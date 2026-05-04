@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RCV — Concept Strategy Report F01</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blu:#2B38B0;
+  --arancio:#F0A500;
+  --grigio-bg:#F2F1ED;
+  --bianco:#FFFFFF;
+  --nero:#111111;
+  --testo:#1a1a2e;
+  --blu-scuro:#1a2480;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Barlow',sans-serif;background:var(--grigio-bg);color:var(--testo);max-width:680px;margin:0 auto;font-size:15px;line-height:1.55}
+
+/* NAVBAR */
+.navbar{background:var(--blu);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.logo-wrap{display:flex;align-items:center;gap:10px}
+.logo-fran{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;color:var(--bianco)}
+.logo-fran span{color:var(--bianco);background:var(--arancio);padding:1px 6px;border-radius:4px}
+.logo-tagline{font-size:10px;color:rgba(255,255,255,.6);letter-spacing:.08em}
+.nav-doc{font-family:'Barlow Condensed',sans-serif;font-size:11px;color:rgba(255,255,255,.7);letter-spacing:.1em;text-transform:uppercase}
+
+/* HERO */
+.hero{background:var(--blu);color:var(--bianco);padding:40px 20px 36px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;right:-30px;top:-30px;width:220px;height:220px;background:var(--arancio);opacity:.08;border-radius:50%}
+.hero::after{content:'';position:absolute;right:20px;bottom:-40px;width:120px;height:120px;border:3px solid var(--arancio);opacity:.15;border-radius:50%}
+.hero-kicker{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--arancio);margin-bottom:8px}
+.hero-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:42px;line-height:.95;text-transform:uppercase;margin-bottom:16px}
+.hero-title em{color:var(--arancio);font-style:normal}
+.hero-sub{font-size:14px;color:rgba(255,255,255,.75);max-width:520px;line-height:1.6}
+.hero-badge{display:inline-block;margin-top:20px;background:var(--arancio);color:var(--blu);font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:12px;letter-spacing:.1em;text-transform:uppercase;padding:6px 14px;border-radius:2px}
+
+/* MANIFESTO FASI */
+.fasi-strip{background:var(--blu-scuro);padding:14px 20px;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.fase-pill{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;letter-spacing:.08em;padding:4px 10px;border-radius:20px;color:rgba(255,255,255,.5);background:rgba(255,255,255,.08)}
+.fase-pill.active{background:var(--arancio);color:var(--blu);color:var(--nero)}
+.fase-arrow{color:rgba(255,255,255,.25);font-size:12px}
+
+/* KPI STRIP */
+.kpi-strip{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin:2px 0}
+.kpi-box{background:var(--bianco);padding:16px 18px}
+.kpi-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#888;margin-bottom:4px}
+.kpi-value{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:28px;color:var(--blu);line-height:1}
+.kpi-sub{font-size:11px;color:#999;margin-top:3px}
+
+/* SECTION HEADER */
+.section-header{background:var(--blu);color:var(--bianco);padding:12px 20px;display:flex;align-items:center;gap:10px;margin-top:24px}
+.section-icon{font-size:18px}
+.section-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:18px;text-transform:uppercase;letter-spacing:.06em}
+.section-count{margin-left:auto;background:var(--arancio);color:var(--nero);font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:12px;padding:2px 8px;border-radius:2px}
+
+/* CARDS */
+.card{background:var(--bianco);margin:2px 0;padding:20px}
+.card-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px;text-transform:uppercase;color:var(--blu);margin-bottom:6px}
+.card p{font-size:14px;color:#444;line-height:1.6;margin-bottom:10px}
+.card p:last-child{margin-bottom:0}
+
+/* CONCEPT CARDS */
+.concept-card{background:var(--bianco);margin:4px 0;overflow:hidden}
+.concept-head{padding:20px 20px 0}
+.concept-num{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:60px;color:var(--grigio-bg);line-height:1;float:right;margin-top:-8px;margin-left:10px}
+.concept-label{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--arancio);margin-bottom:4px}
+.concept-name{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:26px;text-transform:uppercase;color:var(--blu);line-height:1.05;margin-bottom:4px}
+.concept-tagline{font-size:13px;color:#777;font-style:italic;margin-bottom:16px;clear:both}
+.concept-body{padding:0 20px 20px}
+
+/* ORANGE BAND */
+.orange-band{background:var(--arancio);padding:14px 20px;margin:2px 0}
+.orange-band-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;text-transform:uppercase;color:var(--nero);margin-bottom:6px}
+.orange-band p{font-size:13px;color:rgba(0,0,0,.7);line-height:1.5}
+
+/* STEPS */
+.steps-wrap{padding:0 20px 20px;background:var(--bianco)}
+.step{display:flex;gap:14px;margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid #f0f0f0}
+.step:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.step-num{flex-shrink:0;width:32px;height:32px;background:var(--blu);color:var(--bianco);font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;display:flex;align-items:center;justify-content:center;border-radius:50%}
+.step-content{flex:1}
+.step-title{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;text-transform:uppercase;letter-spacing:.05em;color:var(--nero);margin-bottom:3px}
+.step-text{font-size:13px;color:#666;line-height:1.5}
+
+/* TABLE */
+.table-wrap{background:var(--bianco);padding:0 20px 20px;margin:2px 0}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{background:var(--blu);color:var(--bianco);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.06em;padding:8px 10px;text-align:left}
+td{padding:8px 10px;border-bottom:1px solid #f0f0f0;color:#444}
+td:first-child{font-weight:600;color:var(--testo)}
+td.td-orange{color:var(--arancio);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px}
+tr:last-child td{border-bottom:none}
+tr:nth-child(even){background:#fafafa}
+
+/* BADGE */
+.badge{display:inline-block;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:2px;margin:2px}
+.badge-green{background:#e6f7f0;color:#1a7a50}
+.badge-blue{background:#e8ecff;color:var(--blu)}
+.badge-orange{background:#fff4e0;color:#c27800}
+.badge-red{background:#fff0f0;color:#c0392b}
+.badge-grey{background:#f0f0f0;color:#666}
+
+/* STIMA SCALARE */
+.scalare{background:var(--bianco);padding:20px;margin:2px 0}
+.scalare-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;text-transform:uppercase;color:var(--blu);margin-bottom:14px}
+.scalare-row{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.scalare-scenario{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;width:80px;flex-shrink:0}
+.scalare-bar-wrap{flex:1;height:24px;background:#f0f0f0;border-radius:2px;overflow:hidden}
+.scalare-bar{height:100%;display:flex;align-items:center;padding-left:8px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;color:var(--bianco)}
+.bar-cons{background:#888}
+.bar-base{background:var(--blu)}
+.bar-opt{background:var(--arancio)}
+
+/* DARK CTA */
+.dark-cta{background:var(--nero);color:var(--bianco);padding:32px 20px;margin-top:4px;text-align:center}
+.dark-cta h2{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:30px;text-transform:uppercase;margin-bottom:10px}
+.dark-cta h2 span{color:var(--arancio)}
+.dark-cta p{font-size:13px;color:rgba(255,255,255,.6);max-width:400px;margin:0 auto 20px}
+.cta-btn{display:inline-block;background:var(--arancio);color:var(--nero);font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:14px;letter-spacing:.1em;text-transform:uppercase;padding:12px 28px;border-radius:2px;text-decoration:none}
+
+/* DISCLAIMER */
+.disclaimer{background:#f7f7f5;padding:14px 20px;font-size:11px;color:#aaa;line-height:1.5;border-top:1px solid #e8e8e4}
+
+/* DIVIDER */
+.divider{height:4px;background:var(--arancio);margin:0}
+.thin-div{height:2px;background:#e8e6e0;margin:0}
+
+/* INTRO SECTION */
+.intro{padding:20px;background:var(--bianco)}
+.intro h3{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:18px;text-transform:uppercase;color:var(--blu);margin-bottom:10px}
+.intro p{font-size:14px;color:#555;line-height:1.65;margin-bottom:10px}
+.highlight-box{background:var(--grigio-bg);border-left:4px solid var(--arancio);padding:12px 16px;margin:14px 0;border-radius:0 4px 4px 0}
+.highlight-box p{font-size:13px;color:#555;margin-bottom:0}
+.highlight-box strong{color:var(--blu)}
+
+/* TWO COL */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin:2px 0}
+.mini-box{background:var(--bianco);padding:14px}
+.mini-box-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#aaa;margin-bottom:4px}
+.mini-box-value{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:18px;color:var(--nero)}
+.mini-box-sub{font-size:11px;color:#999;margin-top:2px}
+
+/* CONCEPT SEPARATOR */
+.concept-sep{height:6px;background:linear-gradient(90deg,var(--blu) 0%,var(--arancio) 100%);margin:8px 0}
+
+/* FINANZA TABLE */
+.fin-box{background:var(--bianco);padding:20px;margin:2px 0}
+.fin-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:15px;text-transform:uppercase;color:var(--blu);border-bottom:2px solid var(--arancio);padding-bottom:6px;margin-bottom:14px}
+
+/* NOTA BENE */
+.nota{background:#fff9ee;border:1px solid #f0d080;padding:12px 16px;margin:2px 0;border-radius:2px}
+.nota strong{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--arancio)}
+.nota p{font-size:12px;color:#666;margin-top:4px;line-height:1.5}
+
+/* COMPARISON TABLE HEADER ROWS */
+.comparison-head{background:var(--grigio-bg);font-family:'Barlow Condensed',sans-serif;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:#888;padding:6px 10px}
+.comparison-head td{background:var(--grigio-bg);color:#888;font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:.06em;text-transform:uppercase;font-weight:700}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="logo-wrap">
+    <div>
+      <div class="logo-fran">Fran<span>Ki</span></div>
+      <div class="logo-tagline">We Start Your Ideas</div>
+    </div>
+  </div>
+  <div class="nav-doc">RCV · Fase F01 · Concept Research</div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-kicker">Roccaraso Country Village — F01 Concept Strategy</div>
+  <div class="hero-title">5 CONCEPT<br>PER <em>REINVENTARE</em><br>UN VILLAGGIO</div>
+  <div class="hero-sub">Analisi internazionale comparata, scenari di sviluppo e valutazione economico-finanziaria prospettica per la riqualificazione dell'ex Soggiorno Montano Enel di Roccaraso.</div>
+  <div class="hero-badge">Ricerca completata — Aprile 2026</div>
+</div>
+
+<!-- FASI METODO FRANKI -->
+<div class="fasi-strip">
+  <div class="fase-pill">F00 Scouting ✓</div>
+  <div class="fase-arrow">›</div>
+  <div class="fase-pill active">F01 Concept ●</div>
+  <div class="fase-arrow">›</div>
+  <div class="fase-pill">B00 Bivio</div>
+  <div class="fase-arrow">›</div>
+  <div class="fase-pill">F02 Struttura</div>
+  <div class="fase-arrow">›</div>
+  <div class="fase-pill">F03 Brief</div>
+  <div class="fase-arrow">›</div>
+  <div class="fase-pill">F04 Lean Test</div>
+  <div class="fase-arrow">›</div>
+  <div class="fase-pill">F05 MVP</div>
+  <div class="fase-arrow">›</div>
+  <div class="fase-pill">F06 Scale</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- KPI STRIP -->
+<div class="kpi-strip">
+  <div class="kpi-box">
+    <div class="kpi-label">Base d'asta</div>
+    <div class="kpi-value">€6,07M</div>
+    <div class="kpi-sub">Tribunale Sulmona — Esec. N.43/16</div>
+  </div>
+  <div class="kpi-box">
+    <div class="kpi-label">Superficie totale terreni</div>
+    <div class="kpi-value">219K m²</div>
+    <div class="kpi-sub">di cui 22 ha bosco ceduo</div>
+  </div>
+  <div class="kpi-box">
+    <div class="kpi-label">Unità abitative</div>
+    <div class="kpi-value">46 app.</div>
+    <div class="kpi-sub">74–382 mq — 3 palazzine</div>
+  </div>
+  <div class="kpi-box">
+    <div class="kpi-label">SLP residenziale</div>
+    <div class="kpi-value">5.954 m²</div>
+    <div class="kpi-sub">+ seminterrati servizi collettivi</div>
+  </div>
+</div>
+
+<!-- INTRO -->
+<div class="intro">
+  <h3>📍 Il Contesto: perché questo sito è straordinario</h3>
+  <p>L'ex Soggiorno Montano Enel di Roccaraso non è un asset immobiliare qualunque. È un complesso razionalista anni '56–'71 — architettura del welfare operaio, identità estetica forte e coerente — immerso in 22 ettari di bosco a 1.200 m slm, a pochi chilometri dal più grande comprensorio sciistico del Centro-Sud e a 2 ore da Roma e Napoli.</p>
+  <p>La destinazione extralberghiera autorizzata (L.R. 75/1995), il permesso di costruire attivo e l'ampia dotazione di spazi collettivi nei seminterrati lo rendono un'opportunità quasi irripetibile per chi vuole costruire un prodotto di hospitality innovativo — non l'ennesimo hotel di montagna, ma un <strong>manifesto culturale e un modello replicabile</strong>.</p>
+  <div class="highlight-box">
+    <p><strong>Dati di contesto:</strong> Il turismo in Abruzzo nel 2025 ha raggiunto 8,8 milioni di presenze (+23,3% vs 2024). La provincia dell'Aquila — dove ricade RCV — è l'area più dinamica con +32,1% di presenze. La domanda internazionale cresce del +40,6%. Il mercato del wellness tourism globale vale già $1 trilione e cresce al 9,3% annuo. Il wellness real estate è il segmento più veloce in assoluto: +15,8% annuo stimato fino al 2029.</p>
+  </div>
+</div>
+
+<!-- SEZIONE: BENCHMARK INTERNAZIONALI -->
+<div class="section-header">
+  <div class="section-icon">🌍</div>
+  <div class="section-title">Benchmark Internazionali</div>
+  <div class="section-count">7 casi</div>
+</div>
+
+<div class="card">
+  <div class="card-title">I modelli da cui impariamo</div>
+  <p>Prima dei concept, mappiamo i casi studio internazionali che definiscono i confini del possibile. Ognuno insegna qualcosa — anche e soprattutto i fallimenti.</p>
+</div>
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr><th>Benchmark</th><th>Dove</th><th>Modello</th><th>Lezione chiave</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>SHA Wellness Clinic</td><td>Alicante, ES</td><td>Medical wellness resort. ADR €1.200–3.500/notte. Full occupancy anno-round</td><td class="td-orange">Il benessere come asse primario = premium pricing + anti-stagionalità</td></tr>
+      <tr><td>Vivamayr</td><td>Austria</td><td>Longevity clinic + natura alpina. Pacchetti min. 7 giorni. Alta barriera d'ingresso</td><td class="td-orange">Soggiorno lungo + medicina preventiva = LTV altissimo per cliente</td></tr>
+      <tr><td>Six Senses</td><td>Globale</td><td>Nature resort + wellness + sostenibilità radicale. ADR $600–2.000. RevPAR 2x hotel classici</td><td class="td-orange">Sostenibilità come premium, non come costo</td></tr>
+      <tr><td>Zoku</td><td>Amsterdam/Copenhagen/Parigi/Vienna</td><td>Hybrid hotel: micro-loft + coworking + community. Long stay (14+ notti = -20%). B Corp 2018</td><td class="td-orange">168 ore/settimana da monetizzare — non solo le notti. Community reale, non marketing</td></tr>
+      <tr><td>Selina (cautionary tale)</td><td>163 paesi</td><td>Coliving nomade. Valutazione $1.2B → fallimento 2024. Occupancy 47%</td><td class="td-orange">Hype senza unit economics solide distrugge valore. Crescita prima di profittabilità = errore fatale</td></tr>
+      <tr><td>Crespi d'Adda</td><td>Bergamo, IT</td><td>Ex villaggio operaio Crespi. UNESCO World Heritage. Museo, residenze, eventi culturali</td><td class="td-orange">L'identità operaia è un asset narrativo potentissimo, non un problema estetico</td></tr>
+      <tr><td>Lefay Resort & Spa</td><td>Gargnano, IT</td><td>Wellness resort 5* lago di Garda. ADR €400–900. GOP margin 30%+</td><td class="td-orange">Il modello italiano esiste ed è scalabile. Il gap montagna appenninica è enorme</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="nota">
+  <strong>⚠️ Lezione sistemica da Selina</strong>
+  <p>Il modello coliving/nomad ha una domanda reale e strutturale, ma richiede unit economics solide sin dal primo giorno. Proprietà (anche parziale) dell'asset + volume contenuto + posizionamento premium = la formula corretta. La crescita iperbolica è la patologia, non il modello.</p>
+</div>
+
+<!-- DIVIDER -->
+<div class="section-header" style="margin-top:28px">
+  <div class="section-icon">💡</div>
+  <div class="section-title">I 5 Concept Strategici</div>
+  <div class="section-count">F01</div>
+</div>
+
+<div class="card">
+  <p>Ogni concept è stato calibrato sui 5 assi della mappa concettuale: morfologia del sito, tipologia del costruito, mercato e target, trend internazionale e impatto/posizionamento. I concept non sono mutualmente esclusivi — il modello ibrido ottimale è probabilmente una loro combinazione.</p>
+</div>
+
+<!-- ===== CONCEPT 01 ===== -->
+<div class="concept-sep"></div>
+<div class="concept-card">
+  <div class="concept-head">
+    <div class="concept-num">01</div>
+    <div class="concept-label">🏔️ Mountain Wellness & Longevity</div>
+    <div class="concept-name">APENNINE<br>LONGEVITY VILLAGE</div>
+    <div class="concept-tagline">"Il primo centro di longevità dell'Appennino centrale. Dove la medicina preventiva incontra il bosco."</div>
+  </div>
+  <div class="concept-body">
+    <p><strong>Filosofia:</strong> RCV diventa un destination medical wellness resort focalizzato sulla longevity medicine e sul benessere integrato (corpo + mente + natura). Non una spa, ma una clinica esperienziale: diagnostica avanzata, nutrizione terapeutica, movement medicine, forest therapy nel bosco di 22 ettari.</p>
+
+    <p><strong>Target primario:</strong> 40–70 anni, alta disponibilità di spesa, professionisti e manager, turisti internazionali wellness-oriented, longevity seekers (il segmento più in crescita del turismo globale).</p>
+
+    <p><strong>Il sito come asset:</strong> I 22 ha di bosco diventano la "farmacia a cielo aperto" — percorsi di forest bathing certificati, laboratori di erboristeria, orti biodinamici. I seminterrati diventano medical spa + laboratori diagnostici. Le 46 unità diventano suite resort da 1 a 5 notti, con programmi obbligatori.</p>
+
+    <p><strong>Benchmark:</strong> Vivamayr (Austria) — programmi 7 giorni da €3.500+. SHA Wellness (Spagna) — ADR €1.200–3.500/notte. Lefay (Italia) — GOP margin 30%+.</p>
+
+    <div class="orange-band" style="margin:14px -20px">
+      <div class="orange-band-title">🔑 Differenziatore unico</div>
+      <p>Il gap nel mercato italiano è clamoroso: non esiste un longevity resort di livello internazionale sull'Appennino centrale. Il più vicino concorrente diretto è a 700+ km. RCV può diventare il riferimento per il bacino Roma–Napoli–Pescara (20M di persone entro 2h).</p>
+    </div>
+  </div>
+</div>
+
+<div class="fin-box">
+  <div class="fin-title">💰 Stima Economico-Finanziaria — Concept 01</div>
+  <table>
+    <thead><tr><th>Voce</th><th>Scenario Conservativo</th><th>Scenario Base</th><th>Scenario Ottimistico</th></tr></thead>
+    <tbody>
+      <tr><td>Unità attivate</td><td>20 suite</td><td>30 suite</td><td>40 suite</td></tr>
+      <tr><td>ADR (avg. daily rate)</td><td>€300/notte</td><td>€450/notte</td><td>€650/notte</td></tr>
+      <tr><td>Occupancy annua</td><td>50%</td><td>65%</td><td>75%</td></tr>
+      <tr><td>RevPAR</td><td>€150</td><td>€292</td><td>€488</td></tr>
+      <tr><td><strong>Revenue camere/anno</strong></td><td><strong>€1,1M</strong></td><td><strong>€3,2M</strong></td><td><strong>€7,1M</strong></td></tr>
+      <tr><td>Revenue servizi wellness/diagnostica</td><td>€400K</td><td>€900K</td><td>€2,0M</td></tr>
+      <tr><td>Revenue F&B + retail</td><td>€200K</td><td>€500K</td><td>€900K</td></tr>
+      <tr><td><strong>Revenue totale/anno</strong></td><td><strong>€1,7M</strong></td><td><strong>€4,6M</strong></td><td><strong>€10,0M</strong></td></tr>
+      <tr><td>EBITDA margin (stima)</td><td>20%</td><td>28%</td><td>33%</td></tr>
+      <tr><td class="td-orange"><strong>EBITDA/anno</strong></td><td class="td-orange"><strong>€340K</strong></td><td class="td-orange"><strong>€1,29M</strong></td><td class="td-orange"><strong>€3,3M</strong></td></tr>
+    </tbody>
+  </table>
+  <div style="margin-top:14px">
+    <div class="scalare-title">CAPEX di trasformazione stimato</div>
+    <div class="scalare-row">
+      <div class="scalare-scenario" style="font-size:11px">FASE 1</div>
+      <div class="scalare-bar-wrap"><div class="scalare-bar bar-cons" style="width:45%">€4–6M</div></div>
+    </div>
+    <div class="scalare-row">
+      <div class="scalare-scenario" style="font-size:11px">FULL</div>
+      <div class="scalare-bar-wrap"><div class="scalare-bar bar-base" style="width:75%">€10–14M</div></div>
+    </div>
+    <div style="font-size:11px;color:#999;margin-top:8px">Payback stimato (scenario base): 8–11 anni. Multiplo exit (x10–12 EBITDA): €13–15,5M su scenario base a regime.</div>
+  </div>
+</div>
+
+<div class="two-col">
+  <div class="mini-box">
+    <div class="mini-box-label">Modello economico</div>
+    <div class="mini-box-value" style="font-size:13px">Hospitality + membership medica annuale</div>
+  </div>
+  <div class="mini-box">
+    <div class="mini-box-label">Rischio principale</div>
+    <div class="mini-box-value" style="font-size:13px">CAPEX elevato. Necessità di medici/specialisti</div>
+  </div>
+</div>
+
+<div style="padding:12px 20px 16px;background:var(--bianco);margin-top:2px">
+  <span class="badge badge-green">Alta marginalità</span>
+  <span class="badge badge-blue">Anti-stagionale</span>
+  <span class="badge badge-orange">Premium pricing</span>
+  <span class="badge badge-red">CAPEX elevato</span>
+  <span class="badge badge-grey">Lungo setup time</span>
+</div>
+
+<!-- ===== CONCEPT 02 ===== -->
+<div class="concept-sep"></div>
+<div class="concept-card">
+  <div class="concept-head">
+    <div class="concept-num">02</div>
+    <div class="concept-label">🏗️ Workers' Village Reuse + Cultural Heritage</div>
+    <div class="concept-name">IL VILLAGGIO<br>RITORNA</div>
+    <div class="concept-tagline">"Un manifesto architettonico. Il razionalismo operaio come identità di brand, non come problema da nascondere."</div>
+  </div>
+  <div class="concept-body">
+    <p><strong>Filosofia:</strong> RCV abbraccia e valorizza la sua identità operaia anni '60. L'architettura razionalista diventa asset narrativo e brand positioning — come Crespi d'Adda, come i Bauhaus-Hotel tedeschi. Il villaggio non si trasforma in qualcos'altro: diventa se stesso nella sua versione più consapevole e contemporanea.</p>
+
+    <p><strong>Target primario:</strong> Cultural traveler, architetti e creativi, ricercatori e accademici, artisti in residenza, turismo lento e rigenerativo, istituzioni culturali (università, fondazioni). Secondario: famiglie che cercano un'esperienza autentica, non un resort artificiale.</p>
+
+    <p><strong>Modello:</strong> Albergo diffuso + residenze creative + eventi culturali stagionali. I seminterrati diventano: spazio espositivo/galleria, sala conferenze/residenze accademiche, laboratorio artigianale. Le unità abitative vengono affidate in gestione a operatori selezionati per coerenza di vision.</p>
+
+    <p><strong>Funding:</strong> Questo concept è il più "fundable" tramite bandi pubblici europei (PNRR cultura, fondi ERDF, New European Bauhaus), partnership universitarie (GSSI L'Aquila è a 80 km), fondazioni culturali, crowdfunding equity per la parte più sperimentale.</p>
+
+    <div class="orange-band" style="margin:14px -20px">
+      <div class="orange-band-title">🔑 Differenziatore unico</div>
+      <p>In tutta Italia ci sono centinaia di ex colonie aziendali abbandonate. Nessuna è stata trasformata in un destination cultural resort con questa chiarezza di visione. Chi lo fa primo, definisce il playbook per tutti gli altri — e diventa benchmark internazionale.</p>
+    </div>
+  </div>
+</div>
+
+<div class="fin-box">
+  <div class="fin-title">💰 Stima Economico-Finanziaria — Concept 02</div>
+  <table>
+    <thead><tr><th>Voce</th><th>Conservativo</th><th>Base</th><th>Ottimistico</th></tr></thead>
+    <tbody>
+      <tr><td>Unità attivate</td><td>25 app.</td><td>35 app.</td><td>46 app.</td></tr>
+      <tr><td>ADR (mix breve/media)</td><td>€120/notte</td><td>€180/notte</td><td>€250/notte</td></tr>
+      <tr><td>Occupancy</td><td>55%</td><td>65%</td><td>72%</td></tr>
+      <tr><td><strong>Revenue camere/anno</strong></td><td><strong>€600K</strong></td><td><strong>€1,54M</strong></td><td><strong>€3,02M</strong></td></tr>
+      <tr><td>Revenue eventi/residenze artistiche</td><td>€150K</td><td>€400K</td><td>€700K</td></tr>
+      <tr><td>Grant & fondi pubblici (stima)</td><td>€300K</td><td>€600K</td><td>€1,2M</td></tr>
+      <tr><td><strong>Revenue totale/anno</strong></td><td><strong>€1,05M</strong></td><td><strong>€2,54M</strong></td><td><strong>€4,92M</strong></td></tr>
+      <tr><td>EBITDA margin</td><td>15%</td><td>22%</td><td>28%</td></tr>
+      <tr><td class="td-orange"><strong>EBITDA/anno</strong></td><td class="td-orange"><strong>€158K</strong></td><td class="td-orange"><strong>€559K</strong></td><td class="td-orange"><strong>€1,38M</strong></td></tr>
+    </tbody>
+  </table>
+  <div style="margin-top:10px;font-size:11px;color:#999">CAPEX stimato: €3–7M (più basso grazie a fondi pubblici). Il modello ibrido pubblico-privato abbassa significativamente il rischio finanziario iniziale. Payback: 9–13 anni su scenario base.</div>
+</div>
+
+<div style="padding:12px 20px 16px;background:var(--bianco);margin-top:2px">
+  <span class="badge badge-blue">Alta fundability (bandi EU)</span>
+  <span class="badge badge-green">Brand narrativo forte</span>
+  <span class="badge badge-orange">Modello replicabile</span>
+  <span class="badge badge-grey">Revenue più bassa</span>
+  <span class="badge badge-grey">Stagionalità parziale</span>
+</div>
+
+<!-- ===== CONCEPT 03 ===== -->
+<div class="concept-sep"></div>
+<div class="concept-card">
+  <div class="concept-head">
+    <div class="concept-num">03</div>
+    <div class="concept-label">💻 Mountain Work & Life Hub</div>
+    <div class="concept-name">ALTO SANGRO<br>BASECAMP</div>
+    <div class="concept-tagline">"La montagna come secondo ufficio. Lo smart working smette di essere smart e diventa straordinario."</div>
+  </div>
+  <div class="concept-body">
+    <p><strong>Filosofia:</strong> RCV diventa la risposta italiana al modello Zoku — ma con il vantaggio di essere in natura, non in città. Un hybrid-stay hub per professionisti, team aziendali, startup e freelance. La parola d'ordine è "168 ore da monetizzare": ospitalità notturna + coworking + meeting rooms + team offsite + eventi. Fiber 1Gbps, acustica da studio, cucina d'autore, sci nel weekend.</p>
+
+    <p><strong>Target primario:</strong> Remote workers e digital nomad premium (non i backpacker di Selina, ma i manager che lavorano in remoto), team aziendali per offsite, startup in growth stage, consulenti e professionisti dell'area Roma–Napoli che vogliono un "secondo ufficio" in montagna.</p>
+
+    <p><strong>Differenza da Selina:</strong> Proprietà (non affitto) dell'asset, volumi limitati e controllati, target premium, no IPO no SPAC, crescita organica. La lezione di Selina è chiara: community reale + unit economics solide + no hype = unico percorso sostenibile.</p>
+
+    <p><strong>Il sito:</strong> I seminterrati diventano il cuore operativo: open space coworking + meeting rooms acustiche + event space (ex cinema). Le unità diventano suite loft con kitchen corner. Il bosco diventa il "campus all'aperto" per workshop e team building.</p>
+
+    <div class="orange-band" style="margin:14px -20px">
+      <div class="orange-band-title">🔑 Il gap di mercato</div>
+      <p>In Italia non esiste un hub di coworking mountain resort di livello premium a poche ore da Roma e Napoli. Il mercato dei team offsite in Italia vale centinaia di milioni di euro ed è quasi interamente servito da hotel tradizionali con sale conferenze mediocri. Un'offerta strutturata, con una vision, può catturare una quota significativa.</p>
+    </div>
+  </div>
+</div>
+
+<div class="fin-box">
+  <div class="fin-title">💰 Stima Economico-Finanziaria — Concept 03</div>
+  <table>
+    <thead><tr><th>Voce</th><th>Conservativo</th><th>Base</th><th>Ottimistico</th></tr></thead>
+    <tbody>
+      <tr><td>Unità abitative</td><td>30 loft</td><td>40 loft</td><td>46 loft</td></tr>
+      <tr><td>ADR (long stay discount)</td><td>€150/notte</td><td>€220/notte</td><td>€320/notte</td></tr>
+      <tr><td>Occupancy (mix short/long)</td><td>60%</td><td>70%</td><td>80%</td></tr>
+      <tr><td><strong>Revenue camere/anno</strong></td><td><strong>€986K</strong></td><td><strong>€2,25M</strong></td><td><strong>€4,29M</strong></td></tr>
+      <tr><td>Revenue coworking membership</td><td>€120K</td><td>€300K</td><td>€600K</td></tr>
+      <tr><td>Revenue meeting rooms + eventi aziendali</td><td>€200K</td><td>€550K</td><td>€1,1M</td></tr>
+      <tr><td>Revenue F&B</td><td>€200K</td><td>€400K</td><td>€700K</td></tr>
+      <tr><td><strong>Revenue totale/anno</strong></td><td><strong>€1,5M</strong></td><td><strong>€3,5M</strong></td><td><strong>€6,7M</strong></td></tr>
+      <tr><td>EBITDA margin</td><td>18%</td><td>25%</td><td>30%</td></tr>
+      <tr><td class="td-orange"><strong>EBITDA/anno</strong></td><td class="td-orange"><strong>€270K</strong></td><td class="td-orange"><strong>€875K</strong></td><td class="td-orange"><strong>€2,01M</strong></td></tr>
+    </tbody>
+  </table>
+  <div style="margin-top:10px;font-size:11px;color:#999">CAPEX stimato: €4–9M. Il modello ha startup time più rapido rispetto al wellness: non richiede personale medico, certificazioni sanitarie complesse. Payback: 7–10 anni su scenario base. Alta scalabilità del modello eventi aziendali.</div>
+</div>
+
+<div style="padding:12px 20px 16px;background:var(--bianco);margin-top:2px">
+  <span class="badge badge-green">Startup rapido</span>
+  <span class="badge badge-blue">Anti-stagionale</span>
+  <span class="badge badge-green">Revenue streams multipli</span>
+  <span class="badge badge-orange">Community-driven</span>
+  <span class="badge badge-grey">Richiede tech investment</span>
+</div>
+
+<!-- ===== CONCEPT 04 ===== -->
+<div class="concept-sep"></div>
+<div class="concept-card">
+  <div class="concept-head">
+    <div class="concept-num">04</div>
+    <div class="concept-label">🌱 Eco-Tech Village + Forest Economy</div>
+    <div class="concept-name">VILLAGGIO<br>RIGENERATIVO</div>
+    <div class="concept-tagline">"Il primo villaggio a economia circolare dell'Appennino. Il bosco non è lo sfondo — è il motore."</div>
+  </div>
+  <div class="concept-body">
+    <p><strong>Filosofia:</strong> RCV diventa un laboratorio vivente di economia rigenerativa. I 22 ettari di bosco ceduo non sono un accessorio paesaggistico ma una risorsa economica: gestione forestale certificata FSC, biogas da biomassa, geotermia, produzione di energia rinnovabile in eccesso da rivendere, carbon credits. Il villaggio diventa completamente off-grid entro 5 anni e guadagna dalla propria sostenibilità.</p>
+
+    <p><strong>Target primario:</strong> Turisti eco-consapevoli (fascia premium, non budget), aziende per retreat sostenibilità, ricercatori e università (convenzioni per residenze studio), istituzioni europee e internazionali (fondi LIFE, PNRR, Horizon), organizzazioni che cercano un campo base per programmi di education ambientale.</p>
+
+    <p><strong>Revenue model ibrido:</strong> (1) Ospitalità eco-luxury (~40% revenue), (2) Carbon credits e certificati ambientali (~15%), (3) Produzione energia in eccesso (~10%), (4) Education programs e residenze istituzionali (~20%), (5) Prodotti del bosco e agri-foresty (~15%). È il concept con la revenue mix più diversificata e la maggiore resilienza agli shock economici.</p>
+
+    <div class="orange-band" style="margin:14px -20px">
+      <div class="orange-band-title">🔑 Il vantaggio strutturale dei 22 ha</div>
+      <p>Il bosco ceduo da 22 ettari, correttamente gestito, può generare valore economico diretto (biomasse, carbon credits, prodotti forestali) oltre a costituire un'infrastruttura esperienziale unica (forest therapy, educazione ambientale, ricerca scientifica). In Europa esistono già resort che certificano LEED + BREEAM + Living Building Challenge e si posizionano a ADR 30–50% superiori rispetto alla concorrenza non certificata.</p>
+    </div>
+  </div>
+</div>
+
+<div class="fin-box">
+  <div class="fin-title">💰 Stima Economico-Finanziaria — Concept 04</div>
+  <table>
+    <thead><tr><th>Voce</th><th>Conservativo</th><th>Base</th><th>Ottimistico</th></tr></thead>
+    <tbody>
+      <tr><td>Unità attivate</td><td>20 eco-suite</td><td>30 eco-suite</td><td>40 eco-suite</td></tr>
+      <tr><td>ADR</td><td>€200/notte</td><td>€280/notte</td><td>€380/notte</td></tr>
+      <tr><td>Occupancy</td><td>50%</td><td>62%</td><td>72%</td></tr>
+      <tr><td><strong>Revenue camere/anno</strong></td><td><strong>€730K</strong></td><td><strong>€1,9M</strong></td><td><strong>€3,99M</strong></td></tr>
+      <tr><td>Revenue carbon credits + energia</td><td>€80K</td><td>€200K</td><td>€400K</td></tr>
+      <tr><td>Revenue programmi istituzionali</td><td>€200K</td><td>€500K</td><td>€900K</td></tr>
+      <tr><td>Grant pubblici (PNRR/EU)</td><td>€400K</td><td>€800K</td><td>€1,5M</td></tr>
+      <tr><td><strong>Revenue totale/anno</strong></td><td><strong>€1,41M</strong></td><td><strong>€3,4M</strong></td><td><strong>€6,79M</strong></td></tr>
+      <tr><td>EBITDA margin</td><td>16%</td><td>24%</td><td>30%</td></tr>
+      <tr><td class="td-orange"><strong>EBITDA/anno</strong></td><td class="td-orange"><strong>€226K</strong></td><td class="td-orange"><strong>€816K</strong></td><td class="td-orange"><strong>€2,04M</strong></td></tr>
+    </tbody>
+  </table>
+  <div style="margin-top:10px;font-size:11px;color:#999">CAPEX stimato: €5–10M (include investimenti in energia rinnovabile, geotermia, infrastruttura bosco). Il modello ha la maggiore quota di grant finanziabili pubblicamente. Payback: 9–12 anni su scenario base ma con minor rischio grazie ai grant.</div>
+</div>
+
+<div style="padding:12px 20px 16px;background:var(--bianco);margin-top:2px">
+  <span class="badge badge-green">Max fundability EU</span>
+  <span class="badge badge-blue">Revenue streams diversificate</span>
+  <span class="badge badge-green">Carbon economy</span>
+  <span class="badge badge-orange">Narrativa potentissima</span>
+  <span class="badge badge-grey">Setup time lungo</span>
+</div>
+
+<!-- ===== CONCEPT 05 ===== -->
+<div class="concept-sep"></div>
+<div class="concept-card">
+  <div class="concept-head">
+    <div class="concept-num">05</div>
+    <div class="concept-label">🤝 Co-Ownership + Crowdfunding Equity</div>
+    <div class="concept-name">RCV<br>COMMUNITY FUND</div>
+    <div class="concept-tagline">"Un villaggio che appartiene a chi lo ama. Governance collettiva, rendimento condiviso."</div>
+  </div>
+  <div class="concept-body">
+    <p><strong>Filosofia:</strong> RCV non viene sviluppato da un singolo investitore ma da una community di co-proprietari che condividono visione e rendimento. Ispirato al modello Baugruppe tedesco e al Community Land Trust anglosassone, ma con un veicolo italiano (SRL/SPA + equity crowdfunding regolamentato ECSP) e un obiettivo di rendimento. Un insieme di investitori — da €5.000 a €500.000 — acquistano quote di una holding che detiene e gestisce RCV.</p>
+
+    <p><strong>Meccanismo:</strong> La holding raccoglie tramite equity crowdfunding (piattaforme italiane: Walliance, Concrete Investing) un capitale di €5–8M da ~500–2.000 investitori. Il rendimento viene distribuito annualmente tramite dividendi (stimato 8–12% annuo lordo) più una quota di capital gain all'uscita (dopo 8–10 anni). Gli investitori hanno anche il diritto di utilizzare le strutture a tariffe agevolate.</p>
+
+    <p><strong>Dati di mercato:</strong> Il real estate crowdfunding in Italia ha raccolto €180M nel 2023 con rendimenti equity medi del 13,22% lordo. Il settore cresce al 7,2% annuo. La raccolta globale supera i €52,7 miliardi cumulati. Il mercato italiano è al 4° posto in Europa con ampio spazio di crescita.</p>
+
+    <p><strong>Perché funziona qui:</strong> RCV ha una narrativa straordinaria, un asset tangibile sottostante, una destinazione in forte crescita (+32% presenze provincia AQ nel 2025) e una base d'asta inferiore al valore di mercato potenziale. È esattamente il tipo di deal che il mercato del RECF cerca e fatica a trovare.</p>
+
+    <div class="orange-band" style="margin:14px -20px">
+      <div class="orange-band-title">🔑 Questo concept è un moltiplicatore, non un'alternativa</div>
+      <p>Il modello crowdfunding non esclude nessuno degli altri concept — li finanzia. Il Concept 05 è il veicolo di raccolta che permette agli altri 4 concept di esistere senza dipendere da un singolo investitore istituzionale. È il modo di democratizzare il capitale e costruire una community di "stakeholder affezionati" fin dall'inizio.</p>
+    </div>
+  </div>
+</div>
+
+<div class="fin-box">
+  <div class="fin-title">💰 Stima Economico-Finanziaria — Concept 05</div>
+  <table>
+    <thead><tr><th>Parametro</th><th>Scenario</th><th>Valore</th></tr></thead>
+    <tbody>
+      <tr><td>Target raccolta crowdfunding</td><td>Fase 1</td><td class="td-orange">€3–5M</td></tr>
+      <tr><td>Target raccolta crowdfunding</td><td>Fase 2</td><td class="td-orange">€5–8M</td></tr>
+      <tr><td>Rendimento distribuibile agli investitori</td><td>Anno 3–5</td><td>8–12% lordo/anno</td></tr>
+      <tr><td>Capital gain previsto a exit</td><td>Anno 8–12</td><td>30–60% del capitale investito</td></tr>
+      <tr><td>Investitori stimati</td><td>Mix retail/HNW</td><td>300–1.500 soci</td></tr>
+      <tr><td>Ticket medio investitore</td><td>Range</td><td>€2.000–50.000</td></tr>
+      <tr><td>Valore patrimoniale stimato (a regime)</td><td>10x EBITDA base</td><td>€8,7–13M</td></tr>
+      <tr><td>Costo raccolta (piattaforme + legale)</td><td>% raccolta</td><td>5–8%</td></tr>
+    </tbody>
+  </table>
+  <div style="margin-top:10px;font-size:11px;color:#999">Il modello crowdfunding riduce il rischio finanziario per i promotori, costruisce una community di sostenitori, crea awareness e PR organica, e distribuisce il rendimento in modo trasparente. È compatibile e complementare con tutti gli altri concept.</div>
+</div>
+
+<div style="padding:12px 20px 16px;background:var(--bianco);margin-top:2px">
+  <span class="badge badge-green">Democratizza l'investimento</span>
+  <span class="badge badge-blue">Community built-in</span>
+  <span class="badge badge-green">Riduce rischio promotori</span>
+  <span class="badge badge-orange">Rendimenti attrattivi</span>
+  <span class="badge badge-grey">Governance complessa</span>
+</div>
+
+<!-- SEZIONE COMPARATIVA -->
+<div class="section-header" style="margin-top:24px">
+  <div class="section-icon">📊</div>
+  <div class="section-title">Tavola di confronto dei 5 concept</div>
+  <div class="section-count">sintesi</div>
+</div>
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>Concept</th>
+        <th>EBITDA base</th>
+        <th>CAPEX</th>
+        <th>Payback</th>
+        <th>Risk</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>01 — Longevity Wellness</td>
+        <td class="td-orange">€1,29M/a</td>
+        <td>€10–14M</td>
+        <td>8–11y</td>
+        <td><span class="badge badge-orange">Medio-Alto</span></td>
+      </tr>
+      <tr>
+        <td>02 — Cultural Heritage</td>
+        <td>€559K/a</td>
+        <td>€3–7M</td>
+        <td>9–13y</td>
+        <td><span class="badge badge-green">Basso</span></td>
+      </tr>
+      <tr>
+        <td>03 — Mountain Work Hub</td>
+        <td>€875K/a</td>
+        <td>€4–9M</td>
+        <td>7–10y</td>
+        <td><span class="badge badge-blue">Medio</span></td>
+      </tr>
+      <tr>
+        <td>04 — Eco-Tech Village</td>
+        <td>€816K/a</td>
+        <td>€5–10M</td>
+        <td>9–12y</td>
+        <td><span class="badge badge-blue">Medio</span></td>
+      </tr>
+      <tr>
+        <td>05 — Community Fund</td>
+        <td>→ dipende da concept scelto</td>
+        <td>Crowd-funded</td>
+        <td>—</td>
+        <td><span class="badge badge-green">Distribuito</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- SEZIONE: MODELLO IBRIDO RACCOMANDATO -->
+<div class="section-header">
+  <div class="section-icon">🎯</div>
+  <div class="section-title">Il Modello Ibrido Raccomandato</div>
+  <div class="section-count">F01 ipotesi</div>
+</div>
+
+<div class="card">
+  <div class="card-title">La sintesi che massimizza il potenziale</div>
+  <p>I 5 concept non sono mutuamente esclusivi. Il modello che ottimizza rischio, rendimento, potenziale narrativo e scalabilità è un <strong>ibrido strutturato in fasi</strong>, basato su tre pilastri combinati:</p>
+</div>
+
+<div class="steps-wrap">
+  <div class="step">
+    <div class="step-num">1</div>
+    <div class="step-content">
+      <div class="step-title">Pilastro Operativo: Concept 03 + 01</div>
+      <div class="step-text">Mountain Work Hub come base operativa (startup rapido, revenue immediata, no personale medico), con integrazione progressiva di elementi wellness/longevity (massaggi, nutrizione, diagnostica base). Un resort che si usa per lavorare + recuperare. ADR target: €250–400/notte a regime. Partenza rapida (18–24 mesi dall'aggiudicazione) con 25–30 unità.</div>
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-num">2</div>
+    <div class="step-content">
+      <div class="step-title">Pilastro Identitario: Concept 02</div>
+      <div class="step-text">L'architettura razionalista operaia non si nasconde: diventa il racconto del brand. Conservazione consapevole, design contemporaneo che dialoga con l'esistente, narrazione culturale forte. Questo differenzia RCV da qualunque altro resort di montagna italiano e apre le porte a media internazionali, premi di architettura, istituzioni culturali.</div>
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-num">3</div>
+    <div class="step-content">
+      <div class="step-title">Pilastro Finanziario: Concept 05 + elementi 04</div>
+      <div class="step-text">Il veicolo crowdfunding equity raccoglie il capitale iniziale, costruisce la community di sostenitori e distribuisce il rendimento. Il bosco genera valore economico (carbon credits, energy) e abbassa l'impronta ambientale, aprendo l'accesso ai fondi PNRR e ERDF. Questo riduce la dipendenza da un singolo investitore istituzionale e abbassa il rischio complessivo.</div>
+    </div>
+  </div>
+</div>
+
+<div class="orange-band">
+  <div class="orange-band-title">📈 Revenue model ibrido a regime (scenario base)</div>
+  <p><strong>Revenue totale stimata:</strong> €3,5–5,5M/anno — <strong>EBITDA:</strong> €900K–1,5M/anno — <strong>EBITDA margin:</strong> 25–28% — <strong>CAPEX fase 1:</strong> €5–8M — <strong>Payback:</strong> 7–9 anni — <strong>Multiplo exit stimato (x10 EBITDA):</strong> €9–15M.</p>
+</div>
+
+<!-- SEZIONE: IMPATTO -->
+<div class="section-header">
+  <div class="section-icon">🌍</div>
+  <div class="section-title">Impatto e Legacy</div>
+  <div class="section-count">oltre il ritorno</div>
+</div>
+
+<div class="card">
+  <div class="card-title">Perché questo progetto può diventare un benchmark</div>
+  <p>Il punto non è solo fare un buon investimento immobiliare. Il punto è costruire il <strong>manifesto culturale</strong> che mancava all'Appennino. Occupazione locale qualificata, presidio del territorio, gestione attiva del bosco, modello di turismo rigenerativo replicabile negli altri 150+ borghi abbandonati d'Italia — questo è il legacy che RCV può costruire.</p>
+
+  <div class="highlight-box">
+    <p><strong>Certificazioni target:</strong> BREEAM Outstanding (architettura) · LEED Platinum (energie) · WELL Building Standard (ospitalità) · B Corp (gestione) · FSC (bosco) · Living Building Challenge (ambizione a lungo termine).</p>
+  </div>
+
+  <p>Con questo profilo di certificazioni, RCV entra automaticamente nei radar dei fondi ESG internazionali, dei media specializzati in architettura e sostenibilità, e delle istituzioni europee che finanziano i modelli di sviluppo rigenerativo delle aree interne.</p>
+</div>
+
+<!-- DARK CTA -->
+<div class="dark-cta">
+  <h2>FASE F01<br><span>IN CORSO</span></h2>
+  <p>Il passo successivo è la validazione di mercato (B00) e la scelta del concept primario da sviluppare nella Fase F02 — Struttura. Stiamo costruendo qualcosa che non esiste ancora.</p>
+  <div class="cta-btn">→ Procediamo con il Bivio B00</div>
+</div>
+
+<!-- DISCLAIMER -->
+<div class="disclaimer">
+  <strong>Note metodologiche:</strong> Le stime economico-finanziarie presentate in questo report sono proiezioni indicative basate su benchmark di mercato internazionali, dati di settore pubblicamente disponibili (Global Wellness Institute, Politecnico di Milano, HotStats, ISTAT, Regione Abruzzo) e comparabili di settore. Non costituiscono un piano finanziario certificato né una sollecitazione all'investimento. I valori effettivi dipenderanno da variabili operative, normative e di mercato che richiedono una due diligence specifica. Elaborato da <strong>FranKi Studio</strong> — Fase F01 Concept Research — Aprile 2026.
+</div>
+
+</body>
+</html>

@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Mendula — Assessment Strategico v4 · Franki Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--blu:#3549B5;--giallo:#F9AC28;--verde:#2A6B27;--rosso:#C0392B;--arancio:#B7720A;--crema:#F5F4F0;--bianco:#FFFFFF;--nero:#0a0a0a;--testo:#1a1a1a;--medio:#555;--chiaro:#888}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{font-family:'Lato',sans-serif;background:var(--crema);color:var(--testo)}
+/* HEADER */
+.header{background:var(--blu);padding:28px 24px 28px;position:relative;overflow:hidden}
+.header::before{content:'';position:absolute;top:-60px;right:-60px;width:240px;height:240px;border-radius:50%;background:var(--giallo);opacity:.1}
+.header::after{content:'';position:absolute;bottom:-30px;left:40px;width:140px;height:140px;border-radius:50%;background:var(--giallo);opacity:.06}
+.header-top{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--giallo);margin-bottom:12px;position:relative}
+.header h1{font-family:'Bebas Neue',cursive;font-size:clamp(30px,8vw,52px);color:var(--bianco);line-height:1;letter-spacing:1px;margin-bottom:6px;position:relative}
+.header h1 span{color:var(--giallo)}
+.header-sub{font-size:15px;color:rgba(255,255,255,.6);font-weight:300;position:relative;margin-top:4px}
+.header-meta{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,.4);letter-spacing:1px;margin-top:10px;position:relative}
+.version-badge{display:inline-flex;align-items:center;gap:6px;margin-top:12px;position:relative;background:rgba(255,255,255,.1);border:1px solid rgba(249,172,40,.4);border-radius:20px;padding:4px 12px;font-family:'DM Mono',monospace;font-size:10px;color:var(--giallo);letter-spacing:1px}
+/* NAV */
+.nav-sezioni{background:var(--nero);padding:10px 16px;display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+.nav-sezioni::-webkit-scrollbar{display:none}
+.nav-item{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.35);text-decoration:none;padding:5px 8px;border-radius:4px;white-space:nowrap;transition:all .2s;border:1px solid transparent}
+.nav-item:hover{color:var(--giallo);border-color:rgba(249,172,40,.3)}
+/* MAIN */
+.main{max-width:760px;margin:0 auto;padding:20px 16px 80px}
+/* SEZIONE */
+.sezione{margin-bottom:32px}
+.sezione-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--blu);display:flex;align-items:center;gap:8px;margin-bottom:8px;padding-bottom:6px;border-bottom:3px solid var(--giallo)}
+.sezione h2{font-family:'Bebas Neue',cursive;font-size:clamp(20px,5vw,30px);color:var(--testo);letter-spacing:1px;margin-bottom:14px}
+/* TABELLE */
+.tabella{width:100%;border-collapse:collapse;margin-bottom:12px;font-size:13px}
+.tabella th{background:var(--blu);color:var(--bianco);font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;padding:10px 12px;text-align:left;font-weight:500}
+.tabella td{padding:8px 12px;border-bottom:1px solid #eee;vertical-align:top;color:var(--medio)}
+.tabella td:first-child{font-weight:700;color:var(--testo)}
+.tabella tr:nth-child(even) td{background:var(--crema)}
+.tabella tr:last-child td{border-bottom:none}
+.tabella td .fonte{font-family:'DM Mono',monospace;font-size:10px;color:var(--chiaro);display:block;margin-top:2px}
+.row-totale td{background:#FFF3CD!important;font-weight:700!important;color:var(--testo)!important}
+.row-netto td{background:#C8E6C9!important;font-weight:700!important;font-size:14px!important;color:var(--testo)!important}
+.row-rev td{background:#E8F5E9!important;font-weight:700!important;color:var(--testo)!important}
+.row-det td{background:#E8F5E9!important}
+/* TAGS */
+.tok{color:var(--verde);font-weight:700}.tatt{color:var(--arancio);font-weight:700}.tno{color:var(--rosso);font-weight:700}.tblu{color:var(--blu);font-weight:700}
+/* BOX */
+.box{border-radius:10px;padding:16px 18px;margin-bottom:14px;display:flex;gap:14px;align-items:flex-start}
+.box-icon{font-size:22px;flex-shrink:0;margin-top:2px}
+.box-title{font-size:14px;font-weight:700;margin-bottom:5px}
+.box-text{font-size:13px;color:var(--medio);line-height:1.7}
+.box-text ul{padding-left:16px;margin-top:6px}.box-text li{margin-bottom:4px}
+.box-blu{background:#EEF1FF;border-left:4px solid var(--blu)}.box-blu .box-title{color:var(--blu)}
+.box-giallo{background:#FFF8E1;border-left:4px solid var(--giallo)}.box-giallo .box-title{color:var(--arancio)}
+.box-rosso{background:#FDF0F0;border-left:4px solid var(--rosso)}.box-rosso .box-title{color:var(--rosso)}
+.box-verde{background:#F0FAF0;border-left:4px solid var(--verde)}.box-verde .box-title{color:var(--verde)}
+.box-nero{background:var(--nero);border-left:4px solid var(--giallo)}.box-nero .box-title{color:var(--giallo)}.box-nero .box-text{color:rgba(255,255,255,.65)}
+/* STATUS */
+.status-box{background:var(--bianco);border-radius:12px;padding:18px;margin-bottom:14px;box-shadow:0 2px 12px rgba(53,73,181,.07);border-left:4px solid var(--giallo)}
+.status-item{display:flex;gap:10px;align-items:flex-start;font-size:14px;padding:5px 0;border-bottom:1px solid rgba(0,0,0,.04);line-height:1.5}
+.status-item:last-child{border-bottom:none}
+.s-icon{flex-shrink:0;font-size:15px;margin-top:1px}
+.s-ok{color:var(--verde);font-weight:700}.s-att{color:var(--arancio);font-weight:700}.s-no{color:var(--rosso);font-weight:700}
+/* CITAZIONE */
+.citazione{background:var(--bianco);border-radius:10px;border-left:6px solid var(--blu);padding:20px 20px 20px 24px;margin-bottom:14px;box-shadow:0 2px 12px rgba(53,73,181,.08)}
+.citazione p{font-size:16px;color:var(--testo);line-height:1.7;font-style:italic}
+.citazione-fonte{font-family:'DM Mono',monospace;font-size:11px;color:var(--chiaro);margin-top:8px;letter-spacing:1px}
+/* ROADMAP */
+.roadmap-item{display:flex;margin-bottom:8px;background:var(--bianco);border-radius:10px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.roadmap-num{font-family:'Bebas Neue',cursive;font-size:22px;padding:12px 12px;flex-shrink:0;line-height:1;display:flex;align-items:center;justify-content:center;min-width:50px}
+.rr{background:#FDF0F0;color:var(--rosso)}.ry{background:#FFF8E1;color:var(--arancio)}.rg{background:#F0FAF0;color:var(--verde)}
+.roadmap-body{padding:11px 14px;flex:1}
+.roadmap-title{font-size:14px;font-weight:700;color:var(--testo);margin-bottom:3px}
+.roadmap-desc{font-size:12px;color:var(--medio);line-height:1.5}
+/* DOMANDE */
+.domande-box{background:var(--nero);border-radius:12px;padding:20px;margin-bottom:14px}
+.domande-box-title{font-family:'Bebas Neue',cursive;font-size:20px;color:var(--giallo);letter-spacing:1px;margin-bottom:14px}
+.domanda-item{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.08)}
+.domanda-item:last-child{border-bottom:none;padding-bottom:0}
+.domanda-num{font-family:'DM Mono',monospace;font-size:12px;color:var(--giallo);flex-shrink:0;font-weight:500;min-width:22px;margin-top:2px}
+.domanda-text{font-size:13px;color:rgba(255,255,255,.75);line-height:1.6}
+.domanda-text strong{color:var(--bianco)}
+.domanda-perche{font-size:11px;color:rgba(255,255,255,.4);font-family:'DM Mono',monospace;display:block;margin-top:3px;letter-spacing:.3px}
+/* ALTERNATIVA CARD */
+.alt-card{background:var(--bianco);border-radius:12px;overflow:hidden;margin-bottom:16px;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.alt-header{padding:14px 18px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.alt-header h3{font-family:'Bebas Neue',cursive;font-size:20px;letter-spacing:1px;color:var(--bianco);line-height:1}
+.alt-header .alt-score{font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,.7);text-align:right}
+.alt-header .alt-score strong{font-size:18px;color:var(--giallo);display:block}
+.alt-body{padding:16px 18px}
+.alt-kpi{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.alt-kpi-item{flex:1;min-width:90px;background:var(--crema);border-radius:8px;padding:8px 10px;text-align:center}
+.alt-kpi-val{font-family:'Bebas Neue',cursive;font-size:18px;color:var(--blu);line-height:1;margin-bottom:2px}
+.alt-kpi-lbl{font-size:10px;color:var(--chiaro)}
+.pro-contro{display:flex;gap:10px;margin-top:10px}
+.pro,.contro{flex:1;border-radius:8px;padding:10px 12px;font-size:12px;line-height:1.6}
+.pro{background:#F0FAF0;border-top:3px solid var(--verde)}.pro strong{color:var(--verde);display:block;margin-bottom:4px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1px}
+.contro{background:#FDF0F0;border-top:3px solid var(--rosso)}.contro strong{color:var(--rosso);display:block;margin-bottom:4px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1px}
+/* PROFITTABILITA */
+.prof-box{background:var(--bianco);border-radius:12px;overflow:hidden;box-shadow:0 2px 14px rgba(53,73,181,.1);margin-bottom:20px}
+.prof-header{background:var(--blu);padding:16px 20px;display:flex;align-items:center;justify-content:space-between}
+.prof-header h3{font-family:'Bebas Neue',cursive;font-size:22px;color:var(--bianco);letter-spacing:1px}
+.prof-header .prof-score-wrap{text-align:right}
+.prof-score-now{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,.5);letter-spacing:1px}
+.prof-score-val{font-family:'Bebas Neue',cursive;font-size:38px;line-height:1;color:var(--giallo)}
+.prof-score-max{font-family:'DM Mono',monospace;font-size:12px;color:rgba(255,255,255,.5)}
+.prof-body{padding:16px 20px}
+.param-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #f0f0f0}
+.param-row:last-child{border-bottom:none}
+.param-name{flex:1;font-size:13px;color:var(--testo);font-weight:600;line-height:1.3}
+.param-tipo{font-family:'DM Mono',monospace;font-size:9px;color:var(--chiaro);letter-spacing:1px;display:block;font-weight:400}
+.param-dots{display:flex;gap:4px}
+.dot{width:20px;height:20px;border-radius:50%;border:2px solid #ddd;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#bbb}
+.dot.filled-5{background:var(--verde);border-color:var(--verde);color:white}
+.dot.filled-4{background:#4CAF50;border-color:#4CAF50;color:white}
+.dot.filled-3{background:var(--giallo);border-color:var(--giallo);color:var(--nero)}
+.dot.filled-2{background:var(--arancio);border-color:var(--arancio);color:white}
+.dot.filled-1{background:var(--rosso);border-color:var(--rosso);color:white}
+.param-val{font-family:'DM Mono',monospace;font-size:14px;font-weight:700;min-width:28px;text-align:center}
+.param-prosp{font-family:'DM Mono',monospace;font-size:11px;color:var(--verde);min-width:28px;text-align:center}
+.param-note{font-size:11px;color:var(--chiaro);flex:1;line-height:1.4;font-style:italic}
+.prof-totale{background:var(--crema);border-radius:0 0 12px 12px;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:10px;border-top:2px solid var(--giallo)}
+.prof-totale-label{font-family:'DM Mono',monospace;font-size:11px;color:var(--medio);letter-spacing:1px;text-transform:uppercase}
+.prof-barre{display:flex;gap:20px;align-items:center}
+.prof-barra-wrap{text-align:center}
+.prof-barra-label{font-family:'DM Mono',monospace;font-size:9px;color:var(--chiaro);letter-spacing:1px;margin-bottom:4px;text-transform:uppercase}
+.prof-barra{height:8px;border-radius:4px;margin-bottom:3px}
+.prof-barra.attuale{background:var(--arancio)}
+.prof-barra.prosp{background:var(--verde)}
+.prof-num{font-family:'Bebas Neue',cursive;font-size:22px;line-height:1}
+.prof-num.attuale{color:var(--arancio)}
+.prof-num.prosp{color:var(--verde)}
+/* SEMAFORO AGGIORNATO */
+.sem-grid{display:flex;flex-direction:column;gap:8px}
+.sem-item{background:var(--bianco);border-radius:10px;padding:14px 16px;display:flex;align-items:center;gap:14px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.sem-ico{font-size:22px;flex-shrink:0}
+.sem-body{flex:1}
+.sem-name{font-size:14px;font-weight:700;color:var(--testo);margin-bottom:2px}
+.sem-note{font-size:12px;color:var(--medio);line-height:1.5}
+.sem-badge{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;padding:3px 8px;border-radius:20px;flex-shrink:0;font-weight:500}
+.sem-ok{background:#E8F5E9;color:var(--verde)}.sem-att{background:#FFF8E1;color:var(--arancio)}.sem-no{background:#FDF0F0;color:var(--rosso)}
+/* INTRO FILOSOFIA */
+.filosofia{background:var(--nero);border-radius:12px;padding:24px;margin-bottom:24px}
+.filosofia-titolo{font-family:'Bebas Neue',cursive;font-size:22px;color:var(--giallo);letter-spacing:1px;margin-bottom:12px}
+.filosofia p{font-size:14px;color:rgba(255,255,255,.65);line-height:1.8;margin-bottom:10px}
+.filosofia p:last-child{margin-bottom:0}
+.filosofia strong{color:rgba(255,255,255,.9)}
+/* STATS */
+.stats-row{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.stat-card{flex:1;min-width:90px;background:var(--bianco);border-radius:10px;padding:14px 12px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.stat-val{font-family:'Bebas Neue',cursive;font-size:26px;color:var(--blu);line-height:1;margin-bottom:4px}
+.stat-lbl{font-size:10px;color:var(--chiaro);line-height:1.3}
+footer{background:var(--nero);padding:20px;text-align:center;margin-top:20px}
+footer p{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,.3);letter-spacing:1px}
+footer a{color:var(--giallo);text-decoration:none}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-top">Franki Studio · La Mendula Country House · Assessment Strategico</div>
+  <h1>Assessment <span>Strategico v4</span></h1>
+  <p class="header-sub">La Mendula Country House — Arzachena, Gallura</p>
+  <div class="header-meta">Costi con fonti · Finanziamenti reali · Pensieri alternativi · Analisi di fattibilità · Aprile 2026</div>
+  <div class="version-badge">&#x1F4CA; Dati verificati · Aprile 2026</div>
+</div>
+
+<!-- NAV -->
+<div class="nav-sezioni">
+  <a href="#s00" class="nav-item">00 · Filosofia</a>
+  <a href="#s01" class="nav-item">01 · Situazione</a>
+  <a href="#s02" class="nav-item">02 · Terreno</a>
+  <a href="#s03" class="nav-item">03 · Visione</a>
+  <a href="#s04" class="nav-item">04 · Costi</a>
+  <a href="#s05" class="nav-item">05 · Finanziamenti</a>
+  <a href="#s06" class="nav-item">06 · Revenue</a>
+  <a href="#s07" class="nav-item">07 · Alternative</a>
+  <a href="#s08" class="nav-item">08 · Fattibilità</a>
+  <a href="#s09" class="nav-item">09 · Semafori</a>
+  <a href="#s10" class="nav-item">10 · Domande</a>
+</div>
+
+<div class="main">
+
+<!-- 00 FILOSOFIA -->
+<div class="sezione" id="s00" style="margin-top:20px;">
+  <div class="sezione-label">00 — Filosofia e Obiettivo di questo Documento</div>
+  <div class="filosofia">
+    <div class="filosofia-titolo">Perché esiste questo Assessment</div>
+    <p>Un progetto come La Mendula non si valuta a sensazione. Ci sono numeri, mercati, burocrazia, tempi e rischi reali che è necessario conoscere <strong>prima</strong> di prendere qualsiasi decisione. Questo documento non è un piano definitivo — è uno strumento di lavoro che fotografa lo stato attuale del progetto, mette in fila i dati verificabili, identifica le criticità e apre le domande giuste.</p>
+    <p>La sua funzione è <strong>ridurre l'incertezza</strong>: non eliminarla, ma renderla gestibile. Ogni sezione risponde a una domanda concreta — quanto costa, quanto si guadagna, cosa manca, quali alternative esistono, dove sono i rischi maggiori.</p>
+    <p>I dati economici sono ricavati da <strong>fonti pubbliche verificabili</strong> e aggiornate al 2025–2026. Le stime sono presentate in range perché la precisione definitiva arriverà solo dal computo metrico del tecnico locale — che è il prossimo passo operativo.</p>
+    <p>L'<strong>Analisi di Fattibilità</strong> in fondo al documento non è un voto — è una mappa. Mostra su quali leve il progetto è già forte, su quali è fragile e soprattutto <strong>cosa cambia se si scelgono strade diverse</strong>. L'obiettivo è arrivare alla prossima call con Marco con le idee chiare.</p>
+  </div>
+</div>
+
+<!-- 01 SITUAZIONE -->
+<div class="sezione" id="s01">
+  <div class="sezione-label">01 — Punto della Situazione · Aprile 2026</div>
+  <div class="status-box">
+    <div class="status-item"><span class="s-icon">✅</span><span class="s-ok">Questionario terreno completato — PDF ricevuto e analizzato</span></div>
+    <div class="status-item"><span class="s-icon">✅</span><span class="s-ok">Modello confermato: Esclusivo &amp; Lento — 3 stazzi con piscina e orto privati</span></div>
+    <div class="status-item"><span class="s-icon">✅</span><span class="s-ok">IAP acquisita · Budget dichiarato oltre €200.000</span></div>
+    <div class="status-item"><span class="s-icon">⚠️</span><span class="s-att">Stazzu esistente solo 100 mq — quasi tutto da costruire ex novo</span></div>
+    <div class="status-item"><span class="s-icon">⚠️</span><span class="s-att">PSR 4.1 investimenti sospeso — la misura attiva è SRD03 (Set–Dic 2026)</span></div>
+    <div class="status-item"><span class="s-icon">⚠️</span><span class="s-att">Budget €200k insufficiente per il lordo — necessario mutuo ISMEA</span></div>
+    <div class="status-item"><span class="s-icon">🔴</span><span class="s-no">Statuto SRL non verificato — blocca accesso PSR</span></div>
+    <div class="status-item"><span class="s-icon">🔴</span><span class="s-no">Fascicolo ARGEA non costituito — prerequisito per ogni domanda</span></div>
+  </div>
+  <div class="stats-row">
+    <div class="stat-card"><div class="stat-val">9</div><div class="stat-lbl">ettari disponibili</div></div>
+    <div class="stat-card"><div class="stat-val">100</div><div class="stat-lbl">mq stazzu esistente</div></div>
+    <div class="stat-card"><div class="stat-val">3+</div><div class="stat-lbl">unità previste</div></div>
+    <div class="stat-card"><div class="stat-val">€718k</div><div class="stat-lbl">investimento lordo min.</div></div>
+    <div class="stat-card"><div class="stat-val">28/50</div><div class="stat-lbl">fattibilità attuale</div></div>
+  </div>
+</div>
+
+<!-- 02 TERRENO -->
+<div class="sezione" id="s02">
+  <div class="sezione-label">02 — Analisi del Terreno</div>
+  <table class="tabella">
+    <tr><th>Elemento</th><th style="width:48px;text-align:center">Stato</th><th>Note</th></tr>
+    <tr><td>Accesso stradale</td><td style="text-align:center">✅</td><td class="tok">Strada pubblica + viottolo — nessun problema</td></tr>
+    <tr><td>Acqua — pozzo esistente</td><td style="text-align:center">✅</td><td class="tok">Asset strategico per irrigazione orti autonoma</td></tr>
+    <tr><td>Energia elettrica in loco</td><td style="text-align:center">✅</td><td class="tok">Nessuna infrastruttura da creare</td></tr>
+    <tr><td>Connettività 4G/5G</td><td style="text-align:center">✅</td><td class="tok">Gestione digitale e smart home possibili</td></tr>
+    <tr><td>Vincoli paesaggistici</td><td style="text-align:center">✅</td><td class="tok">Nessun vincolo conosciuto — da confermare con PRG</td></tr>
+    <tr><td>Vegetazione</td><td style="text-align:center">✅</td><td class="tok">Macchia + ulivi abbandonati + morfologia mista — vocazione multipla</td></tr>
+    <tr><td>Stazzu esistente (100 mq)</td><td style="text-align:center">⚠️</td><td class="tatt">Molto piccolo — 2 stazzi nuovi da costruire ex novo</td></tr>
+    <tr><td>Recinzione</td><td style="text-align:center">⚠️</td><td class="tatt">Parziale — da completare prima dell'apertura ricettiva</td></tr>
+    <tr><td>Analisi del suolo</td><td style="text-align:center">⚠️</td><td class="tatt">Non effettuata — necessaria per piano colturale oliveto</td></tr>
+    <tr><td>Soggetto giuridico SRL</td><td style="text-align:center">🔴</td><td class="tno">Statuto da verificare — blocca accesso PSR se non agricolo</td></tr>
+    <tr><td>Edificabilità PRG Arzachena</td><td style="text-align:center">🔴</td><td class="tno">Non ancora verificata — prerequisito per progetto architettonico</td></tr>
+  </table>
+</div>
+
+<!-- 03 VISIONE -->
+<div class="sezione" id="s03">
+  <div class="sezione-label">03 — Visione Confermata</div>
+  <div class="citazione">
+    <p>"Vorrei realizzare uno stazzu per la mia pensione e altri 2 da poterli affittare tutti con piscine. Le stesse dovranno avere un orto proprio che chi viene si può curare e mangiare quello che produce."</p>
+    <div class="citazione-fonte">Marco · Risposta questionario · Aprile 2026</div>
+  </div>
+  <table class="tabella">
+    <tr><td>Modello scelto</td><td><span class="tok">Esclusivo &amp; Lento ✅</span></td></tr>
+    <tr><td>Unità totali</td><td>3+ (1 residenziale + 2 ricettive)</td></tr>
+    <tr><td>Dotazione ogni unità</td><td>Piscina privata + orto esperienziale</td></tr>
+    <tr><td>Gestione</td><td>Parziale — presente periodicamente, delega il resto</td></tr>
+    <tr><td>Produzione</td><td>Biologica certificata — obiettivo dichiarato</td></tr>
+    <tr><td>Orizzonte dichiarato</td><td><span class="tatt">3 anni — incompatibile con tempi PSR (5–7 anni reali)</span></td></tr>
+  </table>
+  <div class="box box-rosso">
+    <div class="box-icon">🔒</div>
+    <div class="box-body">
+      <div class="box-title">Blocco principale — Il costo preciso è il gate decisionale</div>
+      <div class="box-text">"Voglio un costo preciso per l'intera realizzazione prima di muovere una pietra." Il computo metrico estimativo sblocca tutto. Ha già un architetto e un geometra — va dato mandato per questa analisi preliminare.</div>
+    </div>
+  </div>
+</div>
+
+<!-- 04 COSTI -->
+<div class="sezione" id="s04">
+  <div class="sezione-label">04 — Costi di Costruzione e Investimento Totale</div>
+  <div class="box box-blu">
+    <div class="box-icon">📐</div>
+    <div class="box-body">
+      <div class="box-title">Metodologia e fonti</div>
+      <div class="box-text">Costi al mq da fonti pubbliche verificabili (Tecnocasa Sassari 2024, Homedeal 2025, lamaddalena.tv 2025). Per Gallura si applicano valori medio-alti: manodopera locale elevata, trasporto materiali +10–15%, finiture premium. Costruzione stazzu in granito gallurese = +20–30% vs standard.</div>
+    </div>
+  </div>
+  <table class="tabella">
+    <tr><th>Voce di spesa</th><th>Calcolo</th><th>Min.</th><th>Max.</th></tr>
+    <tr><td>Stazzu principale — ristrutturazione (100 mq)<span class="fonte">€1.000–1.400/mq · Tecnocasa Sassari 2024</span></td><td>100 mq</td><td>€100.000</td><td>€140.000</td></tr>
+    <tr><td>Stazzu ricettivo 1 — costruzione nuova (130 mq)<span class="fonte">€1.400–1.800/mq granito gallurese · lamaddalena.tv 2025</span></td><td>130 mq</td><td>€182.000</td><td>€234.000</td></tr>
+    <tr><td>Stazzu ricettivo 2 — costruzione nuova (130 mq)</td><td>130 mq</td><td>€182.000</td><td>€234.000</td></tr>
+    <tr><td>Piscina privata × 3 (cemento, riscaldata, 4x8m)<span class="fonte">€35–55k per unità · SA Piscine 2026 · Waterair</span></td><td>3 piscine</td><td>€105.000</td><td>€165.000</td></tr>
+    <tr><td>Sistemazioni esterne e orti (3 unità)</td><td>giardini, recinzioni</td><td>€30.000</td><td>€60.000</td></tr>
+    <tr><td>Infrastrutture (viabilità, allacci, fogne)</td><td>3 unità remote</td><td>€40.000</td><td>€70.000</td></tr>
+    <tr><td>Progettazione + DL (10% costruzione)</td><td>% totale</td><td>€35.000</td><td>€60.000</td></tr>
+    <tr><td>Permessi e oneri urbanizzazione (3 unità)<span class="fonte">€8–15k per unità · Comune Sassari</span></td><td>3 unità</td><td>€24.000</td><td>€45.000</td></tr>
+    <tr><td>Recupero oliveto + irrigazione orti</td><td>2 ha + 0,5 ha</td><td>€20.000</td><td>€40.000</td></tr>
+    <tr class="row-totale"><td>TOTALE LORDO STIMATO</td><td>—</td><td>€718.000</td><td>€1.048.000</td></tr>
+    <tr class="row-det"><td>Contributo SRD03 agriturismo (50% ammissibile)*</td><td>se bando + SRL ok</td><td class="tok">− €180.000</td><td class="tok">− €260.000</td></tr>
+    <tr class="row-netto"><td>INVESTIMENTO NETTO STIMATO</td><td>—</td><td class="tok">€458.000</td><td class="tok">€788.000</td></tr>
+  </table>
+  <p style="font-size:11px;color:var(--chiaro);font-style:italic;margin-top:4px;">*Subordinato a: bando aperto, SRL agricola ammessa, progetto approvato, graduatoria positiva.</p>
+  <div class="box box-rosso">
+    <div class="box-icon">🔴</div>
+    <div class="box-body">
+      <div class="box-title">Il budget di €200k non è sufficiente da solo</div>
+      <div class="box-text">Il budget dichiarato copre meno del 50% dell'investimento netto minimo. Il mutuo ISMEA (fino €1,5M) è necessario per coprire la quota rimanente. Va discusso apertamente in call.</div>
+    </div>
+  </div>
+</div>
+
+<!-- 05 FINANZIAMENTI -->
+<div class="sezione" id="s05">
+  <div class="sezione-label">05 — Finanziamenti — Situazione Reale e Tempi</div>
+  <div class="box box-rosso">
+    <div class="box-icon">🚨</div>
+    <div class="box-body">
+      <div class="box-title">PSR 4.1 Investimenti — SOSPESO (aprile 2026)</div>
+      <div class="box-text">Dal sito ufficiale sardegnapsr.it: <em>"I bandi 4.1 Investimenti, 4.1 Precision Farming e 4.2 sono sospesi per aggiornamento prezziari."</em> La misura attiva per l'agriturismo è <strong>SRD03</strong> — 2° finestra set–dic 2026.</div>
+    </div>
+  </div>
+  <table class="tabella">
+    <tr><th>Strumento</th><th>Stato</th><th>Contributo</th><th>Quando / Chi</th></tr>
+    <tr><td><strong>SRD03 — Agriturismo</strong></td><td><span class="tok">✅ APERTO</span></td><td>50% · dotazione €5M</td><td>2° finestra: <strong>Set–Dic 2026</strong><span class="fonte">sardegnaagricoltura.it</span></td></tr>
+    <tr><td><strong>PSR 4.1 Investimenti</strong></td><td><span class="tno">⛔ SOSPESO</span></td><td>50–60% bio</td><td>Data non comunicata<span class="fonte">sardegnapsr.it</span></td></tr>
+    <tr><td><strong>SRA29 — Biologico</strong></td><td><span class="tok">✅ ATTIVO</span></td><td>Premio/ha/anno</td><td>Domande annuali<span class="fonte">sardegnapsr.it</span></td></tr>
+    <tr><td><strong>ISMEA — Mutuo agevolato</strong></td><td><span class="tok">✅ ATTIVO</span></td><td>Fino €1,5M</td><td>Sempre · richiede piano aziendale<span class="fonte">ismea.it</span></td></tr>
+    <tr><td><strong>GAL Gallura — LEADER</strong></td><td><span class="tatt">⚠️ DA MONITORARE</span></td><td>Variabile</td><td>Bandi 2026 da verificare<span class="fonte">galgallura.eu</span></td></tr>
+  </table>
+  <div class="box box-giallo">
+    <div class="box-icon">📅</div>
+    <div class="box-body">
+      <div class="box-title">Tempi reali SRD03 — Dal bando al pagamento</div>
+      <div class="box-text">Set–Dic 2026: domanda → +6–12 mesi istruttoria ARGEA → concessione (si inizia a costruire) → +12–24 mesi lavori e rendicontazione → pagamento finale dopo collaudo.<br><strong>Totale: 3–4 anni. Il PSR non anticipa — si costruisce con fondi propri/ISMEA e si viene rimborsati dopo.</strong></div>
+    </div>
+  </div>
+  <div class="box box-blu">
+    <div class="box-icon">📋</div>
+    <div class="box-body">
+      <div class="box-title">Prerequisiti per SRD03 — Cosa manca oggi</div>
+      <div class="box-text">
+        <ul>
+          <li>✅ IAP acquisita</li>
+          <li>⚠️ FMA SRL — statuto agricolo DA VERIFICARE</li>
+          <li>❌ Fascicolo aziendale ARGEA — non costituito</li>
+          <li>❌ Certificato connessione agricoltura–agriturismo</li>
+          <li>❌ Progetto architettonico approvato</li>
+          <li>❌ Preventivi certificati da ditte</li>
+          <li>❌ Verifica zona rurale B/C/D (SRD03 solo qui)</li>
+        </ul>
+        <strong>A chi rivolgersi:</strong> CAA Coldiretti/CIA Olbia (gratuito) per fascicolo ARGEA · Agronomo per piano aziendale e certificato connessione · Commercialista diritto agrario per statuto SRL.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 06 REVENUE -->
+<div class="sezione" id="s06">
+  <div class="sezione-label">06 — Revenue Stimato — Con Benchmark Arzachena</div>
+  <div class="box box-blu">
+    <div class="box-icon">📊</div>
+    <div class="box-body">
+      <div class="box-title">Benchmark reali — Stazzi Arzachena 2025</div>
+      <div class="box-text">Da waa2.it, Mitula Arzachena 2025: stazzu base senza piscina da €800/sett. · stazzu con piscina privata 2–4 pax €2.500–€4.000/sett. · Stazzu de Flores con piscina da €6.000/sett. La visione di Marco si posiziona €2.500–€4.500/sett. per unità.</div>
+    </div>
+  </div>
+  <table class="tabella">
+    <tr><th>Fonte di ricavo</th><th>Tariffa</th><th>Settimane</th><th>Min.</th><th>Max.</th></tr>
+    <tr><td>Stazzu ricettivo 1 — piscina + orto<span class="fonte">Benchmark waa2 Arzachena 2025</span></td><td>€2.500–€4.000/sett.</td><td>14–20 apr–ott</td><td>€35.000</td><td>€80.000</td></tr>
+    <tr><td>Stazzu ricettivo 2 — piscina + orto</td><td>€2.500–€4.000/sett.</td><td>14–20 apr–ott</td><td>€35.000</td><td>€80.000</td></tr>
+    <tr><td>Olio EVO biologico Gallura<span class="fonte">Oliveto 2 ha, 200–400 L/anno</span></td><td>€15–€25/L</td><td>—</td><td>€3.000</td><td>€10.000</td></tr>
+    <tr><td>Miele di corbezzolo<span class="fonte">5–10 alveari macchia mediterranea</span></td><td>€25–€40/vasetto</td><td>—</td><td>€2.000</td><td>€7.000</td></tr>
+    <tr><td>Esperienze orto + vendita diretta</td><td>add-on</td><td>—</td><td>€2.000</td><td>€8.000</td></tr>
+    <tr class="row-rev"><td>TOTALE REVENUE ANNUO STIMATO</td><td>—</td><td>—</td><td>€77.000</td><td>€185.000</td></tr>
+  </table>
+  <table class="tabella" style="margin-top:10px;">
+    <tr><th>Scenario</th><th>Revenue</th><th>Costi gestione 30%</th><th>EBITDA</th><th>Payback</th></tr>
+    <tr><td>Conservativo (14 sett. × €2.500)</td><td>€77.000</td><td>€23.000</td><td>€54.000</td><td>8–10 anni</td></tr>
+    <tr><td>Base (17 sett. × €3.000)</td><td>€112.000</td><td>€33.000</td><td>€79.000</td><td>6–8 anni</td></tr>
+    <tr class="row-rev"><td>Ottimistico (20 sett. × €4.000)</td><td>€185.000</td><td>€55.000</td><td>€130.000</td><td>4–5 anni</td></tr>
+  </table>
+</div>
+
+<!-- 07 ALTERNATIVE -->
+<div class="sezione" id="s07">
+  <div class="sezione-label">07 — Pensieri Alternativi — Ipotesi da Esplorare</div>
+  <div class="box box-nero">
+    <div class="box-icon">💡</div>
+    <div class="box-body">
+      <div class="box-title">Perché guardiamo le alternative</div>
+      <div class="box-text">Non per cambiare la visione di Marco — ma per capire se esistono percorsi che ottimizzano costi, accelerano il break-even o aprono opportunità non ancora considerate. Ogni alternativa è un'ipotesi aperta da valutare insieme, non una proposta definitiva.</div>
+    </div>
+  </div>
+
+  <!-- ALT B: GLAMPING -->
+  <div class="alt-card">
+    <div class="alt-header" style="background:var(--verde);">
+      <div>
+        <h3>&#x1F3D5;&#xFE0F; Glamping di Lusso</h3>
+        <div style="font-size:12px;color:rgba(255,255,255,.7);margin-top:3px;">In alternativa o in parallelo agli stazzi</div>
+      </div>
+      <div class="alt-score">
+        <div>Profittabilità</div>
+        <strong>38/50</strong>
+        <div>vs 28 attuale</div>
+      </div>
+    </div>
+    <div class="alt-body">
+      <div class="alt-kpi">
+        <div class="alt-kpi-item"><div class="alt-kpi-val">€15–40k</div><div class="alt-kpi-lbl">costo per tenda</div></div>
+        <div class="alt-kpi-item"><div class="alt-kpi-val">3–6</div><div class="alt-kpi-lbl">mesi realizzazione</div></div>
+        <div class="alt-kpi-item"><div class="alt-kpi-val">€1.500–3k</div><div class="alt-kpi-lbl">/ settimana</div></div>
+        <div class="alt-kpi-item"><div class="alt-kpi-val">0</div><div class="alt-kpi-lbl">permessi edilizi</div></div>
+      </div>
+      <p style="font-size:13px;color:var(--medio);line-height:1.7;margin-bottom:10px;">Tende glamping premium (safari, bubble, dome) con piscina plunge e orto privato. Realizzabili in 3–6 mesi senza concessione edilizia, con costi 5–10x inferiori agli stazzi. Revenue comparabile nella fascia luxury. <strong>Potrebbe essere la Fase 1 immediata</strong> mentre gli stazzi sono in progettazione — genera cassa da subito e testa il mercato reale prima di investire 700k+.</p>
+      <div class="pro-contro">
+        <div class="pro"><strong>PRO</strong>Costi 5–10x inferiori · Tempi rapidissimi · No permessi edilizi · Revenue immediato · Test mercato reale · Stagione estendibile</div>
+        <div class="contro"><strong>CONTRO</strong>Meno permanente · Valore patrimoniale inferiore · Stagionalità più limitata senza riscaldamento · Meno coerente con visione pensione di Marco</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ALT C: AGRITURISMO PURO -->
+  <div class="alt-card">
+    <div class="alt-header" style="background:var(--arancio);">
+      <div>
+        <h3>&#x1F33E; Agriturismo Puro — Fase Transitoria</h3>
+        <div style="font-size:12px;color:rgba(255,255,255,.7);margin-top:3px;">Solo produzione + esperienze, ricettività in un secondo momento</div>
+      </div>
+      <div class="alt-score">
+        <div>Profittabilità</div>
+        <strong>32/50</strong>
+        <div>vs 28 attuale</div>
+      </div>
+    </div>
+    <div class="alt-body">
+      <div class="alt-kpi">
+        <div class="alt-kpi-item"><div class="alt-kpi-val">€80–120k</div><div class="alt-kpi-lbl">investimento</div></div>
+        <div class="alt-kpi-item"><div class="alt-kpi-val">€20–50k</div><div class="alt-kpi-lbl">revenue anno 1</div></div>
+        <div class="alt-kpi-item"><div class="alt-kpi-val">Max PSR</div><div class="alt-kpi-lbl">agevolazioni</div></div>
+        <div class="alt-kpi-item"><div class="alt-kpi-val">12 mesi</div><div class="alt-kpi-lbl">per avviare</div></div>
+      </div>
+      <p style="font-size:13px;color:var(--medio);line-height:1.7;margin-bottom:10px;">Avviare prima l'attività agricola (oliveto, orti, apiario) con il solo stazzu ristrutturato come base operativa. Questo sblocca il certificato di connessione agrituristica necessario per SRD03, massimizza le agevolazioni PSR agricole pure e crea il brand produttivo. La ricettività arriva nella fase 2.</p>
+      <div class="pro-contro">
+        <div class="pro"><strong>PRO</strong>Investimento ridotto · Risolve il problema certificato connessione · Accesso agevolazioni agricole pure · Costruisce brand e reputazione locale</div>
+        <div class="contro"><strong>CONTRO</strong>Revenue basso nella fase 1 · Non soddisfa la visione pensione di Marco nel breve · Richiede gestione agricola attiva (conduttore?)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ALT D: MIX STAZZI + GLAMPING -->
+  <div class="alt-card">
+    <div class="alt-header" style="background:var(--blu);">
+      <div>
+        <h3>&#x2728; Mix Stazzu + Glamping — Il Percorso Più Intelligente</h3>
+        <div style="font-size:12px;color:rgba(255,255,255,.7);margin-top:3px;">Fase 1 glamping → Fase 2 stazzi · Revenue immediato + visione a lungo termine</div>
+      </div>
+      <div class="alt-score">
+        <div>Profittabilità</div>
+        <strong>42/50</strong>
+        <div>vs 28 attuale</div>
+      </div>
+    </div>
+    <div class="alt-body">
+      <div class="alt-kpi">
+        <div class="alt-kpi-item"><div class="alt-kpi-val">€200–300k</div><div class="alt-kpi-lbl">fase 1</div></div>
+        <div class="alt-kpi-item"><div class="alt-kpi-val">€60–90k</div><div class="alt-kpi-lbl">revenue fase 1</div></div>
+        <div class="alt-kpi-item"><div class="alt-kpi-val">12 mesi</div><div class="alt-kpi-lbl">al mercato</div></div>
+        <div class="alt-kpi-item"><div class="alt-kpi-val">PSR</div><div class="alt-kpi-lbl">per fase 2</div></div>
+      </div>
+      <p style="font-size:13px;color:var(--medio);line-height:1.7;margin-bottom:10px;"><strong>Fase 1 (2026–2027):</strong> Ristruttura lo stazzu principale (la tua casa). Installa 2–3 tende glamping luxury con plunge pool e orto. Avvia l'attività agricola. Costi €200–300k, revenue da subito, test mercato reale, costruzione brand.<br><br><strong>Fase 2 (2027–2028+):</strong> Con i dati reali di occupazione e revenue, presenta domanda SRD03. Costruisce i 2 stazzi ricettivi permanenti finanziati in parte dal PSR e in parte dai cash flow della fase 1.</p>
+      <div class="pro-contre">
+        <div class="pro-contro">
+        <div class="pro"><strong>PRO</strong>Budget fase 1 compatibile con €200k · Revenue immediato · Test mercato prima di investire 700k+ · PSR per fase 2 con dati reali a supporto · Compatibile con visione pensione Marco · Profittabilità massima</div>
+        <div class="contro"><strong>CONTRO</strong>Percorso più lungo per arrivare agli stazzi definitivi · Richiede gestione in due fasi · Glamping temporaneo meno valorizzante dell'asset</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 08 ANALISI FATTIBILITÀ -->
+<div class="sezione" id="s08">
+  <div class="sezione-label">08 — Analisi di Fattibilità Strategica · 0–50</div>
+  <div class="box box-blu">
+    <div class="box-icon">📖</div>
+    <div class="box-body">
+      <div class="box-title">Come leggere questa analisi</div>
+      <div class="box-text">10 parametri, 5 punti ciascuno, totale 50. La colonna <strong>Attuale</strong> riflette lo stato odierno con i dati disponibili. La colonna <strong>Prospettico</strong> mostra il punteggio raggiungibile con le azioni prioritarie e l'alternativa D (Mix). I 3 parametri soggettivi (8–9–10) sono stimati in attesa della call con Marco — il punteggio reale dipenderà dalle sue risposte.</div>
+    </div>
+  </div>
+
+  <div class="prof-box">
+    <div class="prof-header">
+      <h3>La Mendula — Profilo di Fattibilità</h3>
+      <div class="prof-score-wrap">
+        <div class="prof-score-now">Punteggio attuale</div>
+        <div class="prof-score-val">28<span style="font-size:20px;color:rgba(255,255,255,.4)">/50</span></div>
+        <div class="prof-score-max">Prospettico: <strong style="color:var(--giallo)">42/50</strong></div>
+      </div>
+    </div>
+    <div class="prof-body">
+
+      <!-- PARAMETRO 1 -->
+      <div class="param-row">
+        <div class="param-name">1. Asset di partenza<span class="param-tipo">oggettivo</span></div>
+        <div class="param-dots">
+          <div class="dot filled-4">●</div><div class="dot filled-4">●</div><div class="dot filled-4">●</div><div class="dot filled-4">●</div><div class="dot">○</div>
+        </div>
+        <div class="param-val" style="color:var(--verde)">4</div>
+        <div class="param-prosp">→ 4</div>
+        <div class="param-note">9 ha, pozzo, luce, stazzu abitabile, nessun vincolo, macchia + ulivi. Punto di forza solido.</div>
+      </div>
+
+      <!-- PARAMETRO 2 -->
+      <div class="param-row">
+        <div class="param-name">2. Accessibilità ai finanziamenti<span class="param-tipo">semi-oggettivo</span></div>
+        <div class="param-dots">
+          <div class="dot filled-2">●</div><div class="dot filled-2">●</div><div class="dot">○</div><div class="dot">○</div><div class="dot">○</div>
+        </div>
+        <div class="param-val" style="color:var(--arancio)">2</div>
+        <div class="param-prosp">→ 4</div>
+        <div class="param-note">SRD03 aperto ma SRL non verificata + fascicolo ARGEA mancante. Con SRL ok e fascicolo: punteggio 4.</div>
+      </div>
+
+      <!-- PARAMETRO 3 -->
+      <div class="param-row">
+        <div class="param-name">3. Potenziale di mercato<span class="param-tipo">oggettivo</span></div>
+        <div class="param-dots">
+          <div class="dot filled-5">●</div><div class="dot filled-5">●</div><div class="dot filled-5">●</div><div class="dot filled-5">●</div><div class="dot filled-5">●</div>
+        </div>
+        <div class="param-val" style="color:var(--verde)">5</div>
+        <div class="param-prosp">→ 5</div>
+        <div class="param-note">Gallura = uno dei mercati rurali più forti d'Italia. Domanda internazionale strutturata. Trend crescita +34% segmento luxury rural.</div>
+      </div>
+
+      <!-- PARAMETRO 4 -->
+      <div class="param-row">
+        <div class="param-name">4. Solidità del business model<span class="param-tipo">oggettivo</span></div>
+        <div class="param-dots">
+          <div class="dot filled-3">●</div><div class="dot filled-3">●</div><div class="dot filled-3">●</div><div class="dot">○</div><div class="dot">○</div>
+        </div>
+        <div class="param-val" style="color:var(--giallo)">3</div>
+        <div class="param-prosp">→ 4</div>
+        <div class="param-note">Concept solido ma orizzonte 3 anni vs PSR 5–7 anni. Con alternativa D e ISMEA: modello più sostenibile = 4.</div>
+      </div>
+
+      <!-- PARAMETRO 5 -->
+      <div class="param-row">
+        <div class="param-name">5. Fattibilità urbanistica<span class="param-tipo">semi-oggettivo</span></div>
+        <div class="param-dots">
+          <div class="dot filled-2">●</div><div class="dot filled-2">●</div><div class="dot">○</div><div class="dot">○</div><div class="dot">○</div>
+        </div>
+        <div class="param-val" style="color:var(--arancio)">2</div>
+        <div class="param-prosp">→ 4</div>
+        <div class="param-note">PRG Arzachena non ancora verificato — edificabilità rurale incerta. Marco ha già il geometra: con verifica positiva = 4.</div>
+      </div>
+
+      <!-- PARAMETRO 6 -->
+      <div class="param-row">
+        <div class="param-name">6. Sostenibilità finanziaria<span class="param-tipo">semi-oggettivo</span></div>
+        <div class="param-dots">
+          <div class="dot filled-2">●</div><div class="dot filled-2">●</div><div class="dot">○</div><div class="dot">○</div><div class="dot">○</div>
+        </div>
+        <div class="param-val" style="color:var(--arancio)">2</div>
+        <div class="param-prosp">→ 4</div>
+        <div class="param-note">€200k vs €458–788k netto. Con mutuo ISMEA + PSR + alternativa D fase 1: copertura realistica = 4.</div>
+      </div>
+
+      <!-- PARAMETRO 7 -->
+      <div class="param-row">
+        <div class="param-name">7. Profilo giuridico e fiscale<span class="param-tipo">semi-oggettivo</span></div>
+        <div class="param-dots">
+          <div class="dot filled-2">●</div><div class="dot filled-2">●</div><div class="dot">○</div><div class="dot">○</div><div class="dot">○</div>
+        </div>
+        <div class="param-val" style="color:var(--arancio)">2</div>
+        <div class="param-prosp">→ 4</div>
+        <div class="param-note">SRL non verificata, CUAA mancante, struttura da ottimizzare. Con statuto ok + Soc. Agricola: punteggio 4.</div>
+      </div>
+
+      <!-- PARAMETRO 8 -->
+      <div class="param-row">
+        <div class="param-name">8. Motivazione e visione<span class="param-tipo">soggettivo — da call</span></div>
+        <div class="param-dots">
+          <div class="dot filled-4">●</div><div class="dot filled-4">●</div><div class="dot filled-4">●</div><div class="dot filled-4">●</div><div class="dot">○</div>
+        </div>
+        <div class="param-val" style="color:var(--verde)">4*</div>
+        <div class="param-prosp">→ 4</div>
+        <div class="param-note">*Stimato. Visione chiara, obiettivo pensione dichiarato, coerenza interna buona. Orizzonte temporale da allineare.</div>
+      </div>
+
+      <!-- PARAMETRO 9 -->
+      <div class="param-row">
+        <div class="param-name">9. Capacità gestionale e operativa<span class="param-tipo">soggettivo — da call</span></div>
+        <div class="param-dots">
+          <div class="dot filled-3">●</div><div class="dot filled-3">●</div><div class="dot filled-3">●</div><div class="dot">○</div><div class="dot">○</div>
+        </div>
+        <div class="param-val" style="color:var(--giallo)">3*</div>
+        <div class="param-prosp">→ 4</div>
+        <div class="param-note">*Stimato. Residente altrove, gestione parziale, esperienza agricola nulla. Con gestore locale dedicato = 4.</div>
+      </div>
+
+      <!-- PARAMETRO 10 -->
+      <div class="param-row">
+        <div class="param-name">10. Tolleranza al rischio e resilienza<span class="param-tipo">soggettivo — da call</span></div>
+        <div class="param-dots">
+          <div class="dot filled-1">●</div><div class="dot">○</div><div class="dot">○</div><div class="dot">○</div><div class="dot">○</div>
+        </div>
+        <div class="param-val" style="color:var(--rosso)">1*</div>
+        <div class="param-prosp">→ 3</div>
+        <div class="param-note">*Stimato. "Voglio il costo preciso prima di muovere una pietra" suggerisce bassa tolleranza al rischio. Con alternativa D che riduce l'esposizione iniziale = 3.</div>
+      </div>
+
+    </div>
+    <div class="prof-totale">
+      <div>
+        <div class="prof-totale-label">Soglia di lettura</div>
+        <div style="font-size:13px;color:var(--medio);margin-top:4px;">0–20 🔴 Non procedere &nbsp;|&nbsp; 21–30 🟡 Cautela &nbsp;|&nbsp; 31–40 🟡 Potenziale &nbsp;|&nbsp; 41–50 🟢 Solido</div>
+      </div>
+      <div class="prof-barre">
+        <div class="prof-barra-wrap">
+          <div class="prof-barra-label">Attuale</div>
+          <div class="prof-barra attuale" style="width:140px;"></div>
+          <div class="prof-num attuale">28<span style="font-size:12px;color:var(--chiaro)">/50</span></div>
+        </div>
+        <div class="prof-barra-wrap">
+          <div class="prof-barra-label">Prospettico</div>
+          <div class="prof-barra prosp" style="width:210px;"></div>
+          <div class="prof-num prosp">42<span style="font-size:12px;color:var(--chiaro)">/50</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box box-verde">
+    <div class="box-icon">✅</div>
+    <div class="box-body">
+      <div class="box-title">Lettura del punteggio</div>
+      <div class="box-text"><strong>28/50 oggi → fascia gialla "Procedere con cautela".</strong> Il progetto ha un potenziale reale (mercato 5/5, asset 4/5) ma è bloccato da 4 criticità risolvibili: statuto SRL, fascicolo ARGEA, verifica PRG, copertura finanziaria. <strong>42/50 prospettico</strong> con le azioni prioritarie + alternativa D → fascia verde "Progetto solido". La distanza tra 28 e 42 si copre con decisioni burocratiche e progettuali, non con nuovi investimenti.</div>
+    </div>
+  </div>
+</div>
+
+<!-- 09 SEMAFORI -->
+<div class="sezione" id="s09">
+  <div class="sezione-label">09 — Semafori Aggiornati · Profittabilità Inclusa</div>
+  <div class="sem-grid">
+    <div class="sem-item"><div class="sem-ico">🗺️</div><div class="sem-body"><div class="sem-name">Asset e Terreno</div><div class="sem-note">9 ha, pozzo, luce, stazzu abitabile, nessun vincolo — base eccellente</div></div><div class="sem-badge sem-ok">VERDE</div></div>
+    <div class="sem-item"><div class="sem-ico">📈</div><div class="sem-body"><div class="sem-name">Potenziale di Mercato</div><div class="sem-note">Gallura luxury rural — mercato strutturato, domanda internazionale, benchmark positivi</div></div><div class="sem-badge sem-ok">VERDE</div></div>
+    <div class="sem-item"><div class="sem-ico">🔒</div><div class="sem-body"><div class="sem-name">Statuto SRL / Struttura giuridica</div><div class="sem-note">FMA Investement SRL — oggetto sociale agricolo non verificato. Blocca PSR.</div></div><div class="sem-badge sem-no">ROSSO</div></div>
+    <div class="sem-item"><div class="sem-ico">📁</div><div class="sem-body"><div class="sem-name">Fascicolo ARGEA</div><div class="sem-note">Non ancora costituito — prerequisito per qualsiasi domanda PSR</div></div><div class="sem-badge sem-no">ROSSO</div></div>
+    <div class="sem-item"><div class="sem-ico">🏛️</div><div class="sem-body"><div class="sem-name">Fattibilità urbanistica PRG</div><div class="sem-note">Edificabilità rurale Arzachena non ancora verificata — geometra da coinvolgere subito</div></div><div class="sem-badge sem-no">ROSSO</div></div>
+    <div class="sem-item"><div class="sem-ico">💰</div><div class="sem-body"><div class="sem-name">Copertura finanziaria</div><div class="sem-note">€200k dichiarati vs €458–788k netto. ISMEA necessario. Con alternativa D fase 1: gestibile.</div></div><div class="sem-badge sem-att">GIALLO</div></div>
+    <div class="sem-item"><div class="sem-ico">📅</div><div class="sem-body"><div class="sem-name">Tempistiche PSR</div><div class="sem-note">SRD03 aperto set–dic 2026. Orizzonte 3 anni Marco incompatibile — da allineare a 5–7 anni.</div></div><div class="sem-badge sem-att">GIALLO</div></div>
+    <div class="sem-item"><div class="sem-ico">📊</div><div class="sem-body"><div class="sem-name">Profittabilità attuale (28/50)</div><div class="sem-note">Fascia gialla — potenziale reale ma 4 criticità da risolvere prima di procedere</div></div><div class="sem-badge sem-att">GIALLO</div></div>
+    <div class="sem-item"><div class="sem-ico">🚀</div><div class="sem-body"><div class="sem-name">Profittabilità prospettica (42/50)</div><div class="sem-note">Fascia verde con azioni prioritarie + alternativa D — progetto solido e sostenibile</div></div><div class="sem-badge sem-ok">VERDE</div></div>
+    <div class="sem-item"><div class="sem-ico">⚖️</div><div class="sem-body"><div class="sem-name">Rischio complessivo</div><div class="sem-note">Controllabile — i rischi principali sono burocratici e finanziari, non di mercato o di prodotto</div></div><div class="sem-badge sem-att">GIALLO</div></div>
+  </div>
+</div>
+
+<!-- 10 DOMANDE -->
+<div class="sezione" id="s10">
+  <div class="sezione-label">10 — Domande per la Call · Ordinate per Priorità</div>
+
+  <div class="domande-box">
+    <div class="domande-box-title">🔴 Bloccanti — Senza risposta non si procede</div>
+    <div class="domanda-item"><div class="domanda-num">1</div><div class="domanda-text"><strong>FMA Investement SRL — l'oggetto sociale include attività agricola?</strong><span class="domanda-perche">→ Se no: modificare subito o costituire Società Agricola SRL (D.Lgs. 99/2004). Blocca tutto il PSR.</span></div></div>
+    <div class="domanda-item"><div class="domanda-num">2</div><div class="domanda-text"><strong>Il PRG di Arzachena consente nuova costruzione rurale sul terreno?</strong><span class="domanda-perche">→ L'architetto/geometra di Marco lo sa già? Se sì, condividere subito l'analisi. Prerequisito per tutto.</span></div></div>
+    <div class="domanda-item"><div class="domanda-num">3</div><div class="domanda-text"><strong>Ha liquidità propria o mutuo per avviare i lavori prima del rimborso PSR?</strong><span class="domanda-perche">→ Il PSR rimborsa dopo i lavori. Serve copertura ponte di 12–24 mesi. €200k non bastano da soli.</span></div></div>
+    <div class="domanda-item"><div class="domanda-num">4</div><div class="domanda-text"><strong>L'orizzonte è davvero 3 anni o è negoziabile?</strong><span class="domanda-perche">→ Il PSR richiede 5–7 anni. Con alternativa D (glamping fase 1) si può avere revenue in 12 mesi.</span></div></div>
+  </div>
+
+  <div class="domande-box">
+    <div class="domande-box-title">🟡 Strategiche — Orientano la direzione</div>
+    <div class="domanda-item"><div class="domanda-num">5</div><div class="domanda-text"><strong>Il terreno è classificato in zona B, C o D del PSR Sardegna?</strong><span class="domanda-perche">→ SRD03 valido solo in queste zone rurali. Verificare con CAA o Comune Arzachena.</span></div></div>
+    <div class="domanda-item"><div class="domanda-num">6</div><div class="domanda-text"><strong>Ha già un CUAA (Codice Unico Aziendale Agricolo)?</strong><span class="domanda-perche">→ Primo step concreto per fascicolo ARGEA. Senza questo nessuna domanda PSR è presentabile.</span></div></div>
+    <div class="domanda-item"><div class="domanda-num">7</div><div class="domanda-text"><strong>Ha una licenza agrituristica o deve ottenerla da zero?</strong><span class="domanda-perche">→ Il certificato di connessione richiede attività agricola già attiva. Tempi: 6–12 mesi dall'avvio.</span></div></div>
+    <div class="domanda-item"><div class="domanda-num">8</div><div class="domanda-text"><strong>Vuole che individuiamo un CAA e un agronomo fidato nella zona Olbia/Sassari?</strong><span class="domanda-perche">→ Coldiretti o CIA Olbia per fascicolo ARGEA (gratuito). Agronomo per piano aziendale e certificato connessione.</span></div></div>
+    <div class="domanda-item"><div class="domanda-num">9</div><div class="domanda-text"><strong>Quanto può essere presente a La Mendula nei prossimi 12 mesi?</strong><span class="domanda-perche">→ Determina se serve un gestore locale fisso. Con alternativa D è più critico nella fase avvio.</span></div></div>
+  </div>
+
+  <div class="domande-box">
+    <div class="domande-box-title">🟢 Approfondimento — Pensieri alternativi e visione</div>
+    <div class="domanda-item"><div class="domanda-num">10</div><div class="domanda-text"><strong>Ha mai visto strutture glamping luxury? Cosa ne pensa come fase 1 immediata?</strong><span class="domanda-perche">→ Alternativa D: glamping subito + stazzi in Fase 2. Revenue in 12 mesi, test mercato, budget compatibile.</span></div></div>
+    <div class="domanda-item"><div class="domanda-num">11</div><div class="domanda-text"><strong>La piscina privata per ogni stazzu è irrinunciabile o è aperto a soluzioni condivise premium?</strong><span class="domanda-perche">→ 3 piscine private = €105–165k. Una piscina condivisa = €40–55k. Impatto su posizionamento e tariffa.</span></div></div>
+    <div class="domanda-item"><div class="domanda-num">12</div><div class="domanda-text"><strong>Quanto è disposto a rischiare? Cosa succede se il PSR arriva in ritardo di 12 mesi?</strong><span class="domanda-perche">→ Determina il parametro 10 della fattibilità e orienta verso quale scenario pianificare la copertura finanziaria.</span></div></div>
+    <div class="domanda-item"><div class="domanda-num">13</div><div class="domanda-text"><strong>C'è un familiare o socio che potrebbe partecipare attivamente alla gestione?</strong><span class="domanda-perche">→ Se esiste un socio under 40, si apre l'accesso alla Misura 6.1 PSR (€40–70k premio giovani agricoltori).</span></div></div>
+  </div>
+</div>
+
+</div><!-- /main -->
+
+<!-- BOX APPUNTI -->
+<div style="max-width:760px;margin:0 auto;padding:0 16px 40px;">
+  <div style="background:var(--bianco);border-radius:12px;overflow:hidden;box-shadow:0 2px 14px rgba(53,73,181,.1);">
+    <div style="background:var(--nero);padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:10px;">
+      <div>
+        <div style="font-family:'Bebas Neue',cursive;font-size:22px;color:var(--giallo);letter-spacing:1px;">✏️ I tuoi appunti e domande per Franki</div>
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,.4);margin-top:4px;letter-spacing:1px;">Scrivi qui tutto quello che ti viene in mente leggendo — domande, dubbi, idee, cose da chiarire. Poi mandalo a Franki.</div>
+      </div>
+    </div>
+    <div style="padding:20px;">
+      <textarea id="noteMarco" placeholder="Es. Non ho capito bene i tempi del PSR...&#10;Sulla piscina condivisa voglio capire meglio...&#10;Ho un dubbio sulla SRL...&#10;Voglio approfondire il glamping...&#10;&#10;Scrivi liberamente — non ci sono risposte giuste o sbagliate." style="width:100%;min-height:220px;border:2px solid #ddd;border-radius:10px;padding:16px;font-family:'Lato',sans-serif;font-size:14px;color:#333;line-height:1.7;resize:vertical;outline:none;background:#fafafa;transition:border-color .2s;" onfocus="this.style.borderColor='#3549B5';this.style.background='#fff'" onblur="this.style.borderColor='#ddd';this.style.background='#fafafa'" oninput="salvaNote()"></textarea>
+      <div style="display:flex;gap:10px;margin-top:12px;">
+        <button onclick="copiaNote()" style="flex:1;background:var(--blu);color:white;border:none;border-radius:8px;padding:13px;font-family:'Bebas Neue',cursive;font-size:16px;letter-spacing:1px;cursor:pointer;">📋 COPIA APPUNTI</button>
+        <button onclick="copiaNotePiuAssessment()" style="flex:1;background:var(--giallo);color:var(--nero);border:none;border-radius:8px;padding:13px;font-family:'Bebas Neue',cursive;font-size:16px;letter-spacing:1px;cursor:pointer;">📲 COPIA + INVIA A FRANKI</button>
+      </div>
+      <p style="font-size:11px;color:#aaa;font-family:'DM Mono',monospace;text-align:center;margin-top:10px;letter-spacing:.5px;">Gli appunti vengono salvati automaticamente nel browser · Premi COPIA e incolla su WhatsApp a Franki</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>Documento riservato · <a href="https://frankistudio.it">Franki Studio</a> · Avre Srl Napoli · Aprile 2026 · Assessment Strategico v4</p>
+</footer>
+
+<script>
+const NOTE_KEY = 'mendula_assessment_note';
+function salvaNote(){try{localStorage.setItem(NOTE_KEY,document.getElementById('noteMarco').value)}catch(e){}}
+function caricaNote(){try{const v=localStorage.getItem(NOTE_KEY);if(v)document.getElementById('noteMarco').value=v}catch(e){}}
+function mostraToast(msg){const t=document.createElement('div');t.textContent=msg;t.style.cssText='position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#0a0a0a;color:#F9AC28;padding:10px 20px;border-radius:8px;font-family:DM Mono,monospace;font-size:12px;z-index:9999;letter-spacing:1px';document.body.appendChild(t);setTimeout(()=>t.remove(),2500)}
+function copiaConExecCommand(testo){const ta=document.createElement('textarea');ta.value=testo;ta.style.cssText='position:fixed;top:0;left:0;opacity:0;font-size:16px';document.body.appendChild(ta);ta.focus();ta.select();ta.setSelectionRange(0,99999);document.execCommand('copy');document.body.removeChild(ta)}
+function copiaNote(){const nota=document.getElementById('noteMarco').value.trim();if(!nota){mostraToast('✏️ Scrivi prima i tuoi appunti!');return}copiaConExecCommand('📝 APPUNTI PER FRANKI — LA MENDULA\n\n'+nota+'\n\nfrankistudio.it/la-mendula/assessment/');mostraToast('✅ Appunti copiati! Incolla su WhatsApp')}
+function copiaNotePiuAssessment(){const nota=document.getElementById('noteMarco').value.trim();const testo='📋 LA MENDULA — RISCONTRO ASSESSMENT\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n'+(nota?'📝 MIEI APPUNTI E DOMANDE:\n'+nota+'\n\n':'')+'🔗 Assessment completo:\nfrankistudio.it/la-mendula/assessment/\n\nFranki, sono pronto per la call.';copiaConExecCommand(testo);mostraToast('✅ Copiato! Incolla su WhatsApp a Franki')}
+document.addEventListener('DOMContentLoaded',caricaNote);
+</script>
+</body>
+</html>

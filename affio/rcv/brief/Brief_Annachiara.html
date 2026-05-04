@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brief Annachiara — Il Poglío</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--blu:#2B38B0;--arancio:#F0A500;--grigio:#F2F1ED;--bianco:#FFFFFF;--nero:#111118;--verde:#0f6b30;--bosco:#2A3A1E}
+body{font-family:'Barlow',sans-serif;background:var(--grigio);color:var(--nero);max-width:700px;margin:0 auto;font-size:19px;line-height:1.75}
+
+nav{background:var(--blu);padding:14px 24px;display:flex;align-items:center;justify-content:space-between}
+.fk-logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:24px;display:inline-flex;align-items:center}
+.fk-logo .fran{color:#fff}
+.fk-logo .ki{background:#F0A500;color:#fff;border-radius:5px;padding:1px 8px;margin-left:2px}
+.nav-label{color:rgba(255,255,255,0.6);font-size:13px;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+
+/* HERO */
+.hero{background:var(--bosco);padding:36px 24px 28px;position:relative;overflow:hidden}
+.hero::before{content:'POGLIO';position:absolute;right:-10px;top:-10px;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:130px;color:rgba(255,255,255,0.04);line-height:1;pointer-events:none}
+.hero-tag{display:inline-block;background:var(--arancio);color:#fff;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:12px;letter-spacing:2px;text-transform:uppercase;padding:5px 12px;border-radius:3px;margin-bottom:14px}
+.hero-a{font-family:'Barlow Condensed',sans-serif;font-weight:300;font-size:16px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:6px}
+.hero h1{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:44px;color:#fff;text-transform:uppercase;line-height:1;margin-bottom:6px}
+.hero h1 span{color:var(--arancio)}
+.hero-sub{color:rgba(255,255,255,0.45);font-size:14px;font-weight:300}
+
+/* SEZIONE */
+.sez{background:var(--bianco);margin-bottom:3px;padding:22px 24px}
+.sez-label{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--arancio);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.sez-label::after{content:'';flex:1;height:1px;background:rgba(240,165,0,0.3)}
+.sez h2{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:26px;text-transform:uppercase;letter-spacing:.5px;color:var(--blu);margin-bottom:14px}
+.sez p{font-size:19px;color:#222;line-height:1.75;margin-bottom:14px}
+.sez p:last-child{margin-bottom:0}
+.sez p strong{color:var(--nero);font-weight:500}
+
+/* HIGHLIGHT */
+.highlight{background:#fff8e1;border-left:4px solid var(--arancio);padding:14px 18px;margin:14px 0;border-radius:0 4px 4px 0}
+.highlight p{font-size:17px;color:#5a3a00;margin:0;line-height:1.65}
+.info-blu{background:#eef1ff;border-left:4px solid var(--blu);padding:14px 18px;margin:14px 0;border-radius:0 4px 4px 0}
+.info-blu p{font-size:17px;color:#1a237e;margin:0;line-height:1.65}
+
+/* RUOLO CARD */
+.ruolo-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px;margin:14px 0}
+.ruolo-box{background:var(--grigio);padding:16px 18px}
+.ruolo-ico{font-size:24px;margin-bottom:8px}
+.ruolo-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;text-transform:uppercase;letter-spacing:.5px;color:var(--blu);margin-bottom:6px}
+.ruolo-desc{font-size:15px;color:#444;line-height:1.6}
+
+/* SOCIETA */
+.soc-strip{display:grid;grid-template-columns:1fr 1fr;gap:3px;margin:14px 0}
+.soc-box{background:var(--blu);padding:16px 18px;text-align:center}
+.soc-name{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:18px;color:#fff;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.soc-tipo{font-size:13px;color:rgba(255,255,255,0.55);line-height:1.5}
+.soc-ruolo{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:3px;background:var(--arancio);color:#fff;display:inline-block;margin-top:8px}
+
+/* MILESTONE */
+.ms-list{margin:14px 0}
+.ms-item{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--grigio);align-items:flex-start}
+.ms-item:last-child{border-bottom:none}
+.ms-data{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;color:var(--arancio);min-width:90px;padding-top:3px;letter-spacing:.5px}
+.ms-testo{font-size:17px;color:#333;line-height:1.6}
+.ms-testo strong{color:var(--nero);font-weight:500}
+
+/* CTA */
+.cta{background:var(--bosco);padding:22px 24px;text-align:center}
+.cta p{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:18px;color:#fff;text-transform:uppercase;letter-spacing:1px;line-height:1.5}
+.cta p span{color:var(--arancio)}
+.cta-sub{font-size:14px;color:rgba(255,255,255,0.45);font-weight:300;font-family:'Barlow',sans-serif;text-transform:none;letter-spacing:0;margin-top:8px;display:block}
+
+.footer{background:var(--nero);padding:18px 24px;text-align:center}
+.footer p{color:rgba(255,255,255,0.35);font-size:13px;margin-top:6px}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="fk-logo"><span class="fran">Fran</span><span class="ki">Ki</span></div>
+  <span class="nav-label">Brief &middot; Annachiara Calvanese</span>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">Brief Riservato</div>
+  <div class="hero-a">Per Annachiara Calvanese</div>
+  <h1>Il <span>Poglio</span><br>e il tuo ruolo</h1>
+  <div class="hero-sub">FranKi Studio &middot; Aprile 2026 &middot; Riservato</div>
+</div>
+
+<!-- 01 COS'E' -->
+<div class="sez">
+  <div class="sez-label">01 &nbsp; il progetto</div>
+  <h2>Cosa stiamo costruendo</h2>
+  <p>Il Poglio &egrave; un ex complesso dell'ENEL abbandonato dagli anni '90 a Roccaraso, in Abruzzo. Tre palazzine nel bosco, 46 appartamenti, 22 ettari di terreno. Valore periziato dal tribunale: <strong>&euro;13,5 milioni</strong>.</p>
+  <p>FranKi Studio ha costruito il piano per trasformarlo nel <strong>primo club privato di montagna dell'Appennino centrale</strong> &mdash; un luogo per disconnettersi, fatto di bosco, silenzio, wellness e cielo buio. Il mercato di riferimento &egrave; Roma e Napoli: 20 milioni di persone a 2 ore, senza nulla di simile nel raggio di centinaia di chilometri.</p>
+  <p>Il complesso &egrave; oggi all'asta giudiziaria al Tribunale di Sulmona. Due aste sono gi&agrave; andate deserte. La prossima &egrave; a settembre 2026 con una base stimata di <strong>&euro;900.000</strong> &mdash; il 93% in meno rispetto al valore certificato.</p>
+  <div class="highlight">
+    <p>Non &egrave; una startup su carta. &Egrave; un asset reale, con una perizia ufficiale, un piano finanziario strutturato e una finestra di acquisto eccezionale che si chiude a settembre.</p>
+  </div>
+</div>
+
+<!-- 02 LA STRUTTURA -->
+<div class="sez">
+  <div class="sez-label">02 &nbsp; la struttura</div>
+  <h2>Come &egrave; organizzata l'operazione</h2>
+  <p>L'operazione si articola su due societ&agrave; distinte, entrambe sotto la stessa guida.</p>
+  <div class="soc-strip">
+    <div class="soc-box">
+      <div class="soc-name">HoldCo Srl</div>
+      <div class="soc-tipo">Societ&agrave; madre dei fondatori<br>FranKi 20% &middot; Affio 20% &middot; 6 soci 60%</div>
+      <div class="soc-ruolo">AD proposta</div>
+    </div>
+    <div class="soc-box">
+      <div class="soc-name">Il Poglio SPV Srl</div>
+      <div class="soc-tipo">Societ&agrave; operativa<br>HoldCo 60% &middot; Fondo istituzionale 40%</div>
+      <div class="soc-ruolo">AD proposta</div>
+    </div>
+  </div>
+  <p>La <strong>HoldCo Srl</strong> &egrave; la societ&agrave; dei fondatori &mdash; tiene le quote e controlla la SPV. La <strong>Il Poglio SPV Srl</strong> &egrave; la societ&agrave; operativa che acquista l'immobile, gestisce il cantiere, apre il club e genera i ricavi.</p>
+  <p>Un <strong>fondo istituzionale</strong> entrer&agrave; con &euro;2 milioni nel 40% della SPV dopo l'aggiudicazione dell'asta. Questa &egrave; la variabile pi&ugrave; delicata e strategica dell'intera operazione &mdash; e il punto in cui la tua competenza diventa fondamentale.</p>
+</div>
+
+<!-- 03 IL RUOLO -->
+<div class="sez">
+  <div class="sez-label">03 &nbsp; il tuo ruolo</div>
+  <h2>Perch&eacute; sei la persona giusta</h2>
+  <p>La proposta &egrave; che tu ricopra il ruolo di <strong>Amministratrice Delegata</strong> di entrambe le societ&agrave; &mdash; HoldCo Srl e Il Poglio SPV Srl.</p>
+  <p>Non si tratta di un ruolo esecutivo ordinario. La complessit&agrave; di questa operazione richiede qualcuno che conosca dall'interno il funzionamento dei fondi istituzionali &mdash; i loro meccanismi decisionali, il linguaggio, le aspettative in termini di governance, reporting e rendimento. Anni di lavoro in questo mondo ti danno una competenza che nessun consulente esterno pu&ograve; sostituire.</p>
+  <div class="ruolo-grid">
+    <div class="ruolo-box">
+      <div class="ruolo-ico">&#127970;</div>
+      <div class="ruolo-title">Governance societaria</div>
+      <div class="ruolo-desc">Presidi entrambi i livelli &mdash; HoldCo e SPV. Garantisci continuit&agrave; tra la cordata dei fondatori e la gestione operativa dell'asset.</div>
+    </div>
+    <div class="ruolo-box">
+      <div class="ruolo-ico">&#127968;</div>
+      <div class="ruolo-title">Relazione con il fondo</div>
+      <div class="ruolo-desc">Gestisci il rapporto con il fondo istituzionale (&euro;2M, 40% SPV). Reporting, governance, aspettative di rendimento. &Egrave; il tuo campo.</div>
+    </div>
+    <div class="ruolo-box">
+      <div class="ruolo-ico">&#128200;</div>
+      <div class="ruolo-title">Struttura finanziaria</div>
+      <div class="ruolo-desc">Supervisioni cap table, liquidation preference, minibond, finanziamento soci. Conosci questi strumenti per esperienza diretta.</div>
+    </div>
+    <div class="ruolo-box">
+      <div class="ruolo-ico">&#128640;</div>
+      <div class="ruolo-title">Exit M48</div>
+      <div class="ruolo-desc">Coordini il processo di vendita della SPV al mese 48 &mdash; dossier, advisor M&amp;A, due diligence acquirente. Valore stimato: &euro;23-37M.</div>
+    </div>
+  </div>
+  <div class="info-blu">
+    <p><strong>Il valore che porti non &egrave; sostituibile.</strong> Chiunque altro dovrebbe imparare dall'esterno ci&ograve; che tu gi&agrave; sai dall'interno. In un'operazione in cui il rapporto con il fondo vale &euro;2 milioni e l'exit vale fino a &euro;37 milioni, questa competenza &egrave; strategica.</p>
+  </div>
+</div>
+
+<!-- 04 LE TAPPE -->
+<div class="sez">
+  <div class="sez-label">04 &nbsp; le tappe principali</div>
+  <h2>Cosa succede e quando</h2>
+  <div class="ms-list">
+    <div class="ms-item">
+      <div class="ms-data">GIU26</div>
+      <div class="ms-testo"><strong>Firma patto parasociale</strong> &mdash; HoldCo Srl costituita. Cordata di 6 soci chiusa. Nomina AD formalizzata.</div>
+    </div>
+    <div class="ms-item">
+      <div class="ms-data">SET26</div>
+      <div class="ms-testo"><strong>Asta giudiziaria</strong> &mdash; HoldCo si aggiudica l'asset a ~&euro;900K. Asset in mano.</div>
+    </div>
+    <div class="ms-item">
+      <div class="ms-data">NOV26</div>
+      <div class="ms-testo"><strong>Ingresso fondo &euro;2M</strong> &mdash; Trattativa e chiusura con il fondo istituzionale. Il Poglio SPV Srl operativa. Cantiere avviato.</div>
+    </div>
+    <div class="ms-item">
+      <div class="ms-data">AGO27</div>
+      <div class="ms-testo"><strong>Bubble room aperte</strong> &mdash; Primo revenue certificato. &euro;594K run rate annuo. Lancio comunicazione.</div>
+    </div>
+    <div class="ms-item">
+      <div class="ms-data">MAY29</div>
+      <div class="ms-testo"><strong>Pieno regime</strong> &mdash; 68 camere, 140 soci fondatori, &euro;7M revenue, &euro;2,3M EBITDA certificato.</div>
+    </div>
+    <div class="ms-item">
+      <div class="ms-data">NOV30</div>
+      <div class="ms-testo"><strong>Exit M48</strong> &mdash; Vendita SPV a operatore istituzionale. Valore stimato &euro;23-37M. Distribuzione proventi a tutti i soci.</div>
+    </div>
+  </div>
+</div>
+
+<!-- 05 IL COMPENSO -->
+<div class="sez">
+  <div class="sez-label">05 &nbsp; il compenso</div>
+  <h2>Una riflessione aperta</h2>
+  <p>Il ruolo &egrave; sostanzialmente formale nella fase iniziale &mdash; governance, firma, supervisione &mdash; e cresce progressivamente con l'avanzare del progetto. &Egrave; giusto che sia remunerato in modo coerente con questa progressione.</p>
+  <p>Come punto di partenza per la conversazione, FranKi si era immaginato una struttura su tre livelli:</p>
+  <div class="highlight">
+    <p>
+      &bull; &nbsp;<strong>&euro;12.000/anno</strong> nella fase pre-closing &mdash; fino all'aggiudicazione dell'asta<br>
+      &bull; &nbsp;<strong>&euro;15.000/anno</strong> nella fase di cantiere &mdash; dal closing alla prima apertura<br>
+      &bull; &nbsp;<strong>&euro;18.000/anno</strong> a regime &mdash; dal soft opening fino all'exit
+    </p>
+  </div>
+  <p>C'&egrave; poi un'altra cosa che vale la pena menzionare, con la discrezione che merita. Se Annachiara dovesse portare a termine la chiusura con il fondo istituzionale &mdash; che &egrave; la parte pi&ugrave; delicata e strategica di tutta l'operazione &mdash; sarebbe giusto riconoscerle una <strong>success fee di &euro;25.000 una tantum</strong> al closing.</p>
+  <p>Queste sono idee, non proposte definitive. Il pallino &egrave; suo &mdash; &egrave; lei che conosce il valore del suo tempo e della sua competenza. L'obiettivo &egrave; trovare insieme una struttura che funzioni per tutti.</p>
+</div>
+
+<!-- CTA -->
+<div class="cta">
+  <p>Il passo successivo &egrave; <span>un incontro</span><br>per capire se sei interessata</p>
+  <span class="cta-sub">Nessun impegno formale oggi &mdash; prima si parla, poi si decide</span>
+</div>
+
+<div class="footer">
+  <div class="fk-logo"><span class="fran">Fran</span><span class="ki">Ki</span></div>
+  <p>Brief riservato &middot; FranKi Studio (Avre Srl) &middot; Napoli &middot; Aprile 2026<br>HoldCo Srl &middot; Il Poglio SPV Srl</p>
+</div>
+
+</body>
+</html>

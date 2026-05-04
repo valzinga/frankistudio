@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fornitori — RCV Il Poglío</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--blu:#2B38B0;--arancio:#F0A500;--grigio:#F2F1ED;--bianco:#FFFFFF;--nero:#111118;--verde:#0f6b30;--bosco:#2A3A1E}
+body{font-family:'Barlow',sans-serif;background:var(--grigio);color:var(--nero);max-width:700px;margin:0 auto;font-size:14px;line-height:1.6}
+
+nav{background:var(--blu);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.fk-logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;display:inline-flex;align-items:center}
+.fk-logo .fran{color:#fff}
+.fk-logo .ki{background:#F0A500;color:#fff;border-radius:5px;padding:1px 7px;margin-left:2px}
+.nav-label{color:rgba(255,255,255,0.6);font-size:11px;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+
+.hero{background:var(--nero);padding:24px 20px 20px}
+.hero-tag{display:inline-block;background:var(--arancio);color:#fff;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;border-radius:3px;margin-bottom:10px}
+.hero h1{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:36px;color:#fff;text-transform:uppercase;line-height:1;margin-bottom:4px}
+.hero h1 span{color:var(--arancio)}
+.hero p{color:rgba(255,255,255,0.45);font-size:12px;font-weight:300}
+
+/* KPI */
+.kpi-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;background:rgba(0,0,0,0.1)}
+.kpi{background:var(--bianco);padding:14px 16px}
+.kpi-label{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#888;margin-bottom:4px}
+.kpi-val{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:24px;color:var(--blu);line-height:1}
+.kpi-sub{font-size:11px;color:#888;margin-top:2px}
+
+/* NOTA INTRO */
+.intro-band{background:var(--bianco);border-left:4px solid var(--arancio);padding:14px 20px;margin-bottom:3px}
+.intro-band p{font-size:13px;color:#444;line-height:1.7}
+.intro-band strong{color:var(--nero);font-weight:500}
+
+/* CATEGORIA */
+.cat-divider{padding:8px 20px;display:flex;align-items:center;gap:10px;margin-top:6px}
+.cat-line{flex:1;height:1px;background:rgba(0,0,0,0.12)}
+.cat-label{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#fff;padding:4px 12px;border-radius:3px}
+.c-urgente{background:#8a0000}
+.c-cantiere{background:#005a2d}
+.c-operativo{background:#1a2d8a}
+.c-finanziario{background:#8a6a00}
+.c-marketing{background:#6a2d8a}
+
+/* FORNITORE CARD */
+.fornitore-card{background:var(--bianco);margin-bottom:3px;overflow:hidden}
+.fornitore-header{padding:14px 20px;border-bottom:1px solid var(--grigio);display:flex;align-items:flex-start;gap:14px}
+.forn-num{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:30px;color:var(--arancio);line-height:1;min-width:34px}
+.forn-info{flex:1}
+.forn-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:18px;color:var(--nero);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.forn-subtitle{font-size:13px;color:#666;font-weight:300}
+.forn-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.tag{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:10px;letter-spacing:1px;text-transform:uppercase;padding:3px 8px;border-radius:3px}
+.tag-quando{background:#e8eeff;color:#1a237e}
+.tag-urgente{background:#f8d7da;color:#721c24}
+.tag-socio{background:#fff3cd;color:#7c4a00}
+.tag-critico{background:#f8d7da;color:#721c24}
+.tag-ok{background:#d4edda;color:#155724}
+
+/* BODY FORNITORE */
+.forn-body{padding:0}
+.skill-row{display:flex;align-items:flex-start;gap:12px;padding:10px 20px;border-bottom:1px solid var(--grigio);font-size:13px}
+.skill-row:last-child{border-bottom:none}
+.skill-ico{font-size:14px;min-width:20px;padding-top:2px}
+.skill-content{}
+.skill-label{font-weight:500;color:var(--nero);margin-bottom:2px}
+.skill-desc{font-size:12px;color:#666;line-height:1.5}
+
+/* DOPPIO RUOLO */
+.doppio-ruolo{background:#fff8e1;border-top:2px solid var(--arancio);padding:12px 20px;display:flex;align-items:flex-start;gap:10px}
+.doppio-ico{font-size:18px}
+.doppio-testo{font-size:12px;color:#5a3a00;line-height:1.6}
+.doppio-testo strong{color:var(--nero);font-weight:500}
+
+/* TIMING BAR */
+.timing-bar{background:var(--grigio);padding:10px 20px;display:flex;align-items:center;gap:12px}
+.timing-label{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#888}
+.timing-val{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:14px;color:var(--nero)}
+.timing-sep{color:#ccc}
+.timing-budget{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;margin-left:auto}
+.budget-pos{color:var(--verde)}
+.budget-neg{color:#b02020}
+.budget-cond{color:#b07a00}
+
+.footer{background:var(--nero);padding:16px 20px;text-align:center}
+.footer p{color:rgba(255,255,255,0.35);font-size:11px;margin-top:6px}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="fk-logo"><span class="fran">Fran</span><span class="ki">Ki</span></div>
+  <span class="nav-label">Fornitori · RCV Il Poglío</span>
+</nav>
+
+<div class="hero">
+  <div class="hero-tag">🔧 Mappa Fornitori</div>
+  <h1>Fornitori <span>e Skill</span><br>Necessarie</h1>
+  <p>HoldCo Srl · Il Poglío SPV Srl · APR26-2Q → NOV30-1Q</p>
+</div>
+
+<div class="kpi-grid">
+  <div class="kpi">
+    <div class="kpi-label">Fornitori totali</div>
+    <div class="kpi-val">10</div>
+    <div class="kpi-sub">Figure necessarie</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Doppio ruolo possibile</div>
+    <div class="kpi-val">4</div>
+    <div class="kpi-sub">Fornitore + socio fondatore</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Urgenti subito</div>
+    <div class="kpi-val">3</div>
+    <div class="kpi-sub">Da ingaggiare a MAY26</div>
+  </div>
+</div>
+
+<div class="intro-band">
+  <p><strong>Nota strategica:</strong> 4 dei 10 fornitori possono entrare anche come <strong>soci fondatori della cordata</strong> (€50K in 2 tranche). Chi entra come socio lavora a condizioni preferenziali sul progetto e ha skin in the game reale — allineamento perfetto degli interessi. Identificati con il badge ⭐ Socio possibile.</p>
+</div>
+
+<!-- ===== CATEGORIA: URGENTI -->
+<div class="cat-divider">
+  <div class="cat-line"></div>
+  <div class="cat-label c-urgente">⚡ Urgenti — da MAY26</div>
+  <div class="cat-line"></div>
+</div>
+
+<!-- 01 AVVOCATO -->
+<div class="fornitore-card">
+  <div class="fornitore-header">
+    <div class="forn-num">01</div>
+    <div class="forn-info">
+      <div class="forn-title">Avvocato Esecuzioni Immobiliari</div>
+      <div class="forn-subtitle">Specializzato in aste giudiziarie · Tribunale Sulmona o L'Aquila</div>
+      <div class="forn-tags">
+        <span class="tag tag-urgente">⚡ Subito</span>
+        <span class="tag tag-quando">MAY26-1Q</span>
+        <span class="tag tag-critico">Critico</span>
+      </div>
+    </div>
+  </div>
+  <div class="forn-body">
+    <div class="skill-row">
+      <div class="skill-ico">⚖️</div>
+      <div class="skill-content">
+        <div class="skill-label">Procedure esecutive immobiliari</div>
+        <div class="skill-desc">Deve conoscere l'Esec. Forz. N.43/16 e avere esperienza diretta con il Tribunale di Sulmona. Accesso al fascicolo esecutivo.</div>
+      </div>
+    </div>
+    <div class="skill-row">
+      <div class="skill-ico">🏛️</div>
+      <div class="skill-content">
+        <div class="skill-label">Diritto societario — SRL e patto parasociale</div>
+        <div class="skill-desc">Deve saper redigere statuto HoldCo Srl con voto plurimo, patto parasociale, contratto finanziamento soci, accordo con fondo istituzionale.</div>
+      </div>
+    </div>
+    <div class="skill-row">
+      <div class="skill-ico">📋</div>
+      <div class="skill-content">
+        <div class="skill-label">Negoziazione con custode giudiziario</div>
+        <div class="skill-desc">Capacità di interagire con IVG Abruzzo per esplorare trattativa privata, fideiussione per cauzione, tempistiche decreto trasferimento.</div>
+      </div>
+    </div>
+  </div>
+  <div class="timing-bar">
+    <span class="timing-label">Inizio</span><span class="timing-val">MAY26-1Q</span>
+    <span class="timing-sep">·</span>
+    <span class="timing-label">Durata</span><span class="timing-val">Tutto il progetto</span>
+    <span class="timing-budget budget-neg">€20-35K fase 0/1 · ongoing</span>
+  </div>
+</div>
+
+<!-- 02 AGENZIA MARKETING -->
+<div class="fornitore-card">
+  <div class="fornitore-header">
+    <div class="forn-num">02</div>
+    <div class="forn-info">
+      <div class="forn-title">Agenzia / Freelance Marketing Hospitality</div>
+      <div class="forn-subtitle">Luxury travel · Pre-lancio · Lead generation · Roma-Napoli</div>
+      <div class="forn-tags">
+        <span class="tag tag-urgente">⚡ Subito</span>
+        <span class="tag tag-quando">MAY26-1Q</span>
+        <span class="tag tag-socio">⭐ Socio possibile</span>
+      </div>
+    </div>
+  </div>
+  <div class="forn-body">
+    <div class="skill-row">
+      <div class="skill-ico">🎯</div>
+      <div class="skill-content">
+        <div class="skill-label">Pre-lancio e lead generation hospitality</div>
+        <div class="skill-desc">Esperienza su lancio di strutture ricettive prima ancora che esistano. Sa costruire lista d'attesa, raccogliere pre-adesioni, misurare conversion rate.</div>
+      </div>
+    </div>
+    <div class="skill-row">
+      <div class="skill-ico">✍️</div>
+      <div class="skill-content">
+        <div class="skill-label">Brand narrativo luxury — tono Il Poglío</div>
+        <div class="skill-desc">Capacità di costruire la voce del brand: parla poco, dice molto. Conosce il segmento wellness esperienziale e il mercato Roma-Napoli.</div>
+      </div>
+    </div>
+    <div class="skill-row">
+      <div class="skill-ico">📱</div>
+      <div class="skill-content">
+        <div class="skill-label">Social, landing page, campagne ads</div>
+        <div class="skill-desc">Gestione operativa: Instagram, landing page pre-adesione, Google/Meta ads per target HNWI (High Net Worth Individuals) nell'area Centro-Sud.</div>
+      </div>
+    </div>
+  </div>
+  <div class="doppio-ruolo">
+    <div class="doppio-ico">⭐</div>
+    <div class="doppio-testo"><strong>Doppio ruolo possibile:</strong> entra come socio fondatore (€50K in 2 tranche) e gestisce il marketing a fee ridotta. Ha skin in the game — più soci porta, più vale la sua quota. Allineamento perfetto.</div>
+  </div>
+  <div class="timing-bar">
+    <span class="timing-label">Inizio</span><span class="timing-val">MAY26-1Q</span>
+    <span class="timing-sep">·</span>
+    <span class="timing-label">Contratto</span><span class="timing-val">Dilazionato a milestone</span>
+    <span class="timing-budget budget-cond">€800-1K/mese + success fee</span>
+  </div>
+</div>
+
+<!-- 03 COMMERCIALISTA -->
+<div class="fornitore-card">
+  <div class="fornitore-header">
+    <div class="forn-num">03</div>
+    <div class="forn-info">
+      <div class="forn-title">Commercialista / Fiscalista</div>
+      <div class="forn-subtitle">SRL · Minibond · Liquidation preference · Exit taxation</div>
+      <div class="forn-tags">
+        <span class="tag tag-urgente">⚡ Subito</span>
+        <span class="tag tag-quando">GIU26-1Q</span>
+        <span class="tag tag-critico">Critico</span>
+      </div>
+    </div>
+  </div>
+  <div class="forn-body">
+    <div class="skill-row">
+      <div class="skill-ico">🏢</div>
+      <div class="skill-content">
+        <div class="skill-label">Costituzione e gestione SRL — HoldCo Srl e Il Poglío SPV Srl</div>
+        <div class="skill-desc">Deve gestire due società correlate con strutture di quota complesse: voto plurimo, finanziamento soci, ingresso fondo con liquidation preference.</div>
+      </div>
+    </div>
+    <div class="skill-row">
+      <div class="skill-ico">📊</div>
+      <div class="skill-content">
+        <div class="skill-label">Fiscalità minibond e strumenti finanziari</div>
+        <div class="skill-desc">Conoscenza del D.L. 83/2012, trattamento fiscale interessi minibond, deducibilità costi SPV, tassazione success fee FranKi all'exit.</div>
+      </div>
+    </div>
+    <div class="skill-row">
+      <div class="skill-ico">💰</div>
+      <div class="skill-content">
+        <div class="skill-label">Exit taxation e distribuzione proventi</div>
+        <div class="skill-desc">Ottimizzazione fiscale della distribuzione all'exit: PEX (participation exemption), regime partecipazioni, tassazione plusvalenze per persone fisiche e SRL.</div>
+      </div>
+    </div>
+  </div>
+  <div class="timing-bar">
+    <span class="timing-label">Inizio</span><span class="timing-val">GIU26-1Q</span>
+    <span class="timing-sep">·</span>
+    <span class="timing-label">Durata</span><span class="timing-val">Tutto il progetto</span>
+    <span class="timing-budget budget-neg">€8-15K/anno</span>
+  </div>
+</div>
+
+<!-- ===== CATEGORIA: CANTIERE -->
+<div class="cat-divider">
+  <div class="cat-line"></div>
+  <div class="cat-label c-cantiere">🏗️ Cantiere — da NOV26</div>
+  <div class="cat-line"></div>
+</div>
+
+<!-- 04 ARCHITETTO -->
+<div class="fornitore-card">
+  <div class="fornitore-header">
+    <div class="forn-num">04</div>
+    <div class="forn-info">
+      <div class="forn-title">Architetto / Studio di Progettazione</div>
+      <div class="forn-subtitle">Hospitality design · Recupero anni '60 · Bubble room · Vincoli paesaggistici</div>
+      <div class="forn-tags">
+        <span class="tag tag-quando">GIU26-2Q — due diligence</span>
+        <span class="tag tag-socio">⭐ Socio possibile</span>
+      </div>
+    </div>
+  </div>
+  <div class="forn-body">
+    <div class="skill-row">
+      <div class="skill-ico">🏨</div>
+      <div class="skill-content">
+        <div class="skill-label">Progettazione hospitality e recupero edilizio</div>
+        <div class="skill-desc">Esperienza su boutique hotel, club privati o strutture wellness. Capacità di convertire appartamenti anni '60 in camere hotel di qualità mantenendo l'identità del luogo.</div>
+      </div>
+    </div>
+    <div class="skill-row">
+      <div class="skill-ico">🌲</div>
+      <div class="skill-content">
+        <div class="skill-label">Strutture leggere in ambiente naturale — bubble room</div>
+        <div class="skill-desc">Conoscenza di strutture trasparenti, glamping di lusso, installazioni nel bosco. Esperienza con materiali e tecnologie per ambienti montagna (neve, vento, -15°C).</div>
+      </div>
+    </div>
+    <div class="skill-row">
+      <div class="skill-ico">📐</div>
+      <div class="skill-content">
+        <div class="skill-label">Vincoli paesaggistici e urbanistici Abruzzo</div>
+        <div class="skill-desc">Conoscenza della L.R. 75/1995 (destinazione extralberghiera), vincoli D.Lgs. 42/2004, iter con Comune di Roccaraso e Soprintendenza. Capacità di gestire varianti e permessi.</div>
+      </div>
+    </div>
+  </div>
+  <div class="doppio-ruolo">
+    <div class="doppio-ico">⭐</div>
+    <div class="doppio-testo"><strong>Doppio ruolo possibile:</strong> entra come socio fondatore e progetta a condizioni preferenziali. Il suo lavoro di progettazione aumenta direttamente il valore della sua quota — massimo allineamento.</div>
+  </div>
+  <div class="timing-bar">
+    <span class="timing-label">Inizio</span><span class="timing-val">GIU26-2Q</span>
+    <span class="timing-sep">·</span>
+    <span class="timing-label">Fase intensa</span><span class="timing-val">NOV26 → AGO27</span>
+    <span class="timing-budget budget-neg">€80-150K progettazione totale</span>
+  </div>
+</div>
+
+<!-- 05 INGEGNERE STRUTTURALE -->
+<div class="fornitore-card">
+  <div class="fornitore-header">
+    <div class="forn-num">05</div>
+    <div class="forn-info">
+      <div class="forn-title">Ingegnere Strutturale</div>
+      <div class="forn-subtitle">Verifica sismica · Edifici anni '60 · APE energetico · Collaudo</div>
+      <div class="forn-tags">
+        <span class="tag tag-quando">GIU26-2Q — due diligence</span>
+        <span class="tag tag-critico">Critico per due diligence</span>
+      </div>
+    </div>
+  </div>
+  <div class="forn-body">
+    <div class="skill-row">
+      <div class="skill-ico">🏚️</div>
+      <div class="skill-content">
+        <div class="skill-label">Verifica sismica edifici anni '60 in zona Appennino</div>
+        <div class="skill-desc">Roccaraso è in zona sismica 2. Le 3 palazzine risalgono al 1956 e non sono state adeguate. Serve verifica strutturale completa e piano di adeguamento sismico incluso nel budget cantiere.</div>
+      </div>
+    </div>
+    <div class="skill-row">
+      <div class="skill-ico">⚡</div>
+      <div class="skill-content">
+        <div class="skill-label">Diagnosi impianti e APE energetico</div>
+        <div class="skill-desc">Verifica stato impianti elettrici, idraulici, termici dopo 30+ anni di abbandono. Attestato di Prestazione Energetica necessario per il permesso di ristrutturazione e per gli incentivi fiscali.</div>
+      </div>
+    </div>
+    <div class="skill-row">
+      <div class="skill-ico">✅</div>
+      <div class="skill-content">
+        <div class="skill-label">Collaudo finale e agibilità</div>
+        <div class="skill-desc">Collaudo strutturale post-cantiere e ottenimento del certificato di agibilità — prerequisito per l'apertura commerciale e per la licenza extralberghiera.</div>
+      </div>
+    </div>
+  </div>
+  <div class="timing-bar">
+    <span class="timing-label">Inizio</span><span class="timing-val">GIU26-2Q</span>
+    <span class="timing-sep">·</span>
+    <span class="timing-label">Collaudo</span><span class="timing-val">AGO28-1Q</span>
+    <span class="timing-budget budget-neg">€15-25K due diligence · €20-40K collaudo</span>
+  </div>
+</div>
+
+<!-- 06 GENERAL CONTRACTOR -->
+<div class="fornitore-card">
+  <div class="fornitore-header">
+    <div class="forn-num">06</div>
+    <div class="forn-info">
+      <div class="forn-title">General Contractor</div>
+      <div class="forn-subtitle">Ristrutturazione montagna · Zona sismica · Budget €6M · Cantiere parallelo</div>
+      <div class="forn-tags">
+        <span class="tag tag-quando">NOV26-1Q</span>
+        <span class="tag tag-critico">Budget più grande</span>
+        <span class="tag tag-socio">⭐ Socio possibile</span>
+      </div>
+    </div>
+  </div>
+  <div class="forn-body">
+    <div class="skill-row">
+      <div class="skill-ico">🔨</div>
+      <div class="skill-content">
+        <div class="skill-label">Ristrutturazione complessa in zone montagna e sismiche</div>
+        <div class="skill-desc">Esperienza su cantieri in quota (1.000+ m slm), condizioni climatiche estreme, accessi difficili. Conoscenza materiali e tecniche per Appennino centrale — idealmente con lavori già fatti in Abruzzo.</div>
+      </div>
+    </div>
+    <div class="skill-row">
+      <div class="skill-ico">⚙️</div>
+      <div class="skill-content">
+        <div class="skill-label">Gestione cantieri paralleli multi-edificio</div>
+        <div class="skill-desc">Capacità di gestire 3 palazzine in cantiere simultaneamente con subappaltatori diversi. Project management strutturato, rispetto dei SAL (stati avanzamento lavori) per il cronoprogramma.</div>
+      </div>
+    </div>
+    <div class="skill-row">
+      <div class="skill-ico">🌿</div>
+      <div class="skill-content">
+        <div class="skill-label">Costruzioni leggere in ambiente naturale</div>
+        <div class="skill-desc">Esperienza con fondazioni leggere nel bosco per le 6 bubble room — senza impatto visivo, smontabili, conformi ai vincoli forestali. Materiali: acciaio, legno lamellare, policarbonato.</div>
+      </div>
+    </div>
+  </div>
+  <div class="doppio-ruolo">
+    <div class="doppio-ico">⭐</div>
+    <div class="doppio-testo"><strong>Doppio ruolo possibile:</strong> il general contractor entra come socio fondatore (€50K) e ottiene il contratto di cantiere a condizioni di mercato — non a sconto, ma con pagamenti più flessibili coordinati con i SAL. Il suo interesse a finire bene e nei tempi è direttamente legato al valore della sua quota all'exit.</div>
+  </div>
+  <div class="timing-bar">
+    <span class="timing-label">Inizio cantiere</span><span class="timing-val">NOV26-1Q</span>
+    <span class="timing-sep">·</span>
+    <span class="timing-label">Fine</span><span class="timing-val">MAY28-1Q</span>
+    <span class="timing-budget budget-neg">~€6M totale cantiere</span>
+  </div>
+</div>
+
+<!-- ===== CATEGORIA: OPERATIVO -->
+<div class="cat-divider">
+  <div class="cat-line"></div>
+  <div class="cat-label c-operativo">🏨 Operativo — da AGO27</div>
+  <div class="cat-line"></div>
+</div>
+
+<!-- 07 GESTORE OPERATIVO -->
+<div class="fornitore-card">
+  <div class="fornitore-header">
+    <div class="forn-num">07</div>
+    <div class="forn-info">
+      <div class="forn-title">Gestore Operativo Hospitality</div>
+      <div class="forn-subtitle">Club privati · Boutique hotel · Wellness · F&B · Revenue management</div>
+      <div class="forn-tags">
+        <span class="tag tag-quando">AGO27-1Q — bubble M9</span>
+        <span class="tag tag-socio">⭐ Socio possibile</span>
+        <span class="tag tag-critico">Figura chiave</span>
+      </div>
+    </div>
+  </div>
+  <div class="forn-body">
+    <div class="skill-row">
+      <div class="skill-ico">🗝️</div>
+      <div class="skill-content">
+        <div class="skill-label">Gestione club privati o boutique hotel esperienziali</div>
+        <div class="skill-desc">Non un manager di hotel standard — serve qualcuno che capisca il modello membership, la gestione della community di soci, il tono del servizio (discrezione, personalizzazione, niente mass market).</div>
+      </div>
+    </div>
+    <div class="skill-row">
+      <div class="skill-ico">🧘</div>
+      <div class="skill-content">
+        <div class="skill-label">Wellness hub — sauna, cold plunge, breathwork</div>
+        <div class="skill-desc">Conoscenza dei protocolli wellness nordici (Wim Hof, sauna finlandese, ice bath). Capacità di selezionare e gestire practitioners, costruire il programma settimanale.</div>
+      </div>
+    </div>
+    <div class="skill-row">
+      <div class="skill-ico">📈</div>
+      <div class="skill-content">
+        <div class="skill-label">Revenue management e pricing dinamico</div>
+        <div class="skill-desc">Gestione del pricing per camere, bubble room e corporate retreat. Massimizzazione dell'occupancy con ADR elevato. Conoscenza delle stagionalità montagna (inverno sci + estate trekking).</div>
+      </div>
+    </div>
+    <div class="skill-row">
+      <div class="skill-ico">🍽️</div>
+      <div class="skill-content">
+        <div class="skill-label">F&B di qualità in contesto montagna</div>
+        <div class="skill-desc">Non ristorazione di massa — cucina di territorio curata, colazioni elaborate, esperienze gastronomiche per i corporate retreat. Selezione fornitori locali Abruzzo.</div>
+      </div>
+    </div>
+  </div>
+  <div class="doppio-ruolo">
+    <div class="doppio-ico">⭐</div>
+    <div class="doppio-testo"><strong>Doppio ruolo possibile:</strong> il gestore operativo entra come socio fondatore (€50K) e gestisce la struttura con contratto di management. La sua quota vale il suo lavoro — più performa, più il suo exit vale. È la figura con il maggiore allineamento di interessi possibile.</div>
+  </div>
+  <div class="timing-bar">
+    <span class="timing-label">Inizio</span><span class="timing-val">AGO27-1Q</span>
+    <span class="timing-sep">·</span>
+    <span class="timing-label">A regime</span><span class="timing-val">MAY29-1Q</span>
+    <span class="timing-budget budget-neg">2-3% revenue · ~€140-210K/anno a regime</span>
+  </div>
+</div>
+
+<!-- ===== CATEGORIA: FINANZIARIO -->
+<div class="cat-divider">
+  <div class="cat-line"></div>
+  <div class="cat-label c-finanziario">💰 Finanziario — da GIU27</div>
+  <div class="cat-line"></div>
+</div>
+
+<!-- 08 ADVISOR CROWDFUNDING -->
+<div class="fornitore-card">
+  <div class="fornitore-header">
+    <div class="forn-num">08</div>
+    <div class="forn-info">
+      <div class="forn-title">Advisor Crowdfunding / Minibond</div>
+      <div class="forn-subtitle">Piattaforme · D.L. 83/2012 · Walliance · CrowdFundMe · €1,5M target</div>
+      <div class="forn-tags">
+        <span class="tag tag-quando">GIU27-1Q</span>
+      </div>
+    </div>
+  </div>
+  <div class="forn-body">
+    <div class="skill-row">
+      <div class="skill-ico">📋</div>
+      <div class="skill-content">
+        <div class="skill-label">Emissione minibond per PMI — D.L. 83/2012</div>
+        <div class="skill-desc">Conoscenza della normativa minibond: requisiti emittente, prospetto informativo, rating, rating alternativo, collocamento su piattaforma. Esperienza con emissioni sotto €5M.</div>
+      </div>
+    </div>
+    <div class="skill-row">
+      <div class="skill-ico">🌐</div>
+      <div class="skill-content">
+        <div class="skill-label">Relazioni con piattaforme — Walliance, CrowdFundMe, Opstart</div>
+        <div class="skill-desc">Deve avere rapporti diretti con le principali piattaforme italiane di real estate e hospitality crowdfunding. Sa strutturare la campagna, il pitch e la documentazione per la piattaforma.</div>
+      </div>
+    </div>
+  </div>
+  <div class="timing-bar">
+    <span class="timing-label">Inizio</span><span class="timing-val">GIU27-1Q</span>
+    <span class="timing-sep">·</span>
+    <span class="timing-label">Raccolta target</span><span class="timing-val">€1,5M</span>
+    <span class="timing-budget budget-cond">2-3% sulla raccolta · ~€30-45K</span>
+  </div>
+</div>
+
+<!-- 09 CONSULENTE PNRR -->
+<div class="fornitore-card">
+  <div class="fornitore-header">
+    <div class="forn-num">09</div>
+    <div class="forn-info">
+      <div class="forn-title">Consulente PNRR</div>
+      <div class="forn-subtitle">M1C3 Turismo · Rigenerazione aree interne · ESG · Bandi Abruzzo</div>
+      <div class="forn-tags">
+        <span class="tag tag-quando">AGO27-2Q</span>
+        <span class="tag tag-ok">Condizionale</span>
+      </div>
+    </div>
+  </div>
+  <div class="forn-body">
+    <div class="skill-row">
+      <div class="skill-ico">🇮🇹</div>
+      <div class="skill-content">
+        <div class="skill-label">PNRR M1C3 — Turismo e cultura</div>
+        <div class="skill-desc">Conoscenza specifica del bando turismo sostenibile e rigenerazione strutture abbandonate. Esperienza nella redazione di domande per strutture ricettive in aree interne. Track record di successo.</div>
+      </div>
+    </div>
+    <div class="skill-row">
+      <div class="skill-ico">🌿</div>
+      <div class="skill-content">
+        <div class="skill-label">ESG e rendicontazione d'impatto</div>
+        <div class="skill-desc">Capacità di strutturare e documentare la componente ESG del Poglío (10 settimane/anno per fasce deboli, rigenerazione, bosco, Dark Sky) per accesso a fondi pubblici e fondazioni bancarie.</div>
+      </div>
+    </div>
+  </div>
+  <div class="timing-bar">
+    <span class="timing-label">Inizio</span><span class="timing-val">AGO27-2Q</span>
+    <span class="timing-sep">·</span>
+    <span class="timing-label">Contributo target</span><span class="timing-val">€2,1M</span>
+    <span class="timing-budget budget-cond">Fee success · 5-8% contributo ottenuto</span>
+  </div>
+</div>
+
+<!-- ===== CATEGORIA: EXIT -->
+<div class="cat-divider">
+  <div class="cat-line"></div>
+  <div class="cat-label c-finanziario">🚀 Exit — da NOV29</div>
+  <div class="cat-line"></div>
+</div>
+
+<!-- 10 ADVISOR M&A -->
+<div class="fornitore-card">
+  <div class="fornitore-header">
+    <div class="forn-num">10</div>
+    <div class="forn-info">
+      <div class="forn-title">Advisor M&A Hospitality</div>
+      <div class="forn-subtitle">Cessione hotel / resort Italia · Fondi PE · Family office turismo</div>
+      <div class="forn-tags">
+        <span class="tag tag-quando">NOV29-1Q</span>
+      </div>
+    </div>
+  </div>
+  <div class="forn-body">
+    <div class="skill-row">
+      <div class="skill-ico">🤝</div>
+      <div class="skill-content">
+        <div class="skill-label">Track record cessioni hospitality Italia €10-50M</div>
+        <div class="skill-desc">Ha già chiuso operazioni di cessione di boutique hotel, resort o club privati in Italia in questa fascia di prezzo. Conosce i multipli EBITDA del settore e i compratori istituzionali attivi.</div>
+      </div>
+    </div>
+    <div class="skill-row">
+      <div class="skill-ico">🏦</div>
+      <div class="skill-content">
+        <div class="skill-label">Relazioni con fondi PE e family office turismo</div>
+        <div class="skill-desc">Database di compratori qualificati: fondi secondari, family office con portafoglio leisure, catene hospitality italiane ed europee in espansione al Centro-Sud.</div>
+      </div>
+    </div>
+    <div class="skill-row">
+      <div class="skill-ico">📄</div>
+      <div class="skill-content">
+        <div class="skill-label">Preparazione Information Memorandum e processo di vendita</div>
+        <div class="skill-desc">Capacità di produrre un dossier di vendita professionale con EBITDA certificato, proiezioni, comparables di mercato. Gestione del processo: LOI, due diligence acquirenti, SPA.</div>
+      </div>
+    </div>
+  </div>
+  <div class="timing-bar">
+    <span class="timing-label">Inizio</span><span class="timing-val">NOV29-1Q</span>
+    <span class="timing-sep">·</span>
+    <span class="timing-label">Closing target</span><span class="timing-val">NOV30-1Q</span>
+    <span class="timing-budget budget-neg">1-2% valore cessione · €230-460K</span>
+  </div>
+</div>
+
+<!-- RIEPILOGO DOPPIO RUOLO -->
+<div style="background:var(--bianco);padding:20px;margin-top:3px">
+  <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:14px;letter-spacing:2px;text-transform:uppercase;color:var(--arancio);margin-bottom:14px">⭐ Riepilogo — 4 fornitori candidati a socio fondatore</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px">
+    <div style="background:var(--grigio);padding:14px">
+      <div style="font-weight:500;font-size:13px;margin-bottom:4px">02 — Agenzia Marketing</div>
+      <div style="font-size:12px;color:#555">Porta soci + crea il brand · Fee dilazionata</div>
+    </div>
+    <div style="background:var(--grigio);padding:14px">
+      <div style="font-weight:500;font-size:13px;margin-bottom:4px">04 — Architetto</div>
+      <div style="font-size:12px;color:#555">Progetta a costo ridotto · Quota sale col valore</div>
+    </div>
+    <div style="background:var(--grigio);padding:14px;margin-top:2px">
+      <div style="font-weight:500;font-size:13px;margin-bottom:4px">06 — General Contractor</div>
+      <div style="font-size:12px;color:#555">Cantiere nei tempi · Pagamenti flessibili su SAL</div>
+    </div>
+    <div style="background:var(--grigio);padding:14px;margin-top:2px">
+      <div style="font-weight:500;font-size:13px;margin-bottom:4px">07 — Gestore Operativo</div>
+      <div style="font-size:12px;color:#555">Massimo allineamento · Vale ciò che produce</div>
+    </div>
+  </div>
+  <div style="margin-top:12px;font-size:12px;color:#666;line-height:1.6">Su 6 posti disponibili nella cordata, <strong>fino a 4 possono essere fornitori</strong> — lasciando 2 posti per soci puramente finanziari (amici Affio o investitori privati). La composizione ideale è <strong>2 fornitori-soci + 4 soci finanziari</strong> per mantenere liquidità nella cordata senza dipendere da tutti i fornitori come soci.</div>
+</div>
+
+<div class="footer">
+  <div class="fk-logo"><span class="fran">Fran</span><span class="ki">Ki</span></div>
+  <p>Documento interno riservato · FranKi Studio (Avre Srl) · Napoli · Aprile 2026<br>HoldCo Srl · Il Poglío SPV Srl</p>
+</div>
+
+</body>
+</html>

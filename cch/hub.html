@@ -1,0 +1,1374 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Corsale CCH — Hub Strategico | Franki Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@300;400;500&family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════
+   FRANKI DESIGN SYSTEM v3 — Colori ufficiali
+   Blu #3549B5 · Ambra #F9AC28 · We Start Your Ideas
+═══════════════════════════════════════════════════ */
+:root {
+  --fk-blue:#3549B5; --fk-blue-dark:#1E2E8A; --fk-blue-mid:#4E66D0;
+  --fk-blue-light:#EBF0FF; --fk-blue-pale:#F5F7FF;
+  --fk-amber:#F9AC28; --fk-amber-dark:#C07800; --fk-amber-mid:#FBBC50;
+  --fk-amber-light:#FFF7E0;
+  --fk-white:#FFFFFF; --fk-cream:#FAF9F6; --fk-cream-dark:#EDEBE4;
+  --fk-ink:#1A1714; --fk-gray:#6B6560; --fk-gray-light:#F2F0EB;
+  --fk-green:#1A7A4A; --fk-green-light:#E0F5EC; --fk-green-text:#0A4A28;
+  --fk-red:#B03020; --fk-red-light:#FDECEA; --fk-red-text:#701A12;
+  --fk-display:'Bebas Neue',sans-serif;
+  --fk-label:'DM Mono',monospace;
+  --fk-body:'Lato',sans-serif;
+  --fk-radius:6px; --fk-radius-lg:10px;
+  --fk-border:1px solid var(--fk-cream-dark);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--fk-cream);color:var(--fk-ink);font-family:var(--fk-body);font-size:1rem;line-height:1.75;-webkit-font-smoothing:antialiased;}
+p{margin-bottom:1rem;} p:last-child{margin-bottom:0;}
+strong{font-weight:700;} em{font-style:italic;}
+
+/* ── HEADER ── */
+.fk-header{background:var(--fk-blue-dark);padding:2.5rem 4rem;position:relative;overflow:hidden;}
+.fk-header::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(-55deg,transparent,transparent 28px,rgba(255,255,255,.025) 28px,rgba(255,255,255,.025) 29px);pointer-events:none;}
+.fk-header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:4px;background:var(--fk-amber);}
+.fk-header__brand{font-family:var(--fk-label);font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;color:var(--fk-amber-mid);margin-bottom:.5rem;position:relative;}
+.fk-header__title{font-family:var(--fk-display);font-size:clamp(2.2rem,4.5vw,3.8rem);letter-spacing:.04em;line-height:1;color:var(--fk-white);position:relative;}
+.fk-header__title em{color:var(--fk-amber);font-style:normal;}
+.fk-header__sub{font-size:.92rem;font-style:italic;color:rgba(255,255,255,.45);margin-top:.45rem;position:relative;}
+.fk-header__meta{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.4rem;position:relative;}
+
+/* ── NAV PRINCIPALE ── */
+.fk-nav{background:var(--fk-blue-dark);display:flex;overflow-x:auto;position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(255,255,255,.08);}
+.fk-nav__tab{font-family:var(--fk-label);font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.38);padding:.85rem 1.4rem;cursor:pointer;border:none;border-bottom:3px solid transparent;background:none;white-space:nowrap;transition:color .2s,border-color .2s;}
+.fk-nav__tab:hover{color:rgba(255,255,255,.75);}
+.fk-nav__tab.active{color:var(--fk-amber);border-bottom-color:var(--fk-amber);background:rgba(255,255,255,.04);}
+
+/* ── SEZIONI ── */
+.fk-sec{display:none;padding:2.5rem 4rem 4rem;max-width:1280px;margin:0 auto;animation:fkf .3s ease;}
+.fk-sec.active{display:block;}
+@keyframes fkf{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.fk-sec__hdr{display:flex;align-items:baseline;gap:1rem;margin-bottom:1.8rem;padding-bottom:.8rem;border-bottom:var(--fk-border);}
+.fk-sec__num{font-family:var(--fk-display);font-size:3.8rem;color:var(--fk-cream-dark);line-height:1;flex-shrink:0;}
+.fk-sec__title{font-family:var(--fk-display);font-size:2rem;letter-spacing:.06em;color:var(--fk-ink);}
+.fk-sec__desc{font-size:.9rem;font-style:italic;color:var(--fk-gray);margin-bottom:1.8rem;line-height:1.65;}
+.fk-sub{font-family:var(--fk-display);font-size:1.35rem;letter-spacing:.05em;color:var(--fk-ink);margin:1.8rem 0 .9rem;padding-left:.85rem;border-left:4px solid var(--fk-amber);}
+.fk-sub--blue{border-left-color:var(--fk-blue);}
+
+/* ── BADGE & PILL ── */
+.fk-b{display:inline-block;font-family:var(--fk-label);font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;padding:.2rem .65rem;border-radius:var(--fk-radius);line-height:1.4;}
+.fk-b--blue{background:var(--fk-blue-light);color:var(--fk-blue-dark);}
+.fk-b--amber{background:var(--fk-amber-light);color:var(--fk-amber-dark);border:1px solid var(--fk-amber-mid);}
+.fk-b--franki{background:var(--fk-blue);color:var(--fk-amber);}
+.fk-b--green{background:var(--fk-green-light);color:var(--fk-green-text);}
+.fk-b--red{background:var(--fk-red-light);color:var(--fk-red-text);}
+.fk-b--gray{background:var(--fk-gray-light);color:var(--fk-gray);}
+.fk-p{display:inline-block;font-family:var(--fk-label);font-size:.56rem;letter-spacing:.08em;text-transform:uppercase;padding:.22rem .85rem;border-radius:20px;}
+.fk-p--blue{background:var(--fk-blue-light);color:var(--fk-blue-dark);}
+.fk-p--amber{background:var(--fk-amber-light);color:var(--fk-amber-dark);}
+.fk-p--franki{background:var(--fk-blue);color:var(--fk-amber);}
+.fk-p--green{background:var(--fk-green-light);color:var(--fk-green-text);}
+.fk-p--gray{background:var(--fk-gray-light);color:var(--fk-gray);}
+
+/* ── KPI ── */
+.fk-kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:1px;background:var(--fk-cream-dark);border:1px solid var(--fk-cream-dark);margin-bottom:2rem;}
+.fk-kpi{background:var(--fk-white);padding:1.1rem 1.35rem;}
+.fk-kpi--a{background:var(--fk-amber-light);border-left:4px solid var(--fk-amber);}
+.fk-kpi--b{background:var(--fk-blue-light);border-left:4px solid var(--fk-blue);}
+.fk-kpi__l{font-family:var(--fk-label);font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--fk-gray);margin-bottom:.3rem;}
+.fk-kpi--a .fk-kpi__l{color:var(--fk-amber-dark);}
+.fk-kpi--b .fk-kpi__l{color:var(--fk-blue-dark);}
+.fk-kpi__v{font-family:var(--fk-display);font-size:2.7rem;line-height:1;color:var(--fk-ink);}
+.fk-kpi--a .fk-kpi__v{color:var(--fk-amber-dark);}
+.fk-kpi--b .fk-kpi__v{color:var(--fk-blue);}
+.fk-kpi__n{font-family:var(--fk-label);font-size:.58rem;color:var(--fk-gray);margin-top:.25rem;}
+.fk-kpi__n--up{color:var(--fk-green);}
+.fk-kpi__n--hot{color:var(--fk-amber-dark);}
+
+/* ── TABELLA ── */
+.fk-tw{overflow-x:auto;margin-bottom:2rem;}
+.fk-t{width:100%;border-collapse:collapse;font-size:.88rem;background:var(--fk-white);}
+.fk-t th{font-family:var(--fk-label);font-size:.56rem;letter-spacing:.18em;text-transform:uppercase;color:var(--fk-amber);background:var(--fk-blue-dark);text-align:left;padding:.72rem 1rem;white-space:nowrap;}
+.fk-t td{padding:.82rem 1rem;border-bottom:1px solid var(--fk-cream-dark);vertical-align:top;color:var(--fk-ink);line-height:1.5;}
+.fk-t tr:last-child td{border-bottom:none;}
+.fk-t tr:hover td{background:var(--fk-blue-pale);}
+.fk-t tr.hl td{background:var(--fk-amber-light);}
+.fk-t tr.hl td:first-child{border-left:4px solid var(--fk-amber);}
+
+/* ── CALLOUT ── */
+.fk-c{padding:1.1rem 1.55rem;margin:1.2rem 0;border-left:4px solid;border-radius:0 var(--fk-radius) var(--fk-radius) 0;}
+.fk-c__l{font-family:var(--fk-label);font-size:.56rem;letter-spacing:.2em;text-transform:uppercase;margin-bottom:.3rem;}
+.fk-c p,.fk-c li{font-size:.9rem;line-height:1.7;}
+.fk-c--a{background:var(--fk-amber-light);border-left-color:var(--fk-amber);}
+.fk-c--a .fk-c__l{color:var(--fk-amber-dark);}
+.fk-c--a p{color:#5A3A00;}
+.fk-c--a strong{color:var(--fk-amber-dark);}
+.fk-c--b{background:var(--fk-blue-light);border-left-color:var(--fk-blue);}
+.fk-c--b .fk-c__l{color:var(--fk-blue);}
+.fk-c--b p{color:var(--fk-blue-dark);}
+.fk-c--b strong{color:var(--fk-blue);}
+.fk-c--g{background:var(--fk-green-light);border-left-color:var(--fk-green);}
+.fk-c--g .fk-c__l{color:var(--fk-green);}
+.fk-c--g p{color:var(--fk-green-text);}
+.fk-c--g strong{color:var(--fk-green);}
+.fk-c--r{background:var(--fk-red-light);border-left-color:var(--fk-red);}
+.fk-c--r .fk-c__l{color:var(--fk-red);}
+.fk-c--r p{color:var(--fk-red-text);}
+.fk-c--r strong{color:var(--fk-red);}
+
+/* ── CARD GENERICA ── */
+.fk-card{background:var(--fk-white);border:var(--fk-border);border-radius:var(--fk-radius-lg);padding:1.4rem 1.6rem;}
+.fk-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-bottom:1.5rem;}
+.fk-grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.2rem;margin-bottom:1.5rem;}
+
+/* ── TEAM ── */
+.fk-team{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1.2rem;margin-bottom:2rem;}
+.fk-person{background:var(--fk-white);border:var(--fk-border);border-radius:var(--fk-radius-lg);padding:1.35rem;border-top:4px solid var(--fk-blue);}
+.fk-person--a{border-top-color:var(--fk-amber);}
+.fk-person--b{border-top-color:var(--fk-blue);}
+.fk-person--g{border-top-color:var(--fk-green);}
+.fk-person--gr{border-top-color:var(--fk-gray);}
+.fk-person--fk{border-top-color:var(--fk-amber);background:var(--fk-blue-light);border-color:var(--fk-blue-mid);}
+.fk-person__av{width:46px;height:46px;border-radius:50%;background:var(--fk-blue-dark);color:var(--fk-amber);font-family:var(--fk-display);font-size:1.3rem;display:flex;align-items:center;justify-content:center;margin-bottom:.85rem;}
+.fk-person--a  .fk-person__av{background:var(--fk-amber);color:var(--fk-white);}
+.fk-person--b  .fk-person__av{background:var(--fk-blue);color:var(--fk-white);}
+.fk-person--g  .fk-person__av{background:var(--fk-green);color:var(--fk-white);}
+.fk-person--gr .fk-person__av{background:var(--fk-gray);color:var(--fk-white);}
+.fk-person--fk .fk-person__av{background:var(--fk-blue-dark);color:var(--fk-amber);font-size:.9rem;}
+.fk-person__name{font-family:var(--fk-display);font-size:1.55rem;letter-spacing:.04em;color:var(--fk-ink);margin-bottom:.12rem;}
+.fk-person__role{font-family:var(--fk-label);font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;color:var(--fk-gray);margin-bottom:.7rem;line-height:1.5;}
+.fk-person--fk .fk-person__role{color:var(--fk-blue);}
+.fk-person__desc{font-size:.86rem;color:var(--fk-ink);line-height:1.65;}
+
+/* ── UNICUM CARD ── */
+.fk-unicum{background:var(--fk-blue-dark);color:var(--fk-white);margin-bottom:1.2rem;border-left:6px solid var(--fk-amber);overflow:hidden;}
+.fk-unicum__head{padding:1.2rem 1.5rem .9rem;display:grid;grid-template-columns:1fr auto;align-items:start;gap:1rem;}
+.fk-unicum__tag{font-family:var(--fk-label);font-size:.56rem;letter-spacing:.18em;text-transform:uppercase;color:var(--fk-amber);margin-bottom:.25rem;}
+.fk-unicum__name{font-family:var(--fk-display);font-size:1.7rem;letter-spacing:.04em;line-height:1;color:var(--fk-white);}
+.fk-unicum__period{text-align:right;}
+.fk-unicum__period-l{font-family:var(--fk-label);font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.45);}
+.fk-unicum__period-v{font-family:var(--fk-display);font-size:1.4rem;color:var(--fk-amber);}
+.fk-unicum__body{padding:.2rem 1.5rem 1.1rem;display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;}
+@media(max-width:900px){.fk-unicum__body{grid-template-columns:1fr;}}
+.fk-unicum__block-l{font-family:var(--fk-label);font-size:.54rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:.3rem;}
+.fk-unicum__block-t{font-size:.84rem;color:#C8BFA8;line-height:1.6;}
+.fk-unicum__block-t strong{color:var(--fk-white);}
+.fk-unicum__price{background:rgba(249,172,40,.08);border-top:1px solid rgba(249,172,40,.2);padding:.75rem 1.5rem;display:flex;align-items:center;gap:2rem;flex-wrap:wrap;}
+.fk-unicum__price-l{font-family:var(--fk-label);font-size:.54rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.45);}
+.fk-unicum__price-v{font-family:var(--fk-display);font-size:1.6rem;color:var(--fk-amber);}
+.fk-unicum__price-note{font-family:var(--fk-label);font-size:.6rem;color:rgba(255,255,255,.4);}
+.fk-unicum__price-note em{font-style:normal;color:rgba(255,255,255,.55);font-family:var(--fk-body);font-size:.72rem;display:block;margin-top:.3rem;border-top:1px solid rgba(255,255,255,.1);padding-top:.3rem;}
+
+/* ── FOOTER ── */
+.fk-footer{background:var(--fk-blue-dark);border-top:4px solid var(--fk-amber);color:rgba(255,255,255,.35);text-align:center;padding:1.4rem 2rem;font-family:var(--fk-label);font-size:.56rem;letter-spacing:.15em;text-transform:uppercase;}
+.fk-footer strong{color:var(--fk-amber);}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  .fk-header,.fk-sec{padding-left:1.5rem;padding-right:1.5rem;}
+  .fk-sec__num{font-size:2.5rem;}
+  .fk-sec__title{font-size:1.6rem;}
+  .fk-kpi-grid{grid-template-columns:1fr 1fr;}
+  .fk-team{grid-template-columns:1fr 1fr;}
+  .fk-grid-2,.fk-grid-3{grid-template-columns:1fr;}
+}
+@media(max-width:480px){
+  .fk-kpi-grid,.fk-team{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════ HEADER ══════════════════════════════ -->
+<div class="fk-header">
+  <div class="fk-header__brand">Franki Studio · Avre Srl · Napoli · Hub Strategico CCH · Aprile 2026</div>
+  <h1 class="fk-header__title">Corsale <em>Country House</em></h1>
+  <p class="fk-header__sub">Dossier analitico completo — 12 moduli · Uso interno Franki · We Start Your Ideas</p>
+  <div class="fk-header__meta">
+    <span class="fk-p fk-p--amber">San Lorenzello (BN) · Sannio</span>
+    <span class="fk-p fk-p--franki">8–14 pax · Uso esclusivo</span>
+    <span class="fk-p fk-p--blue">Occupazione attuale ~25%</span>
+    <span class="fk-p fk-p--gray">Mandato Franki · Aprile 2026</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ NAV ══════════════════════════════ -->
+<div class="fk-nav">
+  <button class="fk-nav__tab active" onclick="show('sM')">📐 Metodologia</button>
+  <button class="fk-nav__tab" onclick="show('s00')">00 · Progetto Lean</button>
+  <button class="fk-nav__tab" onclick="show('s01')">01 · CCH Oggi</button>
+  <button class="fk-nav__tab" onclick="show('s02')">02 · Benchmark</button>
+  <button class="fk-nav__tab" onclick="show('s03')">03 · Luxury</button>
+  <button class="fk-nav__tab" onclick="show('s04')">04 · Cluster</button>
+  <button class="fk-nav__tab" onclick="show('s05')">05 · Gap</button>
+  <button class="fk-nav__tab" onclick="show('s06')">06 · Pricing</button>
+  <button class="fk-nav__tab" onclick="show('s07')">07 · Calendario</button>
+  <button class="fk-nav__tab" onclick="show('s08')">08 · Esperienze</button>
+  <button class="fk-nav__tab" onclick="show('s09')">09 · UNICUM</button>
+  <button class="fk-nav__tab" onclick="show('s10')">10 · Optional</button>
+  <button class="fk-nav__tab" onclick="show('s11')">11 · Community</button>
+  <button class="fk-nav__tab" onclick="show('s12')">12 · Roadmap</button>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     METODOLOGIA — Come sono stati costruiti i numeri
+══════════════════════════════════════════════════════════════════ -->
+<div class="fk-sec active" id="sM">
+  <div class="fk-sec__hdr">
+    <span class="fk-sec__num">📐</span>
+    <span class="fk-sec__title">Come Sono Stati Costruiti i Numeri</span>
+  </div>
+  <p class="fk-sec__desc">Ogni prezzo, ogni stima di revenue, ogni benchmark riportato in questo documento ha una fonte verificabile. Niente è stato inventato o stimato "a sentimento". Questa sezione spiega il metodo con cui è stato costruito tutto il lavoro di analisi — e perché ci si può fidare dei numeri.</p>
+
+  <div class="fk-c fk-c--b" style="margin-bottom:1.5rem;">
+    <div class="fk-c__l">Il metodo in una riga</div>
+    <p>I prezzi e le stime di revenue sono stati ricavati per <strong>benchmarking comparativo</strong>: abbiamo identificato strutture reali simili a CCH già operative sul mercato, verificato i loro prezzi pubblicati sulle piattaforme ufficiali, e posizionato CCH in modo coerente con il proprio livello di offerta attuale e potenziale.</p>
+  </div>
+
+  <!-- FONTI PRIMARIE -->
+  <div class="fk-sub">Le Fonti Primarie — Strutture Studiate</div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin:1rem 0 1.8rem;">
+
+    <div style="background:var(--fk-white);border:1px solid var(--fk-cream-dark);border-radius:8px;overflow:hidden;">
+      <div style="background:var(--fk-blue-dark);padding:.8rem 1.2rem;">
+        <div style="font-family:var(--fk-label);font-size:.56rem;letter-spacing:.15em;text-transform:uppercase;color:var(--fk-amber);margin-bottom:.2rem;">Benchmark principale · Le Marche</div>
+        <div style="font-family:var(--fk-display);font-size:1.3rem;color:var(--fk-white);">Oliveto Estate</div>
+        <div style="font-size:.8rem;color:rgba(255,255,255,.5);margin-top:.1rem;">olivetoestate.com</div>
+      </div>
+      <div style="padding:1rem 1.2rem;">
+        <p style="font-size:.88rem;line-height:1.65;margin-bottom:.6rem;">Struttura praticamente identica a CCH per DNA: uliveto di 9 acri, famiglia italiana, rurale autentico, uso esclusivo fino a 22 pax. È il punto di riferimento più preciso perché ha le stesse caratteristiche strutturali di CCH con un posizionamento già maturo sul mercato internazionale.</p>
+        <div style="background:var(--fk-amber-light);border-radius:6px;padding:.7rem 1rem;font-size:.84rem;">
+          <strong>Prezzi verificati e pubblicati:</strong><br>
+          Villa Olivo (14 pax) → <strong>€1.340/notte</strong> solo venue hire<br>
+          Retreat yoga organizzati → <strong>$5.800–6.800 p.p./settimana</strong><br>
+          Citazioni: Condé Nast, Forbes, Elle Décor<br>
+          Oltre 200 retreat ospitati
+        </div>
+        <p style="font-size:.8rem;color:var(--fk-gray);margin-top:.6rem;font-style:italic;">Come abbiamo usato questo dato: CCH è posizionata sotto Oliveto perché mancano ancora la fotografia professionale e lo yoga studio dedicato. Con questi investimenti minimi, CCH può raggiungere gli stessi livelli.</p>
+      </div>
+    </div>
+
+    <div style="background:var(--fk-white);border:1px solid var(--fk-cream-dark);border-radius:8px;overflow:hidden;">
+      <div style="background:var(--fk-blue-dark);padding:.8rem 1.2rem;">
+        <div style="font-family:var(--fk-label);font-size:.56rem;letter-spacing:.15em;text-transform:uppercase;color:var(--fk-amber);margin-bottom:.2rem;">Competitor diretto · Sannio</div>
+        <div style="font-family:var(--fk-display);font-size:1.3rem;color:var(--fk-white);">Tenuta Fortilù</div>
+        <div style="font-size:.8rem;color:rgba(255,255,255,.5);margin-top:.1rem;">San Martino in Pensilis (CB) · ~60km da CCH</div>
+      </div>
+      <div style="padding:1rem 1.2rem;">
+        <p style="font-size:.88rem;line-height:1.65;margin-bottom:.6rem;">Il competitor più vicino geograficamente e tipologicamente a CCH. Stessa fascia (uso esclusivo, rurale, Sannio), stessa clientela italiana. Opera solo su Airbnb — distribuzione limitata che è al tempo stesso il suo punto debole e la conferma che CCH ha ampio spazio di miglioramento sulla distribuzione.</p>
+        <div style="background:var(--fk-amber-light);border-radius:6px;padding:.7rem 1rem;font-size:.84rem;">
+          <strong>Prezzi verificati su Airbnb:</strong><br>
+          Prezzo medio pubblicato → <strong>€468/notte</strong><br>
+          Capacità: 11 pax<br>
+          Servizi: bio-piscina, sauna, tinozza, Crystal Room<br>
+          <em>Conclusione: CCH ha servizi superiori e può giustificare €600–800/notte</em>
+        </div>
+        <p style="font-size:.8rem;color:var(--fk-gray);margin-top:.6rem;font-style:italic;">Come abbiamo usato questo dato: è il floor pricing — la base minima sotto cui CCH non dovrebbe mai scendere. È anche la prova che il mercato locale regge questi prezzi.</p>
+      </div>
+    </div>
+
+    <div style="background:var(--fk-white);border:1px solid var(--fk-cream-dark);border-radius:8px;overflow:hidden;">
+      <div style="background:var(--fk-blue-dark);padding:.8rem 1.2rem;">
+        <div style="font-family:var(--fk-label);font-size:.56rem;letter-spacing:.15em;text-transform:uppercase;color:var(--fk-amber);margin-bottom:.2rem;">Piattaforma · Wellness internazionale</div>
+        <div style="font-family:var(--fk-display);font-size:1.3rem;color:var(--fk-white);">BookRetreats.com</div>
+        <div style="font-size:.8rem;color:rgba(255,255,255,.5);margin-top:.1rem;">bookretreats.com · 287 retreat in Italia attivi</div>
+      </div>
+      <div style="padding:1rem 1.2rem;">
+        <p style="font-size:.88rem;line-height:1.65;margin-bottom:.6rem;">La principale piattaforma mondiale per yoga e wellness retreat. Abbiamo analizzato i prezzi delle venue italiane comparabili (uso esclusivo, rurale, 8–14 pax, cucina inclusa) per ricavare il range di mercato per il segmento wellness.</p>
+        <div style="background:var(--fk-amber-light);border-radius:6px;padding:.7rem 1rem;font-size:.84rem;">
+          <strong>Dati estratti dalla piattaforma:</strong><br>
+          Venue hire media Italia rurale → <strong>€800–1.200/notte</strong><br>
+          Retreat organizzato (10 pax, 7 notti) → <strong>€1.400–2.200 p.p.</strong><br>
+          Retreat premium (chef, esperienze) → <strong>€2.500–4.000 p.p.</strong>
+        </div>
+        <p style="font-size:.8rem;color:var(--fk-gray);margin-top:.6rem;font-style:italic;">Come abbiamo usato questo dato: base per i prezzi UNICUM Yoga/Wellness e per il positioning del venue hire CCH.</p>
+      </div>
+    </div>
+
+    <div style="background:var(--fk-white);border:1px solid var(--fk-cream-dark);border-radius:8px;overflow:hidden;">
+      <div style="background:var(--fk-blue-dark);padding:.8rem 1.2rem;">
+        <div style="font-family:var(--fk-label);font-size:.56rem;letter-spacing:.15em;text-transform:uppercase;color:var(--fk-amber);margin-bottom:.2rem;">Piattaforme · Add-on esperienze</div>
+        <div style="font-family:var(--fk-display);font-size:1.3rem;color:var(--fk-white);">Airbnb Experiences · Viator · GetYourGuide</div>
+        <div style="font-size:.8rem;color:rgba(255,255,255,.5);margin-top:.1rem;">mercato esperienze in contesti rurali italiani</div>
+      </div>
+      <div style="padding:1rem 1.2rem;">
+        <p style="font-size:.88rem;line-height:1.65;margin-bottom:.6rem;">Per i prezzi degli add-on (oil tasting, laboratori cucina, mongolfiera, parapendio) abbiamo verificato i prezzi pubblicati su queste piattaforme per esperienze equivalenti in Campania, Basilicata e Molise.</p>
+        <div style="background:var(--fk-amber-light);border-radius:6px;padding:.7rem 1rem;font-size:.84rem;">
+          <strong>Prezzi verificati per tipologia:</strong><br>
+          Oil tasting guidato → <strong>€35–55 p.p.</strong><br>
+          Laboratorio pane/pasta → <strong>€40–60 p.p.</strong><br>
+          Volo mongolfiera tandem → <strong>€170–240 p.p.</strong><br>
+          Parapendio tandem → <strong>€80–130 p.p.</strong>
+        </div>
+        <p style="font-size:.8rem;color:var(--fk-gray);margin-top:.6rem;font-style:italic;">Come abbiamo usato questo dato: base per il pricing degli optional B1–B11 del catalogo esperienze CCH.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FONTI SECONDARIE -->
+  <div class="fk-sub">Altre Fonti Consultate</div>
+  <div class="fk-tw" style="margin-bottom:1.5rem;">
+    <table class="fk-t">
+      <thead><tr><th>Fonte</th><th>Cosa abbiamo verificato</th><th>Applicato a</th></tr></thead>
+      <tbody>
+        <tr><td><strong>SopranoVillas.com</strong></td><td>Listini ville esclusive uso privato in Campania e Centro-Sud. Verifica prezzi notte e settimana per strutture 10–14 pax.</td><td>Pkg A · pricing venue hire</td></tr>
+        <tr class="hl"><td><strong>RetreatHub.com</strong></td><td>Prezzi venue hire per retreat yoga e wellness in Italia. Confronto strutture uliveto/rurale.</td><td>UNICUM Yoga · venue hire range</td></tr>
+        <tr><td><strong>VenueRetreat.com</strong></td><td>Corporate offsite pricing in Italia e Europa. Strutture comparabili per capacità e servizi.</td><td>UNICUM Corporate · team building</td></tr>
+        <tr class="hl"><td><strong>ExperienceRetreats.com</strong></td><td>Venue luxury italiane già listate. Standard fotografici e servizi richiesti per accedere alla piattaforma.</td><td>Analisi gap · requisiti accesso</td></tr>
+        <tr><td><strong>Gambero Rosso · Guide Michelin</strong></td><td>Chef stellati campani attivi, disponibilità per eventi esterni, mercato cene gala in tenuta.</td><td>UNICUM Chef Stellato</td></tr>
+        <tr class="hl"><td><strong>National Geographic · Nat. Geo. Traveller</strong></td><td>Dati crescita astroturismo (+25% 2024). Trend food tourism internazionale.</td><td>UNICUM Dark Sky · validazione trend</td></tr>
+        <tr><td><strong>Instagram · community analisi</strong></td><td>Dimensione community #oliveoillovers, #yogaretreatleader, #retreatleader. Engagement rate, prezzi retreat pubblicati dai leader.</td><td>Clustering · canali di acquisizione</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- NOTA FINALE -->
+  <div class="fk-c fk-c--a">
+    <div class="fk-c__l">Come leggere i prezzi nel documento</div>
+    <p>Tutti i prezzi riportati nelle sezioni seguenti sono <strong>range orientativi di posizionamento</strong>, non listini definitivi. Servono a capire dove CCH è rispetto al mercato (sotto, allineata, sopra) e in quale range può muoversi senza risultare fuori mercato in nessuna direzione.</p>
+    <p style="margin-top:.6rem;">Ogni scheda UNICUM riporta, accanto al prezzo, il riferimento di benchmark specifico su cui è basato. <strong>La validazione definitiva arriva dai test lean</strong> — solo il mercato ci dirà se i range sono precisi o vanno aggiustati. È esattamente per questo che il Lean Project viene prima di tutto il resto.</p>
+  </div>
+
+  <div style="margin-top:1.5rem;text-align:center;">
+    <button onclick="show('s00')" style="background:var(--fk-blue);color:var(--fk-amber);border:none;font-family:var(--fk-display);font-size:1.1rem;letter-spacing:.06em;padding:.7rem 2.5rem;border-radius:4px;cursor:pointer;">Vai al Progetto Lean →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     00 · PROGETTO LEAN
+══════════════════════════════════════════════════════════════════ -->
+<div class="fk-sec active" id="s00">
+  <div class="fk-sec__hdr"><span class="fk-sec__num">00</span><span class="fk-sec__title">Progetto Lean — Prima di Tutto</span></div>
+  <p class="fk-sec__desc">Prima di eseguire qualsiasi cosa, si testa. Il Lean Project è il filtro tra l'analisi e l'execution: serve a validare le ipotesi con il minimo di risorse, nel minor tempo possibile, prima di impegnare energie su qualsiasi direzione. Ogni strada da percorrere viene scelta e approvata da <strong>Luca e Franki insieme.</strong></p>
+
+  <div class="fk-c fk-c--b">
+    <div class="fk-c__l">Perché il Lean viene prima</div>
+    <p>Le analisi nei moduli 01–12 sono solide, ma restano ipotesi finché non vengono testate sul campo. Il Lean ci dice — in 30/60/90 giorni — quali di quelle ipotesi reggono davvero. <strong>Non si investe su niente di non validato.</strong> Non si costruisce niente che non sia stato prima testato in piccolo. Questo protegge Luca, protegge il progetto e rende ogni euro speso successivamente molto più sicuro.</p>
+  </div>
+
+  <div class="fk-sub">La Struttura del Lean — 3 Domande</div>
+  <div class="fk-grid-3">
+    <div class="fk-card" style="border-top:4px solid var(--fk-blue);">
+      <div style="font-family:var(--fk-label);font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:var(--fk-blue);margin-bottom:.5rem;">Domanda 1 · Da rispondere insieme</div>
+      <div style="font-family:var(--fk-display);font-size:1.5rem;color:var(--fk-ink);margin-bottom:.6rem;">COSA TESTIAMO?</div>
+      <div style="font-size:.88rem;color:var(--fk-ink);line-height:1.65;">Quale delle direzioni emerse dall'analisi ha la migliore combinazione di <strong>potenziale alto + costo basso + risultato misurabile in 30–90 giorni?</strong><br><br>Proposta Franki: iniziare con 2 test in parallelo — uno sul segmento wellness/retreat (BookRetreats) e uno sul segmento incoming (Olive Harvest). Ma la scelta finale è di Luca.</div>
+    </div>
+    <div class="fk-card" style="border-top:4px solid var(--fk-amber);">
+      <div style="font-family:var(--fk-label);font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:var(--fk-amber-dark);margin-bottom:.5rem;">Domanda 2 · Il piano concreto</div>
+      <div style="font-family:var(--fk-display);font-size:1.5rem;color:var(--fk-ink);margin-bottom:.6rem;">COME LO TESTIAMO?</div>
+      <div style="font-size:.88rem;color:var(--fk-ink);line-height:1.65;">Cosa facciamo esattamente, in quanto tempo, con quale budget minimo. Il test deve essere <strong>abbastanza piccolo da non fare male se fallisce</strong> e abbastanza significativo da darci dati reali. Niente di costoso, niente di irreversibile.</div>
+    </div>
+    <div class="fk-card" style="border-top:4px solid var(--fk-green);">
+      <div style="font-family:var(--fk-label);font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:var(--fk-green);margin-bottom:.5rem;">Domanda 3 · Il criterio di verità</div>
+      <div style="font-family:var(--fk-display);font-size:1.5rem;color:var(--fk-ink);margin-bottom:.6rem;">COME DECIDIAMO?</div>
+      <div style="font-size:.88rem;color:var(--fk-ink);line-height:1.65;">Numeri precisi, non sensazioni. Prima di iniziare il test, stabiliamo insieme <strong>qual è il risultato minimo che ci convince a proseguire.</strong> Se lo raggiungiamo, si scala. Se no, si cambia strada senza drammi.</div>
+    </div>
+  </div>
+
+  <div class="fk-sub fk-sub--blue">I 4 Test Lean Proposti — Da Validare con Luca</div>
+
+  <div class="fk-tw">
+    <table class="fk-t">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Test</th>
+          <th>Ipotesi da verificare</th>
+          <th>Cosa facciamo</th>
+          <th>Durata</th>
+          <th>Costo</th>
+          <th>Criterio di successo</th>
+          <th>Chi esegue</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="hl">
+          <td style="font-family:var(--fk-label);font-size:1.3rem;color:var(--fk-amber-dark);">L1</td>
+          <td><strong>BookRetreats — Wellness Venue</strong></td>
+          <td>C'è domanda da parte di facilitatori internazionali per una venue rurale autentica nel Sud Italia?</td>
+          <td>Creare profilo su BookRetreats.com in EN. Descrivere CCH come "retreat venue hire". Nessuna spesa pubblicitaria.</td>
+          <td style="font-family:var(--fk-label);">30 giorni</td>
+          <td style="font-family:var(--fk-label);color:var(--fk-green);">€0</td>
+          <td><strong>Minimo 3 richieste di preventivo</strong> da facilitatori entro 30 giorni = strada valida. Meno di 3 = rivedere il copy o la piattaforma.</td>
+          <td>Guia</td>
+        </tr>
+        <tr class="hl">
+          <td style="font-family:var(--fk-label);font-size:1.3rem;color:var(--fk-amber-dark);">L2</td>
+          <td><strong>Pricing Test — Pkg B rivisto</strong></td>
+          <td>Alzare il Pkg B da €100 a €145 p.p./notte blocca le prenotazioni o il mercato regge senza problemi?</td>
+          <td>Aggiornare il listino su Airbnb e sul sito. Monitorare richieste e conversioni per 45 giorni senza cambiare nient'altro.</td>
+          <td style="font-family:var(--fk-label);">45 giorni</td>
+          <td style="font-family:var(--fk-label);color:var(--fk-green);">€0</td>
+          <td><strong>Nessun calo significativo nelle richieste</strong> (meno del 20%) = conferma che il prezzo precedente era sbagliato e si può alzare ancora.</td>
+          <td>Luca + Franki</td>
+        </tr>
+        <tr>
+          <td style="font-family:var(--fk-label);font-size:1.3rem;color:var(--fk-blue);">L3</td>
+          <td><strong>Corporate Outreach — LinkedIn</strong></td>
+          <td>C'è interesse da parte di HR manager italiani per un retreat aziendale in una tenuta rurale nel Sannio?</td>
+          <td>Franki contatta personalmente 20 HR manager o event planner su LinkedIn (Napoli, Roma, Milano) con un messaggio diretto e il PDF del pacchetto corporate. Si monitorano le risposte.</td>
+          <td style="font-family:var(--fk-label);">30 giorni</td>
+          <td style="font-family:var(--fk-label);color:var(--fk-green);">€0</td>
+          <td><strong>Minimo 3 risposte positive</strong> (richiesta preventivo o call) su 20 contatti = canale valido da sviluppare con Italy Charme.</td>
+          <td>Franki</td>
+        </tr>
+        <tr>
+          <td style="font-family:var(--fk-label);font-size:1.3rem;color:var(--fk-blue);">L4</td>
+          <td><strong>Olive Harvest — Validazione Mercato</strong></td>
+          <td>C'è domanda internazionale per un'esperienza di raccolta olive autentica nel Sud Italia a €1.800–2.000 p.p./settimana?</td>
+          <td>Creare una landing page semplice dedicata all'Olive Harvest Experience ottobre 2026. Pubblicarla su 2–3 community food internazionali e misurare le richieste di info.</td>
+          <td style="font-family:var(--fk-label);">60 giorni</td>
+          <td style="font-family:var(--fk-label);">€300–500<br><small>landing page</small></td>
+          <td><strong>Minimo 5 richieste qualificate</strong> (interesse reale a prezzo e date) = concept validato, si struttura l'esperienza completa.</td>
+          <td>Franki + Guia</td>
+        </tr>
+
+        <!-- UNICUM TESTS -->
+        <tr style="background:var(--fk-blue-pale);">
+          <td colspan="8" style="font-family:var(--fk-label);font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--fk-blue);padding:.6rem 1rem;">Test UNICUM — Validazione prodotto esperienziale</td>
+        </tr>
+        <tr style="opacity:.6;">
+          <td style="font-family:var(--fk-label);font-size:1.3rem;color:var(--fk-gray);">L5</td>
+          <td><strong>Dark Sky Week — Appeal Astrotourism</strong> <span class="fk-b fk-b--gray">⏸ Parcheggiato · H2 2026</span></td>
+          <td>Parcheggiato su decisione di Luca — il segmento yoga/wellness ha priorità maggiore e canali di acquisizione più strutturati. Il cielo del Sannio rimane un asset enorme da attivare nella seconda parte dell'anno.</td>
+          <td>Post Giorno 45: pubblicare in 3 community astrofili. Target: prima edizione febbraio 2027.</td>
+          <td style="font-family:var(--fk-label);">Set 2026</td>
+          <td style="font-family:var(--fk-label);color:var(--fk-gray);">€0</td>
+          <td>20 interazioni + 3 richieste concrete nelle community.</td>
+          <td>Guia</td>
+        </tr>
+        <tr>
+          <td style="font-family:var(--fk-label);font-size:1.3rem;color:var(--fk-blue);">L6</td>
+          <td><strong>Chef Stellato in Tenuta — Fattibilità e Appeal</strong></td>
+          <td>Esiste uno chef stellato campano disponibile per una residenza in tenuta? E c'è un pubblico disposto a pagare €2.500–3.500 p.p./settimana per questo?</td>
+          <td><em>Lato offerta:</em> Luca e Franki contattano direttamente 3 chef stellati campani con una proposta di residenza. <em>Lato domanda:</em> Guia pubblica su Instagram un post "sarebbe il tuo sogno cucinare con uno chef stellato in un uliveto del Sannio?" e misura la risposta.</td>
+          <td style="font-family:var(--fk-label);">45 giorni</td>
+          <td style="font-family:var(--fk-label);color:var(--fk-green);">€0</td>
+          <td><strong>Almeno 1 chef disponibile a discutere</strong> + <strong>minimo 30 interazioni positive</strong> sul post social = doppia validazione offerta/domanda. Se manca uno dei due si ripensa il format.</td>
+          <td>Luca + Franki + Guia</td>
+        </tr>
+
+        <!-- OPTIONAL TESTS -->
+        <tr style="background:var(--fk-amber-light);">
+          <td colspan="8" style="font-family:var(--fk-label);font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--fk-amber-dark);padding:.6rem 1rem;">Test Optional — Validazione add-on su prenotazioni reali</td>
+        </tr>
+        <tr>
+          <td style="font-family:var(--fk-label);font-size:1.3rem;color:var(--fk-amber-dark);">L7</td>
+          <td><strong>Oil Tasting + Pane di Maura — Uptake reale</strong></td>
+          <td>I clienti già prenotati sono disposti a pagare €40–50 p.p. per il laboratorio pane e l'oil tasting come add-on?</td>
+          <td>Proporre entrambe le esperienze come opzione a pagamento alle <strong>prossime 3 prenotazioni confermate</strong>, via WhatsApp o email, prima del check-in. Si misura quante persone accettano e a quale prezzo.</td>
+          <td style="font-family:var(--fk-label);">Immediato<br><small>alle prossime prenotazioni</small></td>
+          <td style="font-family:var(--fk-label);color:var(--fk-green);">€0</td>
+          <td><strong>Minimo il 50% dei gruppi</strong> accetta almeno uno dei due add-on = uptake solido, si inseriscono nel listino ufficiale e si comunicano su tutti i canali. Sotto il 50% si rivede il prezzo o la comunicazione.</td>
+          <td>Maura + Luca</td>
+        </tr>
+        <tr>
+          <td style="font-family:var(--fk-label);font-size:1.3rem;color:var(--fk-amber-dark);">L8</td>
+          <td><strong>Pallone Aerostatico — Fattibilità + Willingness to Pay</strong></td>
+          <td>Esiste un fornitore locale affidabile? E i clienti pagherebbero €180–220 p.p. per un volo all'alba sulla Valle del Titerno?</td>
+          <td><em>Lato offerta:</em> Luca verifica l'esistenza di operatori mongolfiera nella zona Sannio/Campania e ottiene un preventivo. <em>Lato domanda:</em> inviare una email ai <strong>clienti degli ultimi 2 anni</strong> con la domanda diretta "se poteste volare in mongolfiera all'alba durante il vostro soggiorno a CCH, lo fareste a questo prezzo?"</td>
+          <td style="font-family:var(--fk-label);">30 giorni</td>
+          <td style="font-family:var(--fk-label);color:var(--fk-green);">€0</td>
+          <td><strong>Fornitore trovato e affidabile</strong> + <strong>minimo 30% di risposte affermative</strong> sull'email ai clienti passati = optional da inserire subito nel listino. Se il fornitore non esiste nella zona, si valuta di organizzarlo come escursione verso area limitrofa.</td>
+          <td>Luca + Guia</td>
+        </tr>
+        <tr style="opacity:.6;">
+          <td style="font-family:var(--fk-label);font-size:1.3rem;color:var(--fk-gray);">L9</td>
+          <td><strong>Slow Stay in Italy — Ottimizzazione + Ambassador Franki</strong> <span class="fk-b fk-b--gray">⏸ Parcheggiato · H2 2026</span></td>
+          <td>Parcheggiato su decisione di Luca — ha senso proporre il metodo Franki ad altre strutture solo dopo che CCH ha risultati concreti da mostrare. Andare prima rischia di fare brutta figura.</td>
+          <td>Post Giorno 45: Luca ottimizza il profilo CCH su Slow Stay, poi contatta 3–4 strutture simili del network per presentare il metodo Franki.</td>
+          <td style="font-family:var(--fk-label);">Ott–Nov 2026</td>
+          <td style="font-family:var(--fk-label);color:var(--fk-gray);">€0</td>
+          <td>Almeno 2 strutture del network interessate ad avere una conversazione con Franki.</td>
+          <td>Luca + Franki</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="fk-sub">Il Calendario Lean — 45 Giorni</div>
+  <div class="fk-tw">
+    <table class="fk-t">
+      <thead><tr><th>Fase</th><th>Timing</th><th>Cosa succede</th><th>Chi</th><th>Output</th></tr></thead>
+      <tbody>
+        <tr class="hl">
+          <td style="font-family:var(--fk-label);">Kick-off</td>
+          <td style="font-family:var(--fk-label);color:var(--fk-amber-dark);">Giorno 1</td>
+          <td><strong>Incontro Luca + Franki.</strong> Si validano gli 8 test proposti, si modificano quelli che non convincono, si approvano i criteri di successo. Si esce con un piano firmato da entrambi.</td>
+          <td>Luca + Franki</td>
+          <td>Piano lean approvato</td>
+        </tr>
+        <tr>
+          <td style="font-family:var(--fk-label);">Preparazione</td>
+          <td style="font-family:var(--fk-label);color:var(--fk-amber-dark);">Giorni 2–5</td>
+          <td>Si lanciano tutti gli 8 test in 4 giorni lavorativi. BookRetreats profilo online: 2 ore. 20 messaggi LinkedIn: 1 giorno. Post community astrofili: 2 ore. Proposta add-on alle prossime prenotazioni: un messaggio WhatsApp. <strong>Non è un progetto complesso — si fa e basta.</strong></td>
+          <td>Guia + Franki + Luca</td>
+          <td>8 test attivi e in corso</td>
+        </tr>
+        <tr>
+          <td style="font-family:var(--fk-label);">Test veloci</td>
+          <td style="font-family:var(--fk-label);color:var(--fk-amber-dark);">Giorni 6–15</td>
+          <td>I test digitali danno risposta in 5–10 giorni: <strong>L3</strong> LinkedIn corporate, <strong>L5</strong> community Dark Sky, <strong>L6</strong> social Chef Stellato, <strong>L7</strong> uptake add-on sulle prenotazioni in arrivo. Questi non hanno bisogno di settimane — i dati arrivano subito.</td>
+          <td>Tutti</td>
+          <td>Primi dati reali sui test veloci</td>
+        </tr>
+        <tr class="hl">
+          <td style="font-family:var(--fk-label);">Prima lettura</td>
+          <td style="font-family:var(--fk-label);color:var(--fk-amber-dark);">Giorno 15</td>
+          <td><strong>Call Luca + Franki.</strong> Si leggono i dati dei test veloci. Si aggiusta immediatamente quello che non funziona — copy sbagliato, prezzo da ritoccare, piattaforma da cambiare. Non si aspetta fine mese per intervenire.</td>
+          <td>Luca + Franki</td>
+          <td>Primo aggiustamento in corsa</td>
+        </tr>
+        <tr>
+          <td style="font-family:var(--fk-label);">Test lenti</td>
+          <td style="font-family:var(--fk-label);color:var(--fk-amber-dark);">Giorni 16–40</td>
+          <td>I test a ciclo più lungo completano la raccolta dati: <strong>L1</strong> BookRetreats richieste organiche, <strong>L2</strong> conversioni Pkg B al nuovo prezzo, <strong>L4</strong> Olive Harvest richieste landing page, <strong>L6</strong> disponibilità chef (lato telefonate dirette), <strong>L8</strong> verifica fornitore mongolfiera + risposte email clienti passati.</td>
+          <td>Tutti</td>
+          <td>Completamento dati tutti i test</td>
+        </tr>
+        <tr class="hl">
+          <td style="font-family:var(--fk-label);">Lettura finale</td>
+          <td style="font-family:var(--fk-label);color:var(--fk-amber-dark);">Giorno 45</td>
+          <td><strong>Incontro Luca + Franki.</strong> Mappa verde/giallo/rosso completa dei 9 test. Decisione chiara su dove investire, cosa aggiustare e cosa abbandonare. Da questo incontro escono le prime azioni concrete di execution — quelle validate dai dati, non dalle ipotesi.</td>
+          <td>Luca + Franki</td>
+          <td>Mappa decisionale + piano execution</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="fk-kpi-grid">
+    <div class="fk-kpi fk-kpi--b">
+      <div class="fk-kpi__l">Durata totale lean</div>
+      <div class="fk-kpi__v">45 gg</div>
+      <div class="fk-kpi__n">kick-off → decisione execution</div>
+    </div>
+    <div class="fk-kpi">
+      <div class="fk-kpi__l">Preparazione</div>
+      <div class="fk-kpi__v">4 gg</div>
+      <div class="fk-kpi__n">tutti gli 8 test lanciati in 4 giorni</div>
+    </div>
+    <div class="fk-kpi fk-kpi--a">
+      <div class="fk-kpi__l">Prima lettura dati</div>
+      <div class="fk-kpi__v">Giorno 15</div>
+      <div class="fk-kpi__n">non si aspetta — si aggiusta subito</div>
+    </div>
+    <div class="fk-kpi">
+      <div class="fk-kpi__l">Investimento massimo</div>
+      <div class="fk-kpi__v">~€500</div>
+      <div class="fk-kpi__n">solo L4 · gli altri 7 costano €0</div>
+    </div>
+    <div class="fk-kpi fk-kpi--a">
+      <div class="fk-kpi__l">Test totali</div>
+      <div class="fk-kpi__v">8</div>
+      <div class="fk-kpi__n">canali · pricing · UNICUM · optional</div>
+    </div>
+    <div class="fk-kpi fk-kpi--b">
+      <div class="fk-kpi__l">Decisioni basate su</div>
+      <div class="fk-kpi__v">Dati</div>
+      <div class="fk-kpi__n">non su sensazioni — mai</div>
+    </div>
+  </div>
+
+  <div class="fk-c fk-c--a">
+    <div class="fk-c__l">La regola del lean — scritta chiara</div>
+    <p><strong>Nessuna direzione viene confermata senza dati.</strong> Nessun investimento significativo parte prima che almeno un test l'abbia validata. La scelta di cosa testare è di Luca e Franki insieme — nessuno dei due decide da solo. I criteri di successo si stabiliscono <em>prima</em> del test, non dopo. Se un test fallisce non è un problema — è informazione. Si cambia strada senza drama e si testa la prossima ipotesi.</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     01 · CCH OGGI
+══════════════════════════════════════════════════════════════════ -->
+<div class="fk-sec" id="s01">
+  <div class="fk-sec__hdr"><span class="fk-sec__num">01</span><span class="fk-sec__title">Corsale Country House — Oggi</span></div>
+  <p class="fk-sec__desc">Fotografia della situazione attuale. Struttura, team, pacchetti, pricing. Il punto di partenza da cui costruiamo tutto il piano.</p>
+
+  <div class="fk-kpi-grid">
+    <div class="fk-kpi"><div class="fk-kpi__l">Pernottamento max</div><div class="fk-kpi__v">14</div><div class="fk-kpi__n">pax · 4 suites · uso esclusivo</div></div>
+    <div class="fk-kpi fk-kpi--a"><div class="fk-kpi__l">Capacità eventi</div><div class="fk-kpi__v">50</div><div class="fk-kpi__n fk-kpi__n--hot">pax · overflow strutture limitrofe</div></div>
+    <div class="fk-kpi fk-kpi--b"><div class="fk-kpi__l">Occupazione stimata</div><div class="fk-kpi__v">~25%</div><div class="fk-kpi__n">~12 settimane / anno</div></div>
+    <div class="fk-kpi fk-kpi--a"><div class="fk-kpi__l">Revenue attuale stimato</div><div class="fk-kpi__v">~€60k</div><div class="fk-kpi__n fk-kpi__n--hot">↑ potenziale €280k anno 1</div></div>
+    <div class="fk-kpi"><div class="fk-kpi__l">Periodo operativo</div><div class="fk-kpi__v">12</div><div class="fk-kpi__n">mesi · piscina giu–set</div></div>
+    <div class="fk-kpi"><div class="fk-kpi__l">Uliveto biologico</div><div class="fk-kpi__v">6 Ha</div><div class="fk-kpi__n">olio EVO produzione propria</div></div>
+    <div class="fk-kpi"><div class="fk-kpi__l">Anni di storia</div><div class="fk-kpi__v">50+</div><div class="fk-kpi__n">tenuta di famiglia</div></div>
+  </div>
+
+  <div class="fk-c fk-c--b" style="margin:1rem 0 .6rem;">
+    <div class="fk-c__l">Filosofia degli ospiti — la chiave narrativa</div>
+    <p>La cultura e la filosofia dei Corsale: <strong>la casa va goduta come essere a casa propria o a casa di amici di vecchia data.</strong> Non un hotel, non un resort — una casa vera con persone vere. Questa è la differenza che nessun competitor può copiare e che il mercato internazionale paga premium.</p>
+  </div>
+
+  <div class="fk-c fk-c--b" style="margin-bottom:1.5rem;">
+    <div class="fk-c__l">Slow Stay in Italy — network di cui CCH fa già parte</div>
+    <p>CCH è iscritta all'organizzazione <strong>Slow Stay in Italy</strong> — network di strutture rurali autentiche in tutta Italia con lo stesso problema di CCH: ottimo prodotto, distribuzione sbagliata. Opportunità doppia: visibilità immediata per CCH + potenziale canale di crescita Franki verso le altre strutture. <em>Attivazione ambassador: H2 2026 dopo consolidamento lean.</em></p>
+  </div>
+
+  <div class="fk-sub">I Tre Pacchetti Attuali</div>
+  <div class="fk-tw">
+    <table class="fk-t">
+      <thead><tr><th>Pacchetto</th><th>Formula</th><th>Prezzo netto operatore</th><th>Incluso</th><th>Stato</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Pkg A — Affitto struttura</strong></td><td>Autogestione totale</td><td style="font-family:var(--fk-label);">€1.200/notte<br><small>€5.040 × 7 notti (–40%)</small></td><td>Piscina, cucina, bici, BBQ, legna, biancheria</td><td><span class="fk-b fk-b--green">Corretto</span></td></tr>
+        <tr class="hl"><td><strong>Pkg B — B&B + esperienze</strong></td><td>Colazione inclusa, extra à la carte</td><td style="font-family:var(--fk-label);">€100 p.p./notte<br><small>–20% × 7 notti</small></td><td>Prima colazione, sauna, bici, piscina</td><td><span class="fk-b fk-b--red">Sottoprezato –33%</span></td></tr>
+        <tr class="hl"><td><strong>Pkg C — All-Inclusive</strong></td><td>Chiavi in mano · incoming</td><td style="font-family:var(--fk-label);">€1.250 p.p. / 7 notti</td><td>Transfer, pensione completa, 3 escursioni, tutte esperienze interne</td><td><span class="fk-b fk-b--red">Sottoprezato –40%</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="fk-sub">Il Team</div>
+  <div class="fk-team">
+    <div class="fk-person fk-person--a">
+      <div class="fk-person__av">L</div>
+      <div class="fk-person__name">Luca</div>
+      <div class="fk-person__role">Fondatore · Mastro Cantiere · Custode del Territorio</div>
+      <div class="fk-person__desc">Allevatore di cani, esperto di cavalli, trattorista per vocazione, olivicoltore per tradizione. Un uomo che sa fare tutto con le mani e ancora di più con la testa. <strong>Semplice e leale come un bicchiere di Aglianico in purezza.</strong></div>
+    </div>
+    <div class="fk-person fk-person--b">
+      <div class="fk-person__av">M</div>
+      <div class="fk-person__name">Maura</div>
+      <div class="fk-person__role">Anima della Cucina · Maga del Sannio</div>
+      <div class="fk-person__desc">La tradizione sannita che si affaccia alla cucina di alto livello senza perdere un grammo di autenticità. Lavoratrice instancabile, <strong>donna di grande sensibilità</strong>. La Cooking School è lei. Il pane è suo. La magia è sua.</div>
+    </div>
+    <div class="fk-person fk-person--g">
+      <div class="fk-person__av">G</div>
+      <div class="fk-person__name">Guia</div>
+      <div class="fk-person__role">Marketing · Distribuzione · La Finestra sul Futuro</div>
+      <div class="fk-person__desc">Ha l'instancabilità di Maura e la caparbietà di Luca — combinazione letale in senso positivo. <strong>La nostra finestra sul futuro di CCH:</strong> BookRetreats, Instagram, piattaforme luxury, influencer, contenuti.</div>
+    </div>
+    <div class="fk-person fk-person--gr">
+      <div class="fk-person__av">M</div>
+      <div class="fk-person__name">Mattia</div>
+      <div class="fk-person__role">Il Jolly · Risorsa da Far Esplodere</div>
+      <div class="fk-person__desc">Al momento un passo indietro, ma solo perché nessuno gli ha ancora dato il palco giusto. <strong>Una risorsa da far esplodere come un tric-trac pesante a Capodanno:</strong> quando parte, lo sentono tutti. Stiamo trovando la miccia giusta.</div>
+    </div>
+    <div class="fk-person fk-person--fk">
+      <div class="fk-person__av">FK</div>
+      <div class="fk-person__name">Franki</div>
+      <div class="fk-person__role">Consulenza Strategica · We Start Your Ideas</div>
+      <div class="fk-person__desc">Un'amicizia di lunga data che finalmente trova il momento giusto. Franki entra con entusiasmo e partecipazione attiva su analisi, posizionamento, distribuzione ed execution. <strong>Revenue share solo sui risultati.</strong> Per ora conta la voglia di farlo bene.</div>
+    </div>
+  </div>
+
+  <div class="fk-c fk-c--a">
+    <div class="fk-c__l">La sintesi del problema</div>
+    <p>Corsale ha gli asset di una struttura da <strong>€200–300 p.p./notte</strong> ma si vende a <strong>€100–178 p.p./notte</strong>. Il gap non è nel prodotto — è nel posizionamento, nel pricing e nella distribuzione. Le prime 5 azioni correttive non costano nulla e possono generare risultati in 90 giorni.</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     02 · BENCHMARK STANDARD
+══════════════════════════════════════════════════════════════════ -->
+<div class="fk-sec" id="s02">
+  <div class="fk-sec__hdr"><span class="fk-sec__num">02</span><span class="fk-sec__title">Benchmark — Fascia Standard</span></div>
+  <p class="fk-sec__desc">Strutture comparabili per tipologia (uso esclusivo, 8–14 pax, rurale) in area geografica vicina e comparabile. Competitor diretti da monitorare e da cui distanziarsi con il posizionamento.</p>
+
+  <div class="fk-tw">
+    <table class="fk-t">
+      <thead><tr><th>#</th><th>Struttura</th><th>Dove</th><th>Pax</th><th>Prezzo/notte</th><th>Differenzianti</th><th>Relazione con CCH</th></tr></thead>
+      <tbody>
+        <tr class="hl">
+          <td style="font-family:var(--fk-label);">★1</td>
+          <td><strong>Tenuta Fortilù</strong><br><span style="font-family:var(--fk-label);font-size:.7rem;color:var(--fk-gray);">tenutafortilu.it</span></td>
+          <td>S. Maria del Molise (IS)<br><span style="font-family:var(--fk-label);font-size:.7rem;color:var(--fk-amber-dark);">~60 km da CCH</span></td>
+          <td>11</td>
+          <td style="font-family:var(--fk-label);"><strong style="color:var(--fk-amber-dark);">€468/notte</strong><br><small>Airbnb · sett. 2025</small></td>
+          <td>Bio-piscina, sauna, tinozza finlandese, pozzo del fuoco, cantina pietra, Crystal Room glamping, parco giochi</td>
+          <td><span class="fk-b fk-b--red">Competitor diretto</span><br>Stessi servizi, CCH chiede 2.6× in più — giustificato da capienza e F&B</td>
+        </tr>
+        <tr>
+          <td style="font-family:var(--fk-label);">2</td>
+          <td><strong>Incredible Country House Sannio</strong><br><span style="font-family:var(--fk-label);font-size:.7rem;color:var(--fk-gray);">Airbnb #15508395</span></td>
+          <td>Benevento (BN)<br><span style="font-family:var(--fk-label);font-size:.7rem;color:var(--fk-red);">Stessa zona CCH</span></td>
+          <td>13+</td>
+          <td style="font-family:var(--fk-label);">N.D. (Airbnb)</td>
+          <td>Piscina panoramica sul tetto, 14.000 mq outdoor, Sannio</td>
+          <td><span class="fk-b fk-b--red">Competitor diretto</span><br>Area identica — monitorare prezzo e occupazione</td>
+        </tr>
+        <tr>
+          <td style="font-family:var(--fk-label);">3</td>
+          <td><strong>Casa Lerario</strong><br><span style="font-family:var(--fk-label);font-size:.7rem;color:var(--fk-gray);">casalerario.it</span></td>
+          <td>Melizzano (BN)<br>Monte Taburno</td>
+          <td>~15–20</td>
+          <td style="font-family:var(--fk-label);">B&B non esclusivo</td>
+          <td>Casale storico, ristorante tipico sannita, zona identica</td>
+          <td><span class="fk-b fk-b--blue">Indiretto</span><br>Non uso esclusivo = punto debole vs CCH</td>
+        </tr>
+        <tr>
+          <td style="font-family:var(--fk-label);">4</td>
+          <td><strong>Borgo Giulietti</strong><br><span style="font-family:var(--fk-label);font-size:.7rem;color:var(--fk-gray);">borgogiulietti.it</span></td>
+          <td>S. Croce del Sannio (BN)</td>
+          <td>18</td>
+          <td style="font-family:var(--fk-label);">€50–80 p.p. B&B</td>
+          <td>Prodotti tipici (salumi, olio, vino, formaggi), ristorante bio</td>
+          <td><span class="fk-b fk-b--blue">Indiretto</span><br>Stessa zona, clientela italiana locale</td>
+        </tr>
+        <tr>
+          <td style="font-family:var(--fk-label);">5</td>
+          <td><strong>Casale Umbria/Toscana</strong><br><span style="font-family:var(--fk-label);font-size:.7rem;color:var(--fk-gray);">Mercato di riferimento</span></td>
+          <td>Umbria / Toscana</td>
+          <td>12–14</td>
+          <td style="font-family:var(--fk-label);">€400–900/notte</td>
+          <td>Solo locazione, cucina autonoma, piscina</td>
+          <td><span class="fk-b fk-b--gray">Benchmark</span><br>Entry level del mercato italiano — CCH è superiore</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="fk-c fk-c--g">
+    <div class="fk-c__l">Lettura del benchmark standard</div>
+    <p>Il competitor più vicino e rilevante è <strong>Tenuta Fortilù</strong> a €468/notte — ma opera solo su Airbnb, senza distribuzione B2B né internazionale. CCH ha servizi superiori (F&B, esperienze, uliveto, storia) e può giustificare il suo pricing attuale di €1.200/notte. Il problema non è il prezzo — è la distribuzione.</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     03 · BENCHMARK LUXURY
+══════════════════════════════════════════════════════════════════ -->
+<div class="fk-sec" id="s03">
+  <div class="fk-sec__hdr"><span class="fk-sec__num">03</span><span class="fk-sec__title">Benchmark — Fascia Luxury & Piattaforme</span></div>
+  <p class="fk-sec__desc">Le strutture aspirazionali — dove CCH può arrivare — e le piattaforme che le distribuiscono. 5 strutture specifiche per ciascun canale con i differenzianti chiave da studiare e adottare.</p>
+
+  <div class="fk-sub">Il Benchmark Assoluto — Oliveto Estate</div>
+  <div class="fk-c fk-c--b">
+    <div class="fk-c__l">Il gemello di CCH nel mercato premium</div>
+    <p><strong>Oliveto Estate</strong> (Le Marche · olivetoestate.com) è praticamente identico a CCH per DNA: 9 acri di uliveto, famiglia italiana, Italia rurale autentica, uso esclusivo. La differenza è nell'esecuzione: yoga studio 75mq, SPA (sauna/steam/jacuzzi), piscina infinity, concierge 24/7, fotografia editoriale. Risultato: <strong>Villa Olivo (14 pax) €1.340/notte solo locazione</strong>. Retreat yoga organizzati: <strong>$5.800–6.800 p.p./settimana</strong>. Citato da Condé Nast, Forbes, Elle Décor.</p>
+  </div>
+
+  <div class="fk-sub fk-sub--blue">Le 5 Piattaforme — Come Accedervi</div>
+  <div class="fk-tw">
+    <table class="fk-t">
+      <thead><tr><th>Piattaforma</th><th>Target</th><th>Commissione</th><th>Accessibilità CCH</th><th>Ticket settimana</th><th>Requisito chiave</th><th>Priorità</th></tr></thead>
+      <tbody>
+        <tr class="hl">
+          <td><strong>BookRetreats</strong><br><span style="font-family:var(--fk-label);font-size:.65rem;color:var(--fk-gray);">bookretreats.com</span></td>
+          <td>Facilitatori wellness/yoga internazionali</td>
+          <td style="font-family:var(--fk-label);">10–15%</td>
+          <td><span class="fk-b fk-b--green">Immediata</span></td>
+          <td style="font-family:var(--fk-label);">€7–12k</td>
+          <td>Area outdoor per attività di gruppo</td>
+          <td><span class="fk-p fk-p--franki">Subito</span></td>
+        </tr>
+        <tr class="hl">
+          <td><strong>Italy Charme</strong><br><span style="font-family:var(--fk-label);font-size:.65rem;color:var(--fk-gray);">italycharme.com</span></td>
+          <td>Corporate retreat B2B europeo</td>
+          <td style="font-family:var(--fk-label);">15–20%</td>
+          <td><span class="fk-b fk-b--amber">30–60 gg</span></td>
+          <td style="font-family:var(--fk-label);">€15–30k</td>
+          <td>PDF commerciale B2B + foto base</td>
+          <td><span class="fk-p fk-p--amber">Priorità alta</span></td>
+        </tr>
+        <tr>
+          <td><strong>SopranoVillas</strong><br><span style="font-family:var(--fk-label);font-size:.65rem;color:var(--fk-gray);">sopranovillas.com</span></td>
+          <td>UK, Europa nord, leisure premium</td>
+          <td style="font-family:var(--fk-label);">~20%</td>
+          <td><span class="fk-b fk-b--blue">60–90 gg</span></td>
+          <td style="font-family:var(--fk-label);">€8–13k</td>
+          <td>Fotografia professionale obbligatoria</td>
+          <td><span class="fk-p fk-p--blue">Priorità alta</span></td>
+        </tr>
+        <tr>
+          <td><strong>Haute Retreats</strong><br><span style="font-family:var(--fk-label);font-size:.65rem;color:var(--fk-gray);">hauteretreats.com</span></td>
+          <td>USA, Canada · Luxury Lifestyle Awards 2025</td>
+          <td style="font-family:var(--fk-label);">~22%</td>
+          <td><span class="fk-b fk-b--blue">90 gg</span></td>
+          <td style="font-family:var(--fk-label);">€12–18k</td>
+          <td>Foto editoriale + en-suite verificate</td>
+          <td><span class="fk-p fk-p--blue">Medio termine</span></td>
+        </tr>
+        <tr>
+          <td><strong>Le Collectionist</strong><br><span style="font-family:var(--fk-label);font-size:.65rem;color:var(--fk-gray);">lecollectionist.com</span></td>
+          <td>Francia, Svizzera, Benelux · ultra-premium</td>
+          <td style="font-family:var(--fk-label);">~27%</td>
+          <td><span class="fk-b fk-b--gray">12–18 mesi</span></td>
+          <td style="font-family:var(--fk-label);">€14–20k</td>
+          <td>Upgrade SPA/wellness + foto editoriale</td>
+          <td><span class="fk-p fk-p--gray">Lungo termine</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="fk-sub">5 Strutture per Piattaforma — Differenzianti da Adottare</div>
+  <div class="fk-grid-3">
+    <div class="fk-card">
+      <div style="font-family:var(--fk-label);font-size:.56rem;letter-spacing:.15em;text-transform:uppercase;color:var(--fk-blue);margin-bottom:.5rem;">SopranoVillas · Masseria Ostuni (Puglia)</div>
+      <div style="font-family:var(--fk-display);font-size:1.2rem;color:var(--fk-ink);margin-bottom:.5rem;">Heritage + Contemporary</div>
+      <div style="font-size:.86rem;color:var(--fk-ink);line-height:1.6;">Masseria XVI secolo con design contemporaneo minimalista su volte in pietra. Lezione: valorizzare l'architettura rurale esistente con elementi design — non serve ristrutturare, basta curare i dettagli visivi.</div>
+    </div>
+    <div class="fk-card">
+      <div style="font-family:var(--fk-label);font-size:.56rem;letter-spacing:.15em;text-transform:uppercase;color:var(--fk-blue);margin-bottom:.5rem;">Haute Retreats · Casa Bagnaia (Toscana)</div>
+      <div style="font-family:var(--fk-display);font-size:1.2rem;color:var(--fk-ink);margin-bottom:.5rem;">Cooking School Residenziale</div>
+      <div style="font-size:.86rem;color:var(--fk-ink);line-height:1.6;">Tenuta con chef residente e lezioni cucina incluse. <strong>€4.500/notte</strong> per 14 pax tutto incluso. Lezione: la cucina di Maura è già questo prodotto — basta packagizzarla.</div>
+    </div>
+    <div class="fk-card">
+      <div style="font-family:var(--fk-label);font-size:.56rem;letter-spacing:.15em;text-transform:uppercase;color:var(--fk-blue);margin-bottom:.5rem;">Le Collectionist · Masseria Bonaccia (Puglia)</div>
+      <div style="font-family:var(--fk-display);font-size:1.2rem;color:var(--fk-ink);margin-bottom:.5rem;">Il gemello pugliese di CCH</div>
+      <div style="font-size:.86rem;color:var(--fk-ink);line-height:1.6;">Fattoria biologica attiva con olio EVO proprio — stesso DNA di CCH. Già listata su Le Collectionist. <strong>Dimostrazione concreta</strong> che CCH può accedere alle stesse piattaforme.</div>
+    </div>
+    <div class="fk-card">
+      <div style="font-family:var(--fk-label);font-size:.56rem;letter-spacing:.15em;text-transform:uppercase;color:var(--fk-blue);margin-bottom:.5rem;">BookRetreats · Oliveto Estate (Le Marche)</div>
+      <div style="font-family:var(--fk-display);font-size:1.2rem;color:var(--fk-ink);margin-bottom:.5rem;">Yoga Studio + Uliveto</div>
+      <div style="font-size:.86rem;color:var(--fk-ink);line-height:1.6;">Studio yoga 75mq con deck vista uliveto e mare. 200+ retreat ospitati. Lezione: un deck esterno tra gli ulivi di CCH costa €2–5k e sblocca l'intero segmento wellness internazionale.</div>
+    </div>
+    <div class="fk-card">
+      <div style="font-family:var(--fk-label);font-size:.56rem;letter-spacing:.15em;text-transform:uppercase;color:var(--fk-blue);margin-bottom:.5rem;">Italy Charme · Villa Toscana (Corporate)</div>
+      <div style="font-family:var(--fk-display);font-size:1.2rem;color:var(--fk-ink);margin-bottom:.5rem;">Walking Meeting nell'Uliveto</div>
+      <div style="font-size:.86rem;color:var(--fk-ink);line-height:1.6;">"No smartphone" durante sessioni, riunioni strategiche tra gli ulivi. Lezione: CCH può offrire <strong>walking meeting tra gli ulivi secolari</strong> come prodotto corporate — costo zero, valore altissimo.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     04 · CLUSTERING
+══════════════════════════════════════════════════════════════════ -->
+<div class="fk-sec" id="s04">
+  <div class="fk-sec__hdr"><span class="fk-sec__num">04</span><span class="fk-sec__title">Clustering Clientela Target</span></div>
+  <p class="fk-sec__desc">5 profili di clientela ordinati per priorità strategica. Per ciascuno: caratteristiche, stagionalità, canali di acquisizione e ticket medio stimato per CCH.</p>
+
+  <div class="fk-tw">
+    <table class="fk-t">
+      <thead><tr><th>#</th><th>Cluster</th><th>Profilo</th><th>Stagionalità</th><th>Canali</th><th>Ticket CCH</th><th>Valore</th><th>Priorità</th></tr></thead>
+      <tbody>
+        <tr class="hl">
+          <td style="font-family:var(--fk-label);">1</td>
+          <td><strong>Corporate Retreat B2B</strong></td>
+          <td>HR manager, event planner, DMC italiani/europei. Team 8–12. Budget aziendale.</td>
+          <td>Apr–giu · Set–nov</td>
+          <td>LinkedIn, Italy Charme, HRS, Cvent</td>
+          <td style="font-family:var(--fk-label);">€24–45k / prenotazione</td>
+          <td><span class="fk-b fk-b--amber">★★★★★</span></td>
+          <td><span class="fk-p fk-p--franki">Subito</span></td>
+        </tr>
+        <tr class="hl">
+          <td style="font-family:var(--fk-label);">2</td>
+          <td><strong>Wellness Retreat — Facilitatori</strong></td>
+          <td>Istruttori yoga/pilates/meditazione che portano il proprio gruppo (8–12 clienti).</td>
+          <td>Feb–apr · Set–nov</td>
+          <td>BookRetreats, RetreatHub, Instagram wellness</td>
+          <td style="font-family:var(--fk-label);">€7–16k / settimana venue hire</td>
+          <td><span class="fk-b fk-b--amber">★★★★☆</span></td>
+          <td><span class="fk-p fk-p--franki">Subito</span></td>
+        </tr>
+        <tr>
+          <td style="font-family:var(--fk-label);">3</td>
+          <td><strong>Famiglie & Gruppi Italiani</strong></td>
+          <td>Famiglie allargate, gruppi amici 30–55 anni. Ricorrenze, compleanni, riunioni. <strong>Arrivano già da soli — non da spingere attivamente.</strong></td>
+          <td>Giu–set · Feste</td>
+          <td>Airbnb, Booking, passaparola, IG</td>
+          <td style="font-family:var(--fk-label);">€8–13k / settimana</td>
+          <td><span class="fk-b fk-b--gray">Naturale</span></td>
+          <td><span class="fk-p fk-p--gray">Non spingere</span></td>
+        </tr>
+        <tr>
+          <td style="font-family:var(--fk-label);">3b</td>
+          <td><strong>Wine Sommelier & Importatori Esteri</strong> <span class="fk-b fk-b--amber">NUOVO</span></td>
+          <td>Importatori esteri di vino campano, sommelier professionisti, wine press internazionale (UK, USA, Germania). Cercano territori autentici e non turisticizzati per scoprire produzioni locali di qualità.</td>
+          <td>Mag–Giu · Set–Ott</td>
+          <td>Contatti importatori vino campano · Slow Food · Gambero Rosso · Wine press</td>
+          <td style="font-family:var(--fk-label);">€14–20k / evento</td>
+          <td><span class="fk-b fk-b--amber">★★★★☆</span></td>
+          <td><span class="fk-p fk-p--amber">Priorità alta</span></td>
+        </tr>
+        <tr>
+          <td style="font-family:var(--fk-label);">4</td>
+          <td><strong>Incoming Internazionale Slow Tourism</strong></td>
+          <td>Americani, nordeuropei 40–65 anni, alto reddito. Cercano "hidden Italy" non turistica.</td>
+          <td>Apr–giu · Set–ott</td>
+          <td>DMC incoming, SopranoVillas, Haute Retreats, PR internazionale</td>
+          <td style="font-family:var(--fk-label);">€14–25k / settimana</td>
+          <td><span class="fk-b fk-b--amber">★★★★★</span></td>
+          <td><span class="fk-p fk-p--blue">Medio termine</span></td>
+        </tr>
+        <tr>
+          <td style="font-family:var(--fk-label);">5</td>
+          <td><strong>Creator & Micro-Influencer Travel</strong></td>
+          <td>Travel blogger, fotografi, content creator slow travel/food/wellness. 10k–200k follower.</td>
+          <td>Tutto l'anno · preferenza autunno/primavera</td>
+          <td>Instagram DM, PR travel community, press trip</td>
+          <td style="font-family:var(--fk-label);">Soggiorno in cambio di contenuti</td>
+          <td><span class="fk-b fk-b--blue">★★☆☆☆ diretto<br>★★★★★ indiretto</span></td>
+          <td><span class="fk-p fk-p--gray">Lungo termine</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     05 · GAP ANALYSIS
+══════════════════════════════════════════════════════════════════ -->
+<div class="fk-sec" id="s05">
+  <div class="fk-sec__hdr"><span class="fk-sec__num">05</span><span class="fk-sec__title">Gap Analysis</span></div>
+  <p class="fk-sec__desc">Cosa ha già Corsale rispetto alle strutture premium analizzate — e cosa manca per accedere a fasce di mercato più remunerative. La buona notizia: la maggior parte dei gap è comunicativa, non strutturale.</p>
+
+  <div class="fk-grid-2">
+    <div>
+      <div class="fk-sub fk-sub--blue">✅ Asset già presenti</div>
+      <div style="display:flex;flex-direction:column;gap:.6rem;">
+        <div class="fk-card" style="padding:.9rem 1.2rem;display:flex;gap:.8rem;align-items:flex-start;">
+          <span style="font-size:1.1rem;">🫒</span>
+          <div><strong style="font-size:.9rem;">6 ettari uliveto biologico + olio EVO proprio</strong><br><span style="font-size:.82rem;color:var(--fk-gray);">Asset narrativo rarissimo — base per Olive Harvest Experience</span></div>
+        </div>
+        <div class="fk-card" style="padding:.9rem 1.2rem;display:flex;gap:.8rem;align-items:flex-start;">
+          <span style="font-size:1.1rem;">🏡</span>
+          <div><strong style="font-size:.9rem;">Tenuta di famiglia da 50 anni</strong><br><span style="font-size:.82rem;color:var(--fk-gray);">Storytelling impossibile da replicare — oro per slow tourism internazionale</span></div>
+        </div>
+        <div class="fk-card" style="padding:.9rem 1.2rem;display:flex;gap:.8rem;align-items:flex-start;">
+          <span style="font-size:1.1rem;">🔒</span>
+          <div><strong style="font-size:.9rem;">Uso esclusivo garantito sempre</strong><br><span style="font-size:.82rem;color:var(--fk-gray);">Standard del mercato luxury — già rispettato, da comunicare meglio</span></div>
+        </div>
+        <div class="fk-card" style="padding:.9rem 1.2rem;display:flex;gap:.8rem;align-items:flex-start;">
+          <span style="font-size:1.1rem;">🧖</span>
+          <div><strong style="font-size:.9rem;">Piscina + Sauna + Tinozza</strong><br><span style="font-size:.82rem;color:var(--fk-gray);">Triade wellness già presente — manca solo spazio yoga per completare</span></div>
+        </div>
+        <div class="fk-card" style="padding:.9rem 1.2rem;display:flex;gap:.8rem;align-items:flex-start;">
+          <span style="font-size:1.1rem;">🐴</span>
+          <div><strong style="font-size:.9rem;">Equitazione + trekking + bici + trattore</strong><br><span style="font-size:.82rem;color:var(--fk-gray);">Portfolio esperienze superiore alla media — sottocomunicato</span></div>
+        </div>
+        <div class="fk-card" style="padding:.9rem 1.2rem;display:flex;gap:.8rem;align-items:flex-start;">
+          <span style="font-size:1.1rem;">🌙</span>
+          <div><strong style="font-size:.9rem;">Cielo buio — zero inquinamento luminoso</strong><br><span style="font-size:.82rem;color:var(--fk-gray);">Asset non comunicato — potenziale dark sky / astrotourism enorme</span></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="fk-sub">⚠️ Gap rispetto al premium</div>
+      <div style="display:flex;flex-direction:column;gap:.6rem;">
+        <div class="fk-card" style="padding:.9rem 1.2rem;display:flex;gap:.8rem;align-items:flex-start;background:var(--fk-amber-light);border:1px solid var(--fk-amber-mid);">
+          <span style="font-size:1.1rem;">📸</span>
+          <div><strong style="font-size:.9rem;">Fotografia professionale assente</strong><br><span style="font-size:.82rem;color:#5A3A00;">Requisito #1 per ogni piattaforma luxury — sblocca tutto il resto</span></div>
+        </div>
+        <div class="fk-card" style="padding:.9rem 1.2rem;display:flex;gap:.8rem;align-items:flex-start;background:var(--fk-amber-light);border:1px solid var(--fk-amber-mid);">
+          <span style="font-size:1.1rem;">🧘</span>
+          <div><strong style="font-size:.9rem;">Nessuno spazio yoga/meditazione dedicato</strong><br><span style="font-size:.82rem;color:#5A3A00;">Blocca il cluster wellness retreat — investimento: €500–2.000 per deck esterno</span></div>
+        </div>
+        <div class="fk-card" style="padding:.9rem 1.2rem;display:flex;gap:.8rem;align-items:flex-start;background:var(--fk-amber-light);border:1px solid var(--fk-amber-mid);">
+          <span style="font-size:1.1rem;">🌐</span>
+          <div><strong style="font-size:.9rem;">Assenza su piattaforme luxury internazionali</strong><br><span style="font-size:.82rem;color:#5A3A00;">SopranoVillas, Haute Retreats, Italy Charme, LeCollectionist</span></div>
+        </div>
+        <div class="fk-card" style="padding:.9rem 1.2rem;display:flex;gap:.8rem;align-items:flex-start;">
+          <span style="font-size:1.1rem;">🤵</span>
+          <div><strong style="font-size:.9rem;">Nessun concierge service nominato</strong><br><span style="font-size:.82rem;color:var(--fk-gray);">Il premium si aspetta un "dedicated contact" — anche informale, da comunicare</span></div>
+        </div>
+        <div class="fk-card" style="padding:.9rem 1.2rem;display:flex;gap:.8rem;align-items:flex-start;">
+          <span style="font-size:1.1rem;">🏨</span>
+          <div><strong style="font-size:.9rem;">Camere non caratterizzate individualmente</strong><br><span style="font-size:.82rem;color:var(--fk-gray);">Naming delle stanze con storia propria — costo zero, percezione luxury</span></div>
+        </div>
+        <div class="fk-card" style="padding:.9rem 1.2rem;display:flex;gap:.8rem;align-items:flex-start;">
+          <span style="font-size:1.1rem;">🤝</span>
+          <div><strong style="font-size:.9rem;">Nessuna rete B2B / DMC incoming</strong><br><span style="font-size:.82rem;color:var(--fk-gray);">Il segmento corporate e internazionale richiede accordi con intermediari</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fk-c fk-c--a">
+    <div class="fk-c__l">I 3 Quick Win immediati — costo zero</div>
+    <p><strong>1 · Riposizionamento narrativo:</strong> smettere di comunicarsi come "agriturismo" e iniziare come "exclusive estate retreat". Stessa struttura, posizionamento percepito completamente diverso. Giustifica +40% sul listino immediato. <br><strong>2 · Fotografia professionale:</strong> 1 giornata con fotografo hospitality — prerequisito per tutte le piattaforme luxury. <br><strong>3 · Profilo su BookRetreats:</strong> creare il profilo "Corsale Retreat Venue Hire" — accesso al cluster wellness, 0 investimento strutturale.</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     06 · PRICING
+══════════════════════════════════════════════════════════════════ -->
+<div class="fk-sec" id="s06">
+  <div class="fk-sec__hdr"><span class="fk-sec__num">06</span><span class="fk-sec__title">Analisi Pricing</span></div>
+  <p class="fk-sec__desc">Dove siamo rispetto al mercato, dove possiamo arrivare e in quanto tempo. Il Pkg B è il più sottoprezato. Il Pkg C ha il maggior potenziale di upside sul segmento internazionale.</p>
+
+  <div class="fk-tw">
+    <table class="fk-t">
+      <thead><tr><th>Pacchetto</th><th>Prezzo attuale</th><th>Mercato entry</th><th>Mercato mid</th><th>Mercato premium</th><th>Upside immediato</th><th>Upside a regime</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Pkg A — Struttura</strong><br><span style="font-size:.8rem;color:var(--fk-gray);">Solo locazione</span></td>
+          <td style="font-family:var(--fk-label);"><strong>€1.200/notte</strong></td>
+          <td style="font-family:var(--fk-label);color:var(--fk-green);">€400–600</td>
+          <td style="font-family:var(--fk-label);">€900–1.200</td>
+          <td style="font-family:var(--fk-label);color:var(--fk-amber-dark);">€1.650+</td>
+          <td><span class="fk-b fk-b--green">Corretto — già in linea</span></td>
+          <td style="font-family:var(--fk-label);">→ €1.400–1.600 con foto</td>
+        </tr>
+        <tr class="hl">
+          <td><strong>Pkg B — B&B</strong><br><span style="font-size:.8rem;color:var(--fk-gray);">Colazione + esperienze à la carte</span></td>
+          <td style="font-family:var(--fk-label);"><strong style="color:var(--fk-red);">€100 p.p./notte</strong></td>
+          <td style="font-family:var(--fk-label);color:var(--fk-green);">€130–150</td>
+          <td style="font-family:var(--fk-label);">€150–200</td>
+          <td style="font-family:var(--fk-label);color:var(--fk-amber-dark);">€250–350</td>
+          <td><span class="fk-b fk-b--red">–33% vs mercato base</span></td>
+          <td style="font-family:var(--fk-label);">→ €140–160 subito · €180–220 con wellness</td>
+        </tr>
+        <tr class="hl">
+          <td><strong>Pkg C — All-Inclusive</strong><br><span style="font-size:.8rem;color:var(--fk-gray);">Incoming internazionale</span></td>
+          <td style="font-family:var(--fk-label);"><strong style="color:var(--fk-red);">€1.250 p.p./7 notti</strong></td>
+          <td style="font-family:var(--fk-label);color:var(--fk-green);">€1.400</td>
+          <td style="font-family:var(--fk-label);">€1.800–2.200</td>
+          <td style="font-family:var(--fk-label);color:var(--fk-amber-dark);">€3.500+</td>
+          <td><span class="fk-b fk-b--red">–40% vs mercato incoming</span></td>
+          <td style="font-family:var(--fk-label);">→ €1.800–2.200 subito · €2.500+ con piattaforme</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="fk-c fk-c--a">
+    <div class="fk-c__l">Stima impatto revenue a 12 mesi</div>
+    <p>Portando l'occupazione da <strong>~25% (12 settimane)</strong> a <strong>50% (24 settimane)</strong> con pricing rivisto e mix ottimizzato Pkg A/B/C: revenue stimato <strong>€200.000–280.000</strong> vs ~€60.000 attuale. Target 60–70% a regime (28–34 settimane): <strong>€300.000–400.000</strong>.</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     07 · CALENDARIO
+══════════════════════════════════════════════════════════════════ -->
+<div class="fk-sec" id="s07">
+  <div class="fk-sec__hdr"><span class="fk-sec__num">07</span><span class="fk-sec__title">Calendario Strategico Annuale</span></div>
+  <p class="fk-sec__desc">48 settimane operative in 7 fasce di priorità. Le prime 8 settimane di feste comandate si vendono per prime — da chiuderle con mesi di anticipo. Le settimane UNICUM (cerchiate) hanno pacchetti tematici dedicati.</p>
+
+  <div class="fk-tw">
+    <table class="fk-t">
+      <thead><tr><th>Priorità</th><th>Periodo</th><th>Settimane</th><th>Tipo clientela</th><th>Prezzo target/notte</th><th>Tattica</th></tr></thead>
+      <tbody>
+        <tr class="hl"><td><span class="fk-b fk-b--amber">1° CHIUDERE</span></td><td><strong>Natale + Capodanno</strong><br>22 dic – 5 gen</td><td>2 + supplemento €500</td><td>Famiglie italiane premium, gruppi amici 35–55</td><td style="font-family:var(--fk-label);">€2.000–2.500</td><td><span class="fk-b fk-b--gray">⚠️ Periodo già pieno</span> — non promuovere. Prenotazioni arrivano naturalmente. Capodanno con Chef Stellato ospite.</td></tr>
+        <tr class="hl"><td><span class="fk-b fk-b--amber">2° CHIUDERE</span></td><td><strong>Ferragosto</strong><br>8–22 agosto</td><td>2 · min 5 notti</td><td>Famiglie, gruppi amici</td><td style="font-family:var(--fk-label);">€1.800–2.200</td><td>UNICUM Chef Stellato in agosto — inserirlo come evento dell'estate.</td></tr>
+        <tr class="hl"><td><span class="fk-b fk-b--amber">3° CHIUDERE</span></td><td><strong>Pasqua</strong><br>aprile (variabile)</td><td>5–8 giorni</td><td>Famiglie italiane, rientri dall'estero</td><td style="font-family:var(--fk-label);">€1.600–1.900</td><td>UNICUM "Pasqua Sannita" — colazione del contadino, caccia all'uovo nell'uliveto.</td></tr>
+        <tr><td><span class="fk-b fk-b--blue">4° CHIUDERE</span></td><td><strong>Ponte 25 Apr / 1 Maggio</strong></td><td>2 ponti da 4–5 notti</td><td>City breakers, coppie, gruppi amici italiani</td><td style="font-family:var(--fk-label);">€1.400–1.600</td><td>Outdoor spring: trekking fiorito, bici, borghi medievali. "Spring awakening nel Sannio".</td></tr>
+        <tr><td><span class="fk-b fk-b--blue">5° RIEMPIRE</span></td><td><strong>Alta stagione</strong><br>giu–lug–ago</td><td>~12 settimane</td><td>Mix italiani + incoming europei</td><td style="font-family:var(--fk-label);">€1.400–1.800</td><td>OTA attivi, canali B2B, piattaforme luxury. Settimana minima luglio/agosto.</td></tr>
+        <tr><td><span class="fk-b fk-b--gray">6° COSTRUIRE</span></td><td><strong>Spalla</strong><br>apr · set · ott</td><td>~10 settimane</td><td>Retreat yoga/wellness, corporate, incoming</td><td style="font-family:var(--fk-label);">€1.200–1.500</td><td>BookRetreats, Italy Charme. UNICUM Olive Harvest (set–ott), Photography Retreat, Writing Retreat.</td></tr>
+        <tr><td><span class="fk-b fk-b--gray">7° ATTIVARE</span></td><td><strong>Bassa stagione</strong><br>gen · feb · nov</td><td>~10 settimane</td><td>Corporate detox, yoga, dark sky, writing</td><td style="font-family:var(--fk-label);">€800–1.200</td><td>UNICUM Dark Sky, Yoga Winter Week, Cooking School. Fuoco + sauna come asset invernale.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="fk-c fk-c--g">
+    <div class="fk-c__l">Revenue feste comandate — il jackpot facile</div>
+    <p>Le prime <strong>8 settimane di feste</strong> (Natale, Capodanno, Ferragosto, Pasqua, 2 ponti) vendute al pricing rivisto valgono da sole circa <strong>€80.000–120.000</strong> — quasi il doppio del fatturato annuale attuale. È lì che si concentra il 70% dello sforzo commerciale immediato.</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     08 · INVENTARIO ESPERIENZE
+══════════════════════════════════════════════════════════════════ -->
+<div class="fk-sec" id="s08">
+  <div class="fk-sec__hdr"><span class="fk-sec__num">08</span><span class="fk-sec__title">Inventario Esperienze CCH</span></div>
+  <p class="fk-sec__desc">Censimento completo di quello che CCH ha già — diviso tra asset strutturali, esperienze attive esistenti e potenziale latente non ancora comunicato.</p>
+
+  <div class="fk-grid-2">
+    <div>
+      <div class="fk-sub fk-sub--blue">Asset Strutturali già presenti</div>
+      <div class="fk-tw">
+        <table class="fk-t">
+          <thead><tr><th>Asset</th><th>Note strategiche</th></tr></thead>
+          <tbody>
+            <tr><td>🌿 Uliveto biologico 6 Ha + olio EVO</td><td>Base per Olive Harvest Experience e Oil Tasting con olivologo</td></tr>
+            <tr><td>🏡 Tenuta di famiglia 50 anni</td><td>Storytelling #1 — impossibile da replicare</td></tr>
+            <tr><td>🏊 Piscina (giu–set)</td><td>Da potenziare: acqua salata? Riscaldamento per estendere stagione?</td></tr>
+            <tr><td>🧖 Sauna</td><td>Asset wellness — comunicarla di più come differenziante</td></tr>
+            <tr><td>🛁 Tinozza idromassaggio esterna</td><td>Da includere nei pacchetti winter invece di venderla à la carte</td></tr>
+            <tr><td>🔥 Camini + legna inclusa</td><td>Asset invernale enorme — "fire experience" per corporate e famiglie</td></tr>
+            <tr><td>🌙 Cielo buio, zero inquinamento</td><td>Asset non comunicato — potenziale dark sky enorme</td></tr>
+            <tr><td>🏰 Borghi medievali Sannio vicini</td><td>Cerreto Sannita, Cusano Mutri, Telese Terme — itinerari già possibili</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div>
+      <div class="fk-sub">Esperienze Attive — Prezzi e Potenziale</div>
+      <div class="fk-tw">
+        <table class="fk-t">
+          <thead><tr><th>Esperienza</th><th>Prezzo attuale</th><th>Mercato</th><th>Azione</th></tr></thead>
+          <tbody>
+            <tr><td>🐴 Equitazione / passeggiata</td><td style="font-family:var(--fk-label);">€20 p.p.</td><td style="font-family:var(--fk-label);">€45–60</td><td><span class="fk-b fk-b--red">+125%</span></td></tr>
+            <tr><td>🥾 Trekking guidato</td><td style="font-family:var(--fk-label);">€10 p.p.</td><td style="font-family:var(--fk-label);">€25–40</td><td><span class="fk-b fk-b--red">+200%</span></td></tr>
+            <tr><td>⚡ E-bike guidata</td><td style="font-family:var(--fk-label);">€15 p.p.</td><td style="font-family:var(--fk-label);">€30–45</td><td><span class="fk-b fk-b--red">+100%</span></td></tr>
+            <tr><td>🚜 Escursione trattore</td><td style="font-family:var(--fk-label);">€15 p.p.</td><td style="font-family:var(--fk-label);">€25–35</td><td><span class="fk-b fk-b--amber">+67%</span></td></tr>
+            <tr><td>🍷 Aperitivo / apericena</td><td style="font-family:var(--fk-label);">€25 p.p.</td><td style="font-family:var(--fk-label);">€35–50</td><td><span class="fk-b fk-b--amber">+40%</span></td></tr>
+            <tr><td>🍽️ Pranzo / cena completa</td><td style="font-family:var(--fk-label);">€40 p.p.</td><td style="font-family:var(--fk-label);">€60–80</td><td><span class="fk-b fk-b--amber">+50%</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="fk-sub">Potenziale Latente da Attivare</div>
+      <div style="display:flex;flex-direction:column;gap:.5rem;">
+        <div class="fk-card" style="padding:.8rem 1rem;display:flex;gap:.7rem;align-items:flex-start;">
+          <span>🫒</span><div style="font-size:.86rem;"><strong>Raccolta olive</strong> — menzionata sul sito ma non è un pacchetto vendibile. Va strutturata come Olive Harvest Experience con olivologo.</div>
+        </div>
+        <div class="fk-card" style="padding:.8rem 1rem;display:flex;gap:.7rem;align-items:flex-start;">
+          <span>🌌</span><div style="font-size:.86rem;"><strong>Cielo stellato</strong> — zero contenuti sul sito. Enorme opportunità astrotourism con telescopio ospite.</div>
+        </div>
+        <div class="fk-card" style="padding:.8rem 1rem;display:flex;gap:.7rem;align-items:flex-start;">
+          <span>🍞</span><div style="font-size:.86rem;"><strong>Pane fatto in casa</strong> (Maura) — non è ancora venduto come esperienza. Con lievito madre locale diventa un prodotto cult per la community sourdough.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     09 · ESPERIENZE UNICUM
+══════════════════════════════════════════════════════════════════ -->
+<div class="fk-sec" id="s09">
+  <div class="fk-sec__hdr"><span class="fk-sec__num">09</span><span class="fk-sec__title">Esperienze UNICUM</span></div>
+  <p class="fk-sec__desc">7 settimane a tema brandizzate da proporre 2–3 volte l'anno. Ogni UNICUM ha stagionalità precisa, target specifico, contenuto irripetibile altrove. Prezzi premium giustificati dall'unicità.</p>
+
+  <!-- UNICUM 1 -->
+  <div class="fk-unicum">
+    <div class="fk-unicum__head">
+      <div><div class="fk-unicum__tag">🫒 UNICUM #1 · Ottobre–Novembre · 2×/anno</div><div class="fk-unicum__name">Corsale Olive Harvest Experience</div></div>
+      <div class="fk-unicum__period"><div class="fk-unicum__period-l">Periodo</div><div class="fk-unicum__period-v">OTT — NOV</div></div>
+    </div>
+    <div class="fk-unicum__body">
+      <div><div class="fk-unicum__block-l">Il prodotto</div><div class="fk-unicum__block-t">Settimana immersiva nella <strong>raccolta a mano delle olive</strong> nei 6 Ha di uliveto biologico. 2–3 sessioni di raccolta, visita al frantoio, olivologo residente, degustazione olio nuovo, laboratorio abbinamento. Bottiglia personalizzata "Corsale [anno]" da portare a casa.</div></div>
+      <div><div class="fk-unicum__block-l">Perché è unico</div><div class="fk-unicum__block-t">Produzione di olio <strong>biologico di proprietà</strong> — non una visita a terzi. Nessun competitor strutturato nel Sannio. Ottobrata appenninica = paesaggio cinematografico. Potenziale PR su media food internazionali.</div></div>
+      <div><div class="fk-unicum__block-l">Target</div><div class="fk-unicum__block-t"><strong>USA, UK, Olanda, Germania, Scandinavia.</strong> 40–65 anni, alto reddito, cercano "hidden Italy". Community food internazionale. Canali: DMC incoming, SopranoVillas, Haute Retreats.</div></div>
+    </div>
+    <div class="fk-unicum__price">
+      <div><div class="fk-unicum__price-l">Prezzo p.p./settimana</div><div class="fk-unicum__price-v">€1.800–2.200</div></div>
+      <div><div class="fk-unicum__price-l">Revenue 10 pax</div><div class="fk-unicum__price-v">€18–22k</div></div>
+      <div class="fk-unicum__price-note">× 2 edizioni autunno = €36–44k · <em>📐 Fonte: food travel community internazionali (BookRetreats, Viator). Harvest week Italia: €1.500–2.500 p.p. verificati su piattaforme attive.</em></div>
+    </div>
+  </div>
+
+  <!-- UNICUM 2 — ELIMINATO su input di Luca -->
+  <div class="fk-unicum" style="border-left-color:#6B6560;opacity:.6;">
+    <div class="fk-unicum__head">
+      <div><div class="fk-unicum__tag" style="color:#6B6560;">⚠️ ELIMINATO · Periodo già pieno — non promuovere</div><div class="fk-unicum__name" style="color:#6B6560;text-decoration:line-through;">Sannio Winter Feast</div></div>
+      <div class="fk-unicum__period"><div class="fk-unicum__period-l">Decisione Luca</div><div class="fk-unicum__period-v" style="color:#6B6560;">DIC — GEN</div></div>
+    </div>
+    <div class="fk-unicum__body">
+      <div style="grid-column:span 3;"><div class="fk-unicum__block-t" style="color:#6B6560;">Il periodo natalizio e di Capodanno è già pieno di richieste naturali — non ha senso promuoverlo ulteriormente. Il Capodanno con Chef Stellato rimane come elemento premium ma non come UNICUM da spingere. Le energie promozionali si concentrano sugli altri UNICUM che hanno bisogno di riempimento.</div></div>
+    </div>
+  </div>
+
+  <!-- UNICUM 3 -->
+  <div class="fk-unicum" style="border-left-color:#4E66D0;">
+    <div class="fk-unicum__head">
+      <div><div class="fk-unicum__tag" style="color:#4E66D0;">👨‍🍳 UNICUM #3 · Marzo–Aprile + Ottobre · 2×/anno</div><div class="fk-unicum__name">Scuola di Cucina Napoletana con Maura</div></div>
+      <div class="fk-unicum__period"><div class="fk-unicum__period-l">Periodo</div><div class="fk-unicum__period-v" style="color:#4E66D0;">MAR · APR · OTT</div></div>
+    </div>
+    <div class="fk-unicum__body">
+      <div><div class="fk-unicum__block-l">Il prodotto</div><div class="fk-unicum__block-t">Settimana immersiva di <strong>cucina del territorio con Maura:</strong> pane con lievito madre, pasta fresca, conserve, focacce sannite. Ogni mattina 2–3 ore di laboratorio. Ricettario personalizzato stampato come souvenir.</div></div>
+      <div><div class="fk-unicum__block-l">Perché è unico</div><div class="fk-unicum__block-t">Il <strong>pane con lievito madre</strong> è un oggetto di culto nella community food internazionale — milioni di appassionati pronti a viaggiare per imparare. La cucina sannita è quasi sconosciuta fuori dalla Campania — è una scoperta.</div></div>
+      <div><div class="fk-unicum__block-l">Target</div><div class="fk-unicum__block-t"><strong>Food enthusiast UK, USA, Germania.</strong> Community sourdough/fermentazione, food blogger. Con chef Michelin guest: versione premium per stampa gastronomica.</div></div>
+    </div>
+    <div class="fk-unicum__price">
+      <div><div class="fk-unicum__price-l">Standard p.p./settimana</div><div class="fk-unicum__price-v">€1.500–2.000</div></div>
+      <div><div class="fk-unicum__price-l">Con chef stellato ospite</div><div class="fk-unicum__price-v">€2.500–3.000</div></div>
+      <div class="fk-unicum__price-note">× 2 edizioni: €30–40k · <em>📐 Fonte: cooking retreat su BookRetreats Italia. Laboratori cucina premium: €1.200–2.000 p.p./settimana.</em></div>
+    </div>
+  </div>
+
+  <!-- UNICUM 4 -->
+  <div class="fk-unicum" style="border-left-color:#1A7A4A;">
+    <div class="fk-unicum__head">
+      <div><div class="fk-unicum__tag" style="color:#52BE80;">🧘 UNICUM #4 · Febbraio + Aprile + Novembre · 3×/anno</div><div class="fk-unicum__name">Corsale Wellness Week — Yoga & Pilates</div></div>
+      <div class="fk-unicum__period"><div class="fk-unicum__period-l">Periodo</div><div class="fk-unicum__period-v" style="color:#52BE80;">FEB · APR · NOV</div></div>
+    </div>
+    <div class="fk-unicum__body">
+      <div><div class="fk-unicum__block-l">Il prodotto</div><div class="fk-unicum__block-t">Retreat yoga/Pilates con istruttore certificato residente. <strong>2 sessioni/giorno:</strong> alba nell'uliveto (outdoor) + sera nella sala comune. Menù plant-based, tinozza serale come ritual, sauna, meditazione camminata.</div></div>
+      <div><div class="fk-unicum__block-l">Perché è unico</div><div class="fk-unicum__block-t">La <strong>sessione yoga all'alba tra ulivi centenari</strong> è un'immagine fotografica potentissima e virale. L'invernalità (fuoco + sauna + yoga) crea un contrasto sensoriale che i retreat estivi non possono offrire.</div></div>
+      <div><div class="fk-unicum__block-l">Target</div><div class="fk-unicum__block-t"><strong>Istruttori yoga internazionali</strong> (UK, USA, Australia) che cercano venue autentica in Italia. Canali: BookRetreats, RetreatHub, Instagram wellness community.</div></div>
+    </div>
+    <div class="fk-unicum__price">
+      <div><div class="fk-unicum__price-l">Venue hire / settimana</div><div class="fk-unicum__price-v">€7–9k</div></div>
+      <div><div class="fk-unicum__price-l">Branded Corsale p.p.</div><div class="fk-unicum__price-v">€1.600–2.000</div></div>
+      <div class="fk-unicum__price-note">× 3 edizioni: €21–27k · <em>📐 Fonte: BookRetreats + RetreatHub. Venue hire comparabile (uliveto, rurale, 10–14 pax): €800–1.200/notte. Oliveto Estate (Le Marche): €1.340/notte.</em></div>
+    </div>
+  </div>
+
+  <!-- UNICUM 5 -->
+  <div class="fk-unicum" style="border-left-color:#E8900A;">
+    <div class="fk-unicum__head">
+      <div><div class="fk-unicum__tag" style="color:#FBBC50;">⭐ UNICUM #5 · Agosto + Dicembre · 2×/anno</div><div class="fk-unicum__name">Chef Stellato in Tenuta — "La Cucina dell'Olio"</div></div>
+      <div class="fk-unicum__period"><div class="fk-unicum__period-l">Periodo</div><div class="fk-unicum__period-v" style="color:#FBBC50;">AGO · DIC</div></div>
+    </div>
+    <div class="fk-unicum__body">
+      <div><div class="fk-unicum__block-l">Il prodotto</div><div class="fk-unicum__block-t">Chef stellato campano in residenza per 3–4 serate. <strong>Menù degustazione 7–9 portate</strong> costruito sull'olio EVO di Corsale come protagonista. Meet&greet, cooking show serale, cucinare un piatto con lo chef.</div></div>
+      <div><div class="fk-unicum__block-l">Perché è unico</div><div class="fk-unicum__block-t">Il <strong>proprio olio biologico come protagonista del menù</strong> è un concept rarissimo anche a livello internazionale. Lo chef porta la propria audience e genera PR spontanea. Agosto: stampa gastronomica estiva.</div></div>
+      <div><div class="fk-unicum__block-l">Target</div><div class="fk-unicum__block-t"><strong>Foodie premium italiani e internazionali.</strong> Comunicazione: Gambero Rosso, food media. Revenue: il prodotto top di gamma CCH, quello che fa parlare di noi.</div></div>
+    </div>
+    <div class="fk-unicum__price">
+      <div><div class="fk-unicum__price-l">Prezzo p.p./settimana</div><div class="fk-unicum__price-v">€2.500–3.500</div></div>
+      <div><div class="fk-unicum__price-l">Revenue 10 pax</div><div class="fk-unicum__price-v">€25–35k</div></div>
+      <div class="fk-unicum__price-note">× 2 edizioni: €50–70k · <em>📐 Fonte: cene gala chef stellato in tenuta. Mercato verificato su piattaforme luxury (SopranoVillas, Haute Retreats). Chef dinner experience: €350–600 p.p./serata.</em></div>
+    </div>
+  </div>
+
+  <!-- UNICUM 6 -->
+  <div class="fk-unicum" style="border-left-color:#16a085;">
+    <div class="fk-unicum__head">
+      <div><div class="fk-unicum__tag" style="color:#76D7C4;">🌌 UNICUM #6 · Febbraio + Novembre · 2×/anno</div><div class="fk-unicum__name">Corsale Dark Sky Week — "Guardare Su"</div></div>
+      <div class="fk-unicum__period"><div class="fk-unicum__period-l">Periodo</div><div class="fk-unicum__period-v" style="color:#76D7C4;">FEB · NOV</div></div>
+    </div>
+    <div class="fk-unicum__body">
+      <div><div class="fk-unicum__block-l">Il prodotto</div><div class="fk-unicum__block-t">Astrotourism + meditazione notturna. Astronomo/astrofilo residente con telescopio professionale, osservazione del cielo (Sannio = zero inquinamento), <strong>star bathing in tinozza sotto le stelle,</strong> fotografia notturna guidata.</div></div>
+      <div><div class="fk-unicum__block-l">Perché è unico</div><div class="fk-unicum__block-t">L'astrotourism ha visto +25% nel 2024 e si proietta a raddoppiare entro 2035 (Nat. Geographic). Il Sannio ha cieli tra i più bui d'Italia meridionale — asset completamente non sfruttato. "Star bathing in tinozza" è virale.</div></div>
+      <div><div class="fk-unicum__block-l">Target</div><div class="fk-unicum__block-t"><strong>Appassionati astronomia</strong> (500k+ astrofili in Italia), fotografi paesaggio, mindfulness seekers. Riempie la bassa stagione con settimane altrimenti vuote.</div></div>
+    </div>
+    <div class="fk-unicum__price">
+      <div><div class="fk-unicum__price-l">Prezzo p.p./settimana</div><div class="fk-unicum__price-v">€1.200–1.600</div></div>
+      <div><div class="fk-unicum__price-l">Revenue 10 pax</div><div class="fk-unicum__price-v">€12–16k</div></div>
+      <div class="fk-unicum__price-note">× 2 edizioni: €24–32k in bassa stagione altrimenti vuota</div>
+    </div>
+  </div>
+
+  <!-- UNICUM 7 -->
+  <div class="fk-unicum" style="border-left-color:#E07820;">
+    <div class="fk-unicum__head">
+      <div><div class="fk-unicum__tag" style="color:#F0B27A;">🏆 UNICUM #7 · Aprile + Settembre + Ottobre · 3×/anno</div><div class="fk-unicum__name">Sannio MasterChef Challenge — Team Building in Tenuta</div></div>
+      <div class="fk-unicum__period"><div class="fk-unicum__period-l">Periodo</div><div class="fk-unicum__period-v" style="color:#F0B27A;">APR · SET · OTT</div></div>
+    </div>
+    <div class="fk-unicum__body">
+      <div><div class="fk-unicum__block-l">Il prodotto</div><div class="fk-unicum__block-t">Corporate team building 3–5 giorni. <strong>MasterChef Challenge</strong> con squadre, ingredienti km0, chef giudice locale. Walking meeting nell'uliveto, sessioni strategiche outdoor, pallone aerostatico come opening event.</div></div>
+      <div><div class="fk-unicum__block-l">Perché è unico</div><div class="fk-unicum__block-t">La <strong>competizione culinaria come team building</strong> è il format aziendale più richiesto nel segmento incentive 2024–2026. Uliveto + trattore tour sono esclusive assolute. Nessun hotel aziendale può replicare questo.</div></div>
+      <div><div class="fk-unicum__block-l">Target</div><div class="fk-unicum__block-t"><strong>HR manager aziende medio-grandi,</strong> event planner corporate, DMC incentive travel. Priorità: aziende napoletane, romane, milanesi. Canale: Italy Charme, LinkedIn outreach.</div></div>
+    </div>
+    <div class="fk-unicum__price">
+      <div><div class="fk-unicum__price-l">Pacchetto p.p./4 giorni</div><div class="fk-unicum__price-v">€1.800–2.400</div></div>
+      <div><div class="fk-unicum__price-l">Revenue 10 pax</div><div class="fk-unicum__price-v">€18–24k</div></div>
+      <div class="fk-unicum__price-note">× 3 edizioni: €54–72k · <em>📐 Fonte: VenueRetreat.com corporate offsite Italia. Team building rurale 3–5 giorni: €1.600–2.800 p.p. Range confermato da Italy Charme B2B.</em></div>
+    </div>
+  </div>
+
+  <!-- UNICUM 8 — NUOVO da meeting Luca -->
+  <div class="fk-unicum" style="border-left-color:#3549B5;">
+    <div class="fk-unicum__head">
+      <div><div class="fk-unicum__tag" style="color:#4E66D0;">🎬 UNICUM #8 · NUOVO · Aprile + Settembre · 2×/anno</div><div class="fk-unicum__name">Celebrity Kitchen — Team Building Show in Cucina</div></div>
+      <div class="fk-unicum__period"><div class="fk-unicum__period-l">Periodo</div><div class="fk-unicum__period-v" style="color:#4E66D0;">APR · SET</div></div>
+    </div>
+    <div class="fk-unicum__body">
+      <div><div class="fk-unicum__block-l">Il prodotto</div><div class="fk-unicum__block-t">Format ispirato ai celebrity cooking show: il team si divide in squadre, ognuna con uno chef-capitano (locale o ospite), ingredienti km0 del Sannio, giudice esterno (chef o food critic), presentazione piatti e verdetto in diretta. <strong>L'attività si svolge nella cucina CCH e nell'uliveto per il foraging degli ingredienti.</strong> Culmina in una cena gala con i piatti realizzati dalle squadre. Fortemente fotografabile e condivisibile.</div></div>
+      <div><div class="fk-unicum__block-l">Perché è unico</div><div class="fk-unicum__block-t">La <strong>competizione culinaria con format televisivo</strong> è tra le esperienze di team building più richieste nel segmento incentive premium. A Corsale si aggiunge l'autenticità del territorio — il foraging degli ingredienti nell'uliveto, la cucina di Maura come backstage, l'Aglianico come premio alla squadra vincitrice. <strong>Marketing spontaneo garantito</strong> — ogni partecipante condivide il proprio piatto.</div></div>
+      <div><div class="fk-unicum__block-l">Target</div><div class="fk-unicum__block-t"><strong>Corporate incentive travel, HR manager.</strong> Segmento più premium del MasterChef Challenge — con giudice esterno di nome e regia dell'evento curata. Budget aziendale elevato. Canali: LinkedIn outreach, Italy Charme, DMC incentive.</div></div>
+    </div>
+    <div class="fk-unicum__price">
+      <div><div class="fk-unicum__price-l">Pacchetto p.p./3–4 giorni</div><div class="fk-unicum__price-v">€2.000–2.800</div></div>
+      <div><div class="fk-unicum__price-l">Revenue 12 pax</div><div class="fk-unicum__price-v">€24–34k</div></div>
+      <div class="fk-unicum__price-note">× 2 edizioni: €48–68k · <em>📐 Fonte: benchmark incentive travel premium Italia. Posizionato +15% rispetto a MasterChef Challenge per presenza giudice esterno e regia evento curata.</em></div>
+    </div>
+  </div>
+
+  <!-- UNICUM 9 — NUOVO da meeting Luca -->
+  <div class="fk-unicum" style="border-left-color:#8B2E00;">
+    <div class="fk-unicum__head">
+      <div><div class="fk-unicum__tag" style="color:#C45A00;">🍷 UNICUM #9 · NUOVO · Maggio–Giugno + Settembre–Ottobre</div><div class="fk-unicum__name">Wine Sannio — Cantine & Territorio</div></div>
+      <div class="fk-unicum__period"><div class="fk-unicum__period-l">Periodo</div><div class="fk-unicum__period-v" style="color:#C45A00;">MAG · GIU · SET · OTT</div></div>
+    </div>
+    <div class="fk-unicum__body">
+      <div><div class="fk-unicum__block-l">Il prodotto</div><div class="fk-unicum__block-t">CCH come palcoscenico per eventi enogastronomici con le cantine locali del Sannio: <strong>Taurasi DOCG, Aglianico del Taburno DOC, Greco di Tufo DOCG, Fiano di Avellino DOCG, Falanghina del Sannio DOC.</strong> 4–5 cantine partner che portano i vini — CCH porta il luogo, Maura porta il cibo. Degustazione con sommelier certificato, visita alle cantine, cena gala di abbinamento. Le cantine ottengono promozione internazionale senza investimenti autonomi.</div></div>
+      <div><div class="fk-unicum__block-l">Perché è unico</div><div class="fk-unicum__block-t">Il Sannio è uno dei territori vinicoli più ricchi e meno conosciuti d'Italia. I produttori locali sono <strong>straordinari ma invisibili</strong> sul mercato internazionale. CCH diventa l'hub enogastronomico di riferimento per importatori, sommelier e wine press esteri — un ruolo che nessun altro attore locale sta svolgendo.</div></div>
+      <div><div class="fk-unicum__block-l">Target</div><div class="fk-unicum__block-t"><strong>Importatori esteri vino campano (UK, USA, Germania), sommelier professionisti, wine press internazionale.</strong> Luca mappa le cantine partner. Canali: contatti importatori, Slow Food network, Gambero Rosso, wine press. Da strutturare H2 2026.</div></div>
+    </div>
+    <div class="fk-unicum__price">
+      <div><div class="fk-unicum__price-l">Prezzo p.p./4–5 notti</div><div class="fk-unicum__price-v">€1.800–2.500</div></div>
+      <div><div class="fk-unicum__price-l">Revenue 10 pax</div><div class="fk-unicum__price-v">€18–25k</div></div>
+      <div class="fk-unicum__price-note">× 2 edizioni: €36–50k · <em>📐 Fonte: wine retreat premium su BookRetreats + RetreatHub. Wine immersion Italy: €1.500–2.800 p.p./settimana su piattaforme attive.</em></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     10 · OPTIONAL ANNO-ROUND
+══════════════════════════════════════════════════════════════════ -->
+<div class="fk-sec" id="s10">
+  <div class="fk-sec__hdr"><span class="fk-sec__num">10</span><span class="fk-sec__title">Optional Anno-Round</span></div>
+  <p class="fk-sec__desc">Esperienze add-on disponibili in qualsiasi settimana. Aumentano il ticket medio di ogni prenotazione, migliorano le recensioni e creano contenuto fotografico spontaneo per i social.</p>
+
+  <div class="fk-grid-3">
+    <div class="fk-card"><div style="font-family:var(--fk-label);font-size:.56rem;letter-spacing:.12em;text-transform:uppercase;color:var(--fk-amber-dark);margin-bottom:.4rem;">🫒 Olio & Territorio</div><div style="font-family:var(--fk-display);font-size:1.1rem;color:var(--fk-ink);margin-bottom:.4rem;">Oil Tasting con Olivologo</div><div style="font-size:.85rem;color:var(--fk-ink);line-height:1.6;">Degustazione guidata dell'olio EVO di Corsale con olivologo certificato. Assaggio su pane appena sfornato. Kit da portare a casa.</div><div style="font-family:var(--fk-label);font-size:.62rem;color:var(--fk-amber-dark);margin-top:.5rem;">€35–45 p.p. · min 4 pax · 90 min</div></div>
+    <div class="fk-card"><div style="font-family:var(--fk-label);font-size:.56rem;letter-spacing:.12em;text-transform:uppercase;color:var(--fk-amber-dark);margin-bottom:.4rem;">🍞 Cucina · Maura</div><div style="font-family:var(--fk-display);font-size:1.1rem;color:var(--fk-ink);margin-bottom:.4rem;">Pane Fatto in Casa</div><div style="font-size:.85rem;color:var(--fk-ink);line-height:1.6;">Laboratorio pane con lievito madre: impasto, formatura, cottura. Farina locale, vasetto starter da portare a casa. Sessione mattutina 3 ore.</div><div style="font-family:var(--fk-label);font-size:.62rem;color:var(--fk-amber-dark);margin-top:.5rem;">€40–50 p.p. · min 4 pax</div></div>
+    <div class="fk-card"><div style="font-family:var(--fk-label);font-size:.56rem;letter-spacing:.12em;text-transform:uppercase;color:var(--fk-amber-dark);margin-bottom:.4rem;">🎈 Avventura</div><div style="font-family:var(--fk-display);font-size:1.1rem;color:var(--fk-ink);margin-bottom:.4rem;">Pallone Aerostatico all'Alba</div><div style="font-size:.85rem;color:var(--fk-ink);line-height:1.6;">Volo in mongolfiera sulla Valle del Titerno all'alba con colazione al rientro. Esperienza emotivamente devastante. Disponibile apr–ott.</div><div style="font-family:var(--fk-label);font-size:.62rem;color:var(--fk-amber-dark);margin-top:.5rem;">€180–220 p.p. · su prenotazione</div></div>
+    <div class="fk-card"><div style="font-family:var(--fk-label);font-size:.56rem;letter-spacing:.12em;text-transform:uppercase;color:var(--fk-blue-dark);margin-bottom:.4rem;">🌿 Natura</div><div style="font-family:var(--fk-display);font-size:1.1rem;color:var(--fk-ink);margin-bottom:.4rem;">Foraging Selvatico</div><div style="font-size:.85rem;color:var(--fk-ink);line-height:1.6;">Escursione con esperto botanico locale: erbe selvatiche, funghi, frutti del bosco. Pranzo preparato con il raccolto del mattino.</div><div style="font-family:var(--fk-label);font-size:.62rem;color:var(--fk-blue-dark);margin-top:.5rem;">€55–70 p.p. · apr–nov</div></div>
+    <div class="fk-card"><div style="font-family:var(--fk-label);font-size:.56rem;letter-spacing:.12em;text-transform:uppercase;color:var(--fk-blue-dark);margin-bottom:.4rem;">🌌 Notte</div><div style="font-family:var(--fk-display);font-size:1.1rem;color:var(--fk-ink);margin-bottom:.4rem;">Serata Astro-Osservazione</div><div style="font-size:.85rem;color:var(--fk-ink);line-height:1.6;">Sessione notturna con telescopio professionale. Costellazioni, pianeti, Lattea visibile a occhio nudo. Star bathing in tinozza incluso.</div><div style="font-family:var(--fk-label);font-size:.62rem;color:var(--fk-blue-dark);margin-top:.5rem;">€40–55 p.p. · luna nuova consigliata</div></div>
+    <div class="fk-card"><div style="font-family:var(--fk-label);font-size:.56rem;letter-spacing:.12em;text-transform:uppercase;color:var(--fk-amber-dark);margin-bottom:.4rem;">🍷 Enogastronomia</div><div style="font-family:var(--fk-display);font-size:1.1rem;color:var(--fk-ink);margin-bottom:.4rem;">Tour Produttori del Sannio</div><div style="font-size:.85rem;color:var(--fk-ink);line-height:1.6;">Mezza giornata con van privato: frantoio, caseificio, cantina Aglianico, salumificio artigiano. Guida della famiglia Corsale.</div><div style="font-family:var(--fk-label);font-size:.62rem;color:var(--fk-amber-dark);margin-top:.5rem;">€65–80 p.p. · min 4 pax</div></div>
+    <div class="fk-card"><div style="font-family:var(--fk-label);font-size:.56rem;letter-spacing:.12em;text-transform:uppercase;color:var(--fk-blue-dark);margin-bottom:.4rem;">💆 Benessere</div><div style="font-family:var(--fk-display);font-size:1.1rem;color:var(--fk-ink);margin-bottom:.4rem;">Massaggio in Villa</div><div style="font-size:.85rem;color:var(--fk-ink);line-height:1.6;">Massaggio professionale in camera o spazio dedicato con olii e olio di oliva di Corsale come base. Terapista locale su chiamata.</div><div style="font-family:var(--fk-label);font-size:.62rem;color:var(--fk-blue-dark);margin-top:.5rem;">€70–90 p.p./ora</div></div>
+    <div class="fk-card"><div style="font-family:var(--fk-label);font-size:.56rem;letter-spacing:.12em;text-transform:uppercase;color:var(--fk-blue-dark);margin-bottom:.4rem;">📸 Creatività</div><div style="font-family:var(--fk-display);font-size:1.1rem;color:var(--fk-ink);margin-bottom:.4rem;">Photography Walk</div><div style="font-size:.85rem;color:var(--fk-ink);line-height:1.6;">Sessione fotografica guidata all'alba o tramonto con fotografo professionista locale. Uliveto, tenuta, borghi vicini. Editing base incluso.</div><div style="font-family:var(--fk-label);font-size:.62rem;color:var(--fk-blue-dark);margin-top:.5rem;">€60–80 p.p. · min 2 pax · 3 ore</div></div>
+    <div class="fk-card"><div style="font-family:var(--fk-label);font-size:.56rem;letter-spacing:.12em;text-transform:uppercase;color:var(--fk-amber-dark);margin-bottom:.4rem;">🎭 Cultura</div><div style="font-family:var(--fk-display);font-size:1.1rem;color:var(--fk-ink);margin-bottom:.4rem;">Serata Tarantella Sannita</div><div style="font-size:.85rem;color:var(--fk-ink);line-height:1.6;">Musicisti e danzatori locali in tenuta per serata di musica popolare sannita live. Aperitivo tipico incluso. Unico nel suo genere nel Sannio.</div><div style="font-family:var(--fk-label);font-size:.62rem;color:var(--fk-amber-dark);margin-top:.5rem;">€45–60 p.p. · min 8 pax · su prenotazione</div></div>
+    <div class="fk-card"><div style="font-family:var(--fk-label);font-size:.56rem;letter-spacing:.12em;text-transform:uppercase;color:var(--fk-amber-dark);margin-bottom:.4rem;">🪂 Avventura · NUOVO</div><div style="font-family:var(--fk-display);font-size:1.1rem;color:var(--fk-ink);margin-bottom:.4rem;">Parapendio sul Monte Erbano</div><div style="font-size:.85rem;color:var(--fk-ink);line-height:1.6;">Volo in parapendio (tandem) sul Monte Erbano — già frequentato da appassionati, infrastruttura esistente. Da intercettare non da costruire. Vista spettacolare sul Sannio.</div><div style="font-family:var(--fk-label);font-size:.62rem;color:var(--fk-amber-dark);margin-top:.5rem;">€80–120 p.p. · con operatore locale · apr–ott</div></div>
+    <div class="fk-card"><div style="font-family:var(--fk-label);font-size:.56rem;letter-spacing:.12em;text-transform:uppercase;color:var(--fk-blue-dark);margin-bottom:.4rem;">🍷 Enogastronomia · NUOVO</div><div style="font-family:var(--fk-display);font-size:1.1rem;color:var(--fk-ink);margin-bottom:.4rem;">Cantine del Sannio — Degustazione in Tenuta</div><div style="font-size:.85rem;color:var(--fk-ink);line-height:1.6;">Degustazione di vini DOC/DOCG del Sannio direttamente in tenuta con produttori locali: <strong>Taurasi DOCG, Aglianico del Taburno DOC, Greco di Tufo DOCG, Fiano di Avellino DOCG, Falanghina del Sannio DOC.</strong> Cantine che non possono permettersi investimenti promozionali autonomi — CCH diventa il loro palcoscenico. Abbinamento con cucina di Maura.</div><div style="font-family:var(--fk-label);font-size:.62rem;color:var(--fk-blue-dark);margin-top:.5rem;">€50–70 p.p. · min 6 pax · da strutturare con 3–4 cantine partner</div></div>
+    <div class="fk-card"><div style="font-family:var(--fk-label);font-size:.56rem;letter-spacing:.12em;text-transform:uppercase;color:var(--fk-amber-dark);margin-bottom:.4rem;">🎈 Evento Speciale · NUOVO · Ottobre 8–12</div><div style="font-family:var(--fk-display);font-size:1.1rem;color:var(--fk-ink);margin-bottom:.4rem;">Raduno Mongolfiere — Agganciare l'Evento</div><div style="font-size:.85rem;color:var(--fk-ink);line-height:1.6;">Nell'area Sannio c'è un importante <strong>raduno di mongolfiere dall'8 al 12 ottobre</strong> — evento già esistente e frequentato. CCH può proporre ai propri ospiti di quella settimana un'esperienza di volo esclusiva agganciata all'evento. Da verificare con gli organizzatori.</div><div style="font-family:var(--fk-label);font-size:.62rem;color:var(--fk-amber-dark);margin-top:.5rem;">€180–220 p.p. · finestra ideale ottobre · verificare accordo organizzatori</div></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     11 · COMMUNITY VERTICALI
+══════════════════════════════════════════════════════════════════ -->
+<div class="fk-sec" id="s11">
+  <div class="fk-sec__hdr"><span class="fk-sec__num">11</span><span class="fk-sec__title">Community Verticali dal Mondo</span></div>
+  <p class="fk-sec__desc">Community globali con passioni specifiche che si organizzano in retreat — molte ancora senza una location italiana autentica di riferimento. Il modello: trovare 1 facilitatore credibile, offrirgli un press trip, e lasciare che porti il suo pubblico.</p>
+
+  <div class="fk-tw">
+    <table class="fk-t">
+      <thead><tr><th>Community</th><th>Dimensione</th><th>Cosa cercano</th><th>Esperienza CCH su misura</th><th>Ticket</th><th>Accessibilità</th></tr></thead>
+      <tbody>
+        <tr class="hl"><td><strong>🫒 Olive Oil Enthusiasts</strong><br><span style="font-size:.8rem;color:var(--fk-gray);">EVOO sommelier · food media</span></td><td style="font-family:var(--fk-label);">2M+ Instagram</td><td>Produttori autentici, raccolta, frantoio, degustazione</td><td>Olive Harvest + olivologo + frantoio + etichetta personalizzata</td><td style="font-family:var(--fk-label);">€1.800–2.200</td><td><span class="fk-b fk-b--amber">Subito</span></td></tr>
+        <tr><td><strong>🌌 Stargazers & Astrophotographers</strong><br><span style="font-size:.8rem;color:var(--fk-gray);">+25% crescita 2024</span></td><td style="font-family:var(--fk-label);">500k+ astrofili IT</td><td>Cieli bui, telescopi professionali, strutture isolate</td><td>Dark Sky Week + tinozza sotto le stelle + telescopio ospite</td><td style="font-family:var(--fk-label);">€1.200–1.600</td><td><span class="fk-b fk-b--amber">Subito</span></td></tr>
+        <tr><td><strong>🍞 Sourdough & Fermentation</strong><br><span style="font-size:.8rem;color:var(--fk-gray)">#sourdough = 8M post IG</span></td><td style="font-family:var(--fk-label);">5M+ global</td><td>Farine locali, forni di campagna, "il pane vero"</td><td>Laboratorio pane Maura + lievito madre locale + ricettario fisico</td><td style="font-family:var(--fk-label);">€1.500–2.000</td><td><span class="fk-b fk-b--amber">Subito</span></td></tr>
+        <tr><td><strong>📸 Travel & Landscape Photographers</strong><br><span style="font-size:.8rem;color:var(--fk-gray);">80k ricerche/mese</span></td><td style="font-family:var(--fk-label);">10M+ community</td><td>Location inedite, luce naturale, soggetti autentici non "già visti"</td><td>Photography walk uliveto + borghi non fotografati + trattore come soggetto</td><td style="font-family:var(--fk-label);">€1.400–1.800</td><td><span class="fk-b fk-b--blue">60–90 gg</span></td></tr>
+        <tr><td><strong>✍️ Writers & Storytellers</strong><br><span style="font-size:.8rem;color:var(--fk-gray);">writing retreat in crescita</span></td><td style="font-family:var(--fk-label);">2M+ scrittori amatoriali</td><td>Silenzio, ispirazione, cucina che nutre, paesaggio che ispira</td><td>"Scrivi il tuo romanzo nel Sannio" — camino + silenzio + storia della famiglia</td><td style="font-family:var(--fk-label);">€1.200–1.500</td><td><span class="fk-b fk-b--blue">60–90 gg</span></td></tr>
+        <tr><td><strong>🫀 Longevity & Biohackers</strong><br><span style="font-size:.8rem;color:var(--fk-gray);">wellness → $9T entro 2028</span></td><td style="font-family:var(--fk-label);">1M+ community</td><td>Sauna, contrasto termico, dieta med. autentica, aria pulita, silenzio</td><td>"Longevity Week al Sannio" — sauna + tinozza fredda + cucina km0 + olio EVO</td><td style="font-family:var(--fk-label);">€1.800–2.500</td><td><span class="fk-b fk-b--blue">90 gg</span></td></tr>
+        <tr><td><strong>🎵 Sound Healing & Meditazione</strong><br><span style="font-size:.8rem;color:var(--fk-gray);">+40% crescita y/y</span></td><td style="font-family:var(--fk-label);">400k ricerche/mese</td><td>Acustica naturale, spazi in pietra, isolamento, silenzio</td><td>Sala in pietra della tenuta + gong bath serale + sessione outdoor sotto ulivi</td><td style="font-family:var(--fk-label);">€1.400–1.800</td><td><span class="fk-b fk-b--gray">Medio termine</span></td></tr>
+        <tr><td><strong>🎨 Artists in Residence</strong><br><span style="font-size:.8rem;color:var(--fk-gray);">3.000+ residenze globali</span></td><td style="font-family:var(--fk-label);">Pittori, fotografi, illustratori</td><td>Location con storia, materiali naturali, comunità locale, no museo</td><td>Acquarello en plein air nell'uliveto + borghi medievali + "Corsale Artist Residency"</td><td style="font-family:var(--fk-label);">€1.000–1.400</td><td><span class="fk-b fk-b--gray">Medio termine</span></td></tr>
+        <tr class="hl"><td><strong>🍷 Wine Sommelier & Importatori</strong> <span class="fk-b fk-b--amber">NUOVO</span><br><span style="font-size:.8rem;color:var(--fk-gray);">Mercato identificato da Luca</span></td><td style="font-family:var(--fk-label);">Importatori UK/USA/DE · Wine press</td><td>Territori autentici, produttori artigiani, esperienze non turisticizzate. Il Sannio è quasi completamente inesplorato da questo segmento.</td><td>Wine UNICUM #9 in tenuta + tour cantine Taurasi/Aglianico/Falanghina + abbinamento cucina Maura</td><td style="font-family:var(--fk-label);">€1.800–2.500</td><td><span class="fk-p fk-p--amber">Priorità alta · H2 2026</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     12 · ROADMAP PRIORITÀ
+══════════════════════════════════════════════════════════════════ -->
+<div class="fk-sec" id="s12">
+  <div class="fk-sec__hdr"><span class="fk-sec__num">12</span><span class="fk-sec__title">Roadmap — Priorità di Azione</span></div>
+  <p class="fk-sec__desc">Le azioni in ordine di priorità. Le prime 5 non costano nulla e generano risultati in 90 giorni. Dalla 6 in poi si investe — ma i ritorni sono già calcolati.</p>
+
+  <div class="fk-tw">
+    <table class="fk-t">
+      <thead><tr><th>#</th><th>Azione</th><th>Chi</th><th>Investimento</th><th>Impatto atteso</th><th>Timing</th></tr></thead>
+      <tbody>
+        <tr class="hl"><td style="font-family:var(--fk-label); font-size:1.4rem; color:var(--fk-amber-dark);">01</td><td><strong>Shooting fotografico professionale</strong><br><span style="font-size:.82rem;color:var(--fk-gray);">1 giornata con fotografo hospitality — interni, esterni, cibo, esperienze, golden hour</span></td><td>Guia</td><td style="font-family:var(--fk-label);">€800–1.500</td><td>Prerequisito per tutte le piattaforme luxury. Sblocca SopranoVillas, Haute Retreats, Italy Charme.</td><td><span class="fk-p fk-p--franki">Subito</span></td></tr>
+        <tr class="hl"><td style="font-family:var(--fk-label); font-size:1.4rem; color:var(--fk-amber-dark);">02</td><td><strong>Riposizionamento narrativo</strong><br><span style="font-size:.82rem;color:var(--fk-gray);">Da "country house per gruppi" a "exclusive estate retreat nel cuore del Sannio". Nuovi testi sito + OTA in IT e EN.</span></td><td>Franki + Guia</td><td style="font-family:var(--fk-label);">€0</td><td>Giustifica +40% sul listino immediatamente. Cambia il tipo di cliente che arriva.</td><td><span class="fk-p fk-p--franki">Subito</span></td></tr>
+        <tr class="hl"><td style="font-family:var(--fk-label); font-size:1.4rem; color:var(--fk-amber-dark);">03</td><td><strong>Revisione pricing Pkg B e Pkg C</strong><br><span style="font-size:.82rem;color:var(--fk-gray);">Pkg B: da €100 a €140–150 p.p./notte. Pkg C: da €1.250 a €1.600–1.800 p.p./settimana.</span></td><td>Luca + Franki</td><td style="font-family:var(--fk-label);">€0</td><td>Revenue immediato senza una prenotazione in più. Solo riallineamento al mercato.</td><td><span class="fk-p fk-p--franki">Subito</span></td></tr>
+        <tr class="hl"><td style="font-family:var(--fk-label); font-size:1.4rem; color:var(--fk-amber-dark);">04</td><td><strong>Profilo su BookRetreats + RetreatHub</strong><br><span style="font-size:.82rem;color:var(--fk-gray);">Creare il profilo "Corsale Retreat Venue Hire" con area outdoor per attività e menu plant-based su richiesta.</span></td><td>Guia</td><td style="font-family:var(--fk-label);">€0</td><td>Accesso immediato al cluster wellness/yoga. Riempie bassa stagione senza advertising.</td><td><span class="fk-p fk-p--franki">Subito</span></td></tr>
+        <tr class="hl"><td style="font-family:var(--fk-label); font-size:1.4rem; color:var(--fk-amber-dark);">05</td><td><strong>PDF commerciale B2B per corporate</strong><br><span style="font-size:.82rem;color:var(--fk-gray);">Pacchetto "Corsale Corporate Retreat" con pricing netto operatori. Outreach LinkedIn HR manager napol./romani/milanesi.</span></td><td>Franki</td><td style="font-family:var(--fk-label);">€0</td><td>Accesso al segmento corporate — ticket medio €18–30k per prenotazione.</td><td><span class="fk-p fk-p--franki">Subito</span></td></tr>
+        <tr><td style="font-family:var(--fk-label); font-size:1.4rem; color:var(--fk-blue);">06</td><td><strong>Press trip per 2–3 creator internazionali</strong><br><span style="font-size:.82rem;color:var(--fk-gray);">Micro-influencer travel/food/wellness (10k–100k follower) UK/USA/NL. 3 notti in cambio di contenuti definiti.</span></td><td>Guia + Franki</td><td style="font-family:var(--fk-label);">3 notti omaggio</td><td>Generazione contenuti internazionali, reach organica, social proof per piattaforme luxury.</td><td><span class="fk-p fk-p--amber">Entro 60 gg</span></td></tr>
+        <tr><td style="font-family:var(--fk-label); font-size:1.4rem; color:var(--fk-blue);">07</td><td><strong>Candidatura SopranoVillas e Italy Charme</strong><br><span style="font-size:.82rem;color:var(--fk-gray);">Con le nuove foto professionali, candidarsi ai due canali prioritari. Form partner/affiliate + presentazione.</span></td><td>Franki + Guia</td><td style="font-family:var(--fk-label);">€0</td><td>Accesso ai mercati UK, Europa nord e corporate europeo. Prenotazioni B2B senza effort commerciale continuo.</td><td><span class="fk-p fk-p--amber">Entro 90 gg</span></td></tr>
+        <tr><td style="font-family:var(--fk-label); font-size:1.4rem; color:var(--fk-blue);">08</td><td><strong>Area wellness outdoor — deck yoga nell'uliveto</strong><br><span style="font-size:.82rem;color:var(--fk-gray);">Piattaforma in legno tra gli ulivi per yoga/meditazione. Costo: €500–2.000. Sblocca il cluster retreat organizzatori.</span></td><td>Luca</td><td style="font-family:var(--fk-label);">€500–2.000</td><td>Sblocca completamente il cluster wellness. Giustifica +€30–40 p.p./notte sul Pkg B.</td><td><span class="fk-p fk-p--amber">Entro 90 gg</span></td></tr>
+        <tr><td style="font-family:var(--fk-label); font-size:1.4rem; color:var(--fk-blue);">09</td><td><strong>Naming e caratterizzazione delle camere</strong><br><span style="font-size:.82rem;color:var(--fk-gray);">Nome + storia per ogni camera (es. "La Stanza dell'Ulivo", "Suite del Titerno"). Schede narrative. Costo: 0.</span></td><td>Franki + famiglia</td><td style="font-family:var(--fk-label);">€0</td><td>Percezione luxury immediata. Requisito per Le Collectionist e Haute Retreats.</td><td><span class="fk-p fk-p--amber">Entro 90 gg</span></td></tr>
+        <tr><td style="font-family:var(--fk-label); font-size:1.4rem; color:var(--fk-gray);">10</td><td><strong>Olive Harvest Experience — prima edizione</strong><br><span style="font-size:.82rem;color:var(--fk-gray);">Strutturare il pacchetto ottobre/novembre con olivologo esterno. Comunicare su canali food internazionali. Obiettivo: sold out 10 pax.</span></td><td>Luca + Maura + Guia</td><td style="font-family:var(--fk-label);">€300–500 olivologo</td><td>Prima edizione test: €18–22k revenue. Validazione del concept per lo scale.</td><td><span class="fk-p fk-p--gray">Ottobre 2026</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="fk-c fk-c--a">
+    <div class="fk-c__l">La sintesi finale — We Start Your Ideas</div>
+    <p>Corsale Country House ha <strong>tutto il necessario per triplicare il fatturato in 12 mesi</strong> senza costruire nulla di nuovo. Il prodotto è già straordinario — serve solo essere raccontato nel modo giusto, ai clienti giusti, sui canali giusti. Le prime 5 azioni si fanno oggi, costano zero e aprono porte che prima erano chiuse. <strong>Luca, Maura, Guia, Mattia e Franki:</strong> questa è la squadra. Adesso si parte.</p>
+  </div>
+
+  <div class="fk-kpi-grid" style="margin-top:2rem;">
+    <div class="fk-kpi"><div class="fk-kpi__l">Azioni a costo zero</div><div class="fk-kpi__v">5</div><div class="fk-kpi__n">impatto entro 90 giorni</div></div>
+    <div class="fk-kpi fk-kpi--b"><div class="fk-kpi__l">Investimento totale step 1–9</div><div class="fk-kpi__v">~€5k</div><div class="fk-kpi__n">massimo scenario</div></div>
+    <div class="fk-kpi fk-kpi--a"><div class="fk-kpi__l">Revenue target anno 1</div><div class="fk-kpi__v">€200k+</div><div class="fk-kpi__n fk-kpi__n--hot">vs ~€60k attuale</div></div>
+    <div class="fk-kpi fk-kpi--a"><div class="fk-kpi__l">Revenue target a regime</div><div class="fk-kpi__v">€350k+</div><div class="fk-kpi__n fk-kpi__n--up">obiettivo 24 mesi</div></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ FOOTER ══════════════════════════════ -->
+<div class="fk-footer">
+  <strong>Franki Studio</strong> · Avre Srl · Napoli · Hub Strategico Corsale CCH · Aprile 2026 · Uso interno · We Start Your Ideas
+</div>
+
+<script>
+function show(id) {
+  document.querySelectorAll('.fk-sec').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.fk-nav__tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const ids = ['sM','s00','s01','s02','s03','s04','s05','s06','s07','s08','s09','s10','s11','s12'];
+  document.querySelectorAll('.fk-nav__tab')[ids.indexOf(id)].classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>

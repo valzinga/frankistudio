@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RCV — Scheda Storica del Compendio</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blu:#2B38B0;
+  --arancio:#F0A500;
+  --grigio-bg:#F2F1ED;
+  --bianco:#FFFFFF;
+  --nero:#111111;
+  --testo:#1a1a2e;
+  --blu-scuro:#1a2480;
+  --grigio-testo:#555;
+  --seppia:#8B7355;
+  --seppia-chiaro:#e8ddd0;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Barlow',sans-serif;background:var(--grigio-bg);color:var(--testo);max-width:680px;margin:0 auto;font-size:15px;line-height:1.6}
+
+/* NAVBAR */
+.navbar{background:var(--blu);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.logo-wrap{display:flex;align-items:center;gap:10px}
+.logo-fran{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;color:var(--bianco)}
+.logo-fran span{color:var(--bianco);background:var(--arancio);padding:1px 6px;border-radius:4px}
+.logo-tagline{font-size:10px;color:rgba(255,255,255,.6);letter-spacing:.08em}
+.nav-doc{font-family:'Barlow Condensed',sans-serif;font-size:11px;color:rgba(255,255,255,.7);letter-spacing:.1em;text-transform:uppercase}
+
+/* HERO — tono seppia/archivio */
+.hero{background:var(--nero);color:var(--bianco);padding:40px 20px 36px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+.hero-kicker{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--arancio);margin-bottom:8px}
+.hero-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:40px;line-height:.95;text-transform:uppercase;margin-bottom:16px;position:relative}
+.hero-title em{color:var(--arancio);font-style:normal;display:block;font-size:52px}
+.hero-sub{font-size:14px;color:rgba(255,255,255,.65);max-width:520px;line-height:1.65;font-style:italic;position:relative}
+.hero-anno{position:absolute;right:20px;top:40px;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:80px;color:rgba(255,255,255,.04);line-height:1}
+
+/* FASI */
+.fasi-strip{background:var(--blu-scuro);padding:14px 20px;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.fase-pill{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;letter-spacing:.08em;padding:4px 10px;border-radius:20px;color:rgba(255,255,255,.5);background:rgba(255,255,255,.08)}
+.fase-pill.active{background:var(--arancio);color:var(--nero)}
+.fase-arrow{color:rgba(255,255,255,.25);font-size:12px}
+
+/* DIVIDER */
+.divider-orange{height:4px;background:var(--arancio)}
+.divider-grey{height:1px;background:#e0ddd8;margin:0 20px}
+
+/* INTRO STORICA */
+.intro-storica{background:var(--seppia-chiaro);padding:20px;border-left:5px solid var(--seppia);margin:0}
+.intro-storica p{font-size:14px;color:#5a4a38;line-height:1.7;font-style:italic}
+.intro-storica p + p{margin-top:10px}
+
+/* TIMELINE */
+.timeline{background:var(--bianco);padding:20px}
+.timeline-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:18px;text-transform:uppercase;color:var(--blu);margin-bottom:20px;border-bottom:2px solid var(--arancio);padding-bottom:8px}
+
+.tl-item{display:flex;gap:16px;margin-bottom:20px;position:relative}
+.tl-item:not(:last-child)::after{content:'';position:absolute;left:30px;top:42px;bottom:-20px;width:2px;background:linear-gradient(180deg,var(--arancio),var(--grigio-bg))}
+.tl-anno{flex-shrink:0;width:60px;height:40px;background:var(--blu);color:var(--bianco);font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:13px;display:flex;align-items:center;justify-content:center;border-radius:3px;z-index:1}
+.tl-anno.seppia{background:var(--seppia)}
+.tl-anno.arancio{background:var(--arancio);color:var(--nero)}
+.tl-anno.rosso{background:#c0392b}
+.tl-anno.grigio{background:#888}
+.tl-content{flex:1;padding-top:4px}
+.tl-label{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--arancio);margin-bottom:3px}
+.tl-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:17px;color:var(--nero);margin-bottom:5px}
+.tl-text{font-size:13px;color:var(--grigio-testo);line-height:1.6}
+
+/* SECTION HEADER */
+.section-header{background:var(--blu);color:var(--bianco);padding:12px 20px;display:flex;align-items:center;gap:10px;margin-top:24px}
+.section-icon{font-size:18px}
+.section-title-txt{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:18px;text-transform:uppercase;letter-spacing:.06em}
+.section-count{margin-left:auto;background:var(--arancio);color:var(--nero);font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:12px;padding:2px 8px;border-radius:2px}
+
+/* SCHEDA CARD */
+.scheda-card{background:var(--bianco);padding:20px;margin:2px 0}
+.scheda-card h3{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:17px;text-transform:uppercase;color:var(--blu);margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid #eee}
+.scheda-card p{font-size:14px;color:var(--grigio-testo);line-height:1.7;margin-bottom:10px}
+.scheda-card p:last-child{margin-bottom:0}
+.scheda-card strong{color:var(--nero)}
+
+/* HIGHLIGHT */
+.highlight-seppia{background:var(--seppia-chiaro);border-left:4px solid var(--seppia);padding:12px 16px;margin:12px 0;border-radius:0 4px 4px 0}
+.highlight-seppia p{font-size:13px;color:#5a4a38;font-style:italic;margin:0;line-height:1.6}
+.highlight-blu{background:#e8ecff;border-left:4px solid var(--blu);padding:12px 16px;margin:12px 0;border-radius:0 4px 4px 0}
+.highlight-blu p{font-size:13px;color:var(--blu-scuro);margin:0;line-height:1.6}
+.highlight-red{background:#fff0f0;border-left:4px solid #c0392b;padding:12px 16px;margin:12px 0;border-radius:0 4px 4px 0}
+.highlight-red p{font-size:13px;color:#922;margin:0;line-height:1.6}
+
+/* KPI STRIP */
+.kpi-strip{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin:2px 0}
+.kpi-box{background:var(--bianco);padding:16px 18px}
+.kpi-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#888;margin-bottom:4px}
+.kpi-value{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:24px;color:var(--blu);line-height:1}
+.kpi-sub{font-size:11px;color:#999;margin-top:3px}
+
+/* ORANGE BAND */
+.orange-band{background:var(--arancio);padding:16px 20px;margin:2px 0}
+.orange-band h3{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;text-transform:uppercase;color:var(--nero);margin-bottom:8px}
+.orange-band p{font-size:13px;color:rgba(0,0,0,.75);line-height:1.6}
+
+/* BADGE */
+.badge{display:inline-block;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:2px;margin:2px}
+.badge-green{background:#e6f7f0;color:#1a7a50}
+.badge-blue{background:#e8ecff;color:var(--blu)}
+.badge-red{background:#fff0f0;color:#c0392b}
+.badge-seppia{background:var(--seppia-chiaro);color:var(--seppia)}
+.badge-grey{background:#f0f0f0;color:#666}
+
+/* PROPRIETARI TABLE */
+.prop-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:10px}
+.prop-table th{background:var(--blu);color:var(--bianco);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.06em;padding:8px 10px;text-align:left}
+.prop-table td{padding:10px;border-bottom:1px solid #f0f0f0;vertical-align:top}
+.prop-table td:first-child{font-weight:700;color:var(--blu);font-family:'Barlow Condensed',sans-serif;font-size:14px;width:80px}
+.prop-table tr:nth-child(even){background:#fafafa}
+.prop-table tr:last-child td{border-bottom:none}
+
+/* QUOTE */
+.quote-block{background:var(--nero);color:var(--bianco);padding:24px 20px;margin:2px 0;position:relative}
+.quote-block::before{content:'"';position:absolute;left:14px;top:12px;font-size:60px;color:var(--arancio);font-family:Georgia,serif;line-height:1;opacity:.6}
+.quote-text{font-size:15px;font-style:italic;color:rgba(255,255,255,.85);line-height:1.7;padding-left:24px;margin-bottom:10px}
+.quote-source{font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--arancio);padding-left:24px}
+
+/* DARK CTA */
+.dark-cta{background:var(--blu);color:var(--bianco);padding:32px 20px;margin-top:4px;text-align:center}
+.dark-cta h2{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:26px;text-transform:uppercase;margin-bottom:10px}
+.dark-cta h2 span{color:var(--arancio)}
+.dark-cta p{font-size:13px;color:rgba(255,255,255,.6);max-width:400px;margin:0 auto}
+
+/* DISCLAIMER */
+.disclaimer{background:#f7f7f5;padding:14px 20px;font-size:11px;color:#aaa;line-height:1.5;border-top:1px solid #e8e8e4}
+
+/* STATO ATTUALE */
+.stato-attuale{background:var(--bianco);padding:20px;margin:2px 0}
+.stato-label{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:#999;margin-bottom:6px}
+.stato-value{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;color:#c0392b;margin-bottom:10px}
+.stato-text{font-size:13px;color:var(--grigio-testo);line-height:1.6}
+
+/* PERCHÉ CONTA */
+.perche-section{background:#1a2480;color:var(--bianco);padding:20px}
+.perche-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px;text-transform:uppercase;color:var(--arancio);margin-bottom:14px}
+.perche-item{display:flex;gap:12px;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,.08)}
+.perche-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.perche-num{flex-shrink:0;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:28px;color:var(--arancio);line-height:1}
+.perche-text{font-size:13px;color:rgba(255,255,255,.75);line-height:1.6}
+.perche-text strong{color:var(--bianco)}
+
+.fk-logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;line-height:1;display:inline-flex;align-items:center}
+.fk-logo .fran{color:#FFFFFF}
+.fk-logo .ki{background:#F0A500;color:#FFFFFF;border-radius:5px;padding:1px 7px;margin-left:2px;display:inline-block}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="logo-wrap">
+    <div>
+      <div class="fk-logo"><span class="fran">Fran</span><span class="ki">Ki</span></div>
+      <div class="logo-tagline">We Start Your Ideas</div>
+    </div>
+  </div>
+  <div class="nav-doc">RCV · Scheda Storica</div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-anno">1956</div>
+  <div class="hero-kicker">Roccaraso Country Village — Archivio Storico</div>
+  <div class="hero-title">
+    UNA STORIA DI<br>
+    <em>CORRENTE</em>
+    WELFARE E ABBANDONO
+  </div>
+  <div class="hero-sub">Il Soggiorno Montano Enel di Roccaraso, Loc. Il Poggio: dalle origini del miracolo economico italiano fino all'asta giudiziaria del Tribunale di Sulmona. Una vicenda che attraversa settant'anni di storia economica, sociale e urbanistica d'Italia.</div>
+</div>
+
+<!-- FASI METODO FRANKI -->
+<div class="fasi-strip">
+  <div class="fase-pill">F00 Scouting ✓</div>
+  <div class="fase-arrow">›</div>
+  <div class="fase-pill active">F01 Concept ●</div>
+  <div class="fase-arrow">›</div>
+  <div class="fase-pill">B00 Bivio</div>
+  <div class="fase-arrow">›</div>
+  <div class="fase-pill">F02 Struttura</div>
+  <div class="fase-arrow">›</div>
+  <div class="fase-pill">F03 Brief</div>
+  <div class="fase-arrow">›</div>
+  <div class="fase-pill">F05 MVP</div>
+  <div class="fase-arrow">›</div>
+  <div class="fase-pill">F06 Scale</div>
+</div>
+<div class="divider-orange"></div>
+
+<!-- INTRO STORICA -->
+<div class="intro-storica">
+  <p>Quello che oggi è un compendio abbandonato da decenni, aggrovigliato in una procedura esecutiva al Tribunale di Sulmona, fu per trent'anni un luogo vivo e pulsante: il soggiorno estivo dei figli dei lavoratori dell'energia elettrica italiana, un presidio di welfare aziendale costruito durante il miracolo economico, quando le grandi aziende di Stato si sentivano anche responsabili del benessere delle famiglie dei propri dipendenti.</p>
+  <p>Per capire dove vogliamo portare RCV, occorre capire da dove viene. Questa è la sua storia.</p>
+</div>
+
+<!-- KPI IDENTITÀ -->
+<div class="kpi-strip">
+  <div class="kpi-box">
+    <div class="kpi-label">Anno di costruzione (stimato)</div>
+    <div class="kpi-value">1956–71</div>
+    <div class="kpi-sub">Tre fasi costruttive successive</div>
+  </div>
+  <div class="kpi-box">
+    <div class="kpi-label">Quota altimetrica</div>
+    <div class="kpi-value">1.023 m</div>
+    <div class="kpi-sub">s.l.m. — Loc. Il Poggio, Roccaraso</div>
+  </div>
+  <div class="kpi-box">
+    <div class="kpi-label">Anni di attività stimati</div>
+    <div class="kpi-value">~30 anni</div>
+    <div class="kpi-sub">Fino ai primi anni '90</div>
+  </div>
+  <div class="kpi-box">
+    <div class="kpi-label">Anni di abbandono</div>
+    <div class="kpi-value">~35 anni</div>
+    <div class="kpi-sub">Dalla chiusura a oggi</div>
+  </div>
+</div>
+
+<!-- SEZIONE 1: RADICI -->
+<div class="section-header">
+  <div class="section-icon">⚡</div>
+  <div class="section-title-txt">Le Radici — L'Italia dell'Energia e del Welfare</div>
+  <div class="section-count">1945–1963</div>
+</div>
+
+<div class="scheda-card">
+  <h3>Il contesto: l'Italia del miracolo economico</h3>
+  <p>Per capire la nascita del Soggiorno Montano Enel occorre tornare all'Italia del dopoguerra. <strong>Tra il 1950 e il 1963, l'economia italiana cresce in media dell'8–9% annuo</strong>: è il "miracolo economico", la più rapida industrializzazione nella storia europea. Le grandi aziende a partecipazione statale — Eni, Enel, Olivetti, IRI — diventano i motori dello sviluppo e al contempo i laboratori di un modello originale di capitalismo sociale.</p>
+  <p>In questo clima, il <strong>welfare aziendale è un valore strategico</strong>, non un costo marginale. Le imprese più illuminate costruiscono villaggi residenziali per i dipendenti, asili nido, ospedali, club ricreativi, e — elemento iconico dell'epoca — colonie estive al mare e in montagna per i figli dei lavoratori.</p>
+  <div class="highlight-seppia">
+    <p>Era prassi comune per molti ragazzi tra i 6 e i 14 anni passare almeno parte delle vacanze nelle colonie estive offerte dalle aziende. Le grandi aziende di Stato — Eni, Agip, Enel e Olivetti — avevano le loro strutture. I soggiorni prevedevano nuove località, gioco, svago, socializzazione: per molte famiglie operaie, l'unica occasione di distrazione dalla città e dalla realtà di tutti i giorni.</p>
+  </div>
+</div>
+
+<div class="scheda-card">
+  <h3>Prima dell'ENEL: la SME e l'elettricità del Sud</h3>
+  <p>Il compendio di Roccaraso nasce <strong>prima ancora della fondazione di ENEL</strong>. L'energia elettrica del Centro-Sud Italia era gestita dalla <strong>SME — Società Meridionale di Elettricità</strong>, una delle principali società regionali elettriche private che dominava il mercato campano, lucano, abruzzese e pugliese. La SME — come le altre grandi aziende elettriche dell'epoca — aveva già sviluppato un sistema di welfare per i propri dipendenti, incluse le colonie vacanza.</p>
+  <p>Il compendio di Roccaraso viene definito negli atti comunali stessi come <strong>"ex SME (colonia Enel)"</strong>: segno inequivocabile che la struttura fu costruita dalla SME negli anni precedenti alla nazionalizzazione, e successivamente ereditata da ENEL nel 1963.</p>
+  <div class="highlight-blu">
+    <p><strong>Il 6 dicembre 1962</strong> — il provvedimento di nazionalizzazione dell'energia elettrica (Legge n.1643) viene approvato in via definitiva. ENEL nasce come ente pubblico e nel 1963 inizia ad assorbire le 1.270 aziende del settore elettrico. La prima tra le grandi: la SME per la Campania e il Centro-Sud. Con la SME, arriva in dote anche il Soggiorno Montano di Roccaraso.</p>
+  </div>
+</div>
+
+<!-- SEZIONE 2: VITA -->
+<div class="section-header">
+  <div class="section-icon">🏔️</div>
+  <div class="section-title-txt">La Vita — Trent'anni di Villeggiatura Operaia</div>
+  <div class="section-count">1956–1990</div>
+</div>
+
+<div class="scheda-card">
+  <h3>La costruzione: tre fasi, un progetto coerente</h3>
+  <p>Il compendio viene realizzato in più fasi tra il <strong>1956 e il 1971</strong>, in piena sintonia con l'architettura razionalista del dopoguerra. Tre corpi di fabbrica principali (i mappali 801, 802 e 803 del catasto), simili ma distinti, disposti sulla collina del Poggio a 1.023 metri sul livello del mare. Il linguaggio architettonico è quello del <strong>razionalismo operaio</strong>: linee rette, volumi ripetuti, funzionalità come estetica.</p>
+  <p>I seminterrati — elemento distintivo e prezioso — vengono concepiti fin dall'inizio come <strong>infrastruttura collettiva</strong>: bar, mensa, cinema, palestra, lavanderia comune. Non solo un luogo dove dormire, ma un villaggio autosufficiente, con tutto il necessario per una vacanza completa per famiglie operaie.</p>
+  <div class="highlight-seppia">
+    <p>La struttura sorge in una "zona O" del Piano Regolatore — <em>zona destinata a verde e a soggiorno montano</em>, o attività sportive. Una destinazione d'uso che riflette perfettamente la sua funzione originaria: non residenza privata, non hotel commerciale, ma luogo di rigenerazione collettiva.</p>
+  </div>
+</div>
+
+<div class="scheda-card">
+  <h3>A chi era rivolto: la famiglia del lavoratore elettrico</h3>
+  <p>Il beneficiario diretto del Soggiorno Montano Enel è <strong>il dipendente della grande azienda elettrica di Stato</strong> e la sua famiglia. In quegli anni, Enel occupa decine di migliaia di lavoratori in tutto il Centro-Sud: operai delle centrali idroelettriche e termoelettriche, tecnici di rete, impiegati degli uffici compartimentali.</p>
+  <p>La struttura di Roccaraso serve principalmente il <strong>Compartimento Centro-Sud di ENEL</strong>, con bacino gravitazionale su Roma, Napoli, Pescara, L'Aquila, Bari. Per molti di questi lavoratori, il soggiorno a Roccaraso era l'unica vacanza in montagna della stagione estiva — un privilegio reso possibile dall'azienda, spesso a prezzi fortemente sussidiati o addirittura gratuiti per le famiglie più numerose.</p>
+  <p>Il modello non è dissimile da quello che Enrico Mattei applicava all'ENI nello stesso periodo: <strong>"i dipendenti Eni di ogni ordine e grado dovevano poter riposare in vacanza con le loro famiglie, senza che vi fosse alcuna distinzione di trattamento."</strong> Stessa filosofia per ENEL, con l'assegnazione dei soggiorni spesso tramite sorteggio per garantire equità.</p>
+</div>
+
+<div class="scheda-card">
+  <h3>La vita quotidiana: estate dopo estate</h3>
+  <p>Per due-tre decenni, ogni estate, il Poggio di Roccaraso si anima. Le tre palazzine accolgono <strong>famiglie provenienti da tutta la rete ENEL del Centro-Sud</strong>. I bambini che oggi ricordano con nostalgia quelle estati le raccontano sui gruppi Facebook come un'esperienza fondativa: la prima montagna, i primi amici fuori dal quartiere, il refettorio comune, i giochi in bosco, i sabato sera nel cinema del seminterrato.</p>
+  <p>La struttura funziona come <strong>villaggio integrato</strong>: la mensa comune serve i pasti, la palestra è aperta tutto il giorno, la pista di pattinaggio è il luogo di ritrovo serale. L'organizzazione è simile a quella di un campeggio strutturato: turni di tre settimane, animazione gestita dall'associazione ricreativa aziendale, attività sportive programmate.</p>
+  <div class="highlight-seppia">
+    <p>Roccaraso in estate è già dal dopoguerra una delle mete di villeggiatura più apprezzate del Centro-Sud: il comprensorio sciistico dell'Alto Sangro, i parchi nazionali limitrofi, i boschi e gli altopiani. Il Soggiorno Montano ENEL occupa una posizione privilegiata: isolato dal paese, immerso nel bosco, ma a pochi minuti dagli impianti.</p>
+  </div>
+</div>
+
+<!-- TIMELINE COMPLETA -->
+<div class="section-header">
+  <div class="section-icon">📅</div>
+  <div class="section-title-txt">La Cronologia Completa</div>
+  <div class="section-count">70 anni</div>
+</div>
+
+<div class="timeline">
+  <div class="timeline-title">Dalla nascita all'asta giudiziaria</div>
+
+  <div class="tl-item">
+    <div class="tl-anno seppia">~1950s</div>
+    <div class="tl-content">
+      <div class="tl-label">Ante ENEL — SME era</div>
+      <div class="tl-title">Prima costruzione del compendio</div>
+      <div class="tl-text">La Società Meridionale di Elettricità (SME), concessionaria dell'energia elettrica per il Centro-Sud Italia, avvia la costruzione del soggiorno montano a Roccaraso, Loc. Il Poggio. La struttura rientra nella politica di welfare aziendale che le grandi aziende elettriche regionali adottano nel dopoguerra per fidelizzare e supportare i dipendenti.</div>
+    </div>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-anno seppia">1956</div>
+    <div class="tl-content">
+      <div class="tl-label">Costruzione — Fase 1</div>
+      <div class="tl-title">I primi corpi di fabbrica</div>
+      <div class="tl-text">Vengono realizzati i primi edifici del compendio in stile razionalista, con struttura in cemento armato. L'architettura riflette i canoni del welfare aziendale del secondo dopoguerra: funzionale, ripetitivo, solidale. I seminterrati vengono progettati fin dall'inizio come spazi collettivi.</div>
+    </div>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-anno seppia">1962–63</div>
+    <div class="tl-content">
+      <div class="tl-label">Nazionalizzazione elettrica</div>
+      <div class="tl-title">ENEL nasce e assorbe tutto</div>
+      <div class="tl-text">Il 6 dicembre 1962, la legge n.1643 istituisce l'Ente Nazionale per l'Energia Elettrica (ENEL). Nel 1963 ENEL assorbe tutte le aziende elettriche, inclusa la SME. Il Soggiorno Montano di Roccaraso passa in proprietà ENEL: da colonia SME diventa "Soggiorno Montano Enel". Lo Stato italiano ha ora il più grande datore di lavoro del settore energetico, e con esso tutta la sua infrastruttura di welfare.</div>
+    </div>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-anno seppia">~1965</div>
+    <div class="tl-content">
+      <div class="tl-label">Espansione</div>
+      <div class="tl-title">Seconda fase costruttiva</div>
+      <div class="tl-text">ENEL amplia la struttura. Nuovi corpi di fabbrica vengono aggiunti per rispondere alla crescente domanda dei dipendenti. Il compendio si consolida nelle tre palazzine (mappali 801, 802, 803) per un totale di 46 unità abitative con tagli dimensionali molto vari (74–382 mq), adatte a famiglie di diverse dimensioni.</div>
+    </div>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-anno seppia">~1971</div>
+    <div class="tl-content">
+      <div class="tl-label">Completamento</div>
+      <div class="tl-title">Ultima fase costruttiva</div>
+      <div class="tl-text">Il compendio raggiunge la sua configurazione finale. A questa data risale l'ultimo intervento costruttivo documentato nella perizia. Il villaggio ha ora una capacità di oltre un centinaio di posti letto, con servizi collettivi completi: mensa, bar, cinema, palestra, pista di pattinaggio, campi da tennis.</div>
+    </div>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-anno">1970–80</div>
+    <div class="tl-content">
+      <div class="tl-label">Anni d'oro</div>
+      <div class="tl-title">Massima frequentazione</div>
+      <div class="tl-text">Il Soggiorno Montano Enel è pienamente operativo e frequentatissimo ogni estate. Le famiglie dei dipendenti ENEL del Centro-Sud vi trascorrono le vacanze estive. La struttura è organizzata con turni, animazione, attività sportive. Il villaggio è autosufficiente. Roccaraso è in quegli anni la meta sciistica e estiva più ambita dell'Appennino centrale.</div>
+    </div>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-anno">1980s</div>
+    <div class="tl-content">
+      <div class="tl-label">Declino del welfare aziendale</div>
+      <div class="tl-title">I cambiamenti culturali erodono il modello</div>
+      <div class="tl-text">A livello nazionale, l'espansione del welfare pubblico (anni '60-'70) rende meno necessario quello aziendale. Le colonie estive iniziano a svuotarsi: cambiano gli stili di vita, le famiglie preferiscono organizzarsi autonomamente, i costi di gestione delle strutture collettive aumentano. ENEL, come le altre grandi aziende, inizia a valutare la sostenibilità economica del proprio patrimonio di welfare.</div>
+    </div>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-anno rosso">~1990</div>
+    <div class="tl-content">
+      <div class="tl-label">Fine del soggiorno</div>
+      <div class="tl-title">ENEL chiude la struttura</div>
+      <div class="tl-text">Il Soggiorno Montano Enel di Roccaraso cessa l'attività. ENEL, in un processo di razionalizzazione delle proprie strutture patrimoniali non-core, avvia la dismissione del compendio. Il villaggio, dopo trent'anni di vita intensa, viene abbandonato. Le tre palazzine restano vuote, il bosco comincia a riprendersi gli spazi.</div>
+    </div>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-anno rosso">1992</div>
+    <div class="tl-content">
+      <div class="tl-label">ENEL diventa SpA</div>
+      <div class="tl-title">La privatizzazione accelera la dismissione</div>
+      <div class="tl-text">Con il D.L. 333/1992, ENEL si trasforma in Società per Azioni, primo passo verso la privatizzazione. Questo segna l'accelerazione della cessione del patrimonio immobiliare non strategico: villaggi vacanza, colonie, strutture di welfare vengono messe sul mercato. Il Soggiorno Montano di Roccaraso entra in questa lista.</div>
+    </div>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-anno rosso">~2000</div>
+    <div class="tl-content">
+      <div class="tl-label">Prima vendita</div>
+      <div class="tl-title">ENEL cede il compendio alla famiglia Ferlaino</div>
+      <div class="tl-text">ENEL vende il compendio di Roccaraso. L'acquirente è la <strong>famiglia Ferlaino</strong> — Corrado Ferlaino, il celebre ingegnere edile napoletano già noto come presidente del Napoli Calcio degli scudetti di Maradona (1987-1990) e costruttore di oltre 20.000 abitazioni tra Napoli, Rione Alto, Anacapri, Roccaraso, Livorno, Milano. La società acquirente è la <strong>Eden Real Estate / Reale Estate</strong>, con sede a Napoli.</div>
+    </div>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-anno rosso">2005</div>
+    <div class="tl-content">
+      <div class="tl-label">Primo tentativo</div>
+      <div class="tl-title">Condono edilizio e prime manovre</div>
+      <div class="tl-text">Viene concesso un <strong>condono edilizio</strong> sulla struttura. I Ferlaino iniziano a esplorare le possibilità di riconversione dell'ex colonia in appartamenti residenziali per villeggianti. L'idea iniziale è audace: <strong>700 appartamenti</strong> nell'area del compendio, inclusa nuova volumetria esterna. Un progetto faraonico per una zona classificata "O" — verde e soggiorno montano.</div>
+    </div>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-anno rosso">2008</div>
+    <div class="tl-content">
+      <div class="tl-label">Primo stop</div>
+      <div class="tl-title">Il Comune boccia i 700 appartamenti</div>
+      <div class="tl-text">Il Consiglio Comunale di Roccaraso rigetta <strong>all'unanimità</strong> la proposta di Piano Integrato presentato dalla ditta Eden Real Estate, che prevedeva 700 unità abitative e volumetria aggiuntiva oltre l'esistente. Il consigliere Luigi Altamura si dimette dalla maggioranza in segno di protesta contro la gestione speculativa del patrimonio territoriale.</div>
+    </div>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-anno arancio">2009</div>
+    <div class="tl-content">
+      <div class="tl-label">Permesso di costruire</div>
+      <div class="tl-title">Via libera (ridimensionato) a 50 appartamenti</div>
+      <div class="tl-text">L'ufficio tecnico del Comune rilascia il <strong>permesso di costruire n. 35/2009</strong> alla ditta Reale Estate per la "ristrutturazione degli edifici esistenti" finalizzata all'ottenimento di <strong>50 appartamenti</strong> — senza aumenti di volumetria ma con cambio di destinazione d'uso. Il progetto non prevede tuttavia le aree comuni necessarie a mantenere la destinazione "soggiorno montano". Controversia politica immediata.</div>
+    </div>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-anno arancio">2010</div>
+    <div class="tl-content">
+      <div class="tl-label">Variante</div>
+      <div class="tl-title">Variante n. 34/2010 al permesso</div>
+      <div class="tl-text">Viene concessa la <strong>variante n. 34/2010</strong> al permesso di costruire originario. I Ferlaino ottengono una modifica al progetto, ancora nell'ambito della volumetria esistente. I lavori vengono avviati.</div>
+    </div>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-anno rosso">Maggio 2011</div>
+    <div class="tl-content">
+      <div class="tl-label">Secondo stop</div>
+      <div class="tl-title">Il Comune blocca i lavori</div>
+      <div class="tl-text">Il sindaco Armando Cipriani blocca i lavori con un'ordinanza di sospensione. Emergono dubbi sulla legittimità della concessione edilizia in sanatoria rilasciata due anni prima. L'area è classificata "O" — verde e soggiorno montano — rendendo teoricamente impossibile la variazione a residenziale privato. Il Comune richiede ulteriori pareri legali e tecnici. Scoppiano le polemiche politiche.</div>
+    </div>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-anno arancio">Ottobre 2011</div>
+    <div class="tl-content">
+      <div class="tl-label">Colpo di scena</div>
+      <div class="tl-title">Il cambiamento climatico "salva" il progetto Ferlaino</div>
+      <div class="tl-text">Il parere legale richiesto dal Comune, sorprendentemente, conferma la validità del permesso a costruire. La motivazione: la destinazione "O" era stata prevista per impianti sciistici, ma le <strong>mutate condizioni climatiche</strong> (riduzione innevamento) avrebbero cambiato le condizioni originarie che avevano ispirato la classificazione urbanistica. Il sindaco Francesco Di Donato conferma l'efficacia del permesso. I lavori potrebbero riprendere.</div>
+    </div>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-anno rosso">2011–2016</div>
+    <div class="tl-content">
+      <div class="tl-label">Paralisi</div>
+      <div class="tl-title">I lavori non riprendono — la crisi finanziaria colpisce</div>
+      <div class="tl-text">Nonostante il parere favorevole, i lavori non riprendono. La crisi finanziaria del 2008-2012 ha colpito duramente il settore immobiliare italiano. Le banche stringono i cordoni del credito. Il progetto dei Ferlaino rimane sulla carta. Il compendio continua ad essere abbandonato, nel degrado crescente. Il bosco avanza.</div>
+    </div>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-anno rosso">2016</div>
+    <div class="tl-content">
+      <div class="tl-label">Procedura esecutiva</div>
+      <div class="tl-title">Esecuzione Forzata N.43/16 — Tribunale di Sulmona</div>
+      <div class="tl-text">La società della famiglia Ferlaino finisce in <strong>procedura esecutiva forzata</strong>. Il Tribunale di Sulmona apre il fascicolo N.43/16. Il compendio — 3 palazzine, 46 appartamenti, 5.954 mq residenziali, 219.239 mq di terreni — viene pignorato e avviato alla vendita all'asta. I creditori attendono il realizzo.</div>
+    </div>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-anno rosso">2016–oggi</div>
+    <div class="tl-content">
+      <div class="tl-label">Aste deserte</div>
+      <div class="tl-title">Anni di aste andate a vuoto</div>
+      <div class="tl-text">Il compendio viene messo all'asta più volte dal Tribunale di Sulmona. Le aste vanno deserte: il prezzo base è alto, la situazione urbanistica è complessa, la struttura necessita di importanti interventi. Nel frattempo, l'abbandono avanza: le palazzine sono in stato di degrado, la vegetazione colonizza gli spazi, le infrastrutture si deteriorano.</div>
+    </div>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-anno arancio">2026</div>
+    <div class="tl-content">
+      <div class="tl-label">Ora</div>
+      <div class="tl-title">Base d'asta corrente: €6.072.822</div>
+      <div class="tl-text">Il compendio è all'asta con base di €6.072.822. I mappali 801, 802, 803 (palazzine) e i terreni circostanti per 219.239 mq sono in vendita come lotto unico. Il permesso di costruire e la variante sono ancora formalmente attivi. La destinazione extralberghiera (L.R. 75/1995) è quella che meglio si adatta al perimetro normativo vigente.</div>
+    </div>
+  </div>
+</div>
+
+<!-- SEZIONE: I PROTAGONISTI -->
+<div class="section-header">
+  <div class="section-icon">👤</div>
+  <div class="section-title-txt">I Protagonisti della Storia</div>
+  <div class="section-count">4 attori</div>
+</div>
+
+<div class="scheda-card">
+  <table class="prop-table">
+    <thead>
+      <tr><th>Epoca</th><th>Proprietario / Gestore</th><th>Ruolo nella storia</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>~1950–1962</td>
+        <td><strong>SME — Società Meridionale di Elettricità</strong><br><span class="badge badge-seppia">Pre-ENEL</span></td>
+        <td>Costruttore e gestore originale. Azienda elettrica regionale per il Centro-Sud, tra i principali erogatori di welfare aziendale del Mezzogiorno. Costruisce il Soggiorno Montano come parte della propria politica sociale verso i dipendenti. Il compendio è uno dei frutti più visibili di quel capitalismo industriale "paternalistico" e solidale del miracolo economico.</td>
+      </tr>
+      <tr>
+        <td>1962–~2000</td>
+        <td><strong>ENEL — Ente Nazionale per l'Energia Elettrica</strong><br><span class="badge badge-blue">Stato italiano</span></td>
+        <td>Eredita il compendio con la nazionalizzazione del 1962-63. Lo gestisce per trent'anni come soggiorno montano per i dipendenti del Compartimento Centro-Sud. Poi, nella fase di privatizzazione e razionalizzazione post-1992, dismette il patrimonio non-core e vende. Il Soggiorno Montano passa dal bilancio dello Stato a quello di un privato.</td>
+      </tr>
+      <tr>
+        <td>~2000–2016</td>
+        <td><strong>Eden Real Estate / Reale Estate (Famiglia Ferlaino)</strong><br><span class="badge badge-red">Proprietario fallito</span></td>
+        <td>Corrado Ferlaino — ingegnere civile napoletano, costruttore di oltre 20.000 abitazioni, ex presidente del Napoli Calcio degli scudetti di Maradona — acquista il compendio. Tenta per 15 anni di trasformarlo in un complesso residenziale: prima 700 appartamenti (bocciati), poi 50. Ottiene permesso e variante ma non riesce a completare i lavori. La crisi finanziaria e i debiti portano all'esecuzione forzata nel 2016.</td>
+      </tr>
+      <tr>
+        <td>2016 → oggi</td>
+        <td><strong>Tribunale di Sulmona — Esec. Forzata N.43/16</strong><br><span class="badge badge-grey">Custodia giudiziaria</span></td>
+        <td>Il compendio è sotto procedura esecutiva. Il custode giudiziario nominato dal Tribunale ne ha la gestione formale. Le aste si susseguono senza esito. L'immobile attende un acquirente con una visione chiara e la capacità di navigare la complessità urbanistica e normativa di un sito così stratificato.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- SEZIONE: PERCHÉ È FALLITO -->
+<div class="section-header">
+  <div class="section-icon">💥</div>
+  <div class="section-title-txt">Perché è Fallito — Anatomia di un Insuccesso</div>
+  <div class="section-count">cause</div>
+</div>
+
+<div class="scheda-card">
+  <h3>Le cause della dismissione da parte di ENEL</h3>
+  <p>ENEL abbandona il Soggiorno Montano per <strong>ragioni sistemiche</strong>, non specifiche al sito di Roccaraso:</p>
+  <p><strong>1. La fine del modello culturale delle colonie.</strong> Dagli anni '80, il concetto di vacanza cambia radicalmente. Le famiglie italiane, con il benessere crescente, preferiscono organizzarsi autonomamente. Le colonie aziendali perdono attrattività: troppo rigide, troppo collettive, troppo simili alle strutture scolastiche.</p>
+  <p><strong>2. L'espansione del welfare pubblico</strong> (pensioni, sanità, istruzione) rende meno necessario quello aziendale privato. Le aziende iniziano a reinterpretare il welfare in forme più moderne (voucher, benefit monetari).</p>
+  <p><strong>3. La privatizzazione di ENEL (1992)</strong> impone una logica di mercato al patrimonio immobiliare: ogni asset deve giustificarsi economicamente. Un villaggio vacanza per dipendenti — con costi di gestione elevati e rendimento nullo per i bilanci aziendali — diventa un peso da cedere.</p>
+  <div class="highlight-red">
+    <p><strong>Paradosso:</strong> ENEL cede a fine anni '90 un patrimonio straordinario — posizione, bosco, strutture, destinazione d'uso — probabilmente a prezzo di saldo. Chi compra non ha una visione adeguata alla complessità del sito. Chi doveva proteggere il territorio (il Comune) si trova a gestire le contraddizioni di una normativa urbanistica inadeguata ai tempi che cambiano.</p>
+  </div>
+</div>
+
+<div class="scheda-card">
+  <h3>Le cause del fallimento del progetto Ferlaino</h3>
+  <p><strong>1. Visione sbagliata.</strong> Trasformare un soggiorno montano in appartamenti privati è esattamente l'opposto di ciò che il sito è stato e potrebbe tornare a essere. Il mercato delle seconde case in montagna non è mai decollato al punto da giustificare il progetto.</p>
+  <p><strong>2. Conflitto normativo cronico.</strong> La zona "O" del Piano Regolatore non è compatibile con la residenzialità privata. Ogni tentativo di forzare questa destinazione ha generato resistenza politica e blocchi procedurali. Quindici anni di battaglie urbanistiche sono stati anni di costi e nessun ritorno.</p>
+  <p><strong>3. Il timing della crisi.</strong> Quando finalmente nel 2011 sembra aprirsi uno spiraglio, la crisi finanziaria del 2008-2012 ha già prosciugato la liquidità disponibile e il credito bancario. L'operazione diventa insostenibile.</p>
+  <p><strong>4. La dimensione sbagliata del progetto.</strong> 50 appartamenti in un'area classificata "soggiorno montano" a 1.000 metri di quota non hanno un mercato naturale. Non abbastanza per un resort, troppi per una residenza di montagna autentica.</p>
+</div>
+
+<!-- QUOTE -->
+<div class="quote-block">
+  <div class="quote-text">L'area in cui sorge la struttura è classificata "O": zona destinata a verde e a soggiorno montano. La ditta non ha previsto aree comuni che potessero salvaguardare la destinazione a soggiorno montano. Il progetto iniziale prevedeva addirittura 700 appartamenti — una richiesta bocciata all'unanimità in consiglio comunale nel 2009, ma senza scoraggiare i costruttori.</div>
+  <div class="quote-source">Il Centro, 5 maggio 2011 — dichiarazione del Sindaco Cipriani sull'ex Colonia Enel di Roccaraso</div>
+</div>
+
+<!-- SEZIONE: STATO ATTUALE -->
+<div class="section-header">
+  <div class="section-icon">🔴</div>
+  <div class="section-title-txt">Lo Stato Attuale</div>
+  <div class="section-count">2026</div>
+</div>
+
+<div class="stato-attuale">
+  <div class="stato-label">Status legale</div>
+  <div class="stato-value">IN VENDITA ALL'ASTA</div>
+  <div class="stato-text">Il compendio è sotto procedura esecutiva forzata (N.43/16) al Tribunale di Sulmona. Custode giudiziario nominato. Base d'asta corrente: <strong>€6.072.822</strong> per il lotto unico comprendente le 3 palazzine (mapp. 801-802-803), 46 unità abitative (5.954 mq SLP residenziale) e 219.239 mq di terreni. Il permesso di costruire n. 35/2009 e la variante n. 34/2010 risultano ancora formalmente attivi. La destinazione extralberghiera (L.R. 75/1995) è quella coerente con la zonizzazione vigente.</div>
+</div>
+
+<div class="scheda-card">
+  <h3>Lo stato fisico del compendio</h3>
+  <p>Dopo 35 anni di abbandono sostanziale, le tre palazzine presentano un <strong>degrado avanzato ma non irreversibile</strong>. La struttura in cemento armato — tipica del razionalismo degli anni '50-'70 — è robusta per natura e generalmente conserva l'integrità strutturale anche dopo lunghi periodi di abbandono. Tuttavia:</p>
+  <p><strong>Cosa certamente richiede intervento:</strong> gli impianti (idrico, elettrico, termico) sono da rifare integralmente. Le finiture interne sono degradate. I serramenti sono da sostituire. I seminterrati potrebbero avere problemi di umidità. La viabilità interna necessita di manutenzione.</p>
+  <p><strong>Cosa probabilmente è in buono stato:</strong> la struttura portante, le fondamenta, la maglia strutturale in CA, la disposizione spaziale degli ambienti (già calibrata per funzioni collettive).</p>
+  <p><strong>Il bosco:</strong> il dato più interessante è che i 22 ettari di bosco ceduo, dopo 35 anni di abbandono gestito, hanno probabilmente raggiunto un'interessante densità e biodiversità. Un patrimonio naturale in crescita, non in decadimento.</p>
+  <div class="highlight-blu">
+    <p><strong>Nota:</strong> La frazione "Soggiorno Montano Enel" è ancora ufficialmente registrata come frazione del Comune di Roccaraso, con 5 abitanti censiti. Il toponimo è rimasto nella mappa d'Italia come memoria toponimica di ciò che fu.</p>
+  </div>
+</div>
+
+<!-- ORANGE BAND: COSA CAMBIA -->
+<div class="orange-band">
+  <h3>🎯 Cosa cambia sapere questa storia per RCV</h3>
+  <p>Conoscere la genesi del compendio non è un esercizio accademico. Cambia profondamente il modo in cui si progetta la sua trasformazione. <strong>Il sito non è un immobile qualunque</strong>: è un luogo che ha vissuto, che ha avuto una comunità, che ha avuto una funzione sociale precisa e nobile. Chi lo riporta alla vita non lo fa partendo da zero — raccoglie un'eredità e si assume la responsabilità di onorarla.</p>
+  <p>Il fallimento dei Ferlaino insegna la lezione più importante: <strong>trasformare questo sito in appartamenti privati è esattamente la direzione sbagliata</strong>. Il luogo è nato come spazio collettivo, vuole tornare ad essere spazio collettivo. La destinazione extralberghiera non è un vincolo — è la risposta giusta.</p>
+</div>
+
+<!-- PERCHÉ CONTA PROGETTUALMENTE -->
+<div class="perche-section">
+  <div class="perche-title">5 Motivi per cui la Storia conta nella Progettazione</div>
+  <div class="perche-item">
+    <div class="perche-num">01</div>
+    <div class="perche-text"><strong>L'identità operaia è un asset narrativo.</strong> Il razionalismo degli anni '50-'70 non è un problema da risolvere — è il brand. Chi compra RCV compra anche 70 anni di storia sociale italiana. Questa narrativa vale milioni in termini di posizionamento e media coverage.</div>
+  </div>
+  <div class="perche-item">
+    <div class="perche-num">02</div>
+    <div class="perche-text"><strong>La destinazione "soggiorno montano" è un'opportunità.</strong> La zonizzazione "O" non è un ostacolo — è la protezione che ha impedito la speculazione. Vincolando il sito alla fruizione collettiva, ha mantenuto aperta la possibilità del concept giusto: extralberghiero, ospitalità, comunità.</div>
+  </div>
+  <div class="perche-item">
+    <div class="perche-num">03</div>
+    <div class="perche-text"><strong>I seminterrati collettivi erano il cuore pulsante.</strong> Cinema, mensa, palestra, bar: il Soggiorno Montano era già un prototipo di what we'd call oggi "third spaces". Riportarli a vita è il gesto più potente — e più fedele — che si possa fare verso la storia del sito.</div>
+  </div>
+  <div class="perche-item">
+    <div class="perche-num">04</div>
+    <div class="perche-text"><strong>Il bosco ha 35 anni di riforestazione spontanea in dote.</strong> Non è un terreno da valorizzare: è già un ecosistema maturo. Ogni anno che il compendio è rimasto abbandonato, il bosco è cresciuto. Chi entra oggi ha in regalo un patrimonio naturale che ha richiesto decenni per formarsi.</div>
+  </div>
+  <div class="perche-item">
+    <div class="perche-num">05</div>
+    <div class="perche-text"><strong>Il fallimento del precedente acquirente è un'istruzione per l'uso.</strong> Il progetto Ferlaino è fallito perché ha ignorato l'identità del sito. La lezione è chiara: chi arriva con una visione speculativa e residenziale troverà opposizione istituzionale, normativa e di mercato. Chi porta una visione coerente con la storia del luogo — collettiva, ospitale, generativa — trova un percorso aperto.</div>
+  </div>
+</div>
+
+<!-- DARK CTA -->
+<div class="dark-cta">
+  <h2>LA STORIA È <span>MATERIA PRIMA.</span></h2>
+  <p>Non si progetta il futuro di un luogo senza capire da dove viene. La storia del Soggiorno Montano Enel è la più potente architettura di brand che RCV possa avere — gratuita, autentica, impossibile da replicare.</p>
+</div>
+
+<!-- DISCLAIMER -->
+<div class="disclaimer">
+  <strong>Note metodologiche:</strong> La ricostruzione storica contenuta in questo documento è basata su fonti giornalistiche verificate (Il Centro, PrimaDaNoi.it, AbruzzoWeb.it), fonti istituzionali (Comune di Roccaraso, Tribunale di Sulmona), studi accademici sulle ex colonie aziendali italiane e fonti storiche su ENEL e SME. Alcune date e dettagli operativi (anni esatti di apertura/chiusura, volume di utenti annui) non sono stati trovati in fonti documentate e sono stati ricostruiti per inferenza dai dati disponibili. La ricostruzione della catena proprietaria SME→ENEL→Ferlaino→Asta è supportata da fonti verificate. Elaborato da <strong>FranKi Studio</strong> — Fase F01 Concept Research — Aprile 2026.
+</div>
+
+</body>
+</html>

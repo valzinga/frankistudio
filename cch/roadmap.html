@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roadmap Operativa v2 | CCH · Franki Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --fk-blue:#3549B5; --fk-blue-dark:#1E2E8A; --fk-blue-mid:#4E66D0;
+  --fk-blue-light:#EBF0FF; --fk-blue-pale:#F5F7FF;
+  --fk-amber:#F9AC28; --fk-amber-dark:#C07800;
+  --fk-amber-light:#FFF7E0;
+  --fk-white:#FFFFFF; --fk-cream:#FAF9F6; --fk-cream-dark:#EDEBE4;
+  --fk-ink:#1A1714; --fk-gray:#6B6560; --fk-gray-light:#F2F0EB;
+  --fk-green:#1A7A4A; --fk-green-light:#E0F5EC; --fk-green-text:#0A4A28;
+  --fk-red:#B03020; --fk-red-light:#FDECEA; --fk-red-text:#701A12;
+  --fk-violet:#6B3FA0; --fk-violet-light:#F0E8FF;
+  --fk-display:'Bebas Neue',sans-serif;
+  --fk-label:'DM Mono',monospace;
+  --fk-body:'Lato',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--fk-cream);color:var(--fk-ink);font-family:var(--fk-body);font-size:1rem;line-height:1.8;-webkit-font-smoothing:antialiased;}
+p{margin-bottom:.9rem;} p:last-child{margin-bottom:0;}
+
+/* HEADER */
+.hdr{background:var(--fk-blue-dark);padding:2.5rem 4rem;position:relative;overflow:hidden;}
+.hdr::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(-55deg,transparent,transparent 28px,rgba(255,255,255,.025) 28px,rgba(255,255,255,.025) 29px);pointer-events:none;}
+.hdr::after{content:'';position:absolute;bottom:0;left:0;right:0;height:4px;background:var(--fk-amber);}
+.hdr__brand{font-family:var(--fk-label);font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;color:var(--fk-amber);margin-bottom:.5rem;position:relative;}
+.hdr__title{font-family:var(--fk-display);font-size:clamp(2rem,4vw,3.8rem);letter-spacing:.04em;line-height:1;color:var(--fk-white);position:relative;}
+.hdr__title em{color:var(--fk-amber);font-style:normal;}
+.hdr__sub{font-size:.92rem;font-style:italic;color:rgba(255,255,255,.45);margin-top:.4rem;position:relative;}
+.hdr__meta{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.4rem;position:relative;}
+
+/* NAV */
+.nav{background:var(--fk-blue-dark);display:flex;overflow-x:auto;position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(255,255,255,.08);}
+.nav__tab{font-family:var(--fk-label);font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.38);padding:.85rem 1.4rem;cursor:pointer;border:none;border-bottom:3px solid transparent;background:none;white-space:nowrap;transition:color .2s,border-color .2s;}
+.nav__tab:hover{color:rgba(255,255,255,.75);}
+.nav__tab.active{color:var(--fk-amber);border-bottom-color:var(--fk-amber);background:rgba(255,255,255,.04);}
+
+/* SEZIONI */
+.sec{display:none;padding:2.5rem 4rem 4rem;max-width:1200px;margin:0 auto;animation:fkf .3s ease;}
+.sec.active{display:block;}
+@keyframes fkf{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+.sec__hdr{display:flex;align-items:baseline;gap:1rem;margin-bottom:.8rem;padding-bottom:.8rem;border-bottom:1px solid var(--fk-cream-dark);}
+.sec__num{font-family:var(--fk-display);font-size:3.5rem;color:var(--fk-cream-dark);line-height:1;flex-shrink:0;}
+.sec__title{font-family:var(--fk-display);font-size:2rem;letter-spacing:.06em;color:var(--fk-ink);}
+.sec__intro{font-size:.92rem;color:var(--fk-gray);font-style:italic;margin-bottom:2rem;line-height:1.65;}
+.sep{height:1px;background:var(--fk-cream-dark);margin:2.5rem 0;}
+.sub{font-family:var(--fk-display);font-size:1.3rem;letter-spacing:.05em;color:var(--fk-ink);margin:1.8rem 0 1rem;padding-left:.85rem;border-left:4px solid var(--fk-amber);}
+.sub--blue{border-left-color:var(--fk-blue);}
+.sub--green{border-left-color:var(--fk-green);}
+.sub--gray{border-left-color:var(--fk-gray);}
+
+/* BADGE & PILL */
+.b{display:inline-block;font-family:var(--fk-label);font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;padding:.2rem .65rem;border-radius:4px;line-height:1.4;}
+.b--blue{background:var(--fk-blue-light);color:var(--fk-blue-dark);}
+.b--amber{background:var(--fk-amber-light);color:var(--fk-amber-dark);border:1px solid #FBBC50;}
+.b--green{background:var(--fk-green-light);color:var(--fk-green-text);}
+.b--red{background:var(--fk-red-light);color:var(--fk-red-text);}
+.b--gray{background:var(--fk-gray-light);color:var(--fk-gray);}
+.b--franki{background:var(--fk-blue);color:var(--fk-amber);}
+.b--violet{background:var(--fk-violet-light);color:var(--fk-violet);}
+.pill{display:inline-block;font-family:var(--fk-label);font-size:.55rem;letter-spacing:.08em;text-transform:uppercase;padding:.22rem .85rem;border-radius:20px;}
+.pill--amber{background:var(--fk-amber-light);color:var(--fk-amber-dark);}
+.pill--franki{background:var(--fk-blue);color:var(--fk-amber);}
+.pill--gray{background:var(--fk-gray-light);color:var(--fk-gray);}
+.pill--green{background:var(--fk-green-light);color:var(--fk-green-text);}
+.pill--blue{background:var(--fk-blue-light);color:var(--fk-blue-dark);}
+
+/* CALLOUT */
+.c{padding:1.1rem 1.55rem;margin:1.2rem 0;border-left:4px solid;border-radius:0 6px 6px 0;}
+.c__l{font-family:var(--fk-label);font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;margin-bottom:.3rem;}
+.c p,.c li{font-size:.9rem;line-height:1.7;}
+.c--a{background:var(--fk-amber-light);border-left-color:var(--fk-amber);}
+.c--a .c__l{color:var(--fk-amber-dark);}
+.c--a p{color:#5A3A00;} .c--a strong{color:var(--fk-amber-dark);}
+.c--b{background:var(--fk-blue-light);border-left-color:var(--fk-blue);}
+.c--b .c__l{color:var(--fk-blue);}
+.c--b p{color:var(--fk-blue-dark);} .c--b strong{color:var(--fk-blue);}
+.c--g{background:var(--fk-green-light);border-left-color:var(--fk-green);}
+.c--g .c__l{color:var(--fk-green);}
+.c--g p{color:var(--fk-green-text);} .c--g strong{color:var(--fk-green);}
+
+/* ────────────────────────────────────────────
+   MASTER CARD — le azioni prioritarie
+──────────────────────────────────────────── */
+.master{background:var(--fk-white);border:2px solid var(--fk-amber);border-radius:10px;margin-bottom:1.8rem;overflow:hidden;position:relative;}
+.master::before{content:'MASTER';position:absolute;top:12px;right:14px;font-family:var(--fk-label);font-size:.55rem;letter-spacing:.18em;background:var(--fk-amber);color:var(--fk-blue-dark);padding:.2rem .6rem;border-radius:3px;font-weight:700;}
+.master--blue{border-color:var(--fk-blue);}
+.master--blue::before{background:var(--fk-blue);color:var(--fk-amber);}
+
+/* STANDARD CARD */
+.card{background:var(--fk-white);border:1px solid var(--fk-cream-dark);border-radius:10px;margin-bottom:1.4rem;overflow:hidden;}
+
+/* HEAD comune */
+.card__head,.master__head{padding:1.2rem 1.6rem;display:grid;grid-template-columns:auto 1fr auto;gap:1rem;align-items:center;border-bottom:1px solid var(--fk-cream-dark);}
+.card__head--amber,.master__head--amber{background:var(--fk-amber-light);border-bottom-color:#E8D080;}
+.card__head--blue,.master__head--blue{background:var(--fk-blue-light);border-bottom-color:#C0D0F0;}
+.card__head--green,.master__head--green{background:var(--fk-green-light);border-bottom-color:#A0D8BC;}
+.card__head--gray,.master__head--gray{background:var(--fk-gray-light);border-bottom-color:var(--fk-cream-dark);}
+.card__head--violet,.master__head--violet{background:var(--fk-violet-light);border-bottom-color:#D0C0F0;}
+
+.card__id,.master__id{font-family:var(--fk-display);font-size:2.8rem;line-height:1;color:var(--fk-cream-dark);flex-shrink:0;width:4rem;text-align:center;}
+.master__head--amber .master__id{color:var(--fk-amber-dark);}
+.master__head--blue  .master__id{color:var(--fk-blue);}
+.master__head--green .master__id{color:var(--fk-green);}
+.master__head--violet .master__id{color:var(--fk-violet);}
+.card__head--amber .card__id{color:var(--fk-amber-dark);}
+.card__head--blue  .card__id{color:var(--fk-blue);}
+
+.card__tag,.master__tag{font-family:var(--fk-label);font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;color:var(--fk-gray);margin-bottom:.2rem;}
+.master__head--amber .master__tag,.card__head--amber .card__tag{color:var(--fk-amber-dark);}
+.master__head--blue  .master__tag,.card__head--blue  .card__tag{color:var(--fk-blue);}
+.master__head--green .master__tag,.card__head--green .card__tag{color:var(--fk-green);}
+.master__head--violet .master__tag,.card__head--violet .card__tag{color:var(--fk-violet);}
+
+.card__title,.master__title{font-family:var(--fk-display);font-size:1.5rem;letter-spacing:.04em;color:var(--fk-ink);line-height:1.1;}
+.card__meta,.master__meta{display:flex;flex-direction:column;gap:.3rem;align-items:flex-end;}
+
+/* BODY */
+.card__body,.master__body{padding:1.4rem 1.6rem;display:grid;grid-template-columns:1fr 1fr;gap:1.6rem;}
+@media(max-width:700px){.card__body,.master__body{grid-template-columns:1fr;}}
+.block__title{font-family:var(--fk-label);font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--fk-gray);margin-bottom:.5rem;padding-bottom:.3rem;border-bottom:1px solid var(--fk-cream-dark);}
+.block__title--amber{color:var(--fk-amber-dark);}
+.block__title--blue{color:var(--fk-blue);}
+.block__title--green{color:var(--fk-green);}
+.block__title--violet{color:var(--fk-violet);}
+.block p{font-size:.9rem;line-height:1.7;}
+
+/* LISTA */
+.alist{list-style:none;margin:.4rem 0;}
+.alist li{display:flex;align-items:flex-start;gap:.7rem;padding:.45rem 0;border-bottom:1px solid var(--fk-cream-dark);font-size:.88rem;line-height:1.6;}
+.alist li:last-child{border-bottom:none;}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--fk-amber);margin-top:.6rem;flex-shrink:0;}
+.dot--blue{background:var(--fk-blue);}
+.dot--green{background:var(--fk-green);}
+.dot--violet{background:var(--fk-violet);}
+.dot--gray{background:var(--fk-gray);}
+
+/* FOOTER CRITERIO */
+.card__foot,.master__foot{padding:.9rem 1.6rem;border-top:1px solid var(--fk-cream-dark);display:flex;align-items:flex-start;gap:1rem;flex-wrap:wrap;}
+.master__foot--amber{background:var(--fk-amber-light);border-top-color:#E8D080;}
+.master__foot--blue{background:var(--fk-blue-light);border-top-color:#C0D0F0;}
+.master__foot--green{background:var(--fk-green-light);border-top-color:#A0D8BC;}
+.card__foot--amber{background:var(--fk-amber-light);border-top-color:#E8D080;}
+.card__foot--blue{background:var(--fk-blue-light);border-top-color:#C0D0F0;}
+.foot__label{font-family:var(--fk-label);font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;flex-shrink:0;margin-top:.1rem;}
+.master__foot--amber .foot__label,.card__foot--amber .foot__label{color:var(--fk-amber-dark);}
+.master__foot--blue .foot__label,.card__foot--blue .foot__label{color:var(--fk-blue);}
+.master__foot--green .foot__label{color:var(--fk-green);}
+.foot__text{font-size:.88rem;font-weight:700;}
+.master__foot--amber .foot__text,.card__foot--amber .foot__text{color:var(--fk-amber-dark);}
+.master__foot--blue .foot__text,.card__foot--blue .foot__text{color:var(--fk-blue-dark);}
+.master__foot--green .foot__text{color:var(--fk-green-text);}
+
+/* RANKING TABLE */
+.rank-table{width:100%;border-collapse:collapse;background:var(--fk-white);margin:1.2rem 0;}
+.rank-table th{font-family:var(--fk-label);font-size:.56rem;letter-spacing:.18em;text-transform:uppercase;color:var(--fk-amber);background:var(--fk-blue-dark);text-align:left;padding:.75rem 1rem;white-space:nowrap;}
+.rank-table td{padding:.85rem 1rem;border-bottom:1px solid var(--fk-cream-dark);vertical-align:middle;color:var(--fk-ink);font-size:.9rem;}
+.rank-table tr:last-child td{border-bottom:none;}
+.rank-table tr.is-master td{background:var(--fk-amber-light);}
+.rank-table tr.is-master td:first-child{border-left:4px solid var(--fk-amber);}
+.stars{color:var(--fk-amber);letter-spacing:-.1em;}
+.stars--gray{color:var(--fk-gray);}
+
+/* PERSONA CARD */
+.persona{background:var(--fk-white);border:1px solid var(--fk-cream-dark);border-radius:10px;overflow:hidden;margin-bottom:1.2rem;}
+.persona__head{display:flex;align-items:center;gap:1rem;padding:1.2rem 1.6rem;border-bottom:1px solid var(--fk-cream-dark);}
+.persona__av{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--fk-display);font-size:1.5rem;flex-shrink:0;letter-spacing:.04em;}
+.persona__name{font-family:var(--fk-display);font-size:1.6rem;letter-spacing:.04em;color:var(--fk-ink);}
+.persona__role{font-family:var(--fk-label);font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;color:var(--fk-gray);margin-top:.1rem;}
+.persona__body{padding:1.2rem 1.6rem;font-size:.9rem;color:var(--fk-ink);line-height:1.7;}
+.persona__body strong{font-weight:700;}
+
+/* PIATTAFORMA CARD */
+.platform-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin:1.2rem 0;}
+.platform{background:var(--fk-white);border:1px solid var(--fk-cream-dark);border-radius:8px;padding:1.2rem 1.4rem;border-top:3px solid var(--fk-blue);}
+.platform--amber{border-top-color:var(--fk-amber);}
+.platform--green{border-top-color:var(--fk-green);}
+.platform__name{font-family:var(--fk-display);font-size:1.1rem;letter-spacing:.04em;color:var(--fk-ink);margin-bottom:.3rem;}
+.platform__url{font-family:var(--fk-label);font-size:.6rem;color:var(--fk-blue);margin-bottom:.6rem;}
+.platform__body{font-size:.86rem;color:var(--fk-ink);line-height:1.65;}
+.platform__body strong{font-weight:700;}
+.platform__action{margin-top:.7rem;font-size:.84rem;color:var(--fk-amber-dark);font-weight:700;}
+
+/* FOOTER */
+.footer{background:var(--fk-blue-dark);border-top:4px solid var(--fk-amber);color:rgba(255,255,255,.35);text-align:center;padding:1.4rem;font-family:var(--fk-label);font-size:.56rem;letter-spacing:.15em;text-transform:uppercase;}
+.footer strong{color:var(--fk-amber);}
+
+@media(max-width:768px){
+  .hdr,.sec{padding-left:1.5rem;padding-right:1.5rem;}
+  .card__head,.master__head{grid-template-columns:auto 1fr;}
+  .card__meta,.master__meta{display:none;}
+}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr__brand">Franki Studio · Corsale CCH · Roadmap Operativa v2 · Aprile 2026</div>
+  <h1 class="hdr__title">Roadmap <em>Operativa</em> — v2</h1>
+  <p class="hdr__sub">Test divisi per tipo · Ranking di priorità · Chi fa cosa e perché · Yoga Retreat Leader focus</p>
+  <div class="hdr__meta">
+    <span class="pill pill--amber">MASTER = focus comunicazione e risorse</span>
+    <span class="pill pill--franki">Kick-off settimana 2 aprile</span>
+    <span class="pill pill--gray">Prima lettura Giorno 15 · Finale Giorno 45</span>
+  </div>
+</div>
+
+<div class="nav">
+  <button class="nav__tab active" onclick="show('s0')">📊 Ranking</button>
+  <button class="nav__tab" onclick="show('s1')">📦 Pacchetti</button>
+  <button class="nav__tab" onclick="show('s2')">➕ Add-on</button>
+  <button class="nav__tab" onclick="show('s3')">🧘 Yoga & Retreat</button>
+  <button class="nav__tab" onclick="show('s4')">⏸️ Parcheggiati</button>
+  <button class="nav__tab" onclick="show('s5')">👥 Il Team</button>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     RANKING — PANORAMICA PRIORITÀ
+══════════════════════════════════════════════════ -->
+<div class="sec active" id="s0">
+  <div class="sec__hdr"><span class="sec__num">00</span><span class="sec__title">Ranking — Priorità e Focus Comunicazione</span></div>
+  <p class="sec__intro">I test sono divisi in <strong>PACCHETTI</strong> (settimane tema, grosse prenotazioni) e <strong>ADD-ON</strong> (esperienze aggiuntive su soggiorni esistenti). Il ranking combina due fattori: quanto è facile da raggiungere e quanto genera in termini di revenue. I <strong>MASTER</strong> sono i test su cui concentrare comunicazione, energia e risorse nelle prime 6 settimane.</p>
+
+  <div class="c c--b">
+    <div class="c__l">Come leggere il ranking</div>
+    <p><strong>★★★ MASTER</strong> = priorità assoluta — azione immediata, comunicazione dedicata, risorse concentrate. <strong>★★☆</strong> = importante ma secondario — si avvia ma non è il focus principale. <strong>★☆☆</strong> = utile ma non urgente — si fa quando c'è spazio. <strong>⏸ Parcheggiato</strong> = buona idea ma non adesso.</p>
+  </div>
+
+  <table class="rank-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Test</th>
+        <th>Tipo</th>
+        <th>Chi</th>
+        <th>Facilità</th>
+        <th>Revenue</th>
+        <th>Priorità</th>
+        <th>Timing</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="is-master">
+        <td style="font-family:var(--fk-label);font-size:1.2rem;color:var(--fk-amber-dark);"><strong>M1</strong></td>
+        <td><strong>Yoga / Wellness Retreat Leader Outreach</strong><br><span style="font-size:.78rem;color:var(--fk-gray);">BookRetreats + RetreatHub + Instagram DM diretto</span></td>
+        <td><span class="b b--franki">Pacchetto</span></td>
+        <td>Guia + Franki</td>
+        <td><span class="stars">★★★</span></td>
+        <td><span class="stars">★★★</span></td>
+        <td><span class="b b--amber">MASTER</span></td>
+        <td>Immediato</td>
+      </tr>
+      <tr class="is-master">
+        <td style="font-family:var(--fk-label);font-size:1.2rem;color:var(--fk-amber-dark);"><strong>M2</strong></td>
+        <td><strong>Oil Tasting + Pane di Maura — Add-on</strong><br><span style="font-size:.78rem;color:var(--fk-gray);">Proposto alle prossime prenotazioni confermate</span></td>
+        <td><span class="b b--blue">Add-on</span></td>
+        <td>Luca + Maura</td>
+        <td><span class="stars">★★★</span></td>
+        <td><span class="stars">★★☆</span></td>
+        <td><span class="b b--amber">MASTER</span></td>
+        <td>Immediato</td>
+      </tr>
+      <tr class="is-master">
+        <td style="font-family:var(--fk-label);font-size:1.2rem;color:var(--fk-amber-dark);"><strong>M3</strong></td>
+        <td><strong>Pricing Test — Pkg B €100 → €145</strong><br><span style="font-size:.78rem;color:var(--fk-gray);">Aggiornamento Airbnb, Booking, sito CCH</span></td>
+        <td><span class="b b--blue">Pricing</span></td>
+        <td>Luca + Guia</td>
+        <td><span class="stars">★★★</span></td>
+        <td><span class="stars">★★★</span></td>
+        <td><span class="b b--amber">MASTER</span></td>
+        <td>Immediato</td>
+      </tr>
+      <tr class="is-master">
+        <td style="font-family:var(--fk-label);font-size:1.2rem;color:var(--fk-amber-dark);"><strong>M4</strong></td>
+        <td><strong>Olive Harvest Experience — Landing Page</strong><br><span style="font-size:.78rem;color:var(--fk-gray);">Pagina EN + community food internazionali</span></td>
+        <td><span class="b b--franki">Pacchetto</span></td>
+        <td>Franki + Guia</td>
+        <td><span class="stars">★★☆</span></td>
+        <td><span class="stars">★★★</span></td>
+        <td><span class="b b--amber">MASTER</span></td>
+        <td>Entro 10 gg</td>
+      </tr>
+      <tr class="is-master">
+        <td style="font-family:var(--fk-label);font-size:1.2rem;color:var(--fk-amber-dark);"><strong>M5</strong></td>
+        <td><strong>Corporate LinkedIn Outreach</strong><br><span style="font-size:.78rem;color:var(--fk-gray);">20 HR manager target Napoli/Roma/Milano</span></td>
+        <td><span class="b b--franki">Pacchetto</span></td>
+        <td>Franki</td>
+        <td><span class="stars">★★★</span></td>
+        <td><span class="stars">★★★</span></td>
+        <td><span class="b b--amber">MASTER</span></td>
+        <td>Entro 5 gg</td>
+      </tr>
+      <tr>
+        <td style="font-family:var(--fk-label);font-size:1.2rem;color:var(--fk-blue);">A1</td>
+        <td><strong>Scuola di Cucina Napoletana (Weekend)</strong><br><span style="font-size:.78rem;color:var(--fk-gray);">Evoluzione dell'add-on Maura in pacchetto strutturato</span></td>
+        <td><span class="b b--franki">Pacchetto</span></td>
+        <td>Maura + Franki</td>
+        <td><span class="stars">★★☆</span></td>
+        <td><span class="stars">★★★</span></td>
+        <td><span class="b b--blue">Priorità alta</span></td>
+        <td>Entro 30 gg</td>
+      </tr>
+      <tr>
+        <td style="font-family:var(--fk-label);font-size:1.2rem;color:var(--fk-blue);">A2</td>
+        <td><strong>Chef Stellato — Fattibilità + Domanda</strong><br><span style="font-size:.78rem;color:var(--fk-gray);">Contatto chef campani + social validation</span></td>
+        <td><span class="b b--franki">Pacchetto</span></td>
+        <td>Luca + Franki + Guia</td>
+        <td><span class="stars">★★☆</span></td>
+        <td><span class="stars">★★★</span></td>
+        <td><span class="b b--blue">Priorità alta</span></td>
+        <td>Entro 15 gg</td>
+      </tr>
+      <tr>
+        <td style="font-family:var(--fk-label);font-size:1.2rem;color:var(--fk-blue);">A3</td>
+        <td><strong>Mongolfiera — Fornitore + Sondaggio</strong><br><span style="font-size:.78rem;color:var(--fk-gray);">Verifica locale + email clienti passati</span></td>
+        <td><span class="b b--blue">Add-on</span></td>
+        <td>Luca + Guia</td>
+        <td><span class="stars">★★☆</span></td>
+        <td><span class="stars">★★☆</span></td>
+        <td><span class="b b--blue">Priorità alta</span></td>
+        <td>Entro 10 gg</td>
+      </tr>
+      <tr>
+        <td style="font-family:var(--fk-label);font-size:1.2rem;color:var(--fk-gray);">P1</td>
+        <td><strong>Dark Sky Week</strong><br><span style="font-size:.78rem;color:var(--fk-gray);">Community astrofili — parcheggiato</span></td>
+        <td><span class="b b--gray">Pacchetto</span></td>
+        <td>Guia</td>
+        <td><span class="stars--gray">★★☆</span></td>
+        <td><span class="stars--gray">★★☆</span></td>
+        <td><span class="b b--gray">⏸ Parcheggiato</span></td>
+        <td>H2 2026</td>
+      </tr>
+      <tr>
+        <td style="font-family:var(--fk-label);font-size:1.2rem;color:var(--fk-gray);">P2</td>
+        <td><strong>Slow Stay in Italy — Ambassador</strong><br><span style="font-size:.78rem;color:var(--fk-gray);">Network outreach — parcheggiato</span></td>
+        <td><span class="b b--gray">Network</span></td>
+        <td>Luca</td>
+        <td><span class="stars--gray">★☆☆</span></td>
+        <td><span class="stars--gray">★★★</span></td>
+        <td><span class="b b--gray">⏸ Parcheggiato</span></td>
+        <td>H2 2026</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     PACCHETTI
+══════════════════════════════════════════════════ -->
+<div class="sec" id="s1">
+  <div class="sec__hdr"><span class="sec__num">01</span><span class="sec__title">Test Pacchetti — Settimane Tema</span></div>
+  <p class="sec__intro">I PACCHETTI sono le esperienze complete che occupano un'intera settimana — generano le prenotazioni più grosse e il revenue più alto. Sono il cuore del posizionamento premium di CCH.</p>
+
+  <!-- M1 YOGA -->
+  <div class="master">
+    <div class="master__head master__head--amber">
+      <div class="master__id">M1</div>
+      <div>
+        <div class="master__tag">Guia + Franki · Immediato · MASTER</div>
+        <div class="master__title">Yoga & Wellness Retreat Leader — Venue Hire</div>
+      </div>
+      <div class="master__meta">
+        <span class="pill pill--amber">Guia + Franki</span>
+        <span class="pill pill--gray">30 giorni</span>
+        <span class="pill pill--green">€0</span>
+      </div>
+    </div>
+    <div class="master__body">
+      <div class="block">
+        <div class="block__title block__title--amber">Perché è il MASTER #1</div>
+        <p>Il segmento Yoga & Wellness Retreat è il più strutturato e accessibile del mercato. Gli istruttori di yoga di alto livello organizzano <strong>2–4 retreat l'anno</strong> e cercano attivamente venue esclusive in Italia per portare i loro clienti (di solito 8–14 persone, alto reddito, anglosassoni). Sono abituati a pagare €1.000–1.500/notte per una venue esclusiva — esattamente quello che offre CCH.</p>
+        <p>La combinazione <strong>uliveto + cucina autentica + uso esclusivo + Sannio non ancora saturo</strong> è esattamente quello che cercano e non trovano nel mainstream toscano.</p>
+      </div>
+      <div class="block">
+        <div class="block__title block__title--amber">Cosa fare — due canali in parallelo</div>
+        <p><strong>Canale 1 — Piattaforme (Guia):</strong> creare profilo CCH su BookRetreats.com E su RetreatHub.com come "venue hire" — non retreat già organizzato. Testo in inglese, focus su esclusività, cucina, uliveto, capienza 14 pax.</p>
+        <p><strong>Canale 2 — Outreach diretto (Franki + Guia):</strong> identificare 20–30 yoga retreat leader su Instagram con 5k–50k follower che hanno già fatto retreat in Italia. Mandare DM personalizzato. Vedi sezione dedicata per istruzioni dettagliate.</p>
+      </div>
+    </div>
+    <div class="master__foot master__foot--amber">
+      <div class="foot__label">Criterio successo →</div>
+      <div class="foot__text">3 richieste preventivo da facilitatori internazionali entro 30 giorni. Se sì: si scala con outreach sistematico su 100 profili.</div>
+    </div>
+  </div>
+
+  <!-- M4 OLIVE HARVEST -->
+  <div class="master master--blue">
+    <div class="master__head master__head--blue">
+      <div class="master__id">M4</div>
+      <div>
+        <div class="master__tag">Franki + Guia · Entro 10 giorni · MASTER</div>
+        <div class="master__title">Olive Harvest Experience — Validazione Mercato Internazionale</div>
+      </div>
+      <div class="master__meta">
+        <span class="pill pill--blue">Franki + Guia</span>
+        <span class="pill pill--gray">60 giorni</span>
+        <span class="pill pill--amber">€0–400</span>
+      </div>
+    </div>
+    <div class="master__body">
+      <div class="block">
+        <div class="block__title block__title--blue">Il prodotto e il mercato</div>
+        <p>Una settimana immersiva in ottobre/novembre: <strong>raccolta delle olive a mano nei 6 ettari di uliveto biologico CCH</strong>, olivologo residente, visita al frantoio, degustazione olio nuovo, bottiglia personalizzata "Corsale [anno]". 2 edizioni autunnali.</p>
+        <p>Nei mercati UK, USA, Australia e Olanda questo tipo di esperienza agricola autentica si vende a <strong>€1.800–2.200 p.p./settimana</strong>. La community degli appassionati di olio extravergine conta oltre 2 milioni di persone solo su Instagram.</p>
+        <p style="font-size:.84rem;font-style:italic;color:var(--fk-gray);">Nota costo: se Guia crea la landing su una sezione del sito CCH esistente → €0. Se si usa Wix con dominio dedicato → €300–400. Decidere insieme al kick-off.</p>
+      </div>
+      <div class="block">
+        <div class="block__title block__title--blue">Cosa fare</div>
+        <ul class="alist">
+          <li><div class="dot dot--blue"></div><div>Franki scrive il testo della pagina in IT e EN — consegna entro 5 giorni dal kick-off</div></li>
+          <li><div class="dot dot--blue"></div><div>Guia crea la pagina: titolo "Corsale Olive Harvest 2026 — An Immersive Week in Sannio, Italy", form contatto semplice, foto dell'uliveto</div></li>
+          <li><div class="dot dot--blue"></div><div>Guia pubblica in 3 community: "Olive Oil Lovers" Facebook (2M+ iscritti) · "Italian Food & Travel" · r/italyfoodtravel su Reddit</div></li>
+          <li><div class="dot dot--blue"></div><div>Post tipo: <em>"We're opening our 6-hectare organic olive grove in Sannio, Campania to guests this October. Would you join a full immersive harvest week?"</em></div></li>
+          <li><div class="dot dot--blue"></div><div>Raccogliere tutte le risposte — anche solo commenti positivi sono dati utili</div></li>
+        </ul>
+      </div>
+    </div>
+    <div class="master__foot master__foot--blue">
+      <div class="foot__label">Criterio successo →</div>
+      <div class="foot__text">5 richieste info qualificate (chiedono date, prezzo, disponibilità) in 60 giorni. Se sì: si struttura il pacchetto completo e si contattano DMC incoming UK/USA.</div>
+    </div>
+  </div>
+
+  <!-- A1 SCUOLA CUCINA -->
+  <div class="card">
+    <div class="card__head card__head--violet">
+      <div class="card__id" style="color:var(--fk-violet);">A1</div>
+      <div>
+        <div class="card__tag card__head--violet" style="color:var(--fk-violet);">Maura + Franki · Entro 30 giorni · Evoluzione dell'add-on</div>
+        <div class="card__title">Scuola di Cucina Napoletana — Weekend & Long Weekend</div>
+      </div>
+      <div class="card__meta">
+        <span class="pill pill--amber">Maura + Franki</span>
+        <span class="pill pill--gray">Strutturazione 30 gg</span>
+        <span class="pill pill--green">€0 strutturazione</span>
+      </div>
+    </div>
+    <div class="card__body">
+      <div class="block">
+        <div class="block__title block__title--violet">Come evolve l'add-on di Maura</div>
+        <p>Il laboratorio pane+olio (Add-on M2) è il punto di partenza. Se il test M2 conferma l'interesse, si struttura come <strong>pacchetto weekend autonomo</strong>: 2–3 notti a CCH con 2 sessioni cucina intensive al giorno con Maura.</p>
+        <p><strong>Formato weekend:</strong> arrivo venerdì sera, 2 mattine di cucina (pane, pasta, conserve, dolci sanniti), cene comuni con quello che si produce. Partenza domenica. Target: food lovers italiani ed europei, piccoli gruppi 6–10 persone.</p>
+        <p><strong>Formato long weekend (4 notti):</strong> aggiunge visita a un produttore di farina locale, degustazione olio CCH, ricettario stampato personalizzato da portare a casa. Target: internazionale, più premium.</p>
+      </div>
+      <div class="block">
+        <div class="block__title block__title--violet">Prezzi e revenue stimato</div>
+        <ul class="alist">
+          <li><div class="dot dot--violet"></div><div><strong>Weekend 2 notti:</strong> €350–450 p.p. all-inclusive · 8 pax = €2.800–3.600 per weekend</div></li>
+          <li><div class="dot dot--violet"></div><div><strong>Long weekend 4 notti:</strong> €600–800 p.p. · 8 pax = €4.800–6.400</div></li>
+          <li><div class="dot dot--violet"></div><div><strong>Frequenza possibile:</strong> 1 weekend al mese ottobre–aprile = €30–40k solo da questo prodotto</div></li>
+          <li><div class="dot dot--violet"></div><div>Canali: BookRetreats weekend format, community food italiani, gruppi amici, aziende come team building gastronomico</div></li>
+        </ul>
+        <p style="margin-top:.6rem;font-size:.86rem;">Prima si valida l'interesse con M2 (add-on semplice). Se funziona, Franki prepara il pacchetto completo e lo posiziona come prodotto autonomo entro 30 giorni.</p>
+      </div>
+    </div>
+    <div class="card__foot card__foot--amber">
+      <div class="foot__label">Criterio successo →</div>
+      <div class="foot__text">M2 raggiunge il 50% di uptake → si struttura il weekend. Prima edizione strutturata entro giugno 2026.</div>
+    </div>
+  </div>
+
+  <!-- A2 CHEF STELLATO -->
+  <div class="card">
+    <div class="card__head card__head--blue">
+      <div class="card__id">A2</div>
+      <div>
+        <div class="card__tag" style="color:var(--fk-blue);">Luca + Franki + Guia · Entro 15 giorni</div>
+        <div class="card__title">Chef Stellato in Tenuta — Fattibilità + Validazione Domanda</div>
+      </div>
+      <div class="card__meta">
+        <span class="pill pill--blue">Luca + Franki + Guia</span>
+        <span class="pill pill--gray">45 giorni</span>
+        <span class="pill pill--green">€0</span>
+      </div>
+    </div>
+    <div class="card__body">
+      <div class="block">
+        <div class="block__title block__title--blue">Il prodotto</div>
+        <p>Uno chef stellato campano in residenza a CCH per 3–4 serate. Menù degustazione 7–9 portate costruito sull'olio EVO di Corsale come protagonista. Meet&greet, cooking show serale, cena gala. Il flagship product di CCH — quello che genera PR e parla da solo.</p>
+        <p>Il test ha due lati: verificare se esiste uno chef campano disponibile e interessato, e verificare se il pubblico sarebbe disposto a pagare €2.500–3.500 p.p./settimana in sua presenza.</p>
+      </div>
+      <div class="block">
+        <div class="block__title block__title--blue">Chi fa cosa</div>
+        <ul class="alist">
+          <li><div class="dot dot--blue"></div><div><strong>Luca:</strong> contatta personalmente 2–3 chef che conosce o conosce di nome — approccio informale, amicale</div></li>
+          <li><div class="dot dot--blue"></div><div><strong>Franki:</strong> identifica 3 chef stellati o premiati campani compatibili con il DNA CCH (cucina del territorio, non cucina fusion)</div></li>
+          <li><div class="dot dot--blue"></div><div><strong>Guia:</strong> Instagram — storia con sondaggio "Vi piacerebbe cenare con uno chef stellato in un uliveto del Sannio?" + form per lasciare email interessati</div></li>
+        </ul>
+      </div>
+    </div>
+    <div class="card__foot card__foot--blue">
+      <div class="foot__label">Criterio successo →</div>
+      <div class="foot__text">1 chef disponibile a discutere + 30 interazioni positive sul social. Se sì: si struttura il pacchetto e si fissa una data agosto o dicembre 2026.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     ADD-ON
+══════════════════════════════════════════════════ -->
+<div class="sec" id="s2">
+  <div class="sec__hdr"><span class="sec__num">02</span><span class="sec__title">Test Add-on — Esperienze Aggiuntive</span></div>
+  <p class="sec__intro">Gli ADD-ON sono esperienze a pagamento che si offrono su qualsiasi soggiorno esistente. Aumentano il ticket medio senza cambiare nulla di strutturale. Costo: quasi sempre zero. Risultati: immediati.</p>
+
+  <!-- M2 OIL TASTING -->
+  <div class="master">
+    <div class="master__head master__head--amber">
+      <div class="master__id">M2</div>
+      <div>
+        <div class="master__tag">Luca + Maura · Immediato — prossime prenotazioni · MASTER</div>
+        <div class="master__title">Oil Tasting + Pane di Maura — Test Uptake su Clienti Reali</div>
+      </div>
+      <div class="master__meta">
+        <span class="pill pill--amber">Luca + Maura</span>
+        <span class="pill pill--gray">Immediato</span>
+        <span class="pill pill--green">€0</span>
+      </div>
+    </div>
+    <div class="master__body">
+      <div class="block">
+        <div class="block__title block__title--amber">Cosa sono e perché partire da qui</div>
+        <p>Due esperienze che CCH sa già fare perfettamente e non ha mai venduto come prodotto a pagamento:</p>
+        <p><strong>Oil Tasting con Olivologo:</strong> degustazione guidata dell'olio EVO di produzione CCH con spiegazione delle differenze varietali, assaggio su pane appena sfornato, kit da portare a casa. Durata 90 minuti.</p>
+        <p><strong>Laboratorio Pane con Maura:</strong> impasto con lievito madre locale, formatura, cottura nel forno a legna. Gli ospiti portano a casa il loro pane. Durata 2–3 ore. Esperienza emotivamente fortissima — spesso citata nelle recensioni.</p>
+        <p>Questo è il test più facile e immediato dell'intera roadmap. Richiede solo un messaggio WhatsApp.</p>
+      </div>
+      <div class="block">
+        <div class="block__title block__title--amber">Testo WhatsApp da inviare</div>
+        <div style="background:var(--fk-blue-light);padding:.9rem 1.1rem;border-radius:6px;font-size:.86rem;color:var(--fk-blue-dark);line-height:1.75;border-left:3px solid var(--fk-blue);">
+          "Ciao! In vista del vostro arrivo volevamo proporvi due esperienze che potete aggiungere al soggiorno:<br><br>
+          🫒 <strong>Degustazione Olio EVO Corsale</strong> — assaggio guidato del nostro olio biologico con pane appena sfornato. €40 a persona · 90 min<br><br>
+          🍞 <strong>Laboratorio Pane con Maura</strong> — impasto con lievito madre, cottura nel forno a legna, portate a casa il vostro pane. €45 a persona · 2 ore<br><br>
+          Vi interessa aggiungere una o entrambe?"
+        </div>
+        <p style="margin-top:.7rem;font-size:.84rem;">Prezzi: €40–50 p.p. per ognuna. Luca annota quante persone accettano e a quale prezzo. Dati da riportare al giorno 15.</p>
+      </div>
+    </div>
+    <div class="master__foot master__foot--amber">
+      <div class="foot__label">Criterio successo →</div>
+      <div class="foot__text">50% dei gruppi contattati accetta almeno 1 add-on. Se sì: inserimento nel listino ufficiale + evoluzione verso Scuola di Cucina Weekend (A1).</div>
+    </div>
+  </div>
+
+  <!-- M3 PRICING -->
+  <div class="master master--blue">
+    <div class="master__head master__head--blue">
+      <div class="master__id">M3</div>
+      <div>
+        <div class="master__tag">Luca + Guia · Entro 5 giorni · MASTER</div>
+        <div class="master__title">Pricing Test — Pacchetto B da €100 a €145 p.p./notte</div>
+      </div>
+      <div class="master__meta">
+        <span class="pill pill--blue">Luca + Guia</span>
+        <span class="pill pill--gray">45 giorni osservazione</span>
+        <span class="pill pill--green">€0</span>
+      </div>
+    </div>
+    <div class="master__body">
+      <div class="block">
+        <div class="block__title block__title--blue">Perché è urgente</div>
+        <p>Il Pacchetto B (B&B con colazione) è a <strong>€100 p.p./notte</strong>. Il mercato comparabile parte da <strong>€130–150 senza i differenzianti di CCH</strong>. Ogni giorno al prezzo attuale CCH lascia €45 per persona sul tavolo. Se ci sono 10 ospiti per una settimana, sono €3.150 persi ogni settimana.</p>
+        <p>Alzare a €145 non è un test rischioso — è un allineamento dovuto. Il test misura solo se il mercato regge senza cali significativi. Ce lo aspettiamo.</p>
+      </div>
+      <div class="block">
+        <div class="block__title block__title--blue">Passo per passo</div>
+        <ul class="alist">
+          <li><div class="dot dot--blue"></div><div>Airbnb → Annunci → Prezzi → aggiornare a <strong>€145 p.p./notte</strong></div></li>
+          <li><div class="dot dot--blue"></div><div>Booking.com (se presente) → stesso aggiornamento</div></li>
+          <li><div class="dot dot--blue"></div><div>Sito CCH → aggiornare il listino visibile</div></li>
+          <li><div class="dot dot--blue"></div><div>Annotare la data esatta del cambio</div></li>
+          <li><div class="dot dot--blue"></div><div><strong>Non comunicarlo</strong> agli ospiti già prenotati — vale solo per le nuove</div></li>
+          <li><div class="dot dot--blue"></div><div>Se qualcuno commenta negativamente il prezzo: annotare il commento esatto — è un dato</div></li>
+        </ul>
+      </div>
+    </div>
+    <div class="master__foot master__foot--blue">
+      <div class="foot__label">Criterio successo →</div>
+      <div class="foot__text">Calo richieste &lt;20% nei 45 giorni. Se regge: si alza ancora a €165 nel round successivo. Revenue aggiuntivo stimato solo dal repricing: +€45k/anno.</div>
+    </div>
+  </div>
+
+  <!-- A3 MONGOLFIERA -->
+  <div class="card">
+    <div class="card__head card__head--amber">
+      <div class="card__id">A3</div>
+      <div>
+        <div class="card__tag" style="color:var(--fk-amber-dark);">Luca + Guia · Entro 10 giorni</div>
+        <div class="card__title">Mongolfiera — Fornitore Locale + Sondaggio Clienti Passati</div>
+      </div>
+      <div class="card__meta">
+        <span class="pill pill--amber">Luca + Guia</span>
+        <span class="pill pill--gray">30 giorni</span>
+        <span class="pill pill--green">€0</span>
+      </div>
+    </div>
+    <div class="card__body">
+      <div class="block">
+        <div class="block__title block__title--amber">Il contesto e l'opportunità di ottobre</div>
+        <p>Un volo in mongolfiera all'alba sulla Valle del Titerno è un'esperienza fotografica e emotivamente unica. Come add-on vale <strong>€180–220 p.p.</strong> Il test ha due lati: verificare che esista un fornitore affidabile in zona, e verificare che i clienti siano disposti a pagarlo.</p>
+        <p><strong>Opportunità specifica:</strong> c'è un <strong>raduno di mongolfiere nell'area Sannio dall'8 al 12 ottobre</strong>. CCH può agganciare questo evento per portare i clienti presenti in quella settimana in volo — trasformando un evento locale in un'esperienza esclusiva CCH.</p>
+      </div>
+      <div class="block">
+        <div class="block__title block__title--amber">Cosa fare</div>
+        <ul class="alist">
+          <li><div class="dot"></div><div><strong>Luca:</strong> cercare operatori mongolfiera nelle province BN, AV, CE o Molise. Chiedere a colleghi della zona o cercare "volo mongolfiera Campania Sannio"</div></li>
+          <li><div class="dot"></div><div><strong>Luca:</strong> contattare chi organizza il raduno di ottobre — chiedere se è possibile accordarsi per portare clienti CCH</div></li>
+          <li><div class="dot"></div><div><strong>Guia:</strong> mandare email agli ospiti degli ultimi 2 anni: <em>"Stiamo pensando di aggiungere un volo in mongolfiera all'alba — a €200 p.p. vi interesserebbe?"</em></div></li>
+          <li><div class="dot"></div><div>Raccogliere % risposte sì / forse / no</div></li>
+        </ul>
+      </div>
+    </div>
+    <div class="card__foot card__foot--amber">
+      <div class="foot__label">Criterio successo →</div>
+      <div class="foot__text">Fornitore trovato + 30% risposte email affermative. Se sì: inserimento nel listino come add-on prenotabile. Ottobre 2026 come prima data concreta.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     YOGA & RETREAT — SEZIONE DEDICATA
+══════════════════════════════════════════════════ -->
+<div class="sec" id="s3">
+  <div class="sec__hdr"><span class="sec__num">03</span><span class="sec__title">Yoga & Retreat Leader — Come Raggiungerli</span></div>
+  <p class="sec__intro">Questa sezione è la guida operativa per trovare e contattare i Yoga Master e Retreat Leader di alto livello. È il test MASTER #1 — quello con la migliore combinazione di accessibilità e revenue.</p>
+
+  <div class="c c--b">
+    <div class="c__l">Chi sono e cosa cercano</div>
+    <p><strong>Yoga Master / Retreat Leader</strong> è chi organizza retreat per il proprio pubblico: ha già 8–20 clienti fedeli, porta il gruppo nella venue, paga la venue hire e organizza il programma in autonomia. Non è un turista — è un professionista che ha bisogno di una location esclusiva, cucina di qualità, spazio outdoor per le sessioni, silenzio e autenticità. <strong>Paga €1.000–1.500/notte senza discutere se il posto è giusto.</strong></p>
+    <p style="margin-top:.5rem;">Il mercato più interessante è quello anglosassone (UK, USA, Australia, Irlanda) e nordeuropeo (Olanda, Germania, Scandinavia) — tutte persone già abituate a pagare premium per esperienze autentiche in Italia.</p>
+  </div>
+
+  <div class="sub">Le Piattaforme — Dove Essere Presenti</div>
+  <div class="platform-grid">
+    <div class="platform">
+      <div class="platform__name">BookRetreats.com</div>
+      <div class="platform__url">bookretreats.com/venues</div>
+      <div class="platform__body">La principale piattaforma mondiale per retreat. Migliaia di yoga e wellness teacher la usano per trovare venue in Italia. <strong>Già nel piano lean L1.</strong> Creare il profilo CCH come "Venue Hire" — costo zero, risultati in 30 giorni.</div>
+      <div class="platform__action">→ Guia crea il profilo entro giorno 3</div>
+    </div>
+    <div class="platform">
+      <div class="platform__name">RetreatHub.com</div>
+      <div class="platform__url">retreathub.com</div>
+      <div class="platform__body">Piattaforma specializzata specificamente nel collegare venue owners con retreat leaders. Pubblico diverso da BookRetreats — più focalizzato su retreat leaders professionisti. Gratuito per listare la venue.</div>
+      <div class="platform__action">→ Guia crea il profilo in parallelo a BookRetreats</div>
+    </div>
+    <div class="platform platform--amber">
+      <div class="platform__name">VenueRetreat.com</div>
+      <div class="platform__url">venueretreat.com</div>
+      <div class="platform__body">Network europeo di venue per retreat e company offsite. Molto usato nel mercato UK. <strong>Coprono entrambi i segmenti</strong> — wellness retreat E corporate offsite. Da contattare per candidatura CCH come venue partner.</div>
+      <div class="platform__action">→ Franki invia candidatura partnership entro giorno 10</div>
+    </div>
+    <div class="platform platform--amber">
+      <div class="platform__name">ExperienceRetreats.com</div>
+      <div class="platform__url">experienceretreats.com</div>
+      <div class="platform__body">Directory curata di venue luxury in Italia. Hanno già listato strutture identiche a CCH (uliveto, esclusivo, rurale). <strong>Mercato UK/USA di alto livello.</strong> Candidatura diretta come venue luxury.</div>
+      <div class="platform__action">→ Franki invia candidatura con foto CCH entro giorno 15</div>
+    </div>
+    <div class="platform platform--green">
+      <div class="platform__name">Instagram — Outreach Diretto</div>
+      <div class="platform__url">#yogaretreatleader #retreatleader</div>
+      <div class="platform__body">Il canale più efficace per raggiungere i retreat leader di fascia alta. Cercare hashtag specifici, identificare chi ha già fatto retreat in Italia, mandare DM personalizzato. Conversione più alta delle piattaforme — il contatto è diretto.</div>
+      <div class="platform__action">→ Guia + Franki: 20 DM a settimana per 3 settimane</div>
+    </div>
+    <div class="platform platform--green">
+      <div class="platform__name">Facebook Groups</div>
+      <div class="platform__url">Retreat Leaders & Teachers · Yoga Business</div>
+      <div class="platform__body">Gruppi dove i retreat leader si confrontano e cercano venue: <strong>"Retreat Leaders Network"</strong>, <strong>"Yoga Teachers Who Travel"</strong>, <strong>"Retreat Business Community"</strong>. Si pubblica un post di presentazione CCH — non pubblicità, ma presentazione autentica.</div>
+      <div class="platform__action">→ Guia: post di presentazione in 3 gruppi entro giorno 5</div>
+    </div>
+  </div>
+
+  <div class="sub fk-sub--blue">Come Identificare i Profili Giusti su Instagram</div>
+  <div class="card">
+    <div class="card__body" style="grid-template-columns:1fr 1fr;">
+      <div class="block">
+        <div class="block__title block__title--blue">Hashtag e criteri di ricerca</div>
+        <ul class="alist">
+          <li><div class="dot dot--blue"></div><div><strong>#yogaretreatleader</strong> — chi si definisce così è già un professionista del settore</div></li>
+          <li><div class="dot dot--blue"></div><div><strong>#retreatleader</strong> — più ampio, include wellness coach e facilitatori</div></li>
+          <li><div class="dot dot--blue"></div><div><strong>#yogaretreat Italy</strong> — chi ha già fatto retreat in Italia conosce il mercato</div></li>
+          <li><div class="dot dot--blue"></div><div><strong>#wellnessretreat Tuscany / Sicily / Italy</strong> — cerca chi è già attivo in Italia</div></li>
+          <li><div class="dot dot--blue"></div><div><strong>#yogateachertraining</strong> + location Europa — insegnanti con audience propria</div></li>
+        </ul>
+      </div>
+      <div class="block">
+        <div class="block__title block__title--blue">Criteri di selezione profilo</div>
+        <ul class="alist">
+          <li><div class="dot dot--blue"></div><div><strong>Follower:</strong> 5.000–100.000 — abbastanza per riempire un retreat, non così grandi da essere irraggiungibili</div></li>
+          <li><div class="dot dot--blue"></div><div><strong>Engagement:</strong> commenti reali, non solo like — segnale di community attiva</div></li>
+          <li><div class="dot dot--blue"></div><div><strong>Ha già fatto retreat in Italia:</strong> sa già cosa vuol dire — non deve essere convinto del paese</div></li>
+          <li><div class="dot dot--blue"></div><div><strong>Clientela alta gamma:</strong> post curati, prezzi retreat visibili >€1.500 p.p.</div></li>
+          <li><div class="dot dot--blue"></div><div><strong>No studio yoga fisso:</strong> chi ha già uno studio fisso raramente porta gruppi in location esterne</div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub fk-sub--blue">Il Messaggio — Come Scriverlo</div>
+  <div class="card">
+    <div class="card__body" style="grid-template-columns:1fr 1fr;">
+      <div class="block">
+        <div class="block__title block__title--blue">Struttura del DM Instagram (EN)</div>
+        <div style="background:var(--fk-blue-light);padding:1rem 1.2rem;border-radius:6px;font-size:.86rem;color:var(--fk-blue-dark);line-height:1.85;border-left:3px solid var(--fk-blue);">
+          "Hi [Name] 👋<br><br>
+          I came across your retreat work and I love what you do — the way you build community around your practice is exactly what we're looking for.<br><br>
+          I'm working with a family-run exclusive estate in Sannio, Southern Italy — 6 hectares of organic olive grove, 4 suites for up to 14 guests, completely private. The family has farmed here for 50 years.<br><br>
+          We're opening the venue to retreat leaders for 2026 and your style of work feels like a perfect fit.<br><br>
+          Would you be open to a quick call to explore if it could work for your next retreat? Happy to send photos and details first if you'd like.<br><br>
+          [Guia / Franki — Corsale Country House, Campania]"
+        </div>
+      </div>
+      <div class="block">
+        <div class="block__title block__title--blue">Regole del DM</div>
+        <ul class="alist">
+          <li><div class="dot dot--blue"></div><div><strong>Personalizzare sempre</strong> il nome e un riferimento specifico al loro lavoro — mai copia-incolla puro</div></li>
+          <li><div class="dot dot--blue"></div><div><strong>Non allegare PDF al primo messaggio</strong> — prima si crea il contatto, poi si manda materiale</div></li>
+          <li><div class="dot dot--blue"></div><div><strong>Non menzionare il prezzo</strong> nel primo DM — prima si capisce se c'è interesse</div></li>
+          <li><div class="dot dot--blue"></div><div><strong>Follow-up dopo 5 giorni</strong> se non risponde — un solo follow-up, non di più</div></li>
+          <li><div class="dot dot--blue"></div><div><strong>Annotare in un foglio Excel:</strong> nome, data DM, risposta, follow-up fatto, esito</div></li>
+          <li><div class="dot dot--blue"></div><div>Ritmo: <strong>5–7 DM al giorno</strong> — non di più per evitare shadow ban su Instagram</div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="c c--g">
+    <div class="c__l">Il Vantaggio di CCH rispetto alle venue toscane</div>
+    <p>La Toscana è <strong>satura</strong>. I retreat leader cercano attivamente nuove destinazioni autentiche e non ancora "consumate". Il Sannio è esattamente questo: <strong>paesaggio identico alla Toscana vent'anni fa</strong>, nessun turismo di massa, cucina autentica che non si trova altrove, cielo buio, silenzio. Per un retreat leader che vuole offrire qualcosa di unico ai suoi clienti, CCH è la risposta giusta al momento giusto.</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     PARCHEGGIATI
+══════════════════════════════════════════════════ -->
+<div class="sec" id="s4">
+  <div class="sec__hdr"><span class="sec__num">04</span><span class="sec__title">Test Parcheggiati — H2 2026</span></div>
+  <p class="sec__intro">Questi test non si fanno adesso — non perché siano cattive idee, ma perché è più intelligente aspettare di avere un'esperienza consolidata e qualcosa di concreto da raccontare prima di attivare questi canali.</p>
+
+  <div class="card">
+    <div class="card__head card__head--gray">
+      <div class="card__id" style="color:var(--fk-gray);">P1</div>
+      <div>
+        <div class="card__tag" style="color:var(--fk-gray);">Parcheggiato · H2 2026 — settembre/ottobre</div>
+        <div class="card__title">Dark Sky Week — Community Astrofili</div>
+      </div>
+      <div class="card__meta"><span class="pill pill--gray">⏸ In attesa</span></div>
+    </div>
+    <div class="card__body" style="grid-template-columns:1fr 1fr;">
+      <div class="block">
+        <div class="block__title">Perché è parcheggiato</div>
+        <p>È un'ottima idea — il cielo buio del Sannio è un asset reale e il mercato dell'astroturismo sta crescendo. Ma il segmento yoga e wellness è più grande, più organizzato e ha canali di acquisizione più precisi. Meglio concentrare le energie su quello adesso e tornare sul Dark Sky in autunno.</p>
+        <p>Ottobre è il momento ideale per lanciarlo: cielo perfetto, olive harvest in corso, novembre e febbraio come date per le prime edizioni.</p>
+      </div>
+      <div class="block">
+        <div class="block__title">Quando si riattiva</div>
+        <ul class="alist">
+          <li><div class="dot dot--gray"></div><div>Settembre 2026 — dopo aver validato almeno 2 MASTER e avere foto professionali pronte</div></li>
+          <li><div class="dot dot--gray"></div><div>Il lancio del post community coincide con il raduno mongolfiere ottobre (cross-opportunity)</div></li>
+          <li><div class="dot dot--gray"></div><div>Target: edizione febbraio 2027 come prima data ufficiale Dark Sky Week</div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card__head card__head--gray">
+      <div class="card__id" style="color:var(--fk-gray);">P2</div>
+      <div>
+        <div class="card__tag" style="color:var(--fk-gray);">Parcheggiato · H2 2026 — dopo settembre</div>
+        <div class="card__title">Slow Stay in Italy — Ambassador Franki verso il Network</div>
+      </div>
+      <div class="card__meta"><span class="pill pill--gray">⏸ In attesa</span></div>
+    </div>
+    <div class="card__body" style="grid-template-columns:1fr 1fr;">
+      <div class="block">
+        <div class="block__title">Perché aspettare</div>
+        <p>L'idea è giustissima — Luca come ambassador Franki verso le altre strutture del network Slow Stay è un canale di crescita potenzialmente enorme per Franki. Ma ha senso farlo <strong>dopo</strong> che CCH ha risultati concreti da mostrare: prenotazioni generate, piattaforme attivate, revenue cresciuto.</p>
+        <p>Andare a proporre il metodo prima di avere risultati è rischioso — si rischia di fare brutta figura. Meglio aspettare la lettura finale del giorno 45 e poi decidere con dati reali in mano.</p>
+      </div>
+      <div class="block">
+        <div class="block__title">Quando si riattiva</div>
+        <ul class="alist">
+          <li><div class="dot dot--gray"></div><div>Dopo giorno 45 del lean — quando abbiamo almeno 2 test validati con dati reali</div></li>
+          <li><div class="dot dot--gray"></div><div>Luca ottimizza nel frattempo il profilo CCH su Slow Stay — quello si fa subito</div></li>
+          <li><div class="dot dot--gray"></div><div>Franki prepara il pitch "metodo per strutture rurali" entro settembre</div></li>
+          <li><div class="dot dot--gray"></div><div>Outreach verso le prime 3–4 strutture del network: ottobre/novembre 2026</div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     IL TEAM
+══════════════════════════════════════════════════ -->
+<div class="sec" id="s5">
+  <div class="sec__hdr"><span class="sec__num">05</span><span class="sec__title">Il Team — Chi è Chi</span></div>
+  <p class="sec__intro">Per chi legge questo documento per la prima volta. Ogni persona ha un ruolo preciso — capirlo è importante per sapere a chi rivolgersi per cosa.</p>
+
+  <div class="persona">
+    <div class="persona__head" style="background:var(--fk-amber-light);border-bottom-color:#E8D080;">
+      <div class="persona__av" style="background:var(--fk-amber);color:var(--fk-white);">L</div>
+      <div>
+        <div class="persona__name">Luca</div>
+        <div class="persona__role">Fondatore · Mastro Cantiere · Custode del Territorio · Decisore Finale</div>
+      </div>
+      <span class="pill pill--amber" style="margin-left:auto;">Decide tutto</span>
+    </div>
+    <div class="persona__body">
+      Allevatore di cani, esperto di cavalli, olivicoltore per vocazione, mastro di cantiere per necessità. Conosce il territorio del Sannio come le sue tasche — le cantine, i borghi, i produttori, le strade di campagna. <strong>È il cuore autentico di CCH</strong> e il principale asset narrativo del posizionamento premium. Semplice e leale come un bicchiere di Aglianico in purezza. <strong>Ogni decisione strategica passa da lui.</strong><br><br>
+      Nel piano lean: approva i test, fa i contatti personali con chef e cantine, verifica i fornitori locali (mongolfiera, parapendio), propone gli add-on agli ospiti, mappa il network Slow Stay.
+    </div>
+  </div>
+
+  <div class="persona">
+    <div class="persona__head" style="background:var(--fk-amber-light);border-bottom-color:#E8D080;">
+      <div class="persona__av" style="background:var(--fk-amber-dark);color:var(--fk-white);">M</div>
+      <div>
+        <div class="persona__name">Maura</div>
+        <div class="persona__role">Cucina · Ospitalità · Anima della Casa · La Cannavacciuola del Sannio</div>
+      </div>
+      <span class="pill pill--amber" style="margin-left:auto;">Il prodotto food</span>
+    </div>
+    <div class="persona__body">
+      La moglie di Luca e il cuore gastronomico di CCH. Il pane fatto in casa con il lievito madre, la pasta tirata a mano, la cucina napoletana e sannita come la sa fare chi l'ha vissuta da sempre — non imparata, tramandata. <strong>Lavoratrice instancabile, donna di grande sensibilità</strong> che sa far sentire ogni ospite a casa propria nel giro di cinque minuti.<br><br>
+      <strong>Nel piano lean:</strong> è lei il prodotto principale dei test M2 (Oil Tasting + Pane) e A1 (Scuola di Cucina Napoletana). Non deve fare marketing — deve fare quello che sa fare meglio. Il marketing lo gestiamo noi intorno a lei.<br><br>
+      <strong>Potenziale narrativo:</strong> Maura è un asset comunicativo di primissimo livello per il mercato food internazionale — la sua storia, le sue mani, la sua cucina sono il tipo di autenticità per cui i food tourist anglosassoni attraversano l'oceano.
+    </div>
+  </div>
+
+  <div class="persona">
+    <div class="persona__head" style="background:var(--fk-blue-light);border-bottom-color:#C0D0F0;">
+      <div class="persona__av" style="background:var(--fk-blue);color:var(--fk-white);">G</div>
+      <div>
+        <div class="persona__name">Guia</div>
+        <div class="persona__role">Marketing · Digital · Distribuzione · La Finestra sul Futuro</div>
+      </div>
+      <span class="pill pill--blue" style="margin-left:auto;">Execution digitale</span>
+    </div>
+    <div class="persona__body">
+      La figlia di Luca e Maura. Ha l'instancabilità della madre e la caparbietà del padre — combinazione che funziona. È il punto operativo quotidiano di tutto il piano: crea i profili sulle piattaforme, pubblica i post nelle community, gestisce i social, raccoglie i dati dei test, coordina Gennaro per i video.<br><br>
+      <strong>Nel piano lean:</strong> BookRetreats, RetreatHub, VenueRetreat, ExperienceRetreats, Instagram outreach yoga, Facebook groups, landing page Olive Harvest, monitoraggio e raccolta dati tutti i test.
+    </div>
+  </div>
+
+  <div class="persona">
+    <div class="persona__head" style="background:var(--fk-green-light);border-bottom-color:#A0D8BC;">
+      <div class="persona__av" style="background:var(--fk-green);color:var(--fk-white);">M</div>
+      <div>
+        <div class="persona__name">Mattia</div>
+        <div class="persona__role">Ruolo in Definizione · La Risorsa da Far Esplodere</div>
+      </div>
+      <span class="pill pill--gray" style="margin-left:auto;">Da attivare</span>
+    </div>
+    <div class="persona__body">
+      Il figlio di Luca. Come dice bene Luca: <strong>una risorsa da far esplodere come un tric-trac pesante a Capodanno</strong> — quando parte, lo sentono tutti. Non ha ancora trovato il ruolo con ownership esclusiva che gli appartiene. Il suo coinvolgimento è uno dei temi da affrontare nella kick-off con Luca.<br><br>
+      <strong>Cosa cerchiamo per lui:</strong> un'area del progetto CCH dove Mattia abbia piena responsabilità e sia il punto di riferimento unico. Non un compito assegnato — qualcosa che sente suo. Le opzioni da esplorare: gestione esperienze outdoor (mongolfiera, parapendio, equitazione), coordinamento ospiti on-site, o un progetto autonomo dentro CCH.
+    </div>
+  </div>
+
+  <div class="persona">
+    <div class="persona__head" style="background:var(--fk-blue-light);border-bottom-color:#C0D0F0;">
+      <div class="persona__av" style="background:var(--fk-gray);color:var(--fk-white);">GE</div>
+      <div>
+        <div class="persona__name">Gennaro</div>
+        <div class="persona__role">Video Production · Collaboratore esterno · Lavora con Guia</div>
+      </div>
+      <span class="pill pill--blue" style="margin-left:auto;">Video & Foto</span>
+    </div>
+    <div class="persona__body">
+      Professionista video che lavora con Guia per creare i primi materiali visivi di CCH. Il suo compito immediato: <strong>3 clip distinti</strong> — uno atmosferico sulla casa e la famiglia, uno sulle esperienze del territorio, uno per il segmento corporate. Brief completo già disponibile in documento separato.<br><br>
+      Fa un sopralluogo prima delle riprese per conoscere spazi e luce. Consegna anche i rushes grezzi e still fotografici. Il suo lavoro alimenta direttamente i test M1, M4, M5 e la candidatura alle piattaforme luxury.
+    </div>
+  </div>
+
+  <div class="persona">
+    <div class="persona__head" style="background:var(--fk-blue-light);border-bottom-color:#C0D0F0;">
+      <div class="persona__av" style="background:var(--fk-blue-dark);color:var(--fk-amber);">FK</div>
+      <div>
+        <div class="persona__name">Franki</div>
+        <div class="persona__role">Consulenza Strategica · Metodo · Outreach · We Start Your Ideas</div>
+      </div>
+      <span class="pill pill--franki" style="margin-left:auto;">Strategia</span>
+    </div>
+    <div class="persona__body">
+      Consulente strategico attivo — lavora con Luca, non per lui. Amicizia di lunga data che ha trovato il momento giusto per fare una cosa concreta insieme. <strong>Revenue share solo sui risultati — nessun costo fisso per CCH.</strong><br><br>
+      Nel piano lean: analisi e strategia, testi e materiali EN/IT, LinkedIn outreach corporate, candidatura piattaforme luxury, Instagram outreach yoga in collaborazione con Guia, supervisione test, lettura dati, brief Gennaro.
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <strong>Franki Studio</strong> · Roadmap Operativa v2 · Corsale CCH · Aprile 2026 · We Start Your Ideas
+</div>
+
+<script>
+function show(id){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav__tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const ids=['s0','s1','s2','s3','s4','s5'];
+  document.querySelectorAll('.nav__tab')[ids.indexOf(id)].classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>

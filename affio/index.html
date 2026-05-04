@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FranKi Studio · Area Riservata Affio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --blue:    #2B38B0;
+  --orange:  #F0A500;
+  --dark:    #111118;
+  --white:   #FFFFFF;
+  --gray:    #6B6B6B;
+  --gray-lt: #E8E6E0;
+  --ink:     #1C1C2E;
+  --alarm:   #CC2200;
+}
+body {
+  background: var(--orange);
+  background-image: radial-gradient(circle, rgba(255,255,255,0.22) 1.5px, transparent 1.5px);
+  background-size: 28px 28px;
+  color: var(--ink);
+  font-family: 'Barlow', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-font-smoothing: antialiased;
+}
+.page {
+  max-width: 480px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 3rem;
+}
+.watermark {
+  text-align: center;
+  font-family: 'Barlow', sans-serif;
+  font-weight: 700;
+  font-size: 0.58rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(28,28,46,0.35);
+  margin-bottom: 2rem;
+}
+.logo {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.logo-mark {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 2.4rem;
+  color: var(--blue);
+}
+.logo-mark span {
+  background: var(--white);
+  color: var(--orange);
+  padding: 0.05em 0.25em;
+  border-radius: 5px;
+}
+.logo-tagline {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 600;
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(28,28,46,0.45);
+  margin-top: 0.4rem;
+}
+.greeting {
+  background: var(--blue);
+  border-radius: 20px;
+  padding: 1.8rem 1.5rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+.greeting-eyebrow {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 600;
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 0.5rem;
+}
+.greeting-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 3rem;
+  line-height: 0.92;
+  text-transform: uppercase;
+  color: var(--white);
+}
+.greeting-title span { color: var(--orange); }
+.greeting-sub {
+  font-family: 'Barlow', sans-serif;
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.55);
+  margin-top: 0.9rem;
+  line-height: 1.65;
+}
+.dossier-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.dossier-card {
+  background: var(--white);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(28,28,46,0.18);
+  text-decoration: none;
+  display: block;
+}
+.dossier-card-top {
+  background: var(--blue);
+  padding: 1.1rem 1.3rem 0.9rem;
+}
+.dossier-card-top.alarm { background: var(--alarm); }
+.dossier-card-eyebrow {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 600;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 0.35rem;
+}
+.dossier-card-top.alarm .dossier-card-eyebrow { color: #FFB0A0; }
+.dossier-card-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 1.7rem;
+  text-transform: uppercase;
+  color: var(--white);
+  line-height: 1;
+}
+.badge-urgente {
+  display: inline-block;
+  background: rgba(255,255,255,0.2);
+  color: white;
+  font-family: 'Barlow', sans-serif;
+  font-weight: 700;
+  font-size: 0.55rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0.18rem 0.45rem;
+  border-radius: 4px;
+  margin-left: 0.4rem;
+  vertical-align: middle;
+}
+.dossier-card-body {
+  padding: 1rem 1.3rem 1.1rem;
+}
+.dossier-card-desc {
+  font-family: 'Barlow', sans-serif;
+  font-size: 0.82rem;
+  color: var(--gray);
+  line-height: 1.55;
+  margin-bottom: 1rem;
+}
+.dossier-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--gray-lt);
+  padding-top: 0.8rem;
+}
+.dossier-card-meta {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight:700;
+  font-size: 0.95rem;
+  color: var(--blue);
+}
+.dossier-card-meta.alarm { color: var(--alarm); }
+.dossier-card-btn {
+  background: var(--orange);
+  color: var(--ink);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.dossier-card-btn.alarm {
+  background: var(--alarm);
+  color: var(--white);
+}
+.hub-footer {
+  background: var(--blue);
+  border-radius: 12px;
+  padding: 1rem 1.2rem;
+  text-align: center;
+}
+.hub-footer-text {
+  font-family: 'Barlow', sans-serif;
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.35);
+  line-height: 1.7;
+}
+.hub-footer-text strong { color: rgba(255,255,255,0.65); font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="watermark">🔒 Area Riservata · Uso Strettamente Personale</div>
+
+  <div class="logo">
+    <div class="logo-mark">Fran<span>Ki</span></div>
+    <div class="logo-tagline">We Start Your Ideas</div>
+  </div>
+
+  <div class="greeting">
+    <div class="greeting-eyebrow">Area riservata · Aprile 2026</div>
+    <h1 class="greeting-title">CIAO<br><span>AFFIO</span></h1>
+    <p class="greeting-sub">
+      Qui trovi i dossier che FranKi Studio<br>ha preparato per te.<br>
+      Documenti riservati — non condividere i link.
+    </p>
+  </div>
+
+  <div class="dossier-cards">
+
+    <a href="https://frankistudio.it/affio/garage-roma/" class="dossier-card">
+      <div class="dossier-card-top alarm">
+        <div class="dossier-card-eyebrow">🔴 Asta 14 Maggio 2026<span class="badge-urgente">23 giorni</span></div>
+        <div class="dossier-card-title">Garage Val D'Ala<br>156–176 · Roma</div>
+      </div>
+      <div class="dossier-card-body">
+        <div class="dossier-card-desc">Ex sede Hertz · Ex concessionaria Ford/Mazda · 3.562 mq seminterrato · Metro B Conca d'Oro · Fallimento 1016/2015 · Tribunale di Roma</div>
+        <div class="dossier-card-footer">
+          <div class="dossier-card-meta alarm">Base d'asta € 2.170.000</div>
+          <div class="dossier-card-btn alarm">Apri →</div>
+        </div>
+      </div>
+    </a>
+
+    <a href="https://frankistudio.it/affio/roccaraso/" class="dossier-card">
+      <div class="dossier-card-top">
+        <div class="dossier-card-eyebrow">🏔️ Roccaraso, L'Aquila · Esec. Forz. N. 43/16</div>
+        <div class="dossier-card-title">Roccaraso<br>Country Village</div>
+      </div>
+      <div class="dossier-card-body">
+        <div class="dossier-card-desc">Ex Soggiorno Montano Enel · SS17, Loc. Il Poggio · 3 palazzine · 46 appartamenti · 22 ettari · Destinazione extralberghiera · Tribunale di Sulmona</div>
+        <div class="dossier-card-footer">
+          <div class="dossier-card-meta">Base d'asta € 6.072.822</div>
+          <div class="dossier-card-btn">Apri →</div>
+        </div>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="hub-footer">
+    <div class="hub-footer-text">
+      <strong>FranKi Studio · Avre Srl</strong><br>
+      frankistudio.it · Documenti riservati · Aprile 2026<br>
+      Riproduzione e distribuzione non autorizzate
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

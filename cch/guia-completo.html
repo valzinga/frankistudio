@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brief Meeting Guia · CCH · Franki Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue:#3549B5; --blue-dark:#1E2E8A; --blue-mid:#4E66D0;
+  --blue-light:#EBF0FF; --blue-pale:#F5F7FF;
+  --amber:#F9AC28; --amber-dark:#C07800;
+  --amber-light:#FFF7E0; --amber-mid:#FBBC50;
+  --green:#1A7A4A; --green-light:#E0F5EC; --green-text:#0A4A28;
+  --red:#B03020; --red-light:#FDECEA;
+  --ink:#1A1714; --gray:#6B6560; --gray-light:#F2F0EB;
+  --cream:#FAF9F6; --cream-dark:#EDEBE4;
+  --white:#FFFFFF;
+  --display:'Bebas Neue',sans-serif;
+  --label:'DM Mono',monospace;
+  --body:'Lato',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--cream);color:var(--ink);font-family:var(--body);font-size:1rem;line-height:1.75;-webkit-font-smoothing:antialiased;}
+p{margin-bottom:.9rem;} p:last-child{margin-bottom:0;}
+
+/* ── HEADER ── */
+.hdr{background:var(--blue-dark);padding:2.5rem 4rem 2rem;position:relative;overflow:hidden;}
+.hdr::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(-55deg,transparent,transparent 28px,rgba(255,255,255,.025) 28px,rgba(255,255,255,.025) 29px);}
+.hdr::after{content:'';position:absolute;bottom:0;left:0;right:0;height:4px;background:var(--amber);}
+.hdr__brand{font-family:var(--label);font-size:.58rem;letter-spacing:.25em;text-transform:uppercase;color:var(--amber);margin-bottom:.5rem;position:relative;}
+.hdr__title{font-family:var(--display);font-size:clamp(2rem,4vw,3.5rem);letter-spacing:.04em;color:var(--white);position:relative;line-height:1;}
+.hdr__title em{color:var(--amber);font-style:normal;}
+.hdr__sub{font-size:.92rem;color:rgba(255,255,255,.45);margin-top:.5rem;position:relative;font-style:italic;}
+.hdr__meta{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.2rem;position:relative;}
+.pill{display:inline-block;font-family:var(--label);font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;padding:.22rem .8rem;border-radius:20px;}
+.pill--amber{background:var(--amber-light);color:var(--amber-dark);}
+.pill--dark{background:rgba(255,255,255,.1);color:rgba(255,255,255,.6);}
+.pill--green{background:var(--green-light);color:var(--green-text);}
+
+/* ── NAV ── */
+.nav{background:var(--blue-dark);display:flex;overflow-x:auto;position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(255,255,255,.08);}
+.nav__tab{font-family:var(--label);font-size:.54rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.35);padding:.85rem 1.3rem;cursor:pointer;border:none;border-bottom:3px solid transparent;background:none;white-space:nowrap;transition:color .2s,border-color .2s;}
+.nav__tab:hover{color:rgba(255,255,255,.7);}
+.nav__tab.active{color:var(--amber);border-bottom-color:var(--amber);background:rgba(255,255,255,.04);}
+
+/* ── SEZIONI ── */
+.sec{display:none;max-width:1000px;margin:0 auto;padding:2.5rem 4rem 4rem;}
+.sec.active{display:block;animation:fkin .3s ease;}
+@keyframes fkin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.sec__hdr{margin-bottom:1.8rem;}
+.sec__num{font-family:var(--display);font-size:4rem;color:var(--cream-dark);line-height:1;}
+.sec__title{font-family:var(--display);font-size:2rem;letter-spacing:.05em;color:var(--ink);margin-top:-.5rem;}
+.sec__intro{font-size:.9rem;color:var(--gray);font-style:italic;margin-top:.5rem;line-height:1.65;max-width:680px;}
+
+/* ── CALLOUT ── */
+.c{padding:1.1rem 1.5rem;border-left:4px solid;border-radius:0 6px 6px 0;margin:1.2rem 0;}
+.c--amber{background:var(--amber-light);border-color:var(--amber);}
+.c--amber .c__l{color:var(--amber-dark);}
+.c--amber p{color:#5A3A00;font-size:.9rem;}
+.c--amber strong{color:var(--amber-dark);}
+.c--blue{background:var(--blue-light);border-color:var(--blue);}
+.c--blue .c__l{color:var(--blue);}
+.c--blue p{color:var(--blue-dark);font-size:.9rem;}
+.c--blue strong{color:var(--blue);}
+.c--green{background:var(--green-light);border-color:var(--green);}
+.c--green .c__l{color:var(--green);}
+.c--green p{color:var(--green-text);font-size:.9rem;}
+.c--green strong{color:var(--green);}
+.c__l{font-family:var(--label);font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;margin-bottom:.35rem;}
+
+/* ── KPI ── */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1px;background:var(--cream-dark);border:1px solid var(--cream-dark);border-radius:8px;overflow:hidden;margin:1.2rem 0;}
+.kpi{background:var(--white);padding:1rem 1.2rem;}
+.kpi--a{background:var(--amber-light);border-left:4px solid var(--amber);}
+.kpi--b{background:var(--blue-light);border-left:4px solid var(--blue);}
+.kpi--g{background:var(--green-light);border-left:4px solid var(--green);}
+.kpi__l{font-family:var(--label);font-size:.54rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gray);margin-bottom:.3rem;}
+.kpi--a .kpi__l{color:var(--amber-dark);}
+.kpi--b .kpi__l{color:var(--blue);}
+.kpi--g .kpi__l{color:var(--green);}
+.kpi__v{font-family:var(--display);font-size:2.2rem;line-height:1;color:var(--ink);}
+.kpi--a .kpi__v{color:var(--amber-dark);}
+.kpi--b .kpi__v{color:var(--blue);}
+.kpi--g .kpi__v{color:var(--green-text);}
+.kpi__n{font-size:.78rem;color:var(--gray);margin-top:.2rem;line-height:1.4;}
+
+/* ── SEZIONE TITOLO ── */
+.sub{font-family:var(--display);font-size:1.3rem;letter-spacing:.05em;color:var(--ink);padding-left:.8rem;border-left:4px solid var(--amber);margin:2rem 0 1rem;}
+.sub--blue{border-left-color:var(--blue);}
+.sub--green{border-left-color:var(--green);}
+.sub--gray{border-left-color:var(--gray);}
+
+/* ── BLOCCO MACRO/MICRO ── */
+.mm-wrap{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin:1rem 0;}
+.mm-block{border-radius:8px;overflow:hidden;}
+.mm-block__head{padding:.8rem 1.2rem;display:flex;align-items:center;gap:.6rem;}
+.mm-block__head--macro{background:var(--blue-dark);}
+.mm-block__head--micro{background:var(--gray-light);}
+.mm-block__icon{font-size:1.1rem;}
+.mm-block__label{font-family:var(--display);font-size:1.1rem;letter-spacing:.04em;}
+.mm-block__head--macro .mm-block__label{color:var(--amber);}
+.mm-block__head--micro .mm-block__label{color:var(--gray);}
+.mm-block__sub{font-family:var(--label);font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;margin-left:auto;}
+.mm-block__head--macro .mm-block__sub{color:rgba(255,255,255,.4);}
+.mm-block__head--micro .mm-block__sub{color:var(--gray);}
+.mm-block__body{background:var(--white);border:1px solid var(--cream-dark);border-top:none;padding:.9rem 1.2rem;}
+.mm-block__body--micro{background:var(--gray-light);}
+
+/* ── ITEM LIST ── */
+.ilist{list-style:none;margin:.2rem 0;}
+.ilist li{display:flex;align-items:flex-start;gap:.7rem;padding:.5rem 0;border-bottom:1px solid var(--cream-dark);font-size:.9rem;line-height:1.6;}
+.ilist li:last-child{border-bottom:none;}
+.ilist__dot{width:6px;height:6px;border-radius:50%;margin-top:.6rem;flex-shrink:0;}
+.ilist__dot--amber{background:var(--amber);}
+.ilist__dot--blue{background:var(--blue);}
+.ilist__dot--green{background:var(--green);}
+.ilist__dot--gray{background:var(--gray);}
+.ilist__dot--red{background:var(--red);}
+
+/* ── TASK CARD ── */
+.task{background:var(--white);border:1px solid var(--cream-dark);border-radius:8px;overflow:hidden;margin-bottom:1rem;}
+.task__head{padding:.9rem 1.2rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;}
+.task__head--amber{background:var(--amber-light);border-bottom:1px solid #E8D080;}
+.task__head--blue{background:var(--blue-light);border-bottom:1px solid #C0D0F0;}
+.task__head--green{background:var(--green-light);border-bottom:1px solid #A0D8BC;}
+.task__title{font-family:var(--display);font-size:1.1rem;letter-spacing:.04em;color:var(--ink);}
+.task__who{font-family:var(--label);font-size:.54rem;letter-spacing:.1em;text-transform:uppercase;}
+.task__head--amber .task__who{color:var(--amber-dark);}
+.task__head--blue .task__who{color:var(--blue);}
+.task__head--green .task__who{color:var(--green);}
+.task__body{padding:.9rem 1.2rem;font-size:.88rem;color:var(--ink);line-height:1.7;}
+.task__body strong{font-weight:700;}
+
+/* ── VALIDAZIONE BOX ── */
+.valida{background:var(--amber-dark);border-radius:8px;padding:1.2rem 1.5rem;margin:1.5rem 0;}
+.valida__label{font-family:var(--label);font-size:.56rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:.6rem;}
+.valida__items{display:flex;flex-direction:column;gap:.5rem;}
+.valida__item{display:flex;align-items:center;gap:.8rem;font-size:.9rem;color:var(--white);}
+.valida__box{width:18px;height:18px;border:2px solid rgba(255,255,255,.4);border-radius:3px;flex-shrink:0;}
+
+/* ── POV AREA ── */
+.pov-area{background:var(--white);border:2px dashed var(--cream-dark);border-radius:8px;padding:1.4rem;margin:1rem 0;}
+.pov-area__label{font-family:var(--label);font-size:.56rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gray);margin-bottom:.8rem;}
+.pov-line{border-bottom:1px solid var(--cream-dark);height:32px;margin-bottom:.4rem;}
+
+/* ── NEXT STEPS ── */
+.step-row{display:grid;grid-template-columns:3rem 1fr auto;gap:1rem;align-items:start;background:var(--white);border:1px solid var(--cream-dark);border-radius:8px;padding:1rem 1.2rem;margin-bottom:.8rem;}
+.step-row--amber{border-left:4px solid var(--amber);}
+.step-row--blue{border-left:4px solid var(--blue);}
+.step-row--green{border-left:4px solid var(--green);}
+.step-n{font-family:var(--display);font-size:2.2rem;line-height:1;color:var(--cream-dark);}
+.step-n--amber{color:var(--amber-dark);}
+.step-n--blue{color:var(--blue);}
+.step-n--green{color:var(--green);}
+.step-title{font-family:var(--display);font-size:1.05rem;letter-spacing:.04em;color:var(--ink);margin-bottom:.3rem;}
+.step-body{font-size:.88rem;color:var(--gray);line-height:1.6;}
+.step-meta{display:flex;flex-direction:column;gap:.3rem;align-items:flex-end;}
+
+/* ── SEP ── */
+.sep{height:1px;background:var(--cream-dark);margin:2rem 0;}
+
+/* ── FOOTER ── */
+.footer{background:var(--blue-dark);border-top:4px solid var(--amber);text-align:center;padding:1.3rem;font-family:var(--label);font-size:.55rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.3);}
+.footer strong{color:var(--amber);}
+
+@media(max-width:768px){
+  .hdr,.sec{padding-left:1.5rem;padding-right:1.5rem;}
+  .mm-wrap{grid-template-columns:1fr;}
+  .step-row{grid-template-columns:2.5rem 1fr;}
+  .step-meta{display:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="hdr">
+  <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:1rem;position:relative;">
+    <div style="font-family:var(--display);font-size:1.6rem;letter-spacing:.04em;line-height:1;color:var(--white);">Frank<span style="background:var(--amber);color:var(--blue-dark);padding:.05em .2em;border-radius:3px;">Ki</span></div>
+    <div style="width:1px;height:1.4rem;background:rgba(255,255,255,.2);"></div>
+    <div style="font-family:var(--label);font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.4);">We Start Your Ideas</div>
+  </div>
+  <div class="hdr__brand">Brief Meeting · Corsale CCH · Aprile 2026</div>
+  <h1 class="hdr__title">Brief Incontro<br><em>con Guia</em></h1>
+  <p class="hdr__sub">Status quo · Obiettivi · Strategia · Task Marketing · Il tuo punto di vista · Prossimi passi</p>
+  <div class="hdr__meta">
+    <span class="pill pill--amber">Primo meeting Guia + Franki</span>
+    <span class="pill pill--dark">CCH · Aprile 2026</span>
+    <span class="pill pill--dark">~90 minuti</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<div class="nav">
+  <button class="nav__tab active" onclick="show('s0')">👋 Chi è Franki</button>
+  <button class="nav__tab" onclick="show('s1')">📊 Status Quo</button>
+  <button class="nav__tab" onclick="show('s2')">🎯 Obiettivi</button>
+  <button class="nav__tab" onclick="show('s3')">🗺️ Strategia</button>
+  <button class="nav__tab" onclick="show('s4')">📣 Task Marketing</button>
+  <button class="nav__tab" onclick="show('s5')">💬 Il tuo POV</button>
+  <button class="nav__tab" onclick="show('s6')">▶️ Prossimi Passi</button>
+</div>
+
+<!-- ══ 0 — CHI È FRANKI ══ -->
+<div class="sec active" id="s0">
+  <div class="sec__hdr">
+    <div class="sec__num">00</div>
+    <div class="sec__title">Prima di tutto — Chi è Franki</div>
+    <p class="sec__intro">Guia, questo primo meeting è anche il momento in cui ti racconto da dove vengo e perché sono qui. Non è un dettaglio — è la base di come lavoreremo insieme.</p>
+  </div>
+
+  <div class="c c--amber">
+    <div class="c__l">Il ruolo di Franki in questo progetto</div>
+    <p>Sono un amico di lunga data di tuo padre. Ho competenze in strategia, marketing e sviluppo di progetti. Ho scelto di affiancare CCH per <strong>passione e affetto</strong> — non per contratto, non per uno stipendio. Al momento lavoro completamente gratis. Se il progetto produrrà risultati, parleremo insieme di come condividere il successo.</p>
+    <p style="margin-top:.6rem;">Quello che mi piace di questo progetto è semplice: <strong>CCH ha qualcosa di straordinario che il mercato non conosce ancora.</strong> Il mio lavoro è aiutare a raccontarlo nel modo giusto, ai clienti giusti, sui canali giusti.</p>
+  </div>
+
+  <div class="c c--blue">
+    <div class="c__l">Come voglio lavorare con te</div>
+    <p>Tu sei la responsabile marketing di CCH. Conosci la struttura, la famiglia, il territorio, i clienti dall'interno — meglio di chiunque altro. Io porto una visione esterna, esperienza su altri progetti, e qualche idea su dove andare.</p>
+    <p style="margin-top:.6rem;"><strong>Le mie idee sono proposte, non decisioni.</strong> Il mio compito è portarti opzioni e ragionamenti — il tuo è dire se le vedi come le vedo io, se ne vedi di migliori, e soprattutto se vedi cose che io da fuori non posso vedere. Questo meeting serve esattamente a questo.</p>
+    <p style="margin-top:.6rem;">Pensami come uno zio con qualche skill in più — al tuo fianco, non sopra di te.</p>
+  </div>
+
+  <div class="c c--green">
+    <div class="c__l">Cosa ho fatto finora</div>
+    <p>Ho incontrato tuo padre il 31 marzo. Abbiamo parlato per ore. Ho preparato un piano strategico completo — analisi, benchmark, pricing, calendario, 8 esperienze UNICUM, piano lean con 9 test a costo quasi zero. <strong>Tuo padre ha letto tutto, ha corretto molte cose, e ha detto sì.</strong></p>
+    <p style="margin-top:.6rem;">Adesso tocca a te. Sei la persona che trasformerà le idee in azioni concrete sul campo. Senza di te, questo piano rimane carta.</p>
+  </div>
+</div>
+
+<!-- ══ 1 — STATUS QUO ══ -->
+<div class="sec" id="s1">
+  <div class="sec__hdr">
+    <div class="sec__num">01</div>
+    <div class="sec__title">Status Quo — Dov'è CCH Oggi</div>
+    <p class="sec__intro">Una fotografia onesta della situazione attuale. Non per fare un'analisi accademica — per capire insieme da dove partiamo e quanto margine abbiamo davanti.</p>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi kpi--b"><div class="kpi__l">Occupazione attuale</div><div class="kpi__v">~25%</div><div class="kpi__n">circa 12 settimane/anno</div></div>
+    <div class="kpi"><div class="kpi__l">Revenue attuale stimato</div><div class="kpi__v">~€35–40k</div><div class="kpi__n">stima non ufficiale · da confermare con Luca</div></div>
+    <div class="kpi kpi--a"><div class="kpi__l">Obiettivo anno 1</div><div class="kpi__v">€70–80k</div><div class="kpi__n">raddoppio · target 40% occupazione</div></div>
+    <div class="kpi kpi--g"><div class="kpi__l">Obiettivo anno 2</div><div class="kpi__v">€140–160k</div><div class="kpi__n">raddoppio progressivo · obiettivo 24 mesi</div></div>
+  </div>
+
+  <div class="c c--amber">
+    <div class="c__l">Nota importante sul revenue attuale</div>
+    <p>Il dato di €35–40k è una stima ricavata dalla conversazione con Luca — <strong>non è un numero ufficiale confermato</strong>. È importante stabilire il dato reale al più presto perché cambia la calibrazione di tutti gli obiettivi. Se il punto di partenza è più alto, anche i target salgono. Se è più basso, il piano va ricalibrato. <strong>Una delle prime cose da fare è avere il numero preciso da Luca.</strong></p>
+  </div>
+
+  <div class="sub">Cosa funziona già — gli asset di CCH</div>
+  <ul class="ilist">
+    <li><div class="ilist__dot ilist__dot--green"></div><div><strong>Il prodotto è straordinario</strong> — uliveto biologico 6 Ha, cucina di Maura, 4 suites uso esclusivo, piscina, sauna, tinozza, 50 anni di storia di famiglia. Un asset impossibile da replicare.</div></li>
+    <li><div class="ilist__dot ilist__dot--green"></div><div><strong>La famiglia è il prodotto</strong> — Luca, Maura, tu, Mattia. Il mercato internazionale paga premium per l'autenticità. CCH ce l'ha in abbondanza.</div></li>
+    <li><div class="ilist__dot ilist__dot--green"></div><div><strong>Stagione alta già piena</strong> — Natale, Capodanno, Ferragosto arrivano da soli. Non serve spingere. Bisogna lavorare sulla spalla e sulla bassa stagione.</div></li>
+    <li><div class="ilist__dot ilist__dot--green"></div><div><strong>Slow Stay in Italy</strong> — CCH è già iscritta. Una rete di strutture simili con potenziale enorme da attivare.</div></li>
+    <li><div class="ilist__dot ilist__dot--green"></div><div><strong>Territorio ricco</strong> — Taurasi, Aglianico, cantine locali, parapendio Monte Erbano, raduno mongolfiere ottobre. Esperienze già esistenti da intercettare.</div></li>
+  </ul>
+
+  <div class="sub sub--gray">Cosa manca — i gap da colmare</div>
+  <ul class="ilist">
+    <li><div class="ilist__dot ilist__dot--red"></div><div><strong>Fotografia professionale assente</strong> — prerequisito #1 per accedere alle piattaforme luxury internazionali. Senza foto giuste, CCH non esiste per quella fascia di mercato.</div></li>
+    <li><div class="ilist__dot ilist__dot--red"></div><div><strong>Nessuna presenza su piattaforme internazionali</strong> — BookRetreats, RetreatHub, SopranoVillas, Italy Charme. Mercati enormi che non sanno ancora che CCH esiste.</div></li>
+    <li><div class="ilist__dot ilist__dot--red"></div><div><strong>Pricing sottostimato</strong> — il Pacchetto B è a €100 p.p./notte vs €130–150 del mercato comparabile. Si lascia soldi sul tavolo ogni giorno.</div></li>
+    <li><div class="ilist__dot ilist__dot--red"></div><div><strong>Nessun video professionale</strong> — i primi materiali video sono in lavorazione con Gennaro. Ma è un prerequisito per molti canali.</div></li>
+    <li><div class="ilist__dot ilist__dot--red"></div><div><strong>Zero add-on venduti</strong> — Oil tasting, pane di Maura, mongolfiera, cantine. Esperienze che valgono €40–220 a persona non vengono ancora proposte come prodotti.</div></li>
+  </ul>
+
+  <div class="c c--amber">
+    <div class="c__l">La sintesi</div>
+    <p>Il problema di CCH <strong>non è il prodotto</strong> — è la distribuzione. Il mercato giusto non sa che CCH esiste. Il nostro lavoro è colmare questo gap con metodo, senza sprechi, testando prima di investire.</p>
+  </div>
+</div>
+
+<!-- ══ 2 — OBIETTIVI ══ -->
+<div class="sec" id="s2">
+  <div class="sec__hdr">
+    <div class="sec__num">02</div>
+    <div class="sec__title">Obiettivi — Dove Vogliamo Arrivare</div>
+    <p class="sec__intro">Questi obiettivi li ho immaginati io sulla base della conversazione con tuo padre e dell'analisi del mercato. Sono proposte, non decisioni. Dimmi dove ti ritrovi e dove no.</p>
+  </div>
+
+  <div class="mm-wrap">
+    <div class="mm-block">
+      <div class="mm-block__head mm-block__head--macro">
+        <span class="mm-block__icon">🎯</span>
+        <span class="mm-block__label">Obiettivi Macro</span>
+        <span class="mm-block__sub">Da discutere e validare insieme</span>
+      </div>
+      <div class="mm-block__body">
+        <ul class="ilist">
+          <li><div class="ilist__dot ilist__dot--amber"></div><div><strong>Portare l'occupazione da ~25% a 50%</strong> in 12 mesi — riempiendo spalla e bassa stagione con clientela internazionale premium.</div></li>
+          <li><div class="ilist__dot ilist__dot--amber"></div><div><strong>Revenue da ~€60k a €200k+</strong> anno 1 — combinando repricing, nuovi canali e add-on.</div></li>
+          <li><div class="ilist__dot ilist__dot--amber"></div><div><strong>Aprire il mercato internazionale</strong> — yoga retreat leader UK/USA/AUS, corporate retreat, food tourist.</div></li>
+          <li><div class="ilist__dot ilist__dot--amber"></div><div><strong>Lanciare almeno 2 UNICUM</strong> nel 2026 — Olive Harvest e Scuola di Cucina come prodotti autonomi.</div></li>
+          <li><div class="ilist__dot ilist__dot--amber"></div><div><strong>Accedere a 2 piattaforme luxury</strong> — BookRetreats e SopranoVillas come canali prioritari.</div></li>
+        </ul>
+      </div>
+    </div>
+    <div class="mm-block">
+      <div class="mm-block__head mm-block__head--micro">
+        <span class="mm-block__icon">📌</span>
+        <span class="mm-block__label">Obiettivi Micro</span>
+        <span class="mm-block__sub">Elenco · da validare</span>
+      </div>
+      <div class="mm-block__body mm-block__body--micro">
+        <ul class="ilist">
+          <li><div class="ilist__dot ilist__dot--gray"></div><div>Alzare Pkg B da €100 a €145 p.p./notte entro 5 giorni</div></li>
+          <li><div class="ilist__dot ilist__dot--gray"></div><div>Vendere il primo add-on Oil Tasting entro 30 giorni</div></li>
+          <li><div class="ilist__dot ilist__dot--gray"></div><div>Prima risposta da un yoga retreat leader entro 15 giorni</div></li>
+          <li><div class="ilist__dot ilist__dot--gray"></div><div>Profilo BookRetreats live entro 5 giorni</div></li>
+          <li><div class="ilist__dot ilist__dot--gray"></div><div>Set fotografico professionale entro 30 giorni</div></li>
+          <li><div class="ilist__dot ilist__dot--gray"></div><div>3 clip video Gennaro consegnati entro 35 giorni</div></li>
+          <li><div class="ilist__dot ilist__dot--gray"></div><div>Email professionale CCH attiva entro 2 giorni</div></li>
+          <li><div class="ilist__dot ilist__dot--gray"></div><div>Bio Instagram CCH in inglese entro 5 giorni</div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="valida">
+    <div class="valida__label">Guia — questi obiettivi ti convincono? Cosa cambieresti?</div>
+    <div class="valida__items">
+      <div class="valida__item"><div class="valida__box"></div><span>Gli obiettivi macro mi convincono così come sono</span></div>
+      <div class="valida__item"><div class="valida__box"></div><span>Cambierei o aggiungerei qualcosa</span></div>
+      <div class="valida__item"><div class="valida__box"></div><span>Vedo obiettivi che ho in testa che non sono elencati qui</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 3 — STRATEGIA ══ -->
+<div class="sec" id="s3">
+  <div class="sec__hdr">
+    <div class="sec__num">03</div>
+    <div class="sec__title">Strategia — Come Ci Arriviamo</div>
+    <p class="sec__intro">La logica strategica che ho immaginato. Non è l'unica strada — è quella che mi sembra più solida basandomi su quello che ho studiato. Tu conosci CCH molto meglio di me. Dimmi dove vedi diversamente.</p>
+  </div>
+
+  <div class="mm-wrap">
+    <div class="mm-block">
+      <div class="mm-block__head mm-block__head--macro">
+        <span class="mm-block__icon">🗺️</span>
+        <span class="mm-block__label">Strategia Macro</span>
+        <span class="mm-block__sub">Da discutere e validare insieme</span>
+      </div>
+      <div class="mm-block__body">
+        <ul class="ilist">
+          <li><div class="ilist__dot ilist__dot--amber"></div><div><strong>Test prima, investimento dopo</strong> — nessuna spesa significativa prima di validare con dati reali. 9 test lean in 45 giorni, quasi a costo zero, per capire quali canali funzionano davvero.</div></li>
+          <li><div class="ilist__dot ilist__dot--amber"></div><div><strong>Riposizionamento narrativo</strong> — da "country house" a "exclusive rural estate". Una frase cambia il pubblico che arriva e il prezzo che accettano di pagare.</div></li>
+          <li><div class="ilist__dot ilist__dot--amber"></div><div><strong>Aprire il canale wellness internazionale</strong> — yoga e wellness retreat leader UK/USA/AUS come primo mercato da sviluppare. Alta disponibilità a spendere, canali di accesso gratuiti.</div></li>
+          <li><div class="ilist__dot ilist__dot--amber"></div><div><strong>Costruire le esperienze UNICUM</strong> — 8 pacchetti tematici settimanali che riempiono la spalla e la bassa stagione con clientela premium.</div></li>
+          <li><div class="ilist__dot ilist__dot--amber"></div><div><strong>Piattaforme luxury come obiettivo 60–90 giorni</strong> — SopranoVillas, Italy Charme, Haute Retreats. Richiedono fotografia professionale come prerequisito.</div></li>
+        </ul>
+      </div>
+    </div>
+    <div class="mm-block">
+      <div class="mm-block__head mm-block__head--micro">
+        <span class="mm-block__icon">📌</span>
+        <span class="mm-block__label">Strategia Micro</span>
+        <span class="mm-block__sub">Elenco · da validare</span>
+      </div>
+      <div class="mm-block__body mm-block__body--micro">
+        <ul class="ilist">
+          <li><div class="ilist__dot ilist__dot--gray"></div><div>Repricing immediato Pkg B → €145</div></li>
+          <li><div class="ilist__dot ilist__dot--gray"></div><div>Profilo BookRetreats come "Venue Hire"</div></li>
+          <li><div class="ilist__dot ilist__dot--gray"></div><div>DM Instagram a 5 yoga retreat leader/settimana</div></li>
+          <li><div class="ilist__dot ilist__dot--gray"></div><div>LinkedIn outreach 20 HR manager (Franki)</div></li>
+          <li><div class="ilist__dot ilist__dot--gray"></div><div>Landing page Olive Harvest in inglese</div></li>
+          <li><div class="ilist__dot ilist__dot--gray"></div><div>Ottimizzazione profilo Slow Stay in Italy</div></li>
+          <li><div class="ilist__dot ilist__dot--gray"></div><div>Candidatura Italy Charme B2B con foto</div></li>
+          <li><div class="ilist__dot ilist__dot--gray"></div><div>Wine UNICUM con cantine Sannio — H2 2026</div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="c c--blue">
+    <div class="c__l">Il filo logico — perché in quest'ordine</div>
+    <p>Prima si testa a costo zero → si capisce cosa funziona → si investe solo sulle strade validate. È l'unico modo per non sprecare tempo e denaro. <strong>Il piano è pensato per essere aggiustato in corsa</strong> — non è scritto nella pietra.</p>
+  </div>
+
+  <div class="valida">
+    <div class="valida__label">Guia — questa logica strategica ti convince? Vedi strade diverse?</div>
+    <div class="valida__items">
+      <div class="valida__item"><div class="valida__box"></div><span>La logica mi convince così com'è</span></div>
+      <div class="valida__item"><div class="valida__box"></div><span>Cambierei l'ordine o le priorità</span></div>
+      <div class="valida__item"><div class="valida__box"></div><span>Vedo canali o strade che non sono elencate</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 4 — TASK MARKETING ══ -->
+<div class="sec" id="s4">
+  <div class="sec__hdr">
+    <div class="sec__num">04</div>
+    <div class="sec__title">Task Marketing — Quello che Ho Immaginato</div>
+    <p class="sec__intro">Guia, queste sono le aree di lavoro che ho immaginato per il marketing di CCH. Le ho costruite sulla base di quello che mi sembra necessario — ma tu sei la responsabile marketing, conosci i tuoi strumenti e le tue capacità molto meglio di me. Dimmi dove sbaglio, dove manca qualcosa, dove vuoi andare tu che io non ho visto.</p>
+  </div>
+
+  <div class="mm-wrap">
+    <div class="mm-block">
+      <div class="mm-block__head mm-block__head--macro">
+        <span class="mm-block__icon">📣</span>
+        <span class="mm-block__label">Aree Macro</span>
+        <span class="mm-block__sub">Da discutere · tu aggiungi o togli</span>
+      </div>
+      <div class="mm-block__body">
+        <ul class="ilist">
+          <li><div class="ilist__dot ilist__dot--amber"></div><div><strong>Social media CCH</strong> — Instagram come canale principale. Bio in inglese, contenuti autentici, storie che raccontano la vita reale di CCH.</div></li>
+          <li><div class="ilist__dot ilist__dot--amber"></div><div><strong>Outreach diretto yoga retreat leader</strong> — DM personalizzati su Instagram. 5–7 al giorno, profili selezionati, messaggio già scritto.</div></li>
+          <li><div class="ilist__dot ilist__dot--amber"></div><div><strong>Gestione piattaforme</strong> — BookRetreats, RetreatHub, VenueRetreat. Creazione profili, aggiornamento contenuti, gestione richieste.</div></li>
+          <li><div class="ilist__dot ilist__dot--amber"></div><div><strong>Coordinamento video con Gennaro</strong> — 3 clip in lavorazione. Sopralluogo, riprese, revisioni, consegna.</div></li>
+          <li><div class="ilist__dot ilist__dot--amber"></div><div><strong>Raccolta dati test lean</strong> — tenere traccia dei risultati di ogni test. Portare i dati alla lettura del Giorno 15 e del Giorno 45.</div></li>
+        </ul>
+      </div>
+    </div>
+    <div class="mm-block">
+      <div class="mm-block__head mm-block__head--micro">
+        <span class="mm-block__icon">📌</span>
+        <span class="mm-block__label">Azioni Micro</span>
+        <span class="mm-block__sub">Elenco · tu aggiungi o togli</span>
+      </div>
+      <div class="mm-block__body mm-block__body--micro">
+        <ul class="ilist">
+          <li><div class="ilist__dot ilist__dot--gray"></div><div>Bio Instagram EN + 3 post venue hire</div></li>
+          <li><div class="ilist__dot ilist__dot--gray"></div><div>Profilo BookRetreats — entro 5 giorni</div></li>
+          <li><div class="ilist__dot ilist__dot--gray"></div><div>5–7 DM yoga leader/giorno su Instagram</div></li>
+          <li><div class="ilist__dot ilist__dot--gray"></div><div>Post nelle community FB yoga retreat</div></li>
+          <li><div class="ilist__dot ilist__dot--gray"></div><div>Post community Olive Oil Lovers</div></li>
+          <li><div class="ilist__dot ilist__dot--gray"></div><div>Sopralluogo e riprese con Gennaro</div></li>
+          <li><div class="ilist__dot ilist__dot--gray"></div><div>Risposta richieste BookRetreats entro 4h</div></li>
+          <li><div class="ilist__dot ilist__dot--gray"></div><div>Scheda rilevazione compilata dopo ogni DM</div></li>
+          <li><div class="ilist__dot ilist__dot--gray"></div><div>Landing page Olive Harvest (con Franki)</div></li>
+          <li><div class="ilist__dot ilist__dot--gray"></div><div>Aggiornamento profilo Slow Stay in Italy</div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="sep"></div>
+
+  <div class="sub sub--blue">Le priorità dei prossimi 15 giorni — secondo me</div>
+
+  <div class="task">
+    <div class="task__head task__head--amber">
+      <div class="task__title">🔴 Questa settimana — urgente</div>
+      <div class="task__who">Entro 5 giorni</div>
+    </div>
+    <div class="task__body">
+      <strong>1.</strong> Bio Instagram CCH in inglese — 2 righe, link BookRetreats, tono autentico<br>
+      <strong>2.</strong> Profilo CCH su BookRetreats.com come "Venue Hire" — con le foto attuali<br>
+      <strong>3.</strong> Email professionale CCH attiva (info@corsalecountryhouse.com o simile)<br>
+      <strong>4.</strong> Iniziare i DM ai 10 profili yoga già selezionati — 2–3 al giorno, personalizzati
+    </div>
+  </div>
+
+  <div class="task">
+    <div class="task__head task__head--blue">
+      <div class="task__title">🟡 Settimana 2–3 — necessario</div>
+      <div class="task__who">Entro 15 giorni</div>
+    </div>
+    <div class="task__body">
+      <strong>5.</strong> Sopralluogo Gennaro a CCH — concordare date riprese<br>
+      <strong>6.</strong> Post nelle community yoga Facebook (testo già pronto con Franki)<br>
+      <strong>7.</strong> Post community Olive Oil Lovers per Olive Harvest<br>
+      <strong>8.</strong> Scheda dati compilata per ogni DM inviato — portare alla call del Giorno 15
+    </div>
+  </div>
+
+  <div class="valida">
+    <div class="valida__label">Guia — queste aree e priorità ti sembrano giuste? Cosa aggiungeresti o toglieresti?</div>
+    <div class="valida__items">
+      <div class="valida__item"><div class="valida__box"></div><span>Le aree mi convincono così com'è</span></div>
+      <div class="valida__item"><div class="valida__box"></div><span>Cambierei le priorità o i timing</span></div>
+      <div class="valida__item"><div class="valida__box"></div><span>Vedo aree di marketing che non sono elencate</span></div>
+      <div class="valida__item"><div class="valida__box"></div><span>Ho già fatto alcune di queste cose</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 5 — POV GUIA ══ -->
+<div class="sec" id="s5">
+  <div class="sec__hdr">
+    <div class="sec__num">05</div>
+    <div class="sec__title">Il Tuo Punto di Vista</div>
+    <p class="sec__intro">Questa sezione è la più importante del meeting. Ho parlato con tuo padre, ho studiato il mercato, ho immaginato un piano. Ma non conosco CCH dall'interno come la conosci tu. Qui parli tu — io ascolto.</p>
+  </div>
+
+  <div class="c c--amber">
+    <div class="c__l">Le domande che voglio farti</div>
+    <p><strong>1. Come vedi CCH tu oggi?</strong> Non l'analisi — la tua percezione dall'interno. Cosa ti entusiasma, cosa ti preoccupa, cosa ti frustra.</p>
+    <p style="margin-top:.6rem;"><strong>2. Cosa stai già facendo sul marketing?</strong> Canali attivi, cosa ha funzionato, cosa non ha funzionato. Non voglio reinventare quello che esiste già.</p>
+    <p style="margin-top:.6rem;"><strong>3. Dove vuoi arrivare tu?</strong> Non gli obiettivi che ho scritto io — i tuoi. Cosa vorresti che CCH fosse tra 2 anni?</p>
+    <p style="margin-top:.6rem;"><strong>4. Cosa vedi che io non vedo?</strong> Sei dentro CCH ogni giorno. Ci sono dinamiche, vincoli, opportunità che non emergono da fuori e che potrebbero cambiare alcune delle cose che ho immaginato.</p>
+    <p style="margin-top:.6rem;"><strong>5. Come vuoi lavorare con me?</strong> Cosa ti aspetti, cosa ti sarebbe più utile, cosa non vuoi.</p>
+  </div>
+
+  <div class="sub sub--green">Note — Appunti durante il meeting</div>
+
+  <div class="pov-area">
+    <div class="pov-area__label">Come vede CCH oggi Guia</div>
+    <div class="pov-line"></div>
+    <div class="pov-line"></div>
+    <div class="pov-line"></div>
+  </div>
+
+  <div class="pov-area">
+    <div class="pov-area__label">Cosa sta già facendo sul marketing</div>
+    <div class="pov-line"></div>
+    <div class="pov-line"></div>
+    <div class="pov-line"></div>
+  </div>
+
+  <div class="pov-area">
+    <div class="pov-area__label">Dove vuole arrivare — i suoi obiettivi</div>
+    <div class="pov-line"></div>
+    <div class="pov-line"></div>
+    <div class="pov-line"></div>
+  </div>
+
+  <div class="pov-area">
+    <div class="pov-area__label">Cose che vede dall'interno e che cambiano il piano</div>
+    <div class="pov-line"></div>
+    <div class="pov-line"></div>
+    <div class="pov-line"></div>
+  </div>
+
+  <div class="pov-area">
+    <div class="pov-area__label">Come vuole lavorare con Franki</div>
+    <div class="pov-line"></div>
+    <div class="pov-line"></div>
+  </div>
+</div>
+
+<!-- ══ 6 — PROSSIMI PASSI ══ -->
+<div class="sec" id="s6">
+  <div class="sec__hdr">
+    <div class="sec__num">06</div>
+    <div class="sec__title">Prossimi Passi — Si Esce con 3 Cose Chiare</div>
+    <p class="sec__intro">Da questo meeting usciamo con 3 cose concrete — non 10. Ognuna ha un nome, una data e una persona responsabile. Senza questo il meeting è inutile.</p>
+  </div>
+
+  <div class="step-row step-row--amber">
+    <div class="step-n step-n--amber">1</div>
+    <div>
+      <div class="step-title">Kick-off ufficiale con Luca</div>
+      <div class="step-body">L'incontro con tutti e tre — Luca, Guia, Franki. Si approvano i 9 test lean, si assegnano i responsabili, si fissano le date. Si esce con il piano firmato da tutti.</div>
+    </div>
+    <div class="step-meta">
+      <span class="pill pill--amber">Luca + Guia + Franki</span>
+      <span class="pill pill--dark">Da fissare</span>
+    </div>
+  </div>
+
+  <div class="step-row step-row--blue">
+    <div class="step-n step-n--blue">2</div>
+    <div>
+      <div class="step-title">Guia lancia i primi 2 test lean</div>
+      <div class="step-body">Profilo BookRetreats + primi DM ai profili yoga già selezionati. Entrambi a costo zero, tutto il materiale è già pronto. Si può partire questa settimana stessa.</div>
+    </div>
+    <div class="step-meta">
+      <span class="pill pill--blue">Guia</span>
+      <span class="pill pill--dark">Questa settimana</span>
+    </div>
+  </div>
+
+  <div class="step-row step-row--blue">
+    <div class="step-n step-n--blue">3</div>
+    <div>
+      <div class="step-title">Luca propone gli add-on alle prossime prenotazioni</div>
+      <div class="step-body">Il messaggio WhatsApp è già scritto. Luca lo invia alle prossime 3 prenotazioni prima del check-in. Il test più semplice e immediato dell'intero piano.</div>
+    </div>
+    <div class="step-meta">
+      <span class="pill pill--blue">Luca + Maura</span>
+      <span class="pill pill--dark">Prossima prenotazione</span>
+    </div>
+  </div>
+
+  <div class="step-row step-row--green">
+    <div class="step-n step-n--green">4</div>
+    <div>
+      <div class="step-title">Call lettura risultati — Giorno 15</div>
+      <div class="step-body">Guia porta i dati dei test avviati. Si legge insieme cosa ha funzionato e si aggiusta in corsa. Non si aspetta il Giorno 45 per intervenire.</div>
+    </div>
+    <div class="step-meta">
+      <span class="pill pill--green">Guia + Franki</span>
+      <span class="pill pill--dark">Giorno 15</span>
+    </div>
+  </div>
+
+  <div class="sep"></div>
+
+  <div class="c c--green">
+    <div class="c__l">Una cosa sola da ricordare</div>
+    <p>CCH ha tutto quello che serve per triplicare il fatturato in 12 mesi <strong>senza costruire niente di nuovo</strong>. Il prodotto è già straordinario. Serve raccontarlo nel modo giusto, alle persone giuste, sui canali giusti. <strong>Questo è il lavoro che facciamo insieme.</strong></p>
+  </div>
+</div>
+
+<div class="footer">
+  <strong>Franki Studio</strong> · Brief Meeting Guia Corsale · CCH · Aprile 2026 · We Start Your Ideas
+</div>
+
+<script>
+function show(id){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav__tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const ids=['s0','s1','s2','s3','s4','s5','s6'];
+  document.querySelectorAll('.nav__tab')[ids.indexOf(id)].classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>

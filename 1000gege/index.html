@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEWCO FUNNEL - Gege · Frankistudio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#f4f6fb; --white:#ffffff; --surface:#eef1f8;
+  --border:#d0d8ee; --borderl:#e4e9f5;
+  --blue:#3549B5; --bluedim:rgba(53,73,181,0.12); --bluelight:rgba(53,73,181,0.07);
+  --amber:#F9AC28; --amberd:#d4880f; --amberdim:rgba(249,172,40,0.15);
+  --red:#c0392b; --reddim:rgba(192,57,43,0.09);
+  --orange:#e67e22; --orangedim:rgba(230,126,34,0.09);
+  --green:#1a9c5b; --greendim:rgba(26,156,91,0.09);
+  --grey:#7f8c8d; --greydim:rgba(127,140,141,0.10);
+  --text:#1a1f3a; --textm:#1a1a1a; --textd:#2a2a2a; --textf:#3a3a3a;
+  --c0:#c0392b; --c1:#e67e22; --c2:#F9AC28; --c3:#1a9c5b; --c4:#7f8c8d;
+}
+* { box-sizing:border-box; margin:0; padding:0; }
+body { background:var(--bg); color:var(--text); font-family:'Lato',Georgia,serif; min-height:100vh; padding-bottom:80px; }
+
+/* HEADER */
+.hdr { background:var(--blue); height:60px; padding:0 28px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:100; box-shadow:0 2px 12px rgba(53,73,181,0.3); }
+.hdr-l { display:flex; align-items:center; gap:14px; }
+.logo { font-family:'Bebas Neue',Impact,sans-serif; font-size:28px; letter-spacing:2px; color:#fff; }
+.logo em { background:var(--amber); color:var(--blue); padding:0 5px 1px; border-radius:3px; font-style:normal; margin-left:1px; }
+.hdiv { width:1px; height:26px; background:rgba(255,255,255,0.22); }
+.htitle { font-family:'Bebas Neue',Impact,sans-serif; font-size:24px; letter-spacing:3px; color:rgba(255,255,255,0.9); }
+.hsub { font-family:'DM Mono',monospace; font-size:13px; color:rgba(255,255,255,0.45); letter-spacing:2px; margin-top:1px; }
+.hdate { font-family:'DM Mono',monospace; font-size:14px; color:rgba(255,255,255,0.45); }
+
+/* PROGRESS */
+.progbar { background:var(--white); border-bottom:1px solid var(--border); padding:10px 28px 8px; display:flex; gap:6px; }
+.progcol { flex:1; cursor:pointer; }
+.progstep { height:4px; border-radius:2px; background:var(--border); transition:background 0.4s; }
+.progstep.active { background:var(--blue); }
+.progstep.done { background:var(--green); }
+.progstep.blocked { background:var(--red); }
+.progstep.warn { background:var(--orange); }
+.proglbl { font-family:'DM Mono',monospace; font-size:12px; color:var(--textf); text-align:center; margin-top:4px; letter-spacing:1px; text-transform:uppercase; }
+
+/* DASHBOARD */
+.dash { background:var(--white); border-bottom:2px solid var(--border); padding:22px 28px 18px; }
+.dash-row { display:flex; align-items:flex-start; gap:28px; flex-wrap:wrap; }
+.gauge-box { display:flex; flex-direction:column; align-items:center; flex-shrink:0; }
+.gauge-lbl { font-family:'DM Mono',monospace; font-size:13px; letter-spacing:2px; text-transform:uppercase; color:var(--textd); margin-bottom:8px; }
+.gauge-num { font-family:'Bebas Neue',Impact,sans-serif; font-size:44px; line-height:1; text-align:center; margin-top:4px; color:var(--textf); }
+.gauge-verdict { font-family:'DM Mono',monospace; font-size:14px; letter-spacing:1px; text-transform:uppercase; text-align:center; margin-top:3px; color:var(--textf); }
+.wtable { flex:1; min-width:260px; }
+.wtitle { font-family:'DM Mono',monospace; font-size:13px; letter-spacing:2px; text-transform:uppercase; color:var(--textd); margin-bottom:8px; }
+.wrow { display:flex; align-items:center; gap:8px; margin-bottom:5px; padding:7px 10px; border-radius:4px; background:var(--surface); border:1px solid var(--borderl); }
+.wnum { font-family:'Bebas Neue',Impact,sans-serif; font-size:24px; color:var(--textf); width:26px; flex-shrink:0; line-height:1; }
+.wname { flex:1; font-size:16px; font-weight:700; color:var(--textm); }
+.wpct { font-family:'DM Mono',monospace; font-size:14px; color:var(--textd); width:30px; text-align:right; flex-shrink:0; }
+.wbar-wrap { width:64px; height:5px; background:var(--border); border-radius:3px; flex-shrink:0; overflow:hidden; }
+.wbar-fill { height:100%; border-radius:3px; transition:width 0.6s; background:var(--blue); }
+.wchip { font-family:'DM Mono',monospace; font-size:14px; font-weight:500; width:42px; text-align:center; border-radius:3px; padding:2px 4px; flex-shrink:0; background:var(--surface); color:var(--textf); }
+.wchip.g { background:var(--greendim); color:var(--green); }
+.wchip.o { background:var(--orangedim); color:var(--orange); }
+.wchip.r { background:var(--reddim); color:var(--red); }
+.wcont { font-family:'DM Mono',monospace; font-size:14px; color:var(--textf); width:26px; text-align:right; flex-shrink:0; }
+.legend { margin-top:14px; padding-top:12px; border-top:1px solid var(--borderl); display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+.leglbl { font-family:'DM Mono',monospace; font-size:13px; letter-spacing:1px; text-transform:uppercase; color:var(--textf); margin-right:4px; }
+.legitem { display:flex; align-items:center; gap:5px; font-family:'DM Mono',monospace; font-size:14px; color:var(--textm); }
+.legdot { width:8px; height:8px; border-radius:50%; }
+
+/* MAIN */
+.main { max-width:860px; margin:0 auto; padding:24px 18px; }
+.conn { display:flex; flex-direction:column; align-items:center; padding:2px 0; }
+.conn-line { width:2px; height:26px; background:var(--border); }
+.conn-arr { color:var(--textf); font-size:14px; margin-top:-3px; }
+
+/* SECTION */
+.sec { background:var(--white); border:1px solid var(--border); border-radius:6px; overflow:hidden; box-shadow:0 2px 8px rgba(53,73,181,0.06); transition:box-shadow 0.3s; }
+.sec:hover { box-shadow:0 4px 16px rgba(53,73,181,0.11); }
+.sec.c0 { border-top:4px solid var(--c0); }
+.sec.c1 { border-top:4px solid var(--c1); }
+.sec.c2 { border-top:4px solid var(--c2); }
+.sec.c3 { border-top:4px solid var(--c3); }
+.sec.c4 { border-top:4px solid var(--c4); }
+
+.sec-hdr { padding:16px 20px 12px; display:flex; align-items:flex-start; gap:12px; cursor:pointer; user-select:none; }
+.sec-num { font-family:'Bebas Neue',Impact,sans-serif; font-size:42px; line-height:1; color:var(--textf); flex-shrink:0; width:38px; }
+.sec-meta { flex:1; }
+.sec-tag { font-family:'DM Mono',monospace; font-size:13px; letter-spacing:1.5px; text-transform:uppercase; color:var(--textd); margin-bottom:3px; }
+.sec-title { font-family:'Bebas Neue',Impact,sans-serif; font-size:25px; letter-spacing:2px; color:var(--blue); margin-bottom:2px; }
+.sec-sub { font-size:16px; color:var(--textm); margin-bottom:3px; }
+.sec-dates { font-family:'DM Mono',monospace; font-size:14px; color:var(--textd); }
+.sec-right { display:flex; flex-direction:column; align-items:flex-end; gap:5px; flex-shrink:0; }
+.sec-tog { font-size:17px; color:var(--textd); transition:transform 0.3s; margin-top:4px; }
+.sec.open .sec-tog { transform:rotate(180deg); }
+
+.sbadge { font-family:'DM Mono',monospace; font-size:13px; letter-spacing:1px; text-transform:uppercase; padding:3px 9px; border-radius:3px; border:1px solid; white-space:nowrap; }
+.sbadge.pending { color:var(--textd); border-color:var(--border); background:var(--surface); }
+.sbadge.active { color:var(--blue); border-color:var(--blue); background:var(--bluedim); }
+.sbadge.ok { color:var(--green); border-color:var(--green); background:var(--greendim); }
+.sbadge.warn { color:var(--orange); border-color:var(--orange); background:var(--orangedim); }
+.sbadge.stop { color:var(--red); border-color:var(--red); background:var(--reddim); }
+.wchip-hdr { font-family:'DM Mono',monospace; font-size:13px; padding:3px 8px; border-radius:3px; background:var(--bluedim); color:var(--blue); border:1px solid rgba(53,73,181,0.2); }
+
+.sec-body { display:none; padding:0 20px 22px; border-top:1px solid var(--borderl); }
+.sec.open .sec-body { display:block; }
+
+.parbadge { display:inline-flex; align-items:center; gap:6px; font-family:'DM Mono',monospace; font-size:13px; letter-spacing:1px; text-transform:uppercase; color:var(--amberd); background:var(--amberdim); border:1px solid var(--amber); border-radius:3px; padding:4px 10px; margin:12px 0 4px; }
+.blbl { font-family:'DM Mono',monospace; font-size:13px; letter-spacing:2px; text-transform:uppercase; color:var(--textd); margin:18px 0 9px; display:flex; align-items:center; gap:8px; }
+.blbl::after { content:''; flex:1; height:1px; background:var(--borderl); }
+
+/* ACTORS */
+.actgrid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:7px; }
+.actcard { background:var(--surface); border:1px solid var(--borderl); border-radius:4px; padding:8px 11px; display:flex; align-items:center; gap:9px; transition:border-color 0.2s; }
+.actcard:hover { border-color:var(--blue); }
+.acticon { width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:17px; flex-shrink:0; }
+.acticon.avv { background:var(--bluedim); }
+.acticon.com { background:var(--amberdim); }
+.acticon.int { background:var(--greendim); }
+.acticon.ext { background:var(--greydim); }
+.actrole { font-family:'DM Mono',monospace; font-size:12px; letter-spacing:1px; text-transform:uppercase; color:var(--textd); margin-bottom:2px; }
+.actinput { width:100%; background:transparent; border:none; border-bottom:1px dashed var(--border); color:var(--text); font-family:'Lato',Georgia,serif; font-size:16px; font-weight:700; padding:2px 0; outline:none; transition:border-color 0.2s; }
+.actinput:focus { border-bottom-color:var(--blue); }
+.actinput::placeholder { color:var(--textf); font-weight:400; font-style:italic; font-size:15px; }
+
+/* TASKS */
+.task { display:flex; align-items:flex-start; gap:9px; padding:8px 9px; border-radius:4px; margin-bottom:3px; background:var(--surface); border:1px solid transparent; transition:all 0.2s; }
+.task:hover { border-color:var(--border); background:var(--bg); }
+.tchk { width:15px; height:15px; border:1.5px solid var(--border); border-radius:3px; flex-shrink:0; cursor:pointer; margin-top:2px; display:flex; align-items:center; justify-content:center; transition:all 0.2s; background:var(--white); font-size:13px; font-weight:bold; color:white; }
+.tchk.on { background:var(--green); border-color:var(--green); }
+.tcont { flex:1; }
+.ttitle { font-size:16px; color:var(--text); line-height:1.4; margin-bottom:2px; }
+.ttitle.done { text-decoration:line-through; color:var(--textf); }
+.tmeta { display:flex; gap:5px; align-items:center; flex-wrap:wrap; }
+.tdate { font-family:'DM Mono',monospace; font-size:13px; color:var(--textf); }
+.atag { font-family:'DM Mono',monospace; font-size:12px; padding:1px 5px; border-radius:2px; }
+.atag.avv { background:var(--bluedim); color:var(--blue); border:1px solid rgba(53,73,181,0.2); }
+.atag.com { background:var(--amberdim); color:var(--amberd); border:1px solid rgba(249,172,40,0.3); }
+.atag.int { background:var(--greendim); color:var(--green); border:1px solid rgba(26,156,91,0.2); }
+.atag.ext { background:var(--greydim); color:var(--grey); border:1px solid rgba(127,140,141,0.2); }
+.tprio { font-family:'DM Mono',monospace; font-size:12px; padding:2px 6px; border-radius:2px; flex-shrink:0; align-self:flex-start; margin-top:1px; }
+.tprio.alta { background:var(--reddim); color:var(--red); border:1px solid rgba(192,57,43,0.2); }
+.tprio.media { background:var(--orangedim); color:var(--orange); border:1px solid rgba(230,126,34,0.2); }
+.tprio.bassa { background:var(--greydim); color:var(--grey); border:1px solid rgba(127,140,141,0.2); }
+
+/* NOTES */
+.notes { width:100%; background:var(--surface); border:1px solid var(--borderl); border-radius:4px; color:var(--text); font-family:'DM Mono',monospace; font-size:16px; line-height:1.7; padding:11px; resize:vertical; min-height:75px; outline:none; transition:all 0.2s; }
+.notes:focus { border-color:var(--blue); box-shadow:0 0 0 3px var(--bluelight); }
+.notes::placeholder { color:var(--textf); }
+
+/* NODE */
+.node { margin-top:18px; border:1px solid var(--border); border-radius:5px; overflow:hidden; }
+.node-hdr { background:var(--blue); padding:7px 14px; font-family:'DM Mono',monospace; font-size:13px; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.7); }
+.node-q { padding:11px 14px; font-family:'Lato',Georgia,serif; font-size:17px; font-weight:700; color:var(--blue); background:var(--bluelight); border-bottom:1px solid var(--borderl); }
+.node-outs { padding:11px 14px; display:flex; flex-direction:column; gap:7px; background:var(--white); }
+.out { display:flex; align-items:flex-start; gap:9px; font-size:16px; line-height:1.5; padding:8px 11px; border-radius:4px; border:1px solid; }
+.out.ok { background:var(--greendim); border-color:rgba(26,156,91,0.2); }
+.out.wa { background:var(--orangedim); border-color:rgba(230,126,34,0.2); }
+.out.st { background:var(--reddim); border-color:rgba(192,57,43,0.2); }
+.out-ico { font-size:15px; flex-shrink:0; }
+.out-txt { color:var(--textm); flex:1; }
+.out-txt b { color:var(--text); display:block; margin-bottom:2px; font-size:17px; }
+.out-sc { font-family:'Bebas Neue',Impact,sans-serif; font-size:26px; flex-shrink:0; width:38px; text-align:center; line-height:1; }
+.out-sc.g { color:var(--green); }
+.out-sc.o { color:var(--orange); }
+.out-sc.r { color:var(--red); }
+
+/* SCORE SELECTOR */
+.scsel { display:flex; gap:5px; margin-top:10px; padding:9px 11px; background:var(--surface); border-radius:4px; border:1px solid var(--borderl); align-items:center; flex-wrap:wrap; }
+.scsel-lbl { font-family:'DM Mono',monospace; font-size:13px; letter-spacing:2px; text-transform:uppercase; color:var(--textd); margin-right:4px; }
+.scbtn { font-family:'DM Mono',monospace; font-size:13px; padding:5px 11px; border-radius:3px; border:1px solid var(--border); background:var(--white); cursor:pointer; transition:all 0.2s; letter-spacing:1px; text-transform:uppercase; color:var(--textd); }
+.scbtn:hover { border-color:var(--blue); color:var(--blue); }
+.scbtn.s100 { background:var(--greendim); border-color:var(--green); color:var(--green); font-weight:700; }
+.scbtn.s50 { background:var(--orangedim); border-color:var(--orange); color:var(--orange); font-weight:700; }
+.scbtn.s0 { background:var(--reddim); border-color:var(--red); color:var(--red); font-weight:700; }
+.scdisp { margin-left:auto; font-family:'Bebas Neue',Impact,sans-serif; font-size:26px; color:var(--textf); transition:color 0.3s; }
+
+/* STATUS SELECTOR */
+.stsel { margin-top:12px; display:flex; gap:5px; align-items:center; flex-wrap:wrap; padding:11px; background:var(--surface); border-radius:4px; border:1px solid var(--borderl); }
+.stlbl { font-family:'DM Mono',monospace; font-size:13px; letter-spacing:2px; color:var(--textf); text-transform:uppercase; margin-right:4px; }
+.stbtn { font-family:'DM Mono',monospace; font-size:13px; letter-spacing:1px; padding:5px 11px; border-radius:3px; border:1px solid var(--border); background:var(--white); color:var(--textd); cursor:pointer; transition:all 0.2s; text-transform:uppercase; }
+.stbtn:hover { border-color:var(--blue); color:var(--blue); }
+.stbtn.sact { background:var(--bluedim); border-color:var(--blue); color:var(--blue); font-weight:700; }
+.stbtn.sok { background:var(--greendim); border-color:var(--green); color:var(--green); font-weight:700; }
+.stbtn.swa { background:var(--orangedim); border-color:var(--orange); color:var(--orange); font-weight:700; }
+.stbtn.sst { background:var(--reddim); border-color:var(--red); color:var(--red); font-weight:700; }
+
+/* FOOTER */
+.ftr { position:fixed; bottom:0; left:0; right:0; background:var(--blue); padding:9px 28px; display:flex; gap:24px; align-items:center; z-index:100; box-shadow:0 -2px 12px rgba(53,73,181,0.22); }
+.fstat-lbl { font-family:'DM Mono',monospace; font-size:12px; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.4); display:block; margin-bottom:1px; }
+.fstat-val { font-family:'Bebas Neue',Impact,sans-serif; font-size:26px; color:var(--amber); letter-spacing:1px; line-height:1; }
+.savecfm { font-family:'DM Mono',monospace; font-size:13px; color:rgba(255,255,255,0.5); opacity:0; transition:opacity 0.4s; letter-spacing:1px; }
+.savecfm.show { opacity:1; }
+.savebtn { margin-left:auto; font-family:'DM Mono',monospace; font-size:13px; letter-spacing:2px; text-transform:uppercase; padding:8px 16px; border-radius:3px; border:1px solid var(--amber); background:rgba(249,172,40,0.15); color:var(--amber); cursor:pointer; transition:all 0.2s; }
+.savebtn:hover { background:var(--amber); color:var(--blue); font-weight:700; }
+
+/* SCROLL NAV */
+.scnav { position:fixed; right:12px; top:50%; transform:translateY(-50%); display:flex; flex-direction:column; gap:9px; z-index:50; }
+.sdot { width:7px; height:7px; border-radius:50%; cursor:pointer; transition:all 0.2s; opacity:0.6; }
+.sdot:hover { opacity:1; transform:scale(1.4); }
+.sdot.c0 { background:var(--c0); }
+.sdot.c1 { background:var(--c1); }
+.sdot.c2 { background:var(--c2); }
+.sdot.c3 { background:var(--c3); }
+.sdot.c4 { background:var(--c4); }
+
+@media(max-width:600px) {
+  .hdr,.ftr { padding:0 14px; }
+  .ftr { padding:8px 14px; gap:12px; }
+  .dash { padding:14px; }
+  .dash-row { flex-direction:column; gap:16px; }
+  .main { padding:14px 10px; }
+  .progbar { padding:8px 14px 6px; }
+  .scnav { display:none; }
+  .actgrid { grid-template-columns:1fr; }
+}
+
+.tnote-wrap { margin-top:6px; }
+.tnote-toggle { font-family:'DM Mono',monospace; font-size:12px; color:var(--blue); background:none; border:none; cursor:pointer; padding:0; letter-spacing:0.5px; text-decoration:underline; }
+.tnote-toggle:hover { color:var(--amberd); }
+.tnote-box { display:none; margin-top:5px; width:100%; background:var(--surface); border:1px solid var(--borderl); border-radius:3px; color:var(--text); font-family:'DM Mono',monospace; font-size:13px; line-height:1.6; padding:8px 10px; resize:vertical; min-height:54px; outline:none; transition:border-color 0.2s; }
+.tnote-box:focus { border-color:var(--blue); }
+.tnote-box::placeholder { color:#888; font-style:italic; }
+.tnote-box.visible { display:block; }
+.tnote-has { color:var(--amberd) !important; font-weight:700; }
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr-l">
+    <div class="logo">Fran<em>Ki</em></div>
+    <div class="hdiv"></div>
+    <div>
+      <div class="htitle">NEWCO FUNNEL</div>
+      <div class="hsub">Progetto Gege &middot; 1000divani &middot; Start 4 mag 2026</div>
+    </div>
+  </div>
+  <div class="hdate" id="hdate"></div>
+</div>
+
+<div class="progbar" id="progbar"></div>
+
+
+<div id="guida" style="background:#fff;border-bottom:2px solid #d0d8ee;padding:0;">
+  <div style="background:#3549B5;padding:18px 28px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;" onclick="toggleGuida()">
+    <div>
+      <div style="font-family:DM Mono,monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:3px;">Prima di iniziare</div>
+      <div style="font-family:Bebas Neue,Impact,sans-serif;font-size:20px;letter-spacing:2px;color:#fff;">Come funziona questo modulo — Leggi prima di compilare</div>
+    </div>
+    <div id="guida-tog" style="font-size:18px;color:rgba(255,255,255,0.7);transition:transform 0.3s;">v</div>
+  </div>
+  <div id="guida-body" style="display:none;padding:24px 28px 20px;">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-bottom:16px;">
+
+      <div style="background:#eef1f8;border-radius:6px;padding:16px 18px;">
+        <div style="font-family:DM Mono,monospace;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#3549B5;margin-bottom:8px;">1 — Cos'e questo modulo</div>
+        <div style="font-size:15px;color:#1a1f3a;line-height:1.7;">Una checklist interattiva che ti guida passo per passo nella valutazione del progetto newco. Ogni sezione e un blocco del percorso: se una va male le successive si bloccano. Come un semaforo: verde vai, giallo attenzione, rosso stop.</div>
+      </div>
+
+      <div style="background:#eef1f8;border-radius:6px;padding:16px 18px;">
+        <div style="font-family:DM Mono,monospace;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#3549B5;margin-bottom:8px;">2 — Lo score in alto</div>
+        <div style="font-size:15px;color:#1a1f3a;line-height:1.7;">Il numero grande e il punteggio totale dell'operazione. Ogni sezione vale un peso diverso — gli accordi interni valgono il 35% perche sono il fondamento di tutto il resto.</div>
+        <div style="margin-top:10px;display:flex;flex-direction:column;gap:5px;">
+          <div style="background:#1a9c5b;color:#fff;font-family:DM Mono,monospace;font-size:12px;padding:4px 10px;border-radius:3px;">Verde 75 e oltre — si procede</div>
+          <div style="background:#e67e22;color:#fff;font-family:DM Mono,monospace;font-size:12px;padding:4px 10px;border-radius:3px;">Giallo 40-74 — attenzione</div>
+          <div style="background:#c0392b;color:#fff;font-family:DM Mono,monospace;font-size:12px;padding:4px 10px;border-radius:3px;">Rosso sotto 40 — stop, ridisegna</div>
+        </div>
+      </div>
+
+      <div style="background:#eef1f8;border-radius:6px;padding:16px 18px;">
+        <div style="font-family:DM Mono,monospace;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#3549B5;margin-bottom:8px;">3 — Come si compila</div>
+        <div style="font-size:15px;color:#1a1f3a;line-height:1.7;">
+          <div style="margin-bottom:6px;"><strong>A)</strong> Clicca su una sezione per aprirla</div>
+          <div style="margin-bottom:6px;"><strong>B)</strong> Spunta le azioni completate cliccando il quadratino</div>
+          <div style="margin-bottom:6px;"><strong>C)</strong> Clicca <em>Aggiungi note</em> su ogni azione per scrivere cosa e successo, cosa ha detto Max, cosa ha risposto Scavolini</div>
+          <div style="margin-bottom:6px;"><strong>D)</strong> Al nodo decisionale scegli: SI pieno, Parziale, o No — aggiorna lo score</div>
+          <div><strong>E)</strong> Aggiorna lo stato della sezione: In corso, Completato, Attenzione, Bloccato</div>
+        </div>
+      </div>
+
+      <div style="background:#eef1f8;border-radius:6px;padding:16px 18px;">
+        <div style="font-family:DM Mono,monospace;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#3549B5;margin-bottom:8px;">4 — Come si salva</div>
+        <div style="font-size:15px;color:#1a1f3a;line-height:1.7;">Tutto si salva automaticamente ogni 30 secondi nel browser che stai usando. Puoi anche premere <strong>Salva tutto</strong> in basso a destra in qualsiasi momento.</div>
+        <div style="margin-top:10px;background:#FAEEDA;border-radius:4px;padding:10px 12px;font-size:13px;color:#633806;line-height:1.6;">Attenzione: il salvataggio e legato al browser che usi. Se apri la pagina da un altro computer i dati non ci sono. Usa sempre lo stesso dispositivo e lo stesso browser.</div>
+      </div>
+
+      <div style="background:#eef1f8;border-radius:6px;padding:16px 18px;">
+        <div style="font-family:DM Mono,monospace;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#3549B5;margin-bottom:8px;">5 — Personalizza i nomi</div>
+        <div style="font-size:15px;color:#1a1f3a;line-height:1.7;">In ogni sezione trovi i riquadri degli attori — avvocato, commercialista, Max, Giusy e cosi via. Clicca sul nome e scrivi il nome reale della persona (es. Avv. Russo). Viene salvato in automatico.</div>
+      </div>
+
+      <div style="background:#eef1f8;border-radius:6px;padding:16px 18px;">
+        <div style="font-family:DM Mono,monospace;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#3549B5;margin-bottom:8px;">6 — Se una sezione si blocca</div>
+        <div style="font-size:15px;color:#1a1f3a;line-height:1.7;">Ogni sezione ha un nodo decisionale con tre esiti. Se scegli <strong>No — 0 pt</strong> su una sezione critica, lo score scende sotto la soglia rossa. Questo non blocca il modulo ma ti segnala che l'operazione va ridisegnata prima di procedere.</div>
+      </div>
+
+    </div>
+    <div style="text-align:right;">
+      <button onclick="toggleGuida()" style="font-family:DM Mono,monospace;font-size:11px;letter-spacing:1px;text-transform:uppercase;padding:8px 18px;border-radius:3px;border:1px solid #3549B5;background:transparent;color:#3549B5;cursor:pointer;">Chiudi guida</button>
+    </div>
+  </div>
+</div>
+<script>
+function toggleGuida() {
+  var body = document.getElementById('guida-body');
+  var tog = document.getElementById('guida-tog');
+  if (body.style.display === 'none') {
+    body.style.display = 'block';
+    tog.style.transform = 'rotate(180deg)';
+  } else {
+    body.style.display = 'none';
+    tog.style.transform = 'rotate(0deg)';
+  }
+}
+</script>
+
+<div class="dash">
+  <div class="dash-row">
+    <div class="gauge-box">
+      <div class="gauge-lbl">Score Operazione</div>
+      <svg width="150" height="85" viewBox="0 0 150 85" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="gg" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#c0392b"/>
+            <stop offset="40%" style="stop-color:#e67e22"/>
+            <stop offset="70%" style="stop-color:#F9AC28"/>
+            <stop offset="100%" style="stop-color:#1a9c5b"/>
+          </linearGradient>
+        </defs>
+        <path d="M 12 80 A 63 63 0 0 1 138 80" fill="none" stroke="#e4e9f5" stroke-width="10" stroke-linecap="round"/>
+        <path id="gfill" d="M 12 80 A 63 63 0 0 1 138 80" fill="none" stroke="url(#gg)" stroke-width="10" stroke-linecap="round" stroke-dasharray="0 198" style="transition:stroke-dasharray 0.8s ease"/>
+        <line id="gneedle" x1="75" y1="80" x2="75" y2="22" stroke="#3549B5" stroke-width="2.5" stroke-linecap="round" style="transform-origin:75px 80px;transform:rotate(-90deg);transition:transform 0.8s ease"/>
+        <circle cx="75" cy="80" r="5" fill="#3549B5"/>
+        <text x="8" y="83" font-size="7" fill="#c0392b" font-family="monospace">0</text>
+        <text x="71" y="16" font-size="7" fill="#888" text-anchor="middle" font-family="monospace">50</text>
+        <text x="142" y="83" font-size="7" fill="#1a9c5b" text-anchor="end" font-family="monospace">100</text>
+      </svg>
+      <div class="gauge-num" id="gnum">--</div>
+      <div class="gauge-verdict" id="gverd">Nessuna risposta inserita</div>
+    </div>
+    <div class="wtable">
+      <div class="wtitle">Pesi &middot; Risposte &middot; Contributo score</div>
+      <div id="wtable"></div>
+      <div class="legend">
+        <span class="leglbl">Esiti:</span>
+        <div class="legitem"><div class="legdot" style="background:var(--green)"></div>SI pieno = 100 pt</div>
+        <div class="legitem"><div class="legdot" style="background:var(--orange)"></div>Parziale = 50 pt</div>
+        <div class="legitem"><div class="legdot" style="background:var(--red)"></div>Bloccato = 0 pt</div>
+        <div class="legitem" style="margin-left:8px;padding-left:8px;border-left:1px solid var(--borderl)"><div class="legdot" style="background:var(--green)"></div>Verde 75+</div>
+        <div class="legitem"><div class="legdot" style="background:var(--orange)"></div>Giallo 40-74</div>
+        <div class="legitem"><div class="legdot" style="background:var(--red)"></div>Rosso sotto 40</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="scnav" id="scnav"></div>
+<div class="main" id="main"></div>
+
+<div class="ftr">
+  <div><span class="fstat-lbl">Score</span><span class="fstat-val" id="fscore">--</span></div>
+  <div><span class="fstat-lbl">Task</span><span class="fstat-val" id="ftask">0/0</span></div>
+  <div><span class="fstat-lbl">Sezioni</span><span class="fstat-val" id="fsec">0/5</span></div>
+  <span class="savecfm" id="scfm">Salvato</span>
+  <button class="savebtn" onclick="saveAll()">Salva tutto</button>
+</div>
+
+<script>
+var AT = {
+  avv: {icon:'A',role:'Avvocato',cls:'avv',ph:'Nome avvocato...'},
+  com: {icon:'C',role:'Commercialista',cls:'com',ph:'Nome commercialista...'},
+  int: {icon:'I',role:'Interno',cls:'int',ph:'Max / Giusy / ...'},
+  ext: {icon:'E',role:'Esterno',cls:'ext',ph:'Controparte / Notaio / ...'}
+};
+
+var SECS = [
+  {
+    id:'s0', num:'00', w:35, cc:'c0', par:false,
+    tag:'GATE BLOCCANTE - Prima di tutto il resto',
+    title:'ACCORDI STRATEGICI INTERNI',
+    sub:'Max e Giusy - Definire ruolo, remunerazione e deleghe di Gege',
+    dates:'4 mag - 10 mag 2026',
+    actors:[
+      {k:'avv',l:'Avvocato Gege'},
+      {k:'com',l:'Commercialista Gege'},
+      {k:'int',l:'Max (padre/titolare)'},
+      {k:'int',l:'Giusy (compagna/titolare)'}
+    ],
+    tasks:[
+      {id:'t00a',tx:'Conversazione con Max e Giusy: apertura formale sul ruolo di Gege',dt:'4-5 mag',p:'alta',ac:['int']},
+      {id:'t00b',tx:'Definire stipendio fisso garantito - importo e condizioni per iscritto',dt:'5-6 mag',p:'alta',ac:['int','avv']},
+      {id:'t00c',tx:'Definire deleghe operative: lista scritta di cosa decide Gege autonomamente',dt:'5-6 mag',p:'alta',ac:['avv']},
+      {id:'t00d',tx:'Identificare e incaricare commercialista indipendente (solo per Gege)',dt:'4-6 mag',p:'alta',ac:['com']},
+      {id:'t00e',tx:'Identificare e incaricare avvocato societario indipendente (solo per Gege)',dt:'4-6 mag',p:'alta',ac:['avv']},
+      {id:'t00f',tx:'Bozza patto parasociale o lettera di intenti - redazione con avvocato',dt:'7-10 mag',p:'alta',ac:['avv']},
+      {id:'t00g',tx:'Firma accordo interno tra tutte le parti',dt:'10 mag',p:'alta',ac:['avv','int']}
+    ],
+    node:{
+      q:'Max e Giusy riconoscono il ruolo, la remunerazione e le deleghe di Gege per iscritto?',
+      outs:[
+        {cls:'ok',sc:100,i:'SI',s:'SI - accordo scritto firmato',t:'Procedi con Fase 01 e Fase 02 in parallelo - partenza 11 maggio.'},
+        {cls:'wa',sc:50, i:'?', s:'PARZIALE - resistono su alcuni punti',t:'Negozia punto per punto. Concedi la forma, mantieni la sostanza. Proroga max 7 giorni.'},
+        {cls:'st',sc:0,  i:'NO',s:'NO - rifiutano qualsiasi accordo scritto',t:'STOP DEFINITIVO. Senza tutele scritte non si procede. Comunicare a Scavolini che i tempi si allungano.'}
+      ]
+    },
+    np:'Cosa ha detto Max. Cosa ha detto Giusy. Punti aperti. Resistenze. Progressi...'
+  },
+  {
+    id:'s1', num:'01', w:25, cc:'c1', par:true,
+    pn:'Corre in parallelo alla Fase 00 - avvia subito senza aspettare',
+    tag:'PRIORITA ALTA - Parallelo alla Fase 00',
+    title:'DUE DILIGENCE TIGO SRL',
+    sub:'Radiografia completa prima di costruire il fosso',
+    dates:'4 mag - 20 mag 2026',
+    actors:[
+      {k:'com',l:'Commercialista Gege'},
+      {k:'avv',l:'Avvocato Gege'},
+      {k:'com',l:'Comm. Tigo (interlocuzione)'},
+      {k:'int',l:'Max / Giusy (accesso doc)'}
+    ],
+    tasks:[
+      {id:'t01a',tx:'Richiedere a Max/Giusy accesso a bilanci ultimi 3 anni',dt:'4-5 mag',p:'alta',ac:['int','com']},
+      {id:'t01b',tx:'Estratto ruoli Agenzia delle Entrate - posizione Tigo Srl',dt:'5-7 mag',p:'alta',ac:['com']},
+      {id:'t01c',tx:'Posizione INPS - contributi arretrati, sanzioni, stato',dt:'5-7 mag',p:'alta',ac:['com']},
+      {id:'t01d',tx:'Mappa debiti fornitori: importi, anzianita, atti formali ricevuti',dt:'7-10 mag',p:'alta',ac:['com']},
+      {id:'t01e',tx:'Verifica cartelle notificate e pignoramenti attivi',dt:'7-10 mag',p:'alta',ac:['avv','com']},
+      {id:'t01f',tx:'Analisi contratti dipendenti: TFR maturato, scadenze, esposizione',dt:'10-14 mag',p:'media',ac:['avv']},
+      {id:'t01g',tx:'Valutazione legale: rischio azione revocatoria e responsabilita solidale',dt:'14-20 mag',p:'alta',ac:['avv']},
+      {id:'t01h',tx:'Valutazione: composizione negoziata della crisi applicabile a Tigo?',dt:'14-20 mag',p:'media',ac:['com','avv']}
+    ],
+    node:{
+      q:'Qual e la reale entita della esposizione debitoria di Tigo Srl?',
+      outs:[
+        {cls:'ok',sc:100,i:'A',s:'SCENARIO A - Debiti gestibili (sotto 80k, nessun pignoramento)',t:'Fosso costruibile con procedura standard. Vai a Fase 03.'},
+        {cls:'wa',sc:50, i:'B',s:'SCENARIO B - Debiti significativi (100-300k, atti formali)',t:'Avviare composizione negoziata della crisi. +30 giorni. Fosso costruibile con piu cautela.'},
+        {cls:'st',sc:0,  i:'C',s:'SCENARIO C - Critico (oltre 300k, pignoramenti, rischio penale)',t:'STOP alla struttura attuale. Valutare scenario alternativo: Gege tratta con Scavolini come soggetto terzo.'}
+      ]
+    },
+    np:'Debiti fisco (importo e tipo). Debiti INPS. Fornitori. Atti formali. Scenario A/B/C stimato...'
+  },
+  {
+    id:'s2', num:'02', w:20, cc:'c2', par:true,
+    pn:'Binario parallelo - tenere il filo caldo con Scavolini fin dal primo giorno',
+    tag:'BINARIO PARALLELO - Avvia subito, non aspettare',
+    title:'RELAZIONE SCAVOLINI',
+    sub:'Tessere la tela mentre si sistema la struttura interna',
+    dates:'6 mag - 30 giu 2026',
+    actors:[
+      {k:'ext',l:'Referente Scavolini (zona)'},
+      {k:'ext',l:'Responsabile Scavolini (diretto)'},
+      {k:'avv',l:'Avvocato Gege (revisione contratto)'}
+    ],
+    tasks:[
+      {id:'t02a',tx:'Primo contatto: confermare interesse e richiedere incontro strutturato',dt:'6-8 mag',p:'alta',ac:['ext']},
+      {id:'t02b',tx:'Identificare interlocutore reale: agente zona o responsabile diretto?',dt:'6-8 mag',p:'media',ac:['ext']},
+      {id:'t02c',tx:'Sondare natura investimento: fondo perduto o prestito? A chi intestato?',dt:'8-12 mag',p:'alta',ac:['ext']},
+      {id:'t02d',tx:'Primo incontro formale - presentarsi come interlocutore diretto e strutturato',dt:'12-16 mag',p:'alta',ac:['ext']},
+      {id:'t02e',tx:'Proposta mandato: durata min 5 anni, area esclusiva, target graduali primo anno',dt:'20-31 mag',p:'alta',ac:['ext','avv']},
+      {id:'t02f',tx:'Negoziare piano marketing: impegno annuo scritto e quantificato (min 10% invest.)',dt:'20-31 mag',p:'media',ac:['ext']},
+      {id:'t02g',tx:'Clausola continuita: se Scavolini esce prima dei 5 anni rimborsa pro-quota',dt:'20-31 mag',p:'alta',ac:['avv','ext']},
+      {id:'t02h',tx:'Bozza contratto mandato - revisione con avvocato di Gege prima della firma',dt:'1-15 giu',p:'alta',ac:['avv']},
+      {id:'t02i',tx:'Firma contratto mandato Scavolini',dt:'entro 30 giu',p:'alta',ac:['ext','avv']}
+    ],
+    node:{
+      q:'Scavolini accetta le condizioni chiave del mandato?',
+      outs:[
+        {cls:'ok',sc:100,i:'SI',s:'SI - mandato firmato con condizioni accettabili',t:'Hai il mandato che giustifica tutta la struttura. Vai a Fase 03.'},
+        {cls:'wa',sc:50, i:'?', s:'PARZIALE - trattativa aperta su alcuni punti',t:'Punto non negoziabile: nessuna garanzia personale di Gege. Sul resto si puo trattare. Max 15 giorni.'},
+        {cls:'st',sc:0,  i:'NO',s:'NO - richiedono garanzia personale di Gege',t:'Non firmare mai con garanzia personale. Valutare brand alternativi o newco solo divani.'}
+      ]
+    },
+    np:'Chi e il referente. Natura investimento. Punti aperti. Clausole accettate e rifiutate...'
+  },
+  {
+    id:'s3', num:'03', w:12, cc:'c3', par:false,
+    tag:'DIPENDE DA 00+01+02 - Tutte verdi per procedere',
+    title:'COSTITUZIONE NEWCO',
+    sub:'La struttura giuridica pulita - solo con le spalle coperte',
+    dates:'1 giu - 30 giu 2026',
+    actors:[
+      {k:'avv',l:'Avvocato Gege'},
+      {k:'com',l:'Commercialista Gege'},
+      {k:'ext',l:'Notaio'},
+      {k:'ext',l:'Proprietario immobile'}
+    ],
+    tasks:[
+      {id:'t03a',tx:'Scelta nome commerciale - distinto e non collegabile a Tigo Srl',dt:'1-3 giu',p:'alta',ac:['int']},
+      {id:'t03b',tx:'Contatto proprietario immobile: nuovo contratto locazione diretto a newco',dt:'1-5 giu',p:'alta',ac:['ext','avv']},
+      {id:'t03c',tx:'Negoziare locazione: durata min 6 anni, canone, opzione rinnovo',dt:'5-10 giu',p:'alta',ac:['avv','ext']},
+      {id:'t03d',tx:'Costituzione SRL - Gege unico socio 100%, oggetto sociale cucine/arredamento',dt:'10-20 giu',p:'alta',ac:['avv','ext','com']},
+      {id:'t03e',tx:'Apertura conto corrente - banca diversa da quella di Tigo',dt:'15-25 giu',p:'alta',ac:['com']},
+      {id:'t03f',tx:'Acquisto attrezzature/campionari da Tigo con fattura regolare a prezzi di mercato',dt:'20-30 giu',p:'media',ac:['com','avv']},
+      {id:'t03g',tx:'Nuove utenze intestate a newco (telefono, luce, gas, internet)',dt:'20-30 giu',p:'media',ac:[]},
+      {id:'t03h',tx:'Nuovi profili social e dominio web intestati a newco',dt:'20-30 giu',p:'bassa',ac:[]}
+    ],
+    node:{
+      q:'Newco costituita, conto aperto, contratto locazione firmato?',
+      outs:[
+        {cls:'ok',sc:100,i:'SI',s:'TUTTO OK',t:'Vai a Fase 04 - Operativita. Partenza luglio 2026.'},
+        {cls:'wa',sc:50, i:'?', s:'RITARDI TECNICI (banca, notaio, proprietario)',t:'Nessun blocco strutturale - solo burocrazia. Max +15 giorni. Vai a Fase 04.'},
+        {cls:'st',sc:0,  i:'NO',s:'PROPRIETARIO NON COLLABORA sul contratto',t:'Valutare immobile alternativo. Senza sede pulita il fosso non regge.'}
+      ]
+    },
+    np:'Nome scelto. Stato trattativa proprietario. Banca scelta. Notaio contattato. Date atti...'
+  },
+  {
+    id:'s4', num:'04', w:8, cc:'c4', par:false,
+    tag:'FASE FINALE - Dipende da tutte le fasi precedenti',
+    title:'OPERATIVITA',
+    sub:'Aprire per davvero - target dicembre 2026',
+    dates:'lug - dic 2026',
+    actors:[
+      {k:'avv',l:'Avvocato Gege (contratti lavoro)'},
+      {k:'com',l:'Commercialista Gege'},
+      {k:'ext',l:'Scavolini (marketing/lavori)'},
+      {k:'int',l:'Dipendenti selezionati'}
+    ],
+    tasks:[
+      {id:'t04a',tx:'Procedure licenziamento dipendenti Tigo - avvio formale',dt:'lug',p:'alta',ac:['avv']},
+      {id:'t04b',tx:'Pausa minima 45-60 giorni prima delle nuove assunzioni newco',dt:'lug-ago',p:'alta',ac:['avv']},
+      {id:'t04c',tx:'Valutazione montatori: dipendenti vs partite IVA fornitori',dt:'lug',p:'media',ac:['avv','com']},
+      {id:'t04d',tx:'Nuovi contratti dipendenti newco - nuove mansioni e condizioni',dt:'ago-set',p:'alta',ac:['avv']},
+      {id:'t04e',tx:'Selezione fornitori divani: top 2-3, contratti rinegoziati a nome newco',dt:'lug-ago',p:'media',ac:['com']},
+      {id:'t04f',tx:'Avvio ristrutturazione: piano terra cucine Scavolini, piano sup. divani',dt:'ago-ott',p:'alta',ac:['ext']},
+      {id:'t04g',tx:'Piano marketing lancio: evento inaugurazione + PR locale',dt:'ott-nov',p:'media',ac:['ext']},
+      {id:'t04h',tx:'Inserimento localizzatore ufficiale Scavolini nazionale',dt:'ott',p:'media',ac:['ext']},
+      {id:'t04i',tx:'Campagne digital locali Google/Meta con contributo Scavolini',dt:'nov',p:'media',ac:['ext']},
+      {id:'t04j',tx:'APERTURA - nuovo format, nuovo brand, nuovo inizio',dt:'dic 2026',p:'alta',ac:[]}
+    ],
+    node:{
+      q:'Obiettivo: apertura entro dicembre 2026',
+      outs:[
+        {cls:'ok',sc:100,i:'SI',s:'APERTURA NEI TEMPI',t:'Break even target: mese 6 dalla riapertura. Review trimestrale.'},
+        {cls:'wa',sc:50, i:'?', s:'RITARDO LAVORI O FORNITURE',t:'Apertura posticipata gen-feb 2027. Mantenere operativita minima divani.'},
+        {cls:'st',sc:0,  i:'NO',s:'BLOCCO PER CAUSE ESTERNE',t:'Attivare piano B: newco solo divani, cucine in secondo momento con brand alternativo.'}
+      ]
+    },
+    np:'Stato lavori. Assunzioni completate. Fornitori confermati. Date inaugurazione. Budget marketing...'
+  }
+];
+
+var ST = {tasks:{}, statuses:{}, notes:{}, actors:{}, scores:{}};
+
+function load() {
+  try {
+    var s = localStorage.getItem('gege_nf4');
+    if (s) { var p = JSON.parse(s); for (var k in p) ST[k] = p[k]; }
+    if (!ST.tnotes) ST.tnotes = {};
+  } catch(e) { ST.tnotes = {}; }
+}
+
+function saveAll() {
+  for (var i = 0; i < SECS.length; i++) {
+    var s = SECS[i];
+    var ta = document.getElementById('n_' + s.id);
+    if (ta) ST.notes[s.id] = ta.value;
+    if (!ST.actors[s.id]) ST.actors[s.id] = {};
+    for (var j = 0; j < s.actors.length; j++) {
+      var inp = document.getElementById('a_' + s.id + '_' + j);
+      if (inp) ST.actors[s.id][j] = inp.value;
+    }
+  }
+  // save task notes
+  var tnotes = document.querySelectorAll('.tnote-box');
+  if (!ST.tnotes) ST.tnotes = {};
+  for (var ti = 0; ti < tnotes.length; ti++) {
+    var tn = tnotes[ti];
+    if (tn.dataset.tid) ST.tnotes[tn.dataset.tid] = tn.value;
+  }
+  try {
+    localStorage.setItem('gege_nf4', JSON.stringify(ST));
+    var el = document.getElementById('scfm');
+    el.classList.add('show');
+    setTimeout(function() { el.classList.remove('show'); }, 2000);
+  } catch(e) {}
+  updateAll();
+}
+
+function toggleTask(id) {
+  ST.tasks[id] = !ST.tasks[id];
+  var c = document.getElementById('ck_' + id);
+  var t = document.getElementById('tt_' + id);
+  if (ST.tasks[id]) { c.classList.add('on'); c.textContent = 'v'; t.classList.add('done'); }
+  else { c.classList.remove('on'); c.textContent = ''; t.classList.remove('done'); }
+  updateStats();
+}
+
+function toggleTaskNote(tid) {
+  var box = document.getElementById('tnb_' + tid);
+  var btn = document.getElementById('tnt_' + tid);
+  if (!box || !btn) return;
+  box.classList.toggle('visible');
+  btn.textContent = box.classList.contains('visible') ? 'Chiudi note' : (box.value ? '+ Note (compilate)' : '+ Aggiungi note');
+  if (box.classList.contains('visible')) box.focus();
+}
+
+function onTaskNoteChange(tid, val) {
+  if (!ST.tnotes) ST.tnotes = {};
+  ST.tnotes[tid] = val;
+  var btn = document.getElementById('tnt_' + tid);
+  if (btn) {
+    if (val.trim()) { btn.classList.add('tnote-has'); btn.textContent = '+ Note (compilate)'; }
+    else { btn.classList.remove('tnote-has'); btn.textContent = '+ Aggiungi note'; }
+  }
+}
+
+function setScore(sid, sc, btn) {
+  ST.scores[sid] = sc;
+  var btns = document.querySelectorAll('.scbtn[data-s="' + sid + '"]');
+  for (var i = 0; i < btns.length; i++) btns[i].classList.remove('s100','s50','s0');
+  btn.classList.add('s' + sc);
+  var d = document.getElementById('sd_' + sid);
+  if (d) {
+    d.textContent = sc + ' pt';
+    d.style.color = sc === 100 ? 'var(--green)' : sc === 50 ? 'var(--orange)' : 'var(--red)';
+  }
+  updateAll();
+}
+
+function setStatus(sid, st, btn) {
+  ST.statuses[sid] = st;
+  var btns = document.querySelectorAll('.stbtn[data-s="' + sid + '"]');
+  for (var i = 0; i < btns.length; i++) btns[i].classList.remove('sact','sok','swa','sst');
+  btn.classList.add('s' + st);
+  var badge = document.getElementById('bd_' + sid);
+  var lbls = {pending:'In attesa', act:'In corso', ok:'Completato', wa:'Attenzione', st:'Bloccato'};
+  var cls_map = {pending:'pending', act:'active', ok:'ok', wa:'warn', st:'stop'};
+  badge.className = 'sbadge ' + (cls_map[st] || 'pending');
+  badge.textContent = lbls[st] || 'In attesa';
+  updateProgress();
+}
+
+function getScore() {
+  var tot = 0, ans = 0;
+  for (var i = 0; i < SECS.length; i++) {
+    var s = SECS[i];
+    if (ST.scores[s.id] !== undefined) { tot += ST.scores[s.id] * (s.w / 100); ans++; }
+  }
+  return ans === 0 ? null : Math.round(tot);
+}
+
+function updateAll() { updateStats(); updateProgress(); updateDash(); }
+
+function updateStats() {
+  var tot = 0, done = 0;
+  for (var i = 0; i < SECS.length; i++)
+    for (var j = 0; j < SECS[i].tasks.length; j++) { tot++; if (ST.tasks[SECS[i].tasks[j].id]) done++; }
+  document.getElementById('ftask').textContent = done + '/' + tot;
+  var act = 0;
+  for (var k in ST.statuses) if (ST.statuses[k] && ST.statuses[k] !== 'pending') act++;
+  document.getElementById('fsec').textContent = act + '/5';
+}
+
+function updateProgress() {
+  for (var i = 0; i < SECS.length; i++) {
+    var s = SECS[i];
+    var el = document.getElementById('ps_' + s.id);
+    if (!el) continue;
+    var st = ST.statuses[s.id] || 'pending';
+    el.className = 'progstep';
+    if (st === 'ok') el.classList.add('done');
+    else if (st === 'act') el.classList.add('active');
+    else if (st === 'st') el.classList.add('blocked');
+    else if (st === 'wa') el.classList.add('warn');
+  }
+}
+
+function updateDash() {
+  var score = getScore();
+  var gn = document.getElementById('gnum');
+  var gv = document.getElementById('gverd');
+  var fs = document.getElementById('fscore');
+  var gf = document.getElementById('gfill');
+  var gnd = document.getElementById('gneedle');
+  if (score === null) {
+    gn.textContent = '--'; gn.style.color = 'var(--textf)';
+    gv.textContent = 'Nessuna risposta inserita'; gv.style.color = 'var(--textf)';
+    fs.textContent = '--'; fs.style.color = 'var(--amber)';
+    gf.style.strokeDasharray = '0 198';
+    gnd.style.transform = 'rotate(-90deg)';
+  } else {
+    gf.style.strokeDasharray = (198 * score / 100) + ' 198';
+    gnd.style.transform = 'rotate(' + (-90 + score / 100 * 180) + 'deg)';
+    var col, verd;
+    if (score >= 75) { col = 'var(--green)'; verd = 'Operazione fattibile'; }
+    else if (score >= 40) { col = 'var(--orange)'; verd = 'Rischio gestibile - cautela'; }
+    else { col = 'var(--red)'; verd = 'Stop o ridisegno necessario'; }
+    gn.textContent = score; gn.style.color = col;
+    gv.textContent = verd; gv.style.color = col;
+    fs.textContent = score; fs.style.color = col;
+  }
+  for (var i = 0; i < SECS.length; i++) {
+    var s = SECS[i];
+    var chip = document.getElementById('wc_' + s.id);
+    var bar = document.getElementById('wb_' + s.id);
+    var cont = document.getElementById('wco_' + s.id);
+    if (!chip) continue;
+    var sc = ST.scores[s.id];
+    if (sc === undefined) {
+      chip.className = 'wchip'; chip.textContent = '--';
+      if (cont) cont.textContent = '--';
+      if (bar) bar.style.width = '0%';
+    } else {
+      chip.className = 'wchip ' + (sc === 100 ? 'g' : sc === 50 ? 'o' : 'r');
+      chip.textContent = sc + ' pt';
+      if (cont) cont.textContent = '+' + Math.round(sc * s.w / 100);
+      if (bar) bar.style.width = sc + '%';
+    }
+  }
+}
+
+function buildProgbar() {
+  var w = document.getElementById('progbar');
+  for (var i = 0; i < SECS.length; i++) {
+    var s = SECS[i];
+    var col = document.createElement('div');
+    col.className = 'progcol';
+    col.setAttribute('data-id', s.id);
+    col.innerHTML = '<div class="progstep" id="ps_' + s.id + '"></div><div class="proglbl">' + s.num + ' ' + s.w + '%</div>';
+    col.onclick = (function(id) { return function() { goTo(id); }; })(s.id);
+    w.appendChild(col);
+  }
+}
+
+function buildNav() {
+  var nav = document.getElementById('scnav');
+  for (var i = 0; i < SECS.length; i++) {
+    var s = SECS[i];
+    var d = document.createElement('div');
+    d.className = 'sdot ' + s.cc;
+    d.title = s.title;
+    d.onclick = (function(id) { return function() { goTo(id); }; })(s.id);
+    nav.appendChild(d);
+  }
+}
+
+function buildWtable() {
+  var tbl = document.getElementById('wtable');
+  var h = '';
+  for (var i = 0; i < SECS.length; i++) {
+    var s = SECS[i];
+    h += '<div class="wrow">';
+    h += '<div class="wnum">' + s.num + '</div>';
+    h += '<div class="wname">' + s.title + '</div>';
+    h += '<div class="wpct">' + s.w + '%</div>';
+    h += '<div class="wbar-wrap"><div class="wbar-fill" id="wb_' + s.id + '" style="width:0%"></div></div>';
+    h += '<div class="wchip" id="wc_' + s.id + '">--</div>';
+    h += '<div class="wcont" id="wco_' + s.id + '">--</div>';
+    h += '</div>';
+  }
+  tbl.innerHTML = h;
+}
+
+function goTo(id) {
+  var el = document.getElementById('sec_' + id);
+  if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function buildSections() {
+  var main = document.getElementById('main');
+  var slbls = {pending:'In attesa', act:'In corso', ok:'Completato', wa:'Attenzione', st:'Bloccato'};
+  var scls = {pending:'pending', act:'active', ok:'ok', wa:'warn', st:'stop'};
+
+  for (var i = 0; i < SECS.length; i++) {
+    var s = SECS[i];
+
+    if (i > 0) {
+      var conn = document.createElement('div');
+      conn.className = 'conn';
+      conn.innerHTML = '<div class="conn-line"></div><div class="conn-arr">v</div>';
+      main.appendChild(conn);
+    }
+
+    var sec = document.createElement('div');
+    sec.id = 'sec_' + s.id;
+    sec.className = 'sec ' + s.cc + (i === 0 ? ' open' : '');
+
+    var curSt = ST.statuses[s.id] || 'pending';
+    var curSc = ST.scores[s.id];
+
+    var h = '';
+
+    // Header
+    h += '<div class="sec-hdr" onclick="document.getElementById(\'sec_' + s.id + '\').classList.toggle(\'open\')">';
+    h += '<div class="sec-num">' + s.num + '</div>';
+    h += '<div class="sec-meta">';
+    h += '<div class="sec-tag">' + s.tag + '</div>';
+    h += '<div class="sec-title">' + s.title + '</div>';
+    h += '<div class="sec-sub">' + s.sub + '</div>';
+    h += '<div class="sec-dates">' + s.dates + '</div>';
+    h += '</div>';
+    h += '<div class="sec-right">';
+    h += '<div class="sbadge ' + (scls[curSt] || 'pending') + '" id="bd_' + s.id + '">' + (slbls[curSt] || 'In attesa') + '</div>';
+    h += '<div class="wchip-hdr">Peso ' + s.w + '%</div>';
+    h += '</div>';
+    h += '<div class="sec-tog">v</div>';
+    h += '</div>';
+
+    // Body
+    h += '<div class="sec-body">';
+
+    if (s.par) {
+      h += '<div class="parbadge">' + s.pn + '</div>';
+    }
+
+    // Actors
+    h += '<div class="blbl">Attori coinvolti</div>';
+    h += '<div class="actgrid">';
+    for (var j = 0; j < s.actors.length; j++) {
+      var a = s.actors[j];
+      var at = AT[a.k] || AT.ext;
+      var sv = (ST.actors[s.id] && ST.actors[s.id][j] != null) ? ST.actors[s.id][j] : a.l;
+      h += '<div class="actcard">';
+      h += '<div class="acticon ' + at.cls + '">' + at.icon + '</div>';
+      h += '<div><div class="actrole">' + at.role + '</div>';
+      h += '<input class="actinput" id="a_' + s.id + '_' + j + '" value="' + sv.replace(/"/g,'&quot;') + '" placeholder="' + at.ph + '" oninput="saveAll()"/>';
+      h += '</div></div>';
+    }
+    h += '</div>';
+
+    // Tasks
+    h += '<div class="blbl">Azioni</div>';
+    for (var j = 0; j < s.tasks.length; j++) {
+      var t = s.tasks[j];
+      var chk = ST.tasks[t.id] || false;
+      var tags = '';
+      for (var k = 0; k < t.ac.length; k++) {
+        var at2 = AT[t.ac[k]] || AT.ext;
+        tags += '<span class="atag ' + at2.cls + '">' + at2.role + '</span>';
+      }
+      var tnval = (ST.tnotes && ST.tnotes[t.id]) ? ST.tnotes[t.id] : '';
+      var tnHas = tnval.trim().length > 0;
+      h += '<div class="task">';
+      h += '<div class="tchk' + (chk ? ' on' : '') + '" id="ck_' + t.id + '" onclick="toggleTask(\'' + t.id + '\')">' + (chk ? 'v' : '') + '</div>';
+      h += '<div class="tcont">';
+      h += '<div class="ttitle' + (chk ? ' done' : '') + '" id="tt_' + t.id + '">' + t.tx + '</div>';
+      h += '<div class="tmeta"><span class="tdate">' + t.dt + '</span>' + tags + '</div>';
+      h += '<div class="tnote-wrap">';
+      h += '<button class="tnote-toggle' + (tnHas ? ' tnote-has' : '') + '" id="tnt_' + t.id + '" onclick="toggleTaskNote(\'' + t.id + '\')">' + (tnHas ? '+ Note (compilate)' : '+ Aggiungi note') + '</button>';
+      h += '<textarea class="tnote-box' + (tnHas ? ' visible' : '') + '" id="tnb_' + t.id + '" data-tid="' + t.id + '" placeholder="Note / motivazione / risposta ricevuta..." oninput="onTaskNoteChange(\'' + t.id + '\',this.value)">' + tnval + '</textarea>';
+      h += '</div>';
+      h += '</div>';
+      h += '<div class="tprio ' + t.p + '">' + t.p + '</div>';
+      h += '</div>';
+    }
+
+    // Notes
+    h += '<div class="blbl">Note e Aggiornamenti</div>';
+    h += '<textarea class="notes" id="n_' + s.id + '" placeholder="' + s.np + '">' + (ST.notes[s.id] || '') + '</textarea>';
+
+    // Node
+    h += '<div class="node">';
+    h += '<div class="node-hdr">Nodo Decisionale - Peso: ' + s.w + '% - Contributo max: ' + s.w + ' pt</div>';
+    h += '<div class="node-q">' + s.node.q + '</div>';
+    h += '<div class="node-outs">';
+    for (var j = 0; j < s.node.outs.length; j++) {
+      var o = s.node.outs[j];
+      var scCls = o.sc === 100 ? 'g' : o.sc === 50 ? 'o' : 'r';
+      h += '<div class="out ' + o.cls + '">';
+      h += '<div class="out-ico">' + o.i + '</div>';
+      h += '<div class="out-txt"><b>' + o.s + '</b>' + o.t + '</div>';
+      h += '<div class="out-sc ' + scCls + '">' + o.sc + '</div>';
+      h += '</div>';
+    }
+    h += '</div>';
+
+    // Score selector
+    var sc100cls = curSc === 100 ? ' s100' : '';
+    var sc50cls  = curSc === 50  ? ' s50'  : '';
+    var sc0cls   = curSc === 0   ? ' s0'   : '';
+    var sdCol = curSc === 100 ? 'var(--green)' : curSc === 50 ? 'var(--orange)' : curSc === 0 ? 'var(--red)' : 'var(--textf)';
+    var sdTxt = curSc !== undefined ? curSc + ' pt' : '-- pt';
+    h += '<div class="scsel">';
+    h += '<span class="scsel-lbl">Risposta:</span>';
+    h += '<button class="scbtn' + sc100cls + '" data-s="' + s.id + '" onclick="setScore(\'' + s.id + '\',100,this)">SI pieno - 100 pt</button>';
+    h += '<button class="scbtn' + sc50cls  + '" data-s="' + s.id + '" onclick="setScore(\'' + s.id + '\',50,this)">Parziale - 50 pt</button>';
+    h += '<button class="scbtn' + sc0cls   + '" data-s="' + s.id + '" onclick="setScore(\'' + s.id + '\',0,this)">No - 0 pt</button>';
+    h += '<div class="scdisp" id="sd_' + s.id + '" style="color:' + sdCol + '">' + sdTxt + '</div>';
+    h += '</div></div>';
+
+    // Status selector
+    var sts = [{v:'act',l:'In corso'},{v:'ok',l:'Completato'},{v:'wa',l:'Attenzione'},{v:'st',l:'Bloccato'}];
+    h += '<div class="stsel"><span class="stlbl">Stato:</span>';
+    for (var j = 0; j < sts.length; j++) {
+      var b = sts[j];
+      var sel = (curSt === b.v) ? ' s' + b.v : '';
+      h += '<button class="stbtn' + sel + '" data-s="' + s.id + '" onclick="setStatus(\'' + s.id + '\',\'' + b.v + '\',this)">' + b.l + '</button>';
+    }
+    h += '</div>';
+
+    h += '</div>'; // end sec-body
+
+    sec.innerHTML = h;
+    main.appendChild(sec);
+  }
+}
+
+function setDate() {
+  var d = new Date();
+  var months = ['gen','feb','mar','apr','mag','giu','lug','ago','set','ott','nov','dic'];
+  document.getElementById('hdate').textContent = d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
+}
+
+load();
+setDate();
+buildProgbar();
+buildNav();
+buildWtable();
+buildSections();
+updateAll();
+setInterval(saveAll, 30000);
+</script>
+</body>
+</html>

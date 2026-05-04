@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RCV &middot; Hub &middot; FranKi Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--blu:#2B38B0;--arancio:#F0A500;--grigio:#F2F1ED;--bianco:#FFFFFF;--nero:#111118;--verde:#0f6b30;--bosco:#2A3A1E}
+body{font-family:"Barlow",sans-serif;background:var(--grigio);color:var(--nero);max-width:680px;margin:0 auto;font-size:15px;line-height:1.6}
+
+nav{background:var(--blu);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.fk-logo{font-family:"Barlow Condensed",sans-serif;font-weight:900;font-size:22px;display:inline-flex;align-items:center}
+.fk-logo .fran{color:#fff}
+.fk-logo .ki{background:#F0A500;color:#fff;border-radius:5px;padding:1px 7px;margin-left:2px}
+.nav-right{color:rgba(255,255,255,0.5);font-size:11px;font-family:"Barlow Condensed",sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+
+.hero{background:var(--blu);padding:28px 20px 24px;position:relative;overflow:hidden}
+.hero::before{content:"HUB";position:absolute;right:-10px;top:-10px;font-family:"Barlow Condensed",sans-serif;font-weight:900;font-size:160px;color:rgba(255,255,255,0.04);line-height:1;pointer-events:none}
+.hero-tag{display:inline-block;background:var(--arancio);color:#fff;font-family:"Barlow Condensed",sans-serif;font-weight:900;font-size:11px;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;border-radius:3px;margin-bottom:12px}
+.hero h1{font-family:"Barlow Condensed",sans-serif;font-weight:900;font-size:38px;color:#fff;text-transform:uppercase;line-height:1;margin-bottom:6px}
+.hero h1 span{color:var(--arancio)}
+.hero-sub{color:rgba(255,255,255,0.45);font-size:13px;font-weight:300}
+
+.manifesto{background:var(--nero);padding:14px 20px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.fase{font-family:"Barlow Condensed",sans-serif;font-weight:900;font-size:11px;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;border-radius:3px;border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.35)}
+.fase.attiva{background:var(--arancio);color:#fff;border-color:var(--arancio)}
+.manifesto-label{font-size:10px;color:rgba(255,255,255,0.3);letter-spacing:1px;text-transform:uppercase;font-weight:700;width:100%;margin-bottom:4px}
+
+/* MASTER CARD */
+.master-card{background:var(--bianco);margin-bottom:8px;overflow:hidden;border-left:4px solid var(--blu)}
+.master-card.urgente{border-left-color:var(--arancio)}
+.master-card.esterno{border-left-color:var(--verde)}
+.master-card.interno{border-left-color:#888}
+
+.master-head{padding:16px 20px;cursor:pointer;user-select:none;display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.master-head:hover{background:#fafafa}
+.master-left{display:flex;align-items:flex-start;gap:14px;flex:1}
+.master-ico{font-size:28px;flex-shrink:0;padding-top:2px}
+.master-info{}
+.master-label{font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:3px}
+.master-card.urgente .master-label{color:var(--arancio)}
+.master-card.esterno .master-label{color:var(--verde)}
+.master-card.interno .master-label{color:#888}
+.master-card:not(.urgente):not(.esterno):not(.interno) .master-label{color:var(--blu)}
+.master-title{font-family:"Barlow Condensed",sans-serif;font-weight:900;font-size:20px;color:var(--nero);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;line-height:1.2}
+.master-desc{font-size:13px;color:#666;line-height:1.5}
+.master-arrow{font-size:12px;color:#ccc;transition:transform .2s;flex-shrink:0;padding-top:4px}
+.master-arrow.open{transform:rotate(90deg)}
+
+/* MASTER LINK */
+.master-link{display:flex;align-items:center;gap:10px;padding:12px 20px;background:var(--grigio);border-top:2px solid rgba(0,0,0,0.06);text-decoration:none;transition:background .15s}
+.master-link:hover{background:#e8e8e4}
+.master-link-ico{font-size:18px;flex-shrink:0}
+.master-link-info{flex:1}
+.master-link-badge{font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:10px;letter-spacing:1px;text-transform:uppercase;padding:2px 7px;border-radius:2px;display:inline-block;margin-bottom:3px}
+.badge-master{background:var(--arancio);color:#fff}
+.badge-nda{background:var(--rosso,#b02020);color:#fff}
+.master-link-title{font-weight:500;font-size:14px;color:var(--nero)}
+.master-link-url{font-size:11px;color:#aaa;margin-top:1px}
+.master-link-arrow{color:var(--arancio);font-size:16px;flex-shrink:0}
+
+/* SUB SECTION */
+.sub-section{display:none;border-top:1px solid var(--grigio)}
+.sub-section.open{display:block}
+.sub-header{padding:8px 20px;background:#f5f5f2;display:flex;align-items:center;gap:8px}
+.sub-header-label{font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#aaa}
+.sub-link{display:flex;align-items:center;gap:10px;padding:10px 20px 10px 36px;background:var(--bianco);border-top:1px solid var(--grigio);text-decoration:none;transition:background .15s}
+.sub-link:hover{background:#fafafa}
+.sub-link-ico{font-size:16px;flex-shrink:0}
+.sub-link-title{font-size:13px;color:#444;flex:1}
+.sub-link-arrow{color:#ccc;font-size:14px;flex-shrink:0}
+
+.footer-band{background:var(--nero);padding:20px;text-align:center;margin-top:8px}
+.footer-band p{color:rgba(255,255,255,0.35);font-size:11px;margin-top:6px;line-height:1.6}
+.riservato{background:var(--arancio);padding:8px 20px;text-align:center;font-family:"Barlow Condensed",sans-serif;font-weight:900;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#fff;margin-top:8px}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="fk-logo"><span class="fran">Fran</span><span class="ki">Ki</span></div>
+  <div class="nav-right">Hub &middot; RCV Il Poglio</div>
+</nav>
+
+<div class="hero">
+  <div class="hero-tag">Hub Documenti</div>
+  <h1>RCV <span>Il Poglio</span></h1>
+  <div class="hero-sub">HoldCo Srl &middot; Il Poglio SPV Srl &middot; FranKi Studio &middot; Aprile 2026</div>
+</div>
+
+<div class="manifesto">
+  <div class="manifesto-label">Metodo FranKi v2 &mdash; Fase attiva</div>
+  <div class="fase">F00 &#10003;</div>
+  <div class="fase attiva">F01 &#9654;</div>
+  <div class="fase">F02</div>
+  <div class="fase">F03</div>
+  <div class="fase">F04</div>
+  <div class="fase">F05</div>
+</div>
+
+<!-- M1 LA PRESENTAZIONE -->
+<div class="master-card" style="margin-top:8px">
+  <div class="master-head" onclick="toggle(this)">
+    <div class="master-left">
+      <div class="master-ico">&#127807;</div>
+      <div class="master-info">
+        <div class="master-label">M1 &mdash; Soci fondatori</div>
+        <div class="master-title">La Presentazione</div>
+        <div class="master-desc">Il documento principale da mostrare ad Affio e ai soci fondatori. Apre tutto il discorso.</div>
+      </div>
+    </div>
+    <div class="master-arrow">&#9654;</div>
+  </div>
+  <a class="master-link" href="POGLIO_Presentazione_Soci.html" target="_blank">
+    <div class="master-link-ico">&#127807;</div>
+    <div class="master-link-info">
+      <span class="master-link-badge badge-master">Master</span>
+      <div class="master-link-title">Il Poglio &mdash; Presentazione Soci</div>
+      <div class="master-link-url">POGLIO_Presentazione_Soci.html</div>
+    </div>
+    <div class="master-link-arrow">&#8594;</div>
+  </a>
+  <div class="sub-section">
+    <div class="sub-header"><span class="sub-header-label">Documenti di approfondimento</span></div>
+    <a class="sub-link" href="RCV_Scheda_Storica.html" target="_blank">
+      <div class="sub-link-ico">&#127963;</div>
+      <div class="sub-link-title">Scheda Storica &mdash; La storia dell'asset</div>
+      <div class="sub-link-arrow">&#8594;</div>
+    </a>
+    <a class="sub-link" href="RCV_Benchmark.html" target="_blank">
+      <div class="sub-link-ico">&#127757;</div>
+      <div class="sub-link-title">Benchmark Internazionali</div>
+      <div class="sub-link-arrow">&#8594;</div>
+    </a>
+    <a class="sub-link" href="RCV_Concept_Report_F01.html" target="_blank">
+      <div class="sub-link-ico">&#128161;</div>
+      <div class="sub-link-title">Concept Report F01 &mdash; Posizionamento strategico</div>
+      <div class="sub-link-arrow">&#8594;</div>
+    </a>
+    <a class="sub-link" href="RCV_ConceptCommerciali.html" target="_blank">
+      <div class="sub-link-ico">&#127968;</div>
+      <div class="sub-link-title">Concept Commerciali &mdash; 68 keys e prodotto</div>
+      <div class="sub-link-arrow">&#8594;</div>
+    </a>
+  </div>
+</div>
+
+<!-- M2 BRIEF MEETING -->
+<div class="master-card urgente">
+  <div class="master-head" onclick="toggle(this)">
+    <div class="master-left">
+      <div class="master-ico">&#128203;</div>
+      <div class="master-info">
+        <div class="master-label">M2 &mdash; Meeting Affio &middot; Oggi ore 17:00</div>
+        <div class="master-title">Il Brief Meeting</div>
+        <div class="master-desc">Verbale interattivo con spunte e campi compilabili. Contiene link a tutti i documenti da mostrare durante la riunione.</div>
+      </div>
+    </div>
+    <div class="master-arrow">&#9654;</div>
+  </div>
+  <a class="master-link" href="brief/Brief_Meeting_Affio.html" target="_blank">
+    <div class="master-link-ico">&#128203;</div>
+    <div class="master-link-info">
+      <span class="master-link-badge badge-master">Master</span>
+      <div class="master-link-title">Brief Meeting Affio &mdash; 30 Aprile 2026</div>
+      <div class="master-link-url">brief/Brief_Meeting_Affio.html</div>
+    </div>
+    <div class="master-link-arrow">&#8594;</div>
+  </a>
+  <div class="sub-section">
+    <div class="sub-header"><span class="sub-header-label">Da aprire durante o dopo il meeting</span></div>
+    <a class="sub-link" href="brief/Brief_Annachiara.html" target="_blank">
+      <div class="sub-link-ico">&#128105;&#8205;&#128188;</div>
+      <div class="sub-link-title">Brief Annachiara Calvanese &mdash; Il suo ruolo</div>
+      <div class="sub-link-arrow">&#8594;</div>
+    </a>
+    <a class="sub-link" href="brief/Checklist_Completa.html" target="_blank">
+      <div class="sub-link-ico">&#9989;</div>
+      <div class="sub-link-title">Checklist Completa &mdash; 27 task con sub-task e date</div>
+      <div class="sub-link-arrow">&#8594;</div>
+    </a>
+    <a class="sub-link" href="brief/RCV_Film_Completo.html" target="_blank">
+      <div class="sub-link-ico">&#127916;</div>
+      <div class="sub-link-title">Il Film &mdash; Roadmap completa APR26 &rarr; NOV30</div>
+      <div class="sub-link-arrow">&#8594;</div>
+    </a>
+    <a class="sub-link" href="brief/RCV_Gantt.html" target="_blank">
+      <div class="sub-link-ico">&#128197;</div>
+      <div class="sub-link-title">Gantt &mdash; Timeline visuale</div>
+      <div class="sub-link-arrow">&#8594;</div>
+    </a>
+    <a class="sub-link" href="brief/RCV_Report_Affio.html" target="_blank">
+      <div class="sub-link-ico">&#128202;</div>
+      <div class="sub-link-title">Report Affio &mdash; I suoi numeri personali</div>
+      <div class="sub-link-arrow">&#8594;</div>
+    </a>
+    <a class="sub-link" href="brief/RCV_Report_Soci.html" target="_blank">
+      <div class="sub-link-ico">&#128101;</div>
+      <div class="sub-link-title">Report Soci &mdash; Flussi e scenari exit cordata</div>
+      <div class="sub-link-arrow">&#8594;</div>
+    </a>
+    <a class="sub-link" href="brief/RCV_CashFlow_Report.html" target="_blank">
+      <div class="sub-link-ico">&#128176;</div>
+      <div class="sub-link-title">Cash Flow Report &mdash; Tutti i movimenti milestone</div>
+      <div class="sub-link-arrow">&#8594;</div>
+    </a>
+    <a class="sub-link" href="brief/RCV_Fornitori.html" target="_blank">
+      <div class="sub-link-ico">&#128296;</div>
+      <div class="sub-link-title">Mappa Fornitori &mdash; Skill e doppio ruolo</div>
+      <div class="sub-link-arrow">&#8594;</div>
+    </a>
+  </div>
+</div>
+
+<!-- M3 IL FILM -->
+<div class="master-card">
+  <div class="master-head" onclick="toggle(this)">
+    <div class="master-left">
+      <div class="master-ico">&#127916;</div>
+      <div class="master-info">
+        <div class="master-label">M3 &mdash; Roadmap operativa</div>
+        <div class="master-title">Il Film</div>
+        <div class="master-desc">La roadmap completa dall'inizio alla fine. 25 passi in 6 fasi. Per chi vuole capire l'intera operazione.</div>
+      </div>
+    </div>
+    <div class="master-arrow">&#9654;</div>
+  </div>
+  <a class="master-link" href="brief/RCV_Film_Completo.html" target="_blank">
+    <div class="master-link-ico">&#127916;</div>
+    <div class="master-link-info">
+      <span class="master-link-badge badge-master">Master</span>
+      <div class="master-link-title">Il Film &mdash; Roadmap APR26 &rarr; NOV30</div>
+      <div class="master-link-url">brief/RCV_Film_Completo.html</div>
+    </div>
+    <div class="master-link-arrow">&#8594;</div>
+  </a>
+  <div class="sub-section">
+    <div class="sub-header"><span class="sub-header-label">Approfondimenti operativi</span></div>
+    <a class="sub-link" href="brief/RCV_Gantt.html" target="_blank">
+      <div class="sub-link-ico">&#128197;</div>
+      <div class="sub-link-title">Gantt &mdash; Timeline visuale</div>
+      <div class="sub-link-arrow">&#8594;</div>
+    </a>
+    <a class="sub-link" href="brief/RCV_CashFlow_Report.html" target="_blank">
+      <div class="sub-link-ico">&#128176;</div>
+      <div class="sub-link-title">Cash Flow Report &mdash; Movimenti per milestone</div>
+      <div class="sub-link-arrow">&#8594;</div>
+    </a>
+    <a class="sub-link" href="brief/Checklist_Completa.html" target="_blank">
+      <div class="sub-link-ico">&#9989;</div>
+      <div class="sub-link-title">Checklist Completa &mdash; 27 task con sub-task e date</div>
+      <div class="sub-link-arrow">&#8594;</div>
+    </a>
+    <a class="sub-link" href="RCV_Piano30Mesi.html" target="_blank">
+      <div class="sub-link-ico">&#128203;</div>
+      <div class="sub-link-title">Piano 30 Mesi &mdash; Gantt operativo originale</div>
+      <div class="sub-link-arrow">&#8594;</div>
+    </a>
+    <a class="sub-link" href="RCV_SimulazioneOperativa.html" target="_blank">
+      <div class="sub-link-ico">&#9881;</div>
+      <div class="sub-link-title">Simulazione Operativa &mdash; Settimana tipo</div>
+      <div class="sub-link-arrow">&#8594;</div>
+    </a>
+  </div>
+</div>
+
+<!-- M4 TEASER FONDO -->
+<div class="master-card esterno">
+  <div class="master-head" onclick="toggle(this)">
+    <div class="master-left">
+      <div class="master-ico">&#127970;</div>
+      <div class="master-info">
+        <div class="master-label">M4 &mdash; Fondo istituzionale &middot; Solo con NDA</div>
+        <div class="master-title">Il Teaser Fondo</div>
+        <div class="master-desc">Documento deal-oriented per fondi, SGR e family office. Non si manda senza NDA firmato.</div>
+      </div>
+    </div>
+    <div class="master-arrow">&#9654;</div>
+  </div>
+  <a class="master-link" href="TEASER-ONE-B1_RCV.html" target="_blank">
+    <div class="master-link-ico">&#128202;</div>
+    <div class="master-link-info">
+      <span class="master-link-badge badge-master">Master</span>
+      <span class="master-link-badge badge-nda" style="background:#b02020;margin-left:4px">Solo con NDA</span>
+      <div class="master-link-title">Teaser B1 &mdash; Per gli Investitori Istituzionali</div>
+      <div class="master-link-url">TEASER-ONE-B1_RCV.html</div>
+    </div>
+    <div class="master-link-arrow">&#8594;</div>
+  </a>
+  <div class="sub-section">
+    <div class="sub-header"><span class="sub-header-label">Da allegare dopo il NDA</span></div>
+    <a class="sub-link" href="RCV_BusinessModel.html" target="_blank">
+      <div class="sub-link-ico">&#128203;</div>
+      <div class="sub-link-title">Business Model &mdash; Piano completo</div>
+      <div class="sub-link-arrow">&#8594;</div>
+    </a>
+    <a class="sub-link" href="RCV_CapTable_v2.html" target="_blank">
+      <div class="sub-link-ico">&#128200;</div>
+      <div class="sub-link-title">Cap Table &mdash; Struttura societaria e scenari exit</div>
+      <div class="sub-link-arrow">&#8594;</div>
+    </a>
+    <a class="sub-link" href="RCV_SimulazioneFasi.html" target="_blank">
+      <div class="sub-link-ico">&#128198;</div>
+      <div class="sub-link-title">Simulazione Fasi &mdash; Revenue per milestone</div>
+      <div class="sub-link-arrow">&#8594;</div>
+    </a>
+    <a class="sub-link" href="RCV_Benchmark.html" target="_blank">
+      <div class="sub-link-ico">&#127757;</div>
+      <div class="sub-link-title">Benchmark Internazionali &mdash; Il mercato esiste</div>
+      <div class="sub-link-arrow">&#8594;</div>
+    </a>
+    <a class="sub-link" href="RCV_SoggettiInCampo.html" target="_blank">
+      <div class="sub-link-ico">&#128101;</div>
+      <div class="sub-link-title">Soggetti in Campo &mdash; Chi fa cosa &#9888; da aggiornare</div>
+      <div class="sub-link-arrow">&#8594;</div>
+    </a>
+  </div>
+</div>
+
+<!-- M5 TEASER SOCI CLUB -->
+<div class="master-card esterno">
+  <div class="master-head" onclick="toggle(this)">
+    <div class="master-left">
+      <div class="master-ico">&#127807;</div>
+      <div class="master-info">
+        <div class="master-label">M5 &mdash; Soci del club &middot; 140 membership</div>
+        <div class="master-title">Il Teaser Soci Club</div>
+        <div class="master-desc">Documento lifestyle per chi potrebbe diventare socio fondatore del club. Tono emotivo e aspirazionale.</div>
+      </div>
+    </div>
+    <div class="master-arrow">&#9654;</div>
+  </div>
+  <a class="master-link" href="TEASER-ONE-A_RCV.html" target="_blank">
+    <div class="master-link-ico">&#127807;</div>
+    <div class="master-link-info">
+      <span class="master-link-badge badge-master">Master</span>
+      <div class="master-link-title">Teaser A &mdash; Per i Soci Fondatori del Club</div>
+      <div class="master-link-url">TEASER-ONE-A_RCV.html</div>
+    </div>
+    <div class="master-link-arrow">&#8594;</div>
+  </a>
+  <div class="sub-section">
+    <div class="sub-header"><span class="sub-header-label">Da mostrare dopo il primo interesse</span></div>
+    <a class="sub-link" href="RCV_ConceptCommerciali.html" target="_blank">
+      <div class="sub-link-ico">&#127968;</div>
+      <div class="sub-link-title">Concept Commerciali &mdash; Le camere e il prodotto</div>
+      <div class="sub-link-arrow">&#8594;</div>
+    </a>
+    <a class="sub-link" href="RCV_Concept_Report_F01.html" target="_blank">
+      <div class="sub-link-ico">&#128161;</div>
+      <div class="sub-link-title">Concept F01 &mdash; Il posizionamento</div>
+      <div class="sub-link-arrow">&#8594;</div>
+    </a>
+  </div>
+</div>
+
+<!-- INTERNO FRANKI -->
+<div class="master-card interno">
+  <div class="master-head" onclick="toggle(this)">
+    <div class="master-left">
+      <div class="master-ico">&#128274;</div>
+      <div class="master-info">
+        <div class="master-label">Uso interno FranKi &mdash; Non esce</div>
+        <div class="master-title">Documenti Interni</div>
+        <div class="master-desc">Report, strumenti e reference. Solo per uso interno FranKi Studio.</div>
+      </div>
+    </div>
+    <div class="master-arrow">&#9654;</div>
+  </div>
+  <div class="sub-section">
+    <div class="sub-header"><span class="sub-header-label">Report</span></div>
+    <a class="sub-link" href="brief/RCV_Report_FranKi.html" target="_blank">
+      <div class="sub-link-ico">&#128202;</div>
+      <div class="sub-link-title">Report FranKi &mdash; Revenue totale sull'operazione</div>
+      <div class="sub-link-arrow">&#8594;</div>
+    </a>
+    <div class="sub-header"><span class="sub-header-label">Operativi</span></div>
+    <a class="sub-link" href="RCV_PianoB_Arbitrage.html" target="_blank">
+      <div class="sub-link-ico">&#128260;</div>
+      <div class="sub-link-title">Piano B &mdash; Arbitrage e vie alternative</div>
+      <div class="sub-link-arrow">&#8594;</div>
+    </a>
+    <a class="sub-link" href="RCV_SoggettiInCampo.html" target="_blank">
+      <div class="sub-link-ico">&#128101;</div>
+      <div class="sub-link-title">Soggetti in Campo &#9888; da aggiornare</div>
+      <div class="sub-link-arrow">&#8594;</div>
+    </a>
+    <a class="sub-link" href="RCV_SimulazioneOperativa.html" target="_blank">
+      <div class="sub-link-ico">&#9881;</div>
+      <div class="sub-link-title">Simulazione Operativa &mdash; Settimana tipo</div>
+      <div class="sub-link-arrow">&#8594;</div>
+    </a>
+    <div class="sub-header"><span class="sub-header-label">Strumenti FranKi</span></div>
+    <a class="sub-link" href="FranKi_DesignGuide.html" target="_blank">
+      <div class="sub-link-ico">&#127912;</div>
+      <div class="sub-link-title">FranKi Design Guide</div>
+      <div class="sub-link-arrow">&#8594;</div>
+    </a>
+    <a class="sub-link" href="RCV_BrandContext.html" target="_blank">
+      <div class="sub-link-ico">&#127775;</div>
+      <div class="sub-link-title">Brand Context &mdash; Brief brand Il Poglio</div>
+      <div class="sub-link-arrow">&#8594;</div>
+    </a>
+  </div>
+</div>
+
+<div class="riservato">Riservato &middot; Distribuzione selezionata &middot; Aprile 2026</div>
+
+<div class="footer-band">
+  <div class="fk-logo"><span class="fran">Fran</span><span class="ki">Ki</span></div>
+  <p>HoldCo Srl &middot; Il Poglio SPV Srl &middot; FranKi Studio (Avre Srl &middot; Napoli)<br>frankistudio.it/affio/rcv/ &middot; Aprile 2026</p>
+</div>
+
+<script>
+function toggle(head){
+  const arrow = head.querySelector(".master-arrow");
+  const sub = head.closest(".master-card").querySelector(".sub-section");
+  if(!sub) return;
+  const open = sub.classList.contains("open");
+  sub.classList.toggle("open", !open);
+  arrow.classList.toggle("open", !open);
+}
+</script>
+</body>
+</html>

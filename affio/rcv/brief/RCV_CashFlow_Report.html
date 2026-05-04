@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cash Flow Report — RCV Il Poglío</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--blu:#2B38B0;--arancio:#F0A500;--grigio:#F2F1ED;--bianco:#FFFFFF;--nero:#111118;--verde:#0f6b30;--rosso:#b02020}
+body{font-family:'Barlow',sans-serif;background:var(--grigio);color:var(--nero);max-width:700px;margin:0 auto;font-size:14px;line-height:1.6}
+nav{background:var(--blu);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.fk-logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;display:inline-flex;align-items:center}
+.fk-logo .fran{color:#fff}
+.fk-logo .ki{background:#F0A500;color:#fff;border-radius:5px;padding:1px 7px;margin-left:2px}
+.nav-label{color:rgba(255,255,255,0.6);font-size:11px;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+
+/* HERO */
+.hero{background:var(--nero);padding:24px 20px 20px}
+.hero-tag{display:inline-block;background:var(--arancio);color:#fff;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;border-radius:3px;margin-bottom:10px}
+.hero h1{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:36px;color:#fff;text-transform:uppercase;line-height:1;margin-bottom:4px}
+.hero h1 span{color:var(--arancio)}
+.hero p{color:rgba(255,255,255,0.45);font-size:12px;font-weight:300}
+
+/* GOVERNANCE CARD */
+.gov-card{background:var(--bianco);margin-bottom:3px;padding:20px}
+.gov-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:13px;letter-spacing:2px;text-transform:uppercase;color:#888;margin-bottom:14px}
+.gov-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px}
+.gov-societa{background:var(--grigio);padding:14px}
+.gov-soc-name{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;color:var(--blu);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.gov-soc-tipo{font-size:11px;color:#888;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;font-family:'Barlow Condensed',sans-serif;font-weight:700}
+.gov-soc-ad{background:var(--bianco);padding:8px 10px;margin-bottom:8px;border-left:3px solid var(--arancio)}
+.gov-soc-ad-label{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#888;font-family:'Barlow Condensed',sans-serif;font-weight:700}
+.gov-soc-ad-name{font-weight:500;font-size:13px;color:var(--nero);margin-top:2px}
+.gov-soc-ad-note{font-size:11px;color:#888;font-style:italic}
+.gov-soci-list{font-size:12px;color:#444;line-height:1.8}
+.gov-soci-list span{font-weight:500;color:var(--nero)}
+.gov-arrow{display:flex;align-items:center;justify-content:center;font-size:20px;color:#ccc;padding:10px 0}
+.gov-chain{grid-column:1/-1;background:var(--nero);padding:12px 16px;display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:2px}
+.gov-chain-item{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;border-radius:3px}
+.gc-blu{background:rgba(43,56,176,0.3);color:#a0b0ff}
+.gc-arr{color:rgba(255,255,255,0.3);font-size:14px}
+.gc-green{background:rgba(15,107,48,0.3);color:#80d0a0}
+.gc-gold{background:rgba(240,165,0,0.3);color:#ffd06d}
+
+/* KPI */
+.kpi-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;background:rgba(0,0,0,0.1)}
+.kpi{background:var(--bianco);padding:14px 16px}
+.kpi-label{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#888;margin-bottom:4px}
+.kpi-val{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:24px;line-height:1}
+.kpi-sub{font-size:11px;color:#888;margin-top:2px}
+.kv-blu{color:var(--blu)}
+.kv-verde{color:var(--verde)}
+.kv-oro{color:var(--arancio)}
+
+/* FASE DIVIDER */
+.fase-div{padding:8px 20px;display:flex;align-items:center;gap:10px;margin-top:6px}
+.fase-div-line{flex:1;height:1px;background:rgba(0,0,0,0.12)}
+.fase-div-label{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#fff;padding:4px 12px;border-radius:3px}
+.f0{background:#2d5a1a}.f1{background:#1a2d8a}.f2{background:#8a4a00}.f3{background:#005a2d}.f4{background:#4a008a}.f5{background:#8a0000}
+
+/* MILESTONE CARD */
+.ms-card{background:var(--bianco);margin-bottom:3px;overflow:hidden}
+.ms-head{padding:12px 20px;border-bottom:1px solid var(--grigio);display:flex;align-items:center;gap:12px}
+.ms-num{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:26px;line-height:1;min-width:32px}
+.ms-info{flex:1}
+.ms-title{font-weight:500;font-size:14px;color:var(--nero);margin-bottom:3px}
+.ms-meta{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.ms-date{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;color:#fff;background:var(--nero);padding:2px 8px;border-radius:2px}
+.badge{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:10px;letter-spacing:1px;text-transform:uppercase;padding:2px 7px;border-radius:3px}
+.b-cardine{background:#fff3cd;color:#7c4a00}
+.b-exit{background:#d4edda;color:#155724}
+.b-cond{background:#cce5ff;color:#004085}
+
+/* TABELLA MOVIMENTI */
+.mov-table{width:100%;border-collapse:collapse}
+.mov-table tr{border-bottom:1px solid var(--grigio)}
+.mov-table tr:last-child{border-bottom:none}
+.mov-table td{padding:9px 20px;font-size:13px;vertical-align:middle}
+.td-desc{color:#333;width:50%}
+.td-sogg{font-size:11px;color:#888;text-transform:uppercase;letter-spacing:.5px;width:20%;font-family:'Barlow Condensed',sans-serif;font-weight:700}
+.td-tipo{font-size:11px;color:#aaa;width:10%;font-style:italic}
+.td-importo{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:17px;text-align:right;width:20%}
+.pos{color:var(--verde)}.neg{color:var(--rosso)}.neu{color:var(--blu)}.gri{color:#888}
+.subtot-row{background:var(--grigio)}
+.subtot-row td{padding:10px 20px;font-weight:500;font-size:13px;border-top:2px solid rgba(0,0,0,0.1)!important}
+.subtot-row .td-importo{font-size:18px}
+
+/* STRISCIA STATO */
+.stato-strip{display:grid;gap:1px;background:rgba(0,0,0,0.08)}
+.stato-strip-3{grid-template-columns:1fr 1fr 1fr}
+.stato-strip-4{grid-template-columns:1fr 1fr 1fr 1fr}
+.stato-cell{background:var(--blu);padding:12px 14px;text-align:center}
+.stato-label{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:4px}
+.stato-val{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:18px;color:#fff}
+.stato-val.verde{color:#6ddc8e}
+.stato-val.oro{color:#ffd06d}
+.stato-val.rosso{color:#ff8080}
+
+/* TOTALE FINALE */
+.totale-box{background:var(--nero);padding:20px}
+.totale-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:13px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:14px}
+.tot-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid rgba(255,255,255,0.07);font-size:13px}
+.tot-row:last-child{border-bottom:none;padding-top:14px;margin-top:6px;border-top:1px solid rgba(255,255,255,0.2);font-size:16px}
+.tot-label{color:rgba(255,255,255,0.6)}
+.tot-val{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px}
+.tot-row:last-child .tot-val{font-size:28px;color:var(--arancio)}
+
+.footer{background:var(--nero);border-top:1px solid rgba(255,255,255,0.08);padding:16px 20px;text-align:center}
+.footer p{color:rgba(255,255,255,0.35);font-size:11px;margin-top:6px}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="fk-logo"><span class="fran">Fran</span><span class="ki">Ki</span></div>
+  <span class="nav-label">Cash Flow Report · RCV Il Poglío</span>
+</nav>
+
+<div class="hero">
+  <div class="hero-tag">💰 Report Cash Flow per Milestone</div>
+  <h1>Incassi per<br><span>Milestone</span></h1>
+  <p>HoldCo Srl · Il Poglío SPV Srl · APR26-2Q → NOV30-1Q</p>
+</div>
+
+<!-- GOVERNANCE -->
+<div class="gov-card">
+  <div class="gov-title">Struttura Societaria — Governance</div>
+  <div class="gov-grid">
+    <div class="gov-societa">
+      <div class="gov-soc-name">HoldCo Srl</div>
+      <div class="gov-soc-tipo">Società madre · Cordata fondatori</div>
+      <div class="gov-soc-ad">
+        <div class="gov-soc-ad-label">AD Proposta</div>
+        <div class="gov-soc-ad-name">Annachiara Calvanese</div>
+        <div class="gov-soc-ad-note">Candidatura da confermare</div>
+      </div>
+      <div class="gov-soci-list">
+        <span>FranKi</span> 20% · voto plurimo<br>
+        <span>Affio</span> 20% · voto plurimo<br>
+        <span>6 Soci cordata</span> 10% ciascuno
+      </div>
+    </div>
+    <div class="gov-societa">
+      <div class="gov-soc-name">Il Poglío SPV Srl</div>
+      <div class="gov-soc-tipo">Società operativa · Asset e gestione</div>
+      <div class="gov-soc-ad">
+        <div class="gov-soc-ad-label">AD Proposta</div>
+        <div class="gov-soc-ad-name">Annachiara Calvanese</div>
+        <div class="gov-soc-ad-note">Candidatura da confermare</div>
+      </div>
+      <div class="gov-soci-list">
+        <span>HoldCo Srl</span> 60%<br>
+        <span>Fondo istituzionale</span> 40%<br>
+        <span style="color:#888;font-size:11px">Liquidation preference €2M</span>
+      </div>
+    </div>
+    <div class="gov-chain">
+      <span class="gov-chain-item gc-blu">FranKi 20%</span>
+      <span class="gov-chain-item gc-blu">Affio 20%</span>
+      <span class="gov-chain-item gc-blu">6 Soci 60%</span>
+      <span class="gc-arr">→</span>
+      <span class="gov-chain-item gc-green">HoldCo Srl 60%</span>
+      <span class="gc-arr">→</span>
+      <span class="gov-chain-item gc-green">Il Poglío SPV Srl</span>
+      <span class="gc-arr">←</span>
+      <span class="gov-chain-item gc-gold">Fondo 40%</span>
+    </div>
+  </div>
+</div>
+
+<!-- KPI -->
+<div class="kpi-grid">
+  <div class="kpi">
+    <div class="kpi-label">Totale raccolto progetto</div>
+    <div class="kpi-val kv-blu">~€9,3M</div>
+    <div class="kpi-sub">Tutte le fonti M0→M48</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Exit scenario base</div>
+    <div class="kpi-val kv-oro">€23M</div>
+    <div class="kpi-sub">EBITDA €2,3M × 10×</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Multiplo soci cordata</div>
+    <div class="kpi-val kv-verde">22×</div>
+    <div class="kpi-sub">€50K → ~€1,12M</div>
+  </div>
+</div>
+
+<!-- ============================================================ FASE 0 -->
+<div class="fase-div"><div class="fase-div-line"></div><div class="fase-div-label f0">FASE 0 — Fondamenta · APR26-2Q → GIU26-1Q</div><div class="fase-div-line"></div></div>
+
+<div class="ms-card">
+  <div class="ms-head">
+    <div class="ms-num" style="color:#2d5a1a">05/06</div>
+    <div class="ms-info">
+      <div class="ms-title">Firma patto parasociale · Tranche 1 cordata incassata · HoldCo Srl costituita</div>
+      <div class="ms-meta"><span class="ms-date">GIU26-1Q</span><span class="badge b-cardine">Punto cardine</span></div>
+    </div>
+  </div>
+  <table class="mov-table">
+    <tr><td class="td-desc">Tranche 1 versata — 6 soci × €25K</td><td class="td-sogg">HoldCo</td><td class="td-tipo">Entrata</td><td class="td-importo pos">+ €150K</td></tr>
+    <tr><td class="td-desc">Spese legali + notaio + costituzione HoldCo Srl</td><td class="td-sogg">HoldCo</td><td class="td-tipo">Uscita</td><td class="td-importo neg">– €15K</td></tr>
+    <tr><td class="td-desc">Agenzia marketing — mese 1 (fee ridotta)</td><td class="td-sogg">HoldCo</td><td class="td-tipo">Uscita</td><td class="td-importo neg">– €1K</td></tr>
+    <tr class="subtot-row"><td class="td-desc"><strong>Cassa HoldCo Srl dopo firma</strong></td><td class="td-sogg"></td><td class="td-tipo"></td><td class="td-importo neu">€134K</td></tr>
+  </table>
+  <div class="stato-strip stato-strip-3">
+    <div class="stato-cell"><div class="stato-label">Cassa HoldCo</div><div class="stato-val verde">€134K</div></div>
+    <div class="stato-cell"><div class="stato-label">Totale raccolto soci</div><div class="stato-val oro">€150K / €300K</div></div>
+    <div class="stato-cell"><div class="stato-label">Fondi mancanti al closing</div><div class="stato-val rosso">€150K</div></div>
+  </div>
+</div>
+
+<!-- ============================================================ FASE 1 -->
+<div class="fase-div"><div class="fase-div-line"></div><div class="fase-div-label f1">FASE 1 — Pre-Asta · GIU26-1Q → SET26-1Q</div><div class="fase-div-line"></div></div>
+
+<div class="ms-card">
+  <div class="ms-head">
+    <div class="ms-num" style="color:#1a2d8a">10</div>
+    <div class="ms-info">
+      <div class="ms-title">Tranche 2 soci · pre deposito offerta · due diligence completata</div>
+      <div class="ms-meta"><span class="ms-date">AGO26-2Q</span><span class="badge b-cardine">Punto cardine</span></div>
+    </div>
+  </div>
+  <table class="mov-table">
+    <tr><td class="td-desc">Tranche 2 versata — 6 soci × €25K</td><td class="td-sogg">HoldCo</td><td class="td-tipo">Entrata</td><td class="td-importo pos">+ €150K</td></tr>
+    <tr><td class="td-desc">Due diligence — avvocato + geometra + sopralluogo</td><td class="td-sogg">HoldCo</td><td class="td-tipo">Uscita</td><td class="td-importo neg">– €20K</td></tr>
+    <tr><td class="td-desc">Agenzia marketing — mesi 2-4</td><td class="td-sogg">HoldCo</td><td class="td-tipo">Uscita</td><td class="td-importo neg">– €3K</td></tr>
+    <tr><td class="td-desc">Cauzione asta depositata (cash o fideiussione)</td><td class="td-sogg">HoldCo</td><td class="td-tipo">Uscita</td><td class="td-importo neg">– €90K</td></tr>
+    <tr class="subtot-row"><td class="td-desc"><strong>Cassa HoldCo pre-asta</strong></td><td class="td-sogg"></td><td class="td-tipo"></td><td class="td-importo neu">~€171K</td></tr>
+  </table>
+  <div class="stato-strip stato-strip-3">
+    <div class="stato-cell"><div class="stato-label">Cassa HoldCo</div><div class="stato-val verde">€171K</div></div>
+    <div class="stato-cell"><div class="stato-label">Totale raccolto soci</div><div class="stato-val verde">€300K ✓</div></div>
+    <div class="stato-cell"><div class="stato-label">Cauzione depositata</div><div class="stato-val oro">€90K</div></div>
+  </div>
+</div>
+
+<!-- ============================================================ FASE 2 -->
+<div class="fase-div"><div class="fase-div-line"></div><div class="fase-div-label f2">FASE 2 — Closing Asta + Fondo · SET26-2Q → NOV26-1Q</div><div class="fase-div-line"></div></div>
+
+<div class="ms-card">
+  <div class="ms-head">
+    <div class="ms-num" style="color:#8a4a00">12</div>
+    <div class="ms-info">
+      <div class="ms-title">Aggiudicazione asta — Il Poglío SPV Srl acquista l'asset</div>
+      <div class="ms-meta"><span class="ms-date">SET26-2Q</span><span class="badge b-cardine">Punto cardine</span><span class="badge b-exit">1° Momento exit</span></div>
+    </div>
+  </div>
+  <table class="mov-table">
+    <tr><td class="td-desc">Asset aggiudicato a ~€900K · nessun movimento immediato</td><td class="td-sogg">SPV</td><td class="td-tipo"></td><td class="td-importo gri">Aggiudicazione</td></tr>
+    <tr><td class="td-desc">Cauzione già versata · scalata dal prezzo finale</td><td class="td-sogg">HoldCo</td><td class="td-tipo"></td><td class="td-importo gri">€90K in conto</td></tr>
+    <tr class="subtot-row"><td class="td-desc"><strong>Cassa HoldCo invariata · asset aggiudicato</strong></td><td class="td-sogg"></td><td class="td-tipo"></td><td class="td-importo neu">~€171K</td></tr>
+  </table>
+  <div class="stato-strip stato-strip-3">
+    <div class="stato-cell"><div class="stato-label">Asset aggiudicato</div><div class="stato-val oro">€900K</div></div>
+    <div class="stato-cell"><div class="stato-label">Valore perizia ufficiale</div><div class="stato-val oro">€13,5M</div></div>
+    <div class="stato-cell"><div class="stato-label">Sconto da perizia</div><div class="stato-val verde">– 93%</div></div>
+  </div>
+</div>
+
+<div class="ms-card">
+  <div class="ms-head">
+    <div class="ms-num" style="color:#8a4a00">13/14</div>
+    <div class="ms-info">
+      <div class="ms-title">Ingresso fondo €2M · saldo asta · decreto trasferimento · asset della SPV</div>
+      <div class="ms-meta"><span class="ms-date">NOV26-1Q</span><span class="badge b-cardine">Punto cardine</span></div>
+    </div>
+  </div>
+  <table class="mov-table">
+    <tr><td class="td-desc">Ingresso fondo istituzionale nella Il Poglío SPV Srl</td><td class="td-sogg">SPV</td><td class="td-tipo">Entrata</td><td class="td-importo pos">+ €2,0M</td></tr>
+    <tr><td class="td-desc">Saldo prezzo asta (€900K – €90K cauzione già versata)</td><td class="td-sogg">SPV</td><td class="td-tipo">Uscita</td><td class="td-importo neg">– €810K</td></div></tr>
+    <tr><td class="td-desc">Imposte acquisto + notaio + spese decreto trasferimento</td><td class="td-sogg">SPV</td><td class="td-tipo">Uscita</td><td class="td-importo neg">– €80K</td></tr>
+    <tr class="subtot-row"><td class="td-desc"><strong>Cassa Il Poglío SPV Srl disponibile per cantiere</strong></td><td class="td-sogg"></td><td class="td-tipo"></td><td class="td-importo neu">~€1,15M</td></tr>
+  </table>
+  <div class="stato-strip stato-strip-4">
+    <div class="stato-cell"><div class="stato-label">Cassa SPV</div><div class="stato-val verde">€1,15M</div></div>
+    <div class="stato-cell"><div class="stato-label">Asset SPV</div><div class="stato-val oro">€13,5M</div></div>
+    <div class="stato-cell"><div class="stato-label">Debito fondo</div><div class="stato-val rosso">€2M pref.</div></div>
+    <div class="stato-cell"><div class="stato-label">Cap table SPV</div><div class="stato-val oro">60/40</div></div>
+  </div>
+</div>
+
+<!-- ============================================================ FASE 3 -->
+<div class="fase-div"><div class="fase-div-line"></div><div class="fase-div-label f3">FASE 3 — Cantiere + Prime Revenue · NOV26-1Q → MAY28-1Q</div><div class="fase-div-line"></div></div>
+
+<div class="ms-card">
+  <div class="ms-head">
+    <div class="ms-num" style="color:#005a2d">15/16</div>
+    <div class="ms-info">
+      <div class="ms-title">Avvio cantiere 3 palazzine · crowdfunding minibond €1,5M</div>
+      <div class="ms-meta"><span class="ms-date">NOV26-1Q → GIU27-1Q</span><span class="badge b-cond">Minibond condizionale</span></div>
+    </div>
+  </div>
+  <table class="mov-table">
+    <tr><td class="td-desc">Budget cantiere totale allocato (18 mesi)</td><td class="td-sogg">SPV</td><td class="td-tipo">Uscita</td><td class="td-importo neg">– €6,0M</td></tr>
+    <tr><td class="td-desc">Crowdfunding minibond 15% — raccolta target</td><td class="td-sogg">SPV</td><td class="td-tipo">Entrata</td><td class="td-importo pos">+ €1,5M</td></tr>
+    <tr><td class="td-desc">Interessi minibond annui (€1,5M × 15%)</td><td class="td-sogg">SPV</td><td class="td-tipo">Uscita</td><td class="td-importo neg">– €225K/anno</td></tr>
+    <tr><td class="td-desc">Fee asset management FranKi — anno 1</td><td class="td-sogg">SPV→FranKi</td><td class="td-tipo">Uscita SPV</td><td class="td-importo neg">– €170K/anno</td></tr>
+    <tr class="subtot-row"><td class="td-desc"><strong>Copertura cantiere da fonti successive (MS 17/18)</strong></td><td class="td-sogg"></td><td class="td-tipo"></td><td class="td-importo gri">→ MS 17/18</td></tr>
+  </table>
+  <div class="stato-strip stato-strip-3">
+    <div class="stato-cell"><div class="stato-label">Budget cantiere</div><div class="stato-val rosso">– €6,0M</div></div>
+    <div class="stato-cell"><div class="stato-label">Minibond raccolto</div><div class="stato-val verde">+ €1,5M</div></div>
+    <div class="stato-cell"><div class="stato-label">Gap da coprire</div><div class="stato-val oro">MS 17/18</div></div>
+  </div>
+</div>
+
+<div class="ms-card">
+  <div class="ms-head">
+    <div class="ms-num" style="color:#005a2d">17</div>
+    <div class="ms-info">
+      <div class="ms-title">M9 — Bubble room aperte · primo revenue certificato · €594K run rate</div>
+      <div class="ms-meta"><span class="ms-date">AGO27-1Q</span><span class="badge b-cardine">Punto cardine</span><span class="badge b-exit">2° Momento exit</span></div>
+    </div>
+  </div>
+  <table class="mov-table">
+    <tr><td class="td-desc">Revenue bubble room annuo (6 × 220n × €450)</td><td class="td-sogg">SPV</td><td class="td-tipo">Entrata</td><td class="td-importo pos">+ €594K/anno</td></tr>
+    <tr><td class="td-desc">Costi gestione operativa bubble + agenzia</td><td class="td-sogg">SPV</td><td class="td-tipo">Uscita</td><td class="td-importo neg">– €180K/anno</td></tr>
+    <tr><td class="td-desc">Fee asset management FranKi — in corso</td><td class="td-sogg">SPV→FranKi</td><td class="td-tipo">Uscita SPV</td><td class="td-importo neg">– €170K/anno</td></tr>
+    <tr class="subtot-row"><td class="td-desc"><strong>EBITDA bubble room netto · run rate SPV totale</strong></td><td class="td-sogg"></td><td class="td-tipo"></td><td class="td-importo pos">€414K/anno · €1,2M</td></tr>
+  </table>
+  <div class="stato-strip stato-strip-4">
+    <div class="stato-cell"><div class="stato-label">Run rate SPV</div><div class="stato-val verde">€1,2M/anno</div></div>
+    <div class="stato-cell"><div class="stato-label">EBITDA bubble</div><div class="stato-val verde">€414K/anno</div></div>
+    <div class="stato-cell"><div class="stato-label">Valutazione SPV stimata</div><div class="stato-val oro">€5-8M</div></div>
+    <div class="stato-cell"><div class="stato-label">Payback bubble room</div><div class="stato-val verde">14 mesi</div></div>
+  </div>
+</div>
+
+<div class="ms-card">
+  <div class="ms-head">
+    <div class="ms-num" style="color:#005a2d">18</div>
+    <div class="ms-info">
+      <div class="ms-title">Quote soci club — 140 × €25K una tantum + €10K/anno membership</div>
+      <div class="ms-meta"><span class="ms-date">AGO27-1Q → MAY28-1Q</span></div>
+    </div>
+  </div>
+  <table class="mov-table">
+    <tr><td class="td-desc">Quote una tantum soci fondatori club (140 × €25K)</td><td class="td-sogg">SPV</td><td class="td-tipo">Entrata</td><td class="td-importo pos">+ €3,5M</td></tr>
+    <tr><td class="td-desc">Membership annua soci fondatori (140 × €10K)</td><td class="td-sogg">SPV</td><td class="td-tipo">Entrata</td><td class="td-importo pos">+ €1,4M/anno</td></tr>
+    <tr class="subtot-row"><td class="td-desc"><strong>Contributo totale al finanziamento cantiere</strong></td><td class="td-sogg"></td><td class="td-tipo"></td><td class="td-importo pos">€3,5M una tantum</td></tr>
+  </table>
+  <div class="stato-strip stato-strip-3">
+    <div class="stato-cell"><div class="stato-label">Una tantum totale</div><div class="stato-val verde">€3,5M</div></div>
+    <div class="stato-cell"><div class="stato-label">Membership annua</div><div class="stato-val verde">€1,4M/anno</div></div>
+    <div class="stato-cell"><div class="stato-label">Copertura cantiere</div><div class="stato-val verde">Completata</div></div>
+  </div>
+</div>
+
+<div class="ms-card">
+  <div class="ms-head">
+    <div class="ms-num" style="color:#005a2d">20</div>
+    <div class="ms-info">
+      <div class="ms-title">M18 — Wellness hub aperto · corporate retreat avviato</div>
+      <div class="ms-meta"><span class="ms-date">MAY28-1Q</span></div>
+    </div>
+  </div>
+  <table class="mov-table">
+    <tr><td class="td-desc">Revenue corporate retreat (10 eventi × €75K)</td><td class="td-sogg">SPV</td><td class="td-tipo">Entrata</td><td class="td-importo pos">+ €750K/anno</td></tr>
+    <tr><td class="td-desc">Revenue wellness + servizi aggiuntivi</td><td class="td-sogg">SPV</td><td class="td-tipo">Entrata</td><td class="td-importo pos">+ €400K/anno</td></tr>
+    <tr><td class="td-desc">Costi gestione wellness hub + staff</td><td class="td-sogg">SPV</td><td class="td-tipo">Uscita</td><td class="td-importo neg">– €320K/anno</td></tr>
+    <tr class="subtot-row"><td class="td-desc"><strong>Run rate SPV totale a M18</strong></td><td class="td-sogg"></td><td class="td-tipo"></td><td class="td-importo pos">~€2,7M/anno</td></tr>
+  </table>
+  <div class="stato-strip stato-strip-3">
+    <div class="stato-cell"><div class="stato-label">Run rate SPV M18</div><div class="stato-val verde">~€2,7M/anno</div></div>
+    <div class="stato-cell"><div class="stato-label">Cassa buffer SPV</div><div class="stato-val verde">~€400K</div></div>
+    <div class="stato-cell"><div class="stato-label">Valutazione SPV stimata</div><div class="stato-val oro">€12-15M</div></div>
+  </div>
+</div>
+
+<!-- ============================================================ FASE 4 -->
+<div class="fase-div"><div class="fase-div-line"></div><div class="fase-div-label f4">FASE 4 — Regime Completo · AGO28-1Q → MAY29-1Q</div><div class="fase-div-line"></div></div>
+
+<div class="ms-card">
+  <div class="ms-head">
+    <div class="ms-num" style="color:#4a008a">21</div>
+    <div class="ms-info">
+      <div class="ms-title">M21 — Soft opening palazzina 801 · 22 camere · run rate €2,9M</div>
+      <div class="ms-meta"><span class="ms-date">AGO28-1Q</span><span class="badge b-cardine">Punto cardine</span><span class="badge b-exit">3° Momento exit</span></div>
+    </div>
+  </div>
+  <table class="mov-table">
+    <tr><td class="td-desc">Revenue camere palazzina 801 (22 × 230n × €315)</td><td class="td-sogg">SPV</td><td class="td-tipo">Entrata</td><td class="td-importo pos">+ €1,59M/anno</td></tr>
+    <tr><td class="td-desc">Costi gestione camere + F&B + staff aggiuntivo</td><td class="td-sogg">SPV</td><td class="td-tipo">Uscita</td><td class="td-importo neg">– €540K/anno</td></tr>
+    <tr><td class="td-desc">Prima rendicontazione formale a tutti i soci HoldCo</td><td class="td-sogg">HoldCo</td><td class="td-tipo">Report</td><td class="td-importo gri">Numeri reali</td></tr>
+    <tr class="subtot-row"><td class="td-desc"><strong>Run rate SPV totale a M21 · valutazione stimata</strong></td><td class="td-sogg"></td><td class="td-tipo"></td><td class="td-importo pos">€2,9M/anno</td></tr>
+  </table>
+  <div class="stato-strip stato-strip-4">
+    <div class="stato-cell"><div class="stato-label">Run rate M21</div><div class="stato-val verde">€2,9M/anno</div></div>
+    <div class="stato-cell"><div class="stato-label">EBITDA stimato</div><div class="stato-val verde">~€960K</div></div>
+    <div class="stato-cell"><div class="stato-label">Valutazione SPV</div><div class="stato-val oro">€15-18M</div></div>
+    <div class="stato-cell"><div class="stato-label">Camere operative</div><div class="stato-val oro">22 / 68</div></div>
+  </div>
+</div>
+
+<div class="ms-card">
+  <div class="ms-head">
+    <div class="ms-num" style="color:#4a008a">22</div>
+    <div class="ms-info">
+      <div class="ms-title">M30 — Pieno regime · 68 camere · 140 soci · €7M revenue · €2,3M EBITDA</div>
+      <div class="ms-meta"><span class="ms-date">MAY29-1Q</span><span class="badge b-cardine">Punto cardine</span><span class="badge b-exit">4° Momento exit — il migliore</span></div>
+    </div>
+  </div>
+  <table class="mov-table">
+    <tr><td class="td-desc">Membership soci (140 × €10K/anno)</td><td class="td-sogg">SPV</td><td class="td-tipo">Entrata</td><td class="td-importo pos">€1,40M</td></tr>
+    <tr><td class="td-desc">Camere clienti esterni (36 × 230n × €315 ADR)</td><td class="td-sogg">SPV</td><td class="td-tipo">Entrata</td><td class="td-importo pos">€2,61M</td></tr>
+    <tr><td class="td-desc">Corporate retreat (10 eventi × €75K)</td><td class="td-sogg">SPV</td><td class="td-tipo">Entrata</td><td class="td-importo pos">€750K</td></tr>
+    <tr><td class="td-desc">Bubble room (6 × 220 notti × €450)</td><td class="td-sogg">SPV</td><td class="td-tipo">Entrata</td><td class="td-importo pos">€594K</td></tr>
+    <tr><td class="td-desc">F&B + servizi + ESG + camere soci</td><td class="td-sogg">SPV</td><td class="td-tipo">Entrata</td><td class="td-importo pos">€1,01M</td></tr>
+    <tr><td class="td-desc">Costi operativi totali (staff, utilities, manutenzione)</td><td class="td-sogg">SPV</td><td class="td-tipo">Uscita</td><td class="td-importo neg">– €4,7M</td></tr>
+    <tr class="subtot-row"><td class="td-desc"><strong>Revenue totale · EBITDA 33%</strong></td><td class="td-sogg"></td><td class="td-tipo"></td><td class="td-importo pos">€7,0M · €2,3M</td></tr>
+  </table>
+  <div class="stato-strip stato-strip-4">
+    <div class="stato-cell"><div class="stato-label">Revenue annua</div><div class="stato-val verde">€7,0M</div></div>
+    <div class="stato-cell"><div class="stato-label">EBITDA 33%</div><div class="stato-val verde">€2,3M</div></div>
+    <div class="stato-cell"><div class="stato-label">Valutazione 10× EBITDA</div><div class="stato-val oro">€23M</div></div>
+    <div class="stato-cell"><div class="stato-label">Valutazione 16× EBITDA</div><div class="stato-val oro">€37M</div></div>
+  </div>
+</div>
+
+<!-- ============================================================ FASE 5 -->
+<div class="fase-div"><div class="fase-div-line"></div><div class="fase-div-label f5">FASE 5 — Exit · NOV29-1Q → NOV30-1Q</div><div class="fase-div-line"></div></div>
+
+<div class="ms-card">
+  <div class="ms-head">
+    <div class="ms-num" style="color:#8a0000">25</div>
+    <div class="ms-info">
+      <div class="ms-title">M48 — Closing exit · distribuzione proventi · tutti escono</div>
+      <div class="ms-meta"><span class="ms-date">NOV30-1Q</span><span class="badge b-exit">Exit finale</span></div>
+    </div>
+  </div>
+  <table class="mov-table">
+    <tr><td class="td-desc">Valore di cessione Il Poglío SPV Srl — scenario base</td><td class="td-sogg">SPV</td><td class="td-tipo">Cessione</td><td class="td-importo pos">€23M</td></tr>
+    <tr><td class="td-desc">Rimborso minibond + 4 anni interessi 15%</td><td class="td-sogg">Creditori</td><td class="td-tipo">Uscita</td><td class="td-importo neg">– €2,4M</td></tr>
+    <tr><td class="td-desc">Liquidation preference fondo istituzionale</td><td class="td-sogg">Fondo</td><td class="td-tipo">Uscita</td><td class="td-importo neg">– €2,0M</td></tr>
+    <tr><td class="td-desc">Residuo distribuibile ai soci</td><td class="td-sogg">Tutti</td><td class="td-tipo">Distribuzione</td><td class="td-importo neu">€18,6M</td></tr>
+    <tr><td class="td-desc">Fondo istituzionale (40% residuo + preference €2M)</td><td class="td-sogg">Fondo</td><td class="td-tipo">Quota</td><td class="td-importo gri">€9,44M · 4,7×</td></tr>
+    <tr><td class="td-desc">HoldCo Srl (60% residuo = €11,16M) → distribuito ai soci</td><td class="td-sogg">HoldCo</td><td class="td-tipo">Quota</td><td class="td-importo pos">€11,16M</td></tr>
+    <tr><td class="td-desc">FranKi — 20% HoldCo + success fee 5% su Affio/soci</td><td class="td-sogg">FranKi</td><td class="td-tipo">Exit</td><td class="td-importo pos">€2,68M</td></tr>
+    <tr><td class="td-desc">Affio — 20% HoldCo (zero investito)</td><td class="td-sogg">Affio</td><td class="td-tipo">Exit</td><td class="td-importo pos">€2,23M</td></tr>
+    <tr><td class="td-desc">Ogni socio cordata — 10% HoldCo (su €50K versati)</td><td class="td-sogg">Soci × 6</td><td class="td-tipo">Exit</td><td class="td-importo pos">~€1,12M · 22×</td></tr>
+    <tr class="subtot-row"><td class="td-desc"><strong>Totale distribuito ai soci HoldCo</strong></td><td class="td-sogg"></td><td class="td-tipo"></td><td class="td-importo pos">€11,16M</td></tr>
+  </table>
+  <div class="stato-strip stato-strip-4">
+    <div class="stato-cell"><div class="stato-label">Exit base</div><div class="stato-val oro">€23M</div></div>
+    <div class="stato-cell"><div class="stato-label">A HoldCo soci</div><div class="stato-val verde">€11,16M</div></div>
+    <div class="stato-cell"><div class="stato-label">Affio netto</div><div class="stato-val verde">€2,23M</div></div>
+    <div class="stato-cell"><div class="stato-label">Ogni socio × 22</div><div class="stato-val verde">€1,12M</div></div>
+  </div>
+</div>
+
+<!-- TOTALE PROGETTO -->
+<div class="totale-box">
+  <div class="totale-title">Riepilogo fonti totali progetto · APR26 → NOV30</div>
+  <div class="tot-row"><span class="tot-label">Cordata fondatori HoldCo (6 × €50K)</span><span class="tot-val" style="color:var(--arancio)">€300K</span></div>
+  <div class="tot-row"><span class="tot-label">Fondo istituzionale (40% SPV)</span><span class="tot-val" style="color:var(--arancio)">€2,0M</span></div>
+  <div class="tot-row"><span class="tot-label">Crowdfunding minibond 15%</span><span class="tot-val" style="color:var(--arancio)">€1,5M</span></div>
+  <div class="tot-row"><span class="tot-label">Quote una tantum soci club (140 × €25K)</span><span class="tot-val" style="color:var(--arancio)">€3,5M</span></div>
+  <div class="tot-row"><span class="tot-label">PNRR M1C3 Turismo (condizionale)</span><span class="tot-val" style="color:#888">+ €2,1M</span></div>
+  <div class="tot-row"><span class="tot-label"><strong>Totale raccolto (senza PNRR)</strong></span><span class="tot-val">~€7,3M</span></div>
+</div>
+
+<div class="footer">
+  <div class="fk-logo"><span class="fran">Fran</span><span class="ki">Ki</span></div>
+  <p>Documento interno riservato · FranKi Studio (Avre Srl) · Napoli · Aprile 2026<br>HoldCo Srl · Il Poglío SPV Srl · AD proposta: Annachiara Calvanese</p>
+</div>
+
+</body>
+</html>

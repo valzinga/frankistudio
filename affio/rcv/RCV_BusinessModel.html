@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RCV — Il Modello</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blu:#2B38B0;
+  --arancio:#F0A500;
+  --grigio-bg:#F2F1ED;
+  --bianco:#FFFFFF;
+  --nero:#111111;
+  --testo:#1a1a2e;
+  --blu-scuro:#1a2480;
+  --verde:#1a7a50;
+  --rosso:#c0392b;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Barlow',sans-serif;background:var(--grigio-bg);color:var(--testo);max-width:680px;margin:0 auto;font-size:15px;line-height:1.6}
+
+/* NAVBAR */
+.navbar{background:var(--blu);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.logo-fran{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;color:var(--bianco)}
+.logo-fran span{background:var(--arancio);padding:1px 6px;border-radius:4px}
+.logo-tagline{font-size:10px;color:rgba(255,255,255,.6);letter-spacing:.08em}
+.nav-doc{font-family:'Barlow Condensed',sans-serif;font-size:11px;color:rgba(255,255,255,.7);letter-spacing:.1em;text-transform:uppercase}
+
+/* HERO */
+.hero{background:var(--nero);color:var(--bianco);padding:48px 20px 44px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 50px,rgba(240,165,0,.025) 50px,rgba(240,165,0,.025) 51px)}
+.hero-kicker{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--arancio);margin-bottom:10px}
+.hero-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:46px;line-height:.92;text-transform:uppercase;margin-bottom:16px}
+.hero-title em{color:var(--arancio);font-style:normal;display:block}
+.hero-statement{font-size:16px;color:rgba(255,255,255,.8);line-height:1.6;max-width:520px;margin-bottom:20px;font-style:italic;border-left:3px solid var(--arancio);padding-left:16px}
+.hero-sub{font-size:13px;color:rgba(255,255,255,.5);line-height:1.6}
+.div-orange{height:4px;background:var(--arancio)}
+
+/* SEZIONE HEADER */
+.sh{background:var(--blu);color:var(--bianco);padding:11px 20px;display:flex;align-items:center;gap:10px;margin-top:20px}
+.sh-icon{font-size:16px}
+.sh-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;text-transform:uppercase;letter-spacing:.06em}
+.sh-badge{margin-left:auto;background:var(--arancio);color:var(--nero);font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;padding:2px 8px;border-radius:2px}
+
+/* CARD */
+.card{background:var(--bianco);padding:20px;margin:2px 0}
+.card h3{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:17px;text-transform:uppercase;color:var(--blu);margin-bottom:12px;border-bottom:2px solid var(--arancio);padding-bottom:6px}
+.card p{font-size:14px;color:#444;line-height:1.7;margin-bottom:10px}
+.card p:last-child{margin-bottom:0}
+.card strong{color:var(--nero)}
+
+/* KPI */
+.kpi-2{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin:2px 0}
+.kpi-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;margin:2px 0}
+.kpi-box{background:var(--bianco);padding:14px 16px}
+.kpi-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#aaa;margin-bottom:4px}
+.kpi-value{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;color:var(--blu);line-height:1}
+.kpi-sub{font-size:11px;color:#bbb;margin-top:2px}
+.kpi-value.green{color:var(--verde)}
+.kpi-value.orange{color:#c27800}
+.kpi-value.nero{color:var(--nero)}
+
+/* FILO ROSSO */
+.filo{background:var(--nero);color:var(--bianco);padding:22px 20px;margin:2px 0;text-align:center}
+.filo-titolo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:28px;text-transform:uppercase;color:var(--bianco);margin-bottom:8px;line-height:1}
+.filo-titolo em{color:var(--arancio);font-style:normal}
+.filo-sub{font-size:13px;color:rgba(255,255,255,.6);max-width:480px;margin:0 auto;line-height:1.6}
+
+/* LAYER SYSTEM */
+.layer{background:var(--bianco);margin:2px 0;overflow:hidden}
+.layer-head{padding:16px 20px 0;display:flex;gap:14px;align-items:flex-start}
+.layer-num{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:60px;line-height:1;flex-shrink:0}
+.layer-num.blu{color:var(--blu)}
+.layer-num.arancio{color:var(--arancio)}
+.layer-num.verde{color:var(--verde)}
+.layer-info{}
+.layer-cat{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#aaa;margin-bottom:2px}
+.layer-nome{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;text-transform:uppercase;color:var(--testo);line-height:1.05}
+.layer-tagline{font-size:13px;color:#888;font-style:italic;margin-top:2px}
+.layer-body{padding:14px 20px 18px}
+.layer-body p{font-size:13px;color:#444;line-height:1.65;margin-bottom:10px}
+.layer-body p:last-child{margin-bottom:0}
+.layer-body strong{color:var(--nero)}
+
+/* REVENUE TABLE */
+.rev-box{background:var(--bianco);padding:20px;margin:2px 0}
+.rev-box h3{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;text-transform:uppercase;color:var(--blu);margin-bottom:14px;border-bottom:2px solid var(--arancio);padding-bottom:6px}
+.rev-item{display:flex;justify-content:space-between;align-items:baseline;padding:10px 0;border-bottom:1px solid #f0f0f0}
+.rev-item:last-child{border-bottom:none;padding-top:14px;margin-top:6px;border-top:2px solid var(--arancio)}
+.rev-label{font-size:13px;color:#444;flex:1}
+.rev-label small{display:block;font-size:11px;color:#aaa;margin-top:1px}
+.rev-value{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;color:var(--blu);flex-shrink:0;margin-left:12px}
+.rev-value.green{color:var(--verde)}
+.rev-value.total{font-size:22px;color:var(--testo)}
+
+/* CALENDAR GRID */
+.cal-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:3px;margin:12px 0}
+.cal-month{text-align:center}
+.cal-dot{height:28px;border-radius:2px;margin-bottom:2px}
+.cal-dot.premium{background:var(--blu)}
+.cal-dot.social{background:var(--verde)}
+.cal-dot.maint{background:#ddd}
+.cal-mname{font-family:'Barlow Condensed',sans-serif;font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:#aaa;text-align:center}
+.cal-legend{display:flex;gap:16px;margin-top:8px;flex-wrap:wrap}
+.cal-leg-item{display:flex;align-items:center;gap:6px;font-size:11px;color:#777}
+.cal-leg-dot{width:12px;height:12px;border-radius:2px;flex-shrink:0}
+
+/* HIGHLIGHT */
+.hl-blue{background:#e8ecff;border-left:4px solid var(--blu);padding:12px 16px;margin:12px 0;border-radius:0 4px 4px 0}
+.hl-blue p{font-size:13px;color:var(--blu-scuro);margin:0;line-height:1.6}
+.hl-green{background:#e6f7f0;border-left:4px solid var(--verde);padding:12px 16px;margin:12px 0;border-radius:0 4px 4px 0}
+.hl-green p{font-size:13px;color:#145c3c;margin:0;line-height:1.6}
+.hl-orange{background:#fff4e0;border-left:4px solid var(--arancio);padding:12px 16px;margin:12px 0;border-radius:0 4px 4px 0}
+.hl-orange p{font-size:13px;color:#7a5000;margin:0;line-height:1.6}
+
+/* ORANGE BAND */
+.orange-band{background:var(--arancio);padding:18px 20px;margin:2px 0}
+.orange-band h3{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;text-transform:uppercase;color:var(--nero);margin-bottom:8px}
+.orange-band p{font-size:13px;color:rgba(0,0,0,.78);line-height:1.65;margin-bottom:8px}
+.orange-band p:last-child{margin-bottom:0}
+.orange-band strong{color:var(--nero)}
+
+/* MANIFESTO */
+.manifesto{background:var(--blu);color:var(--bianco);padding:28px 20px;margin:2px 0}
+.manifesto h2{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;text-transform:uppercase;color:var(--arancio);margin-bottom:16px;letter-spacing:.04em}
+.manifesto-item{display:flex;gap:14px;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,.1)}
+.manifesto-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.manifesto-num{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:24px;color:var(--arancio);flex-shrink:0;line-height:1}
+.manifesto-text{font-size:13px;color:rgba(255,255,255,.8);line-height:1.6}
+.manifesto-text strong{color:var(--bianco)}
+
+/* TABLE */
+.table-wrap{background:var(--bianco);padding:0 20px 20px;margin:2px 0}
+.table-wrap h3{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;text-transform:uppercase;color:var(--blu);padding:16px 0 10px;border-bottom:2px solid var(--arancio);margin-bottom:14px}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--blu);color:var(--bianco);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.06em;padding:8px 10px;text-align:left}
+td{padding:8px 10px;border-bottom:1px solid #f0f0f0;color:#444;vertical-align:top}
+td:first-child{font-weight:600;color:var(--testo)}
+tr:nth-child(even){background:#fafafa}
+tr:last-child td{border-bottom:none}
+.stars{color:var(--arancio);font-size:11px;letter-spacing:1px}
+
+/* BADGE */
+.badge{display:inline-block;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;border-radius:2px;margin:2px}
+.badge-green{background:#e6f7f0;color:var(--verde)}
+.badge-blue{background:#e8ecff;color:var(--blu)}
+.badge-orange{background:#fff4e0;color:#c27800}
+
+/* DARK CTA */
+.dark-cta{background:var(--blu);color:var(--bianco);padding:36px 20px;margin-top:4px;text-align:center}
+.dark-cta h2{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:32px;text-transform:uppercase;line-height:.95;margin-bottom:12px}
+.dark-cta h2 em{color:var(--arancio);font-style:normal;display:block}
+.dark-cta p{font-size:13px;color:rgba(255,255,255,.55);max-width:420px;margin:0 auto 20px}
+.cta-link{display:inline-block;background:var(--arancio);color:var(--nero);font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:13px;letter-spacing:.1em;text-transform:uppercase;padding:12px 28px;border-radius:2px;text-decoration:none}
+
+.disclaimer{background:#f7f7f5;padding:12px 20px;font-size:10px;color:#bbb;line-height:1.5;border-top:1px solid #e8e8e4;text-align:center}
+.sep{height:4px;background:linear-gradient(90deg,var(--blu),var(--arancio));margin:6px 0}
+
+.fk-logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;line-height:1;display:inline-flex;align-items:center}
+.fk-logo .fran{color:#FFFFFF}
+.fk-logo .ki{background:#F0A500;color:#FFFFFF;border-radius:5px;padding:1px 7px;margin-left:2px;display:inline-block}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div>
+    <div class="fk-logo"><span class="fran">Fran</span><span class="ki">Ki</span></div>
+    <div class="logo-tagline">We Start Your Ideas</div>
+  </div>
+  <div class="nav-doc">RCV · Il Modello · 2026</div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-kicker">Roccaraso Country Village — Business Model · Aprile 2026</div>
+  <div class="hero-title">
+    SOLD OUT.<br>
+    PROFITTEVOLE.<br>
+    <em>ETICO.</em>
+  </div>
+  <div class="hero-statement">
+    "Un luogo dove vieni a resettarti davvero. Non una spa. Non un hotel di montagna. Un posto con una filosofia — e una storia di 70 anni che gli dà il diritto di averla."
+  </div>
+  <div class="hero-sub">Sintesi del modello di business emerso dall'analisi strategica FranKi Studio · Uso riservato · Aprile 2026</div>
+</div>
+<div class="div-orange"></div>
+
+<!-- KPI CHIAVE -->
+<div class="kpi-2">
+  <div class="kpi-box">
+    <div class="kpi-label">Asset disponibile</div>
+    <div class="kpi-value">~€900K</div>
+    <div class="kpi-sub">Stima prossima asta · –93% dal valore lordo</div>
+  </div>
+  <div class="kpi-box">
+    <div class="kpi-label">Revenue a regime</div>
+    <div class="kpi-value green">€7,0M</div>
+    <div class="kpi-sub">Mese 30 · 68 keys · piano accelerato</div>
+  </div>
+</div>
+<div class="kpi-3">
+  <div class="kpi-box">
+    <div class="kpi-label">EBITDA target</div>
+    <div class="kpi-value">38%</div>
+    <div class="kpi-sub">Margine operativo lordo</div>
+  </div>
+  <div class="kpi-box">
+    <div class="kpi-label">Settimane sold out</div>
+    <div class="kpi-value orange">36/36</div>
+    <div class="kpi-sub">Settimane commerciali target</div>
+  </div>
+  <div class="kpi-box">
+    <div class="kpi-label">Valutazione exit</div>
+    <div class="kpi-value">€10-16M</div>
+    <div class="kpi-sub">Mese 48 · x10 EBITDA</div>
+  </div>
+</div>
+
+<!-- FILO ROSSO -->
+<div class="filo">
+  <div class="filo-titolo">IL FILO ROSSO:<br><em>RESTITUIRE LA FUNZIONE</em></div>
+  <div class="filo-sub">Il Soggiorno Montano ENEL fu costruito nel 1956 su un principio radicale: ogni dipendente, dall'operaio al dirigente, aveva diritto alla stessa qualità di esperienza in montagna. Le quote venivano assegnate per sorteggio. Nessuna gerarchia. Nessuna distinzione. RCV 2026 porta avanti quella filosofia — aggiornata, economicamente sostenibile, aperta al mondo.</div>
+</div>
+
+<!-- IDENTITÀ -->
+<div class="sh">
+  <div class="sh-icon">🧭</div>
+  <div class="sh-title">L'Identità — Cosa è RCV</div>
+  <div class="sh-badge">01/08</div>
+</div>
+
+<div class="card">
+  <h3>Una sola frase, un solo posizionamento</h3>
+  <p><strong>RCV è il primo reset hub dell'Appennino centrale.</strong> Non un resort. Non una spa. Non un hotel di montagna. Un luogo con una filosofia — dove si viene per disconnettersi dal rumore e riconnettersi a sé stessi, alla natura, agli altri. Attraverso il corpo, il bosco, il silenzio, il cielo buio, l'acqua fredda.</p>
+  <p>Questa identità non è inventata. È già scritta nella struttura: l'isolamento del bosco, la quota di 1.023 metri, il comprensorio sciistico a 5 minuti, i 22 ettari di foresta, il silenzio assoluto, il cielo più buio dell'Italia centrale. RCV non deve diventare qualcosa — deve tornare a essere quello che era sempre stato: <strong>un luogo collettivo di qualità autentica</strong>.</p>
+  <div class="hl-blue">
+    <p><strong>La differenza competitiva:</strong> Tutti i resort di montagna in Italia fanno sci + relax + cucina locale. Nessuno ha un'identità forte. RCV prende posizione — e chi prende posizione non compete sul prezzo, compete sulla scelta.</p>
+  </div>
+</div>
+
+<!-- IL MODELLO A 3 LAYER -->
+<div class="sh">
+  <div class="sh-icon">🏗️</div>
+  <div class="sh-title">Il Modello — 3 Layer Integrati</div>
+  <div class="sh-badge">02/08</div>
+</div>
+
+<div class="card">
+  <p style="font-size:13px;color:#666">Il modello non è monodimensionale. Tre layer distinti ma integrati — ognuno supporta gli altri, nessuno funziona da solo. È questa integrazione che crea un sistema impossibile da replicare con semplice capitale.</p>
+</div>
+
+<div class="sep"></div>
+
+<!-- LAYER 1 -->
+<div class="layer">
+  <div class="layer-head">
+    <div class="layer-num blu">1</div>
+    <div class="layer-info">
+      <div class="layer-cat">Layer Commerciale · Core Revenue</div>
+      <div class="layer-nome">Il Club Privé<br>& Reset Hub</div>
+      <div class="layer-tagline">"L'unico club privato di montagna tra Roma e Napoli"</div>
+    </div>
+  </div>
+  <div class="layer-body">
+    <p><strong>Struttura:</strong> Club a membership chiusa — 120-150 soci fondatori. Quota di ingresso una tantum (€15-30K) + quota annuale (€8-12K). Ogni socio ha diritto a un numero definito di settimane all'anno nella struttura, accesso a tutti i servizi, possibilità di ospiti. Non si acquista una camera specifica — si acquista l'accesso all'intera struttura.</p>
+
+    <p><strong>L'identità poli-community:</strong> Tre comunità con un filo profondo comune — il reset attraverso la natura e il corpo. Non tre strutture separate: un'unica struttura, tre esperienze calibrate sulla stessa filosofia.</p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin:12px 0">
+      <div style="background:var(--grigio-bg);padding:12px;border-radius:2px;border-top:3px solid var(--blu)">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;color:var(--blu);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px">LONGEVITY<br>PERFORMANCE</div>
+        <div style="font-size:12px;color:#555;line-height:1.5">Protocolli biomarker, cold plunge, breathwork, nutrizione personalizzata, sonno ottimizzato. Target: professionisti 35-55 anni. Spesa media: €5-15K/anno.</div>
+      </div>
+      <div style="background:var(--grigio-bg);padding:12px;border-radius:2px;border-top:3px solid var(--arancio)">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;color:#c27800;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px">NORDIC<br>WELLNESS</div>
+        <div style="font-size:12px;color:#555;line-height:1.5">Sauna a legna nel bosco, immersione nel torrente, bagni sonori, meditazione outdoor. La versione "entry point" della stessa filosofia. Target più ampio.</div>
+      </div>
+      <div style="background:var(--grigio-bg);padding:12px;border-radius:2px;border-top:3px solid #555">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;color:#555;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px">DARK SKY<br>LAYER</div>
+        <div style="font-size:12px;color:#555;line-height:1.5">Asset gratuito. Certificazione IDA Dark Sky, telescopio professionale, astronomo part-time. Zero infrastruttura aggiuntiva. Revenue puro.</div>
+      </div>
+    </div>
+
+    <p><strong>Modello Soho House — scalato e sano:</strong> Soho House con 208.000 soci genera $1,2B di revenue ma ancora in perdita netta per overexpansion. RCV fa il contrario — 150 soci, una location, zero debito, EBITDA positivo dall'anno 2. La filosofia funziona. Il modello sano funziona di più.</p>
+
+    <div class="hl-blue">
+      <p><strong>Revenue Layer 1:</strong> 140 soci × €25K media (ingresso amortizzato + annuale) = <strong>€3,5M al primo anno</strong> solo da membership. Poi ricorrenti.</p>
+    </div>
+  </div>
+</div>
+
+<div class="sep"></div>
+
+<!-- BUBBLE ROOM -->
+<div style="background:var(--nero);color:var(--bianco);padding:0;margin:2px 0;overflow:hidden">
+  <div style="padding:18px 20px 0;display:flex;gap:14px;align-items:flex-start">
+    <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:60px;line-height:1;flex-shrink:0;color:var(--arancio)">★</div>
+    <div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:2px">Layer Speciale · Dark Sky Asset</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;text-transform:uppercase;color:var(--bianco);line-height:1.05">6 Bubble Room<br>nel Bosco</div>
+      <div style="font-size:13px;color:rgba(255,255,255,.5);font-style:italic;margin-top:2px">"La foto che nessuno può fare altrove. La notte che nessuno dimentica."</div>
+    </div>
+  </div>
+  <div style="padding:14px 20px 18px">
+    <p style="font-size:13px;color:rgba(255,255,255,.75);line-height:1.65;margin-bottom:10px">I 22 ettari di bosco di RCV si prestano all'installazione di <strong style="color:var(--bianco)">6 bubble room luxury</strong> — strutture trasparenti da 6m di diametro, con letto king size, bagno privato esterno, jacuzzi privata, riscaldamento e climatizzazione, telescopio personale in dotazione. Ogni bolla è a 300-400 metri dalle altre: privacy totale, silenzio assoluto, cielo buio certificato sopra la testa.</p>
+    <p style="font-size:13px;color:rgba(255,255,255,.75);line-height:1.65;margin-bottom:12px">Non ci sono bubble room nel bosco dell'Appennino centrale. Non ci sono bubble room con un cielo stellato certificato IDA in tutta la fascia Roma-Napoli. <strong style="color:var(--bianco)">RCV sarebbe la prima e l'unica.</strong></p>
+
+    <!-- numeri bolle -->
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:2px;margin:12px 0">
+      <div style="background:rgba(255,255,255,.07);padding:10px 12px">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px;color:var(--arancio)">6</div>
+        <div style="font-size:10px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.06em;margin-top:2px">Bolle nel bosco</div>
+      </div>
+      <div style="background:rgba(255,255,255,.07);padding:10px 12px">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px;color:var(--arancio)">€450</div>
+        <div style="font-size:10px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.06em;margin-top:2px">ADR media/notte</div>
+      </div>
+      <div style="background:rgba(255,255,255,.07);padding:10px 12px">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px;color:var(--arancio)">€90K</div>
+        <div style="font-size:10px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.06em;margin-top:2px">Costo/bolla chiavi in mano</div>
+      </div>
+      <div style="background:rgba(255,255,255,.07);padding:10px 12px">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px;color:var(--arancio)">14m</div>
+        <div style="font-size:10px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.06em;margin-top:2px">Payback mesi</div>
+      </div>
+    </div>
+
+    <!-- revenue bolle -->
+    <div style="background:rgba(240,165,0,.12);border:1px solid rgba(240,165,0,.3);padding:12px 16px;border-radius:2px;margin-bottom:12px">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--arancio);margin-bottom:6px">Revenue Bubble — Scenario Base</div>
+      <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.08)">
+        <span style="font-size:12px;color:rgba(255,255,255,.6)">6 bolle × 220 notti × €450</span>
+        <span style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;color:var(--bianco)">€594K</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.08)">
+        <span style="font-size:12px;color:rgba(255,255,255,.6)">Costi operativi (pulizie, manutenzione, F&B)</span>
+        <span style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;color:#ef5350">–€208K</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;padding:6px 0">
+        <span style="font-size:12px;color:var(--arancio);font-weight:600">EBITDA bolle (margine 65%)</span>
+        <span style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:18px;color:var(--arancio)">€386K</span>
+      </div>
+    </div>
+
+    <p style="font-size:12px;color:rgba(255,255,255,.5);line-height:1.6"><strong style="color:rgba(255,255,255,.7)">3 utilizzi strategici:</strong> ① Prenotazione pubblica (Airbnb/Booking) per non-soci — genera visibilità e revenue piena. ② Benefit membership soci — accesso prioritario a tariffa agevolata, aumenta il valore percepito della quota. ③ Reward crowdfunding — chi investe €10K ha diritto a X notti/anno, trasforma il rendimento finanziario in esperienza tangibile.</p>
+  </div>
+</div>
+
+<div class="sep"></div>
+
+<!-- LAYER 2 -->
+<div class="layer">
+  <div class="layer-head">
+    <div class="layer-num arancio">2</div>
+    <div class="layer-info">
+      <div class="layer-cat">Layer Corporate · B2B Revenue</div>
+      <div class="layer-nome">Retreat Hub<br>Aziendale</div>
+      <div class="layer-tagline">"Il posto dove le aziende portano i loro team a pensare"</div>
+    </div>
+  </div>
+  <div class="layer-body">
+    <p><strong>Il mercato:</strong> Il mercato globale dei corporate retreat vale $31,8 miliardi nel 2024 (+9,1%/anno). L'Italia è il 3° paese più richiesto al mondo per team offsite aziendali. Nell'Appennino centrale — tra Roma e Napoli, 20 milioni di persone entro 2 ore — non esiste una struttura dedicata con un'identità forte. Gap clamoroso.</p>
+
+    <p><strong>La struttura fisica è già pronta:</strong> I seminterrati delle tre palazzine — bar, mensa da 200 persone, cinema, palestra, corridoi lunghi — sono la perfetta infrastruttura per workshop, sessioni di team building, retreat aziendali residenziali. Non servono costruzioni nuove. Solo conversione d'uso.</p>
+
+    <p><strong>Il prodotto:</strong> Retreat residenziali da 3-5 giorni per team da 20-50 persone. Formula: giornate di lavoro strutturato alternate a sessioni di wellness (sauna, breathwork, camminate nel bosco, sessione stellare serale). ADR aziendale: €350-600/persona/notte all-inclusive. Un retreat da 40 persone per 4 giorni = €70-100K di revenue.</p>
+
+    <div class="hl-orange">
+      <p><strong>Il vantaggio competitivo:</strong> Il mercato corporate cerca luoghi con carattere, non sale convegni impersonali. La narrativa ENEL — il villaggio operaio che diventa hub per pensare il futuro — è esattamente il tipo di storia che un HR director mette nella presentazione interna per giustificare la spesa.</p>
+    </div>
+  </div>
+</div>
+
+<div class="sep"></div>
+
+<!-- LAYER 3 -->
+<div class="layer">
+  <div class="layer-head">
+    <div class="layer-num verde">3</div>
+    <div class="layer-info">
+      <div class="layer-cat">Layer Sociale · ESG · Identità</div>
+      <div class="layer-nome">Il Ritorno<br>alla Missione</div>
+      <div class="layer-tagline">"10 settimane all'anno questo posto torna a essere quello che è sempre stato"</div>
+    </div>
+  </div>
+  <div class="layer-body">
+    <p><strong>Il principio:</strong> Il Soggiorno Montano ENEL è stato costruito perché ogni persona — indipendentemente dal reddito — merita un'esperienza di qualità in montagna. RCV 2026 non abbandona questo principio. Lo struttura in modo economicamente sostenibile: <strong>10 settimane l'anno</strong>, fuori dai picchi commerciali, dedicate a programmi sociali co-finanziati dal pubblico.</p>
+
+    <p><strong>I beneficiari:</strong></p>
+    <p>① <strong>Anziani</strong> — programmi di turismo terapeutico co-finanziati dalle ASL e dai Comuni. Struttura già adatta: spazi accessibili, bosco pianeggiante, clima salutare. L'Appennino ha le condizioni ideali per la salute degli anziani. Le ASL cercano strutture di qualità per questi programmi — e ce ne sono pochissime.</p>
+    <p>② <strong>Giovani delle periferie urbane</strong> — soggiorni formativi, campi estivi ambientali, laboratori nel bosco. Il bosco di 22 ettari è un'aula all'aperto. Le cooperative sociali di Roma e Napoli pagano rette giornaliere finanziate da fondi europei per questo tipo di programmi.</p>
+    <p>③ <strong>Famiglie ordinarie tramite borse di soggiorno</strong> — il sistema di "settimane donate" dai soci del club che non le usano. Chi è socio e rinuncia a una settimana la mette in un pool. Il pool viene assegnato a famiglie segnalate da associazioni partner. Costo per la struttura: zero. Valore narrativo: immenso.</p>
+
+    <div class="hl-green">
+      <p><strong>Le 10 settimane sociali non sono un costo.</strong> Sono coperte da contratti di servizio con enti pubblici (Comuni, ASL, cooperative) che pagano una retta concordata per ogni utente. La struttura lavora. Il personale è impiegato anche nei periodi a domanda bassa. Il territorio percepisce presenza tutto l'anno.</p>
+    </div>
+
+    <p><strong>Gli effetti collaterali che valgono oro:</strong></p>
+    <p>① Il Comune di Roccaraso si schiera con il progetto invece che contro. ② La Regione Abruzzo apre bandi PNRR compatibili. ③ Le fondazioni bancarie del Centro-Sud entrano come co-finanziatori. ④ Il crowdfunding raccoglie di più perché non è solo un investimento — è una causa. ⑤ Il valore ESG dell'asset aumenta del 10-20% al momento dell'exit.</p>
+  </div>
+</div>
+
+<!-- IL CALENDARIO ANNUALE -->
+<div class="sh">
+  <div class="sh-icon">📅</div>
+  <div class="sh-title">Il Calendario — Come si Distribuisce l'Anno</div>
+  <div class="sh-badge">03/08</div>
+</div>
+
+<div class="card">
+  <h3>52 Settimane, Zero Vuoti</h3>
+
+  <div class="cal-grid">
+    <!-- Gen -->
+    <div class="cal-month">
+      <div class="cal-dot premium"></div>
+      <div class="cal-mname">Gen</div>
+    </div>
+    <!-- Feb -->
+    <div class="cal-month">
+      <div class="cal-dot premium"></div>
+      <div class="cal-mname">Feb</div>
+    </div>
+    <!-- Mar -->
+    <div class="cal-month">
+      <div class="cal-dot premium"></div>
+      <div class="cal-mname">Mar</div>
+    </div>
+    <!-- Apr -->
+    <div class="cal-month">
+      <div class="cal-dot maint"></div>
+      <div class="cal-mname">Apr</div>
+    </div>
+    <!-- Mag -->
+    <div class="cal-month">
+      <div class="cal-dot social"></div>
+      <div class="cal-mname">Mag</div>
+    </div>
+    <!-- Giu -->
+    <div class="cal-month">
+      <div class="cal-dot social"></div>
+      <div class="cal-mname">Giu</div>
+    </div>
+    <!-- Lug -->
+    <div class="cal-month">
+      <div class="cal-dot premium"></div>
+      <div class="cal-mname">Lug</div>
+    </div>
+    <!-- Ago -->
+    <div class="cal-month">
+      <div class="cal-dot premium"></div>
+      <div class="cal-mname">Ago</div>
+    </div>
+    <!-- Set -->
+    <div class="cal-month">
+      <div class="cal-dot premium"></div>
+      <div class="cal-mname">Set</div>
+    </div>
+    <!-- Ott -->
+    <div class="cal-month">
+      <div class="cal-dot social"></div>
+      <div class="cal-mname">Ott</div>
+    </div>
+    <!-- Nov -->
+    <div class="cal-month">
+      <div class="cal-dot maint"></div>
+      <div class="cal-mname">Nov</div>
+    </div>
+    <!-- Dic -->
+    <div class="cal-month">
+      <div class="cal-dot premium"></div>
+      <div class="cal-mname">Dic</div>
+    </div>
+  </div>
+
+  <div class="cal-legend">
+    <div class="cal-leg-item"><div class="cal-leg-dot" style="background:var(--blu)"></div>36 sett. commerciali (club + corporate)</div>
+    <div class="cal-leg-item"><div class="cal-leg-dot" style="background:var(--verde)"></div>10 sett. programmi sociali (anziani + giovani)</div>
+    <div class="cal-leg-item"><div class="cal-leg-dot" style="background:#ddd"></div>6 sett. manutenzione + formazione</div>
+  </div>
+
+  <div class="hl-orange" style="margin-top:14px">
+    <p><strong>La logica anti-stagionalità:</strong> Sci in inverno, trekking e trail in primavera-estate, corporate retreat in autunno, Dark Sky tutto l'anno. I programmi sociali occupano le settimane di spalla (maggio, giugno, ottobre) che altrimenti andrebbero semi-vuote. Zero buchi. Zero sprechi.</p>
+  </div>
+</div>
+
+<!-- IL MODELLO DI REVENUE -->
+<div class="sh">
+  <div class="sh-icon">💶</div>
+  <div class="sh-title">Il Modello di Revenue — Regime Mese 30 · 68 Keys</div>
+  <div class="sh-badge">04/08</div>
+</div>
+
+<div class="rev-box">
+  <h3>Revenue Streams — Regime Mese 30 · 68 Keys · Piano Accelerato</h3>
+
+  <div class="rev-item">
+    <div class="rev-label">
+      Membership fees ricorrenti
+      <small>140 soci × €10K annuale · rendita base indipendente dall'occupazione</small>
+    </div>
+    <div class="rev-value">€1,40M</div>
+  </div>
+
+  <div class="rev-item">
+    <div class="rev-label">
+      Camere clienti esterni
+      <small>36 rooms × 230 notti × €315 ADR blended · full rate</small>
+    </div>
+    <div class="rev-value">€2,61M</div>
+  </div>
+
+  <div class="rev-item">
+    <div class="rev-label">
+      Camere soci soggiorno
+      <small>20 rooms × 200 notti × €165 tariffa agevolata membership</small>
+    </div>
+    <div class="rev-value">€660K</div>
+  </div>
+
+  <div class="rev-item">
+    <div class="rev-label">
+      🫧 Bubble Room — 6 unità nel bosco
+      <small>6 bolle × 220 notti × €450 ADR · EBITDA 65% · payback 14-18 mesi</small>
+    </div>
+    <div class="rev-value" style="color:var(--arancio)">€594K</div>
+  </div>
+
+  <div class="rev-item">
+    <div class="rev-label">
+      Corporate retreat B2B
+      <small>10 eventi/anno × €75K all-inclusive · sala eventi 80 pax</small>
+    </div>
+    <div class="rev-value">€750K</div>
+  </div>
+
+  <div class="rev-item">
+    <div class="rev-label">
+      F&B e servizi ancillari
+      <small>+20% su room revenue · ristorazione, wellness, attività outdoor</small>
+    </div>
+    <div class="rev-value">€773K</div>
+  </div>
+
+  <div class="rev-item">
+    <div class="rev-label">
+      Programmi sociali (rette pubbliche)
+      <small>10 sett. × ~35 ospiti × €80/notte · contratti di servizio PA</small>
+    </div>
+    <div class="rev-value green">€184K</div>
+  </div>
+
+  <div class="rev-item">
+    <div class="rev-label">Carbon credits + certificazioni ESG</div>
+    <div class="rev-value">€50K</div>
+  </div>
+
+  <div class="rev-item">
+    <div class="rev-label"><strong>REVENUE TOTALE — REGIME M30</strong></div>
+    <div class="rev-value total green"><strong>~€7,0M</strong></div>
+  </div>
+</div>
+
+<div class="kpi-3">
+  <div class="kpi-box">
+    <div class="kpi-label">EBITDA regime M30</div>
+    <div class="kpi-value green">€2,3M</div>
+    <div class="kpi-sub">Margin ~33% · 68 keys operativi</div>
+  </div>
+  <div class="kpi-box">
+    <div class="kpi-label">Capex totale upfront</div>
+    <div class="kpi-value orange">€9,0M</div>
+    <div class="kpi-sub">Piano accelerato · tutto parallelo</div>
+  </div>
+  <div class="kpi-box">
+    <div class="kpi-label">Exit M48 · x10 EBITDA</div>
+    <div class="kpi-value">€23-31M</div>
+    <div class="kpi-sub">Anno 4 · asset certificato</div>
+  </div>
+</div>
+
+<!-- LA STRUTTURA FINANZIARIA -->
+<div class="sh">
+  <div class="sh-icon">🏦</div>
+  <div class="sh-title">La Struttura Finanziaria — Come Si Entra</div>
+  <div class="sh-badge">05/08</div>
+</div>
+
+<div class="card">
+  <h3>3 Leve per Abbassare il Rischio Privato</h3>
+
+  <p><strong>Leva 1 — Minibond Crowdfunding 15%:</strong> La SPV raccoglie €1,5M tramite minibond a tasso fisso 15% annuo su Walliance o Concrete Investing. Non equity — è un prestito con rendimento fisso. Gli investitori ricevono €225K/anno per 4 anni + €1,5M capitale restituito = €2,4M totali (1,60x). Nessuna governance, nessun conflitto con il fondo. Raccolta rapida garantita dalla narrativa ENEL. Gap di €3M coperto da mutuo bancario sull'asset (LTV 22%).</p>
+
+  <p><strong>Leva 2 — Fondi PNRR e pubblici:</strong> La componente sociale strutturata (10 settimane/anno, programmi ESG, aree interne) apre accesso a contributi a fondo perduto che possono coprire il 30-50% del capex di ristrutturazione. PNRR M1C3 Turismo, PNRR Missione 5 Inclusione, bandi regionali Abruzzo, fondi europei aree interne. Non charity — contratti di servizio con la PA.</p>
+
+  <p><strong>Leva 3 — Quota di ingresso soci fondatori:</strong> 140 soci × €25K quota di ingresso media = €3,5M che entrano prima ancora di aprire. Finanziano la ristrutturazione. Il socio fondatore paga meno degli altri e ha accesso prioritario. Questo crea urgenza e una community coinvolta prima del day one.</p>
+
+  <div class="hl-green">
+    <p><strong>Il risultato:</strong> Il capitale privato necessario scende a €3-5M — non €13M. Il rischio è distribuito su centinaia di co-investitori, sulla PA, e sui soci fondatori. La struttura finanziaria è più resiliente di qualsiasi investimento monoproprietario.</p>
+  </div>
+</div>
+
+<!-- I CONCORRENTI CHE NON CI SONO -->
+<div class="sh">
+  <div class="sh-icon">🗺️</div>
+  <div class="sh-title">Il Contesto — Perché Adesso e Perché Qui</div>
+  <div class="sh-badge">06/08</div>
+</div>
+
+<div class="table-wrap">
+  <h3>Il Gap di Mercato che Giustifica Tutto</h3>
+  <table>
+    <thead>
+      <tr><th>Cosa cerca il mercato</th><th>In Italia esiste?</th><th>RCV può farlo</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Longevity retreat in montagna</td>
+        <td>❌ Zero strutture dedicate</td>
+        <td class="stars">★★★★★</td>
+      </tr>
+      <tr>
+        <td>Nordic wellness / sauna nel bosco</td>
+        <td>❌ Quasi assente</td>
+        <td class="stars">★★★★★</td>
+      </tr>
+      <tr>
+        <td>Dark Sky lodge certificato Appennino</td>
+        <td>❌ Non esiste</td>
+        <td class="stars">★★★★★</td>
+      </tr>
+      <tr>
+        <td>Corporate retreat con identità forte</td>
+        <td>❌ Nessuno nell'Appennino C-S</td>
+        <td class="stars">★★★★★</td>
+      </tr>
+      <tr>
+        <td>Club privé montagna tra Roma e Napoli</td>
+        <td>❌ Non esiste</td>
+        <td class="stars">★★★★★</td>
+      </tr>
+      <tr>
+        <td>Modello ESG + sociale in hospitality</td>
+        <td>⚠️ Rarissimo</td>
+        <td class="stars">★★★★★</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="card">
+  <h3>I Numeri del Contesto</h3>
+  <p>📍 <strong>2 ore da Roma, 2 ore da Napoli</strong> — bacino di 20 milioni di persone. Comprensorio sciistico Alto Sangro: 150 km di piste, il più grande del Centro-Sud.</p>
+  <p>📊 <strong>+32% presenze turistiche</strong> in provincia dell'Aquila nel 2025. L'Appennino centrale è il segmento più dinamico del turismo montano italiano.</p>
+  <p>💰 <strong>€2,1 miliardi</strong> investiti in hotel italiani nel 2024 (+30%). Il 53% da investitori internazionali. Il luxury hospitality è il segmento più cercato.</p>
+  <p>🌍 <strong>$31,8 miliardi</strong> il mercato globale corporate retreat 2024. Italia terzo paese più richiesto al mondo per team offsite. Zero strutture di qualità tra Roma e Napoli.</p>
+</div>
+
+<!-- IL MANIFESTO COMUNICATIVO -->
+<div class="sh">
+  <div class="sh-icon">📣</div>
+  <div class="sh-title">Il Manifesto Comunicativo</div>
+  <div class="sh-badge">07/08</div>
+</div>
+
+<div class="manifesto">
+  <h2>Perché RCV È Una Bomba Comunicativa</h2>
+
+  <div class="manifesto-item">
+    <div class="manifesto-num">1</div>
+    <div class="manifesto-text"><strong>Una storia vera che nessun resort si inventa.</strong> Costruito da ENEL negli anni '50 per dare a ogni lavoratore — operaio o dirigente, estratto a sorte — la stessa settimana di montagna. Abbandonato per 30 anni. Ora torna. Questa storia si racconta da sola e vale più di qualsiasi campagna pubblicitaria.</div>
+  </div>
+
+  <div class="manifesto-item">
+    <div class="manifesto-num">2</div>
+    <div class="manifesto-text"><strong>Il posizionamento che mancava in Italia.</strong> "Il posto dove vieni a resettarti davvero" non è uno slogan — è un vuoto di mercato. Longevity + Nordic Wellness + Dark Sky in un posto autentico, tra Roma e Napoli. Non esiste ancora. Chi arriva primo definisce il benchmark.</div>
+  </div>
+
+  <div class="manifesto-item">
+    <div class="manifesto-num">3</div>
+    <div class="manifesto-text"><strong>L'etica come vantaggio competitivo, non come obbligo.</strong> Dieci settimane all'anno il villaggio torna alla sua missione originale — anziani, giovani delle periferie, famiglie ordinarie. Questa scelta non indebolisce il brand premium. Lo rafforza perché aggiunge profondità valoriale. I soci del club privato non fuggono da un luogo con un'anima. Fuggono dai posti senz'anima.</div>
+  </div>
+
+  <div class="manifesto-item">
+    <div class="manifesto-num">4</div>
+    <div class="manifesto-text"><strong>I 300 co-investitori sono i 300 primi ambasciatori.</strong> Chi investe in una storia la racconta. 300 persone che hanno messo soldi in "il villaggio ENEL che torna" generano un passaparola organico che vale milioni in comunicazione. Questo è il marketing del futuro: comunità che crede nel progetto prima ancora che apra.</div>
+  </div>
+
+  <div class="manifesto-item">
+    <div class="manifesto-num">5</div>
+    <div class="manifesto-text"><strong>Il bosco, il cielo, il silenzio non si possono costruire.</strong> Nessun resort di nuova costruzione può avere 70 anni di storia, 22 ettari di bosco maturo, un cielo stellato certificato e i Parchi Nazionali a 30 minuti. RCV ha asset fisici e narrativi che il capitale da solo non può comprare. Questo è il moat — il fossato che protegge il posizionamento nel tempo.</div>
+  </div>
+</div>
+
+<div class="sh">
+  <div class="sh-icon">🗓️</div>
+  <div class="sh-title">La Roadmap — Piano Accelerato 30 Mesi</div>
+  <div class="sh-badge">08/08</div>
+</div>
+
+<div class="card">
+  <h3>Tutto in Parallelo · Niente Sequenziale</h3>
+
+  <div style="margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid #f0f0f0">
+    <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;color:var(--arancio);margin-bottom:4px">PRE-ASTA · M1-6 — Preparazione Parallela</div>
+    <div style="font-size:13px;color:#444;line-height:1.6">Strutturazione SPV. Avvocato esecuzioni ingaggiato. Due diligence legale completa. Progettazione esecutiva avviata su <strong>tutte e 3 le palazzine contemporaneamente</strong>. SCIA presentata al Comune di Roccaraso. Crowdfunding strutturato e lanciato. Pre-vendita soci fondatori aperta. Contatti piattaforme RECF (Walliance, Concrete Investing). Accordi preliminari con operatore hospitality.</div>
+  </div>
+
+  <div style="margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid #f0f0f0">
+    <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;color:var(--arancio);margin-bottom:4px">★ M6 — CLOSING · Decreto di Trasferimento</div>
+    <div style="font-size:13px;color:#444;line-height:1.6">Aggiudicazione asta. Crowdfunding chiuso (€1,5M minibond + €2,1M PNRR + €2,0M equity partner (fondo) + €1,88M membership = €9,0M totale. Due aste deserte (dic 2025 e apr 2026) → prossima asta stimata ~€900K. Trattativa privata con custode possibile subito: IVG Abruzzo 085 9436430.</div>
+  </div>
+
+  <div style="margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid #f0f0f0">
+    <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;color:var(--arancio);margin-bottom:4px">★ M9 — BUBBLE ROOMS OPERATIVE</div>
+    <div style="font-size:13px;color:#444;line-height:1.6">6 bubble rooms installate e aperte nel bosco. <strong>Primo revenue pubblico del progetto.</strong> Lancio comunicazione nazionale: "Il villaggio ENEL torna". Prima campagna social con foto stellate dal bosco. Pre-booking sold out in settimane. Lista d'attesa soci supera quota 200.</div>
+  </div>
+
+  <div style="margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid #f0f0f0">
+    <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;color:var(--arancio);margin-bottom:4px">★ M18 — WELLNESS HUB OPERATIVO</div>
+    <div style="font-size:13px;color:#444;line-height:1.6">Seminterrati completati: sauna a legna, cold plunge, coworking, club lounge, sala eventi 80 pax. Primi corporate retreat aziendali. Certificazione IDA Dark Sky ottenuta. Accordi con cooperative sociali per programmi primaverili. Revenue run rate: €1,2M/anno.</div>
+  </div>
+
+  <div style="margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid #f0f0f0">
+    <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;color:var(--verde);margin-bottom:4px">★ M21 — SOFT OPENING · Palazzina 801</div>
+    <div style="font-size:13px;color:#444;line-height:1.6">22 unità hospitality operative. 80 soci fondatori entrano nella struttura. Prima stagione invernale con sci. Revenue run rate: €3,2M/anno. Programmi sociali avviati (primavera M22). Palazzine 802 e 803 ancora in cantiere.</div>
+  </div>
+
+  <div>
+    <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;color:var(--verde);margin-bottom:4px">★ M30 — PIENO REGIME · 68 Keys</div>
+    <div style="font-size:13px;color:#444;line-height:1.6">Tutte e 3 le palazzine completate. <strong>68 keys totali operativi</strong> (62 hotel + 6 bubble). 140 soci. 10 corporate events/anno. 10 settimane sociali a regime. Revenue: <strong>€7,0M/anno · EBITDA €2,3M (33%)</strong>. Apertura finestra di exit: asset certificato 3 anni di EBITDA → valutazione <strong>€23-31M</strong>.</div>
+  </div>
+</div>
+
+<!-- ORANGE BAND FINALE -->
+<div class="orange-band">
+  <h3>🎯 In Una Riga Sola</h3>
+  <p>RCV non è un'altra ristrutturazione di un edificio abbandonato. È la <strong>restituzione di un luogo alla sua funzione originaria</strong> — collettività, qualità, natura — con gli strumenti del 2026: longevity, nordic wellness, dark sky, crowdfunding, corporate retreat, ESG. Un modello che riempie ogni settimana dell'anno, genera margini sani, si finanzia in modo distribuito, e ha una storia che nessun concorrente può comprare.</p>
+  <p>Il mercato c'è. Il gap c'è. L'asset c'è. La narrativa c'è. <strong>Manca solo chi decide di partire.</strong></p>
+</div>
+
+<!-- DARK CTA -->
+<div class="dark-cta">
+  <h2>SOLD OUT.<br>PROFITTEVOLE.<br><em>ETICO.</em></h2>
+  <p>Tutti i documenti analitici, i benchmark internazionali, i concept strategici e il piano operativo sono disponibili nel dossier completo.</p>
+  <a class="cta-link" href="https://frankistudio.it/roccaraso-affio/hub/" target="_blank">→ Accedi al Dossier Completo</a>
+</div>
+
+<div class="disclaimer">
+  Documento elaborato da <strong>FranKi Studio</strong> (Avre Srl · Napoli · frankistudio.it) sulla base dell'analisi strategica FAIP F0B del compendio ex Soggiorno Montano ENEL di Roccaraso (AQ) — Esec. Forz. N.43/16, Tribunale di Sulmona. Fonte dati: Perizia Ing. Farina Rev.3/2021, fonti di mercato pubbliche, ricerca FranKi Studio Aprile 2026. Non costituisce offerta di investimento. Uso interno riservato.
+</div>
+
+</body>
+</html>

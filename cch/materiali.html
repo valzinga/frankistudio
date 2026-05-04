@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checklist Materiali · Risposta Retreat Leader · CCH</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Lato:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue:#3549B5; --blue-dark:#1E2E8A; --blue-light:#EBF0FF;
+  --amber:#F9AC28; --amber-dark:#C07800; --amber-light:#FFF7E0;
+  --green:#1A7A4A; --green-light:#E0F5EC; --green-text:#0A4A28;
+  --red:#B03020; --red-light:#FDECEA;
+  --ink:#1A1714; --gray:#6B6560; --cream:#FAF9F6; --cream-dark:#EDEBE4;
+  --white:#FFFFFF;
+  --display:'Bebas Neue',sans-serif;
+  --label:'DM Mono',monospace;
+  --body:'Lato',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--cream);color:var(--ink);font-family:var(--body);font-size:1rem;line-height:1.75;-webkit-font-smoothing:antialiased;}
+p{margin-bottom:.8rem;} p:last-child{margin-bottom:0;}
+
+.hdr{background:var(--blue-dark);padding:2rem 3rem;position:relative;overflow:hidden;}
+.hdr::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(-55deg,transparent,transparent 28px,rgba(255,255,255,.025) 28px,rgba(255,255,255,.025) 29px);}
+.hdr::after{content:'';position:absolute;bottom:0;left:0;right:0;height:4px;background:var(--amber);}
+.hdr__brand{font-family:var(--label);font-size:.57rem;letter-spacing:.24em;text-transform:uppercase;color:var(--amber);margin-bottom:.4rem;position:relative;}
+.hdr__title{font-family:var(--display);font-size:clamp(1.8rem,3.5vw,2.8rem);letter-spacing:.04em;color:var(--white);position:relative;line-height:1.05;}
+.hdr__title em{color:var(--amber);font-style:normal;}
+.hdr__sub{font-size:.88rem;color:rgba(255,255,255,.45);margin-top:.4rem;position:relative;font-style:italic;}
+.hdr__meta{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1rem;position:relative;}
+.pill{display:inline-block;font-family:var(--label);font-size:.54rem;letter-spacing:.1em;text-transform:uppercase;padding:.22rem .75rem;border-radius:20px;}
+.pill--amber{background:var(--amber-light);color:var(--amber-dark);}
+.pill--dark{background:rgba(255,255,255,.1);color:rgba(255,255,255,.6);}
+.pill--red{background:var(--red-light);color:var(--red);}
+
+.corpo{max-width:920px;margin:0 auto;padding:2rem 3rem 4rem;}
+
+/* INTRO */
+.intro{background:var(--amber-dark);border-radius:8px;padding:1.3rem 1.8rem;margin-bottom:2rem;}
+.intro__label{font-family:var(--label);font-size:.56rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:.4rem;}
+.intro__text{font-size:.9rem;color:var(--white);line-height:1.7;}
+.intro__text strong{color:var(--amber-light);}
+
+/* SEZIONE */
+.sec{margin-bottom:2.5rem;}
+.sec__title{font-family:var(--display);font-size:1.5rem;letter-spacing:.05em;color:var(--ink);padding-left:.8rem;border-left:4px solid var(--amber);margin-bottom:1.1rem;}
+.sec__title--blue{border-left-color:var(--blue);}
+.sec__title--green{border-left-color:var(--green);}
+.sec__title--red{border-left-color:var(--red);}
+.sec__intro{font-size:.88rem;color:var(--gray);font-style:italic;margin-bottom:1rem;line-height:1.65;}
+
+/* CHECKLIST ITEM */
+.items{display:flex;flex-direction:column;gap:.6rem;}
+.item{background:var(--white);border:1px solid var(--cream-dark);border-radius:8px;overflow:hidden;display:grid;grid-template-columns:52px 1fr auto;align-items:stretch;}
+.item--urgent{border-left:4px solid var(--amber);}
+.item--needed{border-left:4px solid var(--blue);}
+.item--future{border-left:4px solid var(--green);}
+.item--missing{border-left:4px solid var(--red);}
+
+.item__check{display:flex;align-items:center;justify-content:center;background:var(--cream);border-right:1px solid var(--cream-dark);}
+.item__check-box{width:22px;height:22px;border:2px solid var(--cream-dark);border-radius:4px;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;font-size:1rem;}
+.item__check-box:hover{border-color:var(--amber);}
+.item__check-box.done{background:var(--green);border-color:var(--green);color:var(--white);}
+
+.item__body{padding:.85rem 1.1rem;}
+.item__tag{font-family:var(--label);font-size:.54rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gray);margin-bottom:.2rem;}
+.item__tag--amber{color:var(--amber-dark);}
+.item__tag--blue{color:var(--blue);}
+.item__tag--green{color:var(--green);}
+.item__tag--red{color:var(--red);}
+.item__title{font-family:var(--display);font-size:1.05rem;letter-spacing:.03em;color:var(--ink);margin-bottom:.3rem;}
+.item__desc{font-size:.86rem;color:var(--gray);line-height:1.6;}
+.item__desc strong{color:var(--ink);font-weight:700;}
+
+.item__meta{padding:.85rem 1rem;display:flex;flex-direction:column;justify-content:center;align-items:flex-end;gap:.3rem;border-left:1px solid var(--cream-dark);min-width:100px;}
+.item__who{font-family:var(--label);font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);text-align:right;}
+.item__timing{font-family:var(--label);font-size:.6rem;font-weight:500;text-align:right;}
+.item__timing--urgent{color:var(--amber-dark);}
+.item__timing--needed{color:var(--blue);}
+.item__timing--future{color:var(--green);}
+.item__timing--missing{color:var(--red);}
+
+/* STATO MATERIALI — tabella riepilogo */
+.stato{background:var(--white);border:1px solid var(--cream-dark);border-radius:8px;overflow:hidden;margin-bottom:2rem;}
+.stato__head{background:var(--blue-dark);padding:.7rem 1.2rem;display:grid;grid-template-columns:1fr 80px 80px 80px;gap:.5rem;}
+.stato__head span{font-family:var(--label);font-size:.56rem;letter-spacing:.15em;text-transform:uppercase;color:var(--amber);}
+.stato__row{display:grid;grid-template-columns:1fr 80px 80px 80px;gap:.5rem;padding:.65rem 1.2rem;border-bottom:1px solid var(--cream-dark);font-size:.86rem;align-items:center;}
+.stato__row:last-child{border-bottom:none;}
+.stato__row:nth-child(even){background:var(--cream);}
+.stato__name{font-weight:700;}
+.stato__dot{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:.3rem;}
+.stato__dot--verde{background:var(--green);}
+.stato__dot--arancio{background:var(--amber);}
+.stato__dot--rosso{background:var(--red);}
+.stato__cell{text-align:center;font-family:var(--label);font-size:.6rem;letter-spacing:.06em;}
+
+/* CALLOUT */
+.c{padding:1rem 1.4rem;border-left:4px solid;border-radius:0 6px 6px 0;margin:1.2rem 0;}
+.c--amber{background:var(--amber-light);border-color:var(--amber);}
+.c--amber .c__l{color:var(--amber-dark);}
+.c--amber p{color:#5A3A00;font-size:.9rem;}
+.c--amber strong{color:var(--amber-dark);}
+.c--blue{background:var(--blue-light);border-color:var(--blue);}
+.c--blue .c__l{color:var(--blue);}
+.c--blue p{color:var(--blue-dark);font-size:.9rem;}
+.c--red{background:var(--red-light);border-color:var(--red);}
+.c--red .c__l{color:var(--red);}
+.c--red p{color:var(--red);font-size:.9rem;}
+.c__l{font-family:var(--label);font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;margin-bottom:.3rem;}
+
+/* PRINT */
+@media print{
+  body{background:white;}
+  .hdr{background:#1E2E8A !important;-webkit-print-color-adjust:exact;}
+  .item__check-box{border:1.5px solid #C8C4BC;}
+}
+@media(max-width:600px){
+  .hdr,.corpo{padding-left:1.4rem;padding-right:1.4rem;}
+  .item{grid-template-columns:44px 1fr;}
+  .item__meta{display:none;}
+  .stato__head,.stato__row{grid-template-columns:1fr 60px 60px;}
+}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr__brand">Franki Studio · Test Lean #2 · Materiali · CCH · Aprile 2026</div>
+  <h1 class="hdr__title">Checklist <em>Materiali</em><br>da Preparare</h1>
+  <p class="hdr__sub">Cosa serve quando un retreat leader risponde — diviso per urgenza e responsabile</p>
+  <div class="hdr__meta">
+    <span class="pill pill--amber">Da preparare ora — prima dei DM</span>
+    <span class="pill pill--dark">Responsabili: Franki · Guia · Gennaro · Luca</span>
+    <span class="pill pill--red">Alcuni materiali non esistono ancora</span>
+  </div>
+</div>
+
+<div class="corpo">
+
+  <div class="intro">
+    <div class="intro__label">Come leggere questa lista</div>
+    <p class="intro__text">Quando un retreat leader risponde "mi interessa, dimmi di più" hai circa <strong>4–6 ore</strong> per rispondere in modo professionale prima che l'attenzione si raffreddi. Se non hai i materiali pronti in quel momento, rischi di perdere il contatto. <strong>Questa lista ti dice cosa preparare prima di inviare il primo DM</strong> — così sei pronto a rispondere subito quando arriva la risposta.</p>
+  </div>
+
+  <!-- STATO ATTUALE -->
+  <div class="sec">
+    <div class="sec__title sec__title--red">Stato Attuale dei Materiali</div>
+    <p class="sec__intro">Una fotografia onesta di cosa esiste già e cosa manca completamente.</p>
+
+    <div class="stato">
+      <div class="stato__head">
+        <span>Materiale</span>
+        <span style="text-align:center;">Esiste</span>
+        <span style="text-align:center;">Pronto</span>
+        <span style="text-align:center;">In EN</span>
+      </div>
+      <div class="stato__row">
+        <span class="stato__name">Foto professionali CCH</span>
+        <span class="stato__cell"><span class="stato__dot stato__dot--rosso"></span>No</span>
+        <span class="stato__cell"><span class="stato__dot stato__dot--rosso"></span>No</span>
+        <span class="stato__cell">—</span>
+      </div>
+      <div class="stato__row">
+        <span class="stato__name">Video / clip CCH</span>
+        <span class="stato__cell"><span class="stato__dot stato__dot--arancio"></span>Parziale</span>
+        <span class="stato__cell"><span class="stato__dot stato__dot--rosso"></span>No</span>
+        <span class="stato__cell"><span class="stato__dot stato__dot--rosso"></span>No</span>
+      </div>
+      <div class="stato__row">
+        <span class="stato__name">PDF presentazione CCH (EN)</span>
+        <span class="stato__cell"><span class="stato__dot stato__dot--rosso"></span>No</span>
+        <span class="stato__cell"><span class="stato__dot stato__dot--rosso"></span>No</span>
+        <span class="stato__cell"><span class="stato__dot stato__dot--rosso"></span>No</span>
+      </div>
+      <div class="stato__row">
+        <span class="stato__name">Listino prezzi venue hire (EN)</span>
+        <span class="stato__cell"><span class="stato__dot stato__dot--arancio"></span>Bozza IT</span>
+        <span class="stato__cell"><span class="stato__dot stato__dot--rosso"></span>No</span>
+        <span class="stato__cell"><span class="stato__dot stato__dot--rosso"></span>No</span>
+      </div>
+      <div class="stato__row">
+        <span class="stato__name">Calendario disponibilità 2026</span>
+        <span class="stato__cell"><span class="stato__dot stato__dot--rosso"></span>No</span>
+        <span class="stato__cell"><span class="stato__dot stato__dot--rosso"></span>No</span>
+        <span class="stato__cell">—</span>
+      </div>
+      <div class="stato__row">
+        <span class="stato__name">Descrizione spazi e capacità (EN)</span>
+        <span class="stato__cell"><span class="stato__dot stato__dot--arancio"></span>Hub IT</span>
+        <span class="stato__cell"><span class="stato__dot stato__dot--arancio"></span>Parziale</span>
+        <span class="stato__cell"><span class="stato__dot stato__dot--rosso"></span>No</span>
+      </div>
+      <div class="stato__row">
+        <span class="stato__name">Menù di Maura (EN)</span>
+        <span class="stato__cell"><span class="stato__dot stato__dot--rosso"></span>No</span>
+        <span class="stato__cell"><span class="stato__dot stato__dot--rosso"></span>No</span>
+        <span class="stato__cell"><span class="stato__dot stato__dot--rosso"></span>No</span>
+      </div>
+      <div class="stato__row">
+        <span class="stato__name">Pagina CCH su BookRetreats</span>
+        <span class="stato__cell"><span class="stato__dot stato__dot--rosso"></span>No</span>
+        <span class="stato__cell"><span class="stato__dot stato__dot--rosso"></span>No</span>
+        <span class="stato__cell"><span class="stato__dot stato__dot--verde"></span>EN</span>
+      </div>
+      <div class="stato__row">
+        <span class="stato__name">Indirizzo email professionale CCH</span>
+        <span class="stato__cell"><span class="stato__dot stato__dot--arancio"></span>Forse</span>
+        <span class="stato__cell"><span class="stato__dot stato__dot--arancio"></span>Forse</span>
+        <span class="stato__cell">—</span>
+      </div>
+      <div class="stato__row">
+        <span class="stato__name">Profilo Instagram CCH</span>
+        <span class="stato__cell"><span class="stato__dot stato__dot--verde"></span>Sì</span>
+        <span class="stato__cell"><span class="stato__dot stato__dot--arancio"></span>Parziale</span>
+        <span class="stato__cell"><span class="stato__dot stato__dot--arancio"></span>Misto</span>
+      </div>
+    </div>
+
+    <div class="c c--red">
+      <div class="c__l">La situazione in una riga</div>
+      <p>La maggior parte dei materiali chiave <strong>non esiste ancora</strong>. Il rischio è mandare i DM, ricevere risposte positive, e non avere nulla da inviare. La priorità assoluta è preparare almeno il PDF base e il listino prezzi prima di inviare il primo messaggio.</p>
+    </div>
+  </div>
+
+  <!-- URGENTI — prima dei DM -->
+  <div class="sec">
+    <div class="sec__title sec__title--red">🔴 Urgenti — Da Preparare Prima di Inviare i DM</div>
+    <p class="sec__intro">Senza questi materiali non si inizia. Tempo stimato di preparazione: 3–4 giorni.</p>
+    <div class="items">
+
+      <div class="item item--urgent">
+        <div class="item__check"><div class="item__check-box" onclick="toggle(this)"></div></div>
+        <div class="item__body">
+          <div class="item__tag item__tag--amber">Documento base · Franki lo prepara</div>
+          <div class="item__title">PDF "Corsale Country House — Retreat Venue" (EN)</div>
+          <div class="item__desc">2–3 pagine in inglese con: foto migliori disponibili (anche quelle del sito attuale), capacità e spazi, cosa include il venue hire, i 3 differenzianti chiave (uliveto, Maura, uso esclusivo), prezzi orientativi, contatto. <strong>Non deve essere perfetto — deve essere credibile.</strong> Si aggiorna con le foto di Gennaro appena pronte.</div>
+        </div>
+        <div class="item__meta">
+          <span class="item__who">Franki</span>
+          <span class="item__timing item__timing--urgent">Entro 3 gg</span>
+        </div>
+      </div>
+
+      <div class="item item--urgent">
+        <div class="item__check"><div class="item__check-box" onclick="toggle(this)"></div></div>
+        <div class="item__body">
+          <div class="item__tag item__tag--amber">Listino base · Franki + Luca</div>
+          <div class="item__title">Listino Prezzi Venue Hire (EN) — versione semplice</div>
+          <div class="item__desc">Un foglio chiaro con: prezzo venue hire settimanale (€7.000–9.000), cosa è incluso (struttura, piscina, sauna, tinozza, parcheggio, wifi), cosa è opzionale (pasti Maura, esperienze add-on), deposito e termini di pagamento. <strong>Basta un Google Doc o una pagina del PDF.</strong></div>
+        </div>
+        <div class="item__meta">
+          <span class="item__who">Franki + Luca</span>
+          <span class="item__timing item__timing--urgent">Entro 3 gg</span>
+        </div>
+      </div>
+
+      <div class="item item--urgent">
+        <div class="item__check"><div class="item__check-box" onclick="toggle(this)"></div></div>
+        <div class="item__body">
+          <div class="item__tag item__tag--amber">Contatto professionale · Luca + Guia</div>
+          <div class="item__title">Email professionale CCH — tipo info@corsalecountryhouse.com</div>
+          <div class="item__desc">Quando si risponde a un retreat leader internazionale, <strong>non si risponde da un indirizzo Gmail personale</strong>. Un'email professionale con il dominio CCH costa pochissimo (o zero se Aruba la include nell'hosting) e aumenta enormemente la percezione di professionalità. Da creare su Aruba o tramite Google Workspace.</div>
+        </div>
+        <div class="item__meta">
+          <span class="item__who">Luca / Guia</span>
+          <span class="item__timing item__timing--urgent">Entro 2 gg</span>
+        </div>
+      </div>
+
+      <div class="item item--urgent">
+        <div class="item__check"><div class="item__check-box" onclick="toggle(this)"></div></div>
+        <div class="item__body">
+          <div class="item__tag item__tag--amber">Calendario · Luca</div>
+          <div class="item__title">Calendario disponibilità 2026 — settimane libere per retreat</div>
+          <div class="item__desc">Una lista semplice delle settimane ancora disponibili nel 2026 per retreat venue hire. Non serve uno strumento complicato — basta un Google Calendar o una lista scritta. <strong>Se un retreat leader chiede "avete date libere a settembre?" devi rispondere in 10 minuti, non in 3 giorni.</strong></div>
+        </div>
+        <div class="item__meta">
+          <span class="item__who">Luca</span>
+          <span class="item__timing item__timing--urgent">Entro 2 gg</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- NECESSARI — entro 2 settimane -->
+  <div class="sec">
+    <div class="sec__title sec__title--blue">🟡 Necessari — Entro 2 Settimane dal Primo DM</div>
+    <p class="sec__intro">Questi materiali non servono per rispondere al primo messaggio, ma servono per convertire l'interesse in prenotazione confermata.</p>
+    <div class="items">
+
+      <div class="item item--needed">
+        <div class="item__check"><div class="item__check-box" onclick="toggle(this)"></div></div>
+        <div class="item__body">
+          <div class="item__tag item__tag--blue">Foto · Gennaro + Guia</div>
+          <div class="item__title">Set fotografico professionale — 15–20 foto pronte per l'invio</div>
+          <div class="item__desc">Non serve l'intero set shooting — bastano <strong>15–20 foto orizzontali ad alta risoluzione</strong> delle aree più fotogeniche: uliveto, cucina, piscina, camere, esterno al tramonto. Gennaro può fare un sopralluogo rapido di mezza giornata anche prima delle riprese video complete. <strong>Le foto sono il filtro #1 con cui i retreat leader valutano una venue.</strong></div>
+        </div>
+        <div class="item__meta">
+          <span class="item__who">Gennaro + Guia</span>
+          <span class="item__timing item__timing--needed">Entro 10 gg</span>
+        </div>
+      </div>
+
+      <div class="item item--needed">
+        <div class="item__check"><div class="item__check-box" onclick="toggle(this)"></div></div>
+        <div class="item__body">
+          <div class="item__tag item__tag--blue">Testo · Franki</div>
+          <div class="item__title">Descrizione spazi in inglese — dettaglio per retreat leader</div>
+          <div class="item__desc">Descrizione dettagliata degli spazi pensata per un retreat leader che deve pianificare il suo programma: dove si fa yoga (outdoor nell'uliveto / interno con luce naturale), dimensioni approssimative, numero persone, piscina, sauna, tinozza, camere. <strong>Risponde alla domanda: "posso fare il mio retreat qui?"</strong></div>
+        </div>
+        <div class="item__meta">
+          <span class="item__who">Franki</span>
+          <span class="item__timing item__timing--needed">Entro 7 gg</span>
+        </div>
+      </div>
+
+      <div class="item item--needed">
+        <div class="item__check"><div class="item__check-box" onclick="toggle(this)"></div></div>
+        <div class="item__body">
+          <div class="item__tag item__tag--blue">Contenuto · Franki + Maura</div>
+          <div class="item__title">Menù tipo di Maura in inglese — colazione, pranzo, cena</div>
+          <div class="item__desc">Un esempio di menù settimanale della cucina di Maura, tradotto in inglese con i nomi dei piatti spiegati. Non serve essere precisi al piatto — serve far capire il livello e lo stile: cucina napoletana autentica, ingredienti locali, pane fatto in casa. <strong>La cucina di Maura è uno dei 3 asset principali di CCH — va raccontata.</strong></div>
+        </div>
+        <div class="item__meta">
+          <span class="item__who">Franki + Maura</span>
+          <span class="item__timing item__timing--needed">Entro 10 gg</span>
+        </div>
+      </div>
+
+      <div class="item item--needed">
+        <div class="item__check"><div class="item__check-box" onclick="toggle(this)"></div></div>
+        <div class="item__body">
+          <div class="item__tag item__tag--blue">Piattaforma · Guia</div>
+          <div class="item__title">Profilo CCH su BookRetreats.com come "Venue Hire"</div>
+          <div class="item__desc">Creare il profilo CCH su BookRetreats — la prima cosa che un retreat leader cerca quando valuta una venue. <strong>Se non sei su BookRetreats non esisti per una larga fetta del mercato.</strong> Il profilo si crea gratis, si aggiorna con le foto appena pronte. Nel frattempo si può creare con le foto attuali del sito.</div>
+        </div>
+        <div class="item__meta">
+          <span class="item__who">Guia</span>
+          <span class="item__timing item__timing--needed">Entro 5 gg</span>
+        </div>
+      </div>
+
+      <div class="item item--needed">
+        <div class="item__check"><div class="item__check-box" onclick="toggle(this)"></div></div>
+        <div class="item__body">
+          <div class="item__tag item__tag--blue">Instagram · Guia</div>
+          <div class="item__title">Profilo Instagram CCH — bio in inglese e 3 post dedicati venue hire</div>
+          <div class="item__desc">Il retreat leader che riceve il DM va a guardare il profilo Instagram di CCH prima di rispondere. <strong>Se trova una bio in italiano e foto disorganizzate, l'interesse cala.</strong> Serve: bio in inglese (2 righe max), link al sito o BookRetreats, e almeno 3 post recenti con foto belle dell'uliveto, della cucina e degli spazi comuni.</div>
+        </div>
+        <div class="item__meta">
+          <span class="item__who">Guia</span>
+          <span class="item__timing item__timing--needed">Entro 5 gg</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FUTURI — dopo le prime risposte -->
+  <div class="sec">
+    <div class="sec__title sec__title--green">🟢 Futuri — Dopo le Prime Risposte Positive</div>
+    <p class="sec__intro">Questi materiali si preparano solo se arrivano risposte concrete. Non ha senso investire tempo adesso.</p>
+    <div class="items">
+
+      <div class="item item--future">
+        <div class="item__check"><div class="item__check-box" onclick="toggle(this)"></div></div>
+        <div class="item__body">
+          <div class="item__tag item__tag--green">Video · Gennaro</div>
+          <div class="item__title">Clip video CCH — versione EN per retreat leader</div>
+          <div class="item__desc">Il Clip 1 atmosferico e il Clip 3 corporate già nel brief di Gennaro. Quando arrivano le prime risposte positive, avere un video da mandare aumenta notevolmente il tasso di conversione. <strong>Un video da 60 secondi vale più di 20 foto.</strong> Gennaro ha già il brief — si tratta di calendarizzare le riprese.</div>
+        </div>
+        <div class="item__meta">
+          <span class="item__who">Gennaro</span>
+          <span class="item__timing item__timing--future">Dopo risposta</span>
+        </div>
+      </div>
+
+      <div class="item item--future">
+        <div class="item__check"><div class="item__check-box" onclick="toggle(this)"></div></div>
+        <div class="item__body">
+          <div class="item__tag item__tag--green">Contratto · Franki + Luca</div>
+          <div class="item__title">Template contratto venue hire — semplice e chiaro</div>
+          <div class="item__desc">Un accordo scritto base per il venue hire: date, numero ospiti, prezzo, deposito (30–50%), termini di cancellazione, cosa è incluso e cosa non lo è. <strong>Non serve un avvocato per la prima versione</strong> — serve qualcosa di chiaro che protegga entrambe le parti. Franki prepara una bozza da far rivedere a Luca.</div>
+        </div>
+        <div class="item__meta">
+          <span class="item__who">Franki + Luca</span>
+          <span class="item__timing item__timing--future">Dopo risposta</span>
+        </div>
+      </div>
+
+      <div class="item item--future">
+        <div class="item__check"><div class="item__check-box" onclick="toggle(this)"></div></div>
+        <div class="item__body">
+          <div class="item__tag item__tag--green">Piattaforma · Guia</div>
+          <div class="item__title">Profilo su RetreatHub.com e VenueRetreat.com</div>
+          <div class="item__desc">Dopo BookRetreats, le due piattaforme successive per amplificare la visibilità. Si creano con gli stessi materiali già pronti per BookRetreats — è un copia-adatta di 30 minuti per piattaforma.</div>
+        </div>
+        <div class="item__meta">
+          <span class="item__who">Guia</span>
+          <span class="item__timing item__timing--future">Dopo BookRetreats</span>
+        </div>
+      </div>
+
+      <div class="item item--future">
+        <div class="item__check"><div class="item__check-box" onclick="toggle(this)"></div></div>
+        <div class="item__body">
+          <div class="item__tag item__tag--green">Testo · Franki</div>
+          <div class="item__title">Pagina CCH in inglese sul sito — sezione "Retreat Venue Hire"</div>
+          <div class="item__desc">Una sezione dedicata sul sito CCH rivolta specificamente ai retreat leader internazionali. Con tutte le info pratiche, le foto, il listino, il modulo di contatto. Quando il sito viene visitato dopo il DM, <strong>deve rispondere a tutte le domande senza che il retreat leader debba chiederle.</strong></div>
+        </div>
+        <div class="item__meta">
+          <span class="item__who">Franki + Guia</span>
+          <span class="item__timing item__timing--future">Entro 30 gg</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- NOTA FINALE -->
+  <div class="c c--amber">
+    <div class="c__l">La priorità assoluta in questo momento</div>
+    <p>Prima di mandare il primo DM devono esistere: <strong>1) PDF base CCH in inglese</strong>, <strong>2) listino prezzi venue hire</strong>, <strong>3) email professionale CCH</strong>, <strong>4) calendario disponibilità 2026</strong>. Con questi quattro materiali si può rispondere a qualsiasi retreat leader in modo credibile e professionale. Tutto il resto si costruisce mentre i test lean girano.</p>
+  </div>
+
+  <div class="c c--blue" style="margin-top:.8rem;">
+    <div class="c__l">Tempo stimato per i materiali urgenti</div>
+    <p>Franki: <strong>4–5 ore</strong> per il PDF base e il listino in inglese. Luca: <strong>30 minuti</strong> per il calendario disponibilità e l'email. Guia: <strong>1 ora</strong> per la bio Instagram in inglese e i 3 post dedicati. <strong>Totale: meno di un giorno di lavoro distribuito tra tutti e tre.</strong> Dopodiché si inviano i DM.</p>
+  </div>
+
+</div>
+
+<div style="background:var(--blue-dark);border-top:4px solid var(--amber);text-align:center;padding:1.2rem;font-family:var(--label);font-size:.54rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.3);">
+  <strong style="color:var(--amber);">Franki Studio</strong> · Checklist Materiali · Test Lean #2 · CCH · Aprile 2026
+</div>
+
+<script>
+function toggle(el) {
+  el.classList.toggle('done');
+  el.textContent = el.classList.contains('done') ? '✓' : '';
+}
+</script>
+
+</body>
+</html>

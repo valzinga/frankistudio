@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brief Gennaro — Clip CCH | Franki Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --fk-blue:#3549B5; --fk-blue-dark:#1E2E8A;
+  --fk-blue-light:#EBF0FF;
+  --fk-amber:#F9AC28; --fk-amber-dark:#C07800;
+  --fk-amber-light:#FFF7E0;
+  --fk-white:#FFFFFF; --fk-cream:#FAF9F6; --fk-cream-dark:#EDEBE4;
+  --fk-ink:#1A1714; --fk-gray:#6B6560;
+  --fk-green:#1A7A4A; --fk-green-light:#E0F5EC; --fk-green-text:#0A4A28;
+  --fk-display:'Bebas Neue',sans-serif;
+  --fk-label:'DM Mono',monospace;
+  --fk-body:'Lato',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--fk-cream);color:var(--fk-ink);font-family:var(--fk-body);font-size:1rem;line-height:1.8;-webkit-font-smoothing:antialiased;}
+p{margin-bottom:1rem;} p:last-child{margin-bottom:0;}
+
+.hdr{background:var(--fk-blue-dark);padding:2.5rem 4rem;position:relative;overflow:hidden;}
+.hdr::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(-55deg,transparent,transparent 28px,rgba(255,255,255,.025) 28px,rgba(255,255,255,.025) 29px);pointer-events:none;}
+.hdr::after{content:'';position:absolute;bottom:0;left:0;right:0;height:4px;background:var(--fk-amber);}
+.hdr__brand{font-family:var(--fk-label);font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;color:var(--fk-amber);margin-bottom:.5rem;position:relative;}
+.hdr__title{font-family:var(--fk-display);font-size:clamp(2rem,4vw,3.5rem);letter-spacing:.04em;line-height:1;color:var(--fk-white);position:relative;}
+.hdr__title em{color:var(--fk-amber);font-style:normal;}
+.hdr__sub{font-size:.92rem;font-style:italic;color:rgba(255,255,255,.5);margin-top:.4rem;position:relative;}
+.hdr__meta{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.4rem;position:relative;}
+
+.corpo{max-width:960px;margin:0 auto;padding:3rem 4rem 5rem;}
+.sep{height:1px;background:var(--fk-cream-dark);margin:2.8rem 0;}
+
+.sec-hdr{display:flex;align-items:baseline;gap:1rem;margin-bottom:1.4rem;padding-bottom:.7rem;border-bottom:1px solid var(--fk-cream-dark);}
+.sec-num{font-family:var(--fk-display);font-size:3.5rem;color:var(--fk-cream-dark);line-height:1;flex-shrink:0;}
+.sec-title{font-family:var(--fk-display);font-size:1.9rem;letter-spacing:.06em;color:var(--fk-ink);}
+
+.sub{font-family:var(--fk-display);font-size:1.25rem;letter-spacing:.05em;color:var(--fk-ink);margin:1.8rem 0 .8rem;padding-left:.85rem;border-left:4px solid var(--fk-amber);}
+.sub--blue{border-left-color:var(--fk-blue);}
+
+.b{display:inline-block;font-family:var(--fk-label);font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;padding:.2rem .65rem;border-radius:4px;line-height:1.4;}
+.b--blue{background:var(--fk-blue-light);color:var(--fk-blue-dark);}
+.b--amber{background:var(--fk-amber-light);color:var(--fk-amber-dark);border:1px solid #FBBC50;}
+.b--green{background:var(--fk-green-light);color:var(--fk-green-text);}
+.b--gray{background:#F2F0EB;color:var(--fk-gray);}
+.b--franki{background:var(--fk-blue);color:var(--fk-amber);}
+
+.pill{display:inline-block;font-family:var(--fk-label);font-size:.56rem;letter-spacing:.08em;text-transform:uppercase;padding:.22rem .85rem;border-radius:20px;}
+.pill--amber{background:var(--fk-amber-light);color:var(--fk-amber-dark);}
+.pill--franki{background:var(--fk-blue);color:var(--fk-amber);}
+.pill--gray{background:#F2F0EB;color:var(--fk-gray);}
+
+.c{padding:1.1rem 1.55rem;margin:1.2rem 0;border-left:4px solid;border-radius:0 6px 6px 0;}
+.c__l{font-family:var(--fk-label);font-size:.56rem;letter-spacing:.2em;text-transform:uppercase;margin-bottom:.3rem;}
+.c p,.c li{font-size:.9rem;line-height:1.75;}
+.c--a{background:var(--fk-amber-light);border-left-color:var(--fk-amber);}
+.c--a .c__l{color:var(--fk-amber-dark);}
+.c--a p,.c--a li{color:#5A3A00;}
+.c--a strong{color:var(--fk-amber-dark);}
+.c--b{background:var(--fk-blue-light);border-left-color:var(--fk-blue);}
+.c--b .c__l{color:var(--fk-blue);}
+.c--b p{color:var(--fk-blue-dark);}
+.c--b strong{color:var(--fk-blue);}
+.c--g{background:var(--fk-green-light);border-left-color:var(--fk-green);}
+.c--g .c__l{color:var(--fk-green);}
+.c--g p{color:var(--fk-green-text);}
+.c--g strong{color:var(--fk-green);}
+
+/* CLIP CARD */
+.clip-grid{display:flex;flex-direction:column;gap:1.2rem;margin:1.5rem 0;}
+.clip{background:var(--fk-white);border:1px solid var(--fk-cream-dark);border-radius:10px;overflow:hidden;}
+.clip__head{background:var(--fk-blue-dark);padding:1.2rem 1.6rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;}
+.clip__head-left{}
+.clip__tag{font-family:var(--fk-label);font-size:.56rem;letter-spacing:.18em;text-transform:uppercase;color:var(--fk-amber);margin-bottom:.25rem;}
+.clip__name{font-family:var(--fk-display);font-size:1.6rem;letter-spacing:.04em;color:var(--fk-white);}
+.clip__meta{text-align:right;display:flex;flex-direction:column;gap:.25rem;align-items:flex-end;}
+.clip__body{padding:1.4rem 1.6rem;display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.2rem;}
+@media(max-width:700px){.clip__body{grid-template-columns:1fr;}}
+.clip__block-l{font-family:var(--fk-label);font-size:.54rem;letter-spacing:.15em;text-transform:uppercase;color:var(--fk-gray);margin-bottom:.35rem;}
+.clip__block-t{font-size:.88rem;color:var(--fk-ink);line-height:1.65;}
+.clip__block-t strong{font-weight:700;}
+.clip__block-t em{font-style:italic;color:var(--fk-gray);}
+.clip__use{background:var(--fk-amber-light);border-top:1px solid #F0D080;padding:.75rem 1.6rem;display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;}
+.clip__use-l{font-family:var(--fk-label);font-size:.54rem;letter-spacing:.12em;text-transform:uppercase;color:var(--fk-amber-dark);}
+
+/* SCENE LIST */
+.scene-list{list-style:none;margin:.8rem 0;}
+.scene-list li{display:flex;align-items:flex-start;gap:.7rem;padding:.5rem 0;border-bottom:1px solid var(--fk-cream-dark);font-size:.88rem;line-height:1.6;}
+.scene-list li:last-child{border-bottom:none;}
+.scene-dot{width:6px;height:6px;border-radius:50%;background:var(--fk-amber);margin-top:.6rem;flex-shrink:0;}
+.scene-dot--blue{background:var(--fk-blue);}
+.scene-dot--green{background:var(--fk-green);}
+
+/* STILE TABLE */
+.tw{overflow-x:auto;margin:1.2rem 0;}
+.t{width:100%;border-collapse:collapse;font-size:.88rem;background:var(--fk-white);}
+.t th{font-family:var(--fk-label);font-size:.56rem;letter-spacing:.16em;text-transform:uppercase;color:var(--fk-amber);background:var(--fk-blue-dark);text-align:left;padding:.7rem 1rem;white-space:nowrap;}
+.t td{padding:.8rem 1rem;border-bottom:1px solid var(--fk-cream-dark);vertical-align:top;color:var(--fk-ink);line-height:1.5;}
+.t tr:last-child td{border-bottom:none;}
+.t tr:hover td{background:var(--fk-blue-light);}
+
+.footer{background:var(--fk-blue-dark);border-top:4px solid var(--fk-amber);color:rgba(255,255,255,.35);text-align:center;padding:1.4rem;font-family:var(--fk-label);font-size:.56rem;letter-spacing:.15em;text-transform:uppercase;}
+.footer strong{color:var(--fk-amber);}
+
+@media(max-width:768px){
+  .hdr,.corpo{padding-left:1.5rem;padding-right:1.5rem;}
+}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr__brand">Franki Studio · Brief riservato · Aprile 2026</div>
+  <h1 class="hdr__title">Brief <em>Gennaro</em></h1>
+  <p class="hdr__sub">Produzione clip video — Corsale Country House · San Lorenzello (BN)</p>
+  <div class="hdr__meta">
+    <span class="pill pill--amber">A: Gennaro + Guia</span>
+    <span class="pill pill--franki">Da: Franki Studio</span>
+    <span class="pill pill--gray">Aprile 2026 · Uso riservato</span>
+  </div>
+</div>
+
+<div class="corpo">
+
+  <!-- ══ 01 CONTESTO ══ -->
+  <div class="sec-hdr">
+    <span class="sec-num">01</span>
+    <span class="sec-title">Contesto — Chi è CCH e Perché lo Facciamo</span>
+  </div>
+
+  <p><strong>Corsale Country House (CCH)</strong> è una tenuta rurale esclusiva a San Lorenzello, nel Sannio (BN) — 6 ettari di uliveto biologico, 4 suites, capacità fino a 14 pax in pernottamento e 50 pax per eventi, 50 anni di storia familiare. La gestisce Luca Corsale con la moglie Maura, la figlia Guia e il figlio Mattia.</p>
+
+  <p>Franki Studio ha avviato un mandato di consulenza strategica per riposizionare CCH dal mercato italiano standard al segmento internazionale premium — retreat yoga e wellness, corporate team building, slow tourism anglosassone, food & wine tourism. Il piano prevede una serie di test lean in 45 giorni per validare i canali prima di investire.</p>
+
+  <div class="c c--b">
+    <div class="c__l">Perché i clip adesso</div>
+    <p>I clip servono a <strong>due cose insieme</strong>: dare a Luca una prima idea concreta di cosa può fare Gennaro in termini di qualità e approccio, e creare i <strong>primi materiali visivi reali</strong> da usare nei test lean — profilo BookRetreats, post community wellness, LinkedIn outreach corporate, social media. Non è produzione per la produzione: ogni clip alimenta almeno un test specifico.</p>
+  </div>
+
+  <div class="sep"></div>
+
+  <!-- ══ 02 OBIETTIVI ══ -->
+  <div class="sec-hdr">
+    <span class="sec-num">02</span>
+    <span class="sec-title">Obiettivi della Produzione</span>
+  </div>
+
+  <p>Chiediamo <strong>3 clip distinti</strong> — ognuno con un target, un tono e un uso preciso. Non sono varianti dello stesso video: sono tre racconti diversi della stessa realtà.</p>
+
+  <div class="clip-grid">
+
+    <!-- CLIP 1 -->
+    <div class="clip">
+      <div class="clip__head">
+        <div class="clip__head-left">
+          <div class="clip__tag">Clip 01 · Il cuore</div>
+          <div class="clip__name">La Casa — Atmosphère</div>
+        </div>
+        <div class="clip__meta">
+          <span class="b b--amber">60–90 sec</span>
+          <span class="b b--gray">No voiceover</span>
+          <span class="b b--gray">Solo musica</span>
+        </div>
+      </div>
+      <div class="clip__body">
+        <div>
+          <div class="clip__block-l">Cosa racconta</div>
+          <div class="clip__block-t">La sensazione di essere a Corsale. Non un hotel, non un agriturismo — <strong>una casa vera, di qualcuno che ci vive da 50 anni.</strong> Luce naturale, spazi, silenzio, il fuoco, la cucina di Maura. Il tempo che rallenta. L'ospite che si sente a casa di amici di vecchia data.</div>
+        </div>
+        <div>
+          <div class="clip__block-l">Soggetti chiave</div>
+          <div class="clip__block-t">
+            Luca che cammina tra gli ulivi all'alba. Maura che impasta in cucina. Tavola apparecchiata per una cena. Piscina al tramonto. Fuoco acceso nel camino. Tinozza esterna di notte. Uliveto in controluce. Dettagli della casa — pietra, legno, cibo, mani.
+          </div>
+        </div>
+        <div>
+          <div class="clip__block-l">Tono e stile</div>
+          <div class="clip__block-t"><strong>Caldo, lento, reale.</strong> Niente gimbal veloce, niente drone da hotel 5 stelle. Movimenti morbidi, qualche shot fermo. <em>Pensa più a un film di Sorrentino che a un reel di booking.com.</em> Colori caldi, non oversaturati. Autenticità sopra tutto.</div>
+        </div>
+      </div>
+      <div class="clip__use">
+        <span class="clip__use-l">Usato per →</span>
+        <span class="b b--blue">Profilo BookRetreats</span>
+        <span class="b b--blue">Instagram CCH</span>
+        <span class="b b--amber">Documento per Luca</span>
+        <span class="b b--amber">Sito CCH</span>
+      </div>
+    </div>
+
+    <!-- CLIP 2 -->
+    <div class="clip">
+      <div class="clip__head">
+        <div class="clip__head-left">
+          <div class="clip__tag">Clip 02 · Le esperienze</div>
+          <div class="clip__name">Il Territorio — Immersione</div>
+        </div>
+        <div class="clip__meta">
+          <span class="b b--amber">45–60 sec</span>
+          <span class="b b--gray">Verticale + orizzontale</span>
+          <span class="b b--gray">Reel-ready</span>
+        </div>
+      </div>
+      <div class="clip__body">
+        <div>
+          <div class="clip__block-l">Cosa racconta</div>
+          <div class="clip__block-t">Cosa si fa a Corsale. Non solo la struttura — il territorio, le esperienze, i sensi. <strong>La raccolta delle olive, la cucina con Maura, i cavalli, il cielo stellato, il vino del Sannio.</strong> Chi guarda deve pensare: voglio essere lì.</div>
+        </div>
+        <div>
+          <div class="clip__block-l">Soggetti chiave</div>
+          <div class="clip__block-t">
+            Mani che raccolgono olive. Olio che cola dalla spremitura. Maura che insegna a fare il pane. Luca a cavallo nell'uliveto. Cielo stellato con tinozza in foreground. Bicchieri di Aglianico brindisi al tramonto. Trattore tra i filari. Tavola imbandita outdoor.
+          </div>
+        </div>
+        <div>
+          <div class="clip__block-l">Tono e stile</div>
+          <div class="clip__block-t"><strong>Sensoriale, ritmo medio, coinvolgente.</strong> Montaggio più dinamico del clip 1 ma mai frenetico. Suoni ambientali in sottofondo (crepitio fuoco, uccelli, vento tra gli ulivi). Formato verticale per reel Instagram e Stories — ma girato orizzontale così abbiamo entrambe le versioni.</div>
+        </div>
+      </div>
+      <div class="clip__use">
+        <span class="clip__use-l">Usato per →</span>
+        <span class="b b--blue">Instagram Reel CCH</span>
+        <span class="b b--blue">Community Dark Sky</span>
+        <span class="b b--amber">Community Olive Oil</span>
+        <span class="b b--amber">Test L5 Dark Sky</span>
+      </div>
+    </div>
+
+    <!-- CLIP 3 -->
+    <div class="clip">
+      <div class="clip__head">
+        <div class="clip__head-left">
+          <div class="clip__tag">Clip 03 · Il business</div>
+          <div class="clip__name">The Retreat — Corporate</div>
+        </div>
+        <div class="clip__meta">
+          <span class="b b--amber">60–75 sec</span>
+          <span class="b b--gray">Sottotitoli EN</span>
+          <span class="b b--gray">Orizzontale</span>
+        </div>
+      </div>
+      <div class="clip__body">
+        <div>
+          <div class="clip__block-l">Cosa racconta</div>
+          <div class="clip__block-t">CCH come venue corporate d'eccellenza. <strong>Walking meeting nell'uliveto. Team intorno a un tavolo all'aperto. Cena di gruppo sotto le stelle. 50 persone che lavorano — e poi si godono un posto straordinario.</strong> Il messaggio: non il solito hotel per conference.</div>
+        </div>
+        <div>
+          <div class="clip__block-l">Soggetti chiave</div>
+          <div class="clip__block-t">
+            Gruppo che cammina tra gli ulivi (walking meeting). Tavolo di lavoro outdoor. Brainstorming su lavagna sotto un pergolato. Cena di gruppo lunga con vino. Persone che si rilassano in piscina dopo la giornata. Vista aerea del parco (drone se disponibile). Cucina di gruppo come team building.
+          </div>
+        </div>
+        <div>
+          <div class="clip__block-l">Tono e stile</div>
+          <div class="clip__block-t"><strong>Professionale ma caldo.</strong> Non corporate freddo — corporate umano. Le persone ridono, lavorano bene, mangiano insieme. <em>Sottotitoli in inglese</em> perché questo clip va direttamente agli HR manager europei e agli incoming internazionali. Voiceover opzionale — se sì, in inglese, voce femminile calda.</div>
+        </div>
+      </div>
+      <div class="clip__use">
+        <span class="clip__use-l">Usato per →</span>
+        <span class="b b--blue">LinkedIn outreach corporate</span>
+        <span class="b b--blue">Italy Charme B2B</span>
+        <span class="b b--amber">Sito CCH EN</span>
+        <span class="b b--amber">Test L3 Corporate</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="sep"></div>
+
+  <!-- ══ 03 STILE ══ -->
+  <div class="sec-hdr">
+    <span class="sec-num">03</span>
+    <span class="sec-title">Stile — Cosa Sì e Cosa No</span>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin:1.2rem 0;">
+    <div>
+      <div class="sub" style="margin-top:0;">✅ Cosa vogliamo</div>
+      <ul class="scene-list">
+        <li><div class="scene-dot scene-dot--green"></div><div><strong>Luce naturale sempre</strong> — alba, tramonto, fuoco, candele. Niente flash artificiali o luci da studio.</div></li>
+        <li><div class="scene-dot scene-dot--green"></div><div><strong>Persone vere</strong> — Luca, Maura, Guia, eventualmente Mattia. Non modelli. Il prodotto è la famiglia.</div></li>
+        <li><div class="scene-dot scene-dot--green"></div><div><strong>Suoni ambientali</strong> — vento, ulivi, crackling del fuoco, acqua. L'audio è parte del racconto.</div></li>
+        <li><div class="scene-dot scene-dot--green"></div><div><strong>Dettagli sensoriali</strong> — mani, cibo, texture pietra e legno, vapore del pane, gocce d'olio.</div></li>
+        <li><div class="scene-dot scene-dot--green"></div><div><strong>Ritmo lento</strong> — specialmente nel clip 1. Il tempo a Corsale non ha fretta.</div></li>
+        <li><div class="scene-dot scene-dot--green"></div><div><strong>Colori caldi e reali</strong> — palette terracotta, verde ulivo, ocra, blu cielo sannita.</div></li>
+      </ul>
+    </div>
+    <div>
+      <div class="sub" style="margin-top:0;border-left-color:var(--fk-blue);">❌ Cosa evitiamo</div>
+      <ul class="scene-list">
+        <li><div class="scene-dot scene-dot--blue"></div><div><strong>Niente stile hotel promozionale</strong> — zoom veloci, transizioni flash, font da booking.com.</div></li>
+        <li><div class="scene-dot scene-dot--blue"></div><div><strong>Niente modelli</strong> — non vogliamo persone che "recitano" di essere ospiti. Devono sembrare veri perché sono veri.</div></li>
+        <li><div class="scene-dot scene-dot--blue"></div><div><strong>Niente musica da spa</strong> — no ambient generico da Youtube. Musica scelta con cura, possibilmente italiana contemporanea o jazz mediterraneo.</div></li>
+        <li><div class="scene-dot scene-dot--blue"></div><div><strong>Niente oversaturation</strong> — colori filtrati, non Instagram 2018.</div></li>
+        <li><div class="scene-dot scene-dot--blue"></div><div><strong>Niente drone aggressivo</strong> — se c'è un drone, movimenti lentissimi. L'aria del Sannio non si vola veloce.</div></li>
+        <li><div class="scene-dot scene-dot--blue"></div><div><strong>Niente voiceover generico</strong> — "benvenuti in un luogo magico..." — no. Se c'è voce, è scritta su misura.</div></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sep"></div>
+
+  <!-- ══ 04 SCENE LIST ══ -->
+  <div class="sec-hdr">
+    <span class="sec-num">04</span>
+    <span class="sec-title">Scene List — Suggerimenti di Ripresa</span>
+  </div>
+  <p style="font-size:.9rem;color:var(--fk-gray);font-style:italic;margin-bottom:1.2rem;">Non è una lista rigida — Gennaro ha piena libertà creativa. Questi sono i soggetti che sappiamo funzionano per i nostri obiettivi. Se in loco trova qualcosa di meglio, va con quello.</p>
+
+  <div class="tw">
+    <table class="t">
+      <thead><tr><th>Momento</th><th>Soggetto</th><th>Ora del giorno</th><th>Note tecniche</th><th>Clip</th></tr></thead>
+      <tbody>
+        <tr><td>🌅 Alba uliveto</td><td>Luca che cammina tra gli ulivi, luce radente</td><td>6:00–7:30</td><td>Steadicam o slider lento. Profilo Luca in controluce.</td><td><span class="b b--franki">1·2</span></td></tr>
+        <tr><td>🫒 Raccolta olive</td><td>Mani che raccolgono, pettinatrice, cassette</td><td>Mattina</td><td>Macro sui dettagli. Suono delle olive nel secchio.</td><td><span class="b b--amber">2</span></td></tr>
+        <tr><td>🍞 Cucina Maura</td><td>Impasto pane, pasta fatta a mano, fornello acceso</td><td>Mattina</td><td>Camera bassa sul piano di lavoro. Vapore in controluce.</td><td><span class="b b--franki">1·2</span></td></tr>
+        <tr><td>🍽️ Tavola outdoor</td><td>Cena di gruppo all'aperto, vino, convivialità</td><td>Sera — golden hour</td><td>Luce calda naturale + candele. No flash.</td><td><span class="b b--franki">1·3</span></td></tr>
+        <tr><td>🏊 Piscina</td><td>Acqua, relax, vista campagna</td><td>Pomeriggio</td><td>Angolazione che include la campagna sullo sfondo.</td><td><span class="b b--amber">1</span></td></tr>
+        <tr><td>🔥 Camino / fuoco</td><td>Fuoco acceso, calici, conversazione serale</td><td>Sera</td><td>Solo luce fuoco. Warm tones. Silhouette persone.</td><td><span class="b b--amber">1</span></td></tr>
+        <tr><td>🌌 Cielo stellato</td><td>Cielo notturno, tinozza, milkyway se visibile</td><td>Notte — luna nuova</td><td>Long exposure o time lapse. Silhouette umana in primo piano.</td><td><span class="b b--amber">2</span></td></tr>
+        <tr><td>🐴 Cavalli / trattore</td><td>Luca con i cavalli, o trattore nell'uliveto</td><td>Mattina</td><td>Lento, no azione frenetica. L'uomo e la terra.</td><td><span class="b b--amber">2</span></td></tr>
+        <tr><td>🍷 Vino Sannio</td><td>Stappare, versare, brindisi, calici in controluce</td><td>Tramonto</td><td>Retroilluminazione sul vino. Colore rosso Aglianico.</td><td><span class="b b--amber">2</span></td></tr>
+        <tr><td>💼 Walking meeting</td><td>Gruppo che cammina e parla nell'uliveto</td><td>Mattina</td><td>Segue il gruppo da dietro. Naturale, non costruito.</td><td><span class="b b--blue">3</span></td></tr>
+        <tr><td>🤝 Team outdoor</td><td>Piccolo gruppo intorno a un tavolo di lavoro</td><td>Mattina/pomeriggio</td><td>Wide shot che include il paesaggio. Persone che lavorano davvero.</td><td><span class="b b--blue">3</span></td></tr>
+        <tr><td>🌿 Aerea (drone)</td><td>Vista dall'alto della tenuta e dell'uliveto</td><td>Golden hour</td><td>Movimento lentissimo. Evidenziare l'estensione del terreno.</td><td><span class="b b--franki">1·3</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sep"></div>
+
+  <!-- ══ 05 SPECIFICHE ══ -->
+  <div class="sec-hdr">
+    <span class="sec-num">05</span>
+    <span class="sec-title">Specifiche Tecniche & Deliverable</span>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin:1.2rem 0;">
+    <div>
+      <div class="sub" style="margin-top:0;">Formato</div>
+      <ul class="scene-list">
+        <li><div class="scene-dot"></div><div><strong>Risoluzione:</strong> 4K se disponibile, minimo 1080p</div></li>
+        <li><div class="scene-dot"></div><div><strong>Aspect ratio:</strong> 16:9 principale + crop 9:16 per Reel/Stories (clip 2)</div></li>
+        <li><div class="scene-dot"></div><div><strong>Frame rate:</strong> 24fps per il look cinematografico, 60fps per slow motion</div></li>
+        <li><div class="scene-dot"></div><div><strong>Codec:</strong> H.264 o H.265 — file .mp4</div></li>
+        <li><div class="scene-dot"></div><div><strong>Color grading:</strong> sì, warm e naturale. No look filtrato da Instagram.</div></li>
+      </ul>
+    </div>
+    <div>
+      <div class="sub" style="margin-top:0;border-left-color:var(--fk-blue);">Deliverable</div>
+      <ul class="scene-list">
+        <li><div class="scene-dot scene-dot--blue"></div><div><strong>3 clip finali</strong> montati come da brief</div></li>
+        <li><div class="scene-dot scene-dot--blue"></div><div><strong>Rushes grezzi</strong> — tutto il girato non montato, per usi futuri</div></li>
+        <li><div class="scene-dot scene-dot--blue"></div><div><strong>Clip 2 in verticale</strong> — versione 9:16 già croppata per Reel</div></li>
+        <li><div class="scene-dot scene-dot--blue"></div><div><strong>5–10 still fotografici</strong> da frame del video (se non c'è fotografo separato)</div></li>
+        <li><div class="scene-dot scene-dot--blue"></div><div><strong>Consegna:</strong> WeTransfer o Drive condiviso con Guia</div></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sub fk-sub--blue">Timeline suggerita</div>
+  <div class="tw">
+    <table class="t">
+      <thead><tr><th>Fase</th><th>Attività</th><th>Chi</th><th>Quando</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Sopralluogo</strong></td><td>Gennaro visita CCH con Guia — capisce gli spazi, la luce, le persone. Definisce il piano di ripresa definitivo.</td><td>Gennaro + Guia</td><td>Entro 10 giorni dal kick-off</td></tr>
+        <tr><td><strong>Riprese</strong></td><td>1–2 giornate in loco. Coordinare con Luca per avere le attività reali (non costruite): cucina in funzione, raccolta olive se in stagione, gruppi reali se presenti.</td><td>Gennaro + Guia + Luca</td><td>Entro 20 giorni dal kick-off</td></tr>
+        <tr><td><strong>Rough cut</strong></td><td>Prima versione dei 3 clip — da mostrare a Franki e Guia per feedback. Non ancora color graded.</td><td>Gennaro</td><td>+7 giorni dalle riprese</td></tr>
+        <tr><td><strong>Revisioni</strong></td><td>Max 1 round di revisioni su feedback Franki + Guia. Nessuna revisione senza brief scritto.</td><td>Tutti</td><td>+3 giorni dal rough cut</td></tr>
+        <tr><td><strong>Consegna finale</strong></td><td>3 clip finali + rushes + still + versione verticale clip 2. Pronti per i test lean.</td><td>Gennaro → Guia</td><td>Entro 35 giorni dal kick-off</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sep"></div>
+
+  <!-- ══ 06 CONTESTO PER GENNARO ══ -->
+  <div class="sec-hdr">
+    <span class="sec-num">06</span>
+    <span class="sec-title">Una Nota Finale — Per Gennaro</span>
+  </div>
+
+  <div class="c c--a">
+    <div class="c__l">Il punto vero</div>
+    <p>Gennaro, quello che stai andando a riprendere non è una struttura ricettiva qualunque. È <strong>la storia di 50 anni di una famiglia che ha costruito qualcosa di raro</strong> — e non l'ha ancora raccontato nel modo giusto al mondo. Il tuo lavoro è colmare questo gap.</p>
+    <p style="margin-top:.6rem;">Luca è un uomo semplice e diretto come un bicchiere di Aglianico in purezza. Maura è la maga della cucina sannita. Guia è la loro finestra sul futuro. Raccontali così — come sono. <strong>Non come vorrebbero apparire, ma come sono davvero.</strong> È lì che sta il valore.</p>
+    <p style="margin-top:.6rem;">Questi clip non sono materiale promozionale da dimenticare in una cartella. Sono i primi strumenti con cui CCH si presenterà al mercato internazionale. <strong>Conta il lavoro bene fatto.</strong></p>
+  </div>
+
+</div>
+
+<div class="footer">
+  <strong>Franki Studio</strong> · Brief Gennaro · Corsale Country House · Aprile 2026 · Riservato · We Start Your Ideas
+</div>
+
+</body>
+</html>

@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Corsale — Per Luca | Franki Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --fk-blue:#3549B5; --fk-blue-dark:#1E2E8A; --fk-blue-light:#EBF0FF;
+  --fk-amber:#F9AC28; --fk-amber-dark:#C07800; --fk-amber-light:#FFF7E0;
+  --fk-white:#FFFFFF; --fk-cream:#FAF9F6; --fk-cream-dark:#EDEBE4;
+  --fk-ink:#1A1714; --fk-gray:#6B6560; --fk-gray-light:#F2F0EB;
+  --fk-green:#1A7A4A; --fk-green-light:#E0F5EC; --fk-green-text:#0A4A28;
+  --fk-red:#B03020; --fk-red-light:#FDECEA;
+  --fk-display:'Bebas Neue',sans-serif;
+  --fk-label:'DM Mono',monospace;
+  --fk-body:'Lato',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--fk-cream);color:var(--fk-ink);font-family:var(--fk-body);font-size:1.05rem;line-height:1.8;-webkit-font-smoothing:antialiased;}
+p{margin-bottom:1.1rem;} p:last-child{margin-bottom:0;}
+strong{font-weight:700;} em{font-style:italic;}
+
+/* ── HEADER ── */
+.header{background:var(--fk-blue-dark);padding:3rem 4rem 2.5rem;position:relative;overflow:hidden;}
+.header::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(-55deg,transparent,transparent 28px,rgba(255,255,255,.025) 28px,rgba(255,255,255,.025) 29px);pointer-events:none;}
+.header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:4px;background:var(--fk-amber);}
+.header__brand{font-family:var(--fk-label);font-size:.62rem;letter-spacing:.25em;text-transform:uppercase;color:var(--fk-amber);opacity:.85;margin-bottom:.5rem;position:relative;}
+.header__title{font-family:var(--fk-display);font-size:clamp(2.5rem,5vw,4.5rem);letter-spacing:.04em;line-height:1;color:var(--fk-white);position:relative;}
+.header__title em{color:var(--fk-amber);font-style:normal;}
+.header__sub{font-size:1.05rem;color:rgba(255,255,255,.55);margin-top:.5rem;font-style:italic;position:relative;}
+.header__note{margin-top:1.8rem;background:rgba(249,172,40,.1);border:1px solid rgba(249,172,40,.25);padding:1rem 1.4rem;position:relative;border-radius:4px;}
+.header__note p{font-size:.92rem;color:rgba(255,255,255,.75);line-height:1.7;margin:0;}
+.header__note strong{color:var(--fk-amber);}
+
+/* ── CORPO ── */
+.corpo{max-width:900px;margin:0 auto;padding:3rem 4rem 5rem;}
+
+/* ── CAPITOLO ── */
+.cap{margin-bottom:3.5rem;}
+.cap-num{font-family:var(--fk-label);font-size:.6rem;letter-spacing:.25em;text-transform:uppercase;color:var(--fk-amber-dark);margin-bottom:.4rem;}
+.cap-title{font-family:var(--fk-display);font-size:2.2rem;letter-spacing:.05em;color:var(--fk-ink);margin-bottom:1.2rem;line-height:1.1;}
+.cap-divider{height:3px;width:48px;background:var(--fk-amber);margin-bottom:1.4rem;}
+
+/* ── HIGHLIGHT BOX ── */
+.hl-box{background:var(--fk-blue-dark);color:var(--fk-white);padding:1.8rem 2rem;margin:1.8rem 0;border-radius:4px;position:relative;}
+.hl-box::before{content:'';position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--fk-amber);}
+.hl-box p{font-size:1rem;line-height:1.75;color:rgba(255,255,255,.85);padding-left:.5rem;}
+.hl-box p strong{color:var(--fk-amber);}
+.hl-box__label{font-family:var(--fk-label);font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--fk-amber);margin-bottom:.5rem;padding-left:.5rem;}
+
+/* ── NUMERO GRANDE ── */
+.big-numbers{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1px;background:var(--fk-cream-dark);border:1px solid var(--fk-cream-dark);margin:1.8rem 0;}
+.bn-item{background:var(--fk-white);padding:1.2rem 1.4rem;}
+.bn-item--a{background:var(--fk-amber-light);border-left:4px solid var(--fk-amber);}
+.bn-item--b{background:var(--fk-blue-light);border-left:4px solid var(--fk-blue);}
+.bn-label{font-family:var(--fk-label);font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:var(--fk-gray);margin-bottom:.3rem;}
+.bn-item--a .bn-label{color:var(--fk-amber-dark);}
+.bn-item--b .bn-label{color:var(--fk-blue-dark);}
+.bn-value{font-family:var(--fk-display);font-size:2.8rem;line-height:1;color:var(--fk-ink);}
+.bn-item--a .bn-value{color:var(--fk-amber-dark);}
+.bn-item--b .bn-value{color:var(--fk-blue);}
+.bn-note{font-family:var(--fk-label);font-size:.6rem;color:var(--fk-gray);margin-top:.25rem;}
+.bn-note--hot{color:var(--fk-amber-dark);}
+.bn-note--up{color:var(--fk-green);}
+
+/* ── DOMANDA ── */
+.domanda{background:var(--fk-amber-light);border-left:4px solid var(--fk-amber);padding:1.3rem 1.6rem;margin:1.8rem 0;border-radius:0 4px 4px 0;}
+.domanda__label{font-family:var(--fk-label);font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--fk-amber-dark);margin-bottom:.4rem;}
+.domanda p{font-size:.95rem;color:#5A3A00;line-height:1.7;}
+.domanda p strong{color:var(--fk-amber-dark);}
+
+/* ── LISTA PULITA ── */
+.lista{list-style:none;margin:1.2rem 0;}
+.lista li{display:flex;align-items:flex-start;gap:.8rem;padding:.6rem 0;border-bottom:1px solid var(--fk-cream-dark);font-size:.95rem;line-height:1.65;}
+.lista li:last-child{border-bottom:none;}
+.lista__dot{width:8px;height:8px;border-radius:50%;background:var(--fk-amber);margin-top:.55rem;flex-shrink:0;}
+.lista__dot--blue{background:var(--fk-blue);}
+.lista__dot--green{background:var(--fk-green);}
+
+/* ── SCENARIO CARD ── */
+.scenari{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin:1.8rem 0;}
+@media(max-width:640px){.scenari{grid-template-columns:1fr;}}
+.scenario{background:var(--fk-white);border:1px solid var(--fk-cream-dark);border-radius:8px;padding:1.4rem;border-top:4px solid var(--fk-blue);}
+.scenario--amber{border-top-color:var(--fk-amber);}
+.scenario__label{font-family:var(--fk-label);font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:var(--fk-blue);margin-bottom:.4rem;}
+.scenario--amber .scenario__label{color:var(--fk-amber-dark);}
+.scenario__title{font-family:var(--fk-display);font-size:1.5rem;letter-spacing:.04em;color:var(--fk-ink);margin-bottom:.6rem;}
+.scenario p{font-size:.9rem;color:var(--fk-ink);line-height:1.65;}
+
+/* ── TEST LEAN ── */
+.lean-grid{display:flex;flex-direction:column;gap:.8rem;margin:1.8rem 0;}
+.lean-item{background:var(--fk-white);border:1px solid var(--fk-cream-dark);border-radius:8px;padding:1.2rem 1.4rem;display:grid;grid-template-columns:2.5rem 1fr auto;gap:1rem;align-items:start;}
+.lean-num{font-family:var(--fk-display);font-size:2rem;color:var(--fk-cream-dark);line-height:1;text-align:center;}
+.lean-title{font-family:var(--fk-display);font-size:1.1rem;letter-spacing:.04em;color:var(--fk-ink);margin-bottom:.3rem;}
+.lean-desc{font-size:.88rem;color:var(--fk-gray);line-height:1.6;}
+.lean-desc strong{color:var(--fk-ink);}
+.lean-cost{font-family:var(--fk-label);font-size:.68rem;text-align:right;white-space:nowrap;}
+.lean-cost--free{color:var(--fk-green);}
+.lean-cost--low{color:var(--fk-amber-dark);}
+
+/* ── FIRME ── */
+.firma-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin:2.5rem 0;}
+@media(max-width:640px){.firma-grid{grid-template-columns:1fr;}}
+.firma{border-top:2px solid var(--fk-cream-dark);padding-top:1.2rem;}
+.firma__name{font-family:var(--fk-display);font-size:1.8rem;letter-spacing:.04em;color:var(--fk-ink);margin-bottom:.1rem;}
+.firma__role{font-family:var(--fk-label);font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:var(--fk-gray);}
+.firma__line{height:48px;border-bottom:1px solid var(--fk-ink);margin-top:1.5rem;}
+
+/* ── SEPARATORE ── */
+.sep{height:1px;background:var(--fk-cream-dark);margin:3rem 0;}
+
+/* ── FOOTER ── */
+.footer{background:var(--fk-blue-dark);border-top:4px solid var(--fk-amber);color:rgba(255,255,255,.35);text-align:center;padding:1.4rem 2rem;font-family:var(--fk-label);font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;}
+.footer strong{color:var(--fk-amber);}
+
+@media(max-width:768px){
+  .header,.corpo{padding-left:1.5rem;padding-right:1.5rem;}
+  .cap-title{font-size:1.8rem;}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════ HEADER ══════════ -->
+<div class="header">
+  <div class="header__brand">Franki Studio · Per Luca · Aprile 2026 · Riservato</div>
+  <h1 class="header__title">Corsale <em>Country House</em><br>— Una conversazione.</h1>
+  <p class="header__sub">Una chiacchierata tra amici che hanno finalmente deciso di fare una cosa insieme.</p>
+  <div class="header__note">
+    <p>Luca, questo documento lo ho scritto pensando a te — non a un cliente anonimo. Il tono è quello che usiamo quando parliamo. Nessuno strumento di vendita. <strong>Solo quello che penso davvero, quello che ho trovato guardando il mercato, e le domande che voglio farti.</strong> Leggilo con calma, poi ne parliamo.</p>
+  </div>
+</div>
+
+<div class="corpo">
+
+  <!-- ══════════ CAP 1 ══════════ -->
+  <div class="cap">
+    <div class="cap-num">Prima di tutto</div>
+    <h2 class="cap-title">Quello che hai, che non sai di avere.</h2>
+    <div class="cap-divider"></div>
+
+    <p>Luca, ti dico una cosa diretta: <strong>Corsale Country House vale molto di più di quello che stai incassando.</strong> Non è una frase di circostanza — l'ho verificato sul mercato, struttura per struttura, prezzo per prezzo.</p>
+
+    <p>Ho analizzato decine di strutture simili alla tua in Italia e in Europa. Ho guardato cosa fanno, cosa offrono, quanto fanno pagare. E ho trovato una cosa che mi ha colpito: <strong>c'è una tenuta nelle Marche — uliveto biologico, famiglia italiana, uso esclusivo, Italia rurale autentica — praticamente identica a Corsale per DNA. Si chiama Oliveto Estate. Fa pagare €1.340 a notte solo per la locazione, e ha avuto 200 retreat ospitati.</strong> È stata citata da Condé Nast, Forbes ed Elle Décor.</p>
+
+    <p>La differenza tra loro e te non è nel prodotto. È in come si raccontano, su quali canali si trovano, e a che prezzo si posizionano. Tutto il resto — la storia, la terra, l'autenticità, la famiglia — tu ce l'hai. Loro no, l'hanno costruita. Tu la vivi da 50 anni.</p>
+
+    <div class="hl-box">
+      <div class="hl-box__label">Il punto centrale</div>
+      <p>Corsale ha gli asset di una struttura da <strong>€200–300 a persona a notte.</strong> Si sta vendendo a <strong>€100–178 a persona a notte.</strong> Il gap non è nel prodotto — è nel posizionamento e nella distribuzione. Ed è un gap che si chiude senza costruire nulla di nuovo.</p>
+    </div>
+
+    <div class="big-numbers">
+      <div class="bn-item">
+        <div class="bn-label">Occupazione attuale stimata</div>
+        <div class="bn-value">~25%</div>
+        <div class="bn-note">circa 12 settimane l'anno</div>
+      </div>
+      <div class="bn-item bn-item--b">
+        <div class="bn-label">Target realistico anno 1</div>
+        <div class="bn-value">50%</div>
+        <div class="bn-note">24 settimane — con le strade giuste</div>
+      </div>
+      <div class="bn-item bn-item--a">
+        <div class="bn-label">Revenue potenziale anno 1</div>
+        <div class="bn-value">€200k+</div>
+        <div class="bn-note bn-note--hot">vs ~€60k attuale stimato</div>
+      </div>
+      <div class="bn-item">
+        <div class="bn-label">Investimento per arrivare</div>
+        <div class="bn-value">~€5k</div>
+        <div class="bn-note">massimo scenario. Quasi tutto costa €0.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sep"></div>
+
+  <!-- ══════════ CAP 2 ══════════ -->
+  <div class="cap">
+    <div class="cap-num">Quello che ho visto</div>
+    <h2 class="cap-title">Il mercato, i numeri, le opportunità.</h2>
+    <div class="cap-divider"></div>
+
+    <p>Ho fatto un'analisi seria del mercato. Ti riassumo solo le cose che contano davvero, senza annoiarti con i dettagli tecnici che puoi leggere altrove se ti interessano.</p>
+
+    <p><strong>Situazione attuale dei prezzi:</strong> il tuo Pacchetto B (colazione inclusa, €100 a persona a notte) è sottoprezato del 33% rispetto a strutture comparabili. Il mercato parte da €130–150 senza particolari differenzianti. Il tuo Pacchetto C (tutto incluso per l'internazionale, €1.250 a persona per settimana) è sottoprezato del 40% rispetto a quello che DMC e operatori incoming pagano normalmente per prodotti equivalenti. <strong>Aggiornare i prezzi domani mattina non richiederebbe spiegazioni a nessuno — sarebbe semplicemente allinearsi al mercato.</strong></p>
+
+    <p><strong>Il competitor più vicino che ho trovato</strong> è la Tenuta Fortilù in Molise, a circa 60 km da te. Piscina, sauna, tinozza — simile a Corsale. Su Airbnb fa €468 a notte per 11 persone. Tu ne ospiti 14, hai molto di più da offrire, e sei posizionato a €1.200 a notte. Il gap si giustifica ampiamente. Il problema è che loro sono su Airbnb e basta — tu potresti essere anche su canali che portano clienti completamente diversi, con budget molto superiori.</p>
+
+    <div class="hl-box">
+      <div class="hl-box__label">La cosa che mi ha sorpreso di più</div>
+      <p>Hai 6 ettari di uliveto biologico con produzione di olio tua. Questo non è un dettaglio — <strong>è un asset rarissimo che nel mercato internazionale si vende come esperienza premium.</strong> La "Olive Harvest Experience" in ottobre è già un prodotto da €1.800–2.000 a persona per settimana nei mercati anglosassoni. Tu ce l'hai sotto i piedi. Letteralmente. E credo che qualcosa del genere hai già organizzato con pubblico locale.</p>
+    </div>
+
+    <p>Ho <strong>iniziato ad identificare</strong> <strong>5 tipi di clientela</strong> che potrebbero venire a Corsale, ognuno con caratteristiche e canali diversi. Non devi inseguirli tutti — ma sapere che esistono cambia il modo in cui ragioni sulla struttura:</p>
+
+    <ul class="lista">
+      <li><div class="lista__dot"></div><div><strong>Gruppi corporate in retreat</strong> — aziende che cercano una location esclusiva per 3–5 giorni fuori dall'ufficio. Budget aziendale, prezzo non è il problema principale. Ticket medio: €18–30k a prenotazione.</div></li>
+      <li><div class="lista__dot lista__dot--blue"></div><div><strong>Istruttori yoga e wellness internazionali</strong> — affittano la struttura per portare il loro gruppo di 8–12 persone. Cercano location autentiche in Italia rurale. Riempiono la bassa stagione. Ticket: €7–12k a settimana.</div></li>
+      <li><div class="lista__dot"></div><div><strong>Famiglie e gruppi italiani</strong> — quello che fai già, da ottimizzare sul pricing e sulla stagionalità.</div></li>
+      <li><div class="lista__dot lista__dot--blue"></div><div><strong>Incoming internazionale — slow tourism</strong> — americani, britannici, olandesi 40–65 anni che hanno già fatto Toscana e Amalfi e cercano la "vera Italia nascosta". Il Sannio è perfetto. Ticket: €14–25k a settimana.</div></li>
+      <li><div class="lista__dot lista__dot--green"></div><div><strong>Community di appassionati</strong> — fotografi, astrofili, amanti della cucina tradizionale, scrittori. Community enormi, molto disposte a spendere, cercano esperienze che non trovano altrove. Il tuo cielo buio, il tuo uliveto e la cucina di Maura sono esattamente quello che cercano.</div></li>
+    </ul>
+
+    <div class="domanda">
+      <div class="domanda__label">Domanda per te, Luca</div>
+      <p>Di questi 5 tipi di clientela, <strong>quali ti sembrano più adatti a Corsale?</strong> Quali ti piacerebbe ospitare? Ci sono tipi di clientela che preferiresti evitare per come gestisci la struttura? Questa risposta orienta tutto quello che facciamo dopo.</p>
+    </div>
+  </div>
+
+  <div class="sep"></div>
+
+  <!-- ══════════ CAP 3 ══════════ -->
+  <div class="cap">
+    <div class="cap-num">Le persone</div>
+    <h2 class="cap-title">La squadra che avete già.</h2>
+    <div class="cap-divider"></div>
+
+    <p>Una cosa che ho capito subito è che il prodotto di Corsale non è solo la struttura. <strong>Il prodotto siete voi.</strong> E questo è qualcosa che nessun concorrente può copiare o comprare.</p>
+
+    <p><strong>Tu, Luca,</strong> sei la storia. Il trattore, i cavalli, l'uliveto, la tenuta costruita con le mani e difesa con la testa. Un uomo che sa fare tutto — mastro di cantiere, allevatore, olivicoltore, ospite generoso. Semplice e leale come un bicchiere di Aglianico in purezza. Per un americano che viene a cercare "la vera Italia", tu sei esattamente quello che cerca. Non è retorica — è posizionamento di mercato.</p>
+
+    <p><strong>Maura</strong> è la Cooking School che non abbiamo ancora aperto. Il pane fatto in casa con il lievito madre, la pasta tirata a mano, la cucina napoletana come la sa fare lei. <strong>Nel mercato internazionale del food tourism, queste cose valgono tantissimo.</strong> La Cannavacciuola del Sannio.</p>
+
+    <p><strong>Guia</strong> è la nostra finestra sul futuro. Ha l'instancabilità di tua moglie e la caparbietà tua — combinazione che funziona. È lei che trasforma le idee in contenuti, i contenuti in prenotazioni. È il nostro punto di contatto operativo quotidiano per tutto il piano.</p>
+
+    <p><strong>Mattia</strong> — e questo è un tema su cui voglio ragionare con te — è una risorsa da far esplodere come un tric-trac pesante a Capodanno. Quando trova il ruolo giusto, quello con una proprietà esclusiva tutta sua, sarà difficile fermarlo. <strong>Se sei d'accordo lo metteremo alla prova.</strong></p>
+
+    <div class="domanda">
+      <div class="domanda__label">Domanda per te, Luca</div>
+      <p>Come immagini il coinvolgimento di Mattia nel progetto? <strong>C'è qualcosa che lo appassiona particolarmente o in cui è già bravo</strong> che potremmo valorizzare? A volte il ruolo giusto è già sotto gli occhi e basta vederlo.</p>
+    </div>
+  </div>
+
+  <div class="sep"></div>
+
+  <!-- ══════════ CAP 4 ══════════ -->
+  <div class="cap">
+    <div class="cap-num">Le esperienze</div>
+    <h2 class="cap-title">Quello che puoi offrire — già da domani.</h2>
+    <div class="cap-divider"></div>
+
+    <p>Ho costruito un inventario completo di quello che Corsale ha già e di quello che potrebbe offrire. Ti anticipo i punti salienti, quelli che mi sembrano più interessanti e originali.</p>
+
+    <p><strong>Le "Settimane Tema" (UNICUM).</strong> L'idea è di costruire 6–7 settimane speciali l'anno — ognuna con un tema, un target preciso e un prezzo premium. Non settimane generiche, ma prodotti con un nome, una storia e un motivo per sceglierle. Alcuni esempi:</p>
+
+    <ul class="lista">
+      <li><div class="lista__dot"></div><div><strong>Olive Harvest Experience</strong> (ottobre–novembre, 2 volte l'anno) — raccolta olive, olivologo residente, frantoio, bottiglia con etichetta personalizzata. €1.800–2.200 a persona. Solo questo vale €36–44k l'anno.</div></li>
+      <li><div class="lista__dot"></div><div><strong>Sannio Winter Feast</strong> (Natale + Capodanno) — menù gala della tradizione, tombolone, caminetti. Capodanno con chef stellato ospite. €2.200–2.800 a persona.</div></li>
+      <li><div class="lista__dot lista__dot--blue"></div><div><strong>Scuola di Cucina Napoletana</strong> (marzo + ottobre) — una settimana con Maura. Pane, pasta, conserve. Ricettario fisico da portare a casa. €1.500–2.000 a persona.</div></li>
+      <li><div class="lista__dot lista__dot--blue"></div><div><strong>Dark Sky Week</strong> (febbraio + novembre) — osservazione del cielo notturno con telescopio, star bathing in tinozza sotto le stelle. Riempie la bassa stagione. €1.200–1.600 a persona.</div></li>
+      <li><div class="lista__dot"></div><div><strong>Sannio MasterChef Challenge</strong> (aprile + settembre) — team building corporate con sfida di cucina, pallone aerostatico all'alba, walking meeting nell'uliveto. €1.800–2.400 a persona per 4 giorni.</div></li>
+    </ul>
+
+    <p><strong>Gli add-on.</strong> Piccole esperienze che si aggiungono a qualsiasi soggiorno e aumentano il ticket medio senza cambiare nulla di strutturale: oil tasting con olivologo (€35–45 a persona), laboratorio pane con Maura (€40–50), serata di osservazione del cielo (€40–55), foraging con esperto botanico locale (€55–70), tour dei produttori del Sannio (€65–80), serata di tarantella sannita con musicisti locali (€45–60).</p>
+
+    <div class="domanda">
+      <div class="domanda__label">Domanda per te, Luca</div>
+      <p>Di queste esperienze, <strong>quali ti sembrano fattibili già quest'anno?</strong> Ci sono vincoli logistici che devo sapere — per esempio, riesci a trovare facilmente un olivologo di qualità per la stagione? Un astronomo o astrofilo nella zona? Come la vedi con i musicisti locali per una serata tradizionale Tarantella per esempio?</p>
+    </div>
+  </div>
+
+  <div class="sep"></div>
+
+  <!-- ══════════ CAP 5 ══════════ -->
+  <div class="cap">
+    <div class="cap-num">Prima di fare qualsiasi cosa</div>
+    <h2 class="cap-title">Il progetto lean — testiamo insieme.</h2>
+    <div class="cap-divider"></div>
+
+    <p>Luca, ti dico come voglio procedere — e perché mi sembra il modo più rispettoso di lavorare con te.</p>
+
+    <p>Non voglio venire da te con un piano già deciso e dirti "fidati, funziona". <strong>Non funziona così.</strong> Le analisi che ho fatto sono solide, e lo saranno ancora di più andando avanti, ma restano ipotesi finché non vengono testate sul campo. Quello che voglio fare è questo: testiamo insieme, con il minimo di risorse e nel minor tempo possibile, per capire quali strade reggono davvero prima di investire energie su qualcosa che non abbiamo ancora validato.</p>
+
+    <p>Ho identificato <strong>8 test specifici</strong> — quasi tutti a costo zero, tutti completabili in 45 giorni. Ogni test ha un criterio di successo preciso che stabiliamo insieme prima di iniziare. Se il test lo supera, si va avanti. Se no, si cambia strada senza drammi. <strong>Le decisioni le prendiamo insieme, sempre. <strong>Ma tu, in primis.</strong></strong></p>
+
+    <div class="hl-box">
+      <div class="hl-box__label">La regola del lean</div>
+      <p>I criteri di successo si stabiliscono <strong>prima</strong> del test, non dopo. Così evitiamo di interpretare i dati nel modo che ci fa più comodo. Se un test fallisce non è un problema — è informazione preziosa. Si cambia strada e si testa la prossima ipotesi.</p>
+    </div>
+
+    <p>Ecco i 4 test principali che propongo per il primo mese. Gli altri 4 li vediamo insieme — alcuni riguardano prodotti specifici che voglio valutare con te prima di formalizzarli:</p>
+
+    <div class="lean-grid">
+      <div class="lean-item">
+        <div class="lean-num">L1</div>
+        <div>
+          <div class="lean-title">BookRetreats — Yoga & Wellness</div>
+          <div class="lean-desc">Creare un profilo su BookRetreats.com come "Corsale Retreat Venue Hire". Zero budget. <strong>Criterio di successo: minimo 3 richieste di preventivo in 30 giorni.</strong> Se arrivano, il segmento wellness internazionale funziona. Se no, si capisce perché e si corregge.</div>
+        </div>
+        <div>
+          <div class="lean-cost lean-cost--free">€0</div>
+          <div class="lean-cost" style="color:var(--fk-gray);">30 giorni</div>
+        </div>
+      </div>
+      <div class="lean-item">
+        <div class="lean-num">L2</div>
+        <div>
+          <div class="lean-title">Pricing Test — Pacchetto B</div>
+          <div class="lean-desc">Alzare il Pacchetto B da €100 a €145 a persona a notte su Airbnb e sul sito. <strong>Criterio: nessun calo significativo nelle richieste (sotto il 20%) in 45 giorni.</strong> Se il mercato regge, conferma che il prezzo precedente era sbagliato e si può salire ancora.</div>
+        </div>
+        <div>
+          <div class="lean-cost lean-cost--free">€0</div>
+          <div class="lean-cost" style="color:var(--fk-gray);">45 giorni</div>
+        </div>
+      </div>
+      <div class="lean-item">
+        <div class="lean-num">L3</div>
+        <div>
+          <div class="lean-title">Corporate Outreach — LinkedIn</div>
+          <div class="lean-desc">Io contatto personalmente 20 HR manager o event planner (Napoli, Roma, Milano) con un messaggio diretto e una proposta di retreat aziendale. <strong>Criterio: minimo 3 risposte positive su 20 contatti.</strong> Se arrivano, il segmento corporate è reale e si attiva Italy Charme.</div>
+        </div>
+        <div>
+          <div class="lean-cost lean-cost--free">€0</div>
+          <div class="lean-cost" style="color:var(--fk-gray);">30 giorni</div>
+        </div>
+      </div>
+      <div class="lean-item">
+        <div class="lean-num">L4</div>
+        <div>
+          <div class="lean-title">Olive Harvest — Validazione internazionale</div>
+          <div class="lean-desc">Creare una pagina dedicata all'Olive Harvest Experience ottobre 2026 e pubblicarla in 3 community food internazionali. <strong>Criterio: minimo 5 richieste di info qualificate in 60 giorni.</strong> Se arrivano, si struttura il pacchetto completo e si contattano i DMC incoming.</div>
+        </div>
+        <div>
+          <div class="lean-cost lean-cost--low">~€400</div>
+          <div class="lean-cost" style="color:var(--fk-gray);">60 giorni</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="big-numbers">
+      <div class="bn-item bn-item--b">
+        <div class="bn-label">Durata totale lean</div>
+        <div class="bn-value">45 gg</div>
+        <div class="bn-note">dal giorno 1 alla prima decisione</div>
+      </div>
+      <div class="bn-item">
+        <div class="bn-label">Costo massimo</div>
+        <div class="bn-value">~€400</div>
+        <div class="bn-note">solo L4 · gli altri 7 costano zero</div>
+      </div>
+      <div class="bn-item bn-item--a">
+        <div class="bn-label">Test totali</div>
+        <div class="bn-value">8</div>
+        <div class="bn-note">canali · pricing · esperienze · add-on</div>
+      </div>
+      <div class="bn-item">
+        <div class="bn-label">Prima lettura dati</div>
+        <div class="bn-value">Giorno 15</div>
+        <div class="bn-note">non si aspetta — si aggiusta subito</div>
+      </div>
+    </div>
+
+    <div class="domanda">
+      <div class="domanda__label">Domanda per te, Luca</div>
+      <p>Di questi 8 test, <strong>ce ne sono alcuni che ti sembrano sbagliati, fuori contesto o che non vorresti fare?</strong> E ce ne sono altri che aggiungeresti tu? Questa è la tua struttura — il piano lo costruiamo insieme, non te lo porto già deciso.</p>
+    </div>
+  </div>
+
+  <div class="sep"></div>
+
+  <!-- ══════════ CAP 6 ══════════ -->
+  <div class="cap">
+    <div class="cap-num">Le due strade</div>
+    <h2 class="cap-title">Dove può arrivare Corsale.</h2>
+    <div class="cap-divider"></div>
+
+    <p>Ti propongo due scenari — non per scegliere uno e dimenticare l'altro, ma per capire in quale direzione ti senti più a tuo agio. Entrambi sono realistici. Entrambi richiedono lavoro. Ma sono due strade diverse con profili di cliente diversi.</p>
+
+    <div class="scenari">
+      <div class="scenario">
+        <div class="scenario__label">Scenario A</div>
+        <div class="scenario__title">Il Meglio del Meglio Italiano</div>
+        <p>Corsale diventa la struttura rurale premium di riferimento nel Sud Italia per famiglie italiane alto-borghesi, italiani all'estero, e incoming europeo mid-range. Revenue target: <strong>€180–220k anno 1.</strong> Cliente tipo: italiano o europeo, 35–60 anni, cerca autenticità e qualità senza fretta. Canali: Airbnb premium, Booking, passaparola qualificato, SopranoVillas.</p>
+      </div>
+      <div class="scenario scenario--amber">
+        <div class="scenario__label">Scenario B</div>
+        <div class="scenario__title">Il Retreat Internazionale</div>
+        <p>Corsale si posiziona come venue di riferimento per retreat internazionali — yoga, corporate, food, astrotourism. Clientela prevalentemente anglosassone e nordeuropea. Revenue target: <strong>€250–320k anno 1.</strong> Richiede qualche investimento in più (foto professionali, area wellness outdoor, inglese curato). Canali: BookRetreats, Italy Charme, Haute Retreats, DMC incoming.</p>
+      </div>
+    </div>
+
+    <p>La verità è che la risposta migliore è probabilmente <strong>un mix dei due</strong> — alta stagione ai clienti italiani e europei, spalla e bassa stagione ai retreat internazionali. Ma questo lo decidiamo dopo aver visto i dati del lean.</p>
+
+    <div class="domanda">
+      <div class="domanda__label">La domanda più importante</div>
+      <p>Luca, <strong>qual è il tuo obiettivo vero per Corsale nei prossimi 3 anni?</strong> Non quello economico — quello personale. Come vuoi che si senta qualcuno che passa una settimana da te? Cosa vuoi che ricordi? La risposta a questa domanda vale più di qualsiasi analisi di mercato.</p>
+    </div>
+  </div>
+
+  <div class="sep"></div>
+
+  <!-- ══════════ CAP 7 ══════════ -->
+  <div class="cap">
+    <div class="cap-num">Franki nel progetto</div>
+    <h2 class="cap-title">Come lavoriamo insieme.</h2>
+    <div class="cap-divider"></div>
+
+    <p>Entro da consulente strategico attivo. <strong>Lavoro con te, non per te.</strong> Costruisco i materiali, faccio l'outreach, identifico i canali, supporto Guia sull'esecuzione digitale, ti aiuto a capire i dati dei test.</p>
+
+    <p>La struttura economica della collaborazione è completamente aperta — non ho chiesto niente e non ho pretese. <strong>Se il progetto produce risultati, troviamo insieme il modo di riconoscere il contributo. Se non produce risultati, ho imparato qualcosa e tu non hai speso niente.</strong> Non è filantropia — è il modo in cui voglio lavorare in questo progetto, prima per affetto e piacere di stare con te. E in questo credo.</p>
+
+    <p>L'unica cosa che chiedo è di lavorare con metodo: decisioni basate su dati, criterio di successo stabilito prima dei test, nessuna mossa grande senza averla prima testata in piccolo. Ma penso che conoscendoti un poco su questo siamo d'accordo.</p>
+
+    <div class="hl-box">
+      <div class="hl-box__label">In sintesi</div>
+      <p>Un'amicizia di lunga data che ha sempre cercato il momento giusto per fare una cosa insieme. <strong>Questo è quel momento.</strong> Non perché le condizioni siano perfette — non lo sono mai. Ma perché Corsale ha qualcosa di raro, il mercato è pronto a recepirlo, e finalmente ci siamo messi seduti a ragionarci seriamente.</p>
+    </div>
+  </div>
+
+  <div class="sep"></div>
+
+  <!-- ══════════ CAP 8 — PROSSIMI PASSI ══════════ -->
+  <div class="cap">
+    <div class="cap-num">Adesso</div>
+    <h2 class="cap-title">Tre cose da fare subito.</h2>
+    <div class="cap-divider"></div>
+
+    <p>Dopo che hai letto questo documento e ci siamo parlati, le prime tre cose da fare sono semplici:</p>
+
+    <ul class="lista">
+      <li><div class="lista__dot lista__dot--green"></div><div><strong>Incontro kick-off</strong> — un pomeriggio insieme (anche a Corsale, meglio ancora) in cui leggiamo insieme gli 8 test, decidiamo quali fare e stabiliamo i criteri di successo. Si esce dall'incontro con un piano scritto e firmato da entrambi.</div></li>
+      <li><div class="lista__dot lista__dot--green"></div><div><strong>Lancio dei test</strong> — 4 giorni di lavoro per mettere in moto tutti gli 8 test. La maggior parte li fa Guia (BookRetreats, social, community), io faccio il LinkedIn outreach, tu verifichi i fornitori locali (mongolfiera, olivologo, musicisti).</div></li>
+      <li><div class="lista__dot lista__dot--green"></div><div><strong><strong>Appuntamento di lettura risultati al giorno 15</strong><strong> — ci vediamo (anche in video call) per leggere i primi dati e aggiustare il tiro se serve. Niente aspetta settimane.</div></li>
+    </ul>
+
+    <p>Tutto il resto viene dopo — e viene meglio, perché sarà guidato da dati reali invece che da ipotesi.</p>
+
+    <div class="domanda">
+      <div class="domanda__label">L'ultima domanda — la più semplice</div>
+      <p>Luca, <strong>quando ci vediamo?</strong></p>
+    </div>
+  </div>
+
+  <div class="sep"></div>
+
+  <!-- ══════════ FIRME ══════════ -->
+  <div class="cap">
+    <div class="cap-num">Per ricordo</div>
+    <h2 class="cap-title">Il progetto lean — approvato da entrambi.</h2>
+    <div class="cap-divider"></div>
+    <p style="color:var(--fk-gray);font-size:.9rem;margin-bottom:2rem;">Questo spazio è per quando ci vediamo e decidiamo di partire. Non è un contratto — è una stretta di mano scritta. Vale quanto un Aglianico condiviso.</p>
+
+    <div class="firma-grid">
+      <div class="firma">
+        <div class="firma__name">Luca</div>
+        <div class="firma__role">Corsale Country House · Fondatore</div>
+        <div class="firma__line"></div>
+        <p style="font-family:var(--fk-label);font-size:.6rem;color:var(--fk-gray);margin-top:.5rem;">Data: _______________</p>
+      </div>
+      <div class="firma">
+        <div class="firma__name">Franki</div>
+        <div class="firma__role">Franki Studio · Consulente strategico</div>
+        <div class="firma__line"></div>
+        <p style="font-family:var(--fk-label);font-size:.6rem;color:var(--fk-gray);margin-top:.5rem;">Data: _______________</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <strong>Franki Studio</strong> · Documento riservato per Luca · Corsale Country House · Aprile 2026 · We Start Your Ideas
+</div>
+
+</body>
+</html>

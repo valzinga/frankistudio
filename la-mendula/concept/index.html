@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Mendula — Visione Strategica · Franki Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Mono:wght@400;500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blu: #3549B5;
+  --giallo: #F9AC28;
+  --crema: #F7F3EC;
+  --verde: #2A6B27;
+  --rosso: #C0392B;
+  --nero: #0a0a0a;
+  --testo: #1a1a1a;
+  --medio: #555;
+  --chiaro: #888;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Lato', sans-serif; background: var(--crema); color: var(--testo); }
+
+/* ── HERO ── */
+.hero {
+  background: var(--nero);
+  min-height: 100svh;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 80px 24px 48px;
+  position: relative; overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 10% 90%, rgba(249,172,40,.18) 0%, transparent 55%),
+    radial-gradient(ellipse at 90% 10%, rgba(53,73,181,.25) 0%, transparent 55%),
+    radial-gradient(ellipse at 60% 50%, rgba(42,107,39,.12) 0%, transparent 50%);
+}
+.hero-grid {
+  position: absolute; inset: 0; opacity: .04;
+  background-image: linear-gradient(rgba(255,255,255,.4) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(255,255,255,.4) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+.hero-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--giallo); margin-bottom: 20px; position: relative;
+  display: flex; align-items: center; gap: 10px;
+}
+.hero-label::before { content: ''; width: 28px; height: 1px; background: var(--giallo); }
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(40px, 12vw, 76px);
+  line-height: .95; color: #fff;
+  position: relative; margin-bottom: 6px;
+}
+.hero h1 em { font-style: italic; color: var(--giallo); display: block; }
+.hero-sub {
+  font-size: 15px; color: rgba(255,255,255,.55); font-weight: 300;
+  line-height: 1.7; max-width: 360px; margin-top: 18px; position: relative;
+}
+.hero-cta {
+  display: inline-flex; align-items: center; gap: 10px;
+  margin-top: 36px; position: relative;
+  background: var(--giallo); color: var(--nero);
+  font-family: 'DM Mono', monospace; font-size: 11px;
+  letter-spacing: 2px; text-transform: uppercase;
+  padding: 14px 24px; border-radius: 6px; text-decoration: none;
+  font-weight: 500; transition: transform .2s;
+}
+.hero-cta:hover { transform: translateY(-2px); }
+
+/* ── SEZIONI ── */
+.section { padding: 56px 24px; max-width: 720px; margin: 0 auto; }
+.section-label {
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  letter-spacing: 3px; text-transform: uppercase; color: var(--blu);
+  display: flex; align-items: center; gap: 8px; margin-bottom: 12px;
+}
+.section-label::before { content: ''; width: 20px; height: 2px; background: var(--giallo); }
+.section h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 7vw, 42px); line-height: 1.1;
+  color: var(--testo); margin-bottom: 20px;
+}
+.section p { font-size: 15px; color: var(--medio); line-height: 1.7; margin-bottom: 14px; }
+
+/* ── NUMERO GRANDE ── */
+.big-stat {
+  background: var(--blu);
+  padding: 28px 24px;
+  border-radius: 12px; margin-bottom: 12px;
+  display: flex; align-items: center; gap: 20px;
+}
+.big-stat .num {
+  font-family: 'Playfair Display', serif;
+  font-size: 52px; font-weight: 900; color: var(--giallo);
+  line-height: 1; flex-shrink: 0;
+}
+.big-stat .desc { font-size: 13px; color: rgba(255,255,255,.75); line-height: 1.5; }
+.big-stat .desc strong { color: #fff; font-size: 15px; display: block; margin-bottom: 3px; }
+
+/* ── MODELLI ── */
+.modello {
+  border-radius: 14px; overflow: hidden;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 24px rgba(0,0,0,.08);
+}
+.modello-header {
+  padding: 20px 22px 16px;
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;
+}
+.modello-tag {
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: 2px; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 20px;
+  border: 1px solid currentColor; flex-shrink: 0; margin-top: 4px;
+}
+.modello-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px; font-weight: 700; line-height: 1.2;
+  margin-bottom: 6px;
+}
+.modello-sub { font-size: 13px; line-height: 1.5; opacity: .8; }
+.modello-body { padding: 0 22px 22px; background: #fff; }
+.modello-body hr { border: none; border-top: 1px solid #eee; margin: 14px 0; }
+.kpi-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+.kpi {
+  flex: 1; min-width: 100px;
+  background: var(--crema); border-radius: 8px; padding: 10px 12px;
+}
+.kpi .kpi-val {
+  font-family: 'Playfair Display', serif; font-size: 20px;
+  font-weight: 700; margin-bottom: 2px;
+}
+.kpi .kpi-lbl { font-size: 11px; color: var(--chiaro); }
+.modello-pros { list-style: none; }
+.modello-pros li {
+  font-size: 13px; color: var(--medio); padding: 5px 0;
+  display: flex; gap: 8px; align-items: flex-start;
+}
+.modello-pros li::before { content: '→'; color: var(--blu); flex-shrink: 0; font-weight: bold; }
+
+/* Colori modelli */
+.m1 .modello-header { background: var(--blu); color: #fff; }
+.m1 .modello-tag { color: var(--giallo); border-color: var(--giallo); }
+.m1 .kpi-val { color: var(--blu); }
+.m2 .modello-header { background: var(--nero); color: #fff; }
+.m2 .modello-tag { color: var(--giallo); border-color: var(--giallo); }
+.m2 .kpi-val { color: var(--nero); }
+.m3 .modello-header { background: var(--verde); color: #fff; }
+.m3 .modello-tag { color: #aed6a8; border-color: #aed6a8; }
+.m3 .kpi-val { color: var(--verde); }
+
+/* ── CLUSTER ── */
+.cluster {
+  background: #fff; border-radius: 10px; padding: 16px 18px;
+  margin-bottom: 10px; border-left: 4px solid var(--giallo);
+  box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+.cluster-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 6px; }
+.cluster-name { font-size: 15px; font-weight: 700; color: var(--testo); }
+.cluster-ticket {
+  font-family: 'DM Mono', monospace; font-size: 11px;
+  color: var(--blu); background: rgba(53,73,181,.08);
+  padding: 3px 8px; border-radius: 4px; white-space: nowrap;
+}
+.cluster-desc { font-size: 13px; color: var(--medio); line-height: 1.5; }
+.cluster-tag {
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: 1px; text-transform: uppercase;
+  color: var(--chiaro); margin-top: 6px;
+}
+
+/* ── UNICUM ── */
+.unicum {
+  background: var(--nero); color: #fff; border-radius: 12px;
+  padding: 22px; margin-bottom: 14px; position: relative; overflow: hidden;
+}
+.unicum::before {
+  content: ''; position: absolute;
+  top: -30px; right: -30px; width: 120px; height: 120px;
+  border-radius: 50%; background: var(--giallo); opacity: .08;
+}
+.unicum-emoji { font-size: 28px; margin-bottom: 10px; }
+.unicum-name { font-family: 'Playfair Display', serif; font-size: 18px; color: var(--giallo); margin-bottom: 6px; }
+.unicum-body { font-size: 13px; color: rgba(255,255,255,.65); line-height: 1.6; margin-bottom: 12px; }
+.unicum-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.unicum-kpi {
+  background: rgba(255,255,255,.08); border-radius: 6px;
+  padding: 6px 12px; font-size: 12px; color: rgba(255,255,255,.8);
+}
+.unicum-kpi strong { color: var(--giallo); display: block; font-size: 14px; }
+
+/* ── BENCHMARK STRIP ── */
+.bench-strip {
+  background: var(--giallo); padding: 24px;
+  margin: 0 -24px; display: flex; flex-direction: column; gap: 14px;
+}
+.bench-card {
+  background: #fff; border-radius: 10px; padding: 16px;
+}
+.bench-title { font-size: 13px; font-weight: 700; color: var(--testo); margin-bottom: 4px; }
+.bench-sub { font-size: 12px; color: var(--medio); line-height: 1.5; }
+.bench-price {
+  font-family: 'DM Mono', monospace; font-size: 13px;
+  color: var(--blu); margin-top: 8px; font-weight: 500;
+}
+
+/* ── CTA FINALE ── */
+.cta-box {
+  background: var(--blu); border-radius: 16px; padding: 32px 24px;
+  text-align: center; margin: 0 0 40px;
+}
+.cta-box h3 {
+  font-family: 'Playfair Display', serif; font-size: 28px;
+  color: #fff; margin-bottom: 10px;
+}
+.cta-box p { font-size: 14px; color: rgba(255,255,255,.6); margin-bottom: 24px; line-height: 1.6; }
+.cta-link {
+  display: inline-block; background: var(--giallo); color: var(--nero);
+  font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 2px;
+  text-transform: uppercase; padding: 14px 28px; border-radius: 8px;
+  text-decoration: none; font-weight: 500; transition: transform .2s;
+}
+.cta-link:hover { transform: translateY(-2px); }
+
+/* ── DIVIDER ── */
+.divider { height: 1px; background: rgba(53,73,181,.1); margin: 0 24px; }
+.full-strip {
+  background: var(--testo); padding: 20px 24px;
+  display: flex; gap: 12px; align-items: center;
+}
+.full-strip p { font-size: 13px; color: rgba(255,255,255,.6); line-height: 1.5; }
+.full-strip strong { color: var(--giallo); }
+
+/* ── ANIMATE ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.hero > * { animation: fadeUp .6s ease both; }
+.hero-label { animation-delay: .1s; }
+.hero h1 { animation-delay: .2s; }
+.hero-sub { animation-delay: .3s; }
+.hero-cta { animation-delay: .45s; }
+
+/* ── FOOTER ── */
+footer { background: var(--nero); padding: 24px; text-align: center; }
+footer p { font-family: 'DM Mono', monospace; font-size: 10px; color: rgba(255,255,255,.3); letter-spacing: 1px; }
+footer a { color: var(--giallo); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-label">Franki Studio · Documento riservato · Aprile 2026</div>
+  <h1>La Mendula<em>Visione Strategica</em></h1>
+  <p class="hero-sub">Marco, prima di scegliere la direzione vogliamo mostrarti le potenzialità reali del terreno — numeri di mercato, modelli possibili, clienti raggiungibili. Poi sei tu a decidere.</p>
+  <a href="#modelli" class="hero-cta">Scopri i modelli →</a>
+</div>
+
+<!-- INTRO -->
+<div class="section">
+  <div class="section-label">Il contesto</div>
+  <h2>Arzachena è uno dei mercati ricettivi più forti d'Italia</h2>
+  <p>La Gallura non è solo Costa Smeralda. È un territorio con una domanda internazionale strutturata — inglesi, tedeschi, scandinavi, americani — che cercano autenticità, paesaggio e esperienze uniche lontano dai resort affollati.</p>
+  <p>Il tuo terreno di 9 ettari con stazzu esistente, pozzo, ulivi e macchia mediterranea è esattamente il tipo di asset su cui il mercato luxury rurale sta crescendo. La domanda esiste già. La questione è: che tipo di prodotto vuoi costruire?</p>
+
+  <div style="margin-top: 24px;">
+    <div class="big-stat">
+      <div class="num">+34%</div>
+      <div class="desc">
+        <strong>Crescita agriturismo premium in Sardegna</strong>
+        Domanda internazionale 2022–2024. Il segmento "rural luxury" cresce tre volte più veloce del turismo balneare standard.
+      </div>
+    </div>
+    <div class="big-stat" style="background: var(--verde);">
+      <div class="num">€1.8k</div>
+      <div class="desc">
+        <strong>Tariffa media settimanale strutture comparabili in Gallura</strong>
+        Per uso esclusivo con 6–12 ospiti. Le strutture con orto e piscina privata toccano €2.500–3.500/settimana.
+      </div>
+    </div>
+    <div class="big-stat" style="background: #7B3F00;">
+      <div class="num">9 ha</div>
+      <div class="desc">
+        <strong>Il tuo punto di partenza</strong>
+        Stazzu abitabile, pozzo, elettricità, 4G — infrastrutture base già presenti. È una base eccellente rispetto alla media del mercato.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- MODELLI -->
+<div class="section" id="modelli">
+  <div class="section-label">I tre modelli possibili</div>
+  <h2>Quale direzione vuoi prendere?</h2>
+  <p>Ogni modello è valido — ma implicano investimenti, gestione e risultati molto diversi. Leggili tutti e tre: alla fine ti chiediamo di dirci verso quale ti senti orientato.</p>
+
+  <!-- MODELLO 1 -->
+  <div class="modello m1">
+    <div class="modello-header">
+      <div>
+        <div class="modello-title">Modello A — Esclusivo & Lento</div>
+        <div class="modello-sub">3 stazzi indipendenti, piscine e orti privati, pochi ospiti, esperienza totale</div>
+      </div>
+      <div class="modello-tag">La tua visione</div>
+    </div>
+    <div class="modello-body">
+      <div class="kpi-row">
+        <div class="kpi"><div class="kpi-val">3</div><div class="kpi-lbl">stazzi</div></div>
+        <div class="kpi"><div class="kpi-val">6–12</div><div class="kpi-lbl">ospiti max</div></div>
+        <div class="kpi"><div class="kpi-val">€2.5–4k</div><div class="kpi-lbl">/ settimana</div></div>
+        <div class="kpi"><div class="kpi-val">€80–130k</div><div class="kpi-lbl">rev. stimata/anno</div></div>
+      </div>
+      <hr>
+      <ul class="modello-pros">
+        <li>Ogni stazzu ha piscina privata + orto personale — esperienza unica sul mercato gallura</li>
+        <li>Tu abiti il tuo stazzu, i 2 ricettivi generano reddito passivo con gestione leggera</li>
+        <li>Target: coppie e famiglie straniere alto reddito (UK, Germania, Scandinavia, USA) che cercano isolamento autentico</li>
+        <li>Investimento alto (piscine, ristrutturazione stazzi) ma contributi PSR fino al 50%</li>
+        <li>Gestione diretta semplice: pochi ospiti, alta qualità, basso stress operativo</li>
+        <li>Produzione biologica integrata (ulivi, orti) — aggiunge valore e apre a bandi PAC</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- MODELLO 2 -->
+  <div class="modello m2">
+    <div class="modello-header">
+      <div>
+        <div class="modello-title">Modello B — Alta Rotazione</div>
+        <div class="modello-sub">Struttura ricettiva unica con più camere/unità, massima occupazione</div>
+      </div>
+      <div class="modello-tag">Alto fatturato</div>
+    </div>
+    <div class="modello-body">
+      <div class="kpi-row">
+        <div class="kpi"><div class="kpi-val">1</div><div class="kpi-lbl">struttura unica</div></div>
+        <div class="kpi"><div class="kpi-val">14–22</div><div class="kpi-lbl">ospiti max</div></div>
+        <div class="kpi"><div class="kpi-val">€1.2–2k</div><div class="kpi-lbl">/ notte uso escl.</div></div>
+        <div class="kpi"><div class="kpi-val">€150–250k</div><div class="kpi-lbl">rev. stimata/anno</div></div>
+      </div>
+      <hr>
+      <ul class="modello-pros">
+        <li>Struttura unica con più camere: gruppi, retreat, corporate, famiglie allargate</li>
+        <li>Modello simile a CCH — uso esclusivo dell'intera tenuta per ogni prenotazione</li>
+        <li>Target internazionale strutturato: retreat yoga/wellness, corporate team building, ricevimenti privati</li>
+        <li>Revenue più alta ma gestione più complessa (staff, pulizie, logistica)</li>
+        <li>Investimento concentrato su un'unica struttura — più efficiente architettonicamente</li>
+        <li>Accesso a piattaforme internazionali (BookRetreats, SopranoVillas, Italy Charme)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- MODELLO 3 -->
+  <div class="modello m3">
+    <div class="modello-header">
+      <div>
+        <div class="modello-title">Modello C — Ibrido Agricolo</div>
+        <div class="modello-sub">1 stazzu ricettivo + produzione biologica certificata come core business</div>
+      </div>
+      <div class="modello-tag">Agevolazioni max</div>
+    </div>
+    <div class="modello-body">
+      <div class="kpi-row">
+        <div class="kpi"><div class="kpi-val">1</div><div class="kpi-lbl">stazzu ricettivo</div></div>
+        <div class="kpi"><div class="kpi-val">6–10</div><div class="kpi-lbl">ospiti max</div></div>
+        <div class="kpi"><div class="kpi-val">€40–60k</div><div class="kpi-lbl">agriturismo/anno</div></div>
+        <div class="kpi"><div class="kpi-val">€30–50k</div><div class="kpi-lbl">produz. agricola</div></div>
+      </div>
+      <hr>
+      <ul class="modello-pros">
+        <li>L'attività principale è agricola (oliveto bio, orti, apicoltura) — la ricettività è complementare</li>
+        <li>Accesso massimo ai contributi PSR, GAL Gallura, PAC — fino al 60% degli investimenti rimborsati</li>
+        <li>Produzione olio EVO biologico Gallura + miele di corbezzolo — nicchie premium internazionali</li>
+        <li>Investimento iniziale più basso — meno costruzioni, più terra</li>
+        <li>Ideale se vuoi costruire un'azienda agricola solida prima di scalare la ricettività</li>
+        <li>Gestione più vicina alla terra — richiede o un conduttore terzo o formazione agricola</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- BENCHMARK -->
+<div style="background: #fff; padding: 0 0 8px;">
+<div class="section" style="padding-bottom: 24px;">
+  <div class="section-label">Benchmark di mercato</div>
+  <h2>Chi lo fa già — e quanto guadagna</h2>
+  <p>Strutture reali simili alla tua visione, già operative sul mercato. I numeri sono verificati su piattaforme pubbliche.</p>
+</div>
+<div class="bench-strip">
+  <div class="bench-card">
+    <div class="bench-title">🇮🇹 Agriturismo Stazzu — Gallura (Costa Smeralda entroterra)</div>
+    <div class="bench-sub">3 unità indipendenti con piscina privata e orto. Ulivi, macchia mediterranea. Gestione familiare diretta. Ospiti: coppie internazionali, famiglie nordeuropee.</div>
+    <div class="bench-price">€2.800–4.200 / settimana per unità · Stagione Apr–Ott · Occupazione ~65%</div>
+  </div>
+  <div class="bench-card">
+    <div class="bench-title">🇮🇹 Tenuta uso esclusivo — Sardegna nord (12–16 pax)</div>
+    <div class="bench-sub">Casa padronale ristrutturata con piscina, uliveto, orto condiviso. Booking solo diretto e SopranoVillas. Team di 2 persone.</div>
+    <div class="bench-price">€1.600–2.400 / notte uso esclusivo · €120–180k revenue annuo stimato</div>
+  </div>
+  <div class="bench-card">
+    <div class="bench-title">🇮🇹 Oliveto Estate — Le Marche (benchmark CCH)</div>
+    <div class="bench-sub">9 acri uliveto biologico, 3 cottages, uso esclusivo. Retreat yoga, cooking class, raccolta olive. Citato da Condé Nast e Forbes.</div>
+    <div class="bench-price">€1.340 / notte · Retreat: $5.800–6.800 p.p./settimana · 200+ retreat ospitati</div>
+  </div>
+</div>
+</div>
+
+<!-- CLUSTER -->
+<div class="section">
+  <div class="section-label">Chi sono i tuoi ospiti</div>
+  <h2>5 cluster di clientela raggiungibili</h2>
+  <p>Ordinati per priorità strategica e facilità di acquisizione per una struttura in Gallura.</p>
+
+  <div class="cluster">
+    <div class="cluster-head">
+      <div class="cluster-name">⭐ Coppie & Famiglie internazionali — Slow Luxury</div>
+      <div class="cluster-ticket">€2.5–4k / settimana</div>
+    </div>
+    <div class="cluster-desc">Nordeuropei e anglosassoni 35–60 anni, alto reddito, cercano autenticità lontano dai resort. Vogliono piscina privata, silenzio, cibo vero. Il tuo target naturale per il Modello A. Arrivano da Airbnb Luxe, SopranoVillas e passaparola.</div>
+    <div class="cluster-tag">Stagionalità: Apr–Giu · Ago · Set–Ott</div>
+  </div>
+
+  <div class="cluster">
+    <div class="cluster-head">
+      <div class="cluster-name">⭐ Yoga & Wellness Retreat Leader</div>
+      <div class="cluster-ticket">€7–12k / settimana (venue hire)</div>
+    </div>
+    <div class="cluster-desc">Istruttori internazionali con gruppo proprio 8–14 pax. Cercano location esclusiva, cucina di qualità, natura intatta. La macchia mediterranea e il silenzio della Gallura sono asset potentissimi. Canale principale: BookRetreats.</div>
+    <div class="cluster-tag">Stagionalità: Feb–Apr · Set–Nov · Perfetto per bassa stagione</div>
+  </div>
+
+  <div class="cluster">
+    <div class="cluster-head">
+      <div class="cluster-name">⭐ Corporate Retreat & Team Building</div>
+      <div class="cluster-ticket">€20–40k / prenotazione</div>
+    </div>
+    <div class="cluster-desc">HR manager e event planner aziendali cercano location esclusive per offsite. Budget aziendale = il ticket più alto. La Gallura è già nel radar dei planner internazionali per il brand "Sardinia". Canale: Italy Charme, DMC, LinkedIn.</div>
+    <div class="cluster-tag">Stagionalità: Apr–Giu · Set–Nov · Ideale per riempire spalla</div>
+  </div>
+
+  <div class="cluster">
+    <div class="cluster-head">
+      <div class="cluster-name">Food & Wine Tourism — Vermentino Experience</div>
+      <div class="cluster-ticket">€1.8–3k / soggiorno</div>
+    </div>
+    <div class="cluster-desc">Appassionati di enogastronomia, sommelier internazionali, food press. Il Vermentino di Gallura DOCG è quasi sconosciuto fuori dall'Italia — enorme potenziale narrativo. Il tuo orto + olio + vino locale = esperienza completa.</div>
+    <div class="cluster-tag">Stagionalità: Mag–Giu · Set–Ott</div>
+  </div>
+
+  <div class="cluster">
+    <div class="cluster-head">
+      <div class="cluster-name">Olive Oil & Bio Enthusiasts</div>
+      <div class="cluster-ticket">€1.5–2.5k / soggiorno</div>
+    </div>
+    <div class="cluster-desc">Community globale (2M+ su Instagram) di appassionati di olio EVO biologico. La raccolta olive + frantoio + etichetta personalizzata è un'esperienza virale. Community: #oliveoillovers. Si attiva con la Misura 4.1 PSR per l'oliveto.</div>
+    <div class="cluster-tag">Stagionalità: Ott–Nov · Ottimo per colmare il vuoto autunnale</div>
+  </div>
+</div>
+
+<!-- UNICUM -->
+<div style="background: var(--crema); padding: 8px 0;">
+<div class="section">
+  <div class="section-label">Esperienze UNICUM</div>
+  <h2>Cosa nessun hotel può offrirti</h2>
+  <p>Le esperienze differenzianti che solo La Mendula può proporre — asset già presenti, da valorizzare.</p>
+
+  <div class="unicum">
+    <div class="unicum-emoji">🫒</div>
+    <div class="unicum-name">Olive Harvest Experience</div>
+    <div class="unicum-body">Settimana immersiva nella raccolta degli ulivi abbandonati recuperati. Raccolta a mano, frantoio locale, degustazione olio nuovo, bottiglia personalizzata "La Mendula [anno]". Community Olive Oil Lovers internazionale: mercato già strutturato.</div>
+    <div class="unicum-row">
+      <div class="unicum-kpi"><strong>€1.8–2.5k</strong>p.p. / settimana</div>
+      <div class="unicum-kpi"><strong>Ott–Nov</strong>periodo</div>
+      <div class="unicum-kpi"><strong>€18–30k</strong>/ edizione</div>
+    </div>
+  </div>
+
+  <div class="unicum">
+    <div class="unicum-emoji">🌿</div>
+    <div class="unicum-name">Orto Experience — "Grow Your Plate"</div>
+    <div class="unicum-body">Gli ospiti coltivano il proprio orto durante il soggiorno e mangiano quello che producono — la tua visione originale. Asset virale potentissimo: fotogenico, autentico, replicabile. Nessuna struttura in Gallura lo propone in modo strutturato.</div>
+    <div class="unicum-row">
+      <div class="unicum-kpi"><strong>Incluso</strong>nel soggiorno</div>
+      <div class="unicum-kpi"><strong>Tutto l'anno</strong></div>
+      <div class="unicum-kpi"><strong>+30%</strong>sul prezzo base</div>
+    </div>
+  </div>
+
+  <div class="unicum">
+    <div class="unicum-emoji">🍯</div>
+    <div class="unicum-name">Miele di Corbezzolo — Apicoltura di Macchia</div>
+    <div class="unicum-body">Il miele di corbezzolo è uno dei più rari e pregiati al mondo — amaro, unico, ricercatissimo. La macchia mediterranea di La Mendula è l'habitat naturale. Produzione propria, vendita diretta, esperienza con l'apicoltore. Nicchia premium internazionale.</div>
+    <div class="unicum-row">
+      <div class="unicum-kpi"><strong>€25–40</strong>/ vasetto 250g</div>
+      <div class="unicum-kpi"><strong>Nov–Dic</strong>raccolta</div>
+      <div class="unicum-kpi"><strong>€8–15k</strong>/ anno stimato</div>
+    </div>
+  </div>
+
+  <div class="unicum">
+    <div class="unicum-emoji">🌊</div>
+    <div class="unicum-name">Gallura Insider — Mar & Terra</div>
+    <div class="unicum-body">La Mendula è a 20 minuti dal mare più bello d'Italia — ma lontana dal turismo di massa. Pacchetto esclusivo: mattina in barca nelle calette private, pomeriggio nell'orto, sera con Vermentino al tramonto. Esperienza impossibile da trovare altrove.</div>
+    <div class="unicum-row">
+      <div class="unicum-kpi"><strong>€200–350</strong>p.p. / giornata</div>
+      <div class="unicum-kpi"><strong>Giu–Set</strong></div>
+      <div class="unicum-kpi"><strong>Add-on</strong>premium</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- REVENUE SUMMARY -->
+<div style="background: var(--blu); padding: 40px 24px;">
+  <div style="max-width: 720px; margin: 0 auto;">
+    <div style="font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--giallo); margin-bottom: 16px;">Stima di potenziale</div>
+    <div style="font-family: 'Playfair Display', serif; font-size: 32px; color: #fff; margin-bottom: 20px; line-height: 1.2;">Cosa puoi generare<br>a regime</div>
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+      <div style="background: rgba(255,255,255,.08); border-radius: 8px; padding: 14px 18px; display: flex; justify-content: space-between; align-items: center;">
+        <span style="font-size: 14px; color: rgba(255,255,255,.7);">Modello A — 2 stazzi ricettivi (esclusivo)</span>
+        <span style="font-family: 'DM Mono', monospace; color: var(--giallo); font-size: 14px;">€80–130k</span>
+      </div>
+      <div style="background: rgba(255,255,255,.08); border-radius: 8px; padding: 14px 18px; display: flex; justify-content: space-between; align-items: center;">
+        <span style="font-size: 14px; color: rgba(255,255,255,.7);">Modello B — struttura unica alta rotazione</span>
+        <span style="font-family: 'DM Mono', monospace; color: var(--giallo); font-size: 14px;">€150–250k</span>
+      </div>
+      <div style="background: rgba(255,255,255,.08); border-radius: 8px; padding: 14px 18px; display: flex; justify-content: space-between; align-items: center;">
+        <span style="font-size: 14px; color: rgba(255,255,255,.7);">Produzione agricola (oli, miele, orti)</span>
+        <span style="font-family: 'DM Mono', monospace; color: var(--giallo); font-size: 14px;">€20–50k</span>
+      </div>
+      <div style="background: var(--giallo); border-radius: 8px; padding: 14px 18px; display: flex; justify-content: space-between; align-items: center;">
+        <span style="font-size: 14px; font-weight: 700; color: var(--nero);">Potenziale totale a regime (3 anni)</span>
+        <span style="font-family: 'DM Mono', monospace; color: var(--nero); font-size: 16px; font-weight: 700;">€100–300k/anno</span>
+      </div>
+    </div>
+    <p style="font-size: 12px; color: rgba(255,255,255,.35); margin-top: 12px;">Stime conservative basate su benchmark reali. Il range dipende dal modello scelto e dall'investimento.</p>
+  </div>
+</div>
+
+<!-- CTA QUESTIONARIO -->
+<div class="section">
+  <div class="section-label">Adesso tocca a te</div>
+  <h2>Aiutaci a capire la tua direzione</h2>
+  <p>Abbiamo bisogno di alcune informazioni aggiuntive per costruire un piano su misura per La Mendula. Ci vogliono 5 minuti.</p>
+  <div class="cta-box">
+    <h3>Completa il questionario strategico</h3>
+    <p>Hai già compilato la parte tecnica sul terreno. Ora rispondi alle domande sulla ricettività e sulla direzione che vuoi prendere — così possiamo darti un piano concreto.</p>
+    <a href="onboarding/" class="cta-link">Vai al questionario →</a>
+  </div>
+</div>
+
+<footer>
+  <p>Documento riservato · <a href="https://frankistudio.it">Franki Studio</a> · Avre Srl Napoli · Aprile 2026</p>
+</footer>
+
+</body>
+</html>

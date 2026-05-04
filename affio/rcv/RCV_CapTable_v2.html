@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RCV · Cap Table Definitiva</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--blu:#2B38B0;--arancio:#F0A500;--grigio-bg:#F2F1ED;--bianco:#FFFFFF;--nero:#111118;--testo:#1a1a2e;--verde:#1a7a50;--viola:#6B46C1;--grigio:#888;}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Barlow',sans-serif;background:var(--grigio-bg);color:var(--testo);max-width:680px;margin:0 auto;font-size:15px;line-height:1.6}
+.navbar{background:var(--blu);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.logo-fran{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;color:var(--bianco)}
+.logo-fran span{background:var(--arancio);color:#FFFFFF;padding:1px 6px;border-radius:4px}
+.logo-tagline{font-size:10px;color:rgba(255,255,255,.5);letter-spacing:.08em}
+.nav-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.6)}
+.hero{background:var(--nero);color:var(--bianco);padding:44px 20px 40px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 40px,rgba(43,56,176,.06) 40px,rgba(43,56,176,.06) 41px)}
+.hero-kicker{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--arancio);margin-bottom:14px}
+.hero-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:44px;line-height:.9;text-transform:uppercase;margin-bottom:20px}
+.hero-title em{color:var(--arancio);font-style:normal;display:block}
+.hero-sub{font-size:14px;color:rgba(255,255,255,.65);line-height:1.7}
+.div-orange{height:4px;background:var(--arancio)}
+.sh{background:var(--blu);color:var(--bianco);padding:11px 20px;display:flex;align-items:center;gap:10px;margin-top:20px}
+.sh-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:15px;text-transform:uppercase;letter-spacing:.06em}
+.sh-badge{margin-left:auto;background:var(--arancio);color:var(--nero);font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;padding:2px 8px;border-radius:2px}
+.card{background:var(--bianco);padding:20px;margin:2px 0}
+.card p{font-size:14px;color:#444;line-height:1.75;margin-bottom:12px}
+.card p:last-child{margin-bottom:0}
+.card strong{color:var(--nero)}
+.fase{background:var(--bianco);margin:2px 0;border-left:6px solid;overflow:hidden}
+.fase-head{padding:16px 20px;display:flex;align-items:center;gap:14px}
+.fase-num{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:48px;line-height:1;opacity:.12;flex-shrink:0}
+.fase-titolo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px;text-transform:uppercase;line-height:1.1}
+.fase-quando{font-size:12px;margin-top:4px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.fase-body{padding:0 20px 20px}
+.fase-body p{font-size:14px;color:#444;line-height:1.75;margin-bottom:10px}
+.fase-body p:last-child{margin-bottom:0}
+.fase-body strong{color:var(--nero)}
+.ct{padding:14px 20px;background:var(--grigio-bg);margin-top:2px}
+.ct-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#aaa;margin-bottom:12px}
+.ct-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.ct-row:last-child{margin-bottom:0}
+.ct-nome{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;width:90px;flex-shrink:0}
+.ct-bar-bg{flex:1;height:26px;background:#e0ddd8;border-radius:3px;overflow:hidden}
+.ct-bar{height:100%;display:flex;align-items:center;padding-left:10px;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:12px;color:var(--bianco)}
+.ct-note{font-size:11px;color:#aaa;width:70px;text-align:right;flex-shrink:0}
+.fin-grid{background:var(--bianco);padding:20px;margin:2px 0}
+.fin-title{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#aaa;margin-bottom:14px}
+.fin-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #f5f5f2}
+.fin-row:last-child{border-bottom:none;padding-top:14px;border-top:2px solid var(--arancio);margin-top:6px}
+.fin-label{font-size:14px;color:#444}
+.fin-label small{display:block;font-size:11px;color:#bbb;margin-top:1px}
+.fin-val{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:18px}
+.fin-type{display:inline-block;font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:2px 6px;border-radius:2px;margin-left:6px;vertical-align:middle}
+.prot{background:var(--bianco);padding:20px;margin:2px 0;border-top:3px solid var(--verde)}
+.prot-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:15px;text-transform:uppercase;color:var(--verde);margin-bottom:10px}
+.prot-body{font-size:14px;color:#444;line-height:1.75}
+.prot-esempio{background:#e6f7f0;padding:14px;border-radius:3px;margin-top:12px;font-size:13px;color:#145c3c;line-height:1.7}
+.scenario{background:var(--bianco);margin:2px 0;overflow:hidden;border-top:4px solid}
+.sc-head{padding:14px 20px;background:var(--grigio-bg)}
+.sc-nome{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px;text-transform:uppercase}
+.sc-sub{font-size:12px;color:#888;margin-top:2px}
+.sc-body{padding:16px 20px}
+.sc-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #f5f5f2}
+.sc-row:last-child{border-bottom:none}
+.sc-chi{display:flex;align-items:center;gap:8px}
+.sc-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.sc-nome2{font-size:14px;color:#444}
+.sc-note2{font-size:11px;color:#bbb;margin-top:1px}
+.sc-val{text-align:right}
+.sc-importo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:18px}
+.sc-irr{font-size:11px;color:#aaa;margin-top:1px}
+.sc-sep{background:rgba(240,165,0,.1);border-top:2px dashed rgba(240,165,0,.4);padding:10px 0;margin-top:8px;display:flex;justify-content:space-between}
+.sc-sep-label{font-size:12px;color:#aaa;font-style:italic}
+.sc-sep-val{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;color:#c27800}
+.sc-total{display:flex;justify-content:space-between;padding:12px 0 0;border-top:2px solid var(--arancio);margin-top:8px}
+.sc-total-label{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:13px;text-transform:uppercase;color:#aaa}
+.sc-total-val{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px}
+.hl-green{background:#e6f7f0;border-left:4px solid var(--verde);padding:14px 16px;margin:2px 0}
+.hl-green p{font-size:13px;color:#145c3c;margin:0;line-height:1.65}
+.hl-blue{background:#e8ecff;border-left:4px solid var(--blu);padding:14px 16px;margin:2px 0}
+.hl-blue p{font-size:13px;color:#1a2480;margin:0;line-height:1.65}
+.hl-orange{background:#fff4e0;border-left:4px solid var(--arancio);padding:14px 16px;margin:2px 0}
+.hl-orange p{font-size:13px;color:#7a5000;margin:0;line-height:1.65}
+.orange-band{background:var(--arancio);padding:20px;margin:2px 0}
+.orange-band h3{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;text-transform:uppercase;color:var(--nero);margin-bottom:10px}
+.orange-band p{font-size:14px;color:rgba(0,0,0,.8);line-height:1.7}
+.dark-cta{background:var(--nero);color:var(--bianco);padding:36px 20px;text-align:center}
+.dark-cta h2{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:32px;text-transform:uppercase;line-height:.9;margin-bottom:12px}
+.dark-cta h2 em{color:var(--arancio);font-style:normal;display:block}
+.dark-cta p{font-size:13px;color:rgba(255,255,255,.5);max-width:420px;margin:0 auto}
+.confid{background:var(--blu);padding:10px 20px;font-size:10px;color:rgba(255,255,255,.3);text-align:center;letter-spacing:.06em}
+
+.fk-logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;line-height:1;display:inline-flex;align-items:center}
+.fk-logo .fran{color:#FFFFFF}
+.fk-logo .ki{background:#F0A500;color:#FFFFFF;border-radius:5px;padding:1px 7px;margin-left:2px;display:inline-block}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div><div class="fk-logo"><span class="fran">Fran</span><span class="ki">Ki</span></div><div class="logo-tagline">We Start Your Ideas</div></div>
+  <div class="nav-label">RCV · Cap Table Definitiva</div>
+</nav>
+
+<div class="hero">
+  <div class="hero-kicker">Struttura societaria definitiva · Versione finale · Aprile 2026</div>
+  <div class="hero-title">CHI ENTRA,<br>QUANDO,<br><em>E QUANTO<br>GUADAGNA.</em></div>
+  <div class="hero-sub">Percorso completo in tre fasi. Struttura definitiva con fondo equity al 40%, minibond crowd al 15% e mutuo bancario. Quote fondatori migliorate rispetto alla versione precedente.</div>
+</div>
+<div class="div-orange"></div>
+
+<!-- NOVITA RISPETTO ALLA VERSIONE PRECEDENTE -->
+<div class="hl-orange">
+  <p><strong>Cosa è cambiato rispetto alla versione precedente:</strong> il crowdfunding non è più socio (equity) ma diventa un minibond al 15% annuo — un prestito che la società restituisce con interessi fissi. Questo libera il 10% di equity che si redistribuisce tra i fondatori. Affio e Marco salgono dal 20% al 24%. FranKi sale dal 10% al 12%. Per coprire il gap di €3M si aggiunge un mutuo bancario sull'asset.</p>
+</div>
+
+<!-- STRUTTURA FINANZIARIA -->
+<div class="sh">
+  <div class="sh-title">Come Si Finanziano i ~€9,0M</div>
+  <div class="sh-badge">definitivo</div>
+</div>
+
+<div class="fin-grid">
+  <div class="fin-title">Le 5 fonti di capitale · Capex totale ~€9,0M · Asta stimata ~€900K</div>
+  <div class="fin-row">
+    <div class="fin-label">Quote soci fondatori del club (140 × €25K)<small>Non diventano soci della società — pagano l'accesso al club</small></div>
+    <div class="fin-val" style="color:var(--blu)">€3,5M<span class="fin-type" style="background:#e8ecff;color:var(--blu)">membership</span></div>
+  </div>
+  <div class="fin-row">
+    <div class="fin-label">Fondo di investimento equity<small>Diventa socio al 40% con liquidation preference</small></div>
+    <div class="fin-val" style="color:var(--viola)">€2,0M<span class="fin-type" style="background:#f0ebff;color:var(--viola)">equity</span></div>
+  </div>
+  <div class="fin-row">
+    <div class="fin-label">PNRR e bandi pubblici<small>30% della ristrutturazione · Non diluisce nessuno</small></div>
+    <div class="fin-val" style="color:var(--verde)">€2,1M<span class="fin-type" style="background:#e6f7f0;color:var(--verde)">pubblico</span></div>
+  </div>
+  <div class="fin-row">
+    <div class="fin-label">Crowdfunding — Minibond al 15%<small>Prestito con interessi fissi · Non diventa socio</small></div>
+    <div class="fin-val" style="color:var(--arancio)">€1,5M<span class="fin-type" style="background:#fff4e0;color:#c27800">minibond</span></div>
+  </div>
+  <div class="fin-row">
+    <div class="fin-label">Asta acquisizione (stima prossimo ribasso)<small>Due aste deserte → prezzo stimato ~€900K · Trattativa privata possibile</small></div>
+    <div class="fin-val" style="color:var(--grigio)">~€900K<span class="fin-type" style="background:#f0f0f0;color:var(--grigio)">acquisizione</span></div>
+  </div>
+  <div class="fin-row">
+    <div class="fin-label"><strong>TOTALE CAPEX COPERTO</strong></div>
+    <div class="fin-val" style="font-size:24px;color:var(--testo)">~€9,0M</div>
+  </div>
+</div>
+
+<div class="hl-green">
+  <p><strong>Perché il mutuo bancario è una buona notizia:</strong> dopo il closing avete un asset da €13,5M. Una banca presta €3M con LTV al 22% — bassissimo, nessun rischio per la banca. Il mutuo si ripaga con i flussi operativi (€7M/anno a regime). Non diluite nessuno e il costo è circa €120K/anno di interessi al 4% — molto meno che cedere equity.</p>
+</div>
+
+<!-- LE TRE FASI -->
+<div class="sh" style="margin-top:20px">
+  <div class="sh-title">Il Percorso — Fase per Fase</div>
+  <div class="sh-badge">3 fasi</div>
+</div>
+
+<!-- FASE 1 -->
+<div class="fase" style="border-color:var(--blu)">
+  <div class="fase-head">
+    <div class="fase-num" style="color:var(--blu)">1</div>
+    <div>
+      <div class="fase-titolo" style="color:var(--blu)">I Tre Fondatori Si Accordano</div>
+      <div class="fase-quando" style="color:var(--blu)">Adesso → Mese 6 · Prima dell'asta</div>
+    </div>
+  </div>
+  <div class="fase-body">
+    <p>FranKi, Affio e Marco firmano il patto parasociale. Affio e Marco mettono €60K ciascuno per coprire i costi pre-asta. FranKi porta il lavoro e ottiene il 20% come sweat equity.</p>
+  </div>
+  <div class="ct">
+    <div class="ct-label">Proprietà della società — Fase 1</div>
+    <div class="ct-row">
+      <div class="ct-nome">FranKi</div>
+      <div class="ct-bar-bg"><div class="ct-bar" style="width:20%;background:var(--blu)">20%</div></div>
+      <div class="ct-note">€0 cash</div>
+    </div>
+    <div class="ct-row">
+      <div class="ct-nome">Affio</div>
+      <div class="ct-bar-bg"><div class="ct-bar" style="width:40%;background:var(--arancio)">40%</div></div>
+      <div class="ct-note">€60K</div>
+    </div>
+    <div class="ct-row">
+      <div class="ct-nome">Marco</div>
+      <div class="ct-bar-bg"><div class="ct-bar" style="width:40%;background:var(--verde)">40%</div></div>
+      <div class="ct-note">€60K</div>
+    </div>
+  </div>
+</div>
+
+<!-- FASE 2 -->
+<div class="fase" style="border-color:var(--viola);margin-top:2px">
+  <div class="fase-head">
+    <div class="fase-num" style="color:var(--viola)">2</div>
+    <div>
+      <div class="fase-titolo" style="color:var(--viola)">Entra il Fondo · Struttura Definitiva</div>
+      <div class="fase-quando" style="color:var(--viola)">Mese 6 → Mese 9 · Dopo il closing</div>
+    </div>
+  </div>
+  <div class="fase-body">
+    <p>L'asta è vinta. Entra il fondo con <strong>€2,0M</strong> in cambio del <strong>40% della società.</strong> Grazie alle due aste deserte e al prezzo d'acquisizione crollato a ~€900K, il capitale totale necessario è sceso a ~€9M — il fondo investe molto meno per la stessa quota. Il crowdfunding non entra come socio — entra come creditore con un minibond al 15%. Il mutuo bancario copre il restante gap.</p>
+    <p><strong>Le quote dei fondatori migliorano</strong> rispetto alla versione precedente — senza il crowd come socio, la torta equity si divide tra meno persone.</p>
+  </div>
+  <div class="ct">
+    <div class="ct-label">Proprietà della società — Fase 2 · Struttura definitiva</div>
+    <div class="ct-row">
+      <div class="ct-nome">FranKi</div>
+      <div class="ct-bar-bg"><div class="ct-bar" style="width:12%;background:var(--blu)">12%</div></div>
+      <div class="ct-note">sweat</div>
+    </div>
+    <div class="ct-row">
+      <div class="ct-nome">Affio</div>
+      <div class="ct-bar-bg"><div class="ct-bar" style="width:24%;background:var(--arancio)">24%</div></div>
+      <div class="ct-note">€60K</div>
+    </div>
+    <div class="ct-row">
+      <div class="ct-nome">Marco</div>
+      <div class="ct-bar-bg"><div class="ct-bar" style="width:24%;background:var(--verde)">24%</div></div>
+      <div class="ct-note">€60K</div>
+    </div>
+    <div class="ct-row">
+      <div class="ct-nome">Fondo</div>
+      <div class="ct-bar-bg"><div class="ct-bar" style="width:40%;background:var(--viola)">40%</div></div>
+      <div class="ct-note">€4,5M</div>
+    </div>
+  </div>
+  <div class="fase-body" style="padding-top:14px">
+    <p style="font-size:13px;color:#888;font-style:italic">Il crowdfunding (€1,5M) e il mutuo bancario (€3M) non appaiono in questa tabella perché non sono soci — sono creditori. La società restituisce loro i soldi con gli interessi, ma non hanno quote di proprietà né voce in capitolo.</p>
+  </div>
+</div>
+
+<!-- LIQUIDATION PREFERENCE -->
+<div class="prot">
+  <div class="prot-title">🛡️ La Protezione del Fondo — Liquidation Preference</div>
+  <div class="prot-body">
+    <p>Il fondo entra con €4,5M ma chiede una garanzia standard: <strong>se la società viene venduta, riprende prima i suoi €2,0M, poi si divide il resto con tutti.</strong></p>
+    <p style="margin-top:10px">Non è una penalità per voi — è il prezzo normale per avere €4,5M di capitale senza cedere il controllo operativo. Su €23M di exit quello che rimane a voi è comunque enorme.</p>
+  </div>
+  <div class="prot-esempio">
+    <strong>Esempio con exit a €23M:</strong><br><br>
+    1. Prima il fondo riprende i suoi €2,0M → restano €21,0M<br>
+    2. Il resto si divide: Fondo 40% = €8,4M · Fondatori 60% = €12,6M<br>
+    3. Fondo totale: €2,0M + €8,4M = <strong>€10,4M → 5,2x → IRR ~51%! ✓✓✓</strong><br><br>
+    Parallelamente e separatamente:<br>
+    → Crowd riceve €225K/anno × 4 anni + €1,5M capitale = <strong>€2,4M → 1,60x → 15% annuo ✓</strong><br>
+    → Banca riceve la rata del mutuo dai flussi operativi
+  </div>
+</div>
+
+<!-- I TRE SCENARI -->
+<div class="sh" style="margin-top:20px">
+  <div class="sh-title">Cosa Porta a Casa Ognuno · 3 Scenari</div>
+  <div class="sh-badge">exit M48</div>
+</div>
+
+<!-- SCENARIO BASE -->
+<div class="scenario" style="border-color:var(--blu)">
+  <div class="sc-head">
+    <div class="sc-nome" style="color:var(--blu)">Scenario Base · Exit €23M</div>
+    <div class="sc-sub">Multiplo x10 EBITDA · Il più prudente</div>
+  </div>
+  <div class="sc-body">
+    <div class="sc-row">
+      <div class="sc-chi"><div class="sc-dot" style="background:var(--viola)"></div><div><div class="sc-nome2"><strong>Fondo</strong> — con liquidation preference</div><div class="sc-note2">€4,5M recuperati + 40% × €18,5M</div></div></div>
+      <div class="sc-val"><div class="sc-importo" style="color:var(--viola)">€10,4M</div><div class="sc-irr">5,2x · IRR ~51% ✓✓✓</div></div>
+    </div>
+    <div class="sc-row">
+      <div class="sc-chi"><div class="sc-dot" style="background:var(--blu)"></div><div><div class="sc-nome2"><strong>FranKi</strong> — 12% equity + fee + success fee</div><div class="sc-note2">€2,22M + €680K fee + €264K success fee</div></div></div>
+      <div class="sc-val"><div class="sc-importo" style="color:var(--blu)">€3,70M</div><div class="sc-irr">€0 investiti</div></div>
+    </div>
+    <div class="sc-row">
+      <div class="sc-chi"><div class="sc-dot" style="background:var(--arancio)"></div><div><div class="sc-nome2"><strong>Affio</strong> — 24% equity</div><div class="sc-note2">€4,44M − €132K success fee a FranKi</div></div></div>
+      <div class="sc-val"><div class="sc-importo" style="color:var(--arancio)">€4,79M</div><div class="sc-irr">€60K investiti → 80x</div></div>
+    </div>
+    <div class="sc-row">
+      <div class="sc-chi"><div class="sc-dot" style="background:var(--verde)"></div><div><div class="sc-nome2"><strong>Marco</strong> — 24% equity</div><div class="sc-note2">€4,44M − €132K success fee a FranKi</div></div></div>
+      <div class="sc-val"><div class="sc-importo" style="color:var(--verde)">€4,79M</div><div class="sc-irr">€60K investiti → 80x</div></div>
+    </div>
+    <div class="sc-sep">
+      <div class="sc-sep-label">Crowd — minibond 15% · pagato dai flussi operativi (non dall'exit)</div>
+      <div class="sc-sep-val">€2,4M fissi</div>
+    </div>
+    <div class="sc-total">
+      <div class="sc-total-label">Fondatori incassano</div>
+      <div class="sc-total-val" style="color:var(--blu)">€12,89M</div>
+    </div>
+  </div>
+</div>
+
+<!-- SCENARIO BUONO -->
+<div class="scenario" style="border-color:var(--arancio);margin-top:2px">
+  <div class="sc-head">
+    <div class="sc-nome" style="color:#c27800">Scenario Buono · Exit €32M</div>
+    <div class="sc-sub">Multiplo x14 EBITDA · Club privato con lista d'attesa</div>
+  </div>
+  <div class="sc-body">
+    <div class="sc-row">
+      <div class="sc-chi"><div class="sc-dot" style="background:var(--viola)"></div><div><div class="sc-nome2"><strong>Fondo</strong></div><div class="sc-note2">€4,5M + 40% × €27,5M</div></div></div>
+      <div class="sc-val"><div class="sc-importo" style="color:var(--viola)">€14,4M</div><div class="sc-irr">7,2x · IRR ~63% ✓✓✓</div></div>
+    </div>
+    <div class="sc-row">
+      <div class="sc-chi"><div class="sc-dot" style="background:var(--blu)"></div><div><div class="sc-nome2"><strong>FranKi</strong></div><div class="sc-note2">€3,3M equity + €680K fee + €388K success fee</div></div></div>
+      <div class="sc-val"><div class="sc-importo" style="color:var(--blu)">€4,92M</div><div class="sc-irr">€0 investiti</div></div>
+    </div>
+    <div class="sc-row">
+      <div class="sc-chi"><div class="sc-dot" style="background:var(--arancio)"></div><div><div class="sc-nome2"><strong>Affio</strong></div><div class="sc-note2">€6,6M − €194K success fee</div></div></div>
+      <div class="sc-val"><div class="sc-importo" style="color:var(--arancio)">€6,73M</div><div class="sc-irr">€60K investiti → 112x</div></div>
+    </div>
+    <div class="sc-row">
+      <div class="sc-chi"><div class="sc-dot" style="background:var(--verde)"></div><div><div class="sc-nome2"><strong>Marco</strong></div><div class="sc-note2">€6,6M − €194K success fee</div></div></div>
+      <div class="sc-val"><div class="sc-importo" style="color:var(--verde)">€6,73M</div><div class="sc-irr">€60K investiti → 112x</div></div>
+    </div>
+    <div class="sc-sep">
+      <div class="sc-sep-label">Crowd — minibond 15% · fisso indipendente dall'exit</div>
+      <div class="sc-sep-val">€2,4M fissi</div>
+    </div>
+    <div class="sc-total">
+      <div class="sc-total-label">Fondatori incassano</div>
+      <div class="sc-total-val" style="color:var(--arancio)">€18,38M</div>
+    </div>
+  </div>
+</div>
+
+<!-- SCENARIO OTTIMO -->
+<div class="scenario" style="border-color:var(--verde);margin-top:2px">
+  <div class="sc-head">
+    <div class="sc-nome" style="color:var(--verde)">Scenario Ottimo · Exit €37M</div>
+    <div class="sc-sub">Multiplo x16 EBITDA · Acquirente strategico premium</div>
+  </div>
+  <div class="sc-body">
+    <div class="sc-row">
+      <div class="sc-chi"><div class="sc-dot" style="background:var(--viola)"></div><div><div class="sc-nome2"><strong>Fondo</strong></div><div class="sc-note2">€4,5M + 40% × €32,5M</div></div></div>
+      <div class="sc-val"><div class="sc-importo" style="color:var(--viola)">€16,4M</div><div class="sc-irr">8,2x · IRR ~70% ✓✓✓</div></div>
+    </div>
+    <div class="sc-row">
+      <div class="sc-chi"><div class="sc-dot" style="background:var(--blu)"></div><div><div class="sc-nome2"><strong>FranKi</strong></div><div class="sc-note2">€3,9M equity + €680K fee + €460K success fee</div></div></div>
+      <div class="sc-val"><div class="sc-importo" style="color:var(--blu)">€5,55M</div><div class="sc-irr">€0 investiti</div></div>
+    </div>
+    <div class="sc-row">
+      <div class="sc-chi"><div class="sc-dot" style="background:var(--arancio)"></div><div><div class="sc-nome2"><strong>Affio</strong></div><div class="sc-note2">€7,8M − €230K success fee</div></div></div>
+      <div class="sc-val"><div class="sc-importo" style="color:var(--arancio)">€7,90M</div><div class="sc-irr">€60K investiti → 132x</div></div>
+    </div>
+    <div class="sc-row">
+      <div class="sc-chi"><div class="sc-dot" style="background:var(--verde)"></div><div><div class="sc-nome2"><strong>Marco</strong></div><div class="sc-note2">€7,8M − €230K success fee</div></div></div>
+      <div class="sc-val"><div class="sc-importo" style="color:var(--verde)">€7,90M</div><div class="sc-irr">€60K investiti → 132x</div></div>
+    </div>
+    <div class="sc-sep">
+      <div class="sc-sep-label">Crowd — minibond 15% · fisso indipendente dall'exit</div>
+      <div class="sc-sep-val">€2,4M fissi</div>
+    </div>
+    <div class="sc-total">
+      <div class="sc-total-label">Fondatori incassano</div>
+      <div class="sc-total-val" style="color:var(--verde)">€21,35M</div>
+    </div>
+  </div>
+</div>
+
+<!-- TABELLA SINTESI -->
+<div class="sh" style="margin-top:20px">
+  <div class="sh-title">Riepilogo Finale</div>
+  <div class="sh-badge">sintesi</div>
+</div>
+
+<div class="card" style="padding:0;overflow:hidden">
+  <table style="width:100%;border-collapse:collapse;font-size:13px">
+    <thead>
+      <tr style="background:var(--blu);color:var(--bianco)">
+        <th style="padding:10px 12px;text-align:left;font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:.08em;text-transform:uppercase">Chi</th>
+        <th style="padding:10px 12px;text-align:right;font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:.08em;text-transform:uppercase">Mette</th>
+        <th style="padding:10px 12px;text-align:right;font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:.08em;text-transform:uppercase">Base €23M</th>
+        <th style="padding:10px 12px;text-align:right;font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:.08em;text-transform:uppercase">Buono €32M</th>
+        <th style="padding:10px 12px;text-align:right;font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:.08em;text-transform:uppercase">Ottimo €37M</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="padding:10px 12px;font-weight:600;color:var(--blu)">FranKi</td>
+        <td style="padding:10px 12px;text-align:right;color:#aaa">€0</td>
+        <td style="padding:10px 12px;text-align:right;font-family:'Barlow Condensed',sans-serif;font-weight:900;color:var(--blu)">€3,70M</td>
+        <td style="padding:10px 12px;text-align:right;font-family:'Barlow Condensed',sans-serif;font-weight:900;color:var(--blu)">€4,92M</td>
+        <td style="padding:10px 12px;text-align:right;font-family:'Barlow Condensed',sans-serif;font-weight:900;color:var(--blu)">€5,55M</td>
+      </tr>
+      <tr style="background:#f8f8f8">
+        <td style="padding:10px 12px;font-weight:600;color:#c27800">Affio</td>
+        <td style="padding:10px 12px;text-align:right;color:#aaa">€60K</td>
+        <td style="padding:10px 12px;text-align:right;font-family:'Barlow Condensed',sans-serif;font-weight:900;color:var(--arancio)">€4,79M</td>
+        <td style="padding:10px 12px;text-align:right;font-family:'Barlow Condensed',sans-serif;font-weight:900;color:var(--arancio)">€6,73M</td>
+        <td style="padding:10px 12px;text-align:right;font-family:'Barlow Condensed',sans-serif;font-weight:900;color:var(--arancio)">€7,90M</td>
+      </tr>
+      <tr>
+        <td style="padding:10px 12px;font-weight:600;color:var(--verde)">Marco</td>
+        <td style="padding:10px 12px;text-align:right;color:#aaa">€60K</td>
+        <td style="padding:10px 12px;text-align:right;font-family:'Barlow Condensed',sans-serif;font-weight:900;color:var(--verde)">€4,79M</td>
+        <td style="padding:10px 12px;text-align:right;font-family:'Barlow Condensed',sans-serif;font-weight:900;color:var(--verde)">€6,73M</td>
+        <td style="padding:10px 12px;text-align:right;font-family:'Barlow Condensed',sans-serif;font-weight:900;color:var(--verde)">€7,90M</td>
+      </tr>
+      <tr style="background:#fff4e0">
+        <td style="padding:10px 12px;font-weight:700">3 fondatori</td>
+        <td style="padding:10px 12px;text-align:right;font-weight:600">€120K</td>
+        <td style="padding:10px 12px;text-align:right;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:15px">€12,89M</td>
+        <td style="padding:10px 12px;text-align:right;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:15px">€18,38M</td>
+        <td style="padding:10px 12px;text-align:right;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:15px">€21,35M</td>
+      </tr>
+      <tr style="background:#f0ebff">
+        <td style="padding:10px 12px;font-weight:600;color:var(--viola)">Fondo</td>
+        <td style="padding:10px 12px;text-align:right;color:#aaa">€2,0M</td>
+        <td style="padding:10px 12px;text-align:right;font-family:'Barlow Condensed',sans-serif;font-weight:900;color:var(--viola)">€10,4M</td>
+        <td style="padding:10px 12px;text-align:right;font-family:'Barlow Condensed',sans-serif;font-weight:900;color:var(--viola)">€14,4M</td>
+        <td style="padding:10px 12px;text-align:right;font-family:'Barlow Condensed',sans-serif;font-weight:900;color:var(--viola)">€16,4M</td>
+      </tr>
+      <tr style="background:#fff4e0;border-top:2px dashed rgba(240,165,0,.4)">
+        <td style="padding:10px 12px;color:var(--grigio);font-style:italic">Crowd minibond</td>
+        <td style="padding:10px 12px;text-align:right;color:#aaa">€1,5M</td>
+        <td colspan="3" style="padding:10px 12px;text-align:right;font-family:'Barlow Condensed',sans-serif;font-weight:700;color:#c27800">€2,4M fissi (indipendente dall'exit)</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="orange-band" style="margin-top:20px">
+  <h3>Il Miglioramento Rispetto alla Versione Precedente</h3>
+  <p>Convertendo il crowd da equity a minibond, Affio e Marco salgono dal 20% al 24% — guadagnano 4 punti percentuali senza investire un euro in più. Nello scenario buono questo vale €1,42M aggiuntivi ciascuno. Nel base case €610K in più ciascuno. La struttura definitiva è più semplice, più pulita e più redditizia per i fondatori.</p>
+</div>
+
+<div class="dark-cta">
+  <h2>STRUTTURA<br>DEFINITIVA.<br><em>PROSSIMO PASSO:<br>L'AVVOCATO.</em></h2>
+  <p>Trovare lo specialista in esecuzioni immobiliari a Sulmona e firmare il patto parasociale tra FranKi, Affio e Marco. Da lì parte tutto.</p>
+</div>
+
+<div class="confid">CAP TABLE DEFINITIVA · RISERVATO · FranKi, Affio, Marco · Aprile 2026 · Valori stimati — non costituiscono garanzia di rendimento</div>
+</body>
+</html>

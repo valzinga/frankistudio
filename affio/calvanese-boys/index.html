@@ -1,0 +1,1577 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Analisi Immobile — Calvanese Boys</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue: #3549B5;
+    --blue-dark: #2a3a96;
+    --blue-light: #e8ecf9;
+    --amber: #F9AC28;
+    --amber-light: #fff8e8;
+    --amber-dark: #d4901a;
+    --bg: #f7f8fc;
+    --card: #ffffff;
+    --text: #1a1f3a;
+    --muted: #6b7280;
+    --border: #dde1ef;
+    --success: #22c55e;
+    --radius: 12px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Lato', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .header {
+    background: var(--blue);
+    color: white;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 16px rgba(53,73,181,0.25);
+  }
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 2px;
+    color: var(--amber);
+    line-height: 1;
+  }
+  .logo span { color: white; font-size: 13px; letter-spacing: 1px; display: block; font-family: 'DM Mono', monospace; font-weight: 400; margin-top: 2px; }
+  .header-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: rgba(255,255,255,0.7);
+    text-align: right;
+    line-height: 1.5;
+  }
+  .header-tag strong { color: var(--amber); font-size: 13px; display: block; }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--blue) 0%, #1e2d8a 100%);
+    color: white;
+    padding: 48px 24px 40px;
+    text-align: center;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: var(--amber);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(32px, 6vw, 52px);
+    letter-spacing: 2px;
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+  .hero h1 span { color: var(--amber); }
+  .hero p {
+    font-size: 15px;
+    color: rgba(255,255,255,0.8);
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* PROGRESS */
+  .progress-wrap {
+    background: white;
+    border-bottom: 1px solid var(--border);
+    padding: 16px 24px;
+    position: sticky;
+    top: 72px;
+    z-index: 90;
+  }
+  .progress-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  .progress-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .progress-count {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--blue);
+  }
+  .progress-bar-bg {
+    height: 6px;
+    background: var(--border);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--blue), var(--amber));
+    border-radius: 99px;
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+
+  /* SECTION TABS */
+  .section-tabs {
+    display: flex;
+    gap: 8px;
+    padding: 20px 24px 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .section-tabs::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    flex-shrink: 0;
+    background: white;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .tab-btn.active {
+    background: var(--blue);
+    border-color: var(--blue);
+    color: white;
+  }
+  .tab-btn.done {
+    background: var(--amber-light);
+    border-color: var(--amber);
+    color: var(--amber-dark);
+  }
+  .tab-btn .tab-num {
+    display: block;
+    font-size: 9px;
+    opacity: 0.7;
+    margin-bottom: 2px;
+  }
+
+  /* MAIN */
+  main { padding: 24px 24px 120px; max-width: 720px; margin: 0 auto; }
+
+  /* SECTION CARD */
+  .section-card {
+    display: none;
+    background: white;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    margin-top: 20px;
+    box-shadow: 0 2px 12px rgba(53,73,181,0.06);
+  }
+  .section-card.active { display: block; animation: slideIn 0.3s ease; }
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .section-header {
+    background: var(--blue);
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .section-emoji {
+    font-size: 28px;
+    line-height: 1;
+  }
+  .section-title-wrap {}
+  .section-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+    letter-spacing: 1px;
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 24px;
+    color: white;
+    letter-spacing: 1.5px;
+  }
+
+  .section-body { padding: 28px 24px; display: flex; flex-direction: column; gap: 24px; }
+
+  /* FIELD */
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--blue);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .req {
+    background: var(--amber);
+    color: var(--text);
+    font-size: 9px;
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+  .hint {
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'Lato', sans-serif;
+    font-style: italic;
+    margin-top: -2px;
+  }
+
+  input[type="text"], input[type="number"], textarea, select {
+    width: 100%;
+    padding: 12px 14px;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    font-family: 'Lato', sans-serif;
+    font-size: 15px;
+    color: var(--text);
+    background: white;
+    transition: border-color 0.2s;
+    outline: none;
+    -webkit-appearance: none;
+  }
+  input[type="text"]:focus, input[type="number"]:focus, textarea:focus, select:focus {
+    border-color: var(--blue);
+    background: var(--blue-light);
+  }
+  textarea { resize: vertical; min-height: 90px; }
+
+  /* RADIO / CHECKBOX GROUP */
+  .options-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .options-grid.cols-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .opt-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-size: 14px;
+    color: var(--text);
+    background: white;
+    text-align: left;
+  }
+  .opt-btn:hover { border-color: var(--blue); background: var(--blue-light); }
+  .opt-btn.selected { border-color: var(--blue); background: var(--blue-light); color: var(--blue); font-weight: 700; }
+  .opt-btn.selected .opt-dot { background: var(--blue); border-color: var(--blue); }
+  .opt-dot {
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    flex-shrink: 0;
+    transition: all 0.15s;
+  }
+  .opt-check {
+    width: 16px; height: 16px;
+    border-radius: 4px;
+    border: 2px solid var(--border);
+    flex-shrink: 0;
+    transition: all 0.15s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .opt-btn.selected .opt-check {
+    background: var(--blue);
+    border-color: var(--blue);
+  }
+  .opt-btn.selected .opt-check::after { content: '✓'; color: white; font-size: 11px; font-weight: 700; }
+
+  /* HIGHLIGHT BOX */
+  .info-box {
+    background: var(--amber-light);
+    border: 1px solid var(--amber);
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.6;
+    display: flex;
+    gap: 10px;
+  }
+  .info-box .ib-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+
+  /* NOTES SECTION */
+  .notes-section {
+    background: #f9fafb;
+    border-top: 1px solid var(--border);
+    padding: 20px 24px;
+  }
+  .notes-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* NAVIGATION */
+  .nav-wrap {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+    justify-content: space-between;
+  }
+  .btn {
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+    letter-spacing: 0.5px;
+  }
+  .btn-prev {
+    background: white;
+    border: 2px solid var(--border);
+    color: var(--muted);
+  }
+  .btn-prev:hover { border-color: var(--blue); color: var(--blue); }
+  .btn-next {
+    background: var(--blue);
+    color: white;
+    flex: 1;
+  }
+  .btn-next:hover { background: var(--blue-dark); }
+  .btn-amber {
+    background: var(--amber);
+    color: var(--text);
+    font-weight: 700;
+  }
+  .btn-amber:hover { background: var(--amber-dark); color: white; }
+
+  /* FINAL SECTION */
+  .final-box {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px 24px;
+    margin-top: 20px;
+    box-shadow: 0 2px 12px rgba(53,73,181,0.06);
+  }
+  .final-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    color: var(--blue);
+    letter-spacing: 1.5px;
+    margin-bottom: 16px;
+  }
+  .step-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
+  .step-item {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--text);
+  }
+  .step-num {
+    width: 28px; height: 28px;
+    background: var(--blue);
+    color: white;
+    border-radius: 50%;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .action-btns { display: flex; gap: 10px; flex-wrap: wrap; }
+  .action-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+    letter-spacing: 0.5px;
+  }
+  .btn-pdf { background: var(--blue); color: white; }
+  .btn-pdf:hover { background: var(--blue-dark); }
+  .btn-save { background: var(--amber); color: var(--text); font-weight: 700; }
+  .btn-save:hover { background: var(--amber-dark); color: white; }
+  .btn-copy { background: white; border: 2px solid var(--border); color: var(--muted); }
+  .btn-copy:hover { border-color: var(--blue); color: var(--blue); }
+  .btn-wa { background: #25d366; color: white; }
+  .btn-wa:hover { background: #1ebe5c; }
+
+  /* THANK YOU */
+  .thankyou { display: none; text-align: center; padding: 60px 24px; }
+  .thankyou.active { display: block; }
+  .ty-icon { font-size: 60px; margin-bottom: 20px; }
+  .ty-title { font-family: 'Bebas Neue', sans-serif; font-size: 40px; color: var(--blue); letter-spacing: 2px; margin-bottom: 12px; }
+  .ty-sub { font-size: 16px; color: var(--muted); max-width: 400px; margin: 0 auto; line-height: 1.6; }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 24px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+  }
+  footer strong { color: var(--blue); }
+
+  /* SCENARIOS SECTION */
+  .scenarios-section {
+    background: white;
+    border-bottom: 3px solid var(--blue);
+  }
+  .scenarios-intro {
+    background: linear-gradient(135deg, #1a1f3a 0%, #2a3a96 100%);
+    padding: 36px 24px 28px;
+    text-align: center;
+  }
+  .scenarios-intro .s-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--amber);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .scenarios-intro h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(26px, 5vw, 40px);
+    color: white;
+    letter-spacing: 2px;
+    line-height: 1.1;
+    margin-bottom: 14px;
+  }
+  .scenarios-intro h2 span { color: var(--amber); }
+  .scenarios-intro p {
+    font-size: 14px;
+    color: rgba(255,255,255,0.75);
+    max-width: 500px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+  .tar-box {
+    background: #fff8e8;
+    border-left: 4px solid var(--amber);
+    margin: 0 24px;
+    margin-top: -1px;
+    padding: 14px 16px;
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.6;
+  }
+  .tar-box strong { color: var(--blue); }
+  .scenarios-grid {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .scenario-card {
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+  }
+  .scenario-card:hover { box-shadow: 0 4px 20px rgba(53,73,181,0.12); }
+  .sc-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 20px;
+    cursor: pointer;
+    background: white;
+  }
+  .sc-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    color: var(--border);
+    line-height: 1;
+    min-width: 36px;
+  }
+  .sc-icon { font-size: 26px; }
+  .sc-title-wrap { flex: 1; }
+  .sc-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    color: var(--blue);
+    letter-spacing: 1px;
+    line-height: 1.1;
+  }
+  .sc-subtitle {
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    margin-top: 2px;
+  }
+  .sc-scores {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .score-pill {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    padding: 3px 9px;
+    border-radius: 20px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .score-green { background: #dcfce7; color: #166534; }
+  .score-yellow { background: #fef9c3; color: #854d0e; }
+  .score-red { background: #fee2e2; color: #991b1b; }
+  .score-blue { background: var(--blue-light); color: var(--blue); }
+  .sc-verdict {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 8px;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: 'DM Mono', monospace;
+    border: 1.5px solid;
+    width: fit-content;
+  }
+  .verdict-go { background: #dcfce7; color: #166534; border-color: #86efac; }
+  .verdict-maybe { background: #fef9c3; color: #854d0e; border-color: #fde047; }
+  .verdict-no { background: #fee2e2; color: #991b1b; border-color: #fca5a5; }
+  .sc-body {
+    display: none;
+    padding: 0 20px 20px;
+    border-top: 1px solid var(--border);
+    background: #fafbff;
+  }
+  .sc-body.open { display: block; animation: slideIn 0.25s ease; }
+  .sc-body p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text);
+    margin-top: 16px;
+  }
+  .sc-metrics {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 16px;
+  }
+  .sc-metric {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+  }
+  .sc-metric-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+  }
+  .sc-metric-value {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    color: var(--blue);
+    letter-spacing: 0.5px;
+  }
+  .sc-metric-value.amber { color: var(--amber-dark); }
+  .sc-metric-value.green { color: #16a34a; }
+  .sc-metric-value.red { color: #dc2626; }
+  .sc-franki-note {
+    margin-top: 14px;
+    background: var(--blue-light);
+    border-left: 3px solid var(--blue);
+    padding: 12px 14px;
+    font-size: 13px;
+    color: var(--blue-dark);
+    line-height: 1.6;
+    border-radius: 0 6px 6px 0;
+  }
+  .sc-franki-note strong { color: var(--blue); }
+  .toggle-icon {
+    font-size: 16px;
+    color: var(--muted);
+    transition: transform 0.2s;
+    margin-left: auto;
+  }
+  .sc-header.expanded .toggle-icon { transform: rotate(180deg); }
+  .scenarios-cta {
+    background: var(--blue);
+    padding: 28px 24px;
+    text-align: center;
+  }
+  .scenarios-cta p {
+    color: rgba(255,255,255,0.85);
+    font-size: 14px;
+    margin-bottom: 14px;
+    line-height: 1.6;
+  }
+  .scenarios-cta button {
+    background: var(--amber);
+    color: var(--text);
+    border: none;
+    padding: 14px 32px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 1.5px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .scenarios-cta button:hover { background: var(--amber-dark); color: white; }
+
+  @media (max-width: 480px) {
+    .options-grid.cols-2 { grid-template-columns: 1fr; }
+    .hero { padding: 32px 20px 28px; }
+    main { padding: 16px 16px 100px; }
+    .section-body { padding: 20px 16px; }
+    .action-btns { flex-direction: column; }
+    .action-btn { justify-content: center; }
+    .sc-metrics { grid-template-columns: 1fr; }
+    .scenarios-grid { padding: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="logo">
+    FranKi<span>STUDIO — NAPOLI</span>
+  </div>
+  <div class="header-tag">
+    <strong>ANALISI STRATEGICA PRELIMINARE</strong>
+    Immobili in zona A — Frattamaggiore
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">🏛️ Progetto Calvanese Boys</div>
+  <h1>Analisi <span>Immobile</span><br>Frattamaggiore</h1>
+  <p>Compila il questionario per ricevere gli scenari di valorizzazione e riconversione del fabbricato.</p>
+</div>
+
+<!-- SCENARIOS SECTION -->
+<div class="scenarios-section" id="scenariosSection">
+  <div class="scenarios-intro">
+    <div class="s-eyebrow">📋 Analisi post-sentenza TAR Campania 2020</div>
+    <h2>I 6 Scenari <span>Possibili</span><br>per il tuo Immobile</h2>
+    <p>Il Piano Casa è definitivamente chiuso. Ma la sentenza non blocca l'immobile — lo <strong style="color:var(--amber)">definisce</strong>. Ecco cosa si può fare concretamente.</p>
+  </div>
+
+  <div class="tar-box">
+    <strong>📌 Sentenza TAR n. 1837/2020:</strong> rigettato il ricorso Calvanese contro il Comune di Frattamaggiore. Doppio motivo: (A) la ristrutturazione 1975 riguarda edificio separato — p.lla 492, non la 476; (B) vincolo "memoria storica" da NTA PRG esclude il Piano Casa. <strong>Il Motivo B non è mai stato esaminato nel merito</strong> — spiraglio residuo per eventuale appello.
+  </div>
+
+  <div class="scenarios-grid">
+
+    <!-- S1 -->
+    <div class="scenario-card">
+      <div class="sc-header" onclick="toggleScenario(this)">
+        <div class="sc-num">01</div>
+        <div class="sc-icon">⚖️</div>
+        <div class="sc-title-wrap">
+          <div class="sc-title">Consiglio di Stato — Ricorso in Appello</div>
+          <div class="sc-subtitle">Impugnare la sentenza TAR sul Motivo B</div>
+          <div class="sc-scores" style="margin-top:8px">
+            <span class="score-pill score-red">Probabilità bassa</span>
+            <span class="score-pill score-red">Costi alti</span>
+            <span class="score-pill score-red">Tempi 3–5 anni</span>
+          </div>
+          <div class="sc-verdict verdict-no">🔴 NON CONSIGLIATO</div>
+        </div>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="sc-body">
+        <p>Il Motivo A (edifici separati) è stato confermato dal verificatore tecnico e poi dal TAR — difficile ribaltarlo. L'unico margine è il <strong>Motivo B</strong>: il vincolo "memoria storica" da NTA del PRG <em>non equivale</em> automaticamente a un vincolo D.Lgs. 42/2004 o a inedificabilità assoluta. Questo punto non è mai stato esaminato nel merito. In appello si potrebbe sostenere che il TAR ha dichiarato inammissibile una censura potenzialmente fondata.</p>
+        <div class="sc-metrics">
+          <div class="sc-metric"><div class="sc-metric-label">Probabilità di successo</div><div class="sc-metric-value red">15–20%</div></div>
+          <div class="sc-metric"><div class="sc-metric-label">Costo stimato</div><div class="sc-metric-value amber">€15.000–30.000</div></div>
+          <div class="sc-metric"><div class="sc-metric-label">Tempi attesi</div><div class="sc-metric-value">3–5 anni</div></div>
+          <div class="sc-metric"><div class="sc-metric-label">Upside se si vince</div><div class="sc-metric-value green">+35% volume</div></div>
+        </div>
+        <div class="sc-franki-note"><strong>Nota Franki:</strong> Ha senso solo se la volumetria aggiuntiva vale abbastanza da giustificare rischio e costo. Va valutato con un avvocato amministrativista specializzato, preferibilmente diverso da quello già coinvolto. Nel frattempo non è incompatibile con gli altri scenari.</div>
+      </div>
+    </div>
+
+    <!-- S2 -->
+    <div class="scenario-card">
+      <div class="sc-header" onclick="toggleScenario(this)">
+        <div class="sc-num">02</div>
+        <div class="sc-icon">🔨</div>
+        <div class="sc-title-wrap">
+          <div class="sc-title">Ristrutturazione Conservativa</div>
+          <div class="sc-subtitle">Restauro e risanamento senza toccare la volumetria</div>
+          <div class="sc-scores" style="margin-top:8px">
+            <span class="score-pill score-green">Alta fattibilità</span>
+            <span class="score-pill score-green">Basso rischio</span>
+            <span class="score-pill score-yellow">ROI medio</span>
+          </div>
+          <div class="sc-verdict verdict-go">🟢 PERCORSO PRINCIPALE</div>
+        </div>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="sc-body">
+        <p>Restauro, risanamento conservativo e manutenzione straordinaria ai sensi del DPR 380/2001. Compatibile con il vincolo "memoria storica" — anzi, è esattamente l'intervento che la norma intende favorire. Si lavora sugli impianti, sulla struttura, sugli interni e sui prospetti, senza modificare i volumi. Il risultato è un immobile completamente recuperato con titolo edilizio sicuro.</p>
+        <div class="sc-metrics">
+          <div class="sc-metric"><div class="sc-metric-label">Fattibilità autorizzativa</div><div class="sc-metric-value green">Alta</div></div>
+          <div class="sc-metric"><div class="sc-metric-label">Investimento stimato</div><div class="sc-metric-value amber">€800–1.200/mq</div></div>
+          <div class="sc-metric"><div class="sc-metric-label">Tempi lavori</div><div class="sc-metric-value">18–36 mesi</div></div>
+          <div class="sc-metric"><div class="sc-metric-label">Incremento valore</div><div class="sc-metric-value green">+60–100%</div></div>
+        </div>
+        <div class="sc-franki-note"><strong>Nota Franki:</strong> Primo scenario da attivare, basso rischio autorizzativo, alto impatto sul valore. Può essere combinato con frazionamento e cambio d'uso parziale. È la base di tutti gli altri percorsi.</div>
+      </div>
+    </div>
+
+    <!-- S3 -->
+    <div class="scenario-card">
+      <div class="sc-header" onclick="toggleScenario(this)">
+        <div class="sc-num">03</div>
+        <div class="sc-icon">🏗️</div>
+        <div class="sc-title-wrap">
+          <div class="sc-title">Demolizione e Ricostruzione a Parità Volumetrica</div>
+          <div class="sc-subtitle">Edificio nuovo, stessa cubatura — massima efficienza interna</div>
+          <div class="sc-scores" style="margin-top:8px">
+            <span class="score-pill score-yellow">Da verificare su PRG</span>
+            <span class="score-pill score-yellow">Investimento alto</span>
+            <span class="score-pill score-green">ROI elevato</span>
+          </div>
+          <div class="sc-verdict verdict-maybe">🟡 ALTO POTENZIALE — DA VALIDARE</div>
+        </div>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="sc-body">
+        <p>Il Piano Casa era escluso perché chiedeva <em>più</em> volume. Ma la demolizione totale e ricostruzione <em>alla stessa cubatura</em> segue le norme ordinarie del PRG — non il Piano Casa. In zona A è generalmente ammessa se le NTA non la escludono espressamente. Il risultato è un edificio completamente nuovo, antisismico, efficiente, con layout ottimizzato, stessa superficie totale.</p>
+        <div class="sc-metrics">
+          <div class="sc-metric"><div class="sc-metric-label">Fattibilità autorizzativa</div><div class="sc-metric-value amber">Da verificare NTA</div></div>
+          <div class="sc-metric"><div class="sc-metric-label">Investimento stimato</div><div class="sc-metric-value amber">€1.200–1.800/mq</div></div>
+          <div class="sc-metric"><div class="sc-metric-label">Tempi lavori</div><div class="sc-metric-value">24–48 mesi</div></div>
+          <div class="sc-metric"><div class="sc-metric-label">Incremento valore</div><div class="sc-metric-value green">+120–180%</div></div>
+        </div>
+        <div class="sc-franki-note"><strong>Nota Franki:</strong> Lo scenario più trasformativo. Prima mossa: far leggere le NTA del PRG di Frattamaggiore a un tecnico per capire se la demolizione/ricostruzione a parità è ammessa in Zona A con vincolo memoria storica. Se sì, cambia tutto il gioco.</div>
+      </div>
+    </div>
+
+    <!-- S4 -->
+    <div class="scenario-card">
+      <div class="sc-header" onclick="toggleScenario(this)">
+        <div class="sc-num">04</div>
+        <div class="sc-icon">✂️</div>
+        <div class="sc-title-wrap">
+          <div class="sc-title">Frazionamento delle Unità</div>
+          <div class="sc-subtitle">Unità grandi → appartamenti piccoli, più vendibili e più redditizi</div>
+          <div class="sc-scores" style="margin-top:8px">
+            <span class="score-pill score-green">Alta fattibilità</span>
+            <span class="score-pill score-green">Investimento basso</span>
+            <span class="score-pill score-green">ROI alto</span>
+          </div>
+          <div class="sc-verdict verdict-go">🟢 QUICK WIN — ATTIVABILE SUBITO</div>
+        </div>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="sc-body">
+        <p>Il fabbricato ha già 24+ sub-unità (p.lla 476, sub 1–24 + 101/102). Frazionare ulteriormente le unità più grandi in bilocali o trilocali è tipicamente una <strong>SCIA</strong> — lavori interni senza modifiche esterne, iter veloce. Sul mercato di Frattamaggiore e hinterland napoletano, un bilocale compatto vale molto di più al mq di un appartamento grande da ristrutturare. Alta liquidità, basso rischio, tempi brevi.</p>
+        <div class="sc-metrics">
+          <div class="sc-metric"><div class="sc-metric-label">Tipo pratica</div><div class="sc-metric-value green">SCIA</div></div>
+          <div class="sc-metric"><div class="sc-metric-label">Investimento per unità</div><div class="sc-metric-value green">€20.000–50.000</div></div>
+          <div class="sc-metric"><div class="sc-metric-label">Tempi autorizzativi</div><div class="sc-metric-value green">30–60 giorni</div></div>
+          <div class="sc-metric"><div class="sc-metric-label">Incremento valore/mq</div><div class="sc-metric-value green">+30–50%</div></div>
+        </div>
+        <div class="sc-franki-note"><strong>Nota Franki:</strong> Il percorso a più alto ROI rispetto all'investimento. Combinato con la ristrutturazione conservativa diventa il motore principale della valorizzazione. Da attivare in parallelo, unità per unità, senza aspettare il progetto complessivo.</div>
+      </div>
+    </div>
+
+    <!-- S5 -->
+    <div class="scenario-card">
+      <div class="sc-header" onclick="toggleScenario(this)">
+        <div class="sc-num">05</div>
+        <div class="sc-icon">🔄</div>
+        <div class="sc-title-wrap">
+          <div class="sc-title">Cambio Destinazione d'Uso</div>
+          <div class="sc-subtitle">Da residenziale a misto — commerciale, uffici, ricettivo</div>
+          <div class="sc-scores" style="margin-top:8px">
+            <span class="score-pill score-yellow">Da verificare NTA</span>
+            <span class="score-pill score-yellow">Complessità media</span>
+            <span class="score-pill score-green">Reddito potenziale alto</span>
+          </div>
+          <div class="sc-verdict verdict-maybe">🟡 STRATO AGGIUNTIVO — DA ESPLORARE</div>
+        </div>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="sc-body">
+        <p>Frattamaggiore è un comune di 30.000 abitanti nell'hinterland napoletano, con domanda di spazi per uffici professionali, attività commerciali e ricettività di prossimità. Cambiare la destinazione d'uso di alcune unità — piano terra a commerciale, piani superiori residenziale o B&B — può aumentare significativamente il reddito generabile. Richiede verifica delle NTA per Zona A e compatibilità con il vincolo "memoria storica".</p>
+        <div class="sc-metrics">
+          <div class="sc-metric"><div class="sc-metric-label">Fattibilità</div><div class="sc-metric-value amber">Da verificare NTA</div></div>
+          <div class="sc-metric"><div class="sc-metric-label">Tipo pratica</div><div class="sc-metric-value">SCIA / Permesso</div></div>
+          <div class="sc-metric"><div class="sc-metric-label">Reddito aggiuntivo</div><div class="sc-metric-value green">+40–80% vs residenziale</div></div>
+          <div class="sc-metric"><div class="sc-metric-label">Complessità gestionale</div><div class="sc-metric-value amber">Media-alta</div></div>
+        </div>
+        <div class="sc-franki-note"><strong>Nota Franki:</strong> Non è un percorso a sé — è un moltiplicatore. Si sovrappone agli scenari 2, 3 e 4. La domanda chiave è: cosa chiede il mercato locale? Serve una breve analisi della domanda a Frattamaggiore prima di orientarsi.</div>
+      </div>
+    </div>
+
+    <!-- S6 -->
+    <div class="scenario-card">
+      <div class="sc-header" onclick="toggleScenario(this)">
+        <div class="sc-num">06</div>
+        <div class="sc-icon">💼</div>
+        <div class="sc-title-wrap">
+          <div class="sc-title">Vendita Valorizzata</div>
+          <div class="sc-subtitle">Uscire dall'immobile dopo aver costruito il dossier del fattibile</div>
+          <div class="sc-scores" style="margin-top:8px">
+            <span class="score-pill score-green">Zero rischio costruttivo</span>
+            <span class="score-pill score-green">Tempi brevi</span>
+            <span class="score-pill score-yellow">Upside limitato</span>
+          </div>
+          <div class="sc-verdict verdict-go">🟢 EXIT STRATEGY VALIDA</div>
+        </div>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="sc-body">
+        <p>La sentenza paradossalmente <em>aiuta</em> la vendita: perché delimita con precisione i rischi per un compratore. Un immobile "con sentenza chiara" vale più di uno con contenzioso aperto. Costruire un dossier tecnico-strategico — cosa è fattibile, con quale iter, con quale investimento e quale upside — aumenta il prezzo di cessione in modo significativo. L'acquirente tipo è uno sviluppatore locale o un investitore privato del territorio.</p>
+        <div class="sc-metrics">
+          <div class="sc-metric"><div class="sc-metric-label">Rischio costruttivo</div><div class="sc-metric-value green">Zero</div></div>
+          <div class="sc-metric"><div class="sc-metric-label">Tempo alla liquidità</div><div class="sc-metric-value green">6–18 mesi</div></div>
+          <div class="sc-metric"><div class="sc-metric-label">Valore attuale stimato</div><div class="sc-metric-value amber">€300–500/mq</div></div>
+          <div class="sc-metric"><div class="sc-metric-label">Valore con dossier</div><div class="sc-metric-value green">+20–35%</div></div>
+        </div>
+        <div class="sc-franki-note"><strong>Nota Franki:</strong> Questo questionario che stai compilando è già il primo passo verso questa valorizzazione. Anche se non vuoi vendere, sapere cosa vale l'immobile "preparato" è un dato fondamentale per qualsiasi decisione.</div>
+      </div>
+    </div>
+
+  </div><!-- end scenarios-grid -->
+
+  <div class="scenarios-cta">
+    <p>Hai letto i 6 scenari. Ora compila il questionario — le tue risposte ci permettono di capire quale percorso è più adatto alla tua situazione specifica.</p>
+    <button onclick="scrollToQuestionnaire()">COMPILA IL QUESTIONARIO →</button>
+  </div>
+</div><!-- end scenarios-section -->
+
+<!-- PROGRESS -->
+<div class="progress-wrap">
+  <div class="progress-meta">
+    <span class="progress-label">Compilazione in corso</span>
+    <span class="progress-count" id="progressCount">0 / 30 risposte</span>
+  </div>
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressBar"></div>
+  </div>
+</div>
+
+<!-- SECTION TABS -->
+<div class="section-tabs" id="sectionTabs">
+  <button class="tab-btn active" onclick="goToSection(0)"><span class="tab-num">01/06</span>L'Immobile</button>
+  <button class="tab-btn" onclick="goToSection(1)"><span class="tab-num">02/06</span>Vincoli</button>
+  <button class="tab-btn" onclick="goToSection(2)"><span class="tab-num">03/06</span>Interventi</button>
+  <button class="tab-btn" onclick="goToSection(3)"><span class="tab-num">04/06</span>Finanze</button>
+  <button class="tab-btn" onclick="goToSection(4)"><span class="tab-num">05/06</span>Tempi</button>
+  <button class="tab-btn" onclick="goToSection(5)"><span class="tab-num">06/06</span>Obiettivi</button>
+</div>
+
+<!-- MAIN -->
+<main id="mainContent">
+
+  <!-- SEZIONE 1 — L'IMMOBILE -->
+  <div class="section-card active" id="section-0">
+    <div class="section-header">
+      <div class="section-emoji">🏛️</div>
+      <div class="section-title-wrap">
+        <div class="section-num">01 / 06</div>
+        <div class="section-title">L'Immobile</div>
+      </div>
+    </div>
+    <div class="section-body">
+
+      <div class="info-box">
+        <span class="ib-icon">ℹ️</span>
+        <span>Questi dati sono la base per l'analisi tecnica. Inserisci i valori che conosci — anche parziali vanno bene.</span>
+      </div>
+
+      <div class="field">
+        <div class="field-label">Indirizzo completo <span class="req">OBBLIG</span></div>
+        <input type="text" id="f_indirizzo" placeholder="Es. Via Don Minzioni 37, Frattamaggiore" oninput="updateProgress()">
+      </div>
+
+      <div class="field">
+        <div class="field-label">Dati catastali (foglio / particella)</div>
+        <input type="text" id="f_catasto" placeholder="Es. Foglio 5 — Particella 476" oninput="updateProgress()">
+      </div>
+
+      <div class="field">
+        <div class="field-label">Superficie totale (mq) <span class="req">OBBLIG</span></div>
+        <div class="hint">Somma di tutte le unità — anche stima approssimativa</div>
+        <input type="number" id="f_superficie" placeholder="Es. 1043" oninput="updateProgress()">
+      </div>
+
+      <div class="field">
+        <div class="field-label">Numero di unità immobiliari</div>
+        <input type="number" id="f_unita" placeholder="Es. 24" oninput="updateProgress()">
+      </div>
+
+      <div class="field">
+        <div class="field-label">Numero di piani fuori terra</div>
+        <div class="options-grid cols-2" id="piani">
+          <div class="opt-btn" onclick="selectOpt(this,'piani')"><div class="opt-dot"></div>1 piano</div>
+          <div class="opt-btn" onclick="selectOpt(this,'piani')"><div class="opt-dot"></div>2 piani</div>
+          <div class="opt-btn" onclick="selectOpt(this,'piani')"><div class="opt-dot"></div>3 piani</div>
+          <div class="opt-btn" onclick="selectOpt(this,'piani')"><div class="opt-dot"></div>4 piani</div>
+          <div class="opt-btn" onclick="selectOpt(this,'piani')"><div class="opt-dot"></div>5+ piani</div>
+          <div class="opt-btn" onclick="selectOpt(this,'piani')"><div class="opt-dot"></div>Non so</div>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">Stato manutentivo attuale <span class="req">OBBLIG</span></div>
+        <div class="options-grid" id="stato">
+          <div class="opt-btn" onclick="selectOpt(this,'stato')"><div class="opt-dot"></div>Pessimo — inabitabile / pericolante</div>
+          <div class="opt-btn" onclick="selectOpt(this,'stato')"><div class="opt-dot"></div>Fatiscente — abitabile ma fortemente degradato</div>
+          <div class="opt-btn" onclick="selectOpt(this,'stato')"><div class="opt-dot"></div>Mediocre — funzionante ma da ristrutturare</div>
+          <div class="opt-btn" onclick="selectOpt(this,'stato')"><div class="opt-dot"></div>Discreto — solo interventi di manutenzione ordinaria</div>
+          <div class="opt-btn" onclick="selectOpt(this,'stato')"><div class="opt-dot"></div>Buono — recentemente ristrutturato</div>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">Anno di costruzione (approssimativo)</div>
+        <div class="options-grid cols-2" id="annocostr">
+          <div class="opt-btn" onclick="selectOpt(this,'annocostr')"><div class="opt-dot"></div>Prima del 1900</div>
+          <div class="opt-btn" onclick="selectOpt(this,'annocostr')"><div class="opt-dot"></div>1900–1940</div>
+          <div class="opt-btn" onclick="selectOpt(this,'annocostr')"><div class="opt-dot"></div>1940–1970</div>
+          <div class="opt-btn" onclick="selectOpt(this,'annocostr')"><div class="opt-dot"></div>1970–1990</div>
+          <div class="opt-btn" onclick="selectOpt(this,'annocostr')"><div class="opt-dot"></div>Post 1990</div>
+          <div class="opt-btn" onclick="selectOpt(this,'annocostr')"><div class="opt-dot"></div>Non so</div>
+        </div>
+      </div>
+
+    </div>
+    <div class="notes-section">
+      <div class="notes-label">✏️ Note su L'Immobile</div>
+      <textarea id="note_immobile" placeholder="Aggiungi qualsiasi dettaglio aggiuntivo sull'immobile..." oninput="updateProgress()"></textarea>
+    </div>
+    <div class="section-body">
+      <div class="nav-wrap" style="margin-top:0">
+        <button class="btn btn-next" onclick="goToSection(1)">SEZIONE SUCCESSIVA →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEZIONE 2 — VINCOLI & CONFORMITÀ -->
+  <div class="section-card" id="section-1">
+    <div class="section-header">
+      <div class="section-emoji">⚖️</div>
+      <div class="section-title-wrap">
+        <div class="section-num">02 / 06</div>
+        <div class="section-title">Vincoli & Conformità</div>
+      </div>
+    </div>
+    <div class="section-body">
+
+      <div class="info-box">
+        <span class="ib-icon">⚠️</span>
+        <span>L'immobile ricade in <strong>Zona A (centro storico)</strong> con vincolo "memoria storica" da NTA del PRG di Frattamaggiore. Il Piano Casa è già stato escluso dal TAR nel 2020.</span>
+      </div>
+
+      <div class="field">
+        <div class="field-label">Conformità urbanistica <span class="req">OBBLIG</span></div>
+        <div class="options-grid" id="conformita">
+          <div class="opt-btn" onclick="selectOpt(this,'conformita')"><div class="opt-dot"></div>Completamente conforme — tutto regolare</div>
+          <div class="opt-btn" onclick="selectOpt(this,'conformita')"><div class="opt-dot"></div>Abusi sanabili in corso di regolarizzazione</div>
+          <div class="opt-btn" onclick="selectOpt(this,'conformita')"><div class="opt-dot"></div>Abusi non ancora affrontati</div>
+          <div class="opt-btn" onclick="selectOpt(this,'conformita')"><div class="opt-dot"></div>Non so — mai verificato</div>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">Esistono sanatorie edilizie pendenti?</div>
+        <div class="options-grid cols-2" id="sanatorie">
+          <div class="opt-btn" onclick="selectOpt(this,'sanatorie')"><div class="opt-dot"></div>Sì, già presentate</div>
+          <div class="opt-btn" onclick="selectOpt(this,'sanatorie')"><div class="opt-dot"></div>No</div>
+          <div class="opt-btn" onclick="selectOpt(this,'sanatorie')"><div class="opt-dot"></div>Non so</div>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">Altri vincoli sull'immobile</div>
+        <div class="hint">Seleziona tutti quelli applicabili</div>
+        <div class="options-grid" id="vincoli">
+          <div class="opt-btn" onclick="toggleMulti(this,'vincoli')"><div class="opt-check"></div>Vincolo paesaggistico (D.Lgs. 42/2004)</div>
+          <div class="opt-btn" onclick="toggleMulti(this,'vincoli')"><div class="opt-check"></div>Vincolo storico-architettonico della Soprintendenza</div>
+          <div class="opt-btn" onclick="toggleMulti(this,'vincoli')"><div class="opt-check"></div>Ipoteche o pignoramenti bancari</div>
+          <div class="opt-btn" onclick="toggleMulti(this,'vincoli')"><div class="opt-check"></div>Servitù di passaggio</div>
+          <div class="opt-btn" onclick="toggleMulti(this,'vincoli')"><div class="opt-check"></div>Nessun vincolo aggiuntivo conosciuto</div>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">Documentazione disponibile</div>
+        <div class="hint">Seleziona tutto il materiale in tuo possesso</div>
+        <div class="options-grid" id="docs">
+          <div class="opt-btn" onclick="toggleMulti(this,'docs')"><div class="opt-check"></div>Planimetrie catastali aggiornate</div>
+          <div class="opt-btn" onclick="toggleMulti(this,'docs')"><div class="opt-check"></div>Titoli edilizi originali (licenze, concessioni)</div>
+          <div class="opt-btn" onclick="toggleMulti(this,'docs')"><div class="opt-check"></div>Atti di provenienza / rogiti</div>
+          <div class="opt-btn" onclick="toggleMulti(this,'docs')"><div class="opt-check"></div>Relazione tecnica di un professionista</div>
+          <div class="opt-btn" onclick="toggleMulti(this,'docs')"><div class="opt-check"></div>Documentazione scarsa / da recuperare</div>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">Proprietà dell'immobile <span class="req">OBBLIG</span></div>
+        <div class="options-grid" id="proprieta">
+          <div class="opt-btn" onclick="selectOpt(this,'proprieta')"><div class="opt-dot"></div>Unico proprietario</div>
+          <div class="opt-btn" onclick="selectOpt(this,'proprieta')"><div class="opt-dot"></div>Comproprietà familiare — tutti d'accordo</div>
+          <div class="opt-btn" onclick="selectOpt(this,'proprieta')"><div class="opt-dot"></div>Comproprietà familiare — posizioni diverse</div>
+          <div class="opt-btn" onclick="selectOpt(this,'proprieta')"><div class="opt-dot"></div>Comproprietà con terzi estranei</div>
+          <div class="opt-btn" onclick="selectOpt(this,'proprieta')"><div class="opt-dot"></div>In eredità / successione non ancora risolta</div>
+        </div>
+      </div>
+
+    </div>
+    <div class="notes-section">
+      <div class="notes-label">✏️ Note su Vincoli & Conformità</div>
+      <textarea id="note_vincoli" placeholder="Dettagli sui vincoli, problematiche specifiche, iter già avviati..." oninput="updateProgress()"></textarea>
+    </div>
+    <div class="section-body">
+      <div class="nav-wrap" style="margin-top:0">
+        <button class="btn btn-prev" onclick="goToSection(0)">← INDIETRO</button>
+        <button class="btn btn-next" onclick="goToSection(2)">SEZIONE SUCCESSIVA →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEZIONE 3 — INTERVENTI POSSIBILI -->
+  <div class="section-card" id="section-2">
+    <div class="section-header">
+      <div class="section-emoji">🔧</div>
+      <div class="section-title-wrap">
+        <div class="section-num">03 / 06</div>
+        <div class="section-title">Interventi Possibili</div>
+      </div>
+    </div>
+    <div class="section-body">
+
+      <div class="info-box">
+        <span class="ib-icon">💡</span>
+        <span>In Zona A con vincolo memoria storica, la strategia deve puntare su <strong>riconfigurazione e valorizzazione dell'esistente</strong>, non su espansioni volumetriche.</span>
+      </div>
+
+      <div class="field">
+        <div class="field-label">Interesse per ristrutturazione conservativa</div>
+        <div class="options-grid" id="ristrutturazione">
+          <div class="opt-btn" onclick="selectOpt(this,'ristrutturazione')"><div class="opt-dot"></div>Sì — è la prima opzione da valutare</div>
+          <div class="opt-btn" onclick="selectOpt(this,'ristrutturazione')"><div class="opt-dot"></div>Solo se economicamente conveniente</div>
+          <div class="opt-btn" onclick="selectOpt(this,'ristrutturazione')"><div class="opt-dot"></div>No — vogliamo qualcosa di più radicale</div>
+          <div class="opt-btn" onclick="selectOpt(this,'ristrutturazione')"><div class="opt-dot"></div>Non ancora valutato</div>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">Frazionamento delle unità</div>
+        <div class="hint">Suddividere grandi unità in appartamenti più piccoli e vendibili</div>
+        <div class="options-grid" id="frazionamento">
+          <div class="opt-btn" onclick="selectOpt(this,'frazionamento')"><div class="opt-dot"></div>Sì — opzione molto interessante</div>
+          <div class="opt-btn" onclick="selectOpt(this,'frazionamento')"><div class="opt-dot"></div>Da valutare con un tecnico</div>
+          <div class="opt-btn" onclick="selectOpt(this,'frazionamento')"><div class="opt-dot"></div>No — preferiamo mantenere le unità attuali</div>
+          <div class="opt-btn" onclick="selectOpt(this,'frazionamento')"><div class="opt-dot"></div>Non so</div>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">Cambio destinazione d'uso</div>
+        <div class="hint">Da residenziale a uffici, commerciale, ricettivo o misto</div>
+        <div class="options-grid" id="cambiouso">
+          <div class="opt-btn" onclick="selectOpt(this,'cambiouso')"><div class="opt-dot"></div>Sì — siamo aperti a destinazioni diverse</div>
+          <div class="opt-btn" onclick="selectOpt(this,'cambiouso')"><div class="opt-dot"></div>Solo parzialmente (alcune unità)</div>
+          <div class="opt-btn" onclick="selectOpt(this,'cambiouso')"><div class="opt-dot"></div>No — vogliamo mantenere uso residenziale</div>
+          <div class="opt-btn" onclick="selectOpt(this,'cambiouso')"><div class="opt-dot"></div>Non so — dipende dalla fattibilità</div>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">Demolizione e ricostruzione a parità volumetrica</div>
+        <div class="hint">Possibile in zona A senza incremento volumi — ricostruzione completa ma stessa cubatura</div>
+        <div class="options-grid" id="demolizione">
+          <div class="opt-btn" onclick="selectOpt(this,'demolizione')"><div class="opt-dot"></div>Sì — da valutare come opzione principale</div>
+          <div class="opt-btn" onclick="selectOpt(this,'demolizione')"><div class="opt-dot"></div>Solo se non ci sono alternative</div>
+          <div class="opt-btn" onclick="selectOpt(this,'demolizione')"><div class="opt-dot"></div>No — preferiamo conservare l'esistente</div>
+          <div class="opt-btn" onclick="selectOpt(this,'demolizione')"><div class="opt-dot"></div>Non so</div>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">Interventi già effettuati recentemente</div>
+        <div class="options-grid" id="interventi_fatti">
+          <div class="opt-btn" onclick="selectOpt(this,'interventi_fatti')"><div class="opt-dot"></div>Nessuno — immobile ferme da anni</div>
+          <div class="opt-btn" onclick="selectOpt(this,'interventi_fatti')"><div class="opt-dot"></div>Solo manutenzione ordinaria / urgente</div>
+          <div class="opt-btn" onclick="selectOpt(this,'interventi_fatti')"><div class="opt-dot"></div>Interventi parziali su alcune unità</div>
+          <div class="opt-btn" onclick="selectOpt(this,'interventi_fatti')"><div class="opt-dot"></div>Ristrutturazione recente di una parte significativa</div>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">Tecnico o professionista già coinvolto?</div>
+        <div class="options-grid cols-2" id="tecnico">
+          <div class="opt-btn" onclick="selectOpt(this,'tecnico')"><div class="opt-dot"></div>Sì, geometra/architetto di fiducia</div>
+          <div class="opt-btn" onclick="selectOpt(this,'tecnico')"><div class="opt-dot"></div>No, da trovare</div>
+          <div class="opt-btn" onclick="selectOpt(this,'tecnico')"><div class="opt-dot"></div>Legale già attivo</div>
+          <div class="opt-btn" onclick="selectOpt(this,'tecnico')"><div class="opt-dot"></div>Nessun professionista ancora</div>
+        </div>
+      </div>
+
+    </div>
+    <div class="notes-section">
+      <div class="notes-label">✏️ Note su Interventi</div>
+      <textarea id="note_interventi" placeholder="Idee specifiche, vincoli pratici, esperienze passate con interventi edilizi..." oninput="updateProgress()"></textarea>
+    </div>
+    <div class="section-body">
+      <div class="nav-wrap" style="margin-top:0">
+        <button class="btn btn-prev" onclick="goToSection(1)">← INDIETRO</button>
+        <button class="btn btn-next" onclick="goToSection(3)">SEZIONE SUCCESSIVA →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEZIONE 4 — ASPETTI FINANZIARI -->
+  <div class="section-card" id="section-3">
+    <div class="section-header">
+      <div class="section-emoji">💰</div>
+      <div class="section-title-wrap">
+        <div class="section-num">04 / 06</div>
+        <div class="section-title">Aspetti Finanziari</div>
+      </div>
+    </div>
+    <div class="section-body">
+
+      <div class="field">
+        <div class="field-label">Budget disponibile per interventi <span class="req">OBBLIG</span></div>
+        <div class="options-grid" id="budget">
+          <div class="opt-btn" onclick="selectOpt(this,'budget')"><div class="opt-dot"></div>Sotto €50.000</div>
+          <div class="opt-btn" onclick="selectOpt(this,'budget')"><div class="opt-dot"></div>€50.000 – €150.000</div>
+          <div class="opt-btn" onclick="selectOpt(this,'budget')"><div class="opt-dot"></div>€150.000 – €400.000</div>
+          <div class="opt-btn" onclick="selectOpt(this,'budget')"><div class="opt-dot"></div>€400.000 – €1.000.000</div>
+          <div class="opt-btn" onclick="selectOpt(this,'budget')"><div class="opt-dot"></div>Oltre €1.000.000</div>
+          <div class="opt-btn" onclick="selectOpt(this,'budget')"><div class="opt-dot"></div>Da definire con agevolazioni/credito</div>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">Accesso al credito bancario</div>
+        <div class="options-grid" id="credito">
+          <div class="opt-btn" onclick="selectOpt(this,'credito')"><div class="opt-dot"></div>Sì — rapporto bancario solido</div>
+          <div class="opt-btn" onclick="selectOpt(this,'credito')"><div class="opt-dot"></div>Possibile — da verificare</div>
+          <div class="opt-btn" onclick="selectOpt(this,'credito')"><div class="opt-dot"></div>Difficile — situazione creditizia complessa</div>
+          <div class="opt-btn" onclick="selectOpt(this,'credito')"><div class="opt-dot"></div>No — si preferisce solo equity</div>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">Interesse per incentivi fiscali</div>
+        <div class="hint">Seleziona tutto ciò che interessa approfondire</div>
+        <div class="options-grid" id="incentivi">
+          <div class="opt-btn" onclick="toggleMulti(this,'incentivi')"><div class="opt-check"></div>Sismabonus / Bonus strutturale</div>
+          <div class="opt-btn" onclick="toggleMulti(this,'incentivi')"><div class="opt-check"></div>Ecobonus / Risparmio energetico</div>
+          <div class="opt-btn" onclick="toggleMulti(this,'incentivi')"><div class="opt-check"></div>Bonus ristrutturazione 50%</div>
+          <div class="opt-btn" onclick="toggleMulti(this,'incentivi')"><div class="opt-check"></div>Credito d'imposta su beni culturali</div>
+          <div class="opt-btn" onclick="toggleMulti(this,'incentivi')"><div class="opt-check"></div>Fondi regionali Campania per centro storico</div>
+          <div class="opt-btn" onclick="toggleMulti(this,'incentivi')"><div class="opt-check"></div>Nessun interesse specifico</div>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">Disponibilità a coinvolgere partner esterni</div>
+        <div class="options-grid" id="partner">
+          <div class="opt-btn" onclick="selectOpt(this,'partner')"><div class="opt-dot"></div>Sì — aperti a joint venture o co-investimento</div>
+          <div class="opt-btn" onclick="selectOpt(this,'partner')"><div class="opt-dot"></div>Solo per la parte costruttiva (appalto)</div>
+          <div class="opt-btn" onclick="selectOpt(this,'partner')"><div class="opt-dot"></div>No — vogliamo gestire in autonomia</div>
+          <div class="opt-btn" onclick="selectOpt(this,'partner')"><div class="opt-dot"></div>Da valutare in base alle condizioni</div>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">Reddito attuale generato dall'immobile</div>
+        <div class="options-grid" id="reddito_attuale">
+          <div class="opt-btn" onclick="selectOpt(this,'reddito_attuale')"><div class="opt-dot"></div>Zero — immobile inutilizzato / sfitto</div>
+          <div class="opt-btn" onclick="selectOpt(this,'reddito_attuale')"><div class="opt-dot"></div>Parziale — alcune unità affittate a canone basso</div>
+          <div class="opt-btn" onclick="selectOpt(this,'reddito_attuale')"><div class="opt-dot"></div>Buono — gestione già attiva</div>
+          <div class="opt-btn" onclick="selectOpt(this,'reddito_attuale')"><div class="opt-dot"></div>Non so — da verificare</div>
+        </div>
+      </div>
+
+    </div>
+    <div class="notes-section">
+      <div class="notes-label">✏️ Note su Aspetti Finanziari</div>
+      <textarea id="note_finanze" placeholder="Situazione finanziaria specifica, vincoli, opportunità già identificate..." oninput="updateProgress()"></textarea>
+    </div>
+    <div class="section-body">
+      <div class="nav-wrap" style="margin-top:0">
+        <button class="btn btn-prev" onclick="goToSection(2)">← INDIETRO</button>
+        <button class="btn btn-next" onclick="goToSection(4)">SEZIONE SUCCESSIVA →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEZIONE 5 — TEMPI & COMUNE -->
+  <div class="section-card" id="section-4">
+    <div class="section-header">
+      <div class="section-emoji">🗓️</div>
+      <div class="section-title-wrap">
+        <div class="section-num">05 / 06</div>
+        <div class="section-title">Tempi & Comune</div>
+      </div>
+    </div>
+    <div class="section-body">
+
+      <div class="field">
+        <div class="field-label">Rapporto con l'Ufficio Tecnico di Frattamaggiore</div>
+        <div class="options-grid" id="utc">
+          <div class="opt-btn" onclick="selectOpt(this,'utc')"><div class="opt-dot"></div>Buono — interlocuzione diretta già avvenuta</div>
+          <div class="opt-btn" onclick="selectOpt(this,'utc')"><div class="opt-dot"></div>Neutro — nessuna esperienza recente</div>
+          <div class="opt-btn" onclick="selectOpt(this,'utc')"><div class="opt-dot"></div>Difficile — precedenti conflittuali (TAR incluso)</div>
+          <div class="opt-btn" onclick="selectOpt(this,'utc')"><div class="opt-dot"></div>Nessun contatto ancora</div>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">Esperienza con pratiche edilizie a Frattamaggiore</div>
+        <div class="options-grid" id="esperienza">
+          <div class="opt-btn" onclick="selectOpt(this,'esperienza')"><div class="opt-dot"></div>Alta — abbiamo già gestito permessi/DIA/SCIA</div>
+          <div class="opt-btn" onclick="selectOpt(this,'esperienza')"><div class="opt-dot"></div>Media — qualche esperienza ma non recente</div>
+          <div class="opt-btn" onclick="selectOpt(this,'esperienza')"><div class="opt-dot"></div>Bassa — prima volta</div>
+          <div class="opt-btn" onclick="selectOpt(this,'esperienza')"><div class="opt-dot"></div>Affidata completamente a un tecnico</div>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">Urgenza del progetto <span class="req">OBBLIG</span></div>
+        <div class="options-grid" id="urgenza">
+          <div class="opt-btn" onclick="selectOpt(this,'urgenza')"><div class="opt-dot"></div>Alta — vogliamo partire entro 6 mesi</div>
+          <div class="opt-btn" onclick="selectOpt(this,'urgenza')"><div class="opt-dot"></div>Media — entro 1–2 anni</div>
+          <div class="opt-btn" onclick="selectOpt(this,'urgenza')"><div class="opt-dot"></div>Bassa — siamo in fase di studio e pianificazione</div>
+          <div class="opt-btn" onclick="selectOpt(this,'urgenza')"><div class="opt-dot"></div>Vincolata da una scadenza specifica</div>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">Orizzonte temporale del progetto complessivo</div>
+        <div class="options-grid cols-2" id="orizzonte">
+          <div class="opt-btn" onclick="selectOpt(this,'orizzonte')"><div class="opt-dot"></div>1–2 anni</div>
+          <div class="opt-btn" onclick="selectOpt(this,'orizzonte')"><div class="opt-dot"></div>3–5 anni</div>
+          <div class="opt-btn" onclick="selectOpt(this,'orizzonte')"><div class="opt-dot"></div>5–10 anni</div>
+          <div class="opt-btn" onclick="selectOpt(this,'orizzonte')"><div class="opt-dot"></div>Lungo termine / patrimoniale</div>
+        </div>
+      </div>
+
+    </div>
+    <div class="notes-section">
+      <div class="notes-label">✏️ Note su Tempi & Comune</div>
+      <textarea id="note_tempi" placeholder="Scadenze specifiche, informazioni sul Comune, problematiche amministrative..." oninput="updateProgress()"></textarea>
+    </div>
+    <div class="section-body">
+      <div class="nav-wrap" style="margin-top:0">
+        <button class="btn btn-prev" onclick="goToSection(3)">← INDIETRO</button>
+        <button class="btn btn-next" onclick="goToSection(5)">SEZIONE SUCCESSIVA →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEZIONE 6 — OBIETTIVI -->
+  <div class="section-card" id="section-5">
+    <div class="section-header">
+      <div class="section-emoji">🎯</div>
+      <div class="section-title-wrap">
+        <div class="section-num">06 / 06</div>
+        <div class="section-title">Obiettivi del Proprietario</div>
+      </div>
+    </div>
+    <div class="section-body">
+
+      <div class="field">
+        <div class="field-label">Obiettivo principale <span class="req">OBBLIG</span></div>
+        <div class="options-grid" id="obiettivo">
+          <div class="opt-btn" onclick="selectOpt(this,'obiettivo')"><div class="opt-dot"></div>💰 Vendita — massimizzare il prezzo di cessione</div>
+          <div class="opt-btn" onclick="selectOpt(this,'obiettivo')"><div class="opt-dot"></div>📈 Reddito da locazione — cash flow stabile</div>
+          <div class="opt-btn" onclick="selectOpt(this,'obiettivo')"><div class="opt-dot"></div>🏘️ Sviluppo immobiliare — ristrutturare e rivendere</div>
+          <div class="opt-btn" onclick="selectOpt(this,'obiettivo')"><div class="opt-dot"></div>🏨 Destinazione ricettiva — B&B, affitti brevi, hotel</div>
+          <div class="opt-btn" onclick="selectOpt(this,'obiettivo')"><div class="opt-dot"></div>🏢 Commerciale / Uffici — riqualificazione terziario</div>
+          <div class="opt-btn" onclick="selectOpt(this,'obiettivo')"><div class="opt-dot"></div>🏠 Uso familiare / patrimoniale intergenerazionale</div>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">Target di reddito annuo atteso (se locazione)</div>
+        <div class="options-grid" id="target_reddito">
+          <div class="opt-btn" onclick="selectOpt(this,'target_reddito')"><div class="opt-dot"></div>Sotto €20.000/anno</div>
+          <div class="opt-btn" onclick="selectOpt(this,'target_reddito')"><div class="opt-dot"></div>€20.000 – €60.000/anno</div>
+          <div class="opt-btn" onclick="selectOpt(this,'target_reddito')"><div class="opt-dot"></div>€60.000 – €150.000/anno</div>
+          <div class="opt-btn" onclick="selectOpt(this,'target_reddito')"><div class="opt-dot"></div>Oltre €150.000/anno</div>
+          <div class="opt-btn" onclick="selectOpt(this,'target_reddito')"><div class="opt-dot"></div>Non si punta alla locazione</div>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">Gestione preferita del progetto</div>
+        <div class="options-grid" id="gestione">
+          <div class="opt-btn" onclick="selectOpt(this,'gestione')"><div class="opt-dot"></div>Gestione diretta della famiglia Calvanese</div>
+          <div class="opt-btn" onclick="selectOpt(this,'gestione')"><div class="opt-dot"></div>Affidata a terzi / property manager</div>
+          <div class="opt-btn" onclick="selectOpt(this,'gestione')"><div class="opt-dot"></div>Mista — supervisione familiare + operatività esterna</div>
+          <div class="opt-btn" onclick="selectOpt(this,'gestione')"><div class="opt-dot"></div>Non ancora deciso</div>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">Nome del referente <span class="req">OBBLIG</span></div>
+        <input type="text" id="f_nome" placeholder="Nome e cognome" oninput="updateProgress()">
+      </div>
+
+      <div class="field">
+        <div class="field-label">Recapito (telefono o email)</div>
+        <input type="text" id="f_contatto" placeholder="Es. +39 333 1234567 / email@esempio.it" oninput="updateProgress()">
+      </div>
+
+    </div>
+    <div class="notes-section">
+      <div class="notes-label">✏️ Note libere / Domande per Franki</div>
+      <textarea id="note_obiettivi" placeholder="Tutto ciò che non rientra nelle sezioni precedenti — preoccupazioni, domande, scenari specifici..." oninput="updateProgress()" style="min-height:120px"></textarea>
+    </div>
+    <div class="section-body">
+      <div class="nav-wrap" style="margin-top:0">
+        <button class="btn btn-prev" onclick="goToSection(4)">← INDIETRO</button>
+        <button class="btn btn-amber" onclick="showFinal()">COMPLETA IL QUESTIONARIO ✓</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FINAL BOX -->
+  <div class="final-box" id="finalBox" style="display:none">
+    <div class="final-title">📋 COME RESTITUIRE IL MODULO</div>
+    <div class="step-list">
+      <div class="step-item"><div class="step-num">1</div><span>Compila tutti i campi obbligatori del questionario</span></div>
+      <div class="step-item"><div class="step-num">2</div><span>Clicca <strong>SALVA PDF</strong> — il browser genera automaticamente il documento</span></div>
+      <div class="step-item"><div class="step-num">3</div><span>Nella finestra di stampa seleziona <strong>"Salva come PDF"</strong> come destinazione</span></div>
+      <div class="step-item"><div class="step-num">4</div><span>Invia il PDF a <strong>hello@frankistudio.it</strong> oppure via WhatsApp al <strong>+39 335 7230240</strong></span></div>
+    </div>
+    <div class="action-btns">
+      <button class="action-btn btn-pdf" onclick="window.print()">📄 SALVA PDF</button>
+      <button class="action-btn btn-save" onclick="saveLocal()">💾 SALVA</button>
+      <button class="action-btn btn-copy" onclick="copyAll()">📋 COPIA</button>
+      <button class="action-btn btn-wa" onclick="sendWA()">📲 COPIA x WA</button>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <strong>Franki Studio</strong> — Avre Srl, Piazza Vanvitelli 15, Napoli &nbsp;·&nbsp;
+  P.IVA 10233871218 &nbsp;·&nbsp; hello@frankistudio.it &nbsp;·&nbsp; +39 335 7230240
+</footer>
+
+<script>
+function toggleScenario(header) {
+  const body = header.nextElementSibling;
+  const isOpen = body.classList.contains('open');
+  // close all
+  document.querySelectorAll('.sc-body').forEach(b => b.classList.remove('open'));
+  document.querySelectorAll('.sc-header').forEach(h => h.classList.remove('expanded'));
+  if (!isOpen) {
+    body.classList.add('open');
+    header.classList.add('expanded');
+  }
+}
+
+function scrollToQuestionnaire() {
+  document.getElementById('mainContent').scrollIntoView({behavior:'smooth'});
+}
+
+// STATE
+const state = {};
+let currentSection = 0;
+const TOTAL_FIELDS = 30;
+
+// SELECT SINGLE
+function selectOpt(el, group) {
+  document.querySelectorAll(`#${group} .opt-btn`).forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+  state[group] = el.textContent.trim();
+  updateProgress();
+}
+
+// TOGGLE MULTI
+function toggleMulti(el, group) {
+  el.classList.toggle('selected');
+  const vals = Array.from(document.querySelectorAll(`#${group} .opt-btn.selected`)).map(b=>b.textContent.trim());
+  state[group] = vals;
+  updateProgress();
+}
+
+// PROGRESS
+function updateProgress() {
+  let filled = 0;
+  // text inputs
+  ['f_indirizzo','f_superficie','f_nome'].forEach(id=>{
+    if(document.getElementById(id)?.value.trim()) filled+=1;
+  });
+  ['f_catasto','f_unita','f_contatto'].forEach(id=>{
+    if(document.getElementById(id)?.value.trim()) filled+=0.5;
+  });
+  // selects/radios
+  const radioGroups = ['piani','stato','annocostr','conformita','sanatorie','proprieta',
+    'ristrutturazione','frazionamento','cambiouso','demolizione','interventi_fatti','tecnico',
+    'budget','credito','partner','reddito_attuale',
+    'utc','esperienza','urgenza','orizzonte',
+    'obiettivo','target_reddito','gestione'];
+  radioGroups.forEach(g => {
+    if(document.querySelector(`#${g} .opt-btn.selected`)) filled+=1;
+  });
+  const multiGroups = ['vincoli','docs','incentivi'];
+  multiGroups.forEach(g=>{
+    if(document.querySelector(`#${g} .opt-btn.selected`)) filled+=0.5;
+  });
+
+  filled = Math.min(filled, TOTAL_FIELDS);
+  const pct = Math.round((filled/TOTAL_FIELDS)*100);
+  document.getElementById('progressBar').style.width = pct+'%';
+  document.getElementById('progressCount').textContent = Math.round(filled)+' / '+TOTAL_FIELDS+' risposte';
+}
+
+// NAVIGATION
+function goToSection(idx) {
+  document.querySelectorAll('.section-card').forEach(c=>c.classList.remove('active'));
+  document.getElementById('section-'+idx).classList.add('active');
+  const tabs = document.querySelectorAll('.tab-btn');
+  tabs.forEach((t,i)=>{
+    t.classList.remove('active','done');
+    if(i===idx) t.classList.add('active');
+    else if(i<idx) t.classList.add('done');
+  });
+  currentSection = idx;
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function showFinal() {
+  document.getElementById('finalBox').style.display='block';
+  document.getElementById('finalBox').scrollIntoView({behavior:'smooth'});
+}
+
+// COLLECT DATA
+function collectData() {
+  const lines = ['=== QUESTIONARIO CALVANESE BOYS ===\nFranki Studio — Analisi Immobile Frattamaggiore\n'];
+  const sections = [
+    ['L\'IMMOBILE', ['f_indirizzo','f_catasto','f_superficie','f_unita'], ['piani','stato','annocostr'], 'note_immobile'],
+    ['VINCOLI & CONFORMITÀ', [], ['conformita','sanatorie','vincoli','docs','proprieta'], 'note_vincoli'],
+    ['INTERVENTI POSSIBILI', [], ['ristrutturazione','frazionamento','cambiouso','demolizione','interventi_fatti','tecnico'], 'note_interventi'],
+    ['ASPETTI FINANZIARI', [], ['budget','credito','incentivi','partner','reddito_attuale'], 'note_finanze'],
+    ['TEMPI & COMUNE', [], ['utc','esperienza','urgenza','orizzonte'], 'note_tempi'],
+    ['OBIETTIVI', ['f_nome','f_contatto'], ['obiettivo','target_reddito','gestione'], 'note_obiettivi'],
+  ];
+  const labels = {
+    f_indirizzo:'Indirizzo',f_catasto:'Catasto',f_superficie:'Superficie (mq)',f_unita:'N. Unità',f_nome:'Referente',f_contatto:'Contatto',
+    piani:'N. Piani',stato:'Stato manutentivo',annocostr:'Anno costruzione',
+    conformita:'Conformità urbanistica',sanatorie:'Sanatorie',vincoli:'Altri vincoli',docs:'Documentazione disponibile',proprieta:'Proprietà',
+    ristrutturazione:'Ristrutturazione conservativa',frazionamento:'Frazionamento',cambiouso:'Cambio d\'uso',demolizione:'Demolizione/ricostruzione',interventi_fatti:'Interventi già fatti',tecnico:'Tecnico coinvolto',
+    budget:'Budget disponibile',credito:'Accesso credito',incentivi:'Incentivi fiscali',partner:'Partner esterni',reddito_attuale:'Reddito attuale',
+    utc:'Rapporto Ufficio Tecnico',esperienza:'Esperienza pratiche',urgenza:'Urgenza',orizzonte:'Orizzonte temporale',
+    obiettivo:'Obiettivo principale',target_reddito:'Target reddito',gestione:'Gestione preferita'
+  };
+  sections.forEach(([title, inputs, radios, noteId])=>{
+    lines.push(`\n--- ${title} ---`);
+    inputs.forEach(id=>{
+      const el=document.getElementById(id);
+      if(el?.value.trim()) lines.push(`${labels[id]}: ${el.value.trim()}`);
+    });
+    radios.forEach(g=>{
+      const sel=document.querySelectorAll(`#${g} .opt-btn.selected`);
+      if(sel.length) lines.push(`${labels[g]}: ${Array.from(sel).map(b=>b.textContent.trim()).join(', ')}`);
+    });
+    const note=document.getElementById(noteId)?.value.trim();
+    if(note) lines.push(`Note: ${note}`);
+  });
+  return lines.join('\n');
+}
+
+function saveLocal() {
+  const blob = new Blob([collectData()], {type:'text/plain'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'Calvanese_Boys_Questionario.txt';
+  a.click();
+}
+
+function copyAll() {
+  navigator.clipboard.writeText(collectData()).then(()=>alert('Copiato negli appunti!'));
+}
+
+function sendWA() {
+  const text = encodeURIComponent(collectData());
+  navigator.clipboard.writeText(decodeURIComponent(text)).then(()=>alert('Testo copiato! Incollalo in WhatsApp a +39 335 7230240'));
+}
+
+// INIT
+updateProgress();
+</script>
+
+<style media="print">
+  .header { position: static; }
+  .progress-wrap, .section-tabs, .nav-wrap, .action-btns { display: none !important; }
+  .section-card { display: block !important; page-break-inside: avoid; }
+  .section-card + .section-card { margin-top: 32px; }
+</style>
+
+</body>
+</html>

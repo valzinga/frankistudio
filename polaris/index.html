@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>POLARIS — Roadmap Test</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Lato:wght@300;400;700;900&display=swap');
+
+  :root {
+    --blue: #3549B5;
+    --amber: #F9AC28;
+    --dark: #0a0c14;
+    --darker: #06080f;
+    --card: #111420;
+    --border: rgba(53,73,181,0.25);
+    --text: #e8eaf6;
+    --muted: #7b82a8;
+    --red: #e63946;
+    --green: #2ec4b6;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--darker);
+    color: var(--text);
+    font-family: 'Lato', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .header {
+    background: linear-gradient(135deg, var(--darker) 0%, #0d1128 100%);
+    border-bottom: 2px solid var(--amber);
+    padding: 24px 20px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 180px; height: 180px;
+    background: radial-gradient(circle, rgba(53,73,181,0.15) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .header-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--amber);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .header h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 52px;
+    letter-spacing: 4px;
+    color: #fff;
+    line-height: 1;
+  }
+  .header h1 span { color: var(--amber); }
+  .header-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 8px;
+    letter-spacing: 1px;
+  }
+
+  /* MISSION BAR */
+  .mission {
+    background: var(--blue);
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .mission-icon { font-size: 18px; }
+  .mission-text {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: #fff;
+    letter-spacing: 0.5px;
+    line-height: 1.4;
+  }
+  .mission-text strong { color: var(--amber); }
+
+  /* PARAMS */
+  .params {
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .param-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px;
+  }
+  .param-card.full { grid-column: 1 / -1; }
+  .param-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .param-value {
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--amber);
+  }
+
+  /* SECTION TITLE */
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 3px;
+    color: var(--blue);
+    padding: 0 20px 10px;
+    border-bottom: 1px solid var(--border);
+    margin: 0 20px 16px;
+  }
+  .section-wrap { padding: 20px 0 0; }
+
+  /* DAY CARD */
+  .day {
+    margin: 0 20px 20px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .day-header {
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+  }
+  .day-1 .day-header { background: linear-gradient(90deg, #1a2060, #111420); }
+  .day-2 .day-header { background: linear-gradient(90deg, #1a3040, #111420); }
+  .day-3 .day-header { background: linear-gradient(90deg, #1a1a40, #111420); }
+
+  .day-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 2px;
+    color: #fff;
+  }
+  .day-label span { color: var(--amber); }
+  .day-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+  }
+
+  /* SLOT */
+  .slot {
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 16px;
+  }
+  .slot:last-child { border-bottom: none; }
+  .slot-time {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--amber);
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .slot-time::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+  .slot-title {
+    font-weight: 700;
+    font-size: 14px;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+  .slot-items { list-style: none; }
+  .slot-items li {
+    font-size: 13px;
+    color: var(--text);
+    padding: 3px 0 3px 16px;
+    position: relative;
+    line-height: 1.5;
+  }
+  .slot-items li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: var(--blue);
+    font-weight: 700;
+  }
+  .slot-items li strong { color: var(--amber); }
+  .slot-items li em { color: var(--muted); font-style: normal; font-size: 12px; }
+
+  /* PROMPT BOX */
+  .prompt-box {
+    background: #0d1020;
+    border: 1px solid var(--blue);
+    border-left: 3px solid var(--amber);
+    border-radius: 6px;
+    padding: 12px 14px;
+    margin-top: 10px;
+  }
+  .prompt-box-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--amber);
+    margin-bottom: 6px;
+  }
+  .prompt-box p {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: #a8b4d8;
+    line-height: 1.6;
+  }
+
+  /* OUTPUT TAGS */
+  .output-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 10px;
+  }
+  .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+  }
+  .tag-blue { background: rgba(53,73,181,0.2); border: 1px solid var(--blue); color: #8899ee; }
+  .tag-amber { background: rgba(249,172,40,0.15); border: 1px solid var(--amber); color: var(--amber); }
+  .tag-green { background: rgba(46,196,182,0.15); border: 1px solid var(--green); color: var(--green); }
+  .tag-red { background: rgba(230,57,70,0.15); border: 1px solid var(--red); color: var(--red); }
+
+  /* SCANNER BLOCK */
+  .scanner-block {
+    margin: 0 20px 20px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-top: 2px solid var(--blue);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .scanner-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 2px;
+    color: var(--blue);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .scanner-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .scanner-row:last-child { border-bottom: none; }
+  .scanner-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    color: var(--amber);
+    min-width: 28px;
+    line-height: 1;
+  }
+  .scanner-content {}
+  .scanner-source {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    margin-bottom: 3px;
+  }
+  .scanner-desc {
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.5;
+  }
+  .scanner-action {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--green);
+    margin-top: 4px;
+  }
+
+  /* TONE GUIDE */
+  .tone-guide {
+    margin: 0 20px 20px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-top: 2px solid var(--amber);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .tone-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 2px;
+    color: var(--amber);
+    margin-bottom: 12px;
+  }
+  .tone-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 8px;
+    align-items: flex-start;
+  }
+  .tone-do {
+    flex: 1;
+    background: rgba(46,196,182,0.08);
+    border: 1px solid rgba(46,196,182,0.3);
+    border-radius: 6px;
+    padding: 10px;
+  }
+  .tone-dont {
+    flex: 1;
+    background: rgba(230,57,70,0.08);
+    border: 1px solid rgba(230,57,70,0.3);
+    border-radius: 6px;
+    padding: 10px;
+  }
+  .tone-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+  }
+  .tone-do .tone-label { color: var(--green); }
+  .tone-dont .tone-label { color: var(--red); }
+  .tone-item {
+    font-size: 12px;
+    color: var(--text);
+    line-height: 1.5;
+    padding: 2px 0;
+  }
+
+  /* FOOTER */
+  .footer {
+    margin: 20px;
+    padding: 16px;
+    background: linear-gradient(135deg, var(--blue) 0%, #1a2580 100%);
+    border-radius: 10px;
+    text-align: center;
+  }
+  .footer-star {
+    font-size: 28px;
+    margin-bottom: 8px;
+  }
+  .footer-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 24px;
+    letter-spacing: 3px;
+    color: var(--amber);
+  }
+  .footer-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+    margin-top: 6px;
+  }
+
+  /* DIVIDER */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    margin: 8px 20px;
+  }
+
+  .status-pill {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: rgba(46,196,182,0.15);
+    border: 1px solid var(--green);
+    color: var(--green);
+    text-transform: uppercase;
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-tag">Sistema Operativo</div>
+  <h1>POL<span>ARIS</span></h1>
+  <div class="header-sub">ROADMAP TEST · 3 GIORNI · REMIGRAZIONE &nbsp;<span class="status-pill">ATTIVO</span></div>
+</div>
+
+<!-- MISSION BAR -->
+<div class="mission">
+  <div class="mission-icon">🎯</div>
+  <div class="mission-text">
+    <strong>Obiettivo:</strong> Posizionare il parlamentare sul tema remigrazione · Tono: <strong>Diretto + Combattivo</strong> · Output: Social + Stampa
+  </div>
+</div>
+
+<!-- PARAMETRI -->
+<div class="params">
+  <div class="param-card">
+    <div class="param-label">Tema</div>
+    <div class="param-value">Remigrazione</div>
+  </div>
+  <div class="param-card">
+    <div class="param-label">Posizione</div>
+    <div class="param-value">CS Progressista</div>
+  </div>
+  <div class="param-card">
+    <div class="param-label">Inizio</div>
+    <div class="param-value">Martedì mattina</div>
+  </div>
+  <div class="param-card">
+    <div class="param-label">Arrivo</div>
+    <div class="param-value">Giovedì mattina</div>
+  </div>
+  <div class="param-card full">
+    <div class="param-label">Canali output</div>
+    <div class="param-value">X · Facebook · Instagram · Dichiarazioni stampa · Altri media</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════ -->
+<!-- SCANNER NEWS -->
+<!-- ══════════════════════════════════ -->
+<div class="section-wrap">
+  <div class="section-title">📡 SCANNER NEWS — Come si usa</div>
+</div>
+
+<div class="scanner-block">
+  <div class="scanner-title">📡 Fonti da monitorare</div>
+
+  <!-- PRIORITÀ -->
+  <div style="background:rgba(249,172,40,0.12);border:1px solid rgba(249,172,40,0.5);border-left:3px solid var(--amber);border-radius:6px;padding:10px 12px;margin-bottom:14px;">
+    <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--amber);margin-bottom:6px;">⭐ PRIORITÀ QUOTIDIANA</div>
+    <div style="font-size:13px;color:#fff;font-weight:700;line-height:1.8;">ANSA · AGI · Adnkronos · Dire · Domani · Repubblica · Corriere · Il Fatto · Il Mattino</div>
+  </div>
+
+  <div class="scanner-row">
+    <div class="scanner-num">01</div>
+    <div class="scanner-content">
+      <div class="scanner-source">AGENZIE DI STAMPA</div>
+      <div class="scanner-desc">ANSA · AGI · Adnkronos · Dire · Il Velino · Askanews · LaPresse · 9 Colonne</div>
+      <div class="scanner-action">→ Flash notizie entro 2h · fatti nudi da valorizzare subito</div>
+    </div>
+  </div>
+
+  <div class="scanner-row">
+    <div class="scanner-num">02</div>
+    <div class="scanner-content">
+      <div class="scanner-source">NAZIONALI GENERALISTI</div>
+      <div class="scanner-desc">Corriere della Sera · La Repubblica · La Stampa · Il Messaggero · Il Fatto Quotidiano · Domani · Il Giornale · Libero · La Verità · Avvenire · Il Manifesto · Il Tempo · Italia Oggi · Open · Il Mattino</div>
+      <div class="scanner-action">→ Dichiarazioni governo e opposizione · narrazioni dominanti · frame da contrastare</div>
+    </div>
+  </div>
+
+  <div class="scanner-row">
+    <div class="scanner-num">03</div>
+    <div class="scanner-content">
+      <div class="scanner-source">ECONOMICI</div>
+      <div class="scanner-desc">Il Sole 24 Ore · MF Milano Finanza · Affari & Finanza</div>
+      <div class="scanner-action">→ Impatto economico della narrativa migratoria · dati da usare</div>
+    </div>
+  </div>
+
+  <div class="scanner-row">
+    <div class="scanner-num">04</div>
+    <div class="scanner-content">
+      <div class="scanner-source">REGIONALI — SUD / NAPOLI FOCUS</div>
+      <div class="scanner-desc">Il Mattino · Il Corriere del Mezzogiorno · Repubblica Napoli · Gazzetta del Sud · Quotidiano del Sud · La Gazzetta del Mezzogiorno · Quotidiano di Puglia · La Sicilia · Il Centro</div>
+      <div class="scanner-action">→ Rilevanza territoriale · angoli locali da amplificare</div>
+    </div>
+  </div>
+
+  <div class="scanner-row">
+    <div class="scanner-num">05</div>
+    <div class="scanner-content">
+      <div class="scanner-source">REGIONALI — NORD / CENTRO</div>
+      <div class="scanner-desc">Il Resto del Carlino · La Nazione · Il Giorno · Il Gazzettino · Messaggero Veneto · Il Piccolo · Il Secolo XIX · Il Tirreno · La Nuova Sardegna · L'Unione Sarda · Il Mattino di Padova · Gazzetta di Parma · Gazzetta di Mantova · Giornale di Brescia · L'Eco di Bergamo · Corriere delle Alpi · La Tribuna di Treviso · L'Arena · Corriere Adriatico · L'Adige · Alto Adige</div>
+      <div class="scanner-action">→ Reazione dell'elettorato in zone chiave · segnali di consenso o opposizione</div>
+    </div>
+  </div>
+
+  <div class="scanner-row">
+    <div class="scanner-num">06</div>
+    <div class="scanner-content">
+      <div class="scanner-source">ONLINE NATIVE</div>
+      <div class="scanner-desc">HuffPost Italia · Fanpage · Linkiesta · Il Post · Lettera43 · Open · Stylo24 · Giornalettismo · InsideOver · Quotidiano.net · Notizie.it</div>
+      <div class="scanner-action">→ Contenuti virali · opinioni · fact-checking disponibile</div>
+    </div>
+  </div>
+
+  <div class="scanner-row">
+    <div class="scanner-num">07</div>
+    <div class="scanner-content">
+      <div class="scanner-source">TV / TGWEB</div>
+      <div class="scanner-desc">Rai News · TG La7 · TGCom24 · Sky TG24</div>
+      <div class="scanner-action">→ Titoli dei TG · ospiti e dibattiti televisivi da monitorare</div>
+    </div>
+  </div>
+
+  <div class="scanner-row">
+    <div class="scanner-num">08</div>
+    <div class="scanner-content">
+      <div class="scanner-source">AGENZIE COMUNICAZIONE POLITICA (BENCHMARK)</div>
+      <div class="scanner-desc">PolitiKon · Ora Comunica · Res Politics · Strategy Design · Marco Venturini Consulting</div>
+      <div class="scanner-action">→ Osservare format e strategie dei competitor · non contattare</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════ -->
+<!-- GIORNO 1 -->
+<!-- ══════════════════════════════════ -->
+<div class="section-wrap">
+  <div class="section-title">📅 ROADMAP OPERATIVA</div>
+</div>
+
+<div class="day day-1">
+  <div class="day-header">
+    <div class="day-label">GIORNO <span>01</span></div>
+    <div class="day-date">MARTEDÌ — ANALISI + POSIZIONAMENTO</div>
+  </div>
+
+  <div class="slot">
+    <div class="slot-time">07:30 – 08:30 · MATTINA</div>
+    <div class="slot-title">🔍 Scan & Brief</div>
+    <ul class="slot-items">
+      <li>Veronica raccoglie rassegna stampa del mattino su remigrazione</li>
+      <li>Incolla in Claude con prompt scanner → ottiene <strong>sintesi + rischi + opportunità</strong></li>
+      <li>Invia brief a Franki (messaggio vocale o testo, max 3 minuti)</li>
+    </ul>
+    <div class="prompt-box">
+      <div class="prompt-box-label">▸ PROMPT DA USARE</div>
+      <p>Sei il sistema POLARIS. Analizza queste notizie su remigrazione. Dammi: 1) sintesi in 5 righe, 2) dichiarazioni avversarie da contrastare, 3) opportunità di intervento per un parlamentare CS progressista combattivo. Tono: diretto, niente giri di parole.</p>
+    </div>
+  </div>
+
+  <div class="slot">
+    <div class="slot-time">09:00 – 10:00 · MATTINA</div>
+    <div class="slot-title">⚔️ Decisione strategica</div>
+    <ul class="slot-items">
+      <li>Franki + Veronica: <strong>si interviene o si aspetta?</strong></li>
+      <li>Se sì → su quale angolo? (attacco diretto / difesa valori / fact-checking)</li>
+      <li>Si sceglie il <strong>frame narrativo</strong> del giorno</li>
+    </ul>
+    <div class="output-tags">
+      <span class="tag tag-amber">Decisione: SÌ / NO / ASPETTA</span>
+      <span class="tag tag-blue">Frame scelto</span>
+    </div>
+  </div>
+
+  <div class="slot">
+    <div class="slot-time">10:30 – 12:00 · MATTINA</div>
+    <div class="slot-title">✍️ Produzione contenuti</div>
+    <ul class="slot-items">
+      <li>Veronica usa Claude → genera 3 varianti: <strong>post social / dichiarazione / risposta rapida</strong></li>
+      <li>Franki rivede → approva o corregge il tono</li>
+      <li>Si seleziona il <strong>contenuto del giorno</strong></li>
+    </ul>
+    <div class="output-tags">
+      <span class="tag tag-green">Post X/Facebook</span>
+      <span class="tag tag-blue">Dichiarazione stampa</span>
+      <span class="tag tag-amber">Risposta rapida</span>
+    </div>
+  </div>
+
+  <div class="slot">
+    <div class="slot-time">18:00 – 19:00 · SERA</div>
+    <div class="slot-title">📊 Check serale</div>
+    <ul class="slot-items">
+      <li>Com'è andata? Reazioni, condivisioni, attacchi ricevuti</li>
+      <li>Claude analizza eventuali contro-attacchi → <strong>prepara risposta per domani</strong></li>
+      <li>Veronica aggiorna il log giornaliero <em>(3 righe: fatto / azione / risultato)</em></li>
+    </ul>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════ -->
+<!-- GIORNO 2 -->
+<!-- ══════════════════════════════════ -->
+<div class="day day-2">
+  <div class="day-header">
+    <div class="day-label">GIORNO <span>02</span></div>
+    <div class="day-date">MERCOLEDÌ — ATTACCO + AMPLIFICAZIONE</div>
+  </div>
+
+  <div class="slot">
+    <div class="slot-time">07:30 – 08:30 · MATTINA</div>
+    <div class="slot-title">🔍 Scan evoluto</div>
+    <ul class="slot-items">
+      <li>Come si è spostato il dibattito da ieri?</li>
+      <li>Nuove dichiarazioni della destra da smontare?</li>
+      <li>Claude → <strong>mappa delle posizioni aggiornata</strong></li>
+    </ul>
+    <div class="prompt-box">
+      <div class="prompt-box-label">▸ PROMPT DA USARE</div>
+      <p>Sistema POLARIS, giorno 2. Ieri il nostro frame era [X]. Oggi cosa è cambiato nel dibattito su remigrazione? Chi ha detto cosa? Esistono aperture o contraddizioni da sfruttare? Suggerisci il miglior angolo di attacco per oggi. Tono combattivo CS progressista.</p>
+    </div>
+  </div>
+
+  <div class="slot">
+    <div class="slot-time">10:00 – 12:00 · MATTINA</div>
+    <div class="slot-title">⚔️ Attacco coordinato</div>
+    <ul class="slot-items">
+      <li>Produzione contenuto principale del giorno: <strong>più aggressivo del giorno 1</strong></li>
+      <li>Simulazione attacco: Claude risponde "da avversario" → Veronica verifica solidità</li>
+      <li>Se regge → si pubblica. Se no → si rinforza il testo</li>
+    </ul>
+    <div class="output-tags">
+      <span class="tag tag-red">Attacco diretto</span>
+      <span class="tag tag-green">Fact-checking avversario</span>
+      <span class="tag tag-amber">Thread argomentato</span>
+    </div>
+  </div>
+
+  <div class="slot">
+    <div class="slot-time">14:00 – 15:00 · POMERIGGIO</div>
+    <div class="slot-title">📡 Amplificazione</div>
+    <ul class="slot-items">
+      <li>Adatta il contenuto per <strong>canali diversi</strong>: X, Facebook, Instagram, stampa</li>
+      <li>Claude → 4 versioni dello stesso messaggio, calibrate per tono e lunghezza</li>
+      <li>Verifica coerenza narrativa tra tutti i canali</li>
+    </ul>
+  </div>
+
+  <div class="slot">
+    <div class="slot-time">19:00 · SERA</div>
+    <div class="slot-title">📊 Misurazione + reset</div>
+    <ul class="slot-items">
+      <li>Cosa ha funzionato di più? Quale contenuto ha generato reazione?</li>
+      <li>Si decide il <strong>focus del giorno finale</strong></li>
+      <li>Veronica prepara la rassegna del mattino successivo in anticipo</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════ -->
+<!-- GIORNO 3 -->
+<!-- ══════════════════════════════════ -->
+<div class="day day-3">
+  <div class="day-header">
+    <div class="day-label">GIORNO <span>03</span></div>
+    <div class="day-date">GIOVEDÌ — CHIUSURA + VALUTAZIONE</div>
+  </div>
+
+  <div class="slot">
+    <div class="slot-time">07:30 – 09:00 · MATTINA</div>
+    <div class="slot-title">🏁 Sprint finale</div>
+    <ul class="slot-items">
+      <li>Ultimo scan: <strong>dov'è arrivato il dibattito?</strong></li>
+      <li>Il parlamentare ha guadagnato posizione sul tema?</li>
+      <li>Un ultimo contenuto forte per <strong>chiudere il ciclo narrativo</strong></li>
+    </ul>
+    <div class="prompt-box">
+      <div class="prompt-box-label">▸ PROMPT DA USARE</div>
+      <p>Sistema POLARIS, chiusura test 3 giorni su remigrazione. Questo è il recap delle azioni fatte [inserisci]. Valuta: 1) il frame è passato? 2) quali contenuti hanno funzionato? 3) cosa avremmo dovuto fare diversamente? 4) suggerisci il contenuto di chiusura più efficace.</p>
+    </div>
+  </div>
+
+  <div class="slot">
+    <div class="slot-time">09:00 – 10:00 · MATTINA</div>
+    <div class="slot-title">📋 Debriefing POLARIS</div>
+    <ul class="slot-items">
+      <li>Veronica compila il report di test: <strong>tempo usato / qualità percepita / velocità</strong></li>
+      <li>Franki valuta → il sistema funziona? cosa va ottimizzato?</li>
+      <li>Decisione: <strong>si va avanti con il test esteso?</strong></li>
+    </ul>
+    <div class="output-tags">
+      <span class="tag tag-green">Sistema validato ✓</span>
+      <span class="tag tag-amber">Da ottimizzare</span>
+      <span class="tag tag-red">Problema critico</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════ -->
+<!-- GUIDA TONO -->
+<!-- ══════════════════════════════════ -->
+<div class="section-wrap">
+  <div class="section-title">🎭 GUIDA AL TONO</div>
+</div>
+
+<div class="tone-guide">
+  <div class="tone-title">Mix Toni · CS Progressista</div>
+
+  <!-- TONO PRIMARIO -->
+  <div style="background:rgba(46,196,182,0.08);border:1px solid rgba(46,196,182,0.4);border-left:3px solid var(--green);border-radius:8px;padding:12px;margin-bottom:14px;">
+    <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--green);margin-bottom:6px;">⭐ TONO PRIMARIO — EMPATICO DI LOTTA</div>
+    <div style="font-size:13px;color:var(--text);line-height:1.6;margin-bottom:8px;">Racconta storie reali. Metti un volto sui numeri. Indignazione controllata, mai urlata. Il parlamentare è dalla parte di chi subisce.</div>
+    <div class="prompt-box" style="margin-top:0">
+      <div class="prompt-box-label">▸ ESEMPIO</div>
+      <p>"Dietro ogni numero c'è una persona. Dietro ogni slogan sulla remigrazione c'è qualcuno che perde il lavoro, la casa, la dignità. Noi stiamo dalla parte di chi subisce — non di chi strumentalizza."</p>
+    </div>
+    <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--green);margin-top:10px;">✓ Usa storie concrete &nbsp;·&nbsp; ✓ Prima le persone, poi la politica &nbsp;·&nbsp; ✓ Indignazione senza urlo</div>
+  </div>
+
+  <!-- TONO 2 -->
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:10px;">
+    <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--blue);margin-bottom:6px;">2 · ISTITUZIONALE AUTOREVOLE</div>
+    <div style="font-size:13px;color:var(--text);line-height:1.5;margin-bottom:6px;">Dati, accordi, visione. Parla da statista. Zero emotività. Usare quando il tema è tecnico o quando si vuole credibilità istituzionale.</div>
+    <div style="font-family:'DM Mono',monospace;font-size:11px;color:#a8b4d8;font-style:italic;">"I dati smentiscono questa narrazione. I flussi migratori si gestiscono con accordi internazionali, non con annunci."</div>
+  </div>
+
+  <!-- TONO 3 -->
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:10px;">
+    <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--red);margin-bottom:6px;">3 · RADICALE ANTAGONISTA</div>
+    <div style="font-size:13px;color:var(--text);line-height:1.5;margin-bottom:6px;">Rottura totale. Chiama le cose con il loro nome. Usare con cautela — solo su attacchi gravi o momenti di escalation.</div>
+    <div style="font-family:'DM Mono',monospace;font-size:11px;color:#a8b4d8;font-style:italic;">"Chiamatela con il suo nome: è razzismo di stato. O la si combatte o la si legittima. Noi abbiamo scelto."</div>
+  </div>
+
+  <!-- TONO 4 -->
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:14px;">
+    <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--amber);margin-bottom:6px;">4 · TECNICO CREDIBILE</div>
+    <div style="font-size:13px;color:var(--text);line-height:1.5;margin-bottom:6px;">Numeri e fonti. Chi attacca fa la figura del bugiardo. Usare per fact-checking e smontare narrazioni false.</div>
+    <div style="font-family:'DM Mono',monospace;font-size:11px;color:#a8b4d8;font-style:italic;">"Il tasso di rimpatri effettivi in Italia è sotto il 20%. I numeri non mentono — la propaganda sì."</div>
+  </div>
+
+  <!-- MATRICE USO -->
+  <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);margin-bottom:8px;">▸ QUANDO USARE QUALE</div>
+  <div style="font-size:12px;color:var(--text);line-height:1.8;">
+    📅 <strong>Mattina</strong> → Empatico (aggancia) + Tecnico (credibilità)<br>
+    ⚔️ <strong>Attacco ricevuto</strong> → Radicale se grave / Istituzionale se tecnico<br>
+    📣 <strong>Dichiarazione stampa</strong> → Istituzionale o Empatico<br>
+    📱 <strong>Social</strong> → Empatico primario, Radicale per clip virali
+  </div>
+</div>
+
+<!-- ══════════════════════════════════ -->
+<!-- FOOTER -->
+<!-- ══════════════════════════════════ -->
+<div class="footer">
+  <div class="footer-star">⭐</div>
+  <div class="footer-title">POLARIS — TEST ATTIVO</div>
+  <div class="footer-sub">Martedì → Giovedì · Franki guida · Veronica esegue · Sistema si valida</div>
+</div>
+
+<div style="height: 30px;"></div>
+
+</body>
+</html>

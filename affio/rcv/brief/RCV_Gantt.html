@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gantt — RCV Il Poglío</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--blu:#2B38B0;--arancio:#F0A500;--grigio:#F2F1ED;--bianco:#FFFFFF;--nero:#111118;--verde:#1a7a3a;--rosso:#C0392B}
+body{font-family:'Barlow',sans-serif;background:var(--grigio);color:var(--nero);max-width:900px;margin:0 auto;font-size:13px}
+nav{background:var(--blu);padding:12px 20px;display:flex;align-items:center;justify-content:space-between}
+.fk-logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;display:inline-flex;align-items:center}
+.fk-logo .fran{color:#fff}
+.fk-logo .ki{background:#F0A500;color:#fff;border-radius:5px;padding:1px 7px;margin-left:2px}
+.nav-label{color:rgba(255,255,255,0.6);font-size:11px;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.hero{background:var(--nero);padding:20px;display:flex;align-items:center;justify-content:space-between}
+.hero h1{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:28px;color:#fff;text-transform:uppercase}
+.hero h1 span{color:var(--arancio)}
+.hero p{color:rgba(255,255,255,0.4);font-size:11px;margin-top:4px}
+
+/* LEGENDA */
+.legenda{background:var(--bianco);padding:12px 20px;display:flex;gap:16px;flex-wrap:wrap;border-bottom:2px solid var(--grigio)}
+.leg-item{display:flex;align-items:center;gap:6px;font-size:11px;color:#555}
+.leg-color{width:16px;height:10px;border-radius:2px}
+
+/* GANTT */
+.gantt-wrap{overflow-x:auto;background:var(--bianco)}
+.gantt{min-width:860px}
+
+/* HEADER DATE */
+.gantt-head{display:grid;background:var(--blu)}
+.gantt-head-label{padding:8px 12px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;color:rgba(255,255,255,0.5);letter-spacing:1px;text-transform:uppercase;min-width:180px}
+.gantt-dates{display:flex;flex:1}
+.gantt-date{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:10px;color:#fff;letter-spacing:.5px;text-align:center;padding:8px 2px;border-left:1px solid rgba(255,255,255,0.1);flex:1}
+.gantt-date.today{background:rgba(240,165,0,0.3);color:var(--arancio)}
+
+/* FASE HEADER */
+.fase-row{display:flex;align-items:stretch;border-bottom:1px solid var(--grigio)}
+.fase-label{min-width:180px;padding:6px 12px;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:12px;text-transform:uppercase;letter-spacing:.5px;display:flex;align-items:center;border-right:2px solid rgba(0,0,0,0.08)}
+.fase-bar-area{flex:1;display:flex;align-items:center;position:relative;padding:4px 0}
+.fase-bar{height:8px;border-radius:4px;position:absolute}
+
+/* STEP ROW */
+.step-row{display:flex;align-items:stretch;border-bottom:1px solid var(--grigio);background:var(--bianco)}
+.step-row:hover{background:#f8f8f8}
+.step-label{min-width:180px;padding:7px 12px 7px 20px;display:flex;align-items:flex-start;gap:8px;border-right:1px solid var(--grigio);flex-shrink:0}
+.step-n{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:14px;color:var(--arancio);line-height:1.2;flex-shrink:0}
+.step-name{font-size:11px;color:#333;line-height:1.4}
+.step-bar-area{flex:1;display:flex;align-items:center;position:relative;padding:6px 0;min-height:32px}
+.bar{height:14px;border-radius:3px;position:absolute;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:9px;color:#fff;letter-spacing:.5px;white-space:nowrap;overflow:hidden;padding:0 4px}
+.diamond{position:absolute;width:12px;height:12px;transform:rotate(45deg);top:50%;margin-top:-6px}
+.milestone-label{position:absolute;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:9px;color:var(--nero);white-space:nowrap;top:0;line-height:1.2}
+
+/* COLORS */
+.c-f0{background:#2d5a1a}
+.c-f1{background:#1a2d8a}
+.c-f2{background:#8a4a00}
+.c-f3{background:#005a2d}
+.c-f4{background:#4a008a}
+.c-f5{background:#8a0000}
+.c-lean{background:#0c7a8a}
+.c-fondo{background:#8a6a00}
+.c-mkt{background:#6a2d8a}
+.c-cardine{background:var(--arancio)}
+.c-exit{background:var(--verde)}
+
+.grid-line{position:absolute;top:0;bottom:0;width:1px;background:rgba(0,0,0,0.06)}
+.grid-line.half{background:rgba(0,0,0,0.03)}
+.today-line{position:absolute;top:0;bottom:0;width:2px;background:var(--arancio);opacity:0.6;z-index:10}
+
+.section-divider{background:var(--grigio);padding:4px 12px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#888;border-bottom:1px solid rgba(0,0,0,0.06)}
+.footer{background:var(--nero);padding:16px 20px;text-align:center}
+.footer p{color:rgba(255,255,255,0.4);font-size:11px;margin-top:6px}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="fk-logo"><span class="fran">Fran</span><span class="ki">Ki</span></div>
+  <span class="nav-label">Gantt · RCV Il Poglío</span>
+</nav>
+
+<div class="hero">
+  <div>
+    <h1>Gantt <span>Il Poglío</span></h1>
+    <p>APR26-2Q → NOV30-1Q · 25 milestone · 6 fasi</p>
+  </div>
+</div>
+
+<div class="legenda">
+  <div class="leg-item"><div class="leg-color" style="background:#2d5a1a"></div>Fase 0 Fondamenta</div>
+  <div class="leg-item"><div class="leg-color" style="background:#1a2d8a"></div>Fase 1 Pre-Asta</div>
+  <div class="leg-item"><div class="leg-color" style="background:#8a4a00"></div>Fase 2 Closing</div>
+  <div class="leg-item"><div class="leg-color" style="background:#005a2d"></div>Fase 3 Cantiere</div>
+  <div class="leg-item"><div class="leg-color" style="background:#4a008a"></div>Fase 4 Regime</div>
+  <div class="leg-item"><div class="leg-color" style="background:#8a0000"></div>Fase 5 Exit</div>
+  <div class="leg-item"><div class="leg-color" style="background:#F0A500"></div>Punto cardine</div>
+  <div class="leg-item"><div class="leg-color" style="background:#1a7a3a"></div>Momento exit</div>
+</div>
+
+<div class="gantt-wrap">
+<canvas id="ganttCanvas" style="display:block;width:100%"></canvas>
+</div>
+
+<script>
+const canvas = document.getElementById('ganttCanvas');
+const ctx = canvas.getContext('2d');
+
+// Timeline: APR26-2Q to NOV30-1Q
+// Each quindicina = 1 unit
+// APR26-2Q = 0, MAY26-1Q = 1, MAY26-2Q = 2, ...
+// Total quindicine from APR26-2Q to NOV30-1Q
+
+function qIndex(year, month, half) {
+  // half: 1 or 2
+  // Reference: APR26-2Q = 0
+  const refYear = 2026, refMonth = 4, refHalf = 2;
+  const totalHalves = (year - refYear) * 24 + (month - refMonth) * 2 + (half - refHalf);
+  return totalHalves;
+}
+
+const milestones = [
+  // {id, label, shortLabel, start, end, color, type}
+  // type: 'bar' or 'point'
+  {id:'F0', label:'FASE 0 — Fondamenta', start:0, end:6, color:'#2d5a1a', type:'phase'},
+  {id:'01', label:'01 Avvocato', start:1, end:2, color:'#2d5a1a', type:'bar'},
+  {id:'02', label:'02 HoldCo', start:2, end:3, color:'#2d5a1a', type:'bar'},
+  {id:'02b', label:'02b Mappa skill', start:2, end:3, color:'#2d5a1a', type:'bar'},
+  {id:'02c', label:'02c Censimento soci-fornitori', start:2, end:3, color:'#2d5a1a', type:'bar'},
+  {id:'03', label:'03 Agenzia mkt', start:1, end:4, color:'#6a2d8a', type:'bar'},
+  {id:'04', label:'04 Lean test', start:2, end:10, color:'#0c7a8a', type:'bar'},
+  {id:'05', label:'05 Cordata', start:3, end:4, color:'#2d5a1a', type:'bar'},
+  {id:'06', label:'06 Patto + T1', start:6, end:6, color:'#F0A500', type:'point', label2:'GIU26-2Q'},
+
+  {id:'F1', label:'FASE 1 — Pre-Asta', start:4, end:10, color:'#1a2d8a', type:'phase'},
+  {id:'07', label:'07 Due diligence ⚠ prima del patto', start:3, end:5, color:'#1a2d8a', type:'bar'},
+  {id:'08', label:'08 Lean test cont.', start:6, end:10, color:'#0c7a8a', type:'bar'},
+  {id:'09', label:'09 Contatti fondi', start:6, end:10, color:'#8a6a00', type:'bar'},
+  {id:'10', label:'10 Tranche 2 soci', start:9, end:9, color:'#F0A500', type:'point', label2:'AGO26-2Q'},
+  {id:'11', label:'11 Offerta asta', start:10, end:10, color:'#1a2d8a', type:'point', label2:'SET26-1Q'},
+
+  {id:'F2', label:'FASE 2 — Closing', start:10, end:14, color:'#8a4a00', type:'phase'},
+  {id:'12', label:'12 ASTA', start:11, end:11, color:'#F0A500', type:'point', label2:'SET26-2Q'},
+  {id:'13', label:'13 Fondo chiuso', start:13, end:13, color:'#8a6a00', type:'point', label2:'OTT26-2Q'},
+  {id:'14', label:'14 Decreto trasfm.', start:14, end:14, color:'#8a4a00', type:'point', label2:'NOV26-1Q'},
+
+  {id:'F3', label:'FASE 3 — Cantiere', start:14, end:26, color:'#005a2d', type:'phase'},
+  {id:'15', label:'15 Cantiere avvio', start:14, end:26, color:'#005a2d', type:'bar'},
+  {id:'16', label:'16 Crowdfunding', start:18, end:20, color:'#6a2d8a', type:'bar'},
+  {id:'17', label:'17 Bubble room M9', start:21, end:21, color:'#1a7a3a', type:'point', label2:'AGO27-1Q'},
+  {id:'18', label:'18 Soci club', start:21, end:26, color:'#005a2d', type:'bar'},
+  {id:'19', label:'19 PNRR', start:22, end:24, color:'#0c7a8a', type:'bar'},
+  {id:'20', label:'20 Wellness M18', start:26, end:26, color:'#005a2d', type:'point', label2:'MAY28-1Q'},
+
+  {id:'F4', label:'FASE 4 — Regime', start:26, end:38, color:'#4a008a', type:'phase'},
+  {id:'21', label:'21 Soft open M21', start:29, end:29, color:'#1a7a3a', type:'point', label2:'AGO28-1Q'},
+  {id:'22', label:'22 Pieno regime M30', start:38, end:38, color:'#1a7a3a', type:'point', label2:'MAY29-1Q'},
+
+  {id:'F5', label:'FASE 5 — Exit', start:38, end:54, color:'#8a0000', type:'phase'},
+  {id:'23', label:'23 Advisor M&A', start:38, end:40, color:'#8a0000', type:'bar'},
+  {id:'24', label:'24 Vendita', start:40, end:52, color:'#8a0000', type:'bar'},
+  {id:'25', label:'25 EXIT M48', start:54, end:54, color:'#1a7a3a', type:'point', label2:'NOV30-1Q'},
+];
+
+const TOTAL_Q = 55; // quindicine from 0 to 54
+const ROW_H = 28;
+const LABEL_W = 170;
+const HEADER_H = 36;
+const PHASE_H = 18;
+
+// Generate quarter labels
+const quarters = [];
+for (let y = 2026; y <= 2030; y++) {
+  for (let m = 1; m <= 12; m++) {
+    for (let h = 1; h <= 2; h++) {
+      const idx = qIndex(y, m, h);
+      if (idx >= 0 && idx <= 54) {
+        const mNames = ['','GEN','FEB','MAR','APR','MAY','GIU','LUG','AGO','SET','OTT','NOV','DIC'];
+        quarters.push({idx, label: `${mNames[m]}${String(y).slice(2)}-${h}Q`});
+      }
+    }
+  }
+}
+
+// Count non-phase rows
+const rows = milestones.filter(m => m.type !== 'phase');
+const phases = milestones.filter(m => m.type === 'phase');
+
+// Build phase groups
+const phaseOrder = ['F0','F1','F2','F3','F4','F5'];
+const phaseRows = {};
+let currentPhase = null;
+const groupedRows = [];
+
+milestones.forEach(m => {
+  if (m.type === 'phase') {
+    currentPhase = m.id;
+    groupedRows.push({type:'phase', data:m});
+  } else {
+    groupedRows.push({type:'row', data:m, phase:currentPhase});
+  }
+});
+
+const totalRows = groupedRows.length;
+const W = Math.max(860, window.innerWidth - 40);
+canvas.width = W;
+canvas.height = HEADER_H + totalRows * ROW_H + 20;
+canvas.style.height = canvas.height + 'px';
+
+const BAR_W = (W - LABEL_W) / TOTAL_Q;
+
+// Draw
+ctx.clearRect(0, 0, W, canvas.height);
+
+// Header background
+ctx.fillStyle = '#2B38B0';
+ctx.fillRect(0, 0, W, HEADER_H);
+
+// Label area header
+ctx.fillStyle = 'rgba(255,255,255,0.15)';
+ctx.fillRect(0, 0, LABEL_W, HEADER_H);
+ctx.fillStyle = 'rgba(255,255,255,0.5)';
+ctx.font = 'bold 10px Barlow Condensed, sans-serif';
+ctx.fillText('MILESTONE', 12, HEADER_H/2 + 4);
+
+// Quarter labels
+quarters.forEach(q => {
+  const x = LABEL_W + q.idx * BAR_W;
+  const isKeyQ = q.label.includes('-1Q');
+  ctx.fillStyle = isKeyQ ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.4)';
+  ctx.font = `bold ${isKeyQ ? 9 : 8}px Barlow Condensed, sans-serif`;
+  ctx.save();
+  ctx.translate(x + BAR_W/2, HEADER_H - 4);
+  ctx.rotate(-Math.PI/3);
+  ctx.fillText(q.label, 0, 0);
+  ctx.restore();
+});
+
+// Today line (APR26-2Q = index 0)
+const todayX = LABEL_W + 0 * BAR_W;
+ctx.strokeStyle = '#F0A500';
+ctx.lineWidth = 2;
+ctx.setLineDash([4,3]);
+ctx.beginPath();
+ctx.moveTo(todayX, HEADER_H);
+ctx.lineTo(todayX, canvas.height - 20);
+ctx.stroke();
+ctx.setLineDash([]);
+
+// Draw rows
+groupedRows.forEach((row, i) => {
+  const y = HEADER_H + i * ROW_H;
+  const isPhase = row.type === 'phase';
+  const d = row.data;
+
+  // Background
+  if (isPhase) {
+    ctx.fillStyle = d.color + '22';
+    ctx.fillRect(0, y, W, ROW_H);
+    ctx.fillStyle = d.color;
+    ctx.fillRect(0, y, 4, ROW_H);
+  } else {
+    ctx.fillStyle = i % 2 === 0 ? '#ffffff' : '#fafafa';
+    ctx.fillRect(0, y, W, ROW_H);
+  }
+
+  // Grid lines
+  quarters.forEach(q => {
+    const x = LABEL_W + q.idx * BAR_W;
+    ctx.strokeStyle = q.label.includes('-1Q') ? 'rgba(0,0,0,0.08)' : 'rgba(0,0,0,0.03)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(x, y + ROW_H);
+    ctx.stroke();
+  });
+
+  // Label
+  ctx.fillStyle = isPhase ? d.color : '#333';
+  ctx.font = isPhase
+    ? 'bold 11px Barlow Condensed, sans-serif'
+    : '11px Barlow, sans-serif';
+  if (isPhase) ctx.font = 'bold 11px Barlow Condensed, sans-serif';
+
+  const labelText = isPhase ? d.label : d.label;
+  ctx.fillText(labelText, isPhase ? 8 : 20, y + ROW_H/2 + 4);
+
+  // Separator line
+  ctx.strokeStyle = 'rgba(0,0,0,0.06)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(0, y + ROW_H);
+  ctx.lineTo(W, y + ROW_H);
+  ctx.stroke();
+
+  // Label right border
+  ctx.strokeStyle = isPhase ? d.color + '66' : 'rgba(0,0,0,0.08)';
+  ctx.lineWidth = isPhase ? 2 : 1;
+  ctx.beginPath();
+  ctx.moveTo(LABEL_W, y);
+  ctx.lineTo(LABEL_W, y + ROW_H);
+  ctx.stroke();
+
+  // Bar or point
+  if (!isPhase) {
+    if (d.type === 'bar') {
+      const bx = LABEL_W + d.start * BAR_W;
+      const bw = Math.max((d.end - d.start + 1) * BAR_W - 2, 6);
+      const bh = 12;
+      const by = y + (ROW_H - bh) / 2;
+      ctx.fillStyle = d.color;
+      ctx.beginPath();
+      ctx.roundRect(bx, by, bw, bh, 3);
+      ctx.fill();
+    } else if (d.type === 'point') {
+      const px = LABEL_W + d.start * BAR_W + BAR_W/2;
+      const py = y + ROW_H/2;
+      const size = 8;
+      ctx.fillStyle = d.color;
+      ctx.beginPath();
+      ctx.moveTo(px, py - size);
+      ctx.lineTo(px + size, py);
+      ctx.lineTo(px, py + size);
+      ctx.lineTo(px - size, py);
+      ctx.closePath();
+      ctx.fill();
+
+      if (d.label2) {
+        ctx.fillStyle = '#333';
+        ctx.font = 'bold 9px Barlow Condensed, sans-serif';
+        ctx.fillText(d.label2, px + size + 3, py + 4);
+      }
+    }
+  } else {
+    // Phase bar
+    const bx = LABEL_W + d.start * BAR_W;
+    const bw = (d.end - d.start + 1) * BAR_W - 2;
+    const bh = 6;
+    const by = y + (ROW_H - bh) / 2;
+    ctx.fillStyle = d.color + '88';
+    ctx.beginPath();
+    ctx.roundRect(bx, by, bw, bh, 3);
+    ctx.fill();
+  }
+});
+
+// Footer
+ctx.fillStyle = '#F2F1ED';
+ctx.fillRect(0, HEADER_H + totalRows * ROW_H, W, 20);
+ctx.fillStyle = '#888';
+ctx.font = '10px Barlow, sans-serif';
+ctx.fillText('FranKi Studio · RCV Il Poglío · APR26-2Q → NOV30-1Q', 12, HEADER_H + totalRows * ROW_H + 13);
+
+// Today label
+ctx.fillStyle = '#F0A500';
+ctx.font = 'bold 10px Barlow Condensed, sans-serif';
+ctx.fillText('OGGI', todayX + 4, HEADER_H + 12);
+</script>
+
+<div class="footer">
+  <div class="fk-logo"><span class="fran">Fran</span><span class="ki">Ki</span></div>
+  <p>Gantt RCV Il Poglío · FranKi Studio (Avre Srl) · Napoli · Aprile 2026</p>
+</div>
+
+</body>
+</html>

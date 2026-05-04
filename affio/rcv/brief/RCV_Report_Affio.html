@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Report Affio — RCV Il Poglío</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--blu:#2B38B0;--arancio:#F0A500;--grigio:#F2F1ED;--bianco:#FFFFFF;--nero:#111118;--verde:#0f6b30;--rosso:#b02020;--bosco:#2A3A1E}
+body{font-family:'Barlow',sans-serif;background:var(--grigio);color:var(--nero);max-width:700px;margin:0 auto;font-size:14px;line-height:1.6}
+nav{background:var(--bosco);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.fk-logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;display:inline-flex;align-items:center}
+.fk-logo .fran{color:#fff}
+.fk-logo .ki{background:#F0A500;color:#fff;border-radius:5px;padding:1px 7px;margin-left:2px}
+.nav-label{color:rgba(255,255,255,0.6);font-size:11px;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.hero{background:var(--bosco);padding:24px 20px 20px;position:relative;overflow:hidden}
+.hero::before{content:'AFFIO';position:absolute;right:-10px;top:-10px;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:140px;color:rgba(255,255,255,0.04);line-height:1;pointer-events:none}
+.hero-tag{display:inline-block;background:var(--arancio);color:#fff;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;border-radius:3px;margin-bottom:10px}
+.hero h1{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:36px;color:#fff;text-transform:uppercase;line-height:1;margin-bottom:4px}
+.hero h1 span{color:var(--arancio)}
+.hero p{color:rgba(255,255,255,0.5);font-size:12px}
+.kpi-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;background:rgba(0,0,0,0.1)}
+.kpi{background:var(--bianco);padding:14px 16px}
+.kpi-label{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#888;margin-bottom:4px}
+.kpi-val{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:24px;line-height:1}
+.kpi-sub{font-size:11px;color:#888;margin-top:2px}
+.kv-verde{color:var(--verde)}.kv-blu{color:var(--blu)}.kv-oro{color:var(--arancio)}
+.progressione{background:var(--bianco);padding:20px;margin-bottom:3px}
+.prog-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#888;margin-bottom:14px}
+.prog-row{display:flex;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid var(--grigio)}
+.prog-row:last-child{border-bottom:none;font-weight:500;padding-top:12px;margin-top:4px;border-top:2px solid var(--bosco)}
+.prog-data{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;color:var(--bosco);min-width:80px}
+.prog-voce{font-size:13px;color:#444;flex:1}
+.prog-incr{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;min-width:80px;text-align:right}
+.pos{color:var(--verde)}.neg{color:var(--rosso)}.neu{color:var(--blu)}
+.prog-saldo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:18px;color:var(--bosco);min-width:90px;text-align:right}
+.totale-box{background:var(--bosco);padding:20px}
+.totale-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:13px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:14px}
+.tot-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid rgba(255,255,255,0.07);font-size:13px}
+.tot-row:last-child{border-bottom:none;padding-top:14px;margin-top:6px;border-top:1px solid rgba(255,255,255,0.2)}
+.tot-label{color:rgba(255,255,255,0.6)}
+.tot-val{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px}
+.tot-row:last-child .tot-val{font-size:32px;color:var(--arancio)}
+.highlight-band{background:var(--arancio);padding:12px 20px;text-align:center}
+.highlight-band p{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;color:#fff;text-transform:uppercase;letter-spacing:1px}
+.footer{background:var(--nero);padding:16px 20px;text-align:center}
+.footer p{color:rgba(255,255,255,0.35);font-size:11px;margin-top:6px}
+</style>
+</head>
+<body>
+<nav>
+  <div class="fk-logo"><span class="fran">Fran</span><span class="ki">Ki</span></div>
+  <span class="nav-label">Report Affio · RCV Il Poglío</span>
+</nav>
+<div class="hero">
+  <div class="hero-tag">📊 Report Individuale</div>
+  <h1>Report <span>Affio</span></h1>
+  <p>HoldCo Srl 20% · Co-fondatore · APR26-2Q → NOV30-1Q</p>
+</div>
+<div class="kpi-grid">
+  <div class="kpi"><div class="kpi-label">Cash investito</div><div class="kpi-val kv-verde">€0</div><div class="kpi-sub">Sweat equity — apporta il deal e la rete</div></div>
+  <div class="kpi"><div class="kpi-label">Incasso immediato</div><div class="kpi-val kv-oro">€25K</div><div class="kpi-sub">Margine cessione quote GIU26</div></div>
+  <div class="kpi"><div class="kpi-label">Exit scenario base</div><div class="kpi-val kv-blu">€2,23M</div><div class="kpi-sub">Da €0 investiti</div></div>
+</div>
+
+<div class="highlight-band">
+  <p>Affio investe €0 · porta la rete · guadagna €2,23M + €25K immediati</p>
+</div>
+
+<div class="progressione">
+  <div class="prog-title">Flussi Affio — entrate e uscite milestone per milestone</div>
+  <div class="prog-row">
+    <div class="prog-data">APR26-2Q</div>
+    <div class="prog-voce">Costituzione HoldCo Srl 50/50 con FranKi</div>
+    <div class="prog-incr neg">– €500</div>
+    <div class="prog-saldo" style="color:#888">Quota nominale</div>
+  </div>
+  <div class="prog-row">
+    <div class="prog-data">GIU26-1Q</div>
+    <div class="prog-voce">Margine cessione quote alla cordata (sovrapprezzo Tranche 1)</div>
+    <div class="prog-incr pos">+ €25K</div>
+    <div class="prog-saldo">+ €25K</div>
+  </div>
+  <div class="prog-row">
+    <div class="prog-data">GIU26→NOV30</div>
+    <div class="prog-voce">Nessuna uscita — non versa cash nel progetto</div>
+    <div class="prog-incr" style="color:#888">€0</div>
+    <div class="prog-saldo">+ €25K</div>
+  </div>
+  <div class="prog-row">
+    <div class="prog-data">NOV30-1Q</div>
+    <div class="prog-voce">Quota equity exit — 12% residuo SPV (€18,6M × 12%)</div>
+    <div class="prog-incr pos">+ €2,23M</div>
+    <div class="prog-saldo">€2,255M</div>
+  </div>
+  <div class="prog-row">
+    <div class="prog-data">NOV30-1Q</div>
+    <div class="prog-voce">Success fee FranKi 5% sulla plusvalenza netta di Affio</div>
+    <div class="prog-incr neg">– €111K</div>
+    <div class="prog-saldo">€2,144M</div>
+  </div>
+  <div class="prog-row">
+    <div class="prog-data"><strong>NETTO</strong></div>
+    <div class="prog-voce"><strong>Totale Affio sull'intera operazione — da €0 investiti</strong></div>
+    <div class="prog-incr pos" style="font-size:18px">+ €2,14M</div>
+    <div class="prog-saldo" style="font-size:22px;color:var(--verde)">€2,14M</div>
+  </div>
+</div>
+
+<div class="totale-box">
+  <div class="totale-title">Riepilogo Affio · NOV30-1Q</div>
+  <div class="tot-row"><span class="tot-label">Cash investito totale</span><span class="tot-val" style="color:var(--verde)">€0</span></div>
+  <div class="tot-row"><span class="tot-label">Incasso immediato GIU26 (margine quote)</span><span class="tot-val" style="color:var(--arancio)">€25K</span></div>
+  <div class="tot-row"><span class="tot-label">Quota equity exit M48 (12% × €18,6M)</span><span class="tot-val" style="color:var(--arancio)">€2,23M</span></div>
+  <div class="tot-row"><span class="tot-label">Success fee FranKi detratta (5%)</span><span class="tot-val" style="color:#888">– €111K</span></div>
+  <div class="tot-row"><span class="tot-label"><strong>Totale netto Affio — da €0 investiti</strong></span><span class="tot-val">~€2,14M</span></div>
+</div>
+
+<div class="footer">
+  <div class="fk-logo"><span class="fran">Fran</span><span class="ki">Ki</span></div>
+  <p>Documento interno riservato · FranKi Studio (Avre Srl) · Napoli · Aprile 2026</p>
+</div>
+</body>
+</html>

@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guya × Franki — Area Collaborazione</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lato:wght@400;700;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blu:      #3549B5;
+  --blu-dark: #1a2560;
+  --giallo:   #F9AC28;
+  --bianco:   #FFFFFF;
+  --bg:       #F4F5FA;
+  --testo:    #1a2560;
+  --testo-sec:#4a5480;
+  --border:   #D8DCF0;
+  --verde:    #27AE60;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); font-family:'Lato',sans-serif; color:var(--testo); min-height:100vh; }
+
+/* GATE */
+#gate {
+  position:fixed; inset:0; background:var(--blu-dark);
+  display:flex; align-items:center; justify-content:center;
+  flex-direction:column; gap:24px; z-index:999;
+}
+.gate-logo { font-family:'Bebas Neue',sans-serif; font-size:36px; letter-spacing:.05em; color:var(--bianco); }
+.gate-logo span { background:var(--giallo); color:var(--blu-dark); padding:2px 10px; margin-left:3px; }
+.gate-sub { font-family:'DM Mono',monospace; font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:rgba(255,255,255,.4); text-align:center; }
+.gate-input {
+  background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.2);
+  color:var(--bianco); font-family:'DM Mono',monospace; font-size:18px;
+  padding:14px 28px; letter-spacing:.4em; text-align:center; width:300px; outline:none;
+  transition:border-color .2s;
+}
+.gate-input:focus { border-color:var(--giallo); }
+.gate-input::placeholder { color:rgba(255,255,255,.2); letter-spacing:.15em; font-size:13px; }
+.gate-btn {
+  background:var(--giallo); color:var(--blu-dark); border:none;
+  font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:.12em;
+  padding:14px 0; cursor:pointer; width:300px; transition:opacity .2s;
+}
+.gate-btn:hover { opacity:.88; }
+.gate-error { font-family:'DM Mono',monospace; font-size:11px; color:#E74C3C; letter-spacing:.1em; display:none; }
+
+/* APP */
+#app { display:none; }
+
+/* HEADER */
+header {
+  background:var(--blu-dark); height:64px;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 40px; border-bottom:4px solid var(--giallo);
+  position:sticky; top:0; z-index:100;
+}
+.logo { font-family:'Bebas Neue',sans-serif; font-size:26px; letter-spacing:.05em; color:var(--bianco); }
+.logo span { background:var(--giallo); color:var(--blu-dark); padding:2px 8px; margin-left:2px; }
+.header-right { display:flex; align-items:center; gap:24px; }
+.header-tag { font-family:'DM Mono',monospace; font-size:11px; letter-spacing:.15em; text-transform:uppercase; color:rgba(255,255,255,.4); }
+.header-exit { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,.3); cursor:pointer; background:none; border:1px solid rgba(255,255,255,.15); padding:6px 14px; transition:all .2s; }
+.header-exit:hover { color:rgba(255,100,100,.8); border-color:rgba(255,100,100,.3); }
+
+/* HERO */
+.hero { background:var(--blu-dark); color:var(--bianco); padding:56px 40px 48px; border-bottom:4px solid var(--giallo); }
+.hero-inner { max-width:1000px; margin:0 auto; }
+.chip { display:inline-block; background:var(--giallo); color:var(--blu-dark); font-family:'DM Mono',monospace; font-size:11px; letter-spacing:.2em; text-transform:uppercase; font-weight:700; padding:5px 14px; margin-bottom:20px; }
+.hero h1 { font-family:'Bebas Neue',sans-serif; font-size:clamp(52px,9vw,96px); line-height:.9; letter-spacing:.02em; color:var(--bianco); margin-bottom:28px; }
+.hero h1 em { color:var(--giallo); font-style:normal; }
+.hero-msg {
+  max-width:600px; font-size:16px; line-height:1.75; color:rgba(255,255,255,.85);
+  padding:24px 28px; border-left:4px solid var(--giallo);
+  background:rgba(255,255,255,.05); margin-bottom:32px;
+}
+.hero-msg strong { color:var(--bianco); }
+.hero-firma { font-family:'DM Mono',monospace; font-size:11px; letter-spacing:.15em; color:rgba(255,255,255,.35); text-transform:uppercase; }
+
+/* CONTAINER */
+.container { max-width:1000px; margin:0 auto; padding:48px 40px 80px; }
+.section { margin-bottom:56px; }
+
+/* SECTION HEAD */
+.sec-head { display:flex; align-items:center; gap:14px; margin-bottom:20px; padding-bottom:14px; border-bottom:2px solid var(--blu-dark); }
+.sec-num { font-family:'Bebas Neue',sans-serif; font-size:13px; background:var(--blu-dark); color:var(--giallo); padding:4px 10px; letter-spacing:.1em; }
+.sec-title { font-family:'Bebas Neue',sans-serif; font-size:28px; letter-spacing:.05em; color:var(--blu-dark); }
+.sec-sub { font-size:12px; color:var(--testo-sec); margin-left:auto; }
+
+/* PROJECT CARD */
+.proj-card { background:var(--bianco); border-left:5px solid var(--blu); padding:32px; margin-bottom:2px; }
+.proj-top { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-bottom:20px; }
+.proj-nome { font-family:'Bebas Neue',sans-serif; font-size:32px; letter-spacing:.04em; color:var(--blu-dark); line-height:1; }
+.proj-tipo { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.15em; text-transform:uppercase; color:var(--testo-sec); margin-top:4px; }
+.proj-stato { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.12em; text-transform:uppercase; padding:5px 14px; flex-shrink:0; }
+.stato-lean { background:#E8F8F0; color:var(--verde); border:1px solid #82E0AA; }
+.stato-analisi { background:#E8EBF8; color:var(--blu); border:1px solid #B8C0E8; }
+.proj-desc { font-size:14px; color:var(--testo-sec); line-height:1.75; margin-bottom:24px; }
+.proj-ruolo { padding:18px 22px; background:#FFFBF0; border-left:3px solid var(--giallo); margin-bottom:20px; }
+.proj-ruolo-label { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--giallo); margin-bottom:6px; }
+.proj-ruolo-text { font-size:13px; color:var(--testo); line-height:1.65; }
+.proj-info { display:flex; gap:28px; flex-wrap:wrap; padding-top:16px; border-top:1px solid var(--border); }
+.info-item { display:flex; flex-direction:column; gap:3px; }
+.info-label { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:.15em; text-transform:uppercase; color:#9aa0c0; }
+.info-val { font-size:13px; font-weight:700; color:var(--testo); }
+.info-val.g { color:var(--verde); } .info-val.y { color:#E67E22; }
+
+/* MULTIPLE CARD */
+.multi-card { background:var(--bianco); border-left:5px solid var(--verde); padding:32px; }
+.multi-top { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-bottom:16px; flex-wrap:wrap; }
+.multi-nome { font-family:'Bebas Neue',sans-serif; font-size:32px; letter-spacing:.04em; color:var(--blu-dark); line-height:1; }
+.multi-paese { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.15em; color:var(--testo-sec); text-transform:uppercase; margin-top:4px; }
+.multi-score-wrap { text-align:right; }
+.multi-score-num { font-family:'Bebas Neue',sans-serif; font-size:52px; color:var(--giallo); line-height:1; }
+.multi-score-label { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:.15em; color:var(--testo-sec); text-transform:uppercase; }
+.multi-desc { font-size:14px; color:var(--testo-sec); line-height:1.75; margin-bottom:20px; }
+.fondi-chips { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:24px; }
+.fchip { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.1em; text-transform:uppercase; padding:5px 12px; border:1px solid var(--border); color:var(--testo-sec); background:var(--bg); }
+.fchip.top { background:#E8F8F0; color:var(--verde); border-color:#82E0AA; }
+.btn-analisi {
+  display:inline-flex; align-items:center; gap:10px;
+  background:var(--blu-dark); color:var(--bianco);
+  font-family:'Bebas Neue',sans-serif; font-size:16px; letter-spacing:.1em;
+  padding:13px 28px; text-decoration:none; transition:background .2s;
+}
+.btn-analisi:hover { background:var(--blu); }
+
+/* NEXT STEPS BOX */
+.next-box { background:var(--bianco); border-left:5px solid var(--giallo); padding:28px 32px; margin-top:2px; }
+.next-title { font-family:'Bebas Neue',sans-serif; font-size:22px; letter-spacing:.06em; color:var(--blu-dark); margin-bottom:16px; }
+.next-item { display:flex; gap:12px; align-items:flex-start; margin-bottom:14px; }
+.next-dot { width:8px; height:8px; background:var(--giallo); border-radius:50%; margin-top:6px; flex-shrink:0; }
+.next-text { font-size:14px; color:var(--testo-sec); line-height:1.65; }
+.next-text strong { color:var(--testo); }
+
+/* NOTE */
+.note-card { background:var(--bianco); padding:28px 32px; border-left:5px solid var(--blu); }
+.note-label { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--blu); margin-bottom:12px; }
+.note-textarea {
+  width:100%; min-height:120px; border:1px solid var(--border);
+  background:var(--bg); color:var(--testo); font-family:'Lato',sans-serif;
+  font-size:14px; line-height:1.6; padding:16px; resize:vertical; outline:none;
+  transition:border-color .2s;
+}
+.note-textarea:focus { border-color:var(--blu); }
+.note-textarea::placeholder { color:#9aa0c0; }
+.note-btn {
+  margin-top:12px; background:var(--blu-dark); color:var(--bianco); border:none;
+  font-family:'Bebas Neue',sans-serif; font-size:16px; letter-spacing:.1em;
+  padding:12px 28px; cursor:pointer; transition:background .2s;
+}
+.note-btn:hover { background:var(--blu); }
+.note-confirm { font-family:'DM Mono',monospace; font-size:11px; color:var(--verde); margin-top:10px; display:none; letter-spacing:.1em; }
+.note-storico { margin-top:24px; padding-top:20px; border-top:1px solid var(--border); }
+.nota-item { background:var(--bg); padding:14px 18px; margin-bottom:6px; border-left:3px solid var(--border); }
+.nota-data { font-family:'DM Mono',monospace; font-size:10px; color:#9aa0c0; letter-spacing:.1em; margin-bottom:4px; }
+.nota-testo { font-size:14px; color:var(--testo-sec); line-height:1.5; }
+.note-empty { font-size:13px; color:#9aa0c0; font-style:italic; }
+
+/* FOOTER */
+footer { background:var(--blu-dark); border-top:4px solid var(--giallo); padding:28px 40px; display:flex; justify-content:space-between; align-items:center; }
+.footer-brand { font-family:'Bebas Neue',sans-serif; font-size:15px; letter-spacing:.1em; color:rgba(255,255,255,.35); }
+.footer-date { font-family:'DM Mono',monospace; font-size:10px; color:rgba(255,255,255,.2); letter-spacing:.1em; }
+
+@media(max-width:768px){
+  header,footer{padding:0 20px;}
+  .hero{padding:40px 20px;}
+  .container{padding:32px 20px 60px;}
+  .proj-top,.multi-top{flex-direction:column;}
+  .sec-sub{display:none;}
+  footer{flex-direction:column;gap:8px;padding:20px;}
+}
+</style>
+</head>
+<body>
+
+<!-- GATE -->
+<div id="gate">
+  <div class="gate-logo">Fran<span>Ki</span></div>
+  <div class="gate-sub">Area Riservata · Guya × Franki</div>
+  <input type="password" class="gate-input" id="pwd" placeholder="Inserisci password" onkeydown="if(event.key==='Enter')checkPwd()">
+  <button class="gate-btn" onclick="checkPwd()">ACCEDI →</button>
+  <div class="gate-error" id="gate-error">Password non corretta — riprova</div>
+</div>
+
+<!-- APP -->
+<div id="app">
+
+<header>
+  <div class="logo">Fran<span>Ki</span></div>
+  <div class="header-right">
+    <div class="header-tag">Area Guya Corsale</div>
+    <button class="header-exit" onclick="logout()">Esci</button>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="chip">Collaborazione · Maggio 2026</div>
+    <h1>CIAO<br><em>GUYA.</em></h1>
+    <div class="hero-msg">
+      Questa è la nostra <strong>area di lavoro condivisa</strong>.<br><br>
+      Qui trovi i progetti dove stiamo valutando di collaborare, le analisi che facciamo per te, e uno spazio dove lasciare note e idee in qualsiasi momento.<br><br>
+      Non è uno strumento formale. È il posto dove <strong>iniziamo a pensare insieme</strong>.
+    </div>
+    <div class="hero-firma">— Franki Studio · frankistudio.it</div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- 01 IL POGGIO -->
+  <div class="section">
+    <div class="sec-head">
+      <span class="sec-num">01</span>
+      <span class="sec-title">Il Poglío</span>
+      <span class="sec-sub">Coinvolgimento potenziale — marketing operativo</span>
+    </div>
+    <div class="proj-card">
+      <div class="proj-top">
+        <div>
+          <div class="proj-nome">Il Poglío</div>
+          <div class="proj-tipo">Hospitality · Lean Test in preparazione</div>
+        </div>
+        <div class="proj-stato stato-lean">Lean Test</div>
+      </div>
+      <div class="proj-desc">
+        Il Poglío è un progetto nel settore hospitality che stiamo portando dalla fase concept alla validazione di mercato. Il prossimo step è il lean test — si inizia a spingere il progetto sul mercato in modo controllato, misurando la risposta reale prima di scalare.<br><br>
+        È una fase che richiede esecuzione concreta sul lato marketing: contenuti, canali, presenza, relazione con il territorio. Poca strategia, molta operatività fatta bene.
+      </div>
+      <div class="proj-ruolo">
+        <div class="proj-ruolo-label">Ruolo potenziale per Guya</div>
+        <div class="proj-ruolo-text">Stiamo valutando un tuo coinvolgimento sul <strong>marketing operativo</strong> nella fase lean — gestione dei canali, contenuti, relazioni locali. È ancora in fase di valutazione: prima vogliamo capire insieme se c'è allineamento sul progetto e sulla modalità di lavoro. <strong>Nessun impegno per ora</strong>, solo una conversazione.</div>
+      </div>
+      <a class="btn-analisi" href="POGLIO_Teaser_Guya_1.html" target="_blank" style="margin-top:20px;display:inline-flex;">Scopri il progetto &rarr;</a>
+      <div class="proj-info">
+        <div class="info-item"><span class="info-label">Fase attuale</span><span class="info-val y">Concept → Lean Test</span></div>
+        <div class="info-item"><span class="info-label">Settore</span><span class="info-val">Hospitality</span></div>
+        <div class="info-item"><span class="info-label">Orizzonte coinvolgimento</span><span class="info-val">Breve termine</span></div>
+        <div class="info-item"><span class="info-label">Modalità</span><span class="info-val">Da definire insieme</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 02 MULTIPLE -->
+  <div class="section">
+    <div class="sec-head">
+      <span class="sec-num">02</span>
+      <span class="sec-title">Multiple Identities</span>
+      <span class="sec-sub">Analisi fondi ESG — abbiamo già avviato il lavoro</span>
+    </div>
+    <div class="multi-card">
+      <div class="multi-top">
+        <div>
+          <div class="multi-nome">Multiple Identities</div>
+          <div class="multi-paese">Startup · Paesi Bassi 🇳🇱 · Moda Sostenibile</div>
+        </div>
+        <div class="multi-score-wrap">
+          <div class="multi-score-num">62</div>
+          <div class="multi-score-label">Score fundability / 100</div>
+        </div>
+      </div>
+      <div class="multi-desc">
+        Abbiamo analizzato le opportunità di finanziamento disponibili per Multiple Identities. L'obiettivo è identificare i percorsi più realistici per raccogliere circa <strong>€25.000 al mese per 18 mesi = €450.000</strong>, con focus su strumenti ESG, fondi olandesi e programmi europei per circular fashion.<br><br>
+        Il potenziale è buono. La sede olandese, il posizionamento ESG e il mercato in crescita sono tutti elementi favorevoli. I gap principali — certificazioni formali e dati di impact misurabili — sono colmabili in pochi mesi.
+      </div>
+      <div class="fondi-chips">
+        <span class="fchip top">Fashion for Good</span>
+        <span class="fchip top">MIT RVO</span>
+        <span class="fchip top">WBSO Tax Credit</span>
+        <span class="fchip">Laudes Foundation</span>
+        <span class="fchip">Horizon Europe EIC</span>
+        <span class="fchip">EFRO Regionale NL</span>
+      </div>
+      <a class="btn-analisi" href="multiple_form_v1_20260503.html" target="_blank">Compila la scheda conoscitiva →</a>
+      <div style="margin-top:12px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.12em;color:#9aa0c0;text-transform:uppercase;">
+        <!-- FRANKI ONLY: <a href="multiple_fondi_v3_20260503.html" style="color:#9aa0c0;" target="_blank">Analisi fondi completa →</a> -->
+      </div>
+    </div>
+    <div class="next-box">
+      <div class="next-title">Primo passo proposto</div>
+      <div class="next-item"><div class="next-dot"></div><div class="next-text">Una <strong>call di 30 minuti</strong> per completare il profilo di Multiple — forma giuridica, anno fondazione, composizione del team, uso preciso dei fondi. Senza questi dati non si può selezionare il bando giusto.</div></div>
+      <div class="next-item"><div class="next-dot"></div><div class="next-text">Valutazione della candidatura a <strong>Fashion for Good</strong> (Amsterdam) — l'acceleratore più adatto: zero equity, 9 mesi, accesso diretto a partner corporate e grant scan professionale.</div></div>
+      <div class="next-item"><div class="next-dot"></div><div class="next-text">Attivazione immediata del <strong>WBSO</strong> (credito fiscale R&S olandese) se Multiple ha personale dedicato allo sviluppo — riduce i costi operativi del 40% senza aspettare un bando.</div></div>
+    </div>
+  </div>
+
+  <!-- 03 NOTE -->
+  <div class="section">
+    <div class="sec-head">
+      <span class="sec-num">03</span>
+      <span class="sec-title">Note & Idee</span>
+      <span class="sec-sub">Scrivi qui — le leggiamo sempre</span>
+    </div>
+    <div class="note-card">
+      <div class="note-label">Il tuo spazio — domande, idee, proposte</div>
+      <textarea class="note-textarea" id="note-input" placeholder="Scrivi liberamente — una domanda, un'idea, una proposta..."></textarea>
+      <br>
+      <button class="note-btn" onclick="salvaNota()">SALVA NOTA</button>
+      <div class="note-confirm" id="note-confirm">✓ Nota salvata</div>
+      <div class="note-storico">
+        <div class="note-label" style="margin-bottom:12px;">Note precedenti</div>
+        <div id="note-lista"></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-brand">Franki Studio — Area Collaborazione Guya Corsale</div>
+  <div class="footer-date">v2.0 · Maggio 2026</div>
+</footer>
+
+</div><!-- /app -->
+
+<script>
+const PWD = 'Guya2026';
+const KEY = 'franki_guya_notes_v1';
+
+function checkPwd(){
+  if(document.getElementById('pwd').value === PWD){
+    document.getElementById('gate').style.display='none';
+    document.getElementById('app').style.display='block';
+    caricaNote();
+  } else {
+    document.getElementById('gate-error').style.display='block';
+    document.getElementById('pwd').value='';
+  }
+}
+function logout(){
+  document.getElementById('gate').style.display='flex';
+  document.getElementById('app').style.display='none';
+  document.getElementById('pwd').value='';
+  document.getElementById('gate-error').style.display='none';
+}
+function salvaNota(){
+  const t=document.getElementById('note-input').value.trim();
+  if(!t) return;
+  let note=getNote();
+  const ora=new Date();
+  const d=ora.toLocaleDateString('it-IT',{day:'2-digit',month:'2-digit',year:'numeric'})+' · '+ora.toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit'});
+  note.unshift({data:d,testo:t});
+  localStorage.setItem(KEY,JSON.stringify(note));
+  document.getElementById('note-input').value='';
+  const c=document.getElementById('note-confirm');
+  c.style.display='block';
+  setTimeout(()=>c.style.display='none',2500);
+  renderNote(note);
+}
+function getNote(){
+  try{return JSON.parse(localStorage.getItem(KEY))||[];}catch(e){return[];}
+}
+function caricaNote(){ renderNote(getNote()); }
+function renderNote(note){
+  const l=document.getElementById('note-lista');
+  if(!note.length){l.innerHTML='<div class="note-empty">Nessuna nota ancora.</div>';return;}
+  l.innerHTML=note.map(n=>'<div class="nota-item"><div class="nota-data">'+n.data+'</div><div class="nota-testo">'+n.testo.replace(/\n/g,'<br>')+'</div></div>').join('');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roadmap CCH · Franki Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Lato:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blue:#3549B5;--blue-dark:#1E2E8A;--blue-light:#EBF0FF;
+  --amber:#F9AC28;--amber-dark:#C07800;--amber-light:#FFF7E0;
+  --green:#1A7A4A;--green-light:#E0F5EC;--green-text:#0A4A28;
+  --gray:#6B6560;--gray-light:#F2F0EB;
+  --cream:#FAF9F6;--cream-dark:#EDEBE4;
+  --ink:#1A1714;--white:#FFFFFF;
+  --bg:#1A2A7A;--bg2:#1E2E8A;--bg3:#253EA0;--bg4:#162070;
+  --display:'Bebas Neue',sans-serif;
+  --label:'DM Mono',monospace;
+  --body:'Lato',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;overflow:hidden;}
+body{background:var(--bg);font-family:var(--body);-webkit-font-smoothing:antialiased;display:flex;flex-direction:column;color:var(--white);}
+
+/* ── NAV GLOBALE ── */
+.gnav{background:var(--bg4);border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;padding:0 1.5rem;flex-shrink:0;gap:0;}
+.gnav__logo{display:flex;align-items:center;gap:.65rem;padding:.85rem 0;margin-right:1.5rem;border-right:1px solid rgba(255,255,255,.07);padding-right:1.5rem;}
+.logo-mk{font-family:var(--display);font-size:1.35rem;color:#fff;letter-spacing:.04em;line-height:1;}
+.logo-mk em{background:var(--amber);color:var(--blue-dark);font-style:normal;padding:.03em .16em;border-radius:3px;}
+.logo-tag{font-family:var(--label);font-size:.48rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.28);}
+.gnav__tabs{display:flex;gap:0;flex:1;}
+.gtab{font-family:var(--label);font-size:.54rem;letter-spacing:.14em;text-transform:uppercase;padding:.85rem 1.4rem;cursor:pointer;border:none;border-bottom:3px solid transparent;background:none;color:rgba(255,255,255,.3);transition:all .15s;white-space:nowrap;display:flex;align-items:center;gap:.5rem;}
+.gtab:hover{color:rgba(255,255,255,.65);}
+.gtab.on{color:var(--amber);border-bottom-color:var(--amber);background:rgba(249,172,40,.04);}
+.gnav__counts{display:flex;gap:1rem;margin-left:auto;align-items:center;}
+.gcount{font-family:var(--label);font-size:.5rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.2);white-space:nowrap;}
+.gcount span{font-size:.62rem;margin-left:.2rem;}
+.gcount--g span{color:var(--green);}
+.gcount--a span{color:var(--amber);}
+
+/* ── PAGINE ── */
+.page{display:none;flex:1;overflow:hidden;flex-direction:column;}
+.page.on{display:flex;}
+
+/* ════════════════════════════════
+   PAGINA 0 — HOME / COME FUNZIONA
+════════════════════════════════ */
+.home{flex:1;overflow-y:auto;padding:2.5rem 3rem 3rem;display:flex;flex-direction:column;gap:2rem;}
+.home::-webkit-scrollbar{width:4px;}
+.home::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);}
+
+.home__hero{display:flex;gap:2rem;align-items:flex-start;}
+.home__hero-text{flex:1;}
+.home__eyebrow{font-family:var(--label);font-size:.58rem;letter-spacing:.24em;text-transform:uppercase;color:var(--amber);margin-bottom:.6rem;}
+.home__title{font-family:var(--display);font-size:clamp(2.5rem,4vw,4rem);letter-spacing:.04em;line-height:1;color:var(--white);margin-bottom:.8rem;}
+.home__title em{color:var(--amber);font-style:normal;}
+.home__desc{font-size:.95rem;color:rgba(255,255,255,.45);line-height:1.75;max-width:560px;}
+
+.home__status{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.06);border-radius:8px;overflow:hidden;min-width:280px;}
+.hs{padding:1rem 1.2rem;background:var(--bg);}
+.hs__l{font-family:var(--label);font-size:.5rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:.3rem;}
+.hs__v{font-family:var(--display);font-size:2rem;line-height:1;}
+.hs--tot .hs__v{color:rgba(255,255,255,.3);}
+.hs--done .hs__v{color:var(--green);}
+.hs--part .hs__v{color:var(--amber);}
+.hs--wait .hs__v{color:rgba(255,255,255,.2);}
+
+/* COME FUNZIONA */
+.home__guide-title{font-family:var(--display);font-size:1.6rem;letter-spacing:.05em;color:var(--white);border-left:4px solid var(--amber);padding-left:.8rem;}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;}
+.step-card{background:var(--bg2);border:1px solid rgba(255,255,255,.07);border-radius:10px;overflow:hidden;}
+.step-card__num{font-family:var(--display);font-size:4rem;line-height:1;padding:1.2rem 1.4rem .4rem;color:rgba(255,255,255,.07);}
+.step-card--1 .step-card__num{color:rgba(249,172,40,.15);}
+.step-card--2 .step-card__num{color:rgba(53,73,181,.25);}
+.step-card--3 .step-card__num{color:rgba(26,122,74,.2);}
+.step-card__body{padding:.4rem 1.4rem 1.2rem;}
+.step-card__title{font-family:var(--display);font-size:1.1rem;letter-spacing:.04em;color:var(--white);margin-bottom:.5rem;}
+.step-card--1 .step-card__title{color:var(--amber);}
+.step-card--2 .step-card__title{color:#8090FF;}
+.step-card--3 .step-card__title{color:#5EE8A0;}
+.step-card__text{font-size:.88rem;color:rgba(255,255,255,.45);line-height:1.65;}
+.step-card__text strong{color:rgba(255,255,255,.7);}
+
+/* REGOLE */
+.home__rules-title{font-family:var(--display);font-size:1.3rem;letter-spacing:.05em;color:var(--white);border-left:4px solid rgba(255,255,255,.15);padding-left:.8rem;}
+.rules{display:flex;flex-direction:column;gap:.6rem;}
+.rule{display:flex;gap:.9rem;align-items:flex-start;padding:.8rem 1rem;background:var(--bg2);border:1px solid rgba(255,255,255,.06);border-radius:7px;}
+.rule__n{font-family:var(--display);font-size:1.6rem;line-height:1;color:rgba(255,255,255,.1);flex-shrink:0;min-width:2rem;}
+.rule__title{font-family:var(--label);font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);margin-bottom:.2rem;}
+.rule__text{font-size:.88rem;color:rgba(255,255,255,.45);line-height:1.55;}
+.rule__text strong{color:rgba(255,255,255,.7);}
+
+/* LEGENDA */
+.home__leg-title{font-family:var(--display);font-size:1.3rem;letter-spacing:.05em;color:var(--white);border-left:4px solid rgba(255,255,255,.15);padding-left:.8rem;}
+.leg{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;}
+.leg-item{display:flex;align-items:flex-start;gap:.8rem;padding:.9rem 1rem;background:var(--bg2);border:1px solid rgba(255,255,255,.06);border-radius:7px;}
+.leg-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0;margin-top:.15rem;}
+.leg-dot--wait{background:rgba(255,255,255,.12);border:2px solid rgba(255,255,255,.2);}
+.leg-dot--part{background:var(--amber);}
+.leg-dot--done{background:var(--green);}
+.leg-title{font-family:var(--label);font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.25rem;}
+.leg-item:nth-child(1) .leg-title{color:rgba(255,255,255,.3);}
+.leg-item:nth-child(2) .leg-title{color:var(--amber);}
+.leg-item:nth-child(3) .leg-title{color:var(--green);}
+.leg-text{font-size:.84rem;color:rgba(255,255,255,.4);line-height:1.5;}
+
+/* CTA */
+.home__ctas{display:flex;gap:1rem;}
+.cta-btn{font-family:var(--display);font-size:1.1rem;letter-spacing:.06em;padding:.7rem 2rem;border-radius:6px;border:none;cursor:pointer;transition:all .15s;}
+.cta-btn--amber{background:var(--amber);color:var(--blue-dark);}
+.cta-btn--amber:hover{background:var(--amber-dark);color:var(--white);}
+.cta-btn--outline{background:transparent;color:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.15);}
+.cta-btn--outline:hover{background:rgba(255,255,255,.05);color:rgba(255,255,255,.8);}
+
+/* ════════════════════════════════
+   PAGINA 1 — LISTA + SPECCHIO
+════════════════════════════════ */
+.lista-wrap{flex:1;display:grid;grid-template-columns:360px 1fr;overflow:hidden;gap:0;}
+
+.lista-left{display:flex;flex-direction:column;border-right:1px solid rgba(255,255,255,.06);overflow:hidden;}
+.lista-left__head{padding:.7rem 1rem;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.panel-lbl{font-family:var(--label);font-size:.54rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.3);}
+.panel-lbl span{color:var(--amber);}
+.lista-left__filters{display:flex;gap:.3rem;padding:.6rem .8rem;flex-wrap:wrap;border-bottom:1px solid rgba(255,255,255,.06);flex-shrink:0;}
+.flt{font-family:var(--label);font-size:.48rem;letter-spacing:.08em;text-transform:uppercase;padding:.2rem .6rem;border-radius:20px;border:1px solid rgba(255,255,255,.1);background:transparent;color:rgba(255,255,255,.3);cursor:pointer;transition:all .12s;}
+.flt.on{background:var(--amber);color:var(--blue-dark);border-color:var(--amber);}
+.flt:hover:not(.on){background:rgba(255,255,255,.05);color:rgba(255,255,255,.6);}
+.lista-left__list{overflow-y:auto;flex:1;padding:.7rem;}
+.lista-left__list::-webkit-scrollbar{width:3px;}
+.lista-left__list::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);}
+
+/* CARD LISTA */
+.acard{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:7px;padding:.7rem .85rem;margin-bottom:.5rem;cursor:pointer;transition:all .14s;position:relative;overflow:hidden;}
+.acard:hover{background:rgba(255,255,255,.07);}
+.acard.st-done{background:rgba(26,122,74,.07);border-color:rgba(26,122,74,.2);}
+.acard.st-part{border-color:rgba(249,172,40,.3);}
+.acard__stripe{position:absolute;left:0;top:0;bottom:0;width:3px;}
+.s-guia{background:var(--amber);}
+.s-franki{background:#6080FF;}
+.s-entrambi{background:var(--green);}
+.s-luca{background:#9B59B6;}
+.acard__phase{font-family:var(--label);font-size:.44rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.2);padding-left:.4rem;margin-bottom:.2rem;}
+.acard__title{font-size:.84rem;color:rgba(255,255,255,.75);line-height:1.38;font-weight:600;padding-left:.4rem;margin-bottom:.4rem;}
+.acard.st-done .acard__title{color:rgba(100,220,130,.65);}
+.acard__foot{display:flex;align-items:center;justify-content:space-between;padding-left:.4rem;}
+.acard__date{font-family:var(--label);font-size:.48rem;letter-spacing:.06em;color:rgba(255,255,255,.22);}
+.dots{display:flex;gap:.25rem;}
+.vd{width:7px;height:7px;border-radius:50%;border:1.5px solid;}
+.vd-g-off{border-color:rgba(249,172,40,.3);background:transparent;}
+.vd-g-on{border-color:var(--amber);background:var(--amber);}
+.vd-f-off{border-color:rgba(96,128,255,.3);background:transparent;}
+.vd-f-on{border-color:#6080FF;background:#6080FF;}
+
+/* SPECCHIO */
+.specchio{display:flex;flex-direction:column;overflow:hidden;}
+.specchio__head{padding:.7rem 1.2rem;border-bottom:1px solid rgba(255,255,255,.06);flex-shrink:0;}
+.specchio__cols{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:rgba(255,255,255,.05);flex:1;overflow:hidden;}
+.scol{background:var(--bg);display:flex;flex-direction:column;overflow:hidden;}
+.scol__head{padding:.6rem .9rem;border-bottom:1px solid rgba(255,255,255,.06);flex-shrink:0;}
+.scol__label{font-family:var(--label);font-size:.52rem;letter-spacing:.14em;text-transform:uppercase;}
+.scol__label--wait{color:rgba(255,255,255,.2);}
+.scol__label--part{color:var(--amber);}
+.scol__label--done{color:var(--green);}
+.scol__count{font-family:var(--display);font-size:1.6rem;line-height:1;margin-top:.1rem;}
+.scol__count--wait{color:rgba(255,255,255,.1);}
+.scol__count--part{color:var(--amber);}
+.scol__count--done{color:var(--green);}
+.scol__list{overflow-y:auto;flex:1;padding:.6rem;}
+.scol__list::-webkit-scrollbar{width:3px;}
+.scol__list::-webkit-scrollbar-thumb{background:rgba(255,255,255,.07);}
+.scard{background:rgba(255,255,255,.04);border-radius:5px;padding:.55rem .7rem;margin-bottom:.4rem;cursor:pointer;transition:all .12s;border:1px solid rgba(255,255,255,.05);}
+.scard:hover{background:rgba(255,255,255,.07);}
+.scard__title{font-size:.78rem;line-height:1.38;margin-bottom:.2rem;}
+.scard--wait .scard__title{color:rgba(255,255,255,.45);}
+.scard--part .scard__title{color:rgba(249,172,40,.75);}
+.scard--done .scard__title{color:rgba(100,220,130,.7);}
+.scard__sub{font-family:var(--label);font-size:.46rem;letter-spacing:.04em;color:rgba(255,255,255,.18);}
+
+/* ════════════════════════════════
+   PAGINA 2 — GANTT
+════════════════════════════════ */
+.gantt-wrap{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+.gantt-wrap__head{padding:.7rem 1.5rem;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.gantt-wrap__legend{display:flex;gap:1rem;align-items:center;}
+.gl-item{display:flex;align-items:center;gap:.4rem;font-family:var(--label);font-size:.48rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.3);}
+.gl-bar{width:18px;height:6px;border-radius:3px;}
+.gl-bar--guia{background:var(--amber);}
+.gl-bar--franki{background:#6080FF;}
+.gl-bar--entrambi{background:var(--green);}
+.gl-bar--luca{background:#9B59B6;}
+.gl-bar--done{background:rgba(100,220,130,.5);}
+.gantt-grid{overflow:auto;flex:1;padding:1rem 1.5rem;}
+.gantt-grid::-webkit-scrollbar{width:4px;height:4px;}
+.gantt-grid::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);}
+.g-header{display:grid;margin-bottom:.4rem;padding-left:180px;}
+.g-row{display:grid;margin-bottom:.4rem;align-items:center;cursor:pointer;border-radius:5px;padding:.15rem .3rem;transition:background .12s;}
+.g-row:hover{background:rgba(255,255,255,.03);}
+.g-label{font-size:.78rem;color:rgba(255,255,255,.4);padding-right:.8rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.3;}
+.g-label.is-done{color:rgba(100,220,130,.5);}
+.g-cells{display:flex;height:16px;gap:1px;}
+.g-cell{background:rgba(255,255,255,.03);flex:1;border-radius:1px;}
+.g-bar-fill{height:100%;border-radius:3px;transition:opacity .2s;}
+.g-bar-fill--guia{background:var(--amber);}
+.g-bar-fill--franki{background:#6080FF;}
+.g-bar-fill--entrambi{background:var(--green);}
+.g-bar-fill--luca{background:#9B59B6;}
+.g-bar-fill--done{background:rgba(100,220,130,.5);}
+.week-hdr{font-family:var(--label);font-size:.44rem;letter-spacing:.04em;text-transform:uppercase;color:rgba(255,255,255,.15);text-align:center;}
+.today-line{position:relative;}
+
+/* ── MODAL ── */
+.mbg{position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:500;display:none;align-items:center;justify-content:center;padding:2rem;}
+.mbg.on{display:flex;}
+.modal{background:var(--bg3);border:1px solid rgba(255,255,255,.12);border-radius:10px;width:100%;max-width:460px;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.5);}
+.modal__top{padding:1.1rem 1.3rem;border-bottom:1px solid rgba(255,255,255,.08);}
+.modal__phase{font-family:var(--label);font-size:.48rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:.3rem;}
+.modal__title{font-size:1rem;color:#fff;font-weight:700;line-height:1.35;}
+.modal__body{padding:1rem 1.3rem;}
+.mr{display:flex;gap:.7rem;margin-bottom:.55rem;}
+.mr__l{font-family:var(--label);font-size:.48rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.22);min-width:60px;margin-top:.15rem;flex-shrink:0;}
+.mr__v{font-size:.86rem;color:rgba(255,255,255,.58);line-height:1.5;}
+.m-ta{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:5px;padding:.65rem .8rem;font-family:var(--body);font-size:.86rem;color:#fff;resize:vertical;min-height:56px;margin-top:.5rem;}
+.m-ta::placeholder{color:rgba(255,255,255,.16);}
+.m-ta:focus{outline:none;border-color:var(--amber);}
+.m-val{margin-top:.9rem;padding-top:.9rem;border-top:1px solid rgba(255,255,255,.07);}
+.m-val__hdr{font-family:var(--label);font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:.6rem;}
+.m-val__btns{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;}
+.vbtn{padding:.7rem;border-radius:6px;border:2px solid;font-family:var(--label);font-size:.54rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:all .15s;text-align:center;}
+.vbtn--g{border-color:var(--amber-dark);color:var(--amber);background:transparent;}
+.vbtn--g.on{background:var(--amber);color:var(--blue-dark);}
+.vbtn--f{border-color:#4060D0;color:#8090FF;background:transparent;}
+.vbtn--f.on{background:var(--blue);color:#fff;border-color:var(--blue);}
+.m-ok{text-align:center;margin-top:.65rem;font-family:var(--label);font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;color:var(--green);display:none;}
+.m-ok.on{display:block;}
+.modal__foot{padding:.8rem 1.3rem;border-top:1px solid rgba(255,255,255,.07);display:flex;justify-content:flex-end;}
+.m-close{font-family:var(--label);font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.3);cursor:pointer;padding:.4rem .8rem;border:1px solid rgba(255,255,255,.1);border-radius:4px;background:transparent;transition:all .15s;}
+.m-close:hover{background:rgba(255,255,255,.06);}
+</style>
+</head>
+<body>
+
+<!-- NAV GLOBALE -->
+<nav class="gnav">
+  <div class="gnav__logo">
+    <div class="logo-mk">Frank<em>Ki</em></div>
+    <div class="logo-tag">Roadmap CCH · 2026</div>
+  </div>
+  <div class="gnav__tabs">
+    <button class="gtab on" onclick="goPage(0,this)">🏠 Come Funziona</button>
+    <button class="gtab" onclick="goPage(1,this)">📋 Lista & Specchio</button>
+    <button class="gtab" onclick="goPage(2,this)">📅 Gantt</button>
+  </div>
+  <div class="gnav__counts">
+    <div class="gcount">Totale <span id="g-tot">—</span></div>
+    <div class="gcount gcount--g">✅ Conf. <span id="g-done">—</span></div>
+    <div class="gcount gcount--a">◐ Parz. <span id="g-part">—</span></div>
+    <div class="gcount">○ Attesa <span id="g-wait">—</span></div>
+  </div>
+</nav>
+
+<!-- ════════════ PAGINA 0: COME FUNZIONA ════════════ -->
+<div class="page on" id="page-0">
+<div class="home">
+
+  <div class="home__hero">
+    <div class="home__hero-text">
+      <div class="home__eyebrow">Franki Studio · CCH · Maggio 2026</div>
+      <h1 class="home__title">Roadmap<br><em>Corsale CCH</em></h1>
+      <p class="home__desc">Questo strumento permette a Guia e Franki di tenere traccia di tutte le attività del progetto, validare le date insieme e avere sempre chiaro cosa è in corso, cosa è confermato e cosa è ancora in attesa.</p>
+    </div>
+    <div class="home__status">
+      <div class="hs hs--tot"><div class="hs__l">Totale</div><div class="hs__v" id="h-tot">—</div></div>
+      <div class="hs hs--done"><div class="hs__l">Confermate</div><div class="hs__v" id="h-done">—</div></div>
+      <div class="hs hs--part"><div class="hs__l">Parziali</div><div class="hs__v" id="h-part">—</div></div>
+      <div class="hs hs--wait"><div class="hs__l">In attesa</div><div class="hs__v" id="h-wait">—</div></div>
+    </div>
+  </div>
+
+  <div>
+    <div class="home__guide-title">Come Funziona — 3 Pagine, 4 Regole</div>
+  </div>
+
+  <div class="steps">
+    <div class="step-card step-card--1">
+      <div class="step-card__num">01</div>
+      <div class="step-card__body">
+        <div class="step-card__title">📋 Lista & Specchio</div>
+        <div class="step-card__text">Vedi tutte le attività nella colonna sinistra. Usa i filtri per vedere solo quelle di <strong>Guia, Franki, o per tema</strong> (Merge, Lean, H2). A destra, lo <strong>Specchio</strong> mostra lo stato reale aggiornato in 3 colonne: In attesa / Parziali / Confermate. <strong>Clicca su qualsiasi attività</strong> per aprire il dettaglio e validare la data.</div>
+      </div>
+    </div>
+    <div class="step-card step-card--2">
+      <div class="step-card__num">02</div>
+      <div class="step-card__body">
+        <div class="step-card__title">📅 Gantt</div>
+        <div class="step-card__text">La timeline visiva del progetto settimana per settimana da maggio a novembre. <strong>Ogni barra è un'attività nel tempo.</strong> Il colore indica chi è responsabile. Le barre trasparenti = date non ancora validate. Le barre piene = date confermate da entrambi. Il Gantt si aggiorna automaticamente quando si valida.</div>
+      </div>
+    </div>
+    <div class="step-card step-card--3">
+      <div class="step-card__num">03</div>
+      <div class="step-card__body">
+        <div class="step-card__title">✅ Validazione Data</div>
+        <div class="step-card__text">Cliccando su qualsiasi attività si apre il dettaglio. Qui ci sono <strong>due pulsanti obbligatori: Guia e Franki.</strong> La data è confermata solo quando entrambi hanno cliccato. Finché uno solo ha confermato, l'attività resta parziale (ambra). Quando entrambi confermano, diventa verde e il Gantt si aggiorna.</div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="home__rules-title">Le 4 Regole d'Uso</div>
+  </div>
+
+  <div class="rules">
+    <div class="rule">
+      <div class="rule__n">1</div>
+      <div>
+        <div class="rule__title">Nessuna data è reale finché non è validata da entrambi</div>
+        <div class="rule__text">Le date proposte sono stime di partenza. <strong>Diventano reali solo quando Guia e Franki le confermano entrambi.</strong> Se una data non va bene, si discute e si aggiorna — non si lascia in sospeso.</div>
+      </div>
+    </div>
+    <div class="rule">
+      <div class="rule__n">2</div>
+      <div>
+        <div class="rule__title">Aggiornare lo stato in tempo reale — non a posteriori</div>
+        <div class="rule__text">Quando un'attività viene completata, si apre e si confermano entrambi i pulsanti. <strong>Non si aspetta la call del Giorno 15 per aggiornare lo stato.</strong> Lo specchio deve riflettere la realtà in ogni momento.</div>
+      </div>
+    </div>
+    <div class="rule">
+      <div class="rule__n">3</div>
+      <div>
+        <div class="rule__title">Usare il campo note per ogni aggiornamento importante</div>
+        <div class="rule__text">Ogni attività ha un campo note libero nel dettaglio. <strong>Se qualcosa cambia, si scrive lì.</strong> Un link, una risposta ricevuta, un ostacolo incontrato. Serve per non perdere informazioni tra una call e l'altra.</div>
+      </div>
+    </div>
+    <div class="rule">
+      <div class="rule__n">4</div>
+      <div>
+        <div class="rule__title">I pallini colorati dicono tutto in un colpo d'occhio</div>
+        <div class="rule__text">In ogni card ci sono 2 pallini: <strong>ambra = Guia, blu = Franki.</strong> Pallino vuoto = non confermato. Pallino pieno = confermato. Se entrambi sono pieni, l'attività è confermata e la card diventa verde.</div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="home__leg-title">Legenda Responsabili & Stati</div>
+  </div>
+
+  <div class="leg">
+    <div class="leg-item">
+      <div class="leg-dot leg-dot--wait"></div>
+      <div>
+        <div class="leg-title">In Attesa</div>
+        <div class="leg-text">Nessuno ha ancora confermato la data. Barra trasparente nel Gantt. Colonna sinistra nello Specchio.</div>
+      </div>
+    </div>
+    <div class="leg-item">
+      <div class="leg-dot leg-dot--part"></div>
+      <div>
+        <div class="leg-title">Parzialmente Validata</div>
+        <div class="leg-text">Uno solo ha confermato. Barra ambra nel Gantt. Colonna centrale nello Specchio. Manca ancora l'altra conferma.</div>
+      </div>
+    </div>
+    <div class="leg-item">
+      <div class="leg-dot leg-dot--done"></div>
+      <div>
+        <div class="leg-title">Confermata da Entrambi</div>
+        <div class="leg-text">Guia e Franki hanno entrambi confermato. Card verde. Barra verde nel Gantt. Colonna destra nello Specchio.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="home__ctas">
+    <button class="cta-btn cta-btn--amber" onclick="goPage(1,document.querySelectorAll('.gtab')[1])">Vai a Lista & Specchio →</button>
+    <button class="cta-btn cta-btn--outline" onclick="goPage(2,document.querySelectorAll('.gtab')[2])">Vai al Gantt →</button>
+  </div>
+
+</div>
+</div>
+
+<!-- ════════════ PAGINA 1: LISTA + SPECCHIO ════════════ -->
+<div class="page" id="page-1">
+<div class="lista-wrap">
+
+  <!-- Sinistra: lista -->
+  <div class="lista-left">
+    <div class="lista-left__head">
+      <div class="panel-lbl">📋 Lista <span>Attività</span></div>
+      <div style="font-family:var(--label);font-size:.46rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.2);">Clicca per aprire dettaglio</div>
+    </div>
+    <div class="lista-left__filters">
+      <button class="flt on" onclick="setF('all',this)">Tutte</button>
+      <button class="flt" onclick="setF('guia',this)">Guia</button>
+      <button class="flt" onclick="setF('franki',this)">Franki</button>
+      <button class="flt" onclick="setF('entrambi',this)">Entrambi</button>
+      <button class="flt" onclick="setF('luca',this)">Luca</button>
+      <button class="flt" onclick="setF('merge',this)">Merge</button>
+      <button class="flt" onclick="setF('lean',this)">Lean</button>
+      <button class="flt" onclick="setF('h2',this)">H2</button>
+    </div>
+    <div class="lista-left__list" id="act-list"></div>
+  </div>
+
+  <!-- Destra: specchio -->
+  <div class="specchio">
+    <div class="specchio__head">
+      <div class="panel-lbl">🪞 Specchio <span>Effettivo</span> — Stato Aggiornato in Tempo Reale</div>
+    </div>
+    <div class="specchio__cols">
+      <div class="scol">
+        <div class="scol__head">
+          <div class="scol__label scol__label--wait">○ In Attesa</div>
+          <div class="scol__count scol__count--wait" id="sc-wait">—</div>
+        </div>
+        <div class="scol__list" id="s-wait"></div>
+      </div>
+      <div class="scol">
+        <div class="scol__head">
+          <div class="scol__label scol__label--part">◐ Parzialmente Validate</div>
+          <div class="scol__count scol__count--part" id="sc-part">—</div>
+        </div>
+        <div class="scol__list" id="s-part"></div>
+      </div>
+      <div class="scol">
+        <div class="scol__head">
+          <div class="scol__label scol__label--done">✓ Confermate da Entrambi</div>
+          <div class="scol__count scol__count--done" id="sc-done">—</div>
+        </div>
+        <div class="scol__list" id="s-done"></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ════════════ PAGINA 2: GANTT ════════════ -->
+<div class="page" id="page-2">
+<div class="gantt-wrap">
+  <div class="gantt-wrap__head">
+    <div class="panel-lbl">📅 Gantt <span>Timeline Pianificata</span> — Maggio · Novembre 2026</div>
+    <div class="gantt-wrap__legend">
+      <div class="gl-item"><div class="gl-bar gl-bar--guia"></div>Guia</div>
+      <div class="gl-item"><div class="gl-bar gl-bar--franki"></div>Franki</div>
+      <div class="gl-item"><div class="gl-bar gl-bar--entrambi"></div>Entrambi</div>
+      <div class="gl-item"><div class="gl-bar gl-bar--luca"></div>Luca</div>
+      <div class="gl-item"><div class="gl-bar gl-bar--done"></div>Confermata</div>
+    </div>
+  </div>
+  <div class="gantt-grid" id="gantt-grid"></div>
+</div>
+</div>
+
+<!-- MODAL -->
+<div class="mbg" id="mbg" onclick="closeM(event)">
+  <div class="modal">
+    <div class="modal__top">
+      <div class="modal__phase" id="m-phase"></div>
+      <div class="modal__title" id="m-title"></div>
+    </div>
+    <div class="modal__body">
+      <div class="mr"><div class="mr__l">Chi</div><div class="mr__v" id="m-who"></div></div>
+      <div class="mr"><div class="mr__l">Data</div><div class="mr__v" id="m-date"></div></div>
+      <div class="mr"><div class="mr__l">Descrizione</div><div class="mr__v" id="m-desc"></div></div>
+      <textarea class="m-ta" id="m-ta" placeholder="Note, aggiornamenti, link utili…"></textarea>
+      <div class="m-val">
+        <div class="m-val__hdr">🔐 Validazione obbligatoria — entrambi devono confermare la data</div>
+        <div class="m-val__btns">
+          <button class="vbtn vbtn--g" id="vb-g" onclick="doVal('guia')">
+            <div id="vt-g">👑 Guia — Conferma Data</div>
+          </button>
+          <button class="vbtn vbtn--f" id="vb-f" onclick="doVal('franki')">
+            <div id="vt-f">🤝 Franki — Conferma Data</div>
+          </button>
+        </div>
+        <div class="m-ok" id="m-ok">✅ Data confermata da entrambi — attività verde</div>
+      </div>
+    </div>
+    <div class="modal__foot">
+      <button class="m-close" onclick="closeM()">Salva e chiudi</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── DATI ──────────────────────────────────────────────────
+const WEEKS = [
+  'Mag W1','Mag W2','Mag W3','Mag W4',
+  'Giu W1','Giu W2','Giu W3','Giu W4',
+  'Lug W1','Lug W2','Ago W1','Ago W2',
+  'Set W1','Set W2','Ott','Nov'
+];
+const N = WEEKS.length;
+
+const ACTS = [
+  {id:'r0', phase:'Fase 0 · Merge', title:'Guia invia materiali per il merge', date:'12 Mag', who:'guia', tags:['merge'], w:1, d:1, note:'Calendario comunicazione + info 30 TO + canali social + piattaforme + database clienti'},
+  {id:'r1', phase:'Fase 0 · Merge', title:'Franki restituisce piano unificato', date:'14 Mag', who:'franki', tags:['merge'], w:1, d:1, note:'Piano integrato, sovrapposizioni eliminate, priorità 60 giorni, proposta divisione compiti'},
+  {id:'r2', phase:'Fase 0 · Merge', title:'Guia approva e assegna compiti → Luca valida', date:'16 Mag', who:'entrambi', tags:['merge'], w:2, d:1, note:'Guia rivede, modifica, approva. Decide chi fa cosa. Porta a Luca per validazione finale.'},
+  {id:'r3', phase:'Fase 1 · Lean Test', title:'Profilo CCH su BookRetreats live', date:'19 Mag', who:'guia', tags:['lean'], w:2, d:1, note:'Profilo "Retreat Venue Hire". Franki prepara testo EN su richiesta di Guia.'},
+  {id:'r4', phase:'Fase 1 · Lean Test', title:'Avvio DM yoga retreat leader', date:'19 Mag', who:'guia', tags:['lean'], w:2, d:3, note:'5–7 DM al giorno. 10 profili già selezionati. Messaggio pronto EN e IT.'},
+  {id:'r5', phase:'Fase 1 · Lean Test', title:'Oil Tasting + Pane Maura — primo gruppo', date:'19 Mag', who:'luca', tags:['lean'], w:2, d:2, note:'WhatsApp ospiti pre check-in. Testo pronto. Su indicazione di Guia.'},
+  {id:'r6', phase:'Fase 1 · Lean Test', title:'LinkedIn corporate outreach', date:'26 Mag', who:'franki', tags:['lean'], w:3, d:2, note:'20 HR manager italiani. Solo su approvazione esplicita di Guia.'},
+  {id:'r7', phase:'Fase 2 · Prima Lettura', title:'Call lettura dati lean — Giorno 15', date:'3 Giu', who:'entrambi', tags:['lean'], w:4, d:1, note:'Verde/Giallo/Rosso. Si scala subito su quello che funziona.'},
+  {id:'r8', phase:'Fase 2 · Prima Lettura', title:'Shooting fotografico CCH', date:'10 Giu', who:'guia', tags:[], w:5, d:1, note:'Guia gestisce autonomamente. Franki fornisce solo riferimenti visivi.'},
+  {id:'r9', phase:'Fase 2 · Prima Lettura', title:'Avvio prossimi lean (idee Guia + merge)', date:'9 Giu', who:'entrambi', tags:['lean'], w:5, d:3, note:'Prima idee di Guia, poi quelle Franki. Sempre in condivisione.'},
+  {id:'r10', phase:'Fase 3 · Execution', title:'Lettura finale + decisione scale-up', date:'30 Giu', who:'entrambi', tags:['lean'], w:8, d:1, note:'Mappa completa Verde/Giallo/Rosso. Candidatura piattaforme luxury se foto pronte.'},
+  {id:'r11', phase:'Fase 3 · Execution', title:'Candidatura SopranoVillas + Italy Charme', date:'7 Lug', who:'entrambi', tags:[], w:9, d:1, note:'Solo se foto pronte. Franki prepara dossier, Guia coordina.'},
+  {id:'r12', phase:'H2 2026', title:'Olive Harvest Landing Page EN', date:'1 Set', who:'entrambi', tags:['h2'], w:13, d:2, note:'Pagina EN per raccolta olive ott/nov.'},
+  {id:'r13', phase:'H2 2026', title:'Prima edizione UNICUM Olive Harvest', date:'Ott 2026', who:'luca', tags:['h2'], w:15, d:2, note:'€1.800–2.200 p.p. Cantine Sannio da confermare con Luca.'},
+];
+
+const ST = {};
+ACTS.forEach(a => ST[a.id] = {guia:false, franki:false, note:''});
+
+let curF = 'all';
+let openId = null;
+
+function getStatus(id) {
+  const s = ST[id];
+  if (s.guia && s.franki) return 'done';
+  if (s.guia || s.franki) return 'part';
+  return 'wait';
+}
+
+function visible(a) {
+  if (curF==='all') return true;
+  if (['guia','franki','entrambi','luca'].includes(curF)) return a.who===curF;
+  return a.tags.includes(curF);
+}
+
+// ── NAVIGAZIONE PAGINE ────────────────────────────────────
+function goPage(n, btn) {
+  document.querySelectorAll('.page').forEach((p,i)=> p.classList.toggle('on', i===n));
+  document.querySelectorAll('.gtab').forEach((t,i)=> t.classList.toggle('on', i===n));
+  if (n===1) renderLista();
+  if (n===2) renderGantt();
+}
+
+// ── FILTRO ────────────────────────────────────────────────
+function setF(f, btn) {
+  curF = f;
+  document.querySelectorAll('.flt').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  renderLista();
+}
+
+// ── RENDER LISTA ──────────────────────────────────────────
+function renderLista() {
+  const list = document.getElementById('act-list');
+  list.innerHTML = '';
+  const vis = ACTS.filter(visible);
+
+  vis.forEach(a => {
+    const st = getStatus(a.id);
+    const s = ST[a.id];
+    const d = document.createElement('div');
+    d.className = `acard st-${st}`;
+    d.onclick = () => openModal(a.id);
+    d.innerHTML = `
+      <div class="acard__stripe s-${a.who}"></div>
+      <div class="acard__phase">${a.phase}</div>
+      <div class="acard__title">${st==='done'?'✅ ':''}${a.title}</div>
+      <div class="acard__foot">
+        <div class="acard__date">📅 ${a.date} · ${a.who}</div>
+        <div class="dots">
+          <div class="vd ${s.guia?'vd-g-on':'vd-g-off'}" title="Guia"></div>
+          <div class="vd ${s.franki?'vd-f-on':'vd-f-off'}" title="Franki"></div>
+        </div>
+      </div>`;
+    list.appendChild(d);
+  });
+
+  // Specchio
+  ['wait','part','done'].forEach(st => {
+    document.getElementById('s-'+st).innerHTML = '';
+    document.getElementById('sc-'+st).textContent = '0';
+  });
+  const counts = {wait:0,part:0,done:0};
+  vis.forEach(a => {
+    const st = getStatus(a.id);
+    counts[st]++;
+    const el = document.createElement('div');
+    el.className = `scard scard--${st}`;
+    el.onclick = () => openModal(a.id);
+    el.innerHTML = `<div class="scard__title">${st==='done'?'✅ ':st==='part'?'◐ ':'○ '}${a.title}</div><div class="scard__sub">📅 ${a.date}</div>`;
+    document.getElementById('s-'+st).appendChild(el);
+  });
+  Object.entries(counts).forEach(([k,v]) => document.getElementById('sc-'+k).textContent = v);
+  updateCounts();
+}
+
+// ── RENDER GANTT ──────────────────────────────────────────
+function renderGantt() {
+  const grid = document.getElementById('gantt-grid');
+  grid.innerHTML = '';
+  const colW = Math.max(44, Math.floor((grid.offsetWidth - 200) / N));
+
+  // Header
+  const hrow = document.createElement('div');
+  hrow.className = 'g-header';
+  hrow.style.cssText = `grid-template-columns:${N}fr;display:grid;grid-template-columns:repeat(${N},${colW}px);padding-left:190px;`;
+  WEEKS.forEach(w => {
+    const wl = document.createElement('div');
+    wl.className = 'week-hdr';
+    wl.textContent = w;
+    hrow.appendChild(wl);
+  });
+  grid.appendChild(hrow);
+
+  ACTS.forEach(a => {
+    const st = getStatus(a.id);
+    const row = document.createElement('div');
+    row.className = 'g-row';
+    row.style.cssText = `grid-template-columns:190px ${N*colW}px;display:grid;`;
+    row.onclick = () => openModal(a.id);
+
+    const lbl = document.createElement('div');
+    lbl.className = `g-label${st==='done'?' is-done':''}`;
+    lbl.textContent = (st==='done'?'✅ ':'')+a.title;
+    lbl.style.fontSize = '.75rem';
+
+    const cells = document.createElement('div');
+    cells.className = 'g-cells';
+    cells.style.cssText = `width:${N*colW}px;`;
+
+    for (let i=0; i<N; i++) {
+      if (i === a.w-1) {
+        const bar = document.createElement('div');
+        bar.style.cssText = `width:${a.d*colW}px;height:16px;flex-shrink:0;padding:0 1px;`;
+        const fill = document.createElement('div');
+        const color = st==='done' ? 'done' : a.who;
+        fill.className = `g-bar-fill g-bar-fill--${color}`;
+        fill.style.cssText = `width:100%;height:100%;border-radius:3px;opacity:${st==='wait'?.3:st==='part'?.65:1};`;
+        bar.appendChild(fill);
+        cells.appendChild(bar);
+        i += a.d-1;
+      } else {
+        const cell = document.createElement('div');
+        cell.className = 'g-cell';
+        cell.style.cssText = `width:${colW}px;flex-shrink:0;`;
+        cells.appendChild(cell);
+      }
+    }
+
+    row.appendChild(lbl);
+    row.appendChild(cells);
+    grid.appendChild(row);
+  });
+  updateCounts();
+}
+
+// ── CONTATORI ─────────────────────────────────────────────
+function updateCounts() {
+  const done = ACTS.filter(a=>getStatus(a.id)==='done').length;
+  const part = ACTS.filter(a=>getStatus(a.id)==='part').length;
+  const wait = ACTS.filter(a=>getStatus(a.id)==='wait').length;
+  const tot = ACTS.length;
+  ['g-tot','h-tot'].forEach(id => { const el=document.getElementById(id); if(el) el.textContent=tot; });
+  ['g-done','h-done'].forEach(id => { const el=document.getElementById(id); if(el) el.textContent=done; });
+  ['g-part','h-part'].forEach(id => { const el=document.getElementById(id); if(el) el.textContent=part; });
+  ['g-wait','h-wait'].forEach(id => { const el=document.getElementById(id); if(el) el.textContent=wait; });
+}
+
+// ── MODAL ─────────────────────────────────────────────────
+function openModal(id) {
+  openId = id;
+  const a = ACTS.find(x=>x.id===id);
+  const s = ST[id];
+  document.getElementById('m-phase').textContent = a.phase;
+  document.getElementById('m-title').textContent = a.title;
+  document.getElementById('m-who').textContent = a.who;
+  document.getElementById('m-date').textContent = a.date;
+  document.getElementById('m-desc').textContent = a.note;
+  document.getElementById('m-ta').value = s.note;
+
+  const vbg = document.getElementById('vb-g');
+  const vbf = document.getElementById('vb-f');
+  vbg.className = 'vbtn vbtn--g'+(s.guia?' on':'');
+  document.getElementById('vt-g').textContent = s.guia ? '✓ Guia — Confermato' : '👑 Guia — Conferma Data';
+  vbf.className = 'vbtn vbtn--f'+(s.franki?' on':'');
+  document.getElementById('vt-f').textContent = s.franki ? '✓ Franki — Confermato' : '🤝 Franki — Conferma Data';
+  const ok = document.getElementById('m-ok');
+  ok.className = 'm-ok'+(s.guia&&s.franki?' on':'');
+
+  document.getElementById('mbg').classList.add('on');
+}
+
+function doVal(who) {
+  if (!openId) return;
+  ST[openId].note = document.getElementById('m-ta').value;
+  ST[openId][who] = !ST[openId][who];
+  openModal(openId);
+  renderLista();
+  renderGantt();
+}
+
+function closeM(e) {
+  if (e && e.target!==document.getElementById('mbg')) return;
+  if (openId) ST[openId].note = document.getElementById('m-ta').value;
+  document.getElementById('mbg').classList.remove('on');
+  openId = null;
+  renderLista();
+  renderGantt();
+}
+
+// init
+updateCounts();
+</script>
+</body>
+</html>

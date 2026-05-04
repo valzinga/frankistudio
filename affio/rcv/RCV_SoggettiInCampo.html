@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RCV · Tutti i Soggetti in Campo</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--blu:#2B38B0;--arancio:#F0A500;--grigio-bg:#F2F1ED;--bianco:#FFFFFF;--nero:#111118;--testo:#1a1a2e;--verde:#1a7a50;--viola:#6B46C1;--grigio:#888;}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Barlow',sans-serif;background:var(--grigio-bg);color:var(--testo);max-width:680px;margin:0 auto;font-size:15px;line-height:1.6}
+.navbar{background:var(--blu);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.logo-fran{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;color:var(--bianco)}
+.logo-fran span{background:var(--arancio);color:#FFFFFF;padding:1px 6px;border-radius:4px}
+.logo-tagline{font-size:10px;color:rgba(255,255,255,.5);letter-spacing:.08em}
+.nav-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.6)}
+
+/* HERO */
+.hero{background:var(--nero);color:var(--bianco);padding:44px 20px 40px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 40px,rgba(43,56,176,.06) 40px,rgba(43,56,176,.06) 41px)}
+.hero-kicker{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--arancio);margin-bottom:14px}
+.hero-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:44px;line-height:.9;text-transform:uppercase;margin-bottom:20px}
+.hero-title em{color:var(--arancio);font-style:normal;display:block}
+.hero-sub{font-size:14px;color:rgba(255,255,255,.65);line-height:1.7}
+.div-orange{height:4px;background:var(--arancio)}
+
+/* SH */
+.sh{background:var(--blu);color:var(--bianco);padding:11px 20px;display:flex;align-items:center;gap:10px;margin-top:20px}
+.sh-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:15px;text-transform:uppercase;letter-spacing:.06em}
+.sh-badge{margin-left:auto;background:var(--arancio);color:var(--nero);font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;padding:2px 8px;border-radius:2px}
+
+/* SOGGETTO CARD */
+.soggetto{background:var(--bianco);margin:2px 0;padding:18px 20px;border-left:5px solid}
+.sogg-header{display:flex;align-items:flex-start;gap:14px;margin-bottom:10px}
+.sogg-icon{font-size:26px;flex-shrink:0;margin-top:2px}
+.sogg-titolo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:18px;text-transform:uppercase;color:var(--testo);line-height:1.1}
+.sogg-ruolo{font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-family:'Barlow Condensed',sans-serif;font-weight:700;margin-top:3px}
+.sogg-body{font-size:13px;color:#444;line-height:1.65}
+.sogg-details{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px}
+.sogg-detail{background:var(--grigio-bg);padding:8px 10px;border-radius:2px}
+.sogg-detail-label{font-family:'Barlow Condensed',sans-serif;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#aaa;margin-bottom:2px}
+.sogg-detail-val{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;color:var(--testo)}
+
+/* LINEA TEMPORALE */
+.timeline-section{background:var(--bianco);padding:20px;margin:2px 0}
+.tl-title{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#aaa;margin-bottom:16px}
+.tl-item{display:flex;gap:12px;margin-bottom:16px;align-items:flex-start}
+.tl-item:last-child{margin-bottom:0}
+.tl-dot{width:28px;height:28px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:10px;color:var(--bianco)}
+.tl-body{}
+.tl-fase{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--arancio);margin-bottom:2px}
+.tl-testo{font-size:13px;color:#444;line-height:1.55}
+.tl-soggetti{font-size:11px;color:var(--blu);font-weight:600;margin-top:3px}
+
+/* COSTI */
+.costi-wrap{background:var(--bianco);padding:20px;margin:2px 0}
+.costi-row{display:flex;justify-content:space-between;align-items:baseline;padding:9px 0;border-bottom:1px solid #f5f5f2}
+.costi-row:last-child{border-bottom:none;padding-top:12px;border-top:2px solid var(--arancio);margin-top:6px}
+.costi-label{font-size:13px;color:#555}
+.costi-label small{display:block;font-size:11px;color:#bbb}
+.costi-val{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px}
+
+/* HL */
+.hl-blue{background:#e8ecff;border-left:4px solid var(--blu);padding:14px 16px;margin:2px 0}
+.hl-blue p{font-size:13px;color:#1a2480;margin:0;line-height:1.65}
+.hl-green{background:#e6f7f0;border-left:4px solid var(--verde);padding:14px 16px;margin:2px 0}
+.hl-green p{font-size:13px;color:#145c3c;margin:0;line-height:1.65}
+.hl-orange{background:#fff4e0;border-left:4px solid var(--arancio);padding:14px 16px;margin:2px 0}
+.hl-orange p{font-size:13px;color:#7a5000;margin:0;line-height:1.65}
+
+/* ORANGE BAND */
+.orange-band{background:var(--arancio);padding:20px;margin:2px 0}
+.orange-band h3{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;text-transform:uppercase;color:var(--nero);margin-bottom:10px}
+.orange-band p{font-size:14px;color:rgba(0,0,0,.8);line-height:1.65}
+
+/* DARK CTA */
+.dark-cta{background:var(--nero);color:var(--bianco);padding:36px 20px;text-align:center}
+.dark-cta h2{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:32px;text-transform:uppercase;line-height:.9;margin-bottom:12px}
+.dark-cta h2 em{color:var(--arancio);font-style:normal;display:block}
+.dark-cta p{font-size:13px;color:rgba(255,255,255,.5);max-width:420px;margin:0 auto}
+.confid{background:var(--blu);padding:10px 20px;font-size:10px;color:rgba(255,255,255,.3);text-align:center;letter-spacing:.06em}
+
+.fk-logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;line-height:1;display:inline-flex;align-items:center}
+.fk-logo .fran{color:#FFFFFF}
+.fk-logo .ki{background:#F0A500;color:#FFFFFF;border-radius:5px;padding:1px 7px;margin-left:2px;display:inline-block}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div><div class="fk-logo"><span class="fran">Fran</span><span class="ki">Ki</span></div><div class="logo-tagline">We Start Your Ideas</div></div>
+  <div class="nav-label">RCV · Tutti i Soggetti</div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-kicker">Roccaraso Country Village · Mappa completa · Uso riservato</div>
+  <div class="hero-title">CHI FA<br>COSA<br><em>E QUANTO<br>COSTA.</em></div>
+  <div class="hero-sub">Tre livelli distinti: chi possiede la società, chi costruisce il progetto, chi lo gestisce ogni giorno. Ruoli, compensi e momento di ingresso di ognuno.</div>
+</div>
+<div class="div-orange"></div>
+
+<!-- I TRE LIVELLI -->
+<div class="sh">
+  <div class="sh-title">I Tre Livelli del Progetto</div>
+  <div class="sh-badge">mappa</div>
+</div>
+
+<div style="background:var(--bianco);padding:20px;margin:2px 0">
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px">
+    <div style="background:#e8ecff;padding:14px 12px;border-radius:3px;text-align:center;border-top:3px solid var(--blu)">
+      <div style="font-size:22px;margin-bottom:6px">💰</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:13px;text-transform:uppercase;color:var(--blu)">Livello 1</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--blu);margin-top:3px">I SOCI</div>
+      <div style="font-size:11px;color:#888;margin-top:4px;line-height:1.4">Possiedono la società. Guadagnano all'exit.</div>
+    </div>
+    <div style="background:#fff4e0;padding:14px 12px;border-radius:3px;text-align:center;border-top:3px solid var(--arancio)">
+      <div style="font-size:22px;margin-bottom:6px">🏗️</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:13px;text-transform:uppercase;color:#c27800">Livello 2</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;color:#c27800;margin-top:3px">GLI SVILUPPATORI</div>
+      <div style="font-size:11px;color:#888;margin-top:4px;line-height:1.4">Costruiscono il progetto. Pagati a fee o appalto.</div>
+    </div>
+    <div style="background:#e6f7f0;padding:14px 12px;border-radius:3px;text-align:center;border-top:3px solid var(--verde)">
+      <div style="font-size:22px;margin-bottom:6px">🏨</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:13px;text-transform:uppercase;color:var(--verde)">Livello 3</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;color:var(--verde);margin-top:3px">I GESTORI</div>
+      <div style="font-size:11px;color:#888;margin-top:4px;line-height:1.4">Operano la struttura a regime. Stipendio + bonus.</div>
+    </div>
+  </div>
+  <div style="margin-top:12px;font-size:12px;color:#aaa;text-align:center">Una stessa persona può stare in più livelli — FranKi è nei livelli 1 e 2 contemporaneamente.</div>
+</div>
+
+<!-- =================== LIVELLO 1 — I SOCI =================== -->
+<div class="sh" style="margin-top:20px">
+  <div class="sh-title">Livello 1 · I Soci · Chi Possiede</div>
+  <div class="sh-badge">cap table</div>
+</div>
+
+<!-- FranKi -->
+<div class="soggetto" style="border-color:var(--blu)">
+  <div class="sogg-header">
+    <div class="sogg-icon">🎯</div>
+    <div>
+      <div class="sogg-titolo">FranKi Studio</div>
+      <div class="sogg-ruolo" style="color:var(--blu)">Socio fondatore · Sweat equity</div>
+    </div>
+  </div>
+  <div class="sogg-body">Porta il progetto: analisi dell'asset, piano operativo, dossier, relazioni con investitori e istituzioni. Non mette soldi — mette lavoro e competenza. In cambio ottiene una quota della società.</div>
+  <div class="sogg-details">
+    <div class="sogg-detail"><div class="sogg-detail-label">Quota fase 1</div><div class="sogg-detail-val" style="color:var(--blu)">20%</div></div>
+    <div class="sogg-detail"><div class="sogg-detail-label">Quota post-diluzione</div><div class="sogg-detail-val" style="color:var(--blu)">10%</div></div>
+    <div class="sogg-detail"><div class="sogg-detail-label">Cash investito</div><div class="sogg-detail-val">€0</div></div>
+    <div class="sogg-detail"><div class="sogg-detail-label">Exit scenario base</div><div class="sogg-detail-val" style="color:var(--blu)">€3,43M</div></div>
+  </div>
+</div>
+
+<!-- Affio -->
+<div class="soggetto" style="border-color:var(--arancio)">
+  <div class="sogg-header">
+    <div class="sogg-icon">🤝</div>
+    <div>
+      <div class="sogg-titolo">Affio</div>
+      <div class="sogg-ruolo" style="color:#c27800">Socio fondatore · Capitale iniziale</div>
+    </div>
+  </div>
+  <div class="sogg-body">Primo partner di capitale del progetto. Entra nella fase più rischiosa — prima dell'asta, quando il progetto è ancora un piano. Per questo ottiene la quota più alta e il rendimento più elevato in proporzione all'investimento.</div>
+  <div class="sogg-details">
+    <div class="sogg-detail"><div class="sogg-detail-label">Quota fase 1</div><div class="sogg-detail-val" style="color:var(--arancio)">40%</div></div>
+    <div class="sogg-detail"><div class="sogg-detail-label">Quota post-diluzione</div><div class="sogg-detail-val" style="color:var(--arancio)">20%</div></div>
+    <div class="sogg-detail"><div class="sogg-detail-label">Cash investito</div><div class="sogg-detail-val">€60K</div></div>
+    <div class="sogg-detail"><div class="sogg-detail-label">Exit scenario base</div><div class="sogg-detail-val" style="color:var(--arancio)">€4,37M</div></div>
+  </div>
+</div>
+
+<!-- Marco -->
+<div class="soggetto" style="border-color:var(--verde)">
+  <div class="sogg-header">
+    <div class="sogg-icon">🤝</div>
+    <div>
+      <div class="sogg-titolo">Marco</div>
+      <div class="sogg-ruolo" style="color:var(--verde)">Socio fondatore · Capitale iniziale</div>
+    </div>
+  </div>
+  <div class="sogg-body">Secondo partner di capitale. Stessa struttura di Affio — stessa quota, stesso investimento, stesso rendimento atteso. Porta anche esperienza pregressa su operazioni simili (La Menduna).</div>
+  <div class="sogg-details">
+    <div class="sogg-detail"><div class="sogg-detail-label">Quota fase 1</div><div class="sogg-detail-val" style="color:var(--verde)">40%</div></div>
+    <div class="sogg-detail"><div class="sogg-detail-label">Quota post-diluzione</div><div class="sogg-detail-val" style="color:var(--verde)">20%</div></div>
+    <div class="sogg-detail"><div class="sogg-detail-label">Cash investito</div><div class="sogg-detail-val">€60K</div></div>
+    <div class="sogg-detail"><div class="sogg-detail-label">Exit scenario base</div><div class="sogg-detail-val" style="color:var(--verde)">€4,37M</div></div>
+  </div>
+</div>
+
+<!-- Equity Partner -->
+<div class="soggetto" style="border-color:var(--viola)">
+  <div class="sogg-header">
+    <div class="sogg-icon">🏦</div>
+    <div>
+      <div class="sogg-titolo">Equity Partner Istituzionale</div>
+      <div class="sogg-ruolo" style="color:var(--viola)">Da trovare · Fondo / SGR / HNWI</div>
+    </div>
+  </div>
+  <div class="sogg-body">Entra dopo il closing con €2,0M cash in cambio del 40% della società. Grazie alle due aste deserte (dic 2025 e apr 2026), il capex totale è sceso a ~€9M — il fondo investe meno per la stessa quota e ottiene rendimenti straordinari (IRR ~51%). Può essere un fondo immobiliare (InvestiRE, DeA Capital, CDP Real Asset), un family office, o un operatore hospitality che vuole anche la quota equity. Non gestisce — investe e aspetta l'exit.</div>
+  <div class="sogg-details">
+    <div class="sogg-detail"><div class="sogg-detail-label">Quota</div><div class="sogg-detail-val" style="color:var(--viola)">25%</div></div>
+    <div class="sogg-detail"><div class="sogg-detail-label">Cash investito</div><div class="sogg-detail-val">€2,0M</div></div>
+    <div class="sogg-detail"><div class="sogg-detail-label">Rendimento atteso</div><div class="sogg-detail-val">8–12%/anno</div></div>
+    <div class="sogg-detail"><div class="sogg-detail-label">Exit scenario base</div><div class="sogg-detail-val" style="color:var(--viola)">€10,4M → 5,2x</div></div>
+  </div>
+</div>
+
+<!-- Crowdfunding -->
+<div class="soggetto" style="border-color:var(--grigio)">
+  <div class="sogg-header">
+    <div class="sogg-icon">👥</div>
+    <div>
+      <div class="sogg-titolo">Crowdfunding (SPV)</div>
+      <div class="sogg-ruolo" style="color:var(--grigio)">Da attivare · Walliance / Concrete Investing</div>
+    </div>
+  </div>
+  <div class="sogg-body">Piccoli investitori retail tramite Walliance o Concrete Investing. Non diventano soci — sottoscrivono un <strong>minibond al 15% annuo</strong>. La società restituisce €225K/anno per 4 anni e poi il capitale. Totale: €2,4M su €1,5M investiti (1,60x). Nessun diritto di governance, nessun conflitto con il fondo. Raccolta semplice e rapida.</div>
+  <div class="sogg-details">
+    <div class="sogg-detail"><div class="sogg-detail-label">Tipo strumento</div><div class="sogg-detail-val" style="color:var(--grigio)">Minibond</div></div>
+    <div class="sogg-detail"><div class="sogg-detail-label">Importo</div><div class="sogg-detail-val">€1,5M</div></div>
+    <div class="sogg-detail"><div class="sogg-detail-label">Tasso fisso</div><div class="sogg-detail-val">15%/anno</div></div>
+    <div class="sogg-detail"><div class="sogg-detail-label">Totale incassato</div><div class="sogg-detail-val" style="color:var(--grigio)">€2,4M (1,60x)</div></div>
+  </div>
+</div>
+
+<!-- =================== LIVELLO 2 — SVILUPPATORI =================== -->
+<div class="sh" style="margin-top:20px">
+  <div class="sh-title">Livello 2 · Gli Sviluppatori · Chi Costruisce</div>
+  <div class="sh-badge">M1→M30</div>
+</div>
+
+<div class="hl-orange">
+  <p>Gli sviluppatori <strong>non sono soci</strong> — sono fornitori. Vengono pagati con fee o contratti d'appalto. Il loro lavoro trasforma l'asset da immobile abbandonato a struttura operativa. FranKi Studio è l'unico soggetto che sta sia nel Livello 1 (socio) che nel Livello 2 (sviluppatore).</p>
+</div>
+
+<!-- FranKi come sviluppatore -->
+<div class="soggetto" style="border-color:var(--blu)">
+  <div class="sogg-header">
+    <div class="sogg-icon">🎯</div>
+    <div>
+      <div class="sogg-titolo">FranKi Studio</div>
+      <div class="sogg-ruolo" style="color:var(--blu)">Asset Manager · Project Developer</div>
+    </div>
+  </div>
+  <div class="sogg-body">Coordina tutto il processo di sviluppo: gestisce i fornitori, supervisiona il cantiere, porta avanti le relazioni istituzionali, segue il PNRR, monitora tempi e budget. È il cervello operativo del progetto dal giorno 1 fino all'apertura completa al Mese 30.</div>
+  <div class="sogg-details">
+    <div class="sogg-detail"><div class="sogg-detail-label">Fee annua</div><div class="sogg-detail-val" style="color:var(--blu)">€170K/anno</div></div>
+    <div class="sogg-detail"><div class="sogg-detail-label">Durata</div><div class="sogg-detail-val">4 anni (M1→M48)</div></div>
+    <div class="sogg-detail"><div class="sogg-detail-label">Totale fee</div><div class="sogg-detail-val" style="color:var(--blu)">€680K</div></div>
+    <div class="sogg-detail"><div class="sogg-detail-label">Fonte</div><div class="sogg-detail-val">Budget operativo SPV</div></div>
+  </div>
+</div>
+
+<!-- Avvocato -->
+<div class="soggetto" style="border-color:#aaa">
+  <div class="sogg-header">
+    <div class="sogg-icon">⚖️</div>
+    <div>
+      <div class="sogg-titolo">Studio Legale Specializzato</div>
+      <div class="sogg-ruolo" style="color:#888">Esecuzioni immobiliari · Sulmona / L'Aquila</div>
+    </div>
+  </div>
+  <div class="sogg-body">Gestisce tutta la parte legale dell'acquisizione: due diligence sulla procedura esecutiva, partecipazione all'asta, decreto di trasferimento, cancellazione ipoteca UniCredit, costituzione SPV, patto parasociale tra i soci. Da trovare nelle prossime settimane — è la prima azione concreta.</div>
+  <div class="sogg-details">
+    <div class="sogg-detail"><div class="sogg-detail-label">Fase</div><div class="sogg-detail-val">M1 → M6</div></div>
+    <div class="sogg-detail"><div class="sogg-detail-label">Costo stimato</div><div class="sogg-detail-val">€15–25K</div></div>
+    <div class="sogg-detail"><div class="sogg-detail-label">Profilo</div><div class="sogg-detail-val">Specialista aste</div></div>
+    <div class="sogg-detail"><div class="sogg-detail-label">Stato</div><div class="sogg-detail-val" style="color:var(--rosso,#c0392b)">Da trovare</div></div>
+  </div>
+</div>
+
+<!-- Studio di progettazione -->
+<div class="soggetto" style="border-color:#aaa">
+  <div class="sogg-header">
+    <div class="sogg-icon">📐</div>
+    <div>
+      <div class="sogg-titolo">Studio di Progettazione</div>
+      <div class="sogg-ruolo" style="color:#888">Architetto + Ingegnere strutturale</div>
+    </div>
+  </div>
+  <div class="sogg-body">Progetta la trasformazione delle 3 palazzine da appartamenti a unità hospitality (68 keys). Deve essere esperto in ristrutturazione di patrimonio storico, destinazione extralberghiera e normativa abruzzese. Idealmente con esperienza in hospitality design e sostenibilità per il PNRR.</div>
+  <div class="sogg-details">
+    <div class="sogg-detail"><div class="sogg-detail-label">Fase</div><div class="sogg-detail-val">M1 → M6</div></div>
+    <div class="sogg-detail"><div class="sogg-detail-label">Costo stimato</div><div class="sogg-detail-val">€80–120K</div></div>
+    <div class="sogg-detail"><div class="sogg-detail-label">Profilo</div><div class="sogg-detail-val">Hospitality + storico</div></div>
+    <div class="sogg-detail"><div class="sogg-detail-label">Stato</div><div class="sogg-detail-val" style="color:var(--rosso,#c0392b)">Da trovare</div></div>
+  </div>
+</div>
+
+<!-- Impresa costruttrice -->
+<div class="soggetto" style="border-color:#aaa">
+  <div class="sogg-header">
+    <div class="sogg-icon">🏗️</div>
+    <div>
+      <div class="sogg-titolo">Impresa Costruttrice</div>
+      <div class="sogg-ruolo" style="color:#888">General Contractor · Ristrutturazione</div>
+    </div>
+  </div>
+  <div class="sogg-body">Esegue il cantiere su tutte e 3 le palazzine in parallelo. È la voce di costo più grande del progetto — circa €5,2M. Deve avere capacità di gestire cantieri multipli simultanei e conoscenza del territorio abruzzese. Gara d'appalto dopo il closing.</div>
+  <div class="sogg-details">
+    <div class="sogg-detail"><div class="sogg-detail-label">Fase</div><div class="sogg-detail-val">M6 → M27</div></div>
+    <div class="sogg-detail"><div class="sogg-detail-label">Costo stimato</div><div class="sogg-detail-val">€5,2M</div></div>
+    <div class="sogg-detail"><div class="sogg-detail-label">Selezione</div><div class="sogg-detail-val">Gara post-closing</div></div>
+    <div class="sogg-detail"><div class="sogg-detail-label">Stato</div><div class="sogg-detail-val" style="color:#c27800">Da selezionare</div></div>
+  </div>
+</div>
+
+<!-- Fornitore bubble -->
+<div class="soggetto" style="border-color:#7C3AED">
+  <div class="sogg-header">
+    <div class="sogg-icon">🫧</div>
+    <div>
+      <div class="sogg-titolo">Fornitore Bubble Rooms</div>
+      <div class="sogg-ruolo" style="color:#7C3AED">Produttore strutture trasparenti · Dark sky</div>
+    </div>
+  </div>
+  <div class="sogg-body">Fornisce e installa le 6 bolle trasparenti nel bosco. I principali produttori europei sono in Belgio (Bulle de Bois), Francia (Bulle-inn) e Spagna. Installazione in 60-90 giorni. È il primo cantiere da aprire dopo il closing — le bubble generano revenue già al Mese 9.</div>
+  <div class="sogg-details">
+    <div class="sogg-detail"><div class="sogg-detail-label">Fase</div><div class="sogg-detail-val">M6 → M9</div></div>
+    <div class="sogg-detail"><div class="sogg-detail-label">Costo stimato</div><div class="sogg-detail-val">€90K × 6 = €540K</div></div>
+    <div class="sogg-detail"><div class="sogg-detail-label">Payback</div><div class="sogg-detail-val">14 mesi</div></div>
+    <div class="sogg-detail"><div class="sogg-detail-label">Stato</div><div class="sogg-detail-val" style="color:#c27800">Da contattare</div></div>
+  </div>
+</div>
+
+<!-- Consulente PNRR -->
+<div class="soggetto" style="border-color:var(--verde)">
+  <div class="sogg-header">
+    <div class="sogg-icon">🌱</div>
+    <div>
+      <div class="sogg-titolo">Consulente PNRR e Bandi</div>
+      <div class="sogg-ruolo" style="color:var(--verde)">Fondi pubblici · Turismo aree interne</div>
+    </div>
+  </div>
+  <div class="sogg-body">Specialista nell'accesso ai fondi PNRR Turismo (Missione 1 C3), fondi ERDF per le aree interne, e bandi regionali Abruzzo. Il suo lavoro vale €2,1M — cioè la quota pubblica che abbassa il rischio privato. Lavora a success fee sul finanziamento ottenuto (tipicamente 3-5%).</div>
+  <div class="sogg-details">
+    <div class="sogg-detail"><div class="sogg-detail-label">Fase</div><div class="sogg-detail-val">M1 → M12</div></div>
+    <div class="sogg-detail"><div class="sogg-detail-label">Success fee</div><div class="sogg-detail-val">3–5% ottenuto</div></div>
+    <div class="sogg-detail"><div class="sogg-detail-label">Target fondi</div><div class="sogg-detail-val">€2,1M</div></div>
+    <div class="sogg-detail"><div class="sogg-detail-label">Stato</div><div class="sogg-detail-val" style="color:var(--rosso,#c0392b)">Da trovare</div></div>
+  </div>
+</div>
+
+<!-- =================== LIVELLO 3 — GESTORI =================== -->
+<div class="sh" style="margin-top:20px">
+  <div class="sh-title">Livello 3 · I Gestori · Chi Opera</div>
+  <div class="sh-badge">M21→regime</div>
+</div>
+
+<div class="hl-green">
+  <p>I gestori entrano nella fase operativa — dal soft opening (Mese 21) in poi. Sono dipendenti o contrattisti della società. Vengono pagati con stipendio fisso più bonus legato ai risultati. <strong>La scelta del General Manager è la decisione più importante dopo il closing</strong> — è lui che determina la qualità dell'esperienza e quindi il posizionamento del club.</p>
+</div>
+
+<!-- General Manager -->
+<div class="soggetto" style="border-color:var(--verde)">
+  <div class="sogg-header">
+    <div class="sogg-icon">🏨</div>
+    <div>
+      <div class="sogg-titolo">General Manager</div>
+      <div class="sogg-ruolo" style="color:var(--verde)">Direzione operativa · Responsabile struttura</div>
+    </div>
+  </div>
+  <div class="sogg-body">Gestisce tutto: staff, ospiti, fornitori, eventi, qualità dell'esperienza. Deve avere background in hospitality premium (almeno 4-5 stelle o boutique hotel) e idealmente esperienza in club privati o resort di montagna. Entra a M18 per organizzare il soft opening.</div>
+  <div class="sogg-details">
+    <div class="sogg-detail"><div class="sogg-detail-label">Ingresso</div><div class="sogg-detail-val">Mese 18</div></div>
+    <div class="sogg-detail"><div class="sogg-detail-label">Stipendio stimato</div><div class="sogg-detail-val">€60–80K/anno</div></div>
+    <div class="sogg-detail"><div class="sogg-detail-label">Bonus</div><div class="sogg-detail-val">5–10% EBITDA</div></div>
+    <div class="sogg-detail"><div class="sogg-detail-label">Stato</div><div class="sogg-detail-val" style="color:var(--rosso,#c0392b)">Da trovare</div></div>
+  </div>
+</div>
+
+<!-- Community Manager -->
+<div class="soggetto" style="border-color:var(--verde)">
+  <div class="sogg-header">
+    <div class="sogg-icon">🤝</div>
+    <div>
+      <div class="sogg-titolo">Community Manager</div>
+      <div class="sogg-ruolo" style="color:var(--verde)">Gestione soci · Relazioni · Programmi</div>
+    </div>
+  </div>
+  <div class="sogg-body">Il punto di contatto diretto con i 140 soci del club. Gestisce le prenotazioni prioritarie, organizza gli eventi per i soci, cura le relazioni personali. È la figura che determina se un socio rinnova la membership l'anno dopo — vale più del marketing.</div>
+  <div class="sogg-details">
+    <div class="sogg-detail"><div class="sogg-detail-label">Ingresso</div><div class="sogg-detail-val">Mese 9 (pre-opening)</div></div>
+    <div class="sogg-detail"><div class="sogg-detail-label">Stipendio stimato</div><div class="sogg-detail-val">€35–45K/anno</div></div>
+    <div class="sogg-detail"><div class="sogg-detail-label">Bonus</div><div class="sogg-detail-val">Rinnovi membership</div></div>
+    <div class="sogg-detail"><div class="sogg-detail-label">Stato</div><div class="sogg-detail-val" style="color:var(--rosso,#c0392b)">Da trovare</div></div>
+  </div>
+</div>
+
+<!-- Operatore F&B -->
+<div class="soggetto" style="border-color:var(--verde)">
+  <div class="sogg-header">
+    <div class="sogg-icon">🍽️</div>
+    <div>
+      <div class="sogg-titolo">Operatore F&B</div>
+      <div class="sogg-ruolo" style="color:var(--verde)">Ristorazione · Bar · Servizi</div>
+    </div>
+  </div>
+  <div class="sogg-body">Gestisce la ristorazione e il bar — che in questo tipo di struttura non è un servizio accessorio ma parte centrale dell'esperienza. Due opzioni: assumere uno chef di qualità in house, oppure dare in gestione a un operatore esterno con formula revenue sharing. La seconda opzione abbassa il rischio operativo.</div>
+  <div class="sogg-details">
+    <div class="sogg-detail"><div class="sogg-detail-label">Ingresso</div><div class="sogg-detail-val">Mese 20</div></div>
+    <div class="sogg-detail"><div class="sogg-detail-label">Modello consigliato</div><div class="sogg-detail-val">Revenue sharing</div></div>
+    <div class="sogg-detail"><div class="sogg-detail-val" style="font-size:11px;color:#aaa" colspan="2">Revenue F&B stimata €773K/anno</div></div>
+    <div class="sogg-detail"><div class="sogg-detail-label">Stato</div><div class="sogg-detail-val" style="color:var(--rosso,#c0392b)">Da strutturare</div></div>
+  </div>
+</div>
+
+<!-- Operatore Wellness -->
+<div class="soggetto" style="border-color:var(--verde)">
+  <div class="sogg-header">
+    <div class="sogg-icon">🧬</div>
+    <div>
+      <div class="sogg-titolo">Operatore Wellness Hub</div>
+      <div class="sogg-ruolo" style="color:var(--verde)">Sauna · Cold plunge · Longevity protocols</div>
+    </div>
+  </div>
+  <div class="sogg-body">Gestisce il wellness hub nei seminterrati — sauna a legna, cold plunge, sala breathwork, eventuale diagnostica base. Può essere un operatore specializzato esterno (tipo Therme Group, NordicSpa) o un team interno. È il cuore del posizionamento Longevity Performance del club.</div>
+  <div class="sogg-details">
+    <div class="sogg-detail"><div class="sogg-detail-label">Ingresso</div><div class="sogg-detail-val">Mese 18</div></div>
+    <div class="sogg-detail"><div class="sogg-detail-label">Modello</div><div class="sogg-detail-val">Gestione esterna</div></div>
+    <div class="sogg-detail"><div class="sogg-detail-label">Revenue stimata</div><div class="sogg-detail-val">inclusa nel club</div></div>
+    <div class="sogg-detail"><div class="sogg-detail-label">Stato</div><div class="sogg-detail-val" style="color:var(--rosso,#c0392b)">Da trovare</div></div>
+  </div>
+</div>
+
+<!-- Responsabile Corporate Retreat -->
+<div class="soggetto" style="border-color:var(--verde)">
+  <div class="sogg-header">
+    <div class="sogg-icon">💼</div>
+    <div>
+      <div class="sogg-titolo">Sales Corporate Retreat</div>
+      <div class="sogg-ruolo" style="color:var(--verde)">Business development B2B</div>
+    </div>
+  </div>
+  <div class="sogg-body">Vende e organizza i 10 corporate retreat l'anno da €75K ciascuno — il secondo stream di revenue più alto dopo le camere. Deve avere un network nelle aziende medio-grandi di Roma e Napoli. Può lavorare a commissione sul venduto (10-15%) senza stipendio fisso all'inizio.</div>
+  <div class="sogg-details">
+    <div class="sogg-detail"><div class="sogg-detail-label">Ingresso</div><div class="sogg-detail-val">Mese 12</div></div>
+    <div class="sogg-detail"><div class="sogg-detail-label">Compenso</div><div class="sogg-detail-val">10–15% sul venduto</div></div>
+    <div class="sogg-detail"><div class="sogg-detail-label">Revenue target</div><div class="sogg-detail-val">€750K/anno</div></div>
+    <div class="sogg-detail"><div class="sogg-detail-label">Stato</div><div class="sogg-detail-val" style="color:var(--rosso,#c0392b)">Da trovare</div></div>
+  </div>
+</div>
+
+<!-- RIEPILOGO COSTI PERSONALE -->
+<div class="sh" style="margin-top:20px">
+  <div class="sh-title">Costo Totale dei Soggetti Esterni</div>
+  <div class="sh-badge">budget</div>
+</div>
+
+<div class="costi-wrap">
+  <div class="costi-row">
+    <div class="costi-label">Avvocato specializzato (una tantum)<small>Due diligence + asta + SPV + parasociale</small></div>
+    <div class="costi-val">€25K</div>
+  </div>
+  <div class="costi-row">
+    <div class="costi-label">Studio di progettazione<small>Progetto esecutivo tutte le palazzine</small></div>
+    <div class="costi-val">€100K</div>
+  </div>
+  <div class="costi-row">
+    <div class="costi-label">Impresa costruttrice<small>Ristrutturazione 3 palazzine in parallelo</small></div>
+    <div class="costi-val">€5,2M</div>
+  </div>
+  <div class="costi-row">
+    <div class="costi-label">Fornitore bubble rooms<small>6 bolle × €90K installate</small></div>
+    <div class="costi-val">€540K</div>
+  </div>
+  <div class="costi-row">
+    <div class="costi-label">Consulente PNRR<small>Success fee 4% su €2,1M ottenuti</small></div>
+    <div class="costi-val">~€85K</div>
+  </div>
+  <div class="costi-row">
+    <div class="costi-label">FranKi Studio (fee annua 4 anni)<small>Asset management + project development</small></div>
+    <div class="costi-val">€680K</div>
+  </div>
+  <div class="costi-row">
+    <div class="costi-label">Staff operativo a regime<small>GM + Community Mgr + F&B + Wellness + Sales · stima</small></div>
+    <div class="costi-val">€280K/anno</div>
+  </div>
+  <div class="costi-row">
+    <div class="costi-label" style="font-weight:700;color:var(--testo)">Totale costi sviluppo (M1→M30, una tantum)</div>
+    <div class="costi-val" style="font-size:22px;color:var(--testo)">~€6,6M</div>
+  </div>
+</div>
+
+<div class="orange-band">
+  <h3>La cosa da capire bene</h3>
+  <p>I soggetti del Livello 2 (sviluppatori) e Livello 3 (gestori) <strong>sono già compresi nel capex di €14,6M</strong> — non sono costi aggiuntivi. La voce "ristrutturazione €5,2M" è l'impresa costruttrice. La voce "arredo e tech €480K" copre parte dell'allestimento operativo. I costi del personale a regime sono nel conto economico che genera i €7M di revenue. <strong>Tutto torna.</strong></p>
+</div>
+
+<div class="dark-cta">
+  <h2>ORA SAI<br>CHI FA<br><em>COSA.</em></h2>
+  <p>Il prossimo passo concreto: formalizzare l'accordo tra FranKi, Affio e Marco con un patto parasociale, e trovare l'avvocato specializzato per avviare la due diligence sull'asta. Da lì parte tutto.</p>
+</div>
+
+<div class="confid">RISERVATO · FranKi Studio · Aprile 2026 · Valori stimati</div>
+</body>
+</html>

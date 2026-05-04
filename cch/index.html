@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Corsale Country House · Progetto Franki Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Lato:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--blue:#3549B5;--blue-dark:#1E2E8A;--amber:#F9AC28;--amber-dark:#C07800;--amber-light:#FFF7E0;--green:#1A7A4A;--white:#FFFFFF;--display:'Bebas Neue',sans-serif;--label:'DM Mono',monospace;--body:'Lato',sans-serif;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--blue-dark);font-family:var(--body);-webkit-font-smoothing:antialiased;min-height:100vh;}
+.bg{position:fixed;inset:0;background:var(--blue-dark);z-index:0;}
+.bg::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(-55deg,transparent,transparent 40px,rgba(255,255,255,.018) 40px,rgba(255,255,255,.018) 41px);}
+.wrap{position:relative;z-index:1;max-width:1040px;margin:0 auto;padding:3rem 2.5rem 5rem;}
+.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:3rem;flex-wrap:wrap;gap:1rem;}
+.brand{display:flex;align-items:center;gap:.7rem;}
+.brand__dot{width:9px;height:9px;background:var(--amber);border-radius:50%;}
+.brand__name{font-family:var(--label);font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.35);}
+.brand__sep{color:rgba(255,255,255,.15);}
+.brand__project{font-family:var(--label);font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--amber);}
+.top__date{font-family:var(--label);font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.2);}
+.hero{margin-bottom:2.5rem;}
+.hero__eye{font-family:var(--label);font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;color:var(--amber);margin-bottom:.7rem;}
+.hero__title{font-family:var(--display);font-size:clamp(2.8rem,6vw,5rem);letter-spacing:.03em;color:var(--white);line-height:1;margin-bottom:.8rem;}
+.hero__title em{color:var(--amber);font-style:normal;}
+.hero__desc{font-size:.9rem;color:rgba(255,255,255,.4);max-width:520px;line-height:1.75;}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.05);border-radius:8px;overflow:hidden;margin-bottom:3rem;}
+.stat{padding:1rem 1.2rem;background:rgba(255,255,255,.02);}
+.stat__l{font-family:var(--label);font-size:.52rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:.25rem;}
+.stat__v{font-family:var(--display);font-size:1.8rem;line-height:1;color:var(--amber);}
+.stat__n{font-size:.75rem;color:rgba(255,255,255,.25);margin-top:.2rem;}
+.sec-label{display:flex;align-items:center;gap:.8rem;margin-bottom:1rem;margin-top:2.5rem;}
+.sec-label__num{font-family:var(--display);font-size:1.8rem;line-height:1;color:rgba(255,255,255,.12);}
+.sec-label__title{font-family:var(--label);font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.3);}
+.sec-label::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.06);}
+.docs{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:.9rem;margin-bottom:.5rem;}
+.doc{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:1.3rem;text-decoration:none;display:flex;flex-direction:column;gap:.7rem;position:relative;overflow:hidden;transition:all .2s;}
+.doc::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .2s;pointer-events:none;}
+.doc:hover{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.14);transform:translateY(-2px);}
+.doc--amber::before{background:linear-gradient(135deg,rgba(249,172,40,.1),transparent);}
+.doc--blue::before{background:linear-gradient(135deg,rgba(53,73,181,.18),transparent);}
+.doc--green::before{background:linear-gradient(135deg,rgba(26,122,74,.15),transparent);}
+.doc:hover::before{opacity:1;}
+.doc__top{display:flex;justify-content:space-between;align-items:flex-start;gap:.5rem;}
+.doc__icon{font-size:1.4rem;line-height:1;flex-shrink:0;}
+.doc__badge{font-family:var(--label);font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;padding:.15rem .5rem;border-radius:3px;white-space:nowrap;}
+.doc__badge--amber{background:var(--amber);color:var(--blue-dark);}
+.doc__badge--blue{background:rgba(53,73,181,.45);color:#A0B8FF;}
+.doc__badge--green{background:rgba(26,122,74,.45);color:#7EE8B0;}
+.doc__badge--gray{background:rgba(255,255,255,.08);color:rgba(255,255,255,.4);}
+.doc__step{font-family:var(--label);font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.2);margin-bottom:.2rem;}
+.doc__title{font-family:var(--display);font-size:1.1rem;letter-spacing:.04em;color:var(--white);line-height:1.15;}
+.doc__desc{font-size:.8rem;color:rgba(255,255,255,.35);line-height:1.6;flex:1;}
+.doc__footer{display:flex;justify-content:space-between;align-items:center;padding-top:.6rem;border-top:1px solid rgba(255,255,255,.06);}
+.doc__who{font-family:var(--label);font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.2);}
+.doc__arrow{color:rgba(255,255,255,.18);transition:color .2s;}
+.doc:hover .doc__arrow{color:var(--amber);}
+.pdfs{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.7rem;}
+.pdf{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.05);border-radius:8px;padding:.9rem 1.1rem;text-decoration:none;display:flex;align-items:center;gap:.8rem;transition:all .2s;}
+.pdf:hover{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1);}
+.pdf__icon{font-size:1.2rem;flex-shrink:0;}
+.pdf__title{font-family:var(--label);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.6);font-weight:500;}
+.pdf__sub{font-size:.72rem;color:rgba(255,255,255,.25);margin-top:.15rem;}
+.foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;margin-top:3rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.05);}
+.foot__brand{font-family:var(--label);font-size:.54rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.18);}
+.foot__brand strong{color:var(--amber);}
+.foot__note{font-size:.75rem;color:rgba(255,255,255,.18);font-style:italic;}
+@media(max-width:600px){.wrap{padding:2rem 1.4rem 4rem;}.stats{grid-template-columns:1fr 1fr;}.hero__title{font-size:2.8rem;}}
+</style>
+</head>
+<body>
+<div class="bg"></div>
+<div class="wrap">
+  <div class="top">
+    <div class="brand"><div class="brand__dot"></div><span class="brand__name">Franki Studio</span><span class="brand__sep"> · </span><span class="brand__project">Corsale CCH</span></div>
+    <div class="top__date">Aprile 2026 · Uso riservato</div>
+  </div>
+  <div class="hero">
+    <div class="hero__eye">Progetto strategico riservato</div>
+    <h1 class="hero__title">Corsale<br><em>Country House</em></h1>
+    <p class="hero__desc">Hub documenti del mandato Franki Studio. Tutti i materiali in ordine di consultazione — dalla strategia ai test lean operativi. San Lorenzello (BN) · Sannio.</p>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="stat__l">Revenue target</div><div class="stat__v">€200k</div><div class="stat__n">anno 1 vs ~€60k attuale</div></div>
+    <div class="stat"><div class="stat__l">Test lean</div><div class="stat__v">9</div><div class="stat__n">45 giorni · quasi €0</div></div>
+    <div class="stat"><div class="stat__l">UNICUM</div><div class="stat__v">8</div><div class="stat__n">+ 10 add-on deliberati</div></div>
+    <div class="stat"><div class="stat__l">Kick-off</div><div class="stat__v">Apr</div><div class="stat__n">da mercoledì 2 aprile</div></div>
+  </div>
+
+  <div class="sec-label"><span class="sec-label__num">01</span><span class="sec-label__title">Leggi Prima — La Strategia Completa</span></div>
+  <div class="docs">
+    <a href="hub.html" class="doc doc--amber">
+      <div class="doc__top"><div class="doc__icon">🏛️</div><span class="doc__badge doc__badge--amber">Documento principale</span></div>
+      <div class="doc__step">Inizia da qui</div>
+      <div class="doc__title">Hub Strategico Completo</div>
+      <div class="doc__desc">13 sezioni navigabili — benchmark, pricing, calendario, 8 UNICUM, community, roadmap e Lean. Include la metodologia con le fonti di tutti i prezzi.</div>
+      <div class="doc__footer"><span class="doc__who">Aggiornato post-meeting 31 marzo</span><span class="doc__arrow">→</span></div>
+    </a>
+    <a href="luca.html" class="doc doc--blue">
+      <div class="doc__top"><div class="doc__icon">✉️</div><span class="doc__badge doc__badge--gray">Proposta approvata</span></div>
+      <div class="doc__step">La proposta per Luca</div>
+      <div class="doc__title">Documento di Presentazione</div>
+      <div class="doc__desc">La proposta colloquiale con tutte le modifiche di Luca integrate. Tono diretto, senza jargon. Il documento già letto e condiviso.</div>
+      <div class="doc__footer"><span class="doc__who">Approvato 31 marzo</span><span class="doc__arrow">→</span></div>
+    </a>
+  </div>
+
+  <div class="sec-label"><span class="sec-label__num">02</span><span class="sec-label__title">Il Piano — Chi Fa Cosa e Quando</span></div>
+  <div class="docs">
+    <a href="roadmap.html" class="doc doc--blue">
+      <div class="doc__top"><div class="doc__icon">🗺️</div><span class="doc__badge doc__badge--blue">Operativo</span></div>
+      <div class="doc__step">Roadmap dettagliata</div>
+      <div class="doc__title">Roadmap Operativa v2</div>
+      <div class="doc__desc">Chi fa cosa e perché — test divisi per tipo, ranking MASTER, istruzioni passo per passo. 6 sezioni navigabili con schede complete per ogni azione.</div>
+      <div class="doc__footer"><span class="doc__who">Franki + Team CCH</span><span class="doc__arrow">→</span></div>
+    </a>
+    <a href="gennaro.html" class="doc doc--blue">
+      <div class="doc__top"><div class="doc__icon">🎬</div><span class="doc__badge doc__badge--gray">Brief produzione</span></div>
+      <div class="doc__step">Per Gennaro e Guia</div>
+      <div class="doc__title">Brief Video — 3 Clip CCH</div>
+      <div class="doc__desc">3 clip distinti per 3 mercati diversi. Scene list, stile, specifiche tecniche, timeline e deliverable. Una nota finale per Gennaro.</div>
+      <div class="doc__footer"><span class="doc__who">Franki → Gennaro + Guia</span><span class="doc__arrow">→</span></div>
+    </a>
+    <a href="guia-v2.html" class="doc doc--amber">
+      <div class="doc__top"><div class="doc__icon">👋</div><span class="doc__badge doc__badge--amber">Meeting Guia · v2</span></div>
+      <div class="doc__step">Versione 30 minuti</div>
+      <div class="doc__title">Brief Meeting Guia — Sintesi</div>
+      <div class="doc__desc">Versione compatta per il primo incontro. Chi è Franki, status quo, visione luxury, metodologia lean, spazio Guia e prossimi passi. Timer visibile per sezione.</div>
+      <div class="doc__footer"><span class="doc__who">Franki → Guia · Primo incontro</span><span class="doc__arrow">→</span></div>
+    </a>
+    <a href="guia-completo.html" class="doc doc--blue">
+      <div class="doc__top"><div class="doc__icon">📋</div><span class="doc__badge doc__badge--blue">Brief completo</span></div>
+      <div class="doc__step">Versione approfondita</div>
+      <div class="doc__title">Brief Meeting Guia — Completo</div>
+      <div class="doc__desc">La versione estesa con tutte le 7 sezioni — obiettivi, strategia, task marketing con caselle di validazione. Da usare nei prossimi incontri.</div>
+      <div class="doc__footer"><span class="doc__who">Franki → Guia · Prossimi incontri</span><span class="doc__arrow">→</span></div>
+    </a>
+  </div>
+
+  <div class="sec-label"><span class="sec-label__num">03</span><span class="sec-label__title">I Primi Due Test — Da Attivare Subito</span></div>
+  <div class="docs">
+    <a href="lean1.html" class="doc doc--amber">
+      <div class="doc__top"><div class="doc__icon">🫒</div><span class="doc__badge doc__badge--amber">Test Lean #1 · Immediato</span></div>
+      <div class="doc__step">Luca + Maura · Costo €0</div>
+      <div class="doc__title">Oil Tasting & Pane di Maura</div>
+      <div class="doc__desc">Roadmap completa, 3 scenari economici, testo WhatsApp già pronto da inviare. Scheda di rilevazione da compilare dopo ogni soggiorno.</div>
+      <div class="doc__footer"><span class="doc__who">Prossime prenotazioni</span><span class="doc__arrow">→</span></div>
+    </a>
+    <a href="lean2.html" class="doc doc--blue">
+      <div class="doc__top"><div class="doc__icon">🧘</div><span class="doc__badge doc__badge--blue">Test Lean #2 · Immediato</span></div>
+      <div class="doc__step">Guia + Franki · Costo €0</div>
+      <div class="doc__title">Yoga Retreat Leader Outreach</div>
+      <div class="doc__desc">DM già scritto in inglese e italiano. Criteri di selezione profili, regole di invio, scheda di rilevazione settimanale con caselle da spuntare.</div>
+      <div class="doc__footer"><span class="doc__who">Da questa settimana</span><span class="doc__arrow">→</span></div>
+    </a>
+    <a href="profili.html" class="doc doc--blue">
+      <div class="doc__top"><div class="doc__icon">🔍</div><span class="doc__badge doc__badge--blue">Ricerca completata</span></div>
+      <div class="doc__step">Guia sceglie i 5 da contattare</div>
+      <div class="doc__title">10 Profili Yoga Selezionati</div>
+      <div class="doc__desc">I 10 Yoga Retreat Leader già trovati con link diretti Instagram e sito. Messaggio chiave personalizzato per ognuno. Scheda selezione da compilare.</div>
+      <div class="doc__footer"><span class="doc__who">Franki ricerca → Guia sceglie</span><span class="doc__arrow">→</span></div>
+    </a>
+    <a href="materiali.html" class="doc doc--green">
+      <div class="doc__top"><div class="doc__icon">✅</div><span class="doc__badge doc__badge--green">Checklist interattiva</span></div>
+      <div class="doc__step">Prima dei DM — urgente</div>
+      <div class="doc__title">Materiali da Preparare</div>
+      <div class="doc__desc">Cosa serve per rispondere ai retreat leader in modo professionale. Urgenti, necessari e futuri. Le caselle si spuntano direttamente online.</div>
+      <div class="doc__footer"><span class="doc__who">Franki + Guia + Luca + Gennaro</span><span class="doc__arrow">→</span></div>
+    </a>
+  </div>
+
+  <div class="sec-label"><span class="sec-label__num">04</span><span class="sec-label__title">PDF Strategia — Da Stampare e Condividere</span></div>
+  <div class="pdfs">
+    <a href="hub_strategico.pdf" class="pdf"><div class="pdf__icon">📄</div><div><div class="pdf__title">Hub Strategico</div><div class="pdf__sub">13 sezioni · metodologia · benchmark</div></div></a>
+    <a href="roadmap.pdf" class="pdf"><div class="pdf__icon">📄</div><div><div class="pdf__title">Roadmap Operativa</div><div class="pdf__sub">Chi fa cosa · test lean · il team</div></div></a>
+    <a href="catalogo.pdf" class="pdf"><div class="pdf__icon">📄</div><div><div class="pdf__title">Catalogo Esperienze</div><div class="pdf__sub">8 UNICUM · 10 add-on · revenue</div></div></a>
+  </div>
+
+  <div class="sec-label"><span class="sec-label__num">05</span><span class="sec-label__title">PDF Test Lean — Da Stampare per il Lavoro sul Campo</span></div>
+  <div class="pdfs">
+    <a href="lean1.pdf" class="pdf"><div class="pdf__icon">📄</div><div><div class="pdf__title">Test #1 · Oil Tasting</div><div class="pdf__sub">Roadmap · scenari · scheda rilevazione</div></div></a>
+    <a href="lean2.pdf" class="pdf"><div class="pdf__icon">📄</div><div><div class="pdf__title">Test #2 · Yoga Retreat</div><div class="pdf__sub">Roadmap · DM EN+IT · scheda settimanale</div></div></a>
+    <a href="profili.pdf" class="pdf"><div class="pdf__icon">📄</div><div><div class="pdf__title">10 Profili Yoga</div><div class="pdf__sub">Schede · link · selezione Guia</div></div></a>
+    <a href="materiali.pdf" class="pdf"><div class="pdf__icon">📄</div><div><div class="pdf__title">Checklist Materiali</div><div class="pdf__sub">Urgenti · necessari · futuri</div></div></a>
+  </div>
+
+  <div class="foot">
+    <div class="foot__brand"><strong>Franki Studio</strong> · Avre Srl · Napoli · We Start Your Ideas</div>
+    <div class="foot__note">frankistudio.it/cch · Documento riservato · Aprile 2026</div>
+  </div>
+</div>
+</body>
+</html>

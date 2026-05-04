@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test Lean #2 — Yoga Retreat Leader · CCH</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue:#3549B5; --blue-dark:#1E2E8A; --blue-light:#EBF0FF;
+  --amber:#F9AC28; --amber-dark:#C07800; --amber-light:#FFF7E0;
+  --green:#1A7A4A; --green-light:#E0F5EC; --green-text:#0A4A28;
+  --violet:#4E3D8A; --violet-light:#EEEAFF;
+  --ink:#1A1714; --gray:#6B6560; --cream:#FAF9F6; --cream-dark:#EDEBE4;
+  --white:#FFFFFF;
+  --display:'Bebas Neue',sans-serif;
+  --label:'DM Mono',monospace;
+  --body:'Lato',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--cream);color:var(--ink);font-family:var(--body);font-size:1rem;line-height:1.75;-webkit-font-smoothing:antialiased;}
+p{margin-bottom:.9rem;} p:last-child{margin-bottom:0;}
+
+/* HEADER */
+.hdr{background:var(--blue-dark);padding:2.5rem 3rem;position:relative;overflow:hidden;}
+.hdr::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(-55deg,transparent,transparent 28px,rgba(255,255,255,.025) 28px,rgba(255,255,255,.025) 29px);}
+.hdr::after{content:'';position:absolute;bottom:0;left:0;right:0;height:4px;background:var(--amber);}
+.hdr__num{font-family:var(--display);font-size:5rem;line-height:1;color:rgba(255,255,255,.08);position:absolute;top:1.5rem;right:2rem;}
+.hdr__brand{font-family:var(--label);font-size:.58rem;letter-spacing:.25em;text-transform:uppercase;color:var(--amber);margin-bottom:.4rem;position:relative;}
+.hdr__title{font-family:var(--display);font-size:clamp(2rem,4vw,3rem);letter-spacing:.04em;color:var(--white);position:relative;line-height:1.05;}
+.hdr__title em{color:var(--amber);font-style:normal;}
+.hdr__sub{font-size:.95rem;color:rgba(255,255,255,.5);margin-top:.5rem;position:relative;font-style:italic;}
+.hdr__meta{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.2rem;position:relative;}
+
+.pill{display:inline-block;font-family:var(--label);font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;padding:.25rem .8rem;border-radius:20px;}
+.pill--amber{background:var(--amber-light);color:var(--amber-dark);}
+.pill--dark{background:rgba(255,255,255,.1);color:rgba(255,255,255,.7);}
+.pill--green{background:var(--green-light);color:var(--green-text);}
+.pill--blue{background:var(--blue-light);color:var(--blue-dark);}
+.pill--white{background:var(--white);color:var(--blue-dark);}
+
+.corpo{max-width:900px;margin:0 auto;padding:2.5rem 3rem 4rem;}
+.sep{height:1px;background:var(--cream-dark);margin:2.5rem 0;}
+
+/* INTRO */
+.intro{background:var(--amber-dark);border-radius:8px;padding:1.6rem 2rem;margin-bottom:2rem;}
+.intro__label{font-family:var(--label);font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:.5rem;}
+.intro__text{font-size:.95rem;color:var(--white);line-height:1.7;}
+.intro__text strong{color:var(--amber-light);}
+
+/* STEP ROADMAP */
+.steps{display:flex;flex-direction:column;gap:0;}
+.step{display:grid;grid-template-columns:52px 1fr;gap:0;position:relative;}
+.step::before{content:'';position:absolute;left:25px;top:52px;bottom:0;width:2px;background:var(--cream-dark);z-index:0;}
+.step:last-child::before{display:none;}
+.step__num-wrap{display:flex;flex-direction:column;align-items:center;padding-top:4px;z-index:1;}
+.step__num{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:1.3rem;flex-shrink:0;}
+.step__num--amber{background:var(--amber);color:var(--amber-dark);}
+.step__num--blue{background:var(--blue);color:var(--white);}
+.step__num--green{background:var(--green);color:var(--white);}
+.step__content{background:var(--white);border:1px solid var(--cream-dark);border-radius:8px;padding:1.1rem 1.4rem;margin-bottom:16px;margin-left:10px;}
+.step__tag{font-family:var(--label);font-size:.56rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gray);margin-bottom:.3rem;}
+.step__tag--amber{color:var(--amber-dark);}
+.step__tag--blue{color:var(--blue);}
+.step__tag--green{color:var(--green);}
+.step__title{font-family:var(--display);font-size:1.2rem;letter-spacing:.04em;color:var(--ink);margin-bottom:.5rem;}
+.step__body{font-size:.9rem;color:var(--ink);line-height:1.7;}
+.step__body strong{font-weight:700;}
+.step__timing{margin-top:.8rem;display:flex;gap:.4rem;flex-wrap:wrap;}
+
+/* CALLOUT */
+.c{padding:1.1rem 1.5rem;border-left:4px solid;border-radius:0 6px 6px 0;margin:1.2rem 0;}
+.c--amber{background:var(--amber-light);border-color:var(--amber);}
+.c--amber .c__l{color:var(--amber-dark);}
+.c--amber p{color:#5A3A00;}
+.c--amber strong{color:var(--amber-dark);}
+.c--blue{background:var(--blue-light);border-color:var(--blue);}
+.c--blue .c__l{color:var(--blue);}
+.c--blue p{color:var(--blue-dark);}
+.c--blue strong{color:var(--blue);}
+.c--green{background:var(--green-light);border-color:var(--green);}
+.c--green .c__l{color:var(--green);}
+.c--green p{color:var(--green-text);}
+.c--green strong{color:var(--green);}
+.c__l{font-family:var(--label);font-size:.56rem;letter-spacing:.18em;text-transform:uppercase;margin-bottom:.35rem;}
+.c p{font-size:.9rem;line-height:1.7;}
+
+/* MSG BOX */
+.msg{background:var(--blue-dark);border-radius:8px;padding:1.2rem 1.5rem;margin:1rem 0;}
+.msg__label{font-family:var(--label);font-size:.56rem;letter-spacing:.18em;text-transform:uppercase;color:var(--amber);margin-bottom:.6rem;}
+.msg__text{font-size:.88rem;color:rgba(255,255,255,.8);line-height:1.85;font-style:italic;}
+
+/* PROFILO TIPO */
+.profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1rem 0;}
+.profile{background:var(--white);border:1px solid var(--cream-dark);border-radius:8px;padding:1.1rem 1.3rem;border-top:3px solid var(--blue);}
+.profile__name{font-family:var(--display);font-size:1.1rem;letter-spacing:.04em;color:var(--ink);margin-bottom:.3rem;}
+.profile__tag{font-family:var(--label);font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:.5rem;}
+.profile__body{font-size:.85rem;color:var(--ink);line-height:1.6;}
+
+/* SEZIONE TITOLO */
+.sec-title{font-family:var(--display);font-size:1.6rem;letter-spacing:.06em;color:var(--ink);padding-left:.8rem;border-left:4px solid var(--blue);margin:2rem 0 1rem;}
+.sec-title--amber{border-left-color:var(--amber);}
+.sec-title--green{border-left-color:var(--green);}
+
+/* ECONOMIC TABLE */
+.eco-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--cream-dark);border:1px solid var(--cream-dark);border-radius:8px;overflow:hidden;margin:1rem 0;}
+.eco-cell{background:var(--white);padding:1.1rem 1.3rem;}
+.eco-cell--amber{background:var(--amber-light);}
+.eco-cell--green{background:var(--green-light);}
+.eco-cell--blue{background:var(--blue-light);}
+.eco-cell__l{font-family:var(--label);font-size:.56rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gray);margin-bottom:.35rem;}
+.eco-cell--amber .eco-cell__l{color:var(--amber-dark);}
+.eco-cell--green .eco-cell__l{color:var(--green);}
+.eco-cell--blue .eco-cell__l{color:var(--blue);}
+.eco-cell__v{font-family:var(--display);font-size:2rem;line-height:1;color:var(--ink);}
+.eco-cell--amber .eco-cell__v{color:var(--amber-dark);}
+.eco-cell--green .eco-cell__v{color:var(--green-text);}
+.eco-cell--blue .eco-cell__v{color:var(--blue);}
+.eco-cell__n{font-size:.8rem;color:var(--gray);margin-top:.25rem;line-height:1.4;}
+
+/* SCENARI */
+.scenario{border:1px solid var(--cream-dark);border-radius:8px;overflow:hidden;margin-bottom:1rem;}
+.scenario__head{padding:.8rem 1.2rem;display:flex;justify-content:space-between;align-items:center;}
+.scenario__head--min{background:var(--cream-dark);}
+.scenario__head--med{background:var(--blue-light);}
+.scenario__head--max{background:var(--green-light);}
+.scenario__label{font-family:var(--display);font-size:1.1rem;letter-spacing:.04em;}
+.scenario__head--min .scenario__label{color:var(--gray);}
+.scenario__head--med .scenario__label{color:var(--blue-dark);}
+.scenario__head--max .scenario__label{color:var(--green-text);}
+.scenario__rev{font-family:var(--display);font-size:1.6rem;}
+.scenario__head--min .scenario__rev{color:var(--gray);}
+.scenario__head--med .scenario__rev{color:var(--blue);}
+.scenario__head--max .scenario__rev{color:var(--green-text);}
+.scenario__body{padding:.9rem 1.2rem;background:var(--white);font-size:.88rem;color:var(--ink);line-height:1.65;}
+
+/* CRITERI SELEZIONE */
+.criteria{list-style:none;margin:.6rem 0;}
+.criteria li{display:flex;align-items:flex-start;gap:.7rem;padding:.45rem 0;border-bottom:1px solid var(--cream-dark);font-size:.88rem;line-height:1.6;}
+.criteria li:last-child{border-bottom:none;}
+.criteria__dot{width:6px;height:6px;border-radius:50%;margin-top:.55rem;flex-shrink:0;}
+.criteria__dot--blue{background:var(--blue);}
+.criteria__dot--green{background:var(--green);}
+.criteria__dot--amber{background:var(--amber);}
+
+/* HASHTAG ROW */
+.hashtag-row{display:flex;flex-wrap:wrap;gap:.4rem;margin:.6rem 0;}
+.hashtag{font-family:var(--label);font-size:.65rem;background:var(--blue-light);color:var(--blue-dark);padding:.25rem .7rem;border-radius:4px;}
+
+/* FOOTER */
+.footer{background:var(--blue-dark);border-top:4px solid var(--amber);text-align:center;padding:1.2rem;font-family:var(--label);font-size:.56rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.35);}
+.footer strong{color:var(--amber);}
+
+@media(max-width:600px){
+  .hdr,.corpo{padding-left:1.4rem;padding-right:1.4rem;}
+  .eco-grid{grid-template-columns:1fr 1fr;}
+  .profile-grid{grid-template-columns:1fr;}
+  .step{grid-template-columns:42px 1fr;}
+}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr__num">02</div>
+  <div class="hdr__brand">Franki Studio · Test Lean · Corsale CCH · Aprile 2026</div>
+  <h1 class="hdr__title">5 DM a <em>Yoga</em><br>Retreat Leader</h1>
+  <p class="hdr__sub">La prima finestra sul mercato internazionale — un messaggio alla volta</p>
+  <div class="hdr__meta">
+    <span class="pill pill--white">Test Lean #2</span>
+    <span class="pill pill--dark">Responsabili: Guia + Franki</span>
+    <span class="pill pill--dark">Durata: 15 giorni</span>
+    <span class="pill pill--dark">Costo: €0</span>
+  </div>
+</div>
+
+<div class="corpo">
+
+  <div class="intro">
+    <div class="intro__label">Perché iniziamo da qui</div>
+    <p class="intro__text">Il mercato yoga e wellness internazionale è il più accessibile e strutturato tra quelli che abbiamo identificato per CCH. <strong>I Yoga Master e Retreat Leader cercano attivamente venue esclusive in Italia</strong> — e il Sannio non è ancora nella loro mappa. Questo test costa zero, richiede 30 minuti a settimana, e può portare la prima risposta in pochi giorni. Se arriva una sola risposta positiva, significa che c'è un mercato reale dall'altra parte.</p>
+  </div>
+
+  <!-- CHI SONO -->
+  <div class="sec-title">Chi Sono i Yoga Retreat Leader</div>
+  <p style="font-size:.9rem;color:var(--gray);margin-bottom:1rem;">Prima di capire come contattarli, è utile capire chi sono e cosa cercano.</p>
+
+  <div class="profile-grid">
+    <div class="profile">
+      <div class="profile__name">Il Yoga Master</div>
+      <div class="profile__tag">Termine classico · autorevolezza · esperienza</div>
+      <div class="profile__body">Insegnante certificato con anni di pratica, spesso con formazione in India o Asia. Ha una community fidelizzata di 50–500 allievi. Organizza 2–3 retreat l'anno — cerca location esclusive, cucina di qualità, natura, silenzio. Paga €1.000–1.500/notte per la venue senza discutere se il posto è giusto.</div>
+    </div>
+    <div class="profile">
+      <div class="profile__name">Il Retreat Leader</div>
+      <div class="profile__tag">Termine moderno · wellness coach · format esperienziale</div>
+      <div class="profile__body">Figura più recente — non solo yoga ma meditazione, breathwork, sound healing, ayurveda. Ha un profilo Instagram curato, 5k–50k follower attivi. Porta 8–14 persone nella venue, organizza il programma in autonomia, cerca location che si "fotografino bene" e abbiano un'anima autentica. Budget simile al Yoga Master.</div>
+    </div>
+  </div>
+
+  <div class="c c--blue">
+    <div class="c__l">Perché il Sannio è vantaggioso rispetto alla Toscana</div>
+    <p>La Toscana è <strong>satura</strong> — i retreat leader più attivi la conoscono già e cercano nuove destinazioni da proporre ai loro clienti come "scoperte". Il Sannio ha lo stesso paesaggio, la stessa cucina autentica, lo stesso silenzio — ma è ancora completamente inesplorato. Per un retreat leader che vuole offrire qualcosa di unico, CCH nel Sannio è una risposta perfetta al momento giusto.</p>
+  </div>
+
+  <div class="sep"></div>
+
+  <!-- ROADMAP -->
+  <div class="sec-title sec-title--amber">La Roadmap — Passo per Passo</div>
+
+  <div class="steps">
+
+    <div class="step">
+      <div class="step__num-wrap"><div class="step__num step__num--amber">1</div></div>
+      <div class="step__content">
+        <div class="step__tag step__tag--amber">Giorno 1–2 · Franki</div>
+        <div class="step__title">Preparare il testo del DM e le istruzioni per Guia</div>
+        <div class="step__body">
+          <p>Franki scrive il testo del DM Instagram in inglese e le istruzioni precise per Guia: quali hashtag usare, come valutare un profilo, cosa guardare, come rispondere.</p>
+          <div class="msg">
+            <div class="msg__label">Testo DM Instagram — pronto da usare (personalizzare il nome)</div>
+            <p class="msg__text">"Hi [Name] 👋<br><br>I came across your retreat work and I love what you do — the way you build community around your practice is exactly what we're looking for.<br><br>I'm working with a family-run exclusive estate in Sannio, Southern Italy — 6 hectares of organic olive grove, 4 suites for up to 14 guests, completely private. The family has farmed here for 50 years. Maura, the matriarch, cooks the most extraordinary Neapolitan food you've ever had.<br><br>We're opening the venue to retreat leaders for 2026 and your style of work feels like a perfect fit.<br><br>Would you be open to a quick chat to see if it could work for your next retreat? Happy to send photos and details first.<br><br>[Guia — Corsale Country House, Campania, Italy]"</p>
+          </div>
+
+          <div class="msg" style="background:#2A3A5A;margin-top:.6rem;">
+            <div class="msg__label" style="color:rgba(255,255,255,.4);">Traduzione italiana — per riferimento di Luca</div>
+            <p class="msg__text" style="color:rgba(255,255,255,.6);">"Ciao [Nome] 👋<br><br>Ho trovato il tuo lavoro sui retreat e mi ha colpito davvero — il modo in cui costruisci comunità attorno alla tua pratica è esattamente quello che stiamo cercando.<br><br>Sto lavorando con una tenuta esclusiva a conduzione familiare nel Sannio, in Campania — 6 ettari di uliveto biologico, 4 suites per un massimo di 14 ospiti, uso completamente privato. La famiglia coltiva questa terra da 50 anni. Maura, la matriarca, cucina in modo straordinario — cucina napoletana autentica come non hai mai assaggiato.<br><br>Stiamo aprendo la struttura a retreat leader per il 2026 e il tuo stile di lavoro mi sembra una combinazione perfetta.<br><br>Saresti disponibile per una chiacchierata veloce per vedere se potrebbe funzionare per il tuo prossimo retreat? Posso mandarti prima foto e dettagli se preferisci.<br><br>[Guia — Corsale Country House, Campania, Italia]"</p>
+          </div>
+          <p>Il DM va personalizzato sempre con il nome della persona e un riferimento specifico al loro lavoro — mai copia-incolla puro.</p>
+        </div>
+        <div class="step__timing"><span class="pill pill--amber">Franki lo prepara</span><span class="pill pill--green">€0</span></div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step__num-wrap"><div class="step__num step__num--blue">2</div></div>
+      <div class="step__content">
+        <div class="step__tag step__tag--blue">Giorno 2–3 · Guia</div>
+        <div class="step__title">Trovare i 5 profili giusti su Instagram</div>
+        <div class="step__body">
+          <p>Guia cerca su Instagram usando questi hashtag:</p>
+          <div class="hashtag-row">
+            <span class="hashtag">#yogaretreatleader</span>
+            <span class="hashtag">#retreatleader</span>
+            <span class="hashtag">#yogaretreat Italy</span>
+            <span class="hashtag">#wellnessretreat Italy</span>
+            <span class="hashtag">#yogateacher UK</span>
+            <span class="hashtag">#retreatleaderlife</span>
+          </div>
+          <p style="margin-top:.6rem;"><strong>Criteri di selezione — un profilo va bene se:</strong></p>
+          <ul class="criteria">
+            <li><div class="criteria__dot criteria__dot--green"></div><div>Ha tra <strong>5.000 e 100.000 follower</strong> — abbastanza per riempire un retreat</div></li>
+            <li><div class="criteria__dot criteria__dot--green"></div><div>I commenti sembrano <strong>reali</strong> — persone che chiedono info, ringraziano, condividono esperienze</div></li>
+            <li><div class="criteria__dot criteria__dot--green"></div><div>Ha già fatto o <strong>pubblicato retreat in Italia</strong> — sa già cosa vuol dire</div></li>
+            <li><div class="criteria__dot criteria__dot--green"></div><div>I suoi retreat costano <strong>€1.500+ p.p.</strong> — clientela alta gamma</div></li>
+            <li><div class="criteria__dot criteria__dot--amber"></div><div>Profilo in <strong>inglese</strong> — mercato UK, USA, Australia, Scandinavia, Olanda</div></li>
+            <li><div class="criteria__dot criteria__dot--amber"></div><div><strong>Non ha uno studio fisso</strong> — chi è radicato in un posto raramente porta gruppi in location esterne</div></li>
+          </ul>
+        </div>
+        <div class="step__timing"><span class="pill pill--blue">1–2 ore</span><span class="pill pill--green">€0</span></div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step__num-wrap"><div class="step__num step__num--blue">3</div></div>
+      <div class="step__content">
+        <div class="step__tag step__tag--blue">Giorni 3–15 · Guia · 5 DM in una settimana</div>
+        <div class="step__title">Inviare i messaggi e gestire le risposte</div>
+        <div class="step__body">
+          <p>Guia invia i 5 DM nell'arco di una settimana. <strong>Non tutti insieme</strong> — Instagram penalizza i messaggi in massa. Massimo 2–3 al giorno, con almeno qualche ora di distanza tra uno e l'altro.</p>
+          <p><strong>Regole fondamentali:</strong></p>
+          <ul class="criteria">
+            <li><div class="criteria__dot criteria__dot--blue"></div><div><strong>Personalizzare sempre</strong> il nome e almeno un riferimento specifico al loro lavoro</div></li>
+            <li><div class="criteria__dot criteria__dot--blue"></div><div><strong>Non allegare nulla al primo messaggio</strong> — prima si crea il contatto, poi si manda materiale</div></li>
+            <li><div class="criteria__dot criteria__dot--blue"></div><div><strong>Non menzionare il prezzo</strong> nel primo DM — prima si capisce l'interesse</div></li>
+            <li><div class="criteria__dot criteria__dot--blue"></div><div>Se risponde: rispondere <strong>entro 4 ore</strong> — chi è interessato si raffredda in fretta</div></li>
+            <li><div class="criteria__dot criteria__dot--blue"></div><div><strong>Follow-up dopo 5 giorni</strong> se non risponde — un solo follow-up, non di più</div></li>
+          </ul>
+          <p style="margin-top:.6rem;"><strong>Se qualcuno risponde</strong> chiedendo info: Guia avvisa subito Franki che prepara il materiale — foto, descrizione, prezzi, date disponibili.</p>
+        </div>
+        <div class="step__timing"><span class="pill pill--blue">30 min/settimana</span><span class="pill pill--green">€0</span></div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step__num-wrap"><div class="step__num step__num--blue">4</div></div>
+      <div class="step__content">
+        <div class="step__tag step__tag--blue">Continuo · Guia + Franki</div>
+        <div class="step__title">Tenere traccia di tutto in modo semplice</div>
+        <div class="step__body">
+          <p>Per ogni DM inviato, Guia annota su un foglio semplice:</p>
+          <ul class="criteria">
+            <li><div class="criteria__dot criteria__dot--blue"></div><div>Nome + profilo Instagram della persona</div></li>
+            <li><div class="criteria__dot criteria__dot--blue"></div><div>Data del messaggio</div></li>
+            <li><div class="criteria__dot criteria__dot--blue"></div><div>Risposta ricevuta: sì / no / non ancora</div></li>
+            <li><div class="criteria__dot criteria__dot--blue"></div><div>Contenuto della risposta se positiva</div></li>
+            <li><div class="criteria__dot criteria__dot--blue"></div><div>Follow-up fatto: sì / no</div></li>
+          </ul>
+          <p style="margin-top:.6rem;">Non serve nulla di più complicato di questo per il primo test.</p>
+        </div>
+        <div class="step__timing"><span class="pill pill--blue">2 min per profilo</span></div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step__num-wrap"><div class="step__num step__num--green">5</div></div>
+      <div class="step__content">
+        <div class="step__tag step__tag--green">Giorno 15 · Guia + Franki + Luca</div>
+        <div class="step__title">Prima lettura — cosa ci dicono i dati</div>
+        <div class="step__body">
+          <p>Call di 30 minuti. Si guardano insieme i risultati: quanti hanno risposto, cosa hanno detto, c'è qualcuno in fase di valutazione attiva.</p>
+          <p><strong>Se almeno 1 persona su 5 ha risposto con interesse:</strong> il mercato c'è. Si scala subito a 20 DM nella settimana successiva. Si prepara una scheda CCH in inglese con foto, prezzi e disponibilità.</p>
+          <p><strong>Se nessuno ha risposto:</strong> si analizzano i profili scelti — erano troppo grandi? Troppo specializzati? Si aggiusta la selezione e si riprova con altri 5 profili.</p>
+          <p><strong>Il momento "wow"</strong> per Luca arriva quando la prima yoga teacher australiana o inglese risponde chiedendo date e disponibilità. Quello è il momento in cui il piano smette di essere carta e diventa realtà.</p>
+        </div>
+        <div class="step__timing"><span class="pill pill--green">30 minuti</span><span class="pill pill--green">€0</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="sep"></div>
+
+  <!-- OBIETTIVO ECONOMICO -->
+  <div class="sec-title sec-title--green">Obiettivo Economico</div>
+
+  <div class="eco-grid">
+    <div class="eco-cell eco-cell--blue">
+      <div class="eco-cell__l">Costo totale test</div>
+      <div class="eco-cell__v">€0</div>
+      <div class="eco-cell__n">Zero. Solo 30 minuti a settimana di Guia e la supervisione di Franki.</div>
+    </div>
+    <div class="eco-cell eco-cell--amber">
+      <div class="eco-cell__l">Venue hire per settimana</div>
+      <div class="eco-cell__v">€7–9k</div>
+      <div class="eco-cell__n">Il retreat leader paga CCH come venue. Benchmark: BookRetreats Italia €800–1.200/notte.</div>
+    </div>
+    <div class="eco-cell eco-cell--green">
+      <div class="eco-cell__l">Revenue con cucina inclusa</div>
+      <div class="eco-cell__v">€12k+</div>
+      <div class="eco-cell__n">Se si aggiungono i pasti di Maura al venue hire, il ticket sale significativamente.</div>
+    </div>
+  </div>
+
+  <div class="sec-title sec-title--green">I Tre Scenari</div>
+
+  <div class="scenario">
+    <div class="scenario__head scenario__head--min">
+      <span class="scenario__label">Scenario Minimo — 0 risposte su 5</span>
+      <span class="scenario__rev">€0 diretti</span>
+    </div>
+    <div class="scenario__body">
+      Nessuno risponde al primo round. Non è un fallimento — è un dato. Significa che i profili scelti non erano quelli giusti, o che il messaggio va affinato. Si aggiusta la selezione e si riparte. <strong>Il valore è nel dato, non nel silenzio.</strong> Costo: zero. Perdita: zero.
+    </div>
+  </div>
+
+  <div class="scenario">
+    <div class="scenario__head scenario__head--med">
+      <span class="scenario__label">Scenario Medio — 1–2 risposte positive su 5</span>
+      <span class="scenario__rev">€7–18k potenziale</span>
+    </div>
+    <div class="scenario__body">
+      Una o due yoga teacher mostrano interesse concreto — chiedono date, prezzi, foto. Si tratta di <strong>una prenotazione potenziale da €7.000–9.000</strong> per settimana solo di venue hire, più eventuali pasti di Maura. Questo scenario conferma che il canale funziona e che il mercato internazionale vede CCH. Si scala immediatamente a 20 DM.
+    </div>
+  </div>
+
+  <div class="scenario">
+    <div class="scenario__head scenario__head--max">
+      <span class="scenario__label">Scenario Ottimo — 2+ risposte, 1 prenotazione confermata</span>
+      <span class="scenario__rev">€7–12k confermati</span>
+    </div>
+    <div class="scenario__body">
+      Una prenotazione confermata da un retreat leader internazionale con 10–14 persone per una settimana. <strong>€7.000–12.000 di revenue netto da 5 messaggi su Instagram.</strong> Questo è lo scenario che apre tutto — BookRetreats, RetreatHub, l'outreach sistematico su 100 profili, e la candidatura alle piattaforme luxury. Il ROI di questo test è potenzialmente infinito.
+    </div>
+  </div>
+
+  <div class="sep"></div>
+
+  <!-- PROIEZIONE ANNUALE -->
+  <div class="sec-title sec-title--green">Proiezione Annuale — se il test funziona</div>
+
+  <div class="eco-grid">
+    <div class="eco-cell eco-cell--blue">
+      <div class="eco-cell__l">Retreat per anno (target)</div>
+      <div class="eco-cell__v">4–5</div>
+      <div class="eco-cell__n">Settimane yoga/wellness in bassa e spalla — periodi altrimenti difficili da riempire.</div>
+    </div>
+    <div class="eco-cell eco-cell--amber">
+      <div class="eco-cell__l">Revenue per retreat</div>
+      <div class="eco-cell__v">€7–12k</div>
+      <div class="eco-cell__n">Solo venue hire. Con pasti Maura inclusi: €10–15k per settimana.</div>
+    </div>
+    <div class="eco-cell eco-cell--green">
+      <div class="eco-cell__l">Revenue annuo stimato</div>
+      <div class="eco-cell__v">€35–60k</div>
+      <div class="eco-cell__n">Solo dal canale yoga/wellness. In settimane che altrimenti restano vuote.</div>
+    </div>
+  </div>
+
+  <div class="c c--green" style="margin-top:1.5rem;">
+    <div class="c__l">Il vero obiettivo di questo test</div>
+    <p>Una risposta da una yoga teacher australiana che chiede date e disponibilità per il suo gruppo di 12 persone. <strong>Quel momento vale più di qualsiasi analisi.</strong> Luca capisce in modo fisico e concreto che CCH ha un mercato internazionale reale che non ha mai visto prima. Non è un grafico su un documento — è una persona dall'altra parte del mondo che vuole venire da lui.</p>
+  </div>
+
+  <div class="c c--amber" style="margin-top:1rem;">
+    <div class="c__l">Se funziona — il passo successivo immediato</div>
+    <p>Si crea il profilo CCH su <strong>BookRetreats.com e RetreatHub.com</strong> come "Retreat Venue Hire" — zero costi, accesso immediato a migliaia di retreat leader che cercano venue in Italia. Si scala l'outreach a 20 DM a settimana. Si prepara una scheda CCH in inglese con foto, prezzi e disponibilità pronta da inviare a chiunque risponda. <strong>Il canale da 5 DM diventa un sistema.</strong></p>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SCHEDA DI RILEVAZIONE — DA COMPILARE A MANO
+     Progettata per stampa leggera — inchiostro minimo
+══════════════════════════════════════════════ -->
+<div class="form-page">
+  <div class="form-header">
+    <div class="form-header__left">
+      <div class="form-header__tag">Test Lean #2 · Scheda di Rilevazione</div>
+      <div class="form-header__title">Yoga Retreat Leader Outreach</div>
+      <div class="form-header__sub">Compilare a mano dopo ogni messaggio inviato e ogni risposta ricevuta</div>
+    </div>
+    <div class="form-header__right">
+      <div class="form-field-inline">
+        <div class="form-field-inline__label">Data invio DM</div>
+        <div class="form-line-short"></div>
+      </div>
+      <div class="form-field-inline" style="margin-top:.5rem;">
+        <div class="form-field-inline__label">Settimana n°</div>
+        <div class="form-line-short"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-section">
+    <div class="form-section__title">A · Il Profilo Contattato</div>
+    <div class="form-row form-row--3">
+      <div class="form-field">
+        <div class="form-field__label">Nome / Account Instagram</div>
+        <div class="form-line"></div>
+      </div>
+      <div class="form-field">
+        <div class="form-field__label">Nazionalità / Mercato</div>
+        <div class="form-line"></div>
+      </div>
+      <div class="form-field">
+        <div class="form-field__label">N° follower (approssimativo)</div>
+        <div class="form-line"></div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-field">
+        <div class="form-field__label">Hashtag con cui l'hai trovato</div>
+        <div class="form-line"></div>
+      </div>
+      <div class="form-field">
+        <div class="form-field__label">Ha già fatto retreat in Italia?</div>
+        <div class="form-check-row">
+          <div class="form-check"><div class="form-check__box"></div><span>Sì</span></div>
+          <div class="form-check"><div class="form-check__box"></div><span>No</span></div>
+          <div class="form-check"><div class="form-check__box"></div><span>Non chiaro</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-field form-field--full">
+        <div class="form-field__label">Perché hai scelto questo profilo? Cosa ti ha convinto?</div>
+        <div class="form-line"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-section">
+    <div class="form-section__title">B · Il Messaggio Inviato</div>
+    <div class="form-row">
+      <div class="form-field">
+        <div class="form-field__label">Il messaggio è stato personalizzato?</div>
+        <div class="form-check-row">
+          <div class="form-check"><div class="form-check__box"></div><span>Sì — ho cambiato nome e riferimento</span></div>
+          <div class="form-check"><div class="form-check__box"></div><span>No — testo standard</span></div>
+        </div>
+      </div>
+      <div class="form-field">
+        <div class="form-field__label">Cosa hai personalizzato nel testo?</div>
+        <div class="form-line"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-section">
+    <div class="form-section__title">C · La Risposta</div>
+    <div class="form-row">
+      <div class="form-field">
+        <div class="form-field__label">Ha risposto?</div>
+        <div class="form-check-row">
+          <div class="form-check"><div class="form-check__box"></div><span>Sì — entro 24h</span></div>
+          <div class="form-check"><div class="form-check__box"></div><span>Sì — dopo giorni</span></div>
+          <div class="form-check"><div class="form-check__box"></div><span>No risposta</span></div>
+        </div>
+      </div>
+      <div class="form-field">
+        <div class="form-field__label">Tipo di risposta</div>
+        <div class="form-check-row">
+          <div class="form-check"><div class="form-check__box"></div><span>Molto interessata</span></div>
+          <div class="form-check"><div class="form-check__box"></div><span>Curioso/a</span></div>
+          <div class="form-check"><div class="form-check__box"></div><span>Non interessato/a</span></div>
+          <div class="form-check"><div class="form-check__box"></div><span>Già impegnato/a</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-field form-field--full">
+        <div class="form-field__label">Cosa ha scritto esattamente? (o sintesi della risposta)</div>
+        <div class="form-line"></div>
+        <div class="form-line"></div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-field">
+        <div class="form-field__label">Ha chiesto date o disponibilità?</div>
+        <div class="form-check-row">
+          <div class="form-check"><div class="form-check__box"></div><span>Sì</span></div>
+          <div class="form-check"><div class="form-check__box"></div><span>No</span></div>
+        </div>
+      </div>
+      <div class="form-field">
+        <div class="form-field__label">Ha chiesto il prezzo?</div>
+        <div class="form-check-row">
+          <div class="form-check"><div class="form-check__box"></div><span>Sì</span></div>
+          <div class="form-check"><div class="form-check__box"></div><span>No</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-field">
+        <div class="form-field__label">Follow-up inviato dopo 5 giorni?</div>
+        <div class="form-check-row">
+          <div class="form-check"><div class="form-check__box"></div><span>Sì</span></div>
+          <div class="form-check"><div class="form-check__box"></div><span>No — ha già risposto</span></div>
+          <div class="form-check"><div class="form-check__box"></div><span>Non ancora</span></div>
+        </div>
+      </div>
+      <div class="form-field">
+        <div class="form-field__label">Stato attuale del contatto</div>
+        <div class="form-check-row">
+          <div class="form-check"><div class="form-check__box"></div><span>In trattativa attiva</span></div>
+          <div class="form-check"><div class="form-check__box"></div><span>In attesa risposta</span></div>
+          <div class="form-check"><div class="form-check__box"></div><span>Chiuso</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-section">
+    <div class="form-section__title">D · Se la Trattativa è Attiva</div>
+    <div class="form-row form-row--3">
+      <div class="form-field">
+        <div class="form-field__label">Date di interesse espresse</div>
+        <div class="form-line"></div>
+      </div>
+      <div class="form-field">
+        <div class="form-field__label">N° persone nel gruppo</div>
+        <div class="form-line"></div>
+      </div>
+      <div class="form-field">
+        <div class="form-field__label">Revenue potenziale stimato</div>
+        <div class="form-line"></div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-field form-field--full">
+        <div class="form-field__label">Prossimo passo concordato con la persona</div>
+        <div class="form-line"></div>
+        <div class="form-line"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-section">
+    <div class="form-section__title">E · Note e Osservazioni</div>
+    <div class="form-line" style="margin-bottom:.8rem;"></div>
+    <div class="form-line" style="margin-bottom:.8rem;"></div>
+    <div class="form-line"></div>
+  </div>
+
+  <!-- RIEPILOGO SETTIMANALE — una riga sola in fondo -->
+  <div class="form-section form-section--recap">
+    <div class="form-section__title">F · Riepilogo Settimana (da compilare una sola volta a fine settimana)</div>
+    <div class="form-row form-row--4">
+      <div class="form-field">
+        <div class="form-field__label">DM inviati questa settimana</div>
+        <div class="form-line"></div>
+      </div>
+      <div class="form-field">
+        <div class="form-field__label">Risposte ricevute</div>
+        <div class="form-line"></div>
+      </div>
+      <div class="form-field">
+        <div class="form-field__label">Trattative attive</div>
+        <div class="form-line"></div>
+      </div>
+      <div class="form-field">
+        <div class="form-field__label">Revenue potenziale aperto (€)</div>
+        <div class="form-line"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-footer">
+    Franki Studio · Test Lean #2 · CCH · Aprile 2026 · Portare questa scheda compilata all'appuntamento del Giorno 15
+  </div>
+</div>
+
+<style>
+.form-page{
+  max-width:900px;margin:0 auto;padding:2rem 3rem 2.5rem;
+  border-top:2px solid #E8E5DF;
+  page-break-before:always;
+}
+.form-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.8rem;padding-bottom:1rem;border-bottom:1px solid #E8E5DF;}
+.form-header__tag{font-family:var(--label);font-size:.56rem;letter-spacing:.2em;text-transform:uppercase;color:#A8B8D8;margin-bottom:.3rem;}
+.form-header__title{font-family:var(--display);font-size:1.8rem;letter-spacing:.04em;color:#8898C8;}
+.form-header__sub{font-size:.8rem;color:#AAA49A;font-style:italic;margin-top:.2rem;}
+.form-header__right{text-align:right;}
+.form-field-inline{display:flex;align-items:center;gap:.6rem;justify-content:flex-end;}
+.form-field-inline__label{font-family:var(--label);font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;color:#AAA49A;white-space:nowrap;}
+.form-line-short{width:80px;border-bottom:1px solid #D8D4CC;height:20px;}
+
+.form-section{margin-bottom:1.2rem;padding:1rem 1.2rem;background:#FDFCFA;border:1px solid #EEE9E0;border-radius:6px;}
+.form-section--recap{background:#F5F8FF;border-color:#DDE4F0;}
+.form-section__title{font-family:var(--display);font-size:.95rem;letter-spacing:.08em;color:#8898C8;margin-bottom:.9rem;padding-bottom:.4rem;border-bottom:1px dashed #E8E2D8;}
+.form-section--recap .form-section__title{color:#6678B8;}
+
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-bottom:.8rem;}
+.form-row--3{grid-template-columns:1fr 1fr 1fr;}
+.form-row--4{grid-template-columns:1fr 1fr 1fr 1fr;}
+.form-row:last-child{margin-bottom:0;}
+.form-field{display:flex;flex-direction:column;gap:.4rem;}
+.form-field--full{grid-column:span 2;}
+.form-field__label{font-family:var(--label);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:#999590;}
+.form-line{border-bottom:1px solid #D8D4CC;height:24px;margin-bottom:.1rem;}
+
+.form-check-row{display:flex;gap:.7rem;flex-wrap:wrap;margin-top:.2rem;}
+.form-check{display:flex;align-items:center;gap:.35rem;font-size:.82rem;color:#888480;}
+.form-check__box{width:14px;height:14px;border:1px solid #C8C4BC;border-radius:2px;flex-shrink:0;}
+
+.form-footer{margin-top:1.5rem;text-align:center;font-family:var(--label);font-size:.54rem;letter-spacing:.15em;text-transform:uppercase;color:#C8C4BC;padding-top:.8rem;border-top:1px dashed #E8E2D8;}
+
+@media print{
+  .hdr,.intro,.steps,.sep,.sec-title,.eco-grid,.scenario,.c,.profile-grid{display:none;}
+  .corpo{display:none;}
+  .form-page{padding:1rem;border-top:none;}
+  .form-section{background:transparent;border-color:#E0DCD4;}
+  body{background:white;}
+}
+@media(max-width:600px){
+  .form-page{padding:1.4rem;}
+  .form-row,.form-row--3,.form-row--4{grid-template-columns:1fr;}
+  .form-field--full{grid-column:span 1;}
+}
+</style>
+
+<div class="footer">
+  <strong>Franki Studio</strong> · Test Lean #2 · Yoga Retreat Leader Outreach · CCH · Aprile 2026
+</div>
+
+</body>
+</html>

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TEASER B1 · RCV · Equity Partnership</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--blu:#2B38B0;--arancio:#F0A500;--grigio-bg:#F2F1ED;--bianco:#FFFFFF;--nero:#111118;--testo:#1a1a2e;--verde:#1a7a50;}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Barlow',sans-serif;background:var(--grigio-bg);color:var(--testo);max-width:680px;margin:0 auto;font-size:15px;line-height:1.6}
+.navbar{background:var(--blu);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.logo-fran{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;color:var(--bianco)}
+.logo-fran span{background:var(--arancio);color:#FFFFFF;padding:1px 6px;border-radius:4px}
+.logo-tagline{font-size:10px;color:rgba(255,255,255,.5);letter-spacing:.08em}
+.nav-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.6)}
+
+/* HERO */
+.hero{background:var(--nero);color:var(--bianco);padding:44px 20px 40px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 40px,rgba(43,56,176,.06) 40px,rgba(43,56,176,.06) 41px)}
+.hero-kicker{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--arancio);margin-bottom:14px}
+.hero-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:44px;line-height:.9;text-transform:uppercase;margin-bottom:20px}
+.hero-title em{color:var(--arancio);font-style:normal;display:block}
+.hero-hook{font-size:15px;color:rgba(255,255,255,.75);line-height:1.7;border-left:3px solid var(--arancio);padding-left:16px}
+.div-orange{height:4px;background:var(--arancio)}
+
+/* SH */
+.sh{background:var(--blu);color:var(--bianco);padding:11px 20px;display:flex;align-items:center;gap:10px;margin-top:20px}
+.sh-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:15px;text-transform:uppercase;letter-spacing:.06em}
+.sh-badge{margin-left:auto;background:var(--arancio);color:var(--nero);font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;padding:2px 8px;border-radius:2px}
+
+/* CARD */
+.card{background:var(--bianco);padding:20px;margin:2px 0}
+.card p{font-size:14px;color:#444;line-height:1.7;margin-bottom:10px}
+.card p:last-child{margin-bottom:0}
+.card strong{color:var(--nero)}
+
+/* OFFERTA PRINCIPALE */
+.offerta{background:var(--bianco);padding:24px 20px;margin:2px 0;border-top:4px solid var(--arancio)}
+.offerta-label{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#aaa;margin-bottom:6px}
+.offerta-titolo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:28px;color:var(--testo);margin-bottom:4px}
+.offerta-sub{font-size:13px;color:#888;margin-bottom:20px}
+.offerta-row{display:flex;justify-content:space-between;align-items:baseline;padding:10px 0;border-bottom:1px solid #f5f5f2}
+.offerta-row:last-child{border-bottom:none}
+.offerta-key{font-size:14px;color:#555}
+.offerta-val{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px;color:var(--testo)}
+.offerta-val.big{font-size:26px;color:var(--verde)}
+.offerta-val.blu{color:var(--blu)}
+.offerta-val.arancio{color:var(--arancio)}
+
+/* KPI STRIP */
+.kpi-2{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin:2px 0}
+.kbox{background:var(--bianco);padding:14px 16px}
+.kbox-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#aaa;margin-bottom:4px}
+.kbox-val{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;line-height:1}
+.kbox-sub{font-size:11px;color:#bbb;margin-top:3px}
+
+/* MILESTONE */
+.milestones{background:var(--bianco);padding:20px;margin:2px 0}
+.ms-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#aaa;margin-bottom:16px}
+.ms-row{display:flex;gap:14px;margin-bottom:16px;align-items:flex-start}
+.ms-row:last-child{margin-bottom:0}
+.ms-dot{width:36px;height:36px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;color:var(--bianco)}
+.ms-body{}
+.ms-mese{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--arancio);margin-bottom:2px}
+.ms-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:15px;color:var(--testo)}
+.ms-desc{font-size:12px;color:#888;margin-top:2px}
+
+/* HIGHLIGHTS */
+.hl-green{background:#e6f7f0;border-left:4px solid var(--verde);padding:14px 16px;margin:2px 0}
+.hl-green p{font-size:13px;color:#145c3c;margin:0;line-height:1.65}
+.hl-blue{background:#e8ecff;border-left:4px solid var(--blu);padding:14px 16px;margin:2px 0}
+.hl-blue p{font-size:13px;color:#1a2480;margin:0;line-height:1.65}
+
+/* ORANGE BAND */
+.orange-band{background:var(--arancio);padding:20px;margin:2px 0}
+.orange-band h3{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;text-transform:uppercase;color:var(--nero);margin-bottom:10px}
+.orange-band p{font-size:14px;color:rgba(0,0,0,.8);line-height:1.65}
+
+/* DARK CTA */
+.dark-cta{background:var(--nero);color:var(--bianco);padding:44px 20px;text-align:center}
+.dark-cta h2{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:36px;text-transform:uppercase;line-height:.9;margin-bottom:14px}
+.dark-cta h2 em{color:var(--arancio);font-style:normal;display:block}
+.dark-cta p{font-size:13px;color:rgba(255,255,255,.5);max-width:400px;margin:0 auto 24px;line-height:1.7}
+.cta-btn{display:inline-block;background:var(--arancio);color:var(--nero);font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:14px;letter-spacing:.1em;text-transform:uppercase;padding:16px 36px;border-radius:2px;text-decoration:none}
+.confid{background:var(--blu);padding:10px 20px;font-size:10px;color:rgba(255,255,255,.3);text-align:center;letter-spacing:.06em}
+
+.fk-logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;line-height:1;display:inline-flex;align-items:center}
+.fk-logo .fran{color:#FFFFFF}
+.fk-logo .ki{background:#F0A500;color:#FFFFFF;border-radius:5px;padding:1px 7px;margin-left:2px;display:inline-block}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div><div class="fk-logo"><span class="fran">Fran</span><span class="ki">Ki</span></div><div class="logo-tagline">We Start Your Ideas</div></div>
+  <div class="nav-label">TEASER B1 · Equity Partner</div>
+</nav>
+
+<!-- HOOK -->
+<div class="hero">
+  <div class="hero-kicker">Opportunità di co-investimento · Aprile 2026 · Uso riservato</div>
+  <div class="hero-title">
+    CERCHIAMO<br>UN EQUITY<br>
+    <em>PARTNER<br>DA €2,0M.</em>
+  </div>
+  <div class="hero-hook">
+    Stiamo sviluppando il primo reset hub privato dell'Appennino centrale — 68 keys, 140 soci, bosco da 22 ettari, a 2 ore da Roma e Napoli. Piano operativo a 30 mesi. Revenue a regime: €7M/anno. EBITDA: €2,3M. Due aste deserte. Asset da €13,5M con prossima asta stimata ~€900K. Capex totale ~€9M. Stiamo selezionando il partner di capitale con cui chiudere la struttura finanziaria — con rendimenti senza precedenti.
+  </div>
+</div>
+<div class="div-orange"></div>
+
+<!-- L'OFFERTA -->
+<div class="sh">
+  <div class="sh-title">L'Opportunità di Co-Investimento</div>
+  <div class="sh-badge">SPV equity</div>
+</div>
+
+<div class="offerta">
+  <div class="offerta-label">Cosa offriamo</div>
+  <div class="offerta-titolo">Quota equity in SPV dedicato</div>
+  <div class="offerta-sub">Roccaraso Country Village · Hospitality · Centro-Sud Italia</div>
+  <div class="offerta-row">
+    <span class="offerta-key">Investimento richiesto al partner</span>
+    <span class="offerta-val arancio">€2,0M</span>
+  </div>
+  <div class="offerta-row">
+    <span class="offerta-key">Capex totale dell'operazione (stimato)</span>
+    <span class="offerta-val">~€9,0M</span>
+  </div>
+  <div class="offerta-row">
+    <span class="offerta-key">Revenue target a regime (Mese 30)</span>
+    <span class="offerta-val big">€7,0M/anno</span>
+  </div>
+  <div class="offerta-row">
+    <span class="offerta-key">EBITDA · Margine</span>
+    <span class="offerta-val" style="color:var(--verde)">€2,3M · 33%</span>
+  </div>
+  <div class="offerta-row">
+    <span class="offerta-key">Rendimento atteso per l'equity partner</span>
+    <span class="offerta-val blu">IRR ~51% · 5,2x</span>
+  </div>
+  <div class="offerta-row">
+    <span class="offerta-key">Valore stimato all'exit (Mese 48)</span>
+    <span class="offerta-val big">€23–31M</span>
+  </div>
+</div>
+
+<!-- IL PROGETTO -->
+<div class="sh">
+  <div class="sh-title">Il Progetto</div>
+  <div class="sh-badge">hospitality</div>
+</div>
+
+<div class="card">
+  <p>Roccaraso Country Village è la riqualificazione dell'ex Soggiorno Montano ENEL di Roccaraso (AQ) — tre palazzine anni '60 con 46 appartamenti su 22 ettari di bosco. Il complesso viene trasformato in un <strong>club privato di montagna</strong> con 68 unità hospitality, wellness hub, 6 bubble room nel bosco e una sala eventi da 80 pax per corporate retreat.</p>
+  <p>Il posizionamento è unico: <strong>primo resort club privato tra Roma e Napoli</strong>, in un bacino di 20 milioni di persone senza offerta equivalente. Destinazione extralberghiera già autorizzata. Permesso di costruire attivo. Nessun iter urbanistico da avviare.</p>
+</div>
+
+<!-- COME SI GENERA IL RENDIMENTO -->
+<div class="sh">
+  <div class="sh-title">Come Si Genera il Rendimento</div>
+  <div class="sh-badge">4 stream</div>
+</div>
+
+<div class="card">
+  <p><strong>140 soci fondatori × €10K/anno</strong> = €1,4M di revenue ricorrente garantita, indipendente dall'occupazione delle camere. I soci pagano la quota anche quando non soggiornano.</p>
+  <p><strong>36 camere per clienti esterni</strong> a €315 ADR medio = €2,6M/anno. <strong>10 corporate retreat</strong> da €75K l'uno = €750K. <strong>6 bubble room nel bosco</strong> a €450/notte = €594K con EBITDA al 65%.</p>
+  <p>F&B, servizi e programmi sociali completano il quadro per un totale di <strong>€7,0M/anno a regime</strong>.</p>
+</div>
+
+<!-- PIANO 30 MESI -->
+<div class="sh">
+  <div class="sh-title">Da Oggi al Regime · 30 Mesi</div>
+  <div class="sh-badge">accelerato</div>
+</div>
+
+<div class="milestones">
+  <div class="ms-label">Cantiere parallelo su tutte e 3 le palazzine dal giorno 1 — 18 mesi anticipati vs piano sequenziale</div>
+
+  <div class="ms-row">
+    <div class="ms-dot" style="background:var(--arancio)">M9</div>
+    <div class="ms-body">
+      <div class="ms-mese">Mese 9 · Primo Revenue</div>
+      <div class="ms-title">6 Bubble Room aperte · Run rate €1,2M/anno</div>
+      <div class="ms-desc">80+ soci pre-venduti · cantiere su tutte le palazzine in corso</div>
+    </div>
+  </div>
+
+  <div class="ms-row">
+    <div class="ms-dot" style="background:var(--verde)">M21</div>
+    <div class="ms-body">
+      <div class="ms-mese">Mese 21 · Soft Opening</div>
+      <div class="ms-title">28 keys operativi · Run rate €2,9M/anno</div>
+      <div class="ms-desc">Wellness hub aperto · primi corporate retreat · ramp-up rapido</div>
+    </div>
+  </div>
+
+  <div class="ms-row">
+    <div class="ms-dot" style="background:var(--blu)">M30</div>
+    <div class="ms-body">
+      <div class="ms-mese">Mese 30 · Pieno Regime</div>
+      <div class="ms-title">68 keys · €7,0M revenue · €2,3M EBITDA</div>
+      <div class="ms-desc">Tutte le palazzine complete · 140 soci · exit window aperta</div>
+    </div>
+  </div>
+
+  <div class="ms-row">
+    <div class="ms-dot" style="background:var(--arancio)">M48</div>
+    <div class="ms-body">
+      <div class="ms-mese">Mese 48 · Exit</div>
+      <div class="ms-title">Valore asset stimato €23–31M</div>
+      <div class="ms-desc">3 anni di EBITDA certificato · multiplo x10 · asset appetibile per fondi istituzionali</div>
+    </div>
+  </div>
+</div>
+
+<!-- ELEMENTI ESG/PNRR -->
+<div class="hl-green">
+  <p><strong>PNRR e bandi pubblici:</strong> il 30% della ristrutturazione (€2,1M) è finanziabile tramite PNRR Turismo (Missione 1 C3) e fondi regionali per le aree interne. La componente sociale del progetto (10 settimane/anno per anziani e giovani svantaggiati) apre l'accesso a fondi EU e fondazioni bancarie, e posiziona l'asset come eligible per mandati ESG istituzionali.</p>
+</div>
+
+<div class="hl-blue">
+  <p><strong>Comparabile:</strong> Lefay Resort & SPA Lago di Garda acquistata da CDP Real Asset per €59M — fatturato €46M, ADR €600+. RCV a €7M di revenue e posizionamento club privato punta a x10 EBITDA = €23M base, €31M con espansione bubble. Stesso modello, bacino di domanda più grande, prezzo di ingresso nettamente inferiore.</p>
+</div>
+
+<!-- PERCHÉ ORA -->
+<div class="orange-band">
+  <h3>Perché Adesso</h3>
+  <p>Stiamo chiudendo la struttura finanziaria nelle prossime settimane. La finestra per entrare come equity partner nella quota da €4,5M si chiude con il completamento del round. Il piano operativo è pronto, il team è operativo, la due diligence è disponibile. Cerchiamo un partner che condivida la visione e abbia i tempi decisionali compatibili con il nostro calendario.</p>
+</div>
+
+<!-- CTA -->
+<div class="dark-cta">
+  <h2>IL PIANO<br>FINANZIARIO<br><em>È PRONTO.</em></h2>
+  <p>Investment memorandum completo, piano finanziario a 5 anni, struttura SPV, perizia immobiliare e analisi di mercato disponibili con NDA. Risposta entro 24 ore.</p>
+  <a class="cta-btn" href="mailto:info@frankistudio.it?subject=RCV%20%E2%80%94%20Equity%20Partner%20%E2%80%94%20Richiesta%20IM%20%2B%20NDA">→ Richiedi Investment Memorandum</a>
+</div>
+
+<div class="confid">TEASER B1 · EQUITY PARTNER · CONFIDENZIALE · NDA DISPONIBILE · FranKi Studio (Avre Srl) · Aprile 2026 · Non costituisce offerta di investimento ai sensi del TUF</div>
+</body>
+</html>

@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Multiple Identities — Piano Fondi | Franki Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lato:wght@400;700;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blu:       #3549B5;
+  --blu-dark:  #1a2560;
+  --giallo:    #F9AC28;
+  --bianco:    #FFFFFF;
+  --bg:        #F4F5FA;
+  --testo:     #1a2560;
+  --testo-sec: #4a5480;
+  --border:    #D8DCF0;
+  --verde:     #27AE60;
+  --arancio:   #E67E22;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); font-family:'Lato',sans-serif; color:var(--testo); }
+
+/* HEADER */
+header {
+  background:var(--blu-dark); height:64px;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 40px; border-bottom:4px solid var(--giallo);
+}
+.logo { font-family:'Bebas Neue',sans-serif; font-size:26px; letter-spacing:.05em; color:var(--bianco); }
+.logo span { background:var(--giallo); color:var(--blu-dark); padding:2px 8px; margin-left:2px; }
+.header-tag { font-family:'DM Mono',monospace; font-size:11px; letter-spacing:.15em; text-transform:uppercase; color:rgba(255,255,255,.5); }
+
+/* HERO */
+.hero { background:var(--blu-dark); color:var(--bianco); padding:56px 40px 48px; }
+.hero-inner { max-width:1000px; margin:0 auto; }
+.chip { display:inline-block; background:var(--giallo); color:var(--blu-dark); font-family:'DM Mono',monospace; font-size:11px; letter-spacing:.2em; text-transform:uppercase; font-weight:700; padding:5px 14px; margin-bottom:20px; }
+.hero h1 { font-family:'Bebas Neue',sans-serif; font-size:clamp(52px,8vw,90px); line-height:.9; letter-spacing:.02em; color:var(--bianco); margin-bottom:20px; }
+.hero h1 em { color:var(--giallo); font-style:normal; }
+.hero-desc { font-size:16px; line-height:1.75; color:rgba(255,255,255,.85); max-width:620px; margin-bottom:36px; }
+
+/* TARGET BOX */
+.target-box {
+  display:flex; gap:3px; margin-bottom:0;
+}
+.target-item {
+  flex:1; padding:20px 24px;
+  display:flex; flex-direction:column; gap:6px;
+}
+.target-item.principale { background:var(--giallo); }
+.target-item.bonus { background:rgba(255,255,255,.08); }
+.target-item.totale { background:var(--blu); }
+.t-label { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.18em; text-transform:uppercase; }
+.target-item.principale .t-label { color:var(--blu-dark); }
+.target-item.bonus .t-label { color:rgba(255,255,255,.5); }
+.target-item.totale .t-label { color:rgba(255,255,255,.6); }
+.t-val { font-family:'Bebas Neue',sans-serif; font-size:36px; line-height:1; }
+.target-item.principale .t-val { color:var(--blu-dark); }
+.target-item.bonus .t-val { color:var(--bianco); }
+.target-item.totale .t-val { color:var(--giallo); }
+.t-sub { font-size:12px; line-height:1.4; }
+.target-item.principale .t-sub { color:rgba(26,37,96,.7); }
+.target-item.bonus .t-sub { color:rgba(255,255,255,.5); }
+.target-item.totale .t-sub { color:rgba(255,255,255,.5); }
+
+/* CONTAINER */
+.container { max-width:1000px; margin:0 auto; padding:48px 40px 80px; }
+section { margin-bottom:56px; }
+
+/* SECTION HEAD */
+.sec-head { display:flex; align-items:center; gap:14px; margin-bottom:20px; padding-bottom:14px; border-bottom:2px solid var(--blu-dark); }
+.sec-num { font-family:'Bebas Neue',sans-serif; font-size:13px; background:var(--blu-dark); color:var(--giallo); padding:4px 10px; letter-spacing:.1em; }
+.sec-title { font-family:'Bebas Neue',sans-serif; font-size:28px; letter-spacing:.05em; color:var(--blu-dark); }
+.sec-sub { font-size:12px; color:var(--testo-sec); margin-left:auto; font-style:italic; }
+
+/* PROFILO */
+.profilo-grid { display:grid; grid-template-columns:1fr 1fr; gap:2px; background:var(--border); }
+.profilo-item { background:var(--bianco); padding:18px 22px; }
+.p-label { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--blu); margin-bottom:5px; }
+.p-val { font-size:14px; font-weight:700; color:var(--testo); line-height:1.4; }
+.p-val.tbd { color:var(--arancio); font-weight:400; font-style:italic; }
+
+/* SCORE */
+.score-box { background:var(--blu-dark); padding:36px 40px; }
+.score-top { display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:32px; flex-wrap:wrap; gap:20px; }
+.score-big { font-family:'Bebas Neue',sans-serif; font-size:110px; line-height:1; color:var(--giallo); }
+.score-right { text-align:right; }
+.score-right-num { font-family:'Bebas Neue',sans-serif; font-size:52px; color:#2ECC71; line-height:1; }
+.score-right-label { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.15em; color:rgba(255,255,255,.4); text-transform:uppercase; }
+.score-verdict { font-family:'Bebas Neue',sans-serif; font-size:18px; color:#2ECC71; letter-spacing:.05em; margin-top:4px; }
+.score-bars { display:flex; flex-direction:column; gap:14px; }
+.bar-row { display:flex; justify-content:space-between; font-size:13px; color:rgba(255,255,255,.75); margin-bottom:6px; }
+.bar-row strong { color:var(--bianco); }
+.bar-row span { font-family:'DM Mono',monospace; font-size:12px; color:var(--giallo); }
+.bar-track { height:5px; background:rgba(255,255,255,.1); }
+.bar-fill { height:100%; }
+.bv{background:#2ECC71;} .bg{background:var(--giallo);} .bo{background:var(--arancio);}
+.score-tags { display:flex; gap:8px; flex-wrap:wrap; margin-top:28px; padding-top:24px; border-top:1px solid rgba(255,255,255,.1); }
+.stag { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.1em; text-transform:uppercase; padding:5px 12px; }
+.stag-pro { background:rgba(46,204,113,.2); color:#2ECC71; border:1px solid rgba(46,204,113,.4); }
+.stag-gap { background:rgba(230,126,34,.2); color:var(--arancio); border:1px solid rgba(230,126,34,.4); }
+
+/* FONDO CARD */
+.fondo-card { background:var(--bianco); border-left:5px solid var(--blu); padding:28px 32px; margin-bottom:2px; }
+.fondo-card.p1 { border-left-color:var(--verde); }
+.fondo-card.p2 { border-left-color:var(--giallo); }
+.fondo-card.p3 { border-left-color:var(--arancio); }
+.fondo-card.crowd { border-left-color:var(--blu); background:#F0F3FF; }
+
+.priorita-label {
+  display:inline-block;
+  font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.15em; text-transform:uppercase;
+  padding:4px 10px; margin-bottom:16px;
+}
+.pl-1 { background:#E8F8F0; color:var(--verde); }
+.pl-2 { background:#FEF9E7; color:#E6A817; }
+.pl-3 { background:#FEF0E6; color:var(--arancio); }
+.pl-c { background:#E8EBF8; color:var(--blu); }
+
+.fondo-top { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-bottom:14px; flex-wrap:wrap; }
+.fondo-nome { font-family:'Bebas Neue',sans-serif; font-size:26px; letter-spacing:.04em; color:var(--blu-dark); }
+.fondo-ente { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--testo-sec); margin-top:3px; }
+.fondo-badges { display:flex; gap:6px; flex-shrink:0; flex-wrap:wrap; align-items:flex-start; }
+.fbadge { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:.12em; text-transform:uppercase; padding:4px 10px; }
+.fbadge-eu   { background:#E8EBF8; color:var(--blu); }
+.fbadge-nl   { background:#FFF3E0; color:var(--arancio); }
+.fbadge-priv { background:#F3E5F5; color:#8E44AD; }
+
+/* IMPORTO HIGHLIGHT */
+.importo-box {
+  background:var(--bg); padding:16px 20px; margin-bottom:16px;
+  border:1px solid var(--border);
+  display:flex; align-items:center; gap:16px; flex-wrap:wrap;
+}
+.importo-num { font-family:'Bebas Neue',sans-serif; font-size:32px; color:var(--verde); line-height:1; }
+.importo-desc { font-size:13px; color:var(--testo-sec); line-height:1.5; }
+
+.fondo-desc { font-size:14px; color:var(--testo-sec); line-height:1.75; margin-bottom:20px; }
+
+/* GLOSSARIO inline */
+.gloss {
+  border-bottom:1px dashed var(--blu);
+  cursor:help;
+  color:var(--blu);
+  font-weight:700;
+}
+
+.fondo-perche {
+  background:#FFFBF0; padding:14px 18px; margin-bottom:16px;
+  border-left:3px solid var(--giallo);
+  font-size:13px; color:var(--testo); line-height:1.6;
+}
+.fondo-perche strong { color:var(--blu-dark); }
+
+.fondo-stats { display:flex; gap:24px; flex-wrap:wrap; padding-top:16px; border-top:1px solid var(--border); }
+.fstat { display:flex; flex-direction:column; gap:3px; }
+.fstat-label { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:.15em; text-transform:uppercase; color:#9aa0c0; }
+.fstat-val { font-size:13px; font-weight:700; color:var(--testo); }
+.fstat-val.v { color:var(--verde); } .fstat-val.y { color:var(--arancio); }
+
+.fondo-link { display:inline-flex; align-items:center; gap:6px; font-family:'DM Mono',monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--blu); text-decoration:none; margin-top:14px; font-weight:500; }
+.fondo-link:hover { color:var(--giallo); }
+
+/* SEPARATORE SEZIONE */
+.sezione-titolo {
+  display:flex; align-items:center; gap:16px;
+  padding:20px 0 12px;
+  margin-bottom:2px;
+}
+.sezione-titolo-text {
+  font-family:'Bebas Neue',sans-serif; font-size:20px;
+  letter-spacing:.06em; color:var(--blu-dark);
+}
+.sezione-linea { flex:1; height:1px; background:var(--border); }
+.sezione-tot {
+  font-family:'DM Mono',monospace; font-size:11px;
+  color:var(--testo-sec); letter-spacing:.1em;
+}
+
+/* CROWD EXTRA */
+.crowd-why {
+  background:#E8EBF8; padding:16px 20px; margin-bottom:16px;
+  font-size:13px; color:var(--blu-dark); line-height:1.6;
+}
+.crowd-why strong { color:var(--blu); }
+
+/* PIANO TOTALE */
+.piano-box { background:var(--blu-dark); padding:32px 40px; }
+.piano-title { font-family:'Bebas Neue',sans-serif; font-size:24px; letter-spacing:.06em; color:var(--giallo); margin-bottom:24px; }
+.piano-row {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:12px 0; border-bottom:1px solid rgba(255,255,255,.08);
+  gap:16px;
+}
+.piano-row:last-child { border-bottom:none; }
+.piano-nome { font-size:14px; color:rgba(255,255,255,.8); font-weight:700; }
+.piano-tipo { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.1em; color:rgba(255,255,255,.35); text-transform:uppercase; margin-top:2px; }
+.piano-importo { font-family:'Bebas Neue',sans-serif; font-size:22px; color:var(--bianco); white-space:nowrap; }
+.piano-importo.g { color:#2ECC71; }
+.piano-importo.y { color:var(--giallo); }
+.piano-totale {
+  margin-top:20px; padding-top:20px; border-top:2px solid var(--giallo);
+  display:flex; justify-content:space-between; align-items:flex-end;
+}
+.piano-totale-label { font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:.08em; color:rgba(255,255,255,.5); }
+.piano-totale-num { font-family:'Bebas Neue',sans-serif; font-size:48px; color:var(--giallo); line-height:1; }
+
+/* STEPS */
+.step-item { display:flex; gap:20px; background:var(--bianco); padding:24px 28px; margin-bottom:2px; align-items:flex-start; }
+.step-n { font-family:'Bebas Neue',sans-serif; font-size:48px; color:var(--giallo); line-height:1; flex-shrink:0; width:44px; }
+.step-title { font-size:15px; font-weight:900; color:var(--blu-dark); margin-bottom:6px; }
+.step-desc { font-size:13px; color:var(--testo-sec); line-height:1.65; }
+.step-tag { display:inline-block; font-family:'DM Mono',monospace; font-size:9px; letter-spacing:.12em; text-transform:uppercase; padding:4px 10px; margin-top:10px; }
+.st-f { background:#FEF9E7; color:var(--arancio); border:1px solid #F9C74F; }
+.st-i { background:#E8F8F0; color:var(--verde); border:1px solid #82E0AA; }
+
+/* FOOTER */
+footer { background:var(--blu-dark); border-top:4px solid var(--giallo); padding:28px 40px; display:flex; justify-content:space-between; align-items:center; }
+.footer-brand { font-family:'Bebas Neue',sans-serif; font-size:15px; letter-spacing:.1em; color:rgba(255,255,255,.3); }
+.footer-date { font-family:'DM Mono',monospace; font-size:10px; color:rgba(255,255,255,.2); letter-spacing:.1em; }
+
+@media(max-width:768px){
+  header,footer{padding:0 20px;}
+  .hero{padding:40px 20px;}
+  .container{padding:32px 20px 60px;}
+  .target-box{flex-direction:column;}
+  .profilo-grid{grid-template-columns:1fr;}
+  .fondo-top{flex-direction:column;}
+  .sec-sub{display:none;}
+  .piano-box{padding:24px 20px;}
+  footer{flex-direction:column;gap:8px;padding:20px;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Fran<span>Ki</span></div>
+  <div class="header-tag">Piano Fondi — Uso Interno · Maggio 2026</div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="chip">Progetto × Multiple Identities</div>
+    <h1>PIANO<br><em>FONDI</em><br>€ 550K</h1>
+    <p class="hero-desc">Multiple Identities ha bisogno di circa €25.000 al mese per 18 mesi di sviluppo = <strong style="color:var(--giallo)">€450.000</strong> come obiettivo principale. A questo aggiungiamo <strong style="color:var(--giallo)">€100.000 da crowdfunding</strong> — uno strumento che non serve solo a raccogliere soldi, ma anche a costruire community e visibilità intorno al progetto. Totale target: <strong style="color:var(--giallo)">€550.000</strong>.</p>
+  </div>
+</div>
+
+<!-- TARGET BOX -->
+<div style="max-width:1000px;margin:0 auto;">
+  <div class="target-box">
+    <div class="target-item principale">
+      <div class="t-label">Obiettivo Principale</div>
+      <div class="t-val">€ 450.000</div>
+      <div class="t-sub">Fondi, grant e investitori specializzati — 18 mesi di sviluppo</div>
+    </div>
+    <div class="target-item bonus">
+      <div class="t-label">+ Crowdfunding</div>
+      <div class="t-val">€ 100.000</div>
+      <div class="t-sub">Non equity — serve anche come strumento di marketing e community</div>
+    </div>
+    <div class="target-item totale">
+      <div class="t-label">Totale Target</div>
+      <div class="t-val">€ 550.000</div>
+      <div class="t-sub">Piano completo su 18–24 mesi</div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- 01 PROFILO -->
+  <section>
+    <div class="sec-head">
+      <span class="sec-num">01</span>
+      <span class="sec-title">Profilo Startup</span>
+      <span class="sec-sub">In arancio = da completare con Guya</span>
+    </div>
+    <div class="profilo-grid">
+      <div class="profilo-item"><div class="p-label">Nome</div><div class="p-val">Multiple Identities</div></div>
+      <div class="profilo-item"><div class="p-label">Sede legale</div><div class="p-val">Paesi Bassi (NL) 🇳🇱</div></div>
+      <div class="profilo-item"><div class="p-label">Settore</div><div class="p-val">Moda sostenibile / Abbigliamento circolare</div></div>
+      <div class="profilo-item"><div class="p-label">Vision</div><div class="p-val">Abbigliamento prodotto in modo sostenibile, filiera responsabile</div></div>
+      <div class="profilo-item"><div class="p-label">Canali attivi</div><div class="p-val">Instagram, social media (traffico da link in bio)</div></div>
+      <div class="profilo-item"><div class="p-label">Anno fondazione</div><div class="p-val tbd">Da verificare con Guya</div></div>
+      <div class="profilo-item"><div class="p-label">Forma societaria</div><div class="p-val tbd">Da verificare — BV (spa olandese) o altra forma</div></div>
+      <div class="profilo-item"><div class="p-label">Composizione team</div><div class="p-val tbd">Da verificare — importante sapere se ci sono donne in ruoli chiave (premia nei bandi)</div></div>
+      <div class="profilo-item"><div class="p-label">Fatturato attuale</div><div class="p-val tbd">Da verificare — determina a quali strumenti si può accedere</div></div>
+      <div class="profilo-item"><div class="p-label">Certificazioni ESG</div><div class="p-val tbd">Nessuna nota — da valutare (es. B Corp, GOTS, Fair Trade)</div></div>
+      <div class="profilo-item"><div class="p-label">Fabbisogno mensile</div><div class="p-val">€ 25.000 / mese per 18 mesi = € 450.000</div></div>
+      <div class="profilo-item"><div class="p-label">Uso dei fondi</div><div class="p-val tbd">Da dettagliare — sviluppo prodotto? tecnologia? filiera?</div></div>
+    </div>
+  </section>
+
+  <!-- 02 SCORE -->
+  <section>
+    <div class="sec-head">
+      <span class="sec-num">02</span>
+      <span class="sec-title">Quanto è "finanziabile" oggi</span>
+      <span class="sec-sub">Stima su dati disponibili — aggiornare dopo call con Guya</span>
+    </div>
+    <div class="score-box">
+      <div class="score-top">
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:4px;">Punteggio attuale su 100</div>
+          <div class="score-big">62</div>
+          <div class="score-verdict">⚡ Potenziale Buono — Ma Ci Sono Gap da Colmare</div>
+        </div>
+        <div class="score-right">
+          <div class="score-right-label">Con certificazioni + dati di impatto</div>
+          <div class="score-right-num">80+</div>
+          <div style="font-size:12px;color:rgba(255,255,255,.4);margin-top:4px;">Raggiungibile in 3–6 mesi</div>
+        </div>
+      </div>
+      <div class="score-bars">
+        <div class="bar-item">
+          <div class="bar-row"><strong>Quanto la vision è davvero sostenibile</strong><span>90</span></div>
+          <div class="bar-track"><div class="bar-fill bv" style="width:90%"></div></div>
+        </div>
+        <div class="bar-item">
+          <div class="bar-row"><strong>Mercato in cui opera (la moda sostenibile cresce)</strong><span>85</span></div>
+          <div class="bar-track"><div class="bar-fill bv" style="width:85%"></div></div>
+        </div>
+        <div class="bar-item">
+          <div class="bar-row"><strong>Essere in Olanda (ecosistema molto favorevole)</strong><span>80</span></div>
+          <div class="bar-track"><div class="bar-fill bv" style="width:80%"></div></div>
+        </div>
+        <div class="bar-item">
+          <div class="bar-row"><strong>Community sui social</strong><span>60</span></div>
+          <div class="bar-track"><div class="bar-fill bg" style="width:60%"></div></div>
+        </div>
+        <div class="bar-item">
+          <div class="bar-row"><strong>Certificazioni ufficiali di sostenibilità</strong><span>20</span></div>
+          <div class="bar-track"><div class="bar-fill bo" style="width:20%"></div></div>
+        </div>
+        <div class="bar-item">
+          <div class="bar-row"><strong>Dati misurabili sull'impatto (CO2, rifiuti, ecc.)</strong><span>25</span></div>
+          <div class="bar-track"><div class="bar-fill bo" style="width:25%"></div></div>
+        </div>
+        <div class="bar-item">
+          <div class="bar-row"><strong>Storico finanziario</strong><span>30</span></div>
+          <div class="bar-track"><div class="bar-fill bo" style="width:30%"></div></div>
+        </div>
+      </div>
+      <div class="score-tags">
+        <span class="stag stag-pro">✓ Posizionamento ESG solido</span>
+        <span class="stag stag-pro">✓ Mercato in crescita</span>
+        <span class="stag stag-pro">✓ Olanda = porta aperta sui fondi EU</span>
+        <span class="stag stag-pro">✓ Target €450k realistico in 18 mesi</span>
+        <span class="stag stag-gap">⚠ Zero certificazioni formali</span>
+        <span class="stag stag-gap">⚠ Nessun dato di impatto misurato</span>
+        <span class="stag stag-gap">⚠ Forma societaria da confermare</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 FONDI PRINCIPALI -->
+  <section>
+    <div class="sec-head">
+      <span class="sec-num">03</span>
+      <span class="sec-title">Fondi Principali — Target €450K</span>
+      <span class="sec-sub">Ordinati per priorità e facilità di accesso</span>
+    </div>
+
+    <!-- PRIORITÀ ALTA -->
+    <div class="sezione-titolo">
+      <span class="sezione-titolo-text">Priorità Alta — Parti da Qui</span>
+      <div class="sezione-linea"></div>
+      <span class="sezione-tot">Potenziale: fino a €220.000</span>
+    </div>
+
+    <!-- 1. WBSO -->
+    <div class="fondo-card p1">
+      <div class="priorita-label pl-1">★ Partenza Immediata</div>
+      <div class="fondo-top">
+        <div>
+          <div class="fondo-nome">WBSO — Credito Fiscale R&S</div>
+          <div class="fondo-ente">RVO · Governo Olandese · Sempre Aperto</div>
+        </div>
+        <div class="fondo-badges"><span class="fbadge fbadge-nl">Olanda</span></div>
+      </div>
+      <div class="importo-box">
+        <div class="importo-num">fino al 40%</div>
+        <div class="importo-desc">dei costi del personale dedicato allo sviluppo — se Multiple ha 2-3 persone che lavorano sul prodotto, questo significa <strong>€30.000–60.000 l'anno in risparmio fiscale</strong>.</div>
+      </div>
+      <div class="fondo-desc">
+        Il WBSO è uno sgravio fiscale olandese per chi sviluppa nuovi prodotti o processi. In pratica: tutto il tempo che i dipendenti di Multiple dedicano a ricerca e sviluppo (design sostenibile, studio della filiera, test dei materiali) costa il 40% in meno allo Stato. <strong>Non è cash diretto, ma è come avere il 40% di sconto sul personale.</strong>
+      </div>
+      <div class="fondo-perche"><strong>Perché partire da qui:</strong> Si attiva subito, non c'è competizione con altre aziende, non serve una candidatura complessa. È il più rapido da ottenere e libera budget immediatamente per altre attività.</div>
+      <div class="fondo-stats">
+        <div class="fstat"><span class="fstat-label">Tipo</span><span class="fstat-val">Sgravio fiscale</span></div>
+        <div class="fstat"><span class="fstat-label">Tempistica</span><span class="fstat-val v">Subito</span></div>
+        <div class="fstat"><span class="fstat-label">Difficoltà</span><span class="fstat-val v">Bassa</span></div>
+        <div class="fstat"><span class="fstat-label">Requisito chiave</span><span class="fstat-val">Personale con attività R&S</span></div>
+      </div>
+      <a class="fondo-link" href="https://www.rvo.nl/subsidies-financiering/wbso" target="_blank">rvo.nl/wbso →</a>
+    </div>
+
+    <!-- 2. SoTecIn / Impact Hub -->
+    <div class="fondo-card p1">
+      <div class="priorita-label pl-1">★ Alta Priorità</div>
+      <div class="fondo-top">
+        <div>
+          <div class="fondo-nome">SoTecIn Factory — Impact Hub Amsterdam</div>
+          <div class="fondo-ente">Programma EU Horizon Europe · Impact Hub Amsterdam</div>
+        </div>
+        <div class="fondo-badges"><span class="fbadge fbadge-eu">EU</span><span class="fbadge fbadge-nl">Olanda</span></div>
+      </div>
+      <div class="importo-box">
+        <div class="importo-num">€ 100.000</div>
+        <div class="importo-desc">Grant (= soldi a fondo perduto, non da restituire) per startup con soluzioni tecnologiche nel settore tessile circolare.</div>
+      </div>
+      <div class="fondo-desc">
+        SoTecIn è un programma finanziato dall'Unione Europea e gestito da Impact Hub Amsterdam — il principale hub di innovazione sostenibile della città. Cercano startup che lavorano su soluzioni circolari nel tessile: ridurre gli sprechi, riusare i materiali, ripensare la produzione. Multiple Identities rientra perfettamente in questo profilo.
+        <br><br>
+        Oltre ai soldi, il programma dà accesso a mentori, partner industriali e alla rete europea di Impact Hub — un valore enorme per una startup in fase di sviluppo.
+      </div>
+      <div class="fondo-perche"><strong>Perché è importante:</strong> È il fondo più diretto e specifico per il profilo di Multiple. Gestito localmente ad Amsterdam, il rapporto con i selezionatori è più diretto rispetto ai bandi EU centrali.</div>
+      <div class="fondo-stats">
+        <div class="fstat"><span class="fstat-label">Tipo</span><span class="fstat-val">Grant (a fondo perduto)</span></div>
+        <div class="fstat"><span class="fstat-label">Importo</span><span class="fstat-val v">€ 100.000</span></div>
+        <div class="fstat"><span class="fstat-label">Difficoltà</span><span class="fstat-val v">Media</span></div>
+        <div class="fstat"><span class="fstat-label">Apertura</span><span class="fstat-val y">Verificare bandi 2026</span></div>
+      </div>
+      <a class="fondo-link" href="https://amsterdam.impacthub.net/program/sotecin-factory-open-call-for-higher-r-textile-solutions/" target="_blank">impacthub.net →</a>
+    </div>
+
+    <!-- 3. Fashion for Good -->
+    <div class="fondo-card p1">
+      <div class="priorita-label pl-1">★ Alta Priorità</div>
+      <div class="fondo-top">
+        <div>
+          <div class="fondo-nome">Fashion for Good Accelerator</div>
+          <div class="fondo-ente">Fashion for Good · Amsterdam · Zero equity richiesto</div>
+        </div>
+        <div class="fondo-badges"><span class="fbadge fbadge-priv">Corporate</span></div>
+      </div>
+      <div class="importo-box">
+        <div class="importo-num">€ 0 equity</div>
+        <div class="importo-desc">Non danno soldi direttamente, ma aprono le porte a <strong>grant fino a €50.000+</strong> e a 22 partner corporate (brand come Adidas, Zalando, H&M Group) che possono diventare clienti o co-investitori.</div>
+      </div>
+      <div class="fondo-desc">
+        Fashion for Good è il principale acceleratore mondiale per la moda sostenibile, con sede ad Amsterdam. Il loro programma da 9 mesi seleziona le startup più promettenti e le mette in contatto con i brand più grandi del settore. Non chiedono quote della società (equity). Includono un servizio chiamato "grant scan" — cioè cercano per te tutti i fondi a cui puoi accedere, sia in Europa che negli USA.
+      </div>
+      <div class="fondo-perche"><strong>Perché è importante:</strong> Essere selezionati da Fashion for Good è come avere un marchio di qualità riconosciuto a livello internazionale. Apre porte che da soli si impiegherebbero anni ad aprire.</div>
+      <div class="fondo-stats">
+        <div class="fstat"><span class="fstat-label">Tipo</span><span class="fstat-val">Acceleratore + Grant scan</span></div>
+        <div class="fstat"><span class="fstat-label">Durata</span><span class="fstat-val">9 mesi</span></div>
+        <div class="fstat"><span class="fstat-label">Difficoltà</span><span class="fstat-val y">Media-Alta</span></div>
+        <div class="fstat"><span class="fstat-label">Sede</span><span class="fstat-val">Amsterdam 🇳🇱</span></div>
+      </div>
+      <a class="fondo-link" href="https://fashionforgood.com" target="_blank">fashionforgood.com →</a>
+    </div>
+
+    <!-- PRIORITÀ MEDIA -->
+    <div class="sezione-titolo" style="margin-top:24px;">
+      <span class="sezione-titolo-text">Priorità Media — Seconda Fase</span>
+      <div class="sezione-linea"></div>
+      <span class="sezione-tot">Potenziale: fino a €240.000</span>
+    </div>
+
+    <!-- 4. MIT RVO -->
+    <div class="fondo-card p2">
+      <div class="priorita-label pl-2">◆ Media Priorità</div>
+      <div class="fondo-top">
+        <div>
+          <div class="fondo-nome">MIT Feasibility — Bando Olandese PMI</div>
+          <div class="fondo-ente">RVO · Governo Olandese</div>
+        </div>
+        <div class="fondo-badges"><span class="fbadge fbadge-nl">Olanda</span></div>
+      </div>
+      <div class="importo-box">
+        <div class="importo-num">€ 20.000</div>
+        <div class="importo-desc">Contributo a fondo perduto per fare uno studio di fattibilità — cioè analizzare se il prodotto/processo è realizzabile e ha mercato.</div>
+      </div>
+      <div class="fondo-desc">
+        Il MIT (Mkb Innovatiestimulering Topsectoren) è un fondo del governo olandese per le piccole imprese innovative. Il modulo "Feasibility" — cioè lo studio di fattibilità — è il più accessibile: permette di finanziare la ricerca iniziale sul prodotto o sul processo produttivo. Per Multiple potrebbe coprire, per esempio, lo studio di materiali sostenibili alternativi o l'analisi della supply chain etica.
+      </div>
+      <div class="fondo-perche"><strong>Perché è utile:</strong> È il bando più semplice da vincere tra quelli pubblici olandesi. Ottimo come <em>primo riconoscimento istituzionale</em> — mostra agli altri finanziatori che il governo olandese ha già creduto nel progetto.</div>
+      <div class="fondo-stats">
+        <div class="fstat"><span class="fstat-label">Tipo</span><span class="fstat-val">Grant pubblico NL</span></div>
+        <div class="fstat"><span class="fstat-label">Importo</span><span class="fstat-val v">€ 20.000</span></div>
+        <div class="fstat"><span class="fstat-label">Copertura spese</span><span class="fstat-val">fino al 40%</span></div>
+        <div class="fstat"><span class="fstat-label">Difficoltà</span><span class="fstat-val v">Bassa-Media</span></div>
+      </div>
+      <a class="fondo-link" href="https://www.rvo.nl/subsidies-financiering/mit" target="_blank">rvo.nl/mit →</a>
+    </div>
+
+    <!-- 5. Laudes Foundation -->
+    <div class="fondo-card p2">
+      <div class="priorita-label pl-2">◆ Media Priorità</div>
+      <div class="fondo-top">
+        <div>
+          <div class="fondo-nome">Laudes Foundation</div>
+          <div class="fondo-ente">Fondo Filantropico · ex C&A Foundation · Amsterdam</div>
+        </div>
+        <div class="fondo-badges"><span class="fbadge fbadge-priv">Filantropico</span></div>
+      </div>
+      <div class="importo-box">
+        <div class="importo-num">€ 50–200K</div>
+        <div class="importo-desc">Donazioni (non prestiti, non equity) per progetti con impatto reale e misurabile nel settore moda sostenibile.</div>
+      </div>
+      <div class="fondo-desc">
+        Laudes Foundation è una fondazione filantropica — cioè regala soldi senza aspettarsi un ritorno economico — nata dall'ex C&A Foundation (il grande brand di abbigliamento). Si concentra su tre aree: clima, giustizia sociale e moda sostenibile. Finanziano iniziative che possono dimostrare un impatto reale: quanta CO2 risparmiata, quanti lavoratori coinvolti in modo etico, quanto materiale riciclato.
+      </div>
+      <div class="fondo-perche"><strong>Perché è nella seconda fase:</strong> Richiedono dati di impatto solidi. Bisogna prima costruire la "storia di impatto" di Multiple — quanti kg di materiale sostenibile usati, quanti capi prodotti eticamente. Servono 3-6 mesi per avere dati sufficienti.</div>
+      <div class="fondo-stats">
+        <div class="fstat"><span class="fstat-label">Tipo</span><span class="fstat-val">Donazione filantropica</span></div>
+        <div class="fstat"><span class="fstat-label">Importo stimato</span><span class="fstat-val v">€ 50–200.000</span></div>
+        <div class="fstat"><span class="fstat-label">Difficoltà</span><span class="fstat-val y">Media</span></div>
+        <div class="fstat"><span class="fstat-label">Requisito chiave</span><span class="fstat-val y">Dati di impatto concreti</span></div>
+      </div>
+      <a class="fondo-link" href="https://www.laudesfoundation.org" target="_blank">laudesfoundation.org →</a>
+    </div>
+
+    <!-- PRIORITÀ MEDIO-LUNGO -->
+    <div class="sezione-titolo" style="margin-top:24px;">
+      <span class="sezione-titolo-text">Medio-Lungo Termine — Dopo i Primi Risultati</span>
+      <div class="sezione-linea"></div>
+      <span class="sezione-tot">Potenziale: fino a €2,5M</span>
+    </div>
+
+    <!-- 6. EIC -->
+    <div class="fondo-card p3">
+      <div class="priorita-label pl-3">▲ Medio Termine</div>
+      <div class="fondo-top">
+        <div>
+          <div class="fondo-nome">EIC Accelerator — Horizon Europe</div>
+          <div class="fondo-ente">Commissione Europea · Bando annuale</div>
+        </div>
+        <div class="fondo-badges"><span class="fbadge fbadge-eu">EU</span></div>
+      </div>
+      <div class="importo-box">
+        <div class="importo-num">fino a €2,5M</div>
+        <div class="importo-desc">Grant EU + possibilità di investimento equity. Il programma più ricco d'Europa per startup innovative ad alto impatto.</div>
+      </div>
+      <div class="fondo-desc">
+        L'EIC Accelerator (European Innovation Council) è il programma di finanziamento più importante dell'Unione Europea per startup innovative. Eroga fino a €2,5 milioni in grant (soldi a fondo perduto) più un possibile investimento diretto nella società. La selezione è competitiva — solo le migliori startup europee vengono finanziate. Richiede un pitch video, un business plan dettagliato e dati di impatto solidi.
+      </div>
+      <div class="fondo-perche"><strong>Perché è nel medio termine:</strong> Prima bisogna avere risultati da mostrare — almeno 6-12 mesi di attività, clienti reali, dati di impatto. Con WBSO + SoTecIn + Fashion for Good già attivi, Multiple sarà in una posizione molto più forte per candidarsi.</div>
+      <div class="fondo-stats">
+        <div class="fstat"><span class="fstat-label">Tipo</span><span class="fstat-val">Grant EU + possibile equity</span></div>
+        <div class="fstat"><span class="fstat-label">Importo max</span><span class="fstat-val v">€ 2.500.000</span></div>
+        <div class="fstat"><span class="fstat-label">Difficoltà</span><span class="fstat-val y">Alta</span></div>
+        <div class="fstat"><span class="fstat-label">Quando candidarsi</span><span class="fstat-val y">Dopo 12 mesi di attività</span></div>
+      </div>
+      <a class="fondo-link" href="https://eic.ec.europa.eu/eic-funding/eic-accelerator_en" target="_blank">eic.ec.europa.eu →</a>
+    </div>
+  </section>
+
+  <!-- 04 CROWDFUNDING -->
+  <section>
+    <div class="sec-head">
+      <span class="sec-num">04</span>
+      <span class="sec-title">Crowdfunding — Target € 100K</span>
+      <span class="sec-sub">Non solo raccolta fondi — è uno strumento di marketing</span>
+    </div>
+
+    <div class="crowd-why">
+      <strong>Perché il crowdfunding non è solo un modo per raccogliere soldi:</strong><br>
+      Una campagna di crowdfunding ben fatta costruisce community, genera buzz sui social, attira attenzione della stampa e dimostra agli altri investitori che il mercato esiste davvero. Per una startup di moda sostenibile con una presenza Instagram già attiva come Multiple, è anche un potente strumento di comunicazione. L'obiettivo di €100.000 è realistico con una campagna ben preparata — e quello che si guadagna in visibilità vale spesso più dei soldi.
+    </div>
+
+    <!-- Oneplanetcrowd / DuurzaamInvesteren -->
+    <div class="fondo-card crowd">
+      <div class="priorita-label pl-c">★ Consigliato</div>
+      <div class="fondo-top">
+        <div>
+          <div class="fondo-nome">DuurzaamInvesteren / Oneplanetcrowd</div>
+          <div class="fondo-ente">Piattaforme olandesi per investitori sostenibili</div>
+        </div>
+        <div class="fondo-badges"><span class="fbadge fbadge-nl">Olanda</span></div>
+      </div>
+      <div class="importo-box">
+        <div class="importo-num">€ 50–150K</div>
+        <div class="importo-desc">Campagna di raccolta tramite prestito obbligazionario (= gli investitori prestano soldi e vengono rimborsati con una piccola percentuale di interesse, senza diventare soci).</div>
+      </div>
+      <div class="fondo-desc">
+        DuurzaamInvesteren è la principale piattaforma olandese per chi vuole investire in modo sostenibile — ha già finanziato oltre €580 milioni di progetti. Oneplanetcrowd (ora parte della stessa famiglia) era la piattaforma storica per startup ESG olandesi. Insieme coprono una community molto ampia di investitori privati che cercano esattamente quello che Multiple offre: moda, sostenibilità, impatto reale.
+        <br><br>
+        Il modello <strong>non equity</strong> (= nessuna quota della società ceduta) è perfetto: gli investitori prestano soldi a Multiple e vengono rimborsati nel tempo con un piccolo interesse. Nessuna perdita di controllo.
+      </div>
+      <div class="fondo-perche"><strong>Vantaggio marketing:</strong> La campagna viene promossa sulla piattaforma (40.000+ investitori registrati), genera copertura social e mediatica, e trasforma ogni investitore in un ambassador del brand.</div>
+      <div class="fondo-stats">
+        <div class="fstat"><span class="fstat-label">Tipo</span><span class="fstat-val">Prestito obbligazionario</span></div>
+        <div class="fstat"><span class="fstat-label">Equity ceduta</span><span class="fstat-val v">Zero</span></div>
+        <div class="fstat"><span class="fstat-label">Community investitori</span><span class="fstat-val">40.000+</span></div>
+        <div class="fstat"><span class="fstat-label">Target realistico</span><span class="fstat-val v">€ 50–100.000</span></div>
+      </div>
+      <a class="fondo-link" href="https://www.duurzaaminvesteren.nl" target="_blank">duurzaaminvesteren.nl →</a>
+    </div>
+
+    <!-- Kickstarter/Indiegogo reward -->
+    <div class="fondo-card crowd">
+      <div class="priorita-label pl-c">◆ Alternativa</div>
+      <div class="fondo-top">
+        <div>
+          <div class="fondo-nome">Kickstarter / Indiegogo — Reward-based</div>
+          <div class="fondo-ente">Piattaforme internazionali · Ricompense non monetarie</div>
+        </div>
+        <div class="fondo-badges"><span class="fbadge fbadge-eu">Internazionale</span></div>
+      </div>
+      <div class="importo-box">
+        <div class="importo-num">€ 20–80K</div>
+        <div class="importo-desc">Gli investitori non ricevono soldi — ricevono prodotti, esperienze o riconoscimenti (il primo capo della nuova collezione, il nome nella lista fondatori, ecc.).</div>
+      </div>
+      <div class="fondo-desc">
+        Il crowdfunding "reward-based" (basato su ricompense) è il modello usato da migliaia di marchi di moda sostenibile per lanciare nuove collezioni. Non si cedono quote né si restituiscono soldi: chi partecipa riceve qualcosa in cambio — il prodotto in anticipo, accesso esclusivo, riconoscimenti speciali. <strong>È la forma più pura di marketing-fundraising</strong>: si raccolgono soldi mentre si costruisce il pubblico del brand.
+        <br><br>
+        Per Multiple, una campagna Kickstarter su una collezione specifica potrebbe raccogliere €20.000–80.000 e generare copertura mediatica internazionale — Kickstarter ha una propria audience di milioni di utenti.
+      </div>
+      <div class="fondo-perche"><strong>Ideale per:</strong> Il lancio di una nuova collezione sostenibile specifica. Funziona meglio se il prodotto ha una storia visiva forte — perfetto per un brand con community Instagram attiva.</div>
+      <div class="fondo-stats">
+        <div class="fstat"><span class="fstat-label">Tipo</span><span class="fstat-val">Reward-based (ricompense)</span></div>
+        <div class="fstat"><span class="fstat-label">Equity ceduta</span><span class="fstat-val v">Zero</span></div>
+        <div class="fstat"><span class="fstat-label">Visibilità</span><span class="fstat-val v">Internazionale</span></div>
+        <div class="fstat"><span class="fstat-label">Difficoltà</span><span class="fstat-val v">Media</span></div>
+      </div>
+      <a class="fondo-link" href="https://www.kickstarter.com" target="_blank">kickstarter.com →</a>
+    </div>
+  </section>
+
+  <!-- 05 PIANO TOTALE -->
+  <section>
+    <div class="sec-head">
+      <span class="sec-num">05</span>
+      <span class="sec-title">Piano Totale — Come si Arriva a €550K</span>
+    </div>
+    <div class="piano-box">
+      <div class="piano-title">Combinazione Realistica in 18–24 Mesi</div>
+      <div class="piano-row">
+        <div><div class="piano-nome">WBSO Tax Credit</div><div class="piano-tipo">Risparmio fiscale immediato · Olanda</div></div>
+        <div class="piano-importo g">€ 60.000</div>
+      </div>
+      <div class="piano-row">
+        <div><div class="piano-nome">SoTecIn Factory (Impact Hub Amsterdam)</div><div class="piano-tipo">Grant EU tessile circolare</div></div>
+        <div class="piano-importo g">€ 100.000</div>
+      </div>
+      <div class="piano-row">
+        <div><div class="piano-nome">Fashion for Good + Grant Scan</div><div class="piano-tipo">Acceleratore + identificazione grant specifici</div></div>
+        <div class="piano-importo">€ 50.000+</div>
+      </div>
+      <div class="piano-row">
+        <div><div class="piano-nome">MIT Feasibility (RVO)</div><div class="piano-tipo">Bando pubblico olandese PMI</div></div>
+        <div class="piano-importo">€ 20.000</div>
+      </div>
+      <div class="piano-row">
+        <div><div class="piano-nome">Laudes Foundation</div><div class="piano-tipo">Grant filantropico moda sostenibile</div></div>
+        <div class="piano-importo">€ 100.000</div>
+      </div>
+      <div class="piano-row">
+        <div><div class="piano-nome">EIC Accelerator EU (medio termine)</div><div class="piano-tipo">Grant europeo innovazione · Anno 2</div></div>
+        <div class="piano-importo">€ 150.000+</div>
+      </div>
+      <div class="piano-row" style="border-top:1px solid rgba(255,255,255,.15);padding-top:16px;margin-top:8px;">
+        <div><div class="piano-nome" style="color:var(--giallo);">DuurzaamInvesteren + Kickstarter</div><div class="piano-tipo">Crowdfunding non equity · Marketing + raccolta</div></div>
+        <div class="piano-importo y">€ 100.000</div>
+      </div>
+      <div class="piano-totale">
+        <div class="piano-totale-label">Totale Piano</div>
+        <div class="piano-totale-num">€ 580.000</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 PROSSIMI PASSI -->
+  <section>
+    <div class="sec-head">
+      <span class="sec-num">06</span>
+      <span class="sec-title">Cosa Fare Adesso — In Ordine</span>
+    </div>
+    <div class="step-item">
+      <div class="step-n">1</div>
+      <div>
+        <div class="step-title">Call di discovery con Guya — 30 minuti</div>
+        <div class="step-desc">Completare il profilo: forma societaria, anno fondazione, composizione del team, come vengono usati i fondi esattamente. Senza questi dati non si riesce a selezionare i bandi giusti né a compilare le candidature. Obiettivo: portare lo score di finanziabilità da 62 a 75+.</div>
+        <span class="step-tag st-i">Insieme</span>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-n">2</div>
+      <div>
+        <div class="step-title">Attivare WBSO — questa settimana</div>
+        <div class="step-desc">Se Multiple ha dipendenti o collaboratori che lavorano sullo sviluppo del prodotto, il WBSO si attiva subito. Franki coordina con il commercialista olandese. È il primo passo concreto e il più veloce: riduce i costi operativi del 40% sulle ore di sviluppo.</div>
+        <span class="step-tag st-f">Franki coordina</span>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-n">3</div>
+      <div>
+        <div class="step-title">Candidatura SoTecIn Factory (Impact Hub)</div>
+        <div class="step-desc">Verificare quando apre il prossimo bando 2026 e preparare la candidatura. Franki prepara il dossier: descrizione dell'innovazione, impatto sul tessile circolare, piano d'uso dei fondi. Il grant di €100.000 copre da solo il 22% dell'obiettivo principale.</div>
+        <span class="step-tag st-f">Franki esegue</span>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-n">4</div>
+      <div>
+        <div class="step-title">Costruire la "storia di impatto"</div>
+        <div class="step-desc">Definire 3-5 numeri concreti sull'impatto di Multiple: kg di materiale sostenibile usati, CO2 risparmiata rispetto alla moda tradizionale, % di filiera tracciabile. Questi numeri servono per Laudes Foundation, EIC e per la campagna crowdfunding. Franki aiuta a impostarli.</div>
+        <span class="step-tag st-i">Insieme</span>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-n">5</div>
+      <div>
+        <div class="step-title">Pianificare la campagna crowdfunding</div>
+        <div class="step-desc">Decidere il modello (DuurzaamInvesteren per il pubblico olandese ESG, Kickstarter per il lancio di una collezione specifica) e preparare la narrativa. La campagna crowdfunding va lanciata quando c'è già qualcosa da mostrare — idealmente dopo i primi 3-4 mesi di attività. Va pianificata adesso per partire bene.</div>
+        <span class="step-tag st-f">Franki pianifica</span>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-n">6</div>
+      <div>
+        <div class="step-title">Fashion for Good — candidatura</div>
+        <div class="step-desc">Con WBSO attivo e SoTecIn in corso, Multiple avrà già un track record da mostrare. Franki supporta la candidatura a Fashion for Good: pitch narrative, documentazione ESG, storia del brand. L'acceleratore apre le porte ai grant scan e ai partner corporate più importanti del settore.</div>
+        <span class="step-tag st-f">Franki esegue</span>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="footer-brand">Franki Studio × Multiple Identities — Uso Interno</div>
+  <div class="footer-date">v3.0 · Maggio 2026 · Aggiornare dopo discovery call con Guya</div>
+</footer>
+</body>
+</html>

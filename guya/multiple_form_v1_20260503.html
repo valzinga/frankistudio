@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Multiple Identities — Scheda Conoscitiva | Franki Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lato:wght@400;700;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blu:      #3549B5;
+  --blu-dark: #1a2560;
+  --giallo:   #F9AC28;
+  --bianco:   #FFFFFF;
+  --bg:       #F4F5FA;
+  --testo:    #1a2560;
+  --testo-sec:#4a5480;
+  --border:   #D8DCF0;
+  --verde:    #27AE60;
+  --input-bg: #FFFFFF;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); font-family:'Lato',sans-serif; color:var(--testo); }
+
+/* PRINT */
+@media print {
+  body { background:white; font-size:12px; }
+  header { position:static; }
+  .no-print { display:none !important; }
+  .form-section { break-inside:avoid; }
+  input, textarea, select { border:1px solid #ccc !important; background:white !important; }
+  .hero { background:#1a2560 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .section-head { background:#1a2560 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+}
+
+/* HEADER */
+header {
+  background:var(--blu-dark); height:64px;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 40px; border-bottom:4px solid var(--giallo);
+  position:sticky; top:0; z-index:100;
+}
+.logo { font-family:'Bebas Neue',sans-serif; font-size:26px; letter-spacing:.05em; color:var(--bianco); }
+.logo span { background:var(--giallo); color:var(--blu-dark); padding:2px 8px; margin-left:2px; }
+.header-right { display:flex; align-items:center; gap:16px; }
+.btn-print {
+  font-family:'Bebas Neue',sans-serif; font-size:15px; letter-spacing:.1em;
+  background:var(--giallo); color:var(--blu-dark); border:none;
+  padding:10px 22px; cursor:pointer; transition:opacity .2s;
+}
+.btn-print:hover { opacity:.85; }
+
+/* HERO */
+.hero {
+  background:var(--blu-dark); color:var(--bianco);
+  padding:48px 40px 40px;
+  border-bottom:4px solid var(--giallo);
+}
+.hero-inner { max-width:860px; margin:0 auto; }
+.chip {
+  display:inline-block; background:var(--giallo); color:var(--blu-dark);
+  font-family:'DM Mono',monospace; font-size:11px; letter-spacing:.2em;
+  text-transform:uppercase; font-weight:700; padding:5px 14px; margin-bottom:20px;
+}
+.hero h1 {
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(44px,7vw,80px); line-height:.9;
+  letter-spacing:.02em; color:var(--bianco); margin-bottom:20px;
+}
+.hero h1 em { color:var(--giallo); font-style:normal; }
+.hero-msg {
+  font-size:15px; line-height:1.8; color:rgba(255,255,255,.85);
+  max-width:620px; padding:22px 26px;
+  background:rgba(255,255,255,.06);
+  border-left:4px solid var(--giallo);
+  margin-bottom:28px;
+}
+.hero-msg strong { color:var(--bianco); }
+.hero-note {
+  font-family:'DM Mono',monospace; font-size:11px;
+  letter-spacing:.12em; color:rgba(255,255,255,.35);
+  text-transform:uppercase;
+}
+
+/* CONTAINER */
+.container { max-width:860px; margin:0 auto; padding:48px 40px 80px; }
+
+/* SECTION */
+.form-section { margin-bottom:48px; }
+.section-head {
+  background:var(--blu-dark); color:var(--bianco);
+  padding:16px 24px; margin-bottom:3px;
+  display:flex; align-items:center; gap:16px;
+}
+.section-head-num {
+  font-family:'Bebas Neue',sans-serif; font-size:13px;
+  background:var(--giallo); color:var(--blu-dark);
+  padding:4px 10px; letter-spacing:.1em;
+}
+.section-head-title {
+  font-family:'Bebas Neue',sans-serif; font-size:24px;
+  letter-spacing:.05em;
+}
+.section-head-sub {
+  font-size:12px; color:rgba(255,255,255,.5);
+  font-family:'DM Mono',monospace; letter-spacing:.1em;
+  margin-left:auto;
+}
+
+/* FIELD */
+.field-wrap {
+  background:var(--bianco); padding:22px 26px;
+  margin-bottom:2px; border-left:3px solid transparent;
+  transition:border-left-color .2s;
+}
+.field-wrap:focus-within { border-left-color:var(--giallo); }
+
+.field-label {
+  font-size:13px; font-weight:900; color:var(--blu-dark);
+  margin-bottom:5px; display:block;
+}
+.field-hint {
+  font-size:12px; color:var(--testo-sec); margin-bottom:12px;
+  line-height:1.55;
+}
+.field-hint em {
+  color:var(--blu); font-style:normal; font-weight:700;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="email"],
+textarea,
+select {
+  width:100%;
+  background:var(--bg);
+  border:1px solid var(--border);
+  color:var(--testo);
+  font-family:'Lato',sans-serif;
+  font-size:14px;
+  padding:12px 16px;
+  outline:none;
+  transition:border-color .2s;
+  border-radius:0;
+  appearance:none;
+  -webkit-appearance:none;
+}
+input:focus, textarea:focus, select:focus { border-color:var(--blu); background:var(--bianco); }
+textarea { min-height:100px; resize:vertical; line-height:1.6; }
+select { cursor:pointer; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%231a2560' d='M6 8L0 0h12z'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 16px center; padding-right:40px; }
+
+/* RADIO / CHECKBOX GROUP */
+.radio-group, .check-group { display:flex; flex-direction:column; gap:8px; }
+.radio-item, .check-item {
+  display:flex; align-items:center; gap:12px;
+  padding:10px 14px; background:var(--bg);
+  border:1px solid var(--border); cursor:pointer;
+  transition:border-color .2s, background .2s;
+}
+.radio-item:hover, .check-item:hover { border-color:var(--blu); }
+.radio-item input, .check-item input { width:18px; height:18px; cursor:pointer; flex-shrink:0; accent-color:var(--blu); }
+.radio-item label, .check-item label { font-size:14px; color:var(--testo); cursor:pointer; line-height:1.4; }
+
+/* FASCIA INPUT */
+.fascia-grid { display:grid; grid-template-columns:1fr 1fr; gap:2px; }
+
+/* NOTE FINALI */
+.note-finali {
+  background:var(--bianco); padding:22px 26px;
+  border-left:3px solid var(--giallo);
+  margin-bottom:2px;
+}
+.note-finali-label {
+  font-size:13px; font-weight:900; color:var(--blu-dark); margin-bottom:12px;
+}
+
+/* SUBMIT */
+.submit-area {
+  margin-top:40px; padding:32px;
+  background:var(--blu-dark);
+  display:flex; align-items:center; justify-content:space-between;
+  flex-wrap:wrap; gap:20px;
+}
+.submit-text { color:rgba(255,255,255,.7); font-size:14px; line-height:1.6; max-width:480px; }
+.submit-text strong { color:var(--bianco); }
+.btn-submit {
+  font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:.12em;
+  background:var(--giallo); color:var(--blu-dark); border:none;
+  padding:16px 36px; cursor:pointer; transition:opacity .2s; white-space:nowrap;
+}
+.btn-submit:hover { opacity:.85; }
+.submit-confirm {
+  display:none; background:#E8F8F0; padding:16px 24px;
+  border-left:4px solid var(--verde); margin-top:2px;
+  font-size:14px; color:var(--verde); font-weight:700;
+}
+
+/* OPPORTUNITÀ TEASER */
+.teaser-box {
+  background:var(--giallo); padding:28px 32px; margin-bottom:48px;
+}
+.teaser-title {
+  font-family:'Bebas Neue',sans-serif; font-size:22px;
+  letter-spacing:.05em; color:var(--blu-dark); margin-bottom:12px;
+}
+.teaser-text { font-size:14px; color:var(--blu-dark); line-height:1.7; }
+.teaser-numeri {
+  display:flex; gap:3px; margin-top:16px;
+}
+.teaser-num {
+  flex:1; background:var(--blu-dark); padding:16px 20px;
+}
+.teaser-num-val {
+  font-family:'Bebas Neue',sans-serif; font-size:32px;
+  color:var(--giallo); line-height:1;
+}
+.teaser-num-label {
+  font-family:'DM Mono',monospace; font-size:10px;
+  letter-spacing:.15em; text-transform:uppercase;
+  color:rgba(255,255,255,.5); margin-top:4px;
+}
+
+/* FOOTER */
+footer {
+  background:var(--blu-dark); border-top:4px solid var(--giallo);
+  padding:24px 40px; display:flex; justify-content:space-between; align-items:center;
+}
+.footer-brand { font-family:'Bebas Neue',sans-serif; font-size:14px; letter-spacing:.1em; color:rgba(255,255,255,.3); }
+.footer-date { font-family:'DM Mono',monospace; font-size:10px; color:rgba(255,255,255,.2); letter-spacing:.1em; }
+
+@media(max-width:768px){
+  header,footer{padding:0 20px;}
+  .hero{padding:36px 20px;}
+  .container{padding:32px 20px 60px;}
+  .fascia-grid{grid-template-columns:1fr;}
+  .teaser-numeri{flex-direction:column;}
+  .submit-area{flex-direction:column;}
+  .section-head-sub{display:none;}
+  footer{flex-direction:column;gap:8px;padding:20px;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Fran<span>Ki</span></div>
+  <div class="header-right">
+    <button class="btn-print no-print" onclick="window.print()">↓ Stampa / PDF</button>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="chip">Multiple Identities × Franki Studio</div>
+    <h1>SCHEDA<br><em>CONOSCITIVA</em></h1>
+    <div class="hero-msg">
+      Ciao Guya,<br><br>
+      abbiamo fatto una prima ricerca sulle <strong>opportunità di finanziamento disponibili per Multiple Identities</strong>. Il quadro è interessante — ci sono strumenti concreti sia in Olanda che a livello europeo, con un potenziale complessivo significativo.<br><br>
+      Per capire <strong>quali opportunità si adattano meglio al vostro profilo specifico</strong> e come strutturare la candidatura nel modo più efficace, abbiamo bisogno di alcuni dati. Nessuna informazione riservata — solo i dettagli che ogni finanziatore chiede come primo passo.<br><br>
+      Compila questa scheda e rimandacela. <strong>Ci vogliono circa 10 minuti.</strong>
+    </div>
+    <div class="hero-note">Franki Studio · frankistudio.it · hello@frankistudio.it</div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- SEZIONE 00 — CHI È MULTIPLE IDENTITIES -->
+  <div class="form-section">
+    <div class="section-head">
+      <span class="section-head-num">00</span>
+      <span class="section-head-title">Chi è Multiple Identities — Quello che sappiamo</span>
+      <span class="section-head-sub">Profilo ricercato — da correggere e integrare</span>
+    </div>
+
+    <div class="field-wrap" style="border-left-color:var(--giallo);">
+      <div class="field-label" style="font-size:12px;font-weight:400;color:var(--testo-sec);margin-bottom:14px;font-style:italic;">
+        Questa sezione descrive quello che abbiamo ricostruito da fonti pubbliche. Correggici dove sbagliamo, aggiungi dove manca. Ogni dettaglio che integri ci aiuta a costruire un profilo più preciso per le candidature.
+      </div>
+
+      <div style="background:var(--bg);padding:20px 22px;margin-bottom:2px;">
+        <div class="p-label">Origine e fondatrice</div>
+        <div style="font-size:14px;color:var(--testo);line-height:1.75;margin-top:6px;">
+          Multiple Identities nasce a Londra nel 1999 per mano di <strong>Jacqueline Haeberle</strong>, designer nata a Ulm (Germania) nel 1973. Prima di fondare il brand, Jacqueline ha lavorato per alcune delle aziende di abbigliamento più importanti al mondo: Puma (dove ha contribuito al suo posizionamento come lifestyle brand), Nike (come parte del team Europe Innovation Kitchen, responsabile di linee come Nike Considered Apparel), e K-Swiss come Creative Director. Dal 2009 opera in modo indipendente con Multiple Identities al crocevia tra moda, design, arte, cultura e tecnologia, con un approccio che definisce "less but better" — meno, ma meglio.
+        </div>
+      </div>
+
+      <div style="background:var(--bg);padding:20px 22px;margin-bottom:2px;">
+        <div class="p-label">Dove opera oggi</div>
+        <div style="font-size:14px;color:var(--testo);line-height:1.75;margin-top:6px;">
+          Il cuore operativo di Multiple Identities è ad <strong>Amsterdam, nel quartiere Red Light District</strong>, dove il brand gestisce uno spazio fisico ibrido definito "No Shop Shop" — né galleria né negozio tradizionale, ma uno spazio di scambio creativo aperto alla comunità locale. Lo studio funziona simultaneamente come workspace dei designer, spazio espositivo per artisti locali, e punto vendita curato. Il sito web è strutturato su quattro aree: <em>mi_space</em> (lo spazio fisico), <em>mi_shop</em> (il negozio online), <em>mi_scarves</em> (la linea prodotto proprietaria), <em>mi_service</em> (i servizi creativi per clienti).
+        </div>
+      </div>
+
+      <div style="background:var(--bg);padding:20px 22px;margin-bottom:2px;">
+        <div class="p-label">Il prodotto — mi_scarfsleeve</div>
+        <div style="font-size:14px;color:var(--testo);line-height:1.75;margin-top:6px;">
+          Il prodotto principale e più distintivo è il <strong>mi_scarfsleeve</strong>, oggetto tessile con design registrato a livello europeo (EU 006146023-0001). Non è una sciarpa, non è una manica — è un accessorio trasformabile che si adatta a più usi e forme. Viene prodotto prevalentemente in Germania, in piccoli batch, attraverso collaborazioni con artisti locali selezionati. Ogni pezzo è il risultato di una co-creazione: il brand fornisce il formato e il codice etico, l'artista porta la propria visione. Il prezzo unitario è intorno a €89. Non c'è produzione di massa.
+        </div>
+      </div>
+
+      <div style="background:var(--bg);padding:20px 22px;margin-bottom:2px;">
+        <div class="p-label">Filosofia e approccio alla sostenibilità</div>
+        <div style="font-size:14px;color:var(--testo);line-height:1.75;margin-top:6px;">
+          Multiple Identities dichiara un orientamento esplicito verso la <strong>moda consapevole e sostenibile</strong>. Il codice etico interno (code_of_conduct) che applica nella selezione degli artisti collaboratori include principi come circolarità (minimizzare gli sprechi e offrire un'alternativa), funzionalità, intenzionalità nel design, e documentazione trasparente del processo creativo. Il brand si posiziona apertamente contro la fast fashion e la produzione di massa, a favore di pezzi timeless, slow e prodotti con cura. Non risultano al momento certificazioni ESG formali (da confermare).
+        </div>
+      </div>
+
+      <div style="background:var(--bg);padding:20px 22px;margin-bottom:2px;">
+        <div class="p-label">Modello di business</div>
+        <div style="font-size:14px;color:var(--testo);line-height:1.75;margin-top:6px;">
+          Il modello combina <strong>tre flussi di ricavo</strong>: vendita diretta dei prodotti proprietari (mi_scarfsleeve e altri oggetti tessili) tramite shop fisico e online Shopify; curatela e vendita di prodotti di artisti e designer locali selezionati (quota sul venduto); e servizi creativi a clienti esterni (consulenza design, direzione creativa, progetti speciali). Lo spazio fisico ad Amsterdam funge anche da piattaforma di visibilità per il brand e da punto di aggregazione della community creativa locale.
+        </div>
+      </div>
+
+      <div style="background:var(--bg);padding:20px 22px;margin-bottom:2px;">
+        <div class="p-label">Posizionamento nel mercato</div>
+        <div style="font-size:14px;color:var(--testo);line-height:1.75;margin-top:6px;">
+          Multiple Identities opera in un segmento di nicchia ad alto valore percepito: <strong>moda concettuale, slow, locale e sostenibile</strong>. Non compete con i brand di massa né con il lusso tradizionale — si rivolge a un pubblico urbano, culturalmente consapevole, interessato all'autorialità e alla storia dietro ogni oggetto. La presenza Instagram (con traffico confermato dal link in bio) suggerisce una community attiva, coerente con questo posizionamento. L'ecosistema olandese di moda sostenibile (Fashion for Good, Impact Hub Amsterdam, MUD Jeans, Mud Jeans, Filling Pieces, ecc.) è uno dei più sviluppati in Europa — Multiple opera in un contesto favorevole.
+        </div>
+      </div>
+
+    </div>
+
+    <!-- DOMANDE DI VERIFICA SEZIONE 00 -->
+    <div style="background:var(--blu-dark);padding:20px 26px;margin-bottom:2px;">
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:.08em;color:var(--giallo);margin-bottom:14px;">Confermaci — cosa c'è da correggere o integrare?</div>
+      <div style="font-size:13px;color:rgba(255,255,255,.7);line-height:1.6;">Leggi il profilo sopra e dimmi dove sbagliamo, dove manca qualcosa di importante, o cosa vuoi che sappiamo che non abbiamo trovato online.</div>
+    </div>
+
+    <div class="field-wrap">
+      <label class="field-label">Correzioni al profilo — cosa non è accurato?</label>
+      <div class="field-hint">Se qualcosa del profilo sopra non è corretto o è impreciso, scrivilo qui. Es: la fondatrice, la sede, il modello di business, l'anno di fondazione.</div>
+      <textarea placeholder="Es. La sede operativa non è più nel Red Light District / Il prodotto principale non è solo il mi_scarfsleeve / Il modello di business è cambiato..."></textarea>
+    </div>
+
+    <div class="field-wrap">
+      <label class="field-label">Qual è la fase attuale di sviluppo del progetto?</label>
+      <div class="field-hint">Capire dove si trova Multiple oggi ci aiuta a scegliere gli strumenti giusti. Non c'è una risposta "giusta" — vogliamo capire la situazione reale.</div>
+      <div class="radio-group">
+        <div class="radio-item"><input type="radio" name="fase" id="fa1"><label for="fa1">Idea / Pre-lancio — stiamo ancora costruendo il prodotto e il modello</label></div>
+        <div class="radio-item"><input type="radio" name="fase" id="fa2"><label for="fa2">Lancio — siamo operativi da poco, prime vendite in corso</label></div>
+        <div class="radio-item"><input type="radio" name="fase" id="fa3"><label for="fa3">Early stage — operativi da 1-3 anni, modello validato, dobbiamo scalare</label></div>
+        <div class="radio-item"><input type="radio" name="fase" id="fa4"><label for="fa4">Growth — già strutturati, cerchiamo fondi per accelerare la crescita</label></div>
+      </div>
+    </div>
+
+    <div class="field-wrap">
+      <label class="field-label">Cosa produce o vende Multiple oggi — in concreto?</label>
+      <div class="field-hint">Descrivi la gamma prodotti/servizi attuali: cosa vendete, a che prezzi indicativi, con quale frequenza di collezione, dove (solo online, solo fisico, entrambi, export).</div>
+      <textarea placeholder="Es. Vendiamo principalmente il mi_scarfsleeve (€89), produciamo 2-3 collaborazioni l'anno con artisti locali, vendiamo anche online e in un evento mensile nello spazio..."></textarea>
+    </div>
+
+    <div class="field-wrap">
+      <label class="field-label">Qual è la parte del business che volete sviluppare con i fondi?</label>
+      <div class="field-hint">La componente prodotto tessile? I servizi creativi? Lo spazio fisico? Un'espansione geografica? Una nuova linea? Capire la direzione è fondamentale per orientare le candidature.</div>
+      <textarea placeholder="Es. Vogliamo sviluppare una linea prodotto più ampia / aprire un secondo spazio / creare una piattaforma digitale / espanderci in altri mercati europei..."></textarea>
+    </div>
+
+    <div class="field-wrap">
+      <label class="field-label">Come descrivereste la vostra filiera produttiva attuale?</label>
+      <div class="field-hint">Dove vengono prodotti i vostri articoli, con quali fornitori, con quale controllo sulla catena produttiva. Anche solo a grandi linee — è un dato chiave per quasi tutti i bandi di sostenibilità.</div>
+      <div class="radio-group">
+        <div class="radio-item"><input type="radio" name="filiera" id="fi1"><label for="fi1">Produzione locale / europea — sappiamo esattamente dove e come viene prodotto tutto</label></div>
+        <div class="radio-item"><input type="radio" name="filiera" id="fi2"><label for="fi2">Produzione europea — parzialmente tracciata, ma non abbiamo documentazione completa</label></div>
+        <div class="radio-item"><input type="radio" name="filiera" id="fi3"><label for="fi3">Produzione mista — parte europea, parte fuori Europa</label></div>
+        <div class="radio-item"><input type="radio" name="filiera" id="fi4"><label for="fi4">Ancora in fase di definizione — stiamo scegliendo i partner produttivi</label></div>
+      </div>
+    </div>
+
+    <div class="field-wrap">
+      <label class="field-label">Avete già una storia di impatto da raccontare?</label>
+      <div class="field-hint">Per "storia di impatto" intendiamo: numeri concreti sul vostro contributo alla sostenibilità. Es: quanti kg di materiale sostenibile usati, quanti artisti locali coinvolti, quanta CO2 risparmiata rispetto alla produzione tradizionale. Non serve avere tutto — anche solo uno o due dati fanno la differenza.</div>
+      <div class="radio-group">
+        <div class="radio-item"><input type="radio" name="impact" id="im1"><label for="im1">Sì — abbiamo già dati e li misuriamo (specificare nelle note)</label></div>
+        <div class="radio-item"><input type="radio" name="impact" id="im2"><label for="im2">Parzialmente — abbiamo qualche dato ma non è sistematico</label></div>
+        <div class="radio-item"><input type="radio" name="impact" id="im3"><label for="im3">No — non abbiamo ancora misurato il nostro impatto in modo formale</label></div>
+        <div class="radio-item"><input type="radio" name="impact" id="im4"><label for="im4">Non sappiamo da dove iniziare — ci serve supporto su questo</label></div>
+      </div>
+    </div>
+
+    <div class="field-wrap">
+      <label class="field-label">C'è qualcosa di importante su Multiple che non abbiamo capito o che volete che sappiamo?</label>
+      <div class="field-hint">Spazio libero — tutto quello che ritieni rilevante e che non emerge dal sito o dalle fonti pubbliche.</div>
+      <textarea placeholder="La cosa più importante da sapere su Multiple Identities che non si trova online è..."></textarea>
+    </div>
+
+  </div><!-- /sezione 00 -->
+
+  <!-- TEASER OPPORTUNITÀ -->
+  <div class="teaser-box">
+    <div class="teaser-title">Cosa abbiamo trovato — in sintesi</div>
+    <div class="teaser-text">
+      Dalla nostra prima analisi emergono opportunità concrete su più fronti: strumenti fiscali attivabili immediatamente, programmi di grant specifici per il settore moda sostenibile in Olanda e a livello europeo, fondi filantropici dedicati all'impatto ESG nel tessile, e piattaforme di crowdfunding sostenibile con una community già formata e interessata a progetti come Multiple. Il potenziale complessivo che abbiamo identificato è rilevante — ma per capire a quali strumenti potete accedere oggi e con quale priorità, abbiamo bisogno dei dati qui sotto.
+    </div>
+    <div class="teaser-numeri">
+      <div class="teaser-num">
+        <div class="teaser-num-val">4+</div>
+        <div class="teaser-num-label">Categorie di strumenti identificate</div>
+      </div>
+      <div class="teaser-num">
+        <div class="teaser-num-val">€ 550K</div>
+        <div class="teaser-num-label">Potenziale totale stimato</div>
+      </div>
+      <div class="teaser-num">
+        <div class="teaser-num-val">18–24</div>
+        <div class="teaser-num-label">Mesi per realizzarlo</div>
+      </div>
+      <div class="teaser-num">
+        <div class="teaser-num-val">1</div>
+        <div class="teaser-num-label">Strumento attivabile subito</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEZIONE 01 — DATI FORMALI -->
+  <div class="form-section">
+    <div class="section-head">
+      <span class="section-head-num">01</span>
+      <span class="section-head-title">Dati Formali — La Società</span>
+      <span class="section-head-sub">Struttura legale e organizzativa</span>
+    </div>
+
+    <div class="field-wrap">
+      <label class="field-label">Nome completo della società</label>
+      <div class="field-hint">Ragione sociale ufficiale come risulta dalla Camera di Commercio olandese (KvK).</div>
+      <input type="text" placeholder="Es. Multiple Identities B.V.">
+    </div>
+
+    <div class="field-wrap">
+      <label class="field-label">Forma societaria</label>
+      <div class="field-hint">La struttura legale della vostra società. <em>BV</em> è l'equivalente olandese della Srl italiana. Se non siete sicuri, scrivete come vi siete registrati.</div>
+      <select>
+        <option value="">— Seleziona —</option>
+        <option>BV (Besloten Vennootschap — tipo Srl)</option>
+        <option>Eenmanszaak (Ditta individuale)</option>
+        <option>VOF (Vennootschap onder Firma — tipo Snc)</option>
+        <option>Stichting (Fondazione)</option>
+        <option>Ancora da costituire formalmente</option>
+        <option>Altra forma — specificare nelle note</option>
+      </select>
+    </div>
+
+    <div class="field-wrap">
+      <label class="field-label">Anno di fondazione</label>
+      <div class="field-hint">L'anno in cui la società è stata ufficialmente costituita. Influisce sull'accesso ad alcuni strumenti riservati alle aziende sotto i 5 anni.</div>
+      <input type="number" placeholder="Es. 2022" min="2010" max="2026">
+    </div>
+
+    <div class="field-wrap">
+      <label class="field-label">Sede legale (città e paese)</label>
+      <div class="field-hint">Città in cui è registrata la società. Alcune opportunità sono legate alla regione olandese specifica (Amsterdam, Rotterdam, Eindhoven, ecc.).</div>
+      <input type="text" placeholder="Es. Amsterdam, Paesi Bassi">
+    </div>
+
+    <div class="field-wrap">
+      <label class="field-label">Composizione del team</label>
+      <div class="field-hint">Numero di persone che lavorano in Multiple — inclusi fondatori, dipendenti e collaboratori stabili. La presenza di <em>donne in ruoli chiave</em> e di <em>under 35</em> è un elemento premiante in molti programmi.</div>
+      <div class="fascia-grid">
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--testo-sec);margin-bottom:8px;">Numero totale persone</div>
+          <input type="number" placeholder="Es. 3" min="1" max="50">
+        </div>
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--testo-sec);margin-bottom:8px;">Di cui donne in ruoli chiave</div>
+          <input type="number" placeholder="Es. 2" min="0" max="50">
+        </div>
+      </div>
+    </div>
+
+    <div class="field-wrap">
+      <label class="field-label">Ruoli presenti nel team</label>
+      <div class="field-hint">Seleziona tutte le aree coperte attualmente dal vostro team.</div>
+      <div class="check-group">
+        <div class="check-item"><input type="checkbox" id="r1"><label for="r1">Fondatore/CEO</label></div>
+        <div class="check-item"><input type="checkbox" id="r2"><label for="r2">Design / Prodotto</label></div>
+        <div class="check-item"><input type="checkbox" id="r3"><label for="r3">Sviluppo / Ricerca materiali</label></div>
+        <div class="check-item"><input type="checkbox" id="r4"><label for="r4">Marketing / Comunicazione</label></div>
+        <div class="check-item"><input type="checkbox" id="r5"><label for="r5">Supply chain / Produzione</label></div>
+        <div class="check-item"><input type="checkbox" id="r6"><label for="r6">Amministrazione / Finanza</label></div>
+        <div class="check-item"><input type="checkbox" id="r7"><label for="r7">Altro — specificare nelle note</label></div>
+      </div>
+    </div>
+
+    <div class="field-wrap">
+      <label class="field-label">Certificazioni ESG esistenti</label>
+      <div class="field-hint"><em>ESG</em> = Environmental, Social, Governance — le certificazioni che attestano che la vostra attività è davvero sostenibile. Se non avete ancora nulla, non è un problema — è un'informazione utile per capire i prossimi passi.</div>
+      <div class="check-group">
+        <div class="check-item"><input type="checkbox" id="c1"><label for="c1">B Corp — certificazione internazionale per imprese sostenibili</label></div>
+        <div class="check-item"><input type="checkbox" id="c2"><label for="c2">GOTS — Global Organic Textile Standard (tessuti biologici)</label></div>
+        <div class="check-item"><input type="checkbox" id="c3"><label for="c3">Fair Trade — commercio equo e solidale</label></div>
+        <div class="check-item"><input type="checkbox" id="c4"><label for="c4">OEKO-TEX — sicurezza e sostenibilità dei tessuti</label></div>
+        <div class="check-item"><input type="checkbox" id="c5"><label for="c5">Altra certificazione — specificare nelle note</label></div>
+        <div class="check-item"><input type="checkbox" id="c6"><label for="c6">Nessuna certificazione al momento</label></div>
+      </div>
+    </div>
+
+    <div class="field-wrap">
+      <label class="field-label">Attività di Ricerca & Sviluppo</label>
+      <div class="field-hint"><em>Ricerca & Sviluppo (R&S)</em> significa: tempo dedicato a sviluppare nuovi materiali, nuovi processi produttivi, nuovi design sostenibili. Anche testare un tessuto riciclato o studiare una filiera alternativa conta come R&S.</div>
+      <div class="radio-group">
+        <div class="radio-item"><input type="radio" name="rs" id="rs1"><label for="rs1">Sì — abbiamo personale dedicato allo sviluppo (almeno 4 ore/settimana)</label></div>
+        <div class="radio-item"><input type="radio" name="rs" id="rs2"><label for="rs2">Sì — ma è attività distribuita tra più persone, non dedicata</label></div>
+        <div class="radio-item"><input type="radio" name="rs" id="rs3"><label for="rs3">In parte — difficile quantificarla al momento</label></div>
+        <div class="radio-item"><input type="radio" name="rs" id="rs4"><label for="rs4">No — non abbiamo ancora formalizzato attività R&S</label></div>
+      </div>
+    </div>
+
+    <div class="field-wrap">
+      <label class="field-label">Se avete attività R&S — descrivete brevemente in cosa consiste</label>
+      <div class="field-hint">Anche in poche righe. Es: "Studio di materiali riciclati alternativi al poliestere", "Test di fornitori sostenibili certificati", "Sviluppo di un processo di tintura a basso impatto idrico".</div>
+      <textarea placeholder="Descrivi brevemente le attività di sviluppo / ricerca che svolge il team..."></textarea>
+    </div>
+
+    <div class="field-wrap">
+      <label class="field-label">Avete già ricevuto fondi, grant o finanziamenti pubblici in passato?</label>
+      <div class="field-hint">Qualsiasi tipo: bandi governativi, premi, acceleratori, contributi regionali. Serve per capire il vostro storico di finanziamenti e se ci sono eventuali vincoli da rispettare.</div>
+      <div class="radio-group">
+        <div class="radio-item"><input type="radio" name="past" id="p1"><label for="p1">No — è la prima volta che esploriamo questi strumenti</label></div>
+        <div class="radio-item"><input type="radio" name="past" id="p2"><label for="p2">Sì — abbiamo già ricevuto fondi (specificare nelle note)</label></div>
+        <div class="radio-item"><input type="radio" name="past" id="p3"><label for="p3">Abbiamo fatto domanda ma non siamo stati selezionati</label></div>
+      </div>
+    </div>
+
+  </div><!-- /sezione 01 -->
+
+  <!-- SEZIONE 02 — DATI ECONOMICI -->
+  <div class="form-section">
+    <div class="section-head">
+      <span class="section-head-num">02</span>
+      <span class="section-head-title">Dati Economici — I Numeri</span>
+      <span class="section-head-sub">Situazione finanziaria e fabbisogno</span>
+    </div>
+
+    <div class="field-wrap">
+      <label class="field-label">Fatturato degli ultimi 12 mesi (circa)</label>
+      <div class="field-hint">Non serve un numero preciso — una fascia va bene. Serve per capire in quale fase di sviluppo si trova Multiple e quali strumenti sono accessibili.</div>
+      <div class="radio-group">
+        <div class="radio-item"><input type="radio" name="fat" id="f1"><label for="f1">Ancora pre-revenue (non abbiamo ancora venduto)</label></div>
+        <div class="radio-item"><input type="radio" name="fat" id="f2"><label for="f2">Sotto €10.000 — prime vendite test</label></div>
+        <div class="radio-item"><input type="radio" name="fat" id="f3"><label for="f3">€10.000 – €50.000</label></div>
+        <div class="radio-item"><input type="radio" name="fat" id="f4"><label for="f4">€50.000 – €150.000</label></div>
+        <div class="radio-item"><input type="radio" name="fat" id="f5"><label for="f5">Oltre €150.000</label></div>
+      </div>
+    </div>
+
+    <div class="field-wrap">
+      <label class="field-label">Costi mensili attuali (circa)</label>
+      <div class="field-hint">Somma di tutto quello che spende Multiple ogni mese: stipendi, produzione, fornitori, marketing, affitto, ecc. Anche qui una fascia è sufficiente.</div>
+      <div class="radio-group">
+        <div class="radio-item"><input type="radio" name="cost" id="co1"><label for="co1">Sotto €5.000 / mese</label></div>
+        <div class="radio-item"><input type="radio" name="cost" id="co2"><label for="co2">€5.000 – €15.000 / mese</label></div>
+        <div class="radio-item"><input type="radio" name="cost" id="co3"><label for="co3">€15.000 – €30.000 / mese</label></div>
+        <div class="radio-item"><input type="radio" name="cost" id="co4"><label for="co4">Oltre €30.000 / mese</label></div>
+      </div>
+    </div>
+
+    <div class="field-wrap">
+      <label class="field-label">Di questi costi — quanto va a stipendi / compensi del team?</label>
+      <div class="field-hint">La quota di costi destinata alle persone è un dato chiave per accedere ad alcuni strumenti fiscali olandesi (come il credito R&S). Anche una percentuale approssimativa va bene.</div>
+      <div class="radio-group">
+        <div class="radio-item"><input type="radio" name="stip" id="s1"><label for="s1">Meno del 20% — siamo ancora una struttura molto snella</label></div>
+        <div class="radio-item"><input type="radio" name="stip" id="s2"><label for="s2">20–50% — team parziale, qualcuno già retribuito</label></div>
+        <div class="radio-item"><input type="radio" name="stip" id="s3"><label for="s3">Oltre il 50% — il team è il costo principale</label></div>
+        <div class="radio-item"><input type="radio" name="stip" id="s4"><label for="s4">Non ho questo dato preciso al momento</label></div>
+      </div>
+    </div>
+
+    <div class="field-wrap">
+      <label class="field-label">Quante ore/settimana il team dedica allo sviluppo del prodotto o del processo?</label>
+      <div class="field-hint">Inteso come ore di lavoro su: design, ricerca materiali, test produzione, sviluppo della filiera sostenibile. Non include vendite, marketing o amministrazione. Questo dato è fondamentale per alcuni strumenti specifici.</div>
+      <div class="radio-group">
+        <div class="radio-item"><input type="radio" name="ore" id="o1"><label for="o1">Meno di 10 ore/settimana in totale</label></div>
+        <div class="radio-item"><input type="radio" name="ore" id="o2"><label for="o2">10–30 ore/settimana</label></div>
+        <div class="radio-item"><input type="radio" name="ore" id="o3"><label for="o3">30–60 ore/settimana (equivalente 1 persona full-time)</label></div>
+        <div class="radio-item"><input type="radio" name="ore" id="o4"><label for="o4">Oltre 60 ore/settimana (più persone dedicate)</label></div>
+      </div>
+    </div>
+
+    <div class="field-wrap">
+      <label class="field-label">Fabbisogno finanziario — confermate circa €25.000 al mese per 18 mesi?</label>
+      <div class="field-hint">Questo è il dato che ci avete condiviso. Aiutateci a capire meglio come si distribuisce questo fabbisogno tra le diverse aree.</div>
+      <div class="radio-group">
+        <div class="radio-item"><input type="radio" name="fab" id="fa1"><label for="fa1">Sì — €25.000/mese è corretto</label></div>
+        <div class="radio-item"><input type="radio" name="fab" id="fa2"><label for="fa2">Il numero è indicativo — il fabbisogno reale è diverso (specificare nelle note)</label></div>
+        <div class="radio-item"><input type="radio" name="fab" id="fa3"><label for="fa3">Non abbiamo ancora un piano finanziario dettagliato</label></div>
+      </div>
+    </div>
+
+    <div class="field-wrap">
+      <label class="field-label">Come si distribuisce il fabbisogno? (selezione multipla)</label>
+      <div class="field-hint">Seleziona le voci principali a cui servirebbero i fondi. Aiuta a capire quali strumenti sono più adatti.</div>
+      <div class="check-group">
+        <div class="check-item"><input type="checkbox" id="u1"><label for="u1">Stipendi e compensi del team</label></div>
+        <div class="check-item"><input type="checkbox" id="u2"><label for="u2">Sviluppo e test del prodotto</label></div>
+        <div class="check-item"><input type="checkbox" id="u3"><label for="u3">Produzione (prima collezione o batch)</label></div>
+        <div class="check-item"><input type="checkbox" id="u4"><label for="u4">Ricerca fornitori e materiali sostenibili</label></div>
+        <div class="check-item"><input type="checkbox" id="u5"><label for="u5">Marketing e comunicazione</label></div>
+        <div class="check-item"><input type="checkbox" id="u6"><label for="u6">Certificazioni e compliance (ottenere certificazioni ESG)</label></div>
+        <div class="check-item"><input type="checkbox" id="u7"><label for="u7">Tecnologia / Piattaforma digitale</label></div>
+        <div class="check-item"><input type="checkbox" id="u8"><label for="u8">Altro — specificare nelle note</label></div>
+      </div>
+    </div>
+
+    <div class="field-wrap">
+      <label class="field-label">Avete budget disponibile per i costi di candidatura?</label>
+      <div class="field-hint">Alcune candidature richiedono documentazione professionale, traduzioni, consulenze legali o commerciali. Capire se c'è budget disponibile aiuta a scegliere la strategia giusta.</div>
+      <div class="radio-group">
+        <div class="radio-item"><input type="radio" name="bud" id="b1"><label for="b1">Sì — abbiamo un piccolo budget disponibile (sotto €5.000)</label></div>
+        <div class="radio-item"><input type="radio" name="bud" id="b2"><label for="b2">Sì — abbiamo budget più consistente (oltre €5.000)</label></div>
+        <div class="radio-item"><input type="radio" name="bud" id="b3"><label for="b3">No — al momento non abbiamo budget da dedicare</label></div>
+        <div class="radio-item"><input type="radio" name="bud" id="b4"><label for="b4">Dipende dai termini — valutiamo caso per caso</label></div>
+      </div>
+    </div>
+
+    <div class="field-wrap">
+      <label class="field-label">Interesse per il crowdfunding</label>
+      <div class="field-hint">Il crowdfunding non è solo raccolta fondi — è anche uno strumento di marketing e costruzione di community. Capire il vostro interesse ci aiuta a capire se ha senso includerlo nel piano.</div>
+      <div class="radio-group">
+        <div class="radio-item"><input type="radio" name="crowd" id="cr1"><label for="cr1">Molto interessati — lo vediamo come strumento di marketing oltre che di raccolta</label></div>
+        <div class="radio-item"><input type="radio" name="crowd" id="cr2"><label for="cr2">Interessati — ma solo se non richiede molto tempo</label></div>
+        <div class="radio-item"><input type="radio" name="crowd" id="cr3"><label for="cr3">Poco interessati — preferiamo concentrarci sui fondi tradizionali</label></div>
+        <div class="radio-item"><input type="radio" name="crowd" id="cr4"><label for="cr4">Non lo conosciamo bene — vorremmo capire meglio</label></div>
+      </div>
+    </div>
+
+  </div><!-- /sezione 02 -->
+
+  <!-- NOTE LIBERE -->
+  <div class="form-section">
+    <div class="section-head">
+      <span class="section-head-num">03</span>
+      <span class="section-head-title">Note Libere</span>
+      <span class="section-head-sub">Tutto quello che non entra nelle risposte sopra</span>
+    </div>
+    <div class="note-finali">
+      <div class="note-finali-label">Aggiungi qui qualsiasi informazione che ritieni utile</div>
+      <textarea style="min-height:140px;" placeholder="Es. abbiamo già un contatto con un fondo specifico / stiamo valutando un partner industriale / abbiamo una collezione in uscita a settembre / abbiamo dubbi su X..."></textarea>
+    </div>
+
+    <div class="field-wrap">
+      <label class="field-label">Il tuo nome e contatto diretto</label>
+      <div class="field-hint">Per chi compila questo modulo — così sappiamo a chi rispondere.</div>
+      <div class="fascia-grid">
+        <input type="text" placeholder="Nome e cognome">
+        <input type="email" placeholder="Email o numero WhatsApp">
+      </div>
+    </div>
+  </div>
+
+  <!-- SUBMIT -->
+  <div class="submit-area no-print">
+    <div class="submit-text">
+      Quando hai finito, <strong>stampa questa pagina come PDF</strong> e mandacela via email a <strong>Valzinga@gmail.com</strong> oppure via WhatsApp al <strong>+39 335 7230240</strong>. Con questi dati costruiamo la scheda completa e ti presentiamo le opportunità specifiche per Multiple.
+    </div>
+    <button class="btn-submit" onclick="inviato()">STAMPA / SALVA PDF →</button>
+  </div>
+  <div class="submit-confirm" id="submit-confirm">
+    ✓ Usa il tasto "Stampa / PDF" in alto a destra per salvare questo documento e inviarcelo.
+  </div>
+
+</div><!-- /container -->
+
+<footer>
+  <div class="footer-brand">Franki Studio × Multiple Identities — Scheda Conoscitiva</div>
+  <div class="footer-date">Maggio 2026 · v1.0</div>
+</footer>
+
+<script>
+function inviato() {
+  document.getElementById('submit-confirm').style.display = 'block';
+  window.print();
+}
+</script>
+
+</body>
+</html>

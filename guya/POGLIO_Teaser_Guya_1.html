@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Il Poglío — Per Guya</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--blu:#2B38B0;--arancio:#F0A500;--grigio-bg:#F2F1ED;--bianco:#FFFFFF;--nero:#111118;--testo:#1a1a2e;--verde:#1a7a50;--oliva:#6B8C52;}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Barlow',sans-serif;background:var(--grigio-bg);color:var(--testo);max-width:680px;margin:0 auto;font-size:15px;line-height:1.6}
+.navbar{background:var(--blu);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.fk-logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;line-height:1;display:inline-flex;align-items:center}
+.fk-logo .fran{color:#FFFFFF}
+.fk-logo .ki{background:#F0A500;color:#FFFFFF;border-radius:5px;padding:1px 7px;margin-left:2px;display:inline-block}
+.logo-tagline{font-size:10px;color:rgba(255,255,255,.5);letter-spacing:.08em}
+.nav-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.6)}
+
+/* HERO */
+.hero{background:var(--nero);color:var(--bianco);padding:52px 20px 48px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 40px,rgba(43,56,176,.06) 40px,rgba(43,56,176,.06) 41px)}
+.hero-kicker{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--arancio);margin-bottom:16px;position:relative}
+.hero-logo{margin-bottom:30px;position:relative}
+.hero-logo svg{width:300px;height:auto}
+.hero-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:46px;line-height:.9;text-transform:uppercase;margin-bottom:22px;position:relative}
+.hero-title em{color:var(--arancio);font-style:normal;display:block}
+.hero-sub{font-size:15px;color:rgba(255,255,255,.75);line-height:1.75;border-left:3px solid var(--arancio);padding-left:16px;max-width:460px;position:relative}
+.div-orange{height:4px;background:var(--arancio)}
+
+/* SH */
+.sh{background:var(--blu);color:var(--bianco);padding:11px 20px;display:flex;align-items:center;gap:10px;margin-top:20px}
+.sh-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:15px;text-transform:uppercase;letter-spacing:.06em}
+.sh-badge{margin-left:auto;background:var(--arancio);color:var(--nero);font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;padding:2px 8px;border-radius:2px}
+
+/* CARD NARRATIVA */
+.card{background:var(--bianco);padding:28px 20px;margin:2px 0}
+.card p{font-size:15px;color:#333;line-height:1.85;margin-bottom:18px}
+.card p:last-child{margin-bottom:0}
+.card strong{color:var(--nero)}
+.card em{font-style:italic;color:#555}
+
+/* QUOTE */
+.quote{background:var(--bianco);padding:28px 20px 28px 24px;margin:2px 0;border-left:4px solid var(--arancio)}
+.quote p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:23px;color:var(--testo);line-height:1.5}
+
+/* ORANGE BAND */
+.orange-band{background:var(--arancio);padding:24px 20px;margin:2px 0}
+.orange-band h3{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;text-transform:uppercase;color:var(--nero);margin-bottom:10px}
+.orange-band p{font-size:14px;color:rgba(0,0,0,.85);line-height:1.8}
+
+/* STATEMENT — banda blu */
+.statement{background:var(--blu);color:var(--bianco);padding:24px 20px;margin:2px 0}
+.statement p{font-size:15px;color:rgba(255,255,255,.85);line-height:1.8;font-style:italic}
+.statement strong{color:var(--arancio);font-style:normal}
+
+/* PALETTE */
+.palette{display:flex;gap:2px;margin:2px 0;height:68px}
+.pal-col{flex:1;display:flex;align-items:flex-end;padding:6px}
+.pal-nome{font-family:'Barlow Condensed',sans-serif;font-size:9px;letter-spacing:.08em;text-transform:uppercase;line-height:1.4}
+
+/* HL */
+.hl-blue{background:#e8ecff;border-left:4px solid var(--blu);padding:16px 20px;margin:2px 0}
+.hl-blue p{font-size:14px;color:#1a2480;margin:0;line-height:1.75}
+.hl-green{background:#e6f7f0;border-left:4px solid var(--verde);padding:16px 20px;margin:2px 0}
+.hl-green p{font-size:14px;color:#145c3c;margin:0;line-height:1.75}
+
+/* DOMANDA FINALE */
+.domanda{background:var(--bianco);padding:32px 20px;margin:2px 0;border-top:4px solid var(--blu)}
+.domanda-label{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--arancio);margin-bottom:14px}
+.domanda-testo{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:26px;color:var(--testo);line-height:1.35;margin-bottom:20px}
+.domanda-sub{font-size:14px;color:#666;line-height:1.8}
+
+/* DARK CTA */
+.dark-cta{background:var(--nero);color:var(--bianco);padding:48px 20px;text-align:center}
+.dark-cta h2{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:36px;text-transform:uppercase;line-height:.9;margin-bottom:14px}
+.dark-cta h2 em{color:var(--arancio);font-style:normal;display:block}
+.dark-cta p{font-size:13px;color:rgba(255,255,255,.5);max-width:400px;margin:0 auto}
+.confid{background:var(--blu);padding:10px 20px;font-size:10px;color:rgba(255,255,255,.3);text-align:center;letter-spacing:.06em}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div><div class="fk-logo"><span class="fran">Fran</span><span class="ki">Ki</span></div><div class="logo-tagline">We Start Your Ideas</div></div>
+  <div class="nav-label">Per Guya · Aprile 2026</div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-kicker">Un progetto. Una storia. Un posto che non esiste ancora.</div>
+  <div class="hero-logo">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 130">
+      <text x="42" y="36" font-family="Cormorant Garamond,serif" font-size="14" font-style="italic" font-weight="300" letter-spacing="5" fill="#8FAF6A">il</text>
+      <text x="30" y="95" font-family="Cormorant Garamond,serif" font-size="62" font-weight="400" letter-spacing="12" fill="#F5F0E8">POGLÍO</text>
+      <text x="200" y="114" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="10" font-weight="300" letter-spacing="4" fill="#8FAF6A">Roccaraso · 1023m</text>
+    </svg>
+  </div>
+  <div class="hero-title">C'ERA UNA VOLTA<br>UN VILLAGGIO<br><em>NEL BOSCO.</em></div>
+  <div class="hero-sub">Questo è il racconto di un luogo che ha aspettato trent'anni. E di quello che sta per diventare.</div>
+</div>
+<div class="div-orange"></div>
+
+<!-- 01 LA STORIA -->
+<div class="sh"><div class="sh-title">01 · La Storia</div><div class="sh-badge">1956 — oggi</div></div>
+
+<div class="card">
+  <p>Nel 1956 l'ENEL costruisce un villaggio in montagna per i propri dipendenti. Non un benefit per i manager — un diritto per tutti. La regola è semplice e radicale: ogni lavoratore, dall'operaio al direttore generale, ha diritto alla stessa settimana in montagna. Le quote si assegnano per sorteggio. Nessun privilegio. Nessuna gerarchia. La montagna uguale per tutti.</p>
+  <p>Il villaggio si chiama Soggiorno Montano ENEL. Si trova a Roccaraso, in Abruzzo, a quota 1.023 metri, nel mezzo di 22 ettari di bosco. Per decenni è uno dei posti più ambiti dai dipendenti dell'azienda elettrica italiana — ci vanno le famiglie, i figli, i nonni. Si respira un'aria che sa di legno e resina e libertà.</p>
+  <p>Poi, negli anni '90, il villaggio chiude. L'ENEL si ristruttura, i benefit vengono tagliati, e quel posto nel bosco rimane lì — vuoto, silenzioso, con i suoi appartamenti e le sue palazzine e i suoi trent'anni di attesa.</p>
+  <p><strong>Adesso torna.</strong> Con un nome nuovo e un'idea nuova — ma la stessa convinzione che ci sia un modo di stare in montagna che non ha niente a che fare con il lusso ostentato.</p>
+</div>
+
+<div class="quote"><p>"Il nome è già nel luogo da settant'anni. Si chiama Loc. Il Poggio. Diventa il Poglío. Una parola che non si spiega — si scopre."</p></div>
+
+<!-- 02 IL LUOGO -->
+<div class="sh" style="margin-top:20px"><div class="sh-title">02 · Il Luogo</div><div class="sh-badge">appennino centrale</div></div>
+
+<div class="card">
+  <p>Tra Roma e Napoli vivono venti milioni di persone. A due ore di macchina da entrambe le città — nel cuore dell'Appennino abruzzese, a ridosso del Parco della Maiella — c'è un bosco di 22 ettari che la maggior parte di quelle persone non sa che esiste.</p>
+  <p>Il cielo sopra Roccaraso è uno dei più bui d'Italia. Di notte si vede la Via Lattea a occhio nudo. Il comprensorio sciistico più grande del Centro-Sud è a cinque minuti. D'estate il bosco è silenzioso come pochi posti al mondo sanno essere. D'inverno la neve arriva alta e vera.</p>
+  <p>Non è un posto che si costruisce — è un posto che si trova. E questo è già tutto.</p>
+</div>
+
+<div class="statement">
+  <p>"Tra Roma e Napoli, <strong>venti milioni di persone</strong> non hanno ancora un posto così. Zero club privati di montagna con un'identità forte. Zero luoghi dove si va per scegliere il silenzio invece di subirlo. Il mercato esiste. Il prodotto non c'è ancora."</p>
+</div>
+
+<!-- 03 L'IDEA -->
+<div class="sh" style="margin-top:20px"><div class="sh-title">03 · L'Idea</div><div class="sh-badge">il concept</div></div>
+
+<div class="card">
+  <p>Il Poglío non è un hotel. Non è una spa. Non è l'ennesimo agriturismo chic con le travi a vista e il prosciutto appeso al soffitto. È qualcosa che in Italia non esiste ancora — <strong>un club privato di reset</strong>, dove si viene per scegliere consapevolmente di rallentare.</p>
+
+  <p>L'idea ha tre anime che convivono nello stesso posto, senza schiacciarsi a vicenda.</p>
+
+  <p>La prima è il <strong>club dei soci fondatori</strong>. Un gruppo selezionato di persone — 140, non una di più — che entrano per prime e costruiscono l'identità del posto insieme a noi. Non sono clienti. Sono parte del progetto. Hanno accesso prioritario, tariffe riservate, un wellness hub che funziona tutto l'anno — sauna nel bosco, cold plunge, protocolli di longevità che nel resto d'Italia quasi non esistono. Vengono qui per staccare davvero, non per fingere di farlo.</p>
+
+  <p>La seconda è il <strong>corporate retreat</strong>. Le aziende cercano posti dove portare i team per pensare — fuori dall'ufficio, lontano dalle distrazioni, in un posto che dica qualcosa su chi sono. Il Poglío ha una sala da 80 persone nel bosco, una cucina di qualità, un contesto che fa la differenza. Non si affitta uno spazio conferenze — si porta il team in un luogo che ricorderanno.</p>
+
+  <p>La terza è la <strong>componente sociale</strong>. Dieci settimane all'anno il posto apre a chi non potrebbe permetterselo — anziani, giovani di periferia, famiglie in difficoltà. Non è charity. È un contratto di servizio con gli enti pubblici, e serve a tenere viva l'anima originaria del villaggio ENEL. Quella per cui tutte le settimane erano uguali, per tutti.</p>
+</div>
+
+<div class="hl-green">
+  <p><strong>Le bolle nel bosco.</strong> Sei strutture trasparenti tra gli alberi — jacuzzi privata, telescopio, cielo stellato sopra la testa. Aprono prima ancora che finisca il cantiere principale. Sono il primo prodotto visibile del progetto — e la prima immagine che nessuno ha ancora.</p>
+</div>
+
+<!-- 04 CHI CI CREDE -->
+<div class="sh" style="margin-top:20px"><div class="sh-title">04 · Chi Ci Crede</div><div class="sh-badge">l'ecosistema</div></div>
+
+<div class="card">
+  <p>Un progetto così non si costruisce da soli. Intorno al Poglío si sta formando un ecosistema di persone e soggetti che ci credono — ognuno per ragioni diverse, ognuno con un ruolo preciso.</p>
+
+  <p>Ci sono i <strong>soci fondatori</strong> — le 140 persone che entrano per prime, prima ancora che apra la prima camera. Sono il cuore del club. La loro presenza è già una dichiarazione: questo posto vale la pena aspettarlo.</p>
+
+  <p>Ci sono gli <strong>investitori</strong> — fondi e privati che vedono nel Poglío un'opportunità che il mercato italiano del turismo premium non ha ancora espresso. Un asset straordinario, una storia impossibile da replicare, un modello che genera revenue da più fonti. Entrano nel capitale e aspettano l'uscita con pazienza.</p>
+
+  <p>Ci sono gli <strong>operatori</strong> — chi porta competenza specifica: il general manager con background nell'hospitality di lusso, chi gestisce il wellness hub, chi organizza i corporate retreat, chi si occupa dei programmi sociali. Il progetto funziona perché le persone giuste sono nel posto giusto.</p>
+
+  <p>E ci sono le <strong>istituzioni</strong> — il PNRR, i bandi regionali, le fondazioni bancarie che vedono nel recupero del villaggio ENEL un'operazione di rigenerazione culturale e territoriale. Finanziano una parte della ristrutturazione perché il progetto ha senso anche per loro.</p>
+
+  <p>Non è una struttura societaria — è una comunità di interessi. Persone diverse che convergono sullo stesso posto per ragioni diverse, e che insieme rendono possibile qualcosa che nessuno potrebbe fare da solo.</p>
+</div>
+
+<div class="orange-band">
+  <h3>La comunicazione serve tutto questo</h3>
+  <p>Ogni soggetto ha bisogno di una voce diversa — ma tutte devono venire dallo stesso posto. Il socio fondatore e l'investitore istituzionale, l'HR director di un'azienda e il giornalista di un travel magazine, l'ente pubblico e il turista che ancora non sa che il Poglío esiste. La sfida della comunicazione è tenere tutto insieme senza perdere l'identità.</p>
+</div>
+
+<!-- 05 IL BRAND -->
+<div class="sh" style="margin-top:20px"><div class="sh-title">05 · Il Brand</div><div class="sh-badge">lusso silenzioso</div></div>
+
+<div class="card">
+  <p>Il Poglío non è un brand che si costruisce — è un brand che si rivela. La storia, il luogo, il bosco, il cielo sono già lì. Il lavoro della comunicazione è togliere, non aggiungere.</p>
+  <p>Il colore è il bosco alle sei di mattina — verde scuro, quasi nero, con l'oro delle prime luci tra le foglie. L'avorio della carta da lettere che si lascia sul tavolo. La sabbia del sentiero che sale verso le bolle. Niente che urli. Tutto che rimanga.</p>
+  <p>La voce parla poco e dice molto. Nessun superlativo. Nessuna promessa esplicita. Il brand non convince — <em>invita</em>. Chi capisce è già nella lista giusta.</p>
+  <p>L'ispirazione viene da posti come Lefay sul Lago di Garda, Remoto in Patagonia, Six Senses ovunque nel mondo. Ma il Poglío non li imita — ha qualcosa che loro non hanno: una storia italiana vera, popolare, collettiva. Quella storia vale più di qualsiasi campagna.</p>
+</div>
+
+<!-- PALETTE -->
+<div class="palette">
+  <div class="pal-col" style="background:#2A3A1E"><div class="pal-nome" style="color:rgba(107,140,82,.9)">Bosco<br>#2A3A1E</div></div>
+  <div class="pal-col" style="background:#6B8C52"><div class="pal-nome" style="color:rgba(245,240,232,.8)">Oliva<br>#6B8C52</div></div>
+  <div class="pal-col" style="background:#9C8B6E"><div class="pal-nome" style="color:rgba(245,240,232,.8)">Oro opaco<br>#9C8B6E</div></div>
+  <div class="pal-col" style="background:#D4C5A9"><div class="pal-nome" style="color:#2A3A1E">Sabbia<br>#D4C5A9</div></div>
+  <div class="pal-col" style="background:#F5F0E8"><div class="pal-nome" style="color:#2A3A1E">Avorio<br>#F5F0E8</div></div>
+</div>
+
+<!-- 06 IL MERCATO -->
+<div class="sh" style="margin-top:20px"><div class="sh-title">06 · Il Mercato</div><div class="sh-badge">il vuoto da riempire</div></div>
+
+<div class="card">
+  <p>In Germania ci sono già. In Scozia ci sono già. In Scandinavia ci sono già — i longevity retreat, i nordic wellness hub, i dark sky lodge dove si va per stare bene davvero, non per sembrare che si stia bene. In Italia quasi non esistono. Nell'Italia centrale non esiste niente di tutto questo.</p>
+  <p>Non è una nicchia. È un mercato intero che aspetta il prodotto giusto. Le persone ci sono — professionisti, imprenditori, famiglie — e cercano qualcosa di diverso dall'albergo congressi e dal resort all inclusive. Lo cercano, non lo trovano, e alla fine vanno a cercarlo all'estero.</p>
+  <p>Chi arriva primo in un mercato vuoto non compete. <strong>Definisce la categoria.</strong> Diventa il riferimento. Tutto quello che viene dopo verrà confrontato con lui. Questa è la finestra del Poglío.</p>
+</div>
+
+<div class="hl-blue">
+  <p><strong>La storia ENEL è l'asset di comunicazione più potente che il progetto ha.</strong> Nessun capitale può comprare settant'anni di memoria collettiva. È già lì — e aspettava solo di essere raccontata bene.</p>
+</div>
+
+<!-- 07 LA DOMANDA PER GUYA -->
+<div class="sh" style="margin-top:20px"><div class="sh-title">07 · Per Te</div><div class="sh-badge">la conversazione</div></div>
+
+<div class="domanda">
+  <div class="domanda-label">Perché te lo stiamo mostrando</div>
+  <div class="domanda-testo">"Stiamo cercando persone che capiscono questo tipo di progetto prima che venga spiegato."</div>
+  <div class="domanda-sub">
+    <p style="margin-bottom:14px">Il Poglío ha bisogno di una voce. Non di una campagna — di una narrativa. Qualcuno che sappia parlare ai soci fondatori con emozione e ai fondi di investimento con credibilità, che costruisca l'attesa durante il cantiere e il desiderio prima dell'apertura, che capisca che la storia ENEL non è un dettaglio di colore ma il cuore di tutto.</p>
+    <p style="margin-bottom:14px">C'è un lavoro da fare — brand identity, strategia di lancio, sito web, social, PR, comunicazione B2B per i corporate retreat. È un lavoro che inizia adesso e cresce con il progetto.</p>
+    <p>Ti chiediamo una sola cosa: <strong>raccontaci come lo vedi tu.</strong> Non un piano. Non una proposta. Solo il tuo primo istinto — cosa ti ha colpito, cosa ti manca, come lo racconteresti a qualcuno che non sa ancora che esiste. Quella risposta ci dice già molto.</p>
+  </div>
+</div>
+
+<div class="dark-cta">
+  <h2>UN POSTO<br>CHE ASPETTAVA.<br><em>UNA STORIA<br>DA RACCONTARE.</em></h2>
+  <p>Se vuoi sapere di più — scrivi. Sarà una conversazione, non un brief.</p>
+</div>
+
+<div class="confid">Per Guya · FranKi Studio (Avre Srl · Napoli) · Aprile 2026 · Uso riservato</div>
+</body>
+</html>

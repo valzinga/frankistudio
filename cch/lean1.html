@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test Lean #1 — Oil Tasting & Pane di Maura · CCH</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Lato:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue:#3549B5; --blue-dark:#1E2E8A; --blue-light:#EBF0FF;
+  --amber:#F9AC28; --amber-dark:#C07800; --amber-light:#FFF7E0;
+  --green:#1A7A4A; --green-light:#E0F5EC; --green-text:#0A4A28;
+  --ink:#1A1714; --gray:#6B6560; --cream:#FAF9F6; --cream-dark:#EDEBE4;
+  --white:#FFFFFF;
+  --display:'Bebas Neue',sans-serif;
+  --label:'DM Mono',monospace;
+  --body:'Lato',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--cream);color:var(--ink);font-family:var(--body);font-size:1rem;line-height:1.75;-webkit-font-smoothing:antialiased;}
+p{margin-bottom:.9rem;} p:last-child{margin-bottom:0;}
+
+/* HEADER */
+.hdr{background:var(--amber-dark);padding:2.5rem 3rem;position:relative;overflow:hidden;}
+.hdr::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(-55deg,transparent,transparent 28px,rgba(0,0,0,.04) 28px,rgba(0,0,0,.04) 29px);}
+.hdr::after{content:'';position:absolute;bottom:0;left:0;right:0;height:4px;background:var(--blue-dark);}
+.hdr__brand{font-family:var(--label);font-size:.58rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:.4rem;position:relative;}
+.hdr__num{font-family:var(--display);font-size:5rem;line-height:1;color:rgba(255,255,255,.15);position:absolute;top:1.5rem;right:2rem;letter-spacing:.02em;}
+.hdr__title{font-family:var(--display);font-size:clamp(2rem,4vw,3rem);letter-spacing:.04em;color:var(--white);position:relative;line-height:1.05;}
+.hdr__sub{font-size:.95rem;color:rgba(255,255,255,.65);margin-top:.5rem;position:relative;font-style:italic;}
+.hdr__meta{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.2rem;position:relative;}
+
+.pill{display:inline-block;font-family:var(--label);font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;padding:.25rem .8rem;border-radius:20px;}
+.pill--dark{background:rgba(0,0,0,.25);color:var(--white);}
+.pill--white{background:var(--white);color:var(--amber-dark);}
+.pill--green{background:var(--green-light);color:var(--green-text);}
+.pill--blue{background:var(--blue-light);color:var(--blue-dark);}
+
+.corpo{max-width:900px;margin:0 auto;padding:2.5rem 3rem 4rem;}
+.sep{height:1px;background:var(--cream-dark);margin:2.5rem 0;}
+
+/* INTRO */
+.intro{background:var(--blue-dark);border-radius:8px;padding:1.6rem 2rem;margin-bottom:2rem;position:relative;overflow:hidden;}
+.intro::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(-55deg,transparent,transparent 28px,rgba(255,255,255,.02) 28px,rgba(255,255,255,.02) 29px);}
+.intro__label{font-family:var(--label);font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);margin-bottom:.5rem;position:relative;}
+.intro__text{font-size:.95rem;color:rgba(255,255,255,.75);line-height:1.7;position:relative;}
+.intro__text strong{color:var(--amber);}
+
+/* STEP ROADMAP */
+.steps{display:flex;flex-direction:column;gap:0;}
+.step{display:grid;grid-template-columns:52px 1fr;gap:0;position:relative;}
+.step::before{content:'';position:absolute;left:25px;top:52px;bottom:0;width:2px;background:var(--cream-dark);z-index:0;}
+.step:last-child::before{display:none;}
+.step__num-wrap{display:flex;flex-direction:column;align-items:center;padding-top:4px;z-index:1;}
+.step__num{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:1.3rem;flex-shrink:0;}
+.step__num--amber{background:var(--amber);color:var(--amber-dark);}
+.step__num--blue{background:var(--blue);color:var(--white);}
+.step__num--green{background:var(--green);color:var(--white);}
+.step__num--gray{background:var(--cream-dark);color:var(--gray);}
+.step__content{background:var(--white);border:1px solid var(--cream-dark);border-radius:8px;padding:1.1rem 1.4rem;margin-bottom:16px;margin-left:10px;}
+.step__tag{font-family:var(--label);font-size:.56rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gray);margin-bottom:.3rem;}
+.step__tag--amber{color:var(--amber-dark);}
+.step__tag--blue{color:var(--blue);}
+.step__tag--green{color:var(--green);}
+.step__title{font-family:var(--display);font-size:1.2rem;letter-spacing:.04em;color:var(--ink);margin-bottom:.5rem;}
+.step__body{font-size:.9rem;color:var(--ink);line-height:1.7;}
+.step__body strong{font-weight:700;}
+.step__timing{margin-top:.8rem;display:flex;gap:.4rem;flex-wrap:wrap;}
+
+/* CALLOUT */
+.c{padding:1.1rem 1.5rem;border-left:4px solid;border-radius:0 6px 6px 0;margin:1.2rem 0;}
+.c--amber{background:var(--amber-light);border-color:var(--amber);}
+.c--amber .c__l{color:var(--amber-dark);}
+.c--amber p{color:#5A3A00;}
+.c--amber strong{color:var(--amber-dark);}
+.c--blue{background:var(--blue-light);border-color:var(--blue);}
+.c--blue .c__l{color:var(--blue);}
+.c--blue p{color:var(--blue-dark);}
+.c--green{background:var(--green-light);border-color:var(--green);}
+.c--green .c__l{color:var(--green);}
+.c--green p{color:var(--green-text);}
+.c--green strong{color:var(--green);}
+.c__l{font-family:var(--label);font-size:.56rem;letter-spacing:.18em;text-transform:uppercase;margin-bottom:.35rem;}
+.c p{font-size:.9rem;line-height:1.7;}
+
+/* MSG BOX */
+.msg{background:var(--blue-dark);border-radius:8px;padding:1.2rem 1.5rem;margin:1rem 0;}
+.msg__label{font-family:var(--label);font-size:.56rem;letter-spacing:.18em;text-transform:uppercase;color:var(--amber);margin-bottom:.6rem;}
+.msg__text{font-size:.88rem;color:rgba(255,255,255,.8);line-height:1.8;font-style:italic;}
+
+/* SEZIONE TITOLO */
+.sec-title{font-family:var(--display);font-size:1.6rem;letter-spacing:.06em;color:var(--ink);padding-left:.8rem;border-left:4px solid var(--amber);margin:2rem 0 1rem;}
+.sec-title--blue{border-left-color:var(--blue);}
+.sec-title--green{border-left-color:var(--green);}
+
+/* ECONOMIC TABLE */
+.eco-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--cream-dark);border:1px solid var(--cream-dark);border-radius:8px;overflow:hidden;margin:1rem 0;}
+.eco-cell{background:var(--white);padding:1.1rem 1.3rem;}
+.eco-cell--amber{background:var(--amber-light);}
+.eco-cell--green{background:var(--green-light);}
+.eco-cell--blue{background:var(--blue-light);}
+.eco-cell__l{font-family:var(--label);font-size:.56rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gray);margin-bottom:.35rem;}
+.eco-cell--amber .eco-cell__l{color:var(--amber-dark);}
+.eco-cell--green .eco-cell__l{color:var(--green);}
+.eco-cell--blue .eco-cell__l{color:var(--blue);}
+.eco-cell__v{font-family:var(--display);font-size:2rem;line-height:1;color:var(--ink);}
+.eco-cell--amber .eco-cell__v{color:var(--amber-dark);}
+.eco-cell--green .eco-cell__v{color:var(--green-text);}
+.eco-cell--blue .eco-cell__v{color:var(--blue);}
+.eco-cell__n{font-size:.8rem;color:var(--gray);margin-top:.25rem;line-height:1.4;}
+
+/* SCENARI */
+.scenario{border:1px solid var(--cream-dark);border-radius:8px;overflow:hidden;margin-bottom:1rem;}
+.scenario__head{padding:.8rem 1.2rem;display:flex;justify-content:space-between;align-items:center;}
+.scenario__head--min{background:var(--cream-dark);}
+.scenario__head--med{background:var(--amber-light);}
+.scenario__head--max{background:var(--green-light);}
+.scenario__label{font-family:var(--display);font-size:1.1rem;letter-spacing:.04em;}
+.scenario__head--min .scenario__label{color:var(--gray);}
+.scenario__head--med .scenario__label{color:var(--amber-dark);}
+.scenario__head--max .scenario__label{color:var(--green-text);}
+.scenario__rev{font-family:var(--display);font-size:1.6rem;}
+.scenario__head--min .scenario__rev{color:var(--gray);}
+.scenario__head--med .scenario__rev{color:var(--amber-dark);}
+.scenario__head--max .scenario__rev{color:var(--green-text);}
+.scenario__body{padding:.9rem 1.2rem;background:var(--white);font-size:.88rem;color:var(--ink);line-height:1.65;}
+
+/* FOOTER */
+.footer{background:var(--blue-dark);border-top:4px solid var(--amber);text-align:center;padding:1.2rem;font-family:var(--label);font-size:.56rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.35);}
+.footer strong{color:var(--amber);}
+
+@media(max-width:600px){
+  .hdr,.corpo{padding-left:1.4rem;padding-right:1.4rem;}
+  .eco-grid{grid-template-columns:1fr 1fr;}
+  .step{grid-template-columns:42px 1fr;}
+}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr__num">01</div>
+  <div class="hdr__brand">Franki Studio · Test Lean · Corsale CCH · Aprile 2026</div>
+  <h1 class="hdr__title">Oil Tasting &<br>Pane di Maura</h1>
+  <p class="hdr__sub">Trasformare quello che già fate in un prodotto che si paga — senza cambiare nulla</p>
+  <div class="hdr__meta">
+    <span class="pill pill--white">Test Lean #1</span>
+    <span class="pill pill--dark">Responsabili: Luca + Maura</span>
+    <span class="pill pill--dark">Durata: 15 giorni</span>
+    <span class="pill pill--dark">Costo: €0</span>
+  </div>
+</div>
+
+<div class="corpo">
+
+  <div class="intro">
+    <div class="intro__label">Perché iniziamo da qui</div>
+    <p class="intro__text">Questo è il test più semplice e più immediato dell'intero piano. <strong>Maura fa già il pane. Luca già porta gli ospiti nell'uliveto.</strong> Non si costruisce niente di nuovo — si mette semplicemente un prezzo su qualcosa che ha già un valore enorme agli occhi di chi arriva a Corsale. Il risultato arriva in pochi giorni e dice subito se la strada è quella giusta.</p>
+  </div>
+
+  <!-- ROADMAP -->
+  <div class="sec-title">La Roadmap — Passo per Passo</div>
+
+  <div class="steps">
+
+    <div class="step">
+      <div class="step__num-wrap"><div class="step__num step__num--amber">1</div></div>
+      <div class="step__content">
+        <div class="step__tag step__tag--amber">Kick-off · Giorno 1 · Luca + Franki</div>
+        <div class="step__title">Definire i dettagli delle due esperienze</div>
+        <div class="step__body">
+          <p>In una conversazione di 30 minuti si definiscono i dettagli operativi di entrambe le esperienze: orari, durata, cosa è incluso, quante persone massimo per sessione.</p>
+          <p><strong>Oil Tasting:</strong> durata 90 minuti, massimo 8 pax, olivologo locale o guida di Luca, pane fresco incluso, kit bottiglia da portare a casa. Prezzo: <strong>€40–45 p.p.</strong></p>
+          <p><strong>Pane con Maura:</strong> durata 2–3 ore, massimo 6 pax, impasto con lievito madre, cottura nel forno a legna, ogni partecipante porta a casa il proprio pane. Prezzo: <strong>€45–50 p.p.</strong></p>
+        </div>
+        <div class="step__timing"><span class="pill pill--blue">30 minuti</span><span class="pill pill--green">€0</span></div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step__num-wrap"><div class="step__num step__num--amber">2</div></div>
+      <div class="step__content">
+        <div class="step__tag step__tag--amber">Giorno 1–2 · Franki</div>
+        <div class="step__title">Preparare il testo del messaggio WhatsApp</div>
+        <div class="step__body">
+          <p>Franki prepara il testo del messaggio che Luca invierà agli ospiti prima del check-in. Il tono deve essere quello di Luca — diretto, caldo, informale. Non un volantino promozionale: una proposta personale.</p>
+          <div class="msg">
+            <div class="msg__label">Testo WhatsApp — pronto da usare</div>
+            <p class="msg__text">"Ciao! In vista del vostro arrivo volevamo proporvi due esperienze che potete aggiungere al soggiorno:<br><br>🫒 <strong>Degustazione Olio EVO Corsale</strong> — assaggio guidato del nostro olio biologico con pane appena sfornato. €40 a persona · circa 90 minuti.<br><br>🍞 <strong>Laboratorio Pane con Maura</strong> — impasto con lievito madre, cottura nel forno a legna, vi portate a casa il vostro pane. €45 a persona · circa 2 ore.<br><br>Vi interessa aggiungere una o entrambe? Fatemi sapere così organizziamo!"</p>
+          </div>
+        </div>
+        <div class="step__timing"><span class="pill pill--blue">Franki lo prepara</span><span class="pill pill--green">€0</span></div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step__num-wrap"><div class="step__num step__num--blue">3</div></div>
+      <div class="step__content">
+        <div class="step__tag step__tag--blue">Giorni 2–15 · Luca · In corso durante i soggiorni</div>
+        <div class="step__title">Inviare il messaggio alle prossime 3 prenotazioni</div>
+        <div class="step__body">
+          <p>Luca invia il messaggio WhatsApp a ogni gruppo confermato <strong>3–5 giorni prima del check-in</strong> — non il giorno stesso, quando gli ospiti sono già in viaggio. Il momento giusto è quando hanno ancora tempo di organizzarsi e sono in fase di aspettativa positiva.</p>
+          <p>Importante: <strong>mandarlo sempre prima dell'arrivo, mai all'arrivo</strong>. Chi legge il messaggio a casa propria ha tempo di pensarci, di entusiasmarsi, di rispondere con calma.</p>
+          <p>Non serve nessun sistema particolare — WhatsApp normale, lo stesso numero che Luca usa già per comunicare con gli ospiti.</p>
+        </div>
+        <div class="step__timing"><span class="pill pill--blue">3 prenotazioni consecutive</span><span class="pill pill--blue">5 min a messaggio</span><span class="pill pill--green">€0</span></div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step__num-wrap"><div class="step__num step__num--blue">4</div></div>
+      <div class="step__content">
+        <div class="step__tag step__tag--blue">Subito dopo ogni risposta · Luca</div>
+        <div class="step__title">Raccogliere i dati in modo semplice</div>
+        <div class="step__body">
+          <p>Per ogni gruppo contattato, Luca annota su un foglio (anche carta, anche note del telefono) questi 4 dati:</p>
+          <p><strong>1.</strong> Quante persone nel gruppo<br>
+          <strong>2.</strong> Hanno accettato? Cosa? (oil / pane / entrambi / nessuno)<br>
+          <strong>3.</strong> Se no — hanno detto qualcosa sul perché?<br>
+          <strong>4.</strong> Revenue generato dalla prenotazione grazie agli add-on</p>
+          <p>Non serve un Excel complicato. Bastano queste 4 informazioni per giorno 15.</p>
+        </div>
+        <div class="step__timing"><span class="pill pill--blue">2 minuti per gruppo</span></div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step__num-wrap"><div class="step__num step__num--green">5</div></div>
+      <div class="step__content">
+        <div class="step__tag step__tag--green">Giorno 15 · Luca + Franki</div>
+        <div class="step__title">Prima lettura — cosa ci dicono i dati</div>
+        <div class="step__body">
+          <p>Call o incontro di 30 minuti. Si guardano i numeri insieme: quanti gruppi hanno detto sì, quante persone per esperienza, revenue totale generato.</p>
+          <p><strong>Se il 50%+ dei gruppi ha accettato almeno un add-on:</strong> si inserisce nel listino ufficiale di tutte le prenotazioni future. Si inizia anche a pensare al weekend Scuola di Cucina Napoletana come prodotto autonomo.</p>
+          <p><strong>Se nessuno ha accettato:</strong> non è un fallimento — è un dato. Si capisce insieme il perché: era il messaggio? Il prezzo? Il periodo? E si aggiusta.</p>
+        </div>
+        <div class="step__timing"><span class="pill pill--green">30 minuti</span><span class="pill pill--green">€0</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="sep"></div>
+
+  <!-- OBIETTIVO ECONOMICO -->
+  <div class="sec-title sec-title--green">Obiettivo Economico</div>
+
+  <div class="eco-grid">
+    <div class="eco-cell eco-cell--amber">
+      <div class="eco-cell__l">Costo totale test</div>
+      <div class="eco-cell__v">€0</div>
+      <div class="eco-cell__n">Zero investimento. Solo il tempo di Luca e Maura che già ci sarebbero stati.</div>
+    </div>
+    <div class="eco-cell eco-cell--blue">
+      <div class="eco-cell__l">Ingredienti per sessione</div>
+      <div class="eco-cell__v">~€8</div>
+      <div class="eco-cell__n">Farina, lievito, olio per la degustazione. Già disponibili in casa.</div>
+    </div>
+    <div class="eco-cell eco-cell--green">
+      <div class="eco-cell__l">Margine per sessione</div>
+      <div class="eco-cell__v">~€37</div>
+      <div class="eco-cell__n">Su €45 p.p. Oil Tasting: ~€8 costi = €37 margine netto per persona.</div>
+    </div>
+  </div>
+
+  <div class="sec-title sec-title--green">I Tre Scenari</div>
+
+  <div class="scenario">
+    <div class="scenario__head scenario__head--min">
+      <span class="scenario__label">Scenario Minimo — 1 gruppo su 3 accetta</span>
+      <span class="scenario__rev">€200–280</span>
+    </div>
+    <div class="scenario__body">
+      Un solo gruppo di 6 persone accetta entrambe le esperienze. Oil tasting (6 × €40 = €240) + Pane (6 × €45 = €270). Revenue aggiuntivo: <strong>€510 da una prenotazione sola</strong>, prima non esiste. Anche in questo scenario il test è utile: ci dice che il messaggio o il prezzo vanno affinati.
+    </div>
+  </div>
+
+  <div class="scenario">
+    <div class="scenario__head scenario__head--med">
+      <span class="scenario__label">Scenario Medio — 2 gruppi su 3 accettano</span>
+      <span class="scenario__rev">€800–1.200</span>
+    </div>
+    <div class="scenario__body">
+      Due gruppi di 6–8 persone accettano almeno un add-on. Revenue aggiuntivo in 15 giorni: <strong>€800–1.200</strong> che prima non esistevano. Questo scenario conferma che il mercato c'è e che vale la pena strutturare il prodotto ufficialmente. Si procede con l'inserimento nel listino.
+    </div>
+  </div>
+
+  <div class="scenario">
+    <div class="scenario__head scenario__head--max">
+      <span class="scenario__label">Scenario Ottimo — tutti e 3 i gruppi accettano</span>
+      <span class="scenario__rev">€1.500–2.400</span>
+    </div>
+    <div class="scenario__body">
+      Tre gruppi, media 8 persone, entrambe le esperienze. Oil tasting (24 × €40 = €960) + Pane (24 × €45 = €1.080). Revenue aggiuntivo: <strong>€2.040 in 15 giorni a costo zero</strong>. Questo scenario apre immediatamente la discussione sul weekend Scuola di Cucina Napoletana come prodotto autonomo da €350–450 p.p.
+    </div>
+  </div>
+
+  <div class="sep"></div>
+
+  <!-- PROIEZIONE ANNUALE -->
+  <div class="sec-title sec-title--green">Proiezione Annuale — se il test funziona</div>
+
+  <div class="eco-grid">
+    <div class="eco-cell eco-cell--amber">
+      <div class="eco-cell__l">Prenotazioni annue stimate</div>
+      <div class="eco-cell__v">20–25</div>
+      <div class="eco-cell__n">Gruppi che arrivano a CCH in un anno a occupazione attuale.</div>
+    </div>
+    <div class="eco-cell eco-cell--amber">
+      <div class="eco-cell__l">Uptake stimato (50%)</div>
+      <div class="eco-cell__v">10–12</div>
+      <div class="eco-cell__n">Gruppi che accettano almeno un add-on sul totale annuo.</div>
+    </div>
+    <div class="eco-cell eco-cell--green">
+      <div class="eco-cell__l">Revenue add-on annuo</div>
+      <div class="eco-cell__v">€8–15k</div>
+      <div class="eco-cell__n">Solo dagli add-on. A costo quasi zero. Ogni anno, su base permanente.</div>
+    </div>
+  </div>
+
+  <div class="c c--green" style="margin-top:1.5rem;">
+    <div class="c__l">Il vero obiettivo di questo test</div>
+    <p>I soldi sono importanti, ma non sono il punto principale. <strong>Il punto principale è che Luca vede con i propri occhi che qualcosa che già faceva gratis vale €40–50 a persona agli occhi di chi arriva.</strong> Questo cambia la prospettiva su tutto il resto — sul pricing, sulle esperienze, sul valore di CCH. È il momento "wow" che apre la porta a tutto il piano successivo.</p>
+  </div>
+
+  <div class="c c--amber" style="margin-top:1rem;">
+    <div class="c__l">Se funziona — il passo successivo</div>
+    <p>Il test M2 che funziona è il prerequisito per la <strong>Scuola di Cucina Napoletana weekend</strong>: un prodotto autonomo di 2–3 notti con sessioni intensive, ricettario personalizzato, gruppo di 6–8 persone. <strong>Revenue stimato: €2.800–3.600 per weekend · 1×/mese in bassa stagione = €30–40k annui</strong> solo da Maura.</p>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SCHEDA DI RILEVAZIONE — DA COMPILARE A MANO
+     Progettata per stampa leggera — inchiostro minimo
+══════════════════════════════════════════════ -->
+<div class="form-page">
+  <div class="form-header">
+    <div class="form-header__left">
+      <div class="form-header__tag">Test Lean #1 · Scheda di Rilevazione</div>
+      <div class="form-header__title">Oil Tasting & Pane di Maura</div>
+      <div class="form-header__sub">Compilare a mano dopo ogni soggiorno · Una scheda per gruppo ospiti</div>
+    </div>
+    <div class="form-header__right">
+      <div class="form-field-inline">
+        <div class="form-field-inline__label">Data arrivo ospiti</div>
+        <div class="form-line-short"></div>
+      </div>
+      <div class="form-field-inline" style="margin-top:.5rem;">
+        <div class="form-field-inline__label">N° persone nel gruppo</div>
+        <div class="form-line-short"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-section">
+    <div class="form-section__title">A · Il Messaggio WhatsApp</div>
+    <div class="form-row">
+      <div class="form-field">
+        <div class="form-field__label">Il messaggio è stato inviato?</div>
+        <div class="form-check-row">
+          <div class="form-check"><div class="form-check__box"></div><span>Sì, prima dell'arrivo</span></div>
+          <div class="form-check"><div class="form-check__box"></div><span>Sì, all'arrivo</span></div>
+          <div class="form-check"><div class="form-check__box"></div><span>No</span></div>
+        </div>
+      </div>
+      <div class="form-field">
+        <div class="form-field__label">Quanti giorni prima dell'arrivo?</div>
+        <div class="form-line"></div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-field form-field--full">
+        <div class="form-field__label">Il gruppo ha risposto al messaggio? Come?</div>
+        <div class="form-line"></div>
+        <div class="form-line"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-section">
+    <div class="form-section__title">B · Le Esperienze — Cosa Hanno Scelto</div>
+    <div class="form-row">
+      <div class="form-field">
+        <div class="form-field__label">🫒 Oil Tasting con Olivologo</div>
+        <div class="form-check-row">
+          <div class="form-check"><div class="form-check__box"></div><span>Accettato</span></div>
+          <div class="form-check"><div class="form-check__box"></div><span>Rifiutato</span></div>
+          <div class="form-check"><div class="form-check__box"></div><span>Non proposto</span></div>
+        </div>
+        <div class="form-field__sublabel">Quante persone hanno partecipato?</div>
+        <div class="form-line-short"></div>
+        <div class="form-field__sublabel">Prezzo applicato p.p. (€)</div>
+        <div class="form-line-short"></div>
+        <div class="form-field__sublabel">Revenue totale (€)</div>
+        <div class="form-line-short"></div>
+      </div>
+      <div class="form-field">
+        <div class="form-field__label">🍞 Laboratorio Pane con Maura</div>
+        <div class="form-check-row">
+          <div class="form-check"><div class="form-check__box"></div><span>Accettato</span></div>
+          <div class="form-check"><div class="form-check__box"></div><span>Rifiutato</span></div>
+          <div class="form-check"><div class="form-check__box"></div><span>Non proposto</span></div>
+        </div>
+        <div class="form-field__sublabel">Quante persone hanno partecipato?</div>
+        <div class="form-line-short"></div>
+        <div class="form-field__sublabel">Prezzo applicato p.p. (€)</div>
+        <div class="form-line-short"></div>
+        <div class="form-field__sublabel">Revenue totale (€)</div>
+        <div class="form-line-short"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-section">
+    <div class="form-section__title">C · La Reazione degli Ospiti</div>
+    <div class="form-row">
+      <div class="form-field form-field--full">
+        <div class="form-field__label">Se hanno accettato — come è andata? Qualche commento che ti ha colpito?</div>
+        <div class="form-line"></div>
+        <div class="form-line"></div>
+        <div class="form-line"></div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-field form-field--full">
+        <div class="form-field__label">Se hanno rifiutato — hai capito il perché? Cosa hanno detto?</div>
+        <div class="form-line"></div>
+        <div class="form-line"></div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-field">
+        <div class="form-field__label">Il prezzo sembrava alto, basso o giusto?</div>
+        <div class="form-check-row">
+          <div class="form-check"><div class="form-check__box"></div><span>Alto</span></div>
+          <div class="form-check"><div class="form-check__box"></div><span>Giusto</span></div>
+          <div class="form-check"><div class="form-check__box"></div><span>Basso</span></div>
+          <div class="form-check"><div class="form-check__box"></div><span>Non detto</span></div>
+        </div>
+      </div>
+      <div class="form-field">
+        <div class="form-field__label">Ti hanno chiesto altri optional o esperienze?</div>
+        <div class="form-line"></div>
+        <div class="form-line"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-section">
+    <div class="form-section__title">D · Riepilogo Economico del Soggiorno</div>
+    <div class="form-row">
+      <div class="form-field">
+        <div class="form-field__label">Revenue soggiorno base (€)</div>
+        <div class="form-line"></div>
+      </div>
+      <div class="form-field">
+        <div class="form-field__label">Revenue add-on totale (€)</div>
+        <div class="form-line"></div>
+      </div>
+      <div class="form-field">
+        <div class="form-field__label">Revenue totale soggiorno (€)</div>
+        <div class="form-line"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-section">
+    <div class="form-section__title">E · Note Libere</div>
+    <div class="form-line" style="margin-bottom:.8rem;"></div>
+    <div class="form-line" style="margin-bottom:.8rem;"></div>
+    <div class="form-line" style="margin-bottom:.8rem;"></div>
+    <div class="form-line"></div>
+  </div>
+
+  <div class="form-footer">
+    Franki Studio · Test Lean #1 · CCH · Aprile 2026 · Portare questa scheda compilata all'appuntamento del Giorno 15
+  </div>
+</div>
+
+<style>
+/* ── STILI FORM — ottimizzati per stampa leggera ── */
+.form-page{
+  max-width:900px;margin:0 auto;padding:2rem 3rem 2.5rem;
+  border-top:2px solid #E8E5DF;
+  page-break-before:always;
+}
+.form-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.8rem;padding-bottom:1rem;border-bottom:1px solid #E8E5DF;}
+.form-header__tag{font-family:var(--label);font-size:.56rem;letter-spacing:.2em;text-transform:uppercase;color:#B8A878;margin-bottom:.3rem;}
+.form-header__title{font-family:var(--display);font-size:1.8rem;letter-spacing:.04em;color:#C8A840;}
+.form-header__sub{font-size:.8rem;color:#AAA49A;font-style:italic;margin-top:.2rem;}
+.form-header__right{text-align:right;}
+.form-field-inline{display:flex;align-items:center;gap:.6rem;justify-content:flex-end;}
+.form-field-inline__label{font-family:var(--label);font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;color:#AAA49A;white-space:nowrap;}
+.form-line-short{width:80px;border-bottom:1px solid #D8D4CC;height:20px;}
+
+.form-section{margin-bottom:1.4rem;padding:1rem 1.2rem;background:#FDFCFA;border:1px solid #EEE9E0;border-radius:6px;}
+.form-section__title{font-family:var(--display);font-size:.95rem;letter-spacing:.08em;color:#C8A840;margin-bottom:.9rem;padding-bottom:.4rem;border-bottom:1px dashed #E8E2D8;}
+
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-bottom:.8rem;}
+.form-row:last-child{margin-bottom:0;}
+.form-field{display:flex;flex-direction:column;gap:.4rem;}
+.form-field--full{grid-column:span 2;}
+.form-field__label{font-family:var(--label);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:#999590;}
+.form-field__sublabel{font-family:var(--label);font-size:.54rem;letter-spacing:.08em;text-transform:uppercase;color:#BBB7B0;margin-top:.5rem;}
+.form-line{border-bottom:1px solid #D8D4CC;height:24px;margin-bottom:.1rem;}
+
+.form-check-row{display:flex;gap:.8rem;flex-wrap:wrap;margin-top:.2rem;}
+.form-check{display:flex;align-items:center;gap:.35rem;font-size:.82rem;color:#888480;}
+.form-check__box{width:14px;height:14px;border:1px solid #C8C4BC;border-radius:2px;flex-shrink:0;}
+
+.form-footer{margin-top:1.5rem;text-align:center;font-family:var(--label);font-size:.54rem;letter-spacing:.15em;text-transform:uppercase;color:#C8C4BC;padding-top:.8rem;border-top:1px dashed #E8E2D8;}
+
+@media print{
+  .hdr,.intro,.steps,.sep,.sec-title,.eco-grid,.scenario,.c{display:none;}
+  .corpo{display:none;}
+  .form-page{padding:1rem;border-top:none;}
+  .form-section{background:transparent;border-color:#E0DCD4;}
+  body{background:white;}
+}
+@media(max-width:600px){
+  .form-page{padding:1.4rem;}
+  .form-row{grid-template-columns:1fr;}
+  .form-field--full{grid-column:span 1;}
+}
+</style>
+
+<div class="footer">
+  <strong>Franki Studio</strong> · Test Lean #1 · Oil Tasting & Pane di Maura · CCH · Aprile 2026
+</div>
+
+</body>
+</html>

@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RCV — Benchmark Internazionali 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blu:#2B38B0;
+  --arancio:#F0A500;
+  --grigio-bg:#F2F1ED;
+  --bianco:#FFFFFF;
+  --nero:#111111;
+  --testo:#1a1a2e;
+  --blu-scuro:#1a2480;
+  --verde:#1a7a50;
+  --rosso:#c0392b;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Barlow',sans-serif;background:var(--grigio-bg);color:var(--testo);max-width:680px;margin:0 auto;font-size:15px;line-height:1.6}
+
+/* NAVBAR */
+.navbar{background:var(--blu);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.logo-fran{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;color:var(--bianco)}
+.logo-fran span{background:var(--arancio);padding:1px 6px;border-radius:4px}
+.logo-tagline{font-size:10px;color:rgba(255,255,255,.6);letter-spacing:.08em}
+.nav-doc{font-family:'Barlow Condensed',sans-serif;font-size:11px;color:rgba(255,255,255,.7);letter-spacing:.1em;text-transform:uppercase}
+
+/* HERO */
+.hero{background:var(--nero);color:var(--bianco);padding:40px 20px 36px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:0;right:0;bottom:0;left:0;background:repeating-linear-gradient(45deg,transparent,transparent 40px,rgba(240,165,0,.03) 40px,rgba(240,165,0,.03) 41px)}
+.hero-kicker{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--arancio);margin-bottom:8px}
+.hero-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:40px;line-height:.95;text-transform:uppercase;margin-bottom:14px}
+.hero-title em{color:var(--arancio);font-style:normal}
+.hero-sub{font-size:14px;color:rgba(255,255,255,.65);max-width:520px;line-height:1.7}
+.hero-domanda{background:rgba(240,165,0,.12);border-left:3px solid var(--arancio);padding:14px 16px;margin-top:20px;border-radius:0 4px 4px 0}
+.hero-domanda p{font-size:13px;color:rgba(255,255,255,.8);font-style:italic;line-height:1.6}
+
+/* FASI */
+.fasi-strip{background:var(--blu-scuro);padding:12px 20px;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.fase-pill{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;padding:4px 10px;border-radius:20px;color:rgba(255,255,255,.5);background:rgba(255,255,255,.08)}
+.fase-pill.active{background:var(--arancio);color:var(--nero)}
+.fase-arrow{color:rgba(255,255,255,.25);font-size:11px}
+
+/* DIVIDER */
+.div-orange{height:4px;background:var(--arancio)}
+
+/* KPI STRIP */
+.kpi-strip{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin:2px 0}
+.kpi-box{background:var(--bianco);padding:14px 18px}
+.kpi-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#888;margin-bottom:4px}
+.kpi-value{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;color:var(--blu);line-height:1}
+.kpi-sub{font-size:11px;color:#999;margin-top:3px}
+
+/* SECTION HEADER */
+.section-header{background:var(--blu);color:var(--bianco);padding:11px 20px;display:flex;align-items:center;gap:10px;margin-top:20px}
+.section-icon{font-size:16px}
+.section-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;text-transform:uppercase;letter-spacing:.06em}
+.section-count{margin-left:auto;background:var(--arancio);color:var(--nero);font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;padding:2px 8px;border-radius:2px}
+
+/* BENCHMARK CARD */
+.bm-card{background:var(--bianco);margin:3px 0;overflow:hidden}
+.bm-head{padding:18px 20px 0}
+.bm-numero{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:72px;color:var(--grigio-bg);line-height:1;float:right;margin-top:-10px;margin-left:8px}
+.bm-flag{font-size:22px;margin-bottom:4px}
+.bm-paese{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:#aaa}
+.bm-nome{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:26px;text-transform:uppercase;color:var(--blu);line-height:1.05;margin-bottom:4px}
+.bm-tagline{font-size:13px;color:#888;font-style:italic;margin-bottom:0;clear:both}
+.bm-body{padding:16px 20px 20px}
+
+/* SEZIONI INTERNE CARD */
+.bm-section{margin-bottom:14px}
+.bm-section:last-child{margin-bottom:0}
+.bm-section-title{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--arancio);margin-bottom:6px;border-bottom:1px solid #f5f5f5;padding-bottom:4px}
+.bm-section p{font-size:13px;color:#444;line-height:1.65}
+.bm-section p + p{margin-top:8px}
+
+/* PARALLELO RCV */
+.rcv-parallelo{background:#e8ecff;border-left:4px solid var(--blu);padding:12px 16px;margin:14px 0;border-radius:0 4px 4px 0}
+.rcv-parallelo-title{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--blu);margin-bottom:5px}
+.rcv-parallelo p{font-size:13px;color:var(--blu-scuro);line-height:1.6}
+
+/* NUMERI EVIDENZIATI */
+.numeri-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;margin:10px 0}
+.numero-box{background:var(--grigio-bg);padding:10px 12px;text-align:center}
+.numero-val{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px;color:var(--blu);display:block}
+.numero-label{font-size:10px;color:#888;letter-spacing:.06em;text-transform:uppercase}
+
+/* ORANGE BAND */
+.orange-band{background:var(--arancio);padding:16px 20px;margin:3px 0}
+.orange-band h3{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:15px;text-transform:uppercase;color:var(--nero);margin-bottom:8px}
+.orange-band p{font-size:13px;color:rgba(0,0,0,.75);line-height:1.6}
+
+/* TABLE */
+.table-wrap{background:var(--bianco);padding:0 20px 20px;margin:2px 0}
+.table-wrap table{width:100%;border-collapse:collapse;font-size:13px;margin-top:14px}
+.table-wrap th{background:var(--blu);color:var(--bianco);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.06em;padding:8px 10px;text-align:left}
+.table-wrap td{padding:9px 10px;border-bottom:1px solid #f0f0f0;color:#444;vertical-align:top}
+.table-wrap td:first-child{font-weight:600;color:var(--testo)}
+.table-wrap td.green{color:var(--verde);font-weight:700;font-family:'Barlow Condensed',sans-serif;font-size:14px}
+.table-wrap td.orange{color:#c27800;font-weight:700;font-family:'Barlow Condensed',sans-serif;font-size:14px}
+.table-wrap tr:nth-child(even){background:#fafafa}
+.table-wrap tr:last-child td{border-bottom:none}
+
+/* BADGE */
+.badge{display:inline-block;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;border-radius:2px;margin:2px}
+.badge-green{background:#e6f7f0;color:var(--verde)}
+.badge-blue{background:#e8ecff;color:var(--blu)}
+.badge-orange{background:#fff4e0;color:#c27800}
+.badge-red{background:#fff0f0;color:var(--rosso)}
+
+/* MARKET BOX */
+.market-box{background:var(--nero);color:var(--bianco);padding:20px;margin:3px 0}
+.market-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:18px;text-transform:uppercase;color:var(--arancio);margin-bottom:14px}
+.market-stat{display:flex;align-items:baseline;gap:8px;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,.08)}
+.market-stat:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.market-num{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:28px;color:var(--arancio);flex-shrink:0;line-height:1}
+.market-desc{font-size:12px;color:rgba(255,255,255,.65);line-height:1.5}
+
+/* SEPARATORE BENCHMARK */
+.bm-sep{height:5px;background:linear-gradient(90deg,var(--blu),var(--arancio));margin:10px 0}
+
+/* INTRO SECTION */
+.intro-box{background:var(--bianco);padding:20px}
+.intro-box h3{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:18px;text-transform:uppercase;color:var(--blu);margin-bottom:10px}
+.intro-box p{font-size:14px;color:#555;line-height:1.7;margin-bottom:10px}
+.intro-box p:last-child{margin-bottom:0}
+
+/* SINTESI FINALE */
+.sintesi{background:var(--bianco);padding:20px;margin:3px 0}
+.sintesi h3{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:18px;text-transform:uppercase;color:var(--blu);margin-bottom:14px;border-bottom:2px solid var(--arancio);padding-bottom:8px}
+.sintesi-item{display:flex;gap:14px;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid #f0f0f0}
+.sintesi-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.sintesi-num{flex-shrink:0;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:24px;color:var(--arancio);line-height:1}
+.sintesi-text{font-size:13px;color:#555;line-height:1.6}
+.sintesi-text strong{color:var(--nero)}
+
+/* DARK CTA */
+.dark-cta{background:var(--blu);color:var(--bianco);padding:30px 20px;margin-top:4px;text-align:center}
+.dark-cta h2{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:26px;text-transform:uppercase;margin-bottom:10px}
+.dark-cta h2 span{color:var(--arancio)}
+.dark-cta p{font-size:13px;color:rgba(255,255,255,.55);max-width:420px;margin:0 auto}
+
+/* DISCLAIMER */
+.disclaimer{background:#f7f7f5;padding:14px 20px;font-size:11px;color:#aaa;line-height:1.5;border-top:1px solid #e8e8e4}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div>
+    <div class="logo-fran">Fran<span>Ki</span></div>
+    <div class="logo-tagline">We Start Your Ideas</div>
+  </div>
+  <div class="nav-doc">RCV · Benchmark F01</div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-kicker">Roccaraso Country Village — Ricerca Internazionale F01</div>
+  <div class="hero-title">IL MONDO<br>HA GIÀ<br><em>REINVENTATO</em><br>RCV</div>
+  <div class="hero-sub">In giro per il mondo esistono luoghi che hanno capito la stessa cosa che vogliamo fare noi: che la collettività, la natura, il lavoro e il riposo possono coesistere — e ci hanno costruito sopra un business solido. Li abbiamo cercati, studiati, misurati.</div>
+  <div class="hero-domanda">
+    <p>La domanda guida di questa ricerca: <strong>esiste già nel mondo un modello che funziona, con la stessa filosofia del nostro compendio — e con i numeri per dimostrarlo?</strong> La risposta è sì. Qui dentro trovi 6 prove concrete.</p>
+  </div>
+</div>
+
+<!-- FASI -->
+<div class="fasi-strip">
+  <div class="fase-pill">F00 ✓</div>
+  <div class="fase-arrow">›</div>
+  <div class="fase-pill active">F01 ●</div>
+  <div class="fase-arrow">›</div>
+  <div class="fase-pill">B00</div>
+  <div class="fase-arrow">›</div>
+  <div class="fase-pill">F02</div>
+  <div class="fase-arrow">›</div>
+  <div class="fase-pill">F03</div>
+  <div class="fase-arrow">›</div>
+  <div class="fase-pill">F05</div>
+  <div class="fase-arrow">›</div>
+  <div class="fase-pill">F06</div>
+</div>
+<div class="div-orange"></div>
+
+<!-- INTRO -->
+<div class="intro-box">
+  <h3>Come abbiamo cercato</h3>
+  <p>Non abbiamo cercato "resort di lusso in montagna". Abbiamo cercato qualcosa di molto più specifico: luoghi che condividono la <strong>filosofia originaria del Soggiorno Montano Enel</strong> — cioè l'idea che un edificio collettivo, immerso nella natura, con spazi condivisi e una comunità di persone, possa generare benessere autentico.</p>
+  <p>Poi abbiamo verificato che quella filosofia avesse un mercato reale nel 2026 — e che i numeri reggessero. Quello che trovi in queste pagine è il risultato di quella ricerca: <strong>6 benchmark internazionali</strong>, ognuno con la sua storia, il suo modello economico, e il paralleo diretto con ciò che RCV può diventare.</p>
+  <p>Per ciascuno spieghiamo: <strong>chi sono, dove sono, cosa fanno, come guadagnano, e cosa ci insegnano.</strong></p>
+</div>
+
+<!-- DATI DI MERCATO -->
+<div class="section-header">
+  <div class="section-icon">📊</div>
+  <div class="section-title">Il Mercato — Numeri che fanno capire l'opportunità</div>
+  <div class="section-count">globale</div>
+</div>
+
+<div class="market-box">
+  <div class="market-title">Cosa sta succedendo nel mondo nel 2026</div>
+  <div class="market-stat">
+    <div class="market-num">$31,8B</div>
+    <div class="market-desc"><strong>Mercato globale dei corporate retreat</strong> nel 2024. Crescita al 9,1% annuo. Raggiungerà $73,7 miliardi entro il 2034. <em>L'Italia è il 3° paese più richiesto al mondo per team offsite aziendali.</em></div>
+  </div>
+  <div class="market-stat">
+    <div class="market-num">$1 T</div>
+    <div class="market-desc"><strong>Mercato globale del wellness tourism</strong> nel 2024, crescita al 9,3% annuo. Il wellness real estate è il segmento che cresce più in assoluto: +15,8% all'anno fino al 2029.</div>
+  </div>
+  <div class="market-stat">
+    <div class="market-num">$3.692</div>
+    <div class="market-desc"><strong>Spesa media per dipendente</strong> per un team retreat aziendale (aziende 21-50 persone, media 4 giorni). Il segmento IT è quello dominante: 34% del mercato.</div>
+  </div>
+  <div class="market-stat">
+    <div class="market-num">+32%</div>
+    <div class="market-desc"><strong>Crescita presenze turistiche</strong> nella Provincia dell'Aquila (dove ricade RCV) nel 2025. La montagna abruzzese è il segmento più dinamico della regione — non una moda, ma un cambiamento strutturale.</div>
+  </div>
+  <div class="market-stat">
+    <div class="market-num">+4%</div>
+    <div class="market-desc"><strong>Crescita ADR (tariffa media giornaliera)</strong> degli hotel italiani nel 2024, una delle più alte d'Europa. Gli investimenti in hotel italiani nel 2024 hanno raggiunto €2,1 miliardi — il 30% sopra la media decennale.</div>
+  </div>
+</div>
+
+<!-- ===== BENCHMARK 1 ===== -->
+<div class="section-header" style="margin-top:24px">
+  <div class="section-icon">🌍</div>
+  <div class="section-title">6 Benchmark che ci Riguardano</div>
+  <div class="section-count">analisi</div>
+</div>
+
+<div class="bm-sep"></div>
+
+<!-- B1 -->
+<div class="bm-card">
+  <div class="bm-head">
+    <div class="bm-numero">01</div>
+    <div class="bm-flag">🇮🇹</div>
+    <div class="bm-paese">Italia — Borca di Cadore (BL) · Dolomiti</div>
+    <div class="bm-nome">Villaggio ENI<br>di Borca di Cadore</div>
+    <div class="bm-tagline">"Il gemello dolomitico di RCV. Stessa origine, stesso abbandono, diversa risposta."</div>
+  </div>
+  <div class="bm-body">
+
+    <div class="bm-section">
+      <div class="bm-section-title">🏗️ Chi sono e dove</div>
+      <p>Siamo nel 1954. Enrico Mattei — presidente dell'ENI, la grande azienda petrolifera di Stato — incarica l'architetto Edoardo Gellner di progettare un villaggio vacanze ai piedi del Monte Antelao, vicino a Cortina d'Ampezzo. Nasce il Villaggio ENI di Borca di Cadore: <strong>oltre 100.000 mq</strong> di costruito, con 280 villette monofamiliari, un hotel, una grande Colonia per bambini da 30.000 mq, un campeggio a tende fisse, una chiesa progettata con Carlo Scarpa, e tutti i servizi di un villaggio autosufficiente.</p>
+      <p>Il principio di Mattei era identico a quello di ENEL a Roccaraso: <strong>ogni dipendente, di ogni grado gerarchico, aveva diritto allo stesso soggiorno</strong>. Le villette venivano assegnate tramite sorteggio. Nessuna distinzione di classe. Un esperimento di uguaglianza sociale costruito nel cemento e nel legno delle Dolomiti.</p>
+    </div>
+
+    <div class="bm-section">
+      <div class="bm-section-title">💀 La morte — identica alla nostra</div>
+      <p>Con la morte improvvisa di Mattei nel 1962, il progetto perde il suo motore. Il villaggio viene completato solo in parte rispetto all'idea originale. Negli anni '80-'90 ENI smette di usarlo come welfare aziendale: cambiano i tempi, cambiano i costumi. Il villaggio viene abbandonato. Il bosco comincia a riprendere gli spazi. Esattamente come a Roccaraso.</p>
+      <p>Dal 2000 il Villaggio è proprietà della società <strong>Minoter/Gruppo Cualbu</strong>. Per anni rimane in attesa di una visione.</p>
+    </div>
+
+    <div class="bm-section">
+      <div class="bm-section-title">🔄 La rinascita — e qui la storia diverge</div>
+      <p>Nel 2014, il proprietario decide di non costruire appartamenti. Decide invece di fare una cosa completamente diversa: collabora con <strong>Dolomiti Contemporanee</strong>, un'associazione culturale fondata da Gianluca D'Incà Levis, che ha come missione riattivare "siti inerti dall'elevato potenziale" nelle Dolomiti. Nasce <strong>Progettoborca</strong>.</p>
+      <p>Il modello è semplice ma rivoluzionario: il villaggio diventa una <strong>residenza internazionale per artisti</strong>. Ogni anno, artisti, architetti, ricercatori e studenti da tutto il mondo vengono ospitati nel villaggio, vivono e lavorano all'interno degli spazi abbandonati, producono opere site-specific che prendono ispirazione dall'architettura operaia di Gellner e dalla storia del luogo. Il bosco che invade gli edifici non è un problema — è il soggetto artistico principale.</p>
+      <p>Ogni estate vengono organizzate visite guidate, seminari, mostre, stage. Il Piano Regolatore prevede ora destinazioni culturali, espositive, ricreative/sportive, congressuali, d'istruzione e formazione, artigianali e artistiche, oltre ad attività alberghiere.</p>
+    </div>
+
+    <div class="bm-section">
+      <div class="bm-section-title">💰 Come guadagna</div>
+      <p>Progettoborca non è ancora un modello economico a pieno regime — è ancora nella fase di costruzione dell'identità e dell'attrattività del sito. Il valore prodotto finora è soprattutto di tipo culturale e narrativo: il Villaggio ENI è diventato un riferimento internazionale nell'architettura del welfare aziendale, viene studiato nelle università di tutto il mondo, è stato oggetto di mostre e pubblicazioni internazionali. Questo ha un valore immenso per il posizionamento futuro. Il Piano Urbanistico prevede che una piccola parte (non oltre il 15%) possa essere convertita in residenza — la grande maggioranza avrà destinazione culturale, ricettiva, formativa.</p>
+    </div>
+
+    <div class="rcv-parallelo">
+      <div class="rcv-parallelo-title">🎯 Il parallelo con RCV</div>
+      <p>Questo è il caso più importante di tutta la ricerca. <strong>Il Villaggio ENI è il fratello gemello di RCV</strong> — stessa origine (azienda energetica di Stato), stessa epoca di costruzione (anni '50-'60), stessa architettura razionalista, stesso abbandono per le stesse ragioni, stesso bosco che avanza. La differenza è che Borca ha trovato prima una visione. Ci insegna che <strong>la via non è quella degli appartamenti privati</strong> — quella è la via del conflitto con il territorio e della sconfitta. La via giusta è quella della cultura, dell'ospitalità autentica, del ritorno alla funzione collettiva originaria. Con una differenza fondamentale: RCV ha una destinazione extralberghiera già autorizzata, un permesso di costruire attivo, e un contesto di mercato più maturo. Può fare meglio e più in fretta.</p>
+    </div>
+
+    <div style="padding:0 0 4px">
+      <span class="badge badge-blue">Stessa origine operaia</span>
+      <span class="badge badge-green">Modello culturale validato</span>
+      <span class="badge badge-orange">Non ancora a regime economico</span>
+    </div>
+  </div>
+</div>
+
+<div class="bm-sep"></div>
+
+<!-- B2 -->
+<div class="bm-card">
+  <div class="bm-head">
+    <div class="bm-numero">02</div>
+    <div class="bm-flag">🇨🇭</div>
+    <div class="bm-paese">Svizzera — Liddes, Vallese · Alpi del Gran San Bernardo</div>
+    <div class="bm-nome">Swiss Alps<br>Coliving</div>
+    <div class="bm-tagline">"Il primo coliving al mondo finanziato con il crowdfunding. Ex hotel di montagna. Ora una community di co-proprietari da tutto il mondo."</div>
+  </div>
+  <div class="bm-body">
+
+    <div class="bm-section">
+      <div class="bm-section-title">🏗️ Chi sono e dove</div>
+      <p>Nel gennaio 2023, un gruppo di persone trova un <strong>ex hotel abbandonato a Liddes</strong>, un piccolo villaggio del Vallese svizzero a 1.346 metri di quota, vicino al Colle del Gran San Bernardo. L'hotel è chiuso da anni, come centinaia di strutture alpine che non reggono più il confronto con il turismo di massa. Ma questo gruppo di persone non vuole farne un resort. Vuole farne qualcosa di completamente diverso: una <strong>casa condivisa per lavoratori da remoto, imprenditori e digital nomad</strong>.</p>
+      <p>La cosa straordinaria è come lo finanziano: con una campagna di <strong>equity crowdfunding</strong> aperta a chiunque voglia diventare co-proprietario. Investitori da USA, Italia, Canada, Brasile, Palestina, Germania, Romania si uniscono e acquistano quote del progetto. Il risultato è un coliving con 10 stanze per 22 persone, spazi di coworking, cucina comune, eventi settimanali, e un pass per tre comprensori sciistici incluso a 95 CHF/anno.</p>
+    </div>
+
+    <div class="bm-section">
+      <div class="bm-section-title">⚙️ Come funziona operativamente</div>
+      <p>Il modello è semplice: affitti una stanza (privata o condivisa) per una settimana, un mese, o più. Hai incluso: Wi-Fi fibra, spazio di coworking, accesso alla cucina comune, eventi e attività organizzate dal community manager. Gli host organizzano cene collettive, escursioni, serate di networking, workshop tra i residenti. In estate si cammina, si va in bicicletta, ci si tuffa nei laghi glaciali. In inverno si scia. La vita si svolge tra il lavoro e la montagna, tra la produttività e la comunità.</p>
+    </div>
+
+    <div class="bm-section">
+      <div class="bm-section-title">💰 Come guadagna</div>
+      <p>Il modello di revenue ha tre gambe: (1) affitti delle stanze a tariffe competitive per la Svizzera (da ~80-150 CHF/notte), (2) coworking day pass per chi viene solo per lavorare, (3) eventi e workshop tematici. I fondatori dichiarano di voler espandere il modello ad altri location europee attraverso il brand Coliving.frilingue. L'investimento iniziale è stato coperto tramite crowdfunding. Il punto chiave è che i co-proprietari diventano anche i primi ambasciatori e clienti della struttura.</p>
+    </div>
+
+    <div class="numeri-grid">
+      <div class="numero-box"><span class="numero-val">22</span><span class="numero-label">Posti letto</span></div>
+      <div class="numero-box"><span class="numero-val">~95€</span><span class="numero-label">Skipass intera stagione</span></div>
+      <div class="numero-box"><span class="numero-val">9</span><span class="numero-label">Paesi dei co-owners</span></div>
+    </div>
+
+    <div class="rcv-parallelo">
+      <div class="rcv-parallelo-title">🎯 Il parallelo con RCV</div>
+      <p>Swiss Alps Coliving ci insegna due cose fondamentali. Prima: <strong>l'equity crowdfunding funziona per comprare un asset di montagna abbandonato</strong> — è stato fatto, si può replicare, e i co-investitori diventano automaticamente i primi utenti fedeli. Seconda: il <strong>modello community-first</strong> (non "hotel", ma "casa condivisa") crea un'esperienza radicalmente diversa e un'attrattività che i resort tradizionali non possono copiare. RCV ha 46 unità contro 10 di Liddes — ha la dimensione giusta per una community più grande senza perdere l'autenticità.</p>
+    </div>
+
+    <div style="padding:0 0 4px">
+      <span class="badge badge-green">Crowdfunding validato</span>
+      <span class="badge badge-green">Community model</span>
+      <span class="badge badge-blue">Dimensione piccola ma scalabile</span>
+    </div>
+  </div>
+</div>
+
+<div class="bm-sep"></div>
+
+<!-- B3 -->
+<div class="bm-card">
+  <div class="bm-head">
+    <div class="bm-numero">03</div>
+    <div class="bm-flag">🇨🇭</div>
+    <div class="bm-paese">Svizzera — Campra, Canton Ticino · Alpi Lucomagno</div>
+    <div class="bm-nome">Campra Alpine<br>Lodge & Spa</div>
+    <div class="bm-tagline">"Sport, natura, corporate retreat e gruppi. Il modello multi-target che non si affida a una sola stagione."</div>
+  </div>
+  <div class="bm-body">
+
+    <div class="bm-section">
+      <div class="bm-section-title">🏗️ Chi sono e dove</div>
+      <p>Campra Alpine Lodge & Spa si trova in una delle valli più isolate del Canton Ticino, nell'area del Passo del Lucomagno. A oltre 1.500 metri di quota, immerso in una natura quasi inviolata, il Lodge è raggiungibile ma richiede un po' di sforzo — e questo è parte del suo appeal. Non è un hotel di lusso urbano trapiantato in montagna. È una struttura pensata per chi vuole <strong>davvero essere in montagna</strong>.</p>
+    </div>
+
+    <div class="bm-section">
+      <div class="bm-section-title">⚙️ Come funziona operativamente</div>
+      <p>Il Campra ha capito una cosa che molte strutture di montagna ignorano: <strong>per essere redditizi tutto l'anno, devi servire target diversi</strong>. In estate: mountain biking, hiking, trail running. In inverno: sci di fondo, ciaspole, sci alpinismo. Tutto l'anno: il segmento che fa davvero la differenza economica — <strong>i gruppi sportivi e i corporate retreat aziendali</strong>. Il Lodge offre soluzioni specifiche per squadre sportive in ritiro (16+ persone, formula pensione completa), e ha uno spazio meeting modulare per workshop, eventi aziendali, conferenze. Questa combinazione abbassa drasticamente la dipendenza dalla stagionalità.</p>
+    </div>
+
+    <div class="bm-section">
+      <div class="bm-section-title">💰 Come guadagna</div>
+      <p>Il Campra ha tre revenue stream principali: (1) ospitalità leisure individuale e famigliare (camere + spa + attività), (2) <strong>gruppi sportivi e team di atleti in ritiro</strong> — un segmento spesso trascurato ma ad altissima redditività perché portano volumi garantiti, pochi problemi operativi e tariffe stabili, (3) <strong>corporate retreat aziendali</strong> — meeting room + soggiorno + attività outdoor su misura. La spa aggiunge revenue ancillare. Il modello funziona perché non dipende mai da una sola tipologia di cliente.</p>
+    </div>
+
+    <div class="rcv-parallelo">
+      <div class="rcv-parallelo-title">🎯 Il parallelo con RCV</div>
+      <p>Il Campra è il modello operativo più direttamente applicabile a RCV. <strong>I seminterrati di RCV — palestra, cinema, mensa — erano già pensati per la stessa logica</strong>: servire un gruppo di persone che condividono spazi collettivi. Convertiti in sala conferenze, spazio workshop, coworking e ristorante comune, diventano esattamente la stessa infrastruttura del Campra. Il comprensorio dell'Alto Sangro (150 km di piste, sci di fondo, trail running in estate) è l'equivalente dell'offerta outdoor del Lucomagno. RCV ha anche il vantaggio della dimensione: 46 unità contro strutture più piccole, con la capacità di ospitare gruppi aziendali di 30-50 persone senza spostare altri clienti.</p>
+    </div>
+
+    <div style="padding:0 0 4px">
+      <span class="badge badge-green">Multi-target anti-stagionale</span>
+      <span class="badge badge-green">Gruppi sportivi + corporate</span>
+      <span class="badge badge-blue">Modello direttamente replicabile</span>
+    </div>
+  </div>
+</div>
+
+<div class="bm-sep"></div>
+
+<!-- B4 -->
+<div class="bm-card">
+  <div class="bm-head">
+    <div class="bm-numero">04</div>
+    <div class="bm-flag">🇮🇹</div>
+    <div class="bm-paese">Italia — Madonna di Campiglio (TN) · Dolomiti</div>
+    <div class="bm-nome">Lefay Resort<br>& SPA Dolomiti</div>
+    <div class="bm-tagline">"Il benchmark italiano del wellness mountain resort. €46 milioni di fatturato nel 2022. Dimostra che si può fare in Italia, in montagna, con un modello premium."</div>
+  </div>
+  <div class="bm-body">
+
+    <div class="bm-section">
+      <div class="bm-section-title">🏗️ Chi sono e dove</div>
+      <p>Lefay è un gruppo italiano fondato da una famiglia imprenditoriale bresciana. Il loro primo resort apre nel 2008 sul Lago di Garda — 93 suite, 11 ettari di parco privato, bioarchitettura, spa da 4.000 mq. Un successo tale che nel 2019 aprono il <strong>Lefay Resort & SPA Dolomiti</strong> a Madonna di Campiglio, in Trentino. È una struttura da 88 suite in alta quota, con una delle spa di montagna più premiate d'Europa.</p>
+      <p>Il modello Lefay si basa su una filosofia precisa: <strong>il benessere non è un accessorio — è il prodotto principale</strong>. Non si va al Lefay per sciare con la spa come bonus. Si va al Lefay per il benessere, e lo sci è una delle attività. Questa inversione cambia tutto: le tariffe, la stagionalità, il tipo di cliente, il posizionamento.</p>
+    </div>
+
+    <div class="bm-section">
+      <div class="bm-section-title">⚙️ Come funziona operativamente</div>
+      <p>Lefay propone programmi strutturati di benessere (da 3 a 7 giorni), con percorsi personalizzati che integrano trattamenti spa, nutrizione, movimento e mindfulness. Non si prenota solo una camera — si prenota un'<strong>esperienza di trasformazione</strong>. Le suite sono progettate per favorire il riposo profondo. La cucina è terapeutica. Il bosco circostante è parte integrante del programma (escursioni guidate, meditazione in natura). Il Lefay Dolomiti ha registrato <strong>48.598 pernottamenti</strong> nel 2023, con un'ADR media sopra €600/notte.</p>
+    </div>
+
+    <div class="bm-section">
+      <div class="bm-section-title">💰 Come guadagna — i numeri reali</div>
+      <p>Nel 2022, il <strong>Gruppo Lefay ha registrato un fatturato record di €46 milioni</strong>, con un incremento del 37% sull'anno precedente. L'occupancy è tornata ai livelli del 2019. Ma la cosa più significativa è che l'ADR medio del Lefay Lago di Garda nel 2022 è cresciuto del <strong>50% rispetto al 2019</strong> — dimostrando che il mercato premium accetta e paga tariffe sempre più alte. L'immobile del Lago di Garda è stato acquistato da CDP (Cassa Depositi e Prestiti) per <strong>€59 milioni</strong> in un'operazione sale & leaseback — segno che gli investitori istituzionali riconoscono il valore del modello. Il RevPAR è cresciuto del 55% dall'implementazione del sistema di revenue management professionale.</p>
+    </div>
+
+    <div class="numeri-grid">
+      <div class="numero-box"><span class="numero-val">€46M</span><span class="numero-label">Fatturato 2022</span></div>
+      <div class="numero-box"><span class="numero-val">€59M</span><span class="numero-label">Valore asset Garda</span></div>
+      <div class="numero-box"><span class="numero-val">+50%</span><span class="numero-label">Crescita ADR vs 2019</span></div>
+    </div>
+
+    <div class="rcv-parallelo">
+      <div class="rcv-parallelo-title">🎯 Il parallelo con RCV</div>
+      <p>Lefay dimostra che il <strong>wellness resort premium in montagna italiana funziona e scala</strong>. Ma il confronto che conta è questo: Lefay è partito con un investimento di decine di milioni, una famiglia imprenditoriale con capitali propri, e si è posizionato direttamente nel segmento ultra-premium. <strong>RCV non deve copiare Lefay — deve occupare il livello appena sotto</strong>: un wellness resort di qualità alta ma accessibile (ADR €250-400 vs i €600+ di Lefay), nel Centro-Sud invece che nelle Dolomiti. Un mercato meno affollato, con meno concorrenza diretta, e una base di utenza enorme (20 milioni di persone entro 2 ore da Roccaraso). Il gap che RCV può colmare è clamoroso.</p>
+    </div>
+
+    <div style="padding:0 0 4px">
+      <span class="badge badge-green">€46M fatturato reale</span>
+      <span class="badge badge-green">Modello italiano validato</span>
+      <span class="badge badge-blue">RCV = Lefay del Centro-Sud</span>
+    </div>
+  </div>
+</div>
+
+<div class="bm-sep"></div>
+
+<!-- B5 -->
+<div class="bm-card">
+  <div class="bm-head">
+    <div class="bm-numero">05</div>
+    <div class="bm-flag">🇨🇭</div>
+    <div class="bm-paese">Svizzera — Grimentz, Vallese · 1.500 m slm</div>
+    <div class="bm-nome">Swiss Escape<br>Coliving</div>
+    <div class="bm-tagline">"Il primo coliving nelle Alpi Svizzere. Remote workers, freelancer, entrepreneur. Community come prodotto, montagna come ufficio."</div>
+  </div>
+  <div class="bm-body">
+
+    <div class="bm-section">
+      <div class="bm-section-title">🏗️ Chi sono e dove</div>
+      <p>Grimentz è un villaggio francofono del Vallese a 1.500 metri di quota. Swiss Escape nasce come il <strong>primo spazio di coworking e coliving in Svizzera</strong> dedicato a freelancer, imprenditori e team remoti. La formula è semplice: vieni qui, lavori dalla mattina, nel pomeriggio vai in montagna (hiking in estate, sci in inverno), la sera cucini con gli altri residents e condividi storie. Non sei in un hotel. Sei in una <strong>casa che accoglie persone straordinarie</strong>.</p>
+      <p>Il sito è raggiungibile da Ginevra, Zurigo e Milano in meno di 3 ore. Questo dato geografico è fondamentale: la prossimità ai grandi centri urbani non è un ostacolo, è un vantaggio. Roccaraso dista 2 ore da Roma e Napoli.</p>
+    </div>
+
+    <div class="bm-section">
+      <div class="bm-section-title">⚙️ Come funziona operativamente</div>
+      <p>Gli ospiti condividono gli spazi (cucina, sala, coworking), hanno una camera privata, e un community manager sempre presente che organizza: cene collettive il giovedì sera, workshop, escursioni di gruppo, lezioni di sci, aperitivi post-lavoro. Ci sono massimo 4 persone per casa (più privacy che un hostel, più socialità che un appartamento). La connessione Wi-Fi è fibra — chiamate Zoom senza problemi, anche con uno sfondo di montagna. Il Magic Pass svizzero dà accesso illimitato a quasi tutti gli impianti svizzeri per una stagione a un prezzo fisso. Swiss Escape si è associato per offrirlo ai propri ospiti.</p>
+    </div>
+
+    <div class="bm-section">
+      <div class="bm-section-title">💰 Come guadagna</div>
+      <p>Il modello di Swiss Escape funziona su <strong>stanze private con tariffe settimanali o mensili</strong> — più lungo il soggiorno, migliore la tariffa. In Svizzera le tariffe partono da circa €150-200/notte per una camera privata con colazione inclusa e accesso al coworking. Il valore percepito è molto superiore alla somma delle parti: non stai pagando solo la camera, stai pagando l'<strong>ecosistema</strong> — la community, gli eventi, la struttura coworking, il community manager, le attività. Questo è esattamente il motivo per cui l'ADR è 3-4x quello di un hotel tradizionale equivalente.</p>
+    </div>
+
+    <div class="rcv-parallelo">
+      <div class="rcv-parallelo-title">🎯 Il parallelo con RCV</div>
+      <p>Swiss Escape valida in modo preciso la domanda di remote workers premium per soggiorni in montagna. La distanza da un grande centro urbano — che per anni è stata vista come un problema per i villaggi di montagna — è diventata il principale punto di forza. <strong>La quiete è un prodotto. L'aria di montagna è un prodotto. La fibra ottica in montagna è un prodotto.</strong> RCV, a 2 ore da Roma e Napoli, con 22 ettari di bosco e gli impianti sciistici a 5 minuti, può offrire esattamente quello che Swiss Escape offre — in un contesto climatico più mite in estate (vantaggioso) e con tariffe significativamente più competitive rispetto alla Svizzera.</p>
+    </div>
+
+    <div style="padding:0 0 4px">
+      <span class="badge badge-green">Validato in area alpina</span>
+      <span class="badge badge-green">Remote workers premium</span>
+      <span class="badge badge-blue">Prossimità urbana come asset</span>
+    </div>
+  </div>
+</div>
+
+<div class="bm-sep"></div>
+
+<!-- B6 -->
+<div class="bm-card">
+  <div class="bm-head">
+    <div class="bm-numero">06</div>
+    <div class="bm-flag">🇳🇱🇩🇰🇫🇷🇦🇹</div>
+    <div class="bm-paese">Amsterdam · Copenhagen · Parigi · Vienna</div>
+    <div class="bm-nome">Zoku<br>Hotels</div>
+    <div class="bm-tagline">"L'hotel che ha inventato il concetto di 'home-office hybrid'. 168 ore a settimana da monetizzare — non solo le notti. Il modello più intelligente di ospitalità del decennio."</div>
+  </div>
+  <div class="bm-body">
+
+    <div class="bm-section">
+      <div class="bm-section-title">🏗️ Chi sono e dove</div>
+      <p>Zoku nasce nel 2016 ad Amsterdam. I fondatori olandesi Hans Meyer e Marc Jongerius — ex professionisti dell'ospitalità — si fanno una domanda semplice ma rivoluzionaria: <strong>perché un hotel monetizza solo la notte e non anche il giorno?</strong> Le camere rimangono vuote dalle 9 alle 18 mentre gli ospiti lavorano in ufficio. E se la camera diventasse anche l'ufficio? Se l'hotel diventasse un luogo dove si vive, si lavora, si socializza — non solo dove si dorme?</p>
+      <p>Nasce il <strong>Zoku Loft</strong>: una stanza che è contemporaneamente appartamento micro, ufficio privato, e spazio sociale. Cucina funzionante, tavolo da 4 persone, letto a soppalco separato, ottimo Wi-Fi, desk professionale. Lo stesso spazio si usa per una call di lavoro alle 10 e per la cena con gli amici alle 20. Oggi Zoku ha 4 proprietà: Amsterdam, Copenhagen, Parigi, Vienna. Ha ottenuto la certificazione B Corp nel 2018, è stata votata da Forbes tra i "25 hotel più cool del mondo".</p>
+    </div>
+
+    <div class="bm-section">
+      <div class="bm-section-title">⚙️ Come funziona operativamente — il segreto delle 168 ore</div>
+      <p>Il direttore commerciale di Zoku ha spiegato così il modello: <em>"Abbiamo 168 ore a settimana per fare soldi. Gli uffici vengono cancellati a destra e a manca e le persone vengono a lavorare in hotel. Abbiamo visto questa opportunità anni fa, ma la pandemia l'ha accelerata. Abbiamo dimostrato che puoi usare le nostre camere anche come uffici."</em></p>
+      <p>Zoku offre quindi: camere (soggiorni brevi, medi, lunghi — con sconto del 20% da 14+ notti), coworking in abbonamento mensile (WorkZoku), sale meeting per eventi aziendali, rooftop per eventi, ristorante aperto tutto il giorno. Una community manager organizza eventi settimanali per mettere in contatto i residenti. I soggiorni lunghi (1-3 mesi) sono diventati la spina dorsale del modello: tariffe inferiori per l'ospite, costi operativi molto più bassi per Zoku (meno turnover, meno pulizie).</p>
+    </div>
+
+    <div class="bm-section">
+      <div class="bm-section-title">💰 Come guadagna</div>
+      <p>Il modello Zoku genera revenue da 5 fonti: (1) camere (ADR ~€130-200 in media europea, con picchi a €300+ per soggiorni brevi a Vienna e Parigi), (2) <strong>coworking membership mensile</strong> (WorkZoku da ~€29/giorno o abbonamento mensile), (3) sale meeting e event space (€100+/persona/giorno per eventi aziendali), (4) F&B dal ristorante interno, (5) upselling di servizi. La chiave è che ogni metro quadrato del Zoku genera revenue per l'intera giornata — non solo nelle ore di check-in/out. Zoku è rimasta indipendente e ha cresciuto in modo organico — 4 proprietà in 10 anni, non 163 come Selina che è poi fallita. Questo è il modello giusto.</p>
+    </div>
+
+    <div class="numeri-grid">
+      <div class="numero-box"><span class="numero-val">4</span><span class="numero-label">Città europee</span></div>
+      <div class="numero-box"><span class="numero-val">168h</span><span class="numero-label">A settimana da monetizzare</span></div>
+      <div class="numero-box"><span class="numero-val">BCorp</span><span class="numero-label">Dal 2018</span></div>
+    </div>
+
+    <div class="rcv-parallelo">
+      <div class="rcv-parallelo-title">🎯 Il parallelo con RCV</div>
+      <p>Zoku è il modello concettuale da cui RCV deve imparare la cosa più importante: <strong>ogni spazio fisico deve generare revenue in ogni ora della giornata</strong>. I seminterrati di RCV — cinema, palestra, mensa, bar — sono già predisposti per diventare un coworking open space, sale meeting, ristorante comune, event space. La differenza è che RCV non è in una capitale europea ma in montagna — e questo, post-pandemia, è un vantaggio competitivo, non uno svantaggio. Chi vuole lavorare da remoto può scegliere di farlo da Amsterdam (grigio, costoso, urbano) o da Roccaraso (montagna, bosco, sci, aria). La risposta di molti professionisti nel 2026 è sempre più: <strong>Roccaraso</strong>.</p>
+    </div>
+
+    <div style="padding:0 0 4px">
+      <span class="badge badge-green">Modello 168h validato</span>
+      <span class="badge badge-blue">Multi-revenue stream</span>
+      <span class="badge badge-green">Crescita sostenibile (non Selina)</span>
+    </div>
+  </div>
+</div>
+
+<!-- ORANGE BAND - MERCATO CORPORATE RETREAT -->
+<div class="orange-band" style="margin-top:20px">
+  <h3>🏢 Il Mercato dei Corporate Retreat — L'Opportunità che Nessuno Ha Ancora Catturato</h3>
+  <p>Il mercato globale dei corporate retreat vale <strong>$31,8 miliardi nel 2024</strong> e crescerà a $73,7 miliardi entro il 2034. <strong>L'Italia è il 3° paese più richiesto al mondo</strong> per gli offsite aziendali (dopo USA e Spagna). La spesa media per dipendente per un team retreat di 4 giorni è $3.692. Eppure, in tutto l'Appennino centrale — tra Roma e Napoli, la più grande concentrazione di aziende del Centro-Sud — non esiste una struttura dedicata specificatamente a questo mercato con una qualità e un'identità forte. <strong>RCV può diventare la prima.</strong></p>
+</div>
+
+<!-- TABELLA DI SINTESI -->
+<div class="section-header">
+  <div class="section-icon">📋</div>
+  <div class="section-title">Tavola di Confronto Finale</div>
+  <div class="section-count">6 casi</div>
+</div>
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr><th>Benchmark</th><th>Filosofia</th><th>Revenue principale</th><th>Rilevanza per RCV</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>01 — Villaggio ENI Borca di Cadore</td>
+        <td>Patrimonio operaio → cultura + arte</td>
+        <td>Grant culturali + residenze</td>
+        <td class="green">★★★★★</td>
+      </tr>
+      <tr>
+        <td>02 — Swiss Alps Coliving</td>
+        <td>Ex hotel → community crowdfunded</td>
+        <td>Stanze + coworking + eventi</td>
+        <td class="green">★★★★★</td>
+      </tr>
+      <tr>
+        <td>03 — Campra Alpine Lodge</td>
+        <td>Sport + corporate + natura</td>
+        <td>Gruppi + retreat + spa</td>
+        <td class="green">★★★★☆</td>
+      </tr>
+      <tr>
+        <td>04 — Lefay Resort Dolomiti</td>
+        <td>Benessere come prodotto principale</td>
+        <td>€46M/anno — ADR €600+</td>
+        <td class="green">★★★★☆</td>
+      </tr>
+      <tr>
+        <td>05 — Swiss Escape Coliving</td>
+        <td>Remote work + montagna + community</td>
+        <td>Stanze settimanali/mensili</td>
+        <td class="green">★★★★★</td>
+      </tr>
+      <tr>
+        <td>06 — Zoku Hotels</td>
+        <td>168 ore/settimana da monetizzare</td>
+        <td>Camere + coworking + eventi</td>
+        <td class="green">★★★★★</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- SINTESI CONCLUSIVA -->
+<div class="sintesi">
+  <h3>Cosa Ci Dicono Insieme — Le 5 Lezioni</h3>
+
+  <div class="sintesi-item">
+    <div class="sintesi-num">01</div>
+    <div class="sintesi-text"><strong>La filosofia operaia non è un problema da nascondere — è un asset narrativo.</strong> Il Villaggio ENI di Borca lo dimostra: decine di università internazionali studiano quella struttura, migliaia di persone fanno il pellegrinaggio per vederla. La storia è un magnete potentissimo. RCV ha la stessa storia. Usarla è gratis.</div>
+  </div>
+
+  <div class="sintesi-item">
+    <div class="sintesi-num">02</div>
+    <div class="sintesi-text"><strong>La collettività è tornata di moda — e questa volta paga tariffe premium.</strong> Il Soggiorno Montano Enel era basato sulla condivisione. Nel 2026 la condivisione si chiama coliving, coworking, community — e genera ADR 3-4x superiori alle strutture tradizionali. Il cerchio si chiude: quello che sembrava old-fashioned è esattamente quello che il mercato cerca.</div>
+  </div>
+
+  <div class="sintesi-item">
+    <div class="sintesi-num">03</div>
+    <div class="sintesi-text"><strong>La montagna a 2 ore da una grande città non è una sfortuna — è il prodotto.</strong> Swiss Escape, Zoku, Swiss Alps Coliving: tutti funzionano perché sono raggiungibili ma lontani abbastanza da cambiare davvero il contesto. Roccaraso a 2 ore da Roma e Napoli è un vantaggio strutturale enorme.</div>
+  </div>
+
+  <div class="sintesi-item">
+    <div class="sintesi-num">04</div>
+    <div class="sintesi-text"><strong>Il crowdfunding non è un ripiego — è una strategia di community building.</strong> Swiss Alps Coliving ha dimostrato che raccogliere capitali da molti piccoli investitori crea automaticamente una base di sostenitori, utenti fedeli e ambasciatori del progetto. Per RCV, fare crowdfunding significa trovare contemporaneamente il capitale e i primi clienti.</div>
+  </div>
+
+  <div class="sintesi-item">
+    <div class="sintesi-num">05</div>
+    <div class="sintesi-text"><strong>Il mercato esiste, è enorme, e in Italia è scoperto.</strong> $31,8 miliardi di corporate retreat globali. Italia terzo paese più richiesto. Wellness tourism da $1 trilione. E nell'Appennino centrale tra Roma e Napoli: zero strutture con una visione e un'identità forte. Il gap è clamoroso. RCV può colmarlo.</div>
+  </div>
+</div>
+
+<!-- DARK CTA -->
+<div class="dark-cta">
+  <h2>IL MERCATO<br><span>C'È GIÀ.</span></h2>
+  <p>Questi 6 benchmark dimostrano che la filosofia del Soggiorno Montano Enel — collettività, natura, lavoro, riposo — è esattamente quello che il mercato del 2026 cerca. La domanda ora è una sola: chi arriva primo?</p>
+</div>
+
+<!-- DISCLAIMER -->
+<div class="disclaimer">
+  <strong>Fonti:</strong> Allied Market Research · Global Wellness Institute · HotStats · Lefay Sustainability Report 2023/2024 · RetreatsAndVenues 2025 · Regione Abruzzo Turismo 2025 · Progettoborca.net · SwissAlpsColiving.com · CampraLodge.ch · Zoku (LinkedIn + sito ufficiale) · Il Dolomiti (Borca) · UniPD Il Bo Live. Elaborato da <strong>FranKi Studio</strong> — Fase F01 Concept Research — Aprile 2026.
+</div>
+
+</body>
+</html>

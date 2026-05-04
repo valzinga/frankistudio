@@ -1,0 +1,1469 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Frog 🐸 — Franki Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<style>
+/* =============================================
+   RESET + BASE — sfondo nero fisso
+   ============================================= */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html, body {
+  background: #000 !important;
+  color: #fff;
+  font-family: 'Lato', sans-serif;
+  min-height: 100vh;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* =============================================
+   BRAND VARIABLES
+   ============================================= */
+:root {
+  --blu:      #3549B5;
+  --blu-dark: #1a2560;
+  --giallo:   #F9AC28;
+  --nero:     #000000;
+  --bianco:   #FFFFFF;
+  --fire:     #FF3B30;
+  --next:     #F9AC28;
+  --cool:     #34C759;
+  --border:   rgba(255,255,255,0.09);
+  --surface:  rgba(255,255,255,0.04);
+  --surface2: rgba(255,255,255,0.08);
+}
+
+/* =============================================
+   HEADER — bianco con bordo giallo, Franki style
+   ============================================= */
+header {
+  background: #fff;
+  border-bottom: 3px solid var(--giallo);
+  position: sticky; top: 0; z-index: 100;
+}
+
+.header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  height: 56px;
+}
+
+.brand {
+  display: flex; align-items: center; gap: 10px;
+  background: var(--blu-dark);
+  height: 100%;
+  padding: 0 20px 0 16px;
+  margin-left: -16px;
+  /* angolo destro tagliato */
+  clip-path: polygon(0 0, 100% 0, 88% 100%, 0 100%);
+  padding-right: 36px;
+}
+.brand-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 24px; letter-spacing: 0.1em;
+  color: #fff; white-space: nowrap;
+}
+.brand-name span { color: var(--giallo); }
+
+.header-right-top {
+  display: flex; align-items: center; gap: 10px;
+}
+.clock {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px; letter-spacing: 0.06em;
+  color: rgba(0,0,0,0.4);
+  white-space: nowrap;
+}
+.btn-staff {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px; font-weight: 500;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  background: var(--blu);
+  color: #fff; border: none;
+  padding: 7px 14px;
+  cursor: pointer; text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+.btn-staff:hover { background: var(--blu-dark); }
+
+/* nav tabs — sotto la top bar */
+.header-nav {
+  display: flex;
+  border-top: 1px solid rgba(0,0,0,0.07);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.header-nav::-webkit-scrollbar { display: none; }
+
+.nav-tab {
+  font-family: 'DM Mono', monospace;
+  font-size: 14px; font-weight: 500;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: rgba(0,0,0,0.35);
+  background: transparent; border: none;
+  padding: 10px 18px;
+  white-space: nowrap;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.2s;
+  flex-shrink: 0;
+}
+.nav-tab.active { color: var(--blu-dark); }
+.nav-tab.active::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 3px; background: var(--giallo);
+}
+
+/* =============================================
+   ALERT BANNER
+   ============================================= */
+.alert-banner {
+  display: none;
+  background: var(--fire);
+  padding: 10px 16px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; letter-spacing: 0.08em;
+  color: #fff;
+  gap: 10px; align-items: center;
+}
+.alert-banner.show { display: flex; }
+
+/* =============================================
+   MAIN
+   ============================================= */
+main {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px 16px 80px;
+  background: #000;
+}
+
+/* =============================================
+   STATS GRID — 2x2 mobile, 4x1 desktop
+   ============================================= */
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  margin-bottom: 32px;
+  border: 1px solid var(--border);
+}
+@media (min-width: 600px) {
+  .stats-grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+.stat {
+  background: var(--surface);
+  padding: 20px 16px 16px;
+  position: relative;
+  overflow: hidden;
+}
+.stat::after {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 3px;
+}
+.stat.s-fire::after { background: var(--fire); }
+.stat.s-next::after { background: var(--next); }
+.stat.s-cool::after { background: var(--cool); }
+.stat.s-done::after { background: rgba(255,255,255,0.15); }
+
+.stat-n {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 56px; line-height: 1;
+  letter-spacing: -0.01em;
+}
+.s-fire .stat-n { color: var(--fire); }
+.s-next .stat-n { color: var(--next); }
+.s-cool .stat-n { color: var(--cool); }
+.s-done .stat-n { color: rgba(255,255,255,0.2); }
+
+.stat-l {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+  margin-top: 4px;
+}
+
+/* =============================================
+   ADD ROW
+   ============================================= */
+.add-row {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  margin-bottom: 24px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  padding: 10px;
+}
+.add-row input {
+  flex: 1; min-width: 140px;
+  background: transparent; border: none; outline: none;
+  font-family: 'Lato', sans-serif; font-size: 13px; color: #fff;
+  padding: 4px 6px;
+}
+.add-row input::placeholder { color: rgba(255,255,255,0.2); }
+.add-row select {
+  background: rgba(0,0,0,0.5);
+  border: 1px solid var(--border);
+  color: rgba(255,255,255,0.5);
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 6px 10px; outline: none; cursor: pointer;
+}
+.add-row select option { background: #111; }
+.btn-add {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 17px; letter-spacing: 0.1em;
+  background: var(--giallo); color: #000;
+  border: none; padding: 8px 24px;
+  cursor: pointer; transition: background 0.15s;
+  white-space: nowrap;
+}
+.btn-add:hover { background: #FFB93E; }
+
+/* =============================================
+   SECTION HEADER
+   ============================================= */
+.sec-head {
+  display: flex; align-items: baseline; gap: 12px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 12px; padding-bottom: 8px;
+}
+.sec-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 30px; letter-spacing: 0.1em;
+}
+.sec-title.fire { color: var(--fire); }
+.sec-title.next { color: var(--next); }
+.sec-title.cool { color: var(--cool); }
+.sec-count {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.2); text-transform: uppercase;
+}
+.section { margin-bottom: 36px; }
+
+/* =============================================
+   TASK CARD
+   ============================================= */
+.task {
+  display: flex; align-items: stretch;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 4px solid transparent;
+  margin-bottom: 4px;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.15s;
+}
+.task:hover { background: var(--surface2); transform: translateX(3px); }
+.task.fire { border-left-color: var(--fire); }
+.task.next { border-left-color: var(--next); }
+.task.cool { border-left-color: var(--cool); }
+.task.done { opacity: 0.28; }
+.task.done .task-txt { text-decoration: line-through; }
+
+.task-chk {
+  width: 44px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Bebas Neue', sans-serif; font-size: 16px;
+  color: rgba(255,255,255,0.12);
+  border-right: 1px solid var(--border);
+  transition: color 0.15s;
+}
+.task.done .task-chk { color: var(--cool); background: rgba(52,199,89,0.06); }
+
+.task-body {
+  flex: 1; min-width: 0;
+  padding: 12px 14px;
+}
+.task-txt {
+  font-size: 16px; font-weight: 700;
+  color: rgba(255,255,255,0.85);
+  line-height: 1.4; margin-bottom: 6px;
+}
+.task-meta { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+
+.tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; font-weight: 500;
+  letter-spacing: 0.10em; text-transform: uppercase;
+  padding: 2px 7px;
+}
+.t-prog { background: rgba(53,73,181,0.2); color: rgba(140,160,255,0.9); border: 1px solid rgba(53,73,181,0.3); }
+.t-fire { background: rgba(255,59,48,0.10); color: var(--fire); border: 1px solid rgba(255,59,48,0.2); }
+.t-next { background: rgba(249,172,40,0.10); color: var(--next); border: 1px solid rgba(249,172,40,0.2); }
+.t-cool { background: rgba(52,199,89,0.10); color: var(--cool); border: 1px solid rgba(52,199,89,0.2); }
+.t-blk  { background: rgba(255,149,0,0.10); color: #FF9500; border: 1px solid rgba(255,149,0,0.2); }
+.t-src  { color: rgba(255,255,255,0.18); border: 1px solid var(--border); }
+.t-date { color: rgba(255,255,255,0.15); font-size: 9px; }
+
+.task-pri {
+  width: 44px; flex-shrink: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  border-left: 1px solid var(--border); gap: 4px; padding: 0 4px;
+}
+.pri-dot { width: 7px; height: 7px; border-radius: 50%; }
+.pri-lbl {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(255,255,255,0.2);
+}
+
+/* CATEGORIA TAG */
+.t-cat {
+  background: rgba(249,172,40,0.08);
+  color: rgba(249,172,40,0.65);
+  border: 1px solid rgba(249,172,40,0.18);
+}
+
+/* DESCRIZIONE ESPANDIBILE */
+.task-desc {
+  display: none;
+  margin-top: 8px; padding-top: 8px;
+  border-top: 1px solid var(--border);
+  font-size: 13px; line-height: 1.6;
+  color: rgba(255,255,255,0.4);
+}
+.task-desc.open { display: block; }
+.btn-desc {
+  background: none; border: none; cursor: pointer;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(255,255,255,0.18); padding: 2px 0 0 0;
+  transition: color 0.15s; display: block;
+}
+.btn-desc:hover { color: var(--giallo); }
+
+/* FILTRO CATEGORIA PIPELINE */
+.cat-filter {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  margin-bottom: 20px;
+}
+.cat-btn {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+  background: var(--surface); border: 1px solid var(--border);
+  color: rgba(255,255,255,0.3); padding: 7px 14px; cursor: pointer;
+  transition: all 0.15s;
+}
+.cat-btn.active {
+  background: rgba(249,172,40,0.12);
+  border-color: rgba(249,172,40,0.3);
+  color: var(--giallo);
+}
+.cat-btn:hover { color: rgba(255,255,255,0.7); }
+
+/* =============================================
+   EMPTY STATE
+   ============================================= */
+.empty {
+  padding: 32px 16px; text-align: center;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+  color: rgba(255,255,255,0.12);
+  border: 1px dashed var(--border);
+}
+
+/* =============================================
+   PIPELINE
+   ============================================= */
+.pipe-group { margin-bottom: 28px; }
+.pipe-label {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px; letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.35);
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 8px;
+}
+.pipe-count {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; color: rgba(255,255,255,0.18);
+  font-weight: 400; letter-spacing: 0.05em;
+}
+
+/* =============================================
+   PANELS (Import / GSheets)
+   ============================================= */
+.panel { border: 1px solid var(--border); margin-bottom: 20px; }
+.panel-head {
+  background: var(--blu-dark);
+  border-bottom: 2px solid var(--giallo);
+  padding: 12px 18px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.panel-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 19px; letter-spacing: 0.1em; color: #fff;
+}
+.panel-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+  padding: 3px 10px;
+  background: rgba(249,172,40,0.12); color: var(--giallo);
+  border: 1px solid rgba(249,172,40,0.25);
+}
+.panel-body { padding: 20px; background: #000; }
+.panel-desc {
+  font-size: 12px; color: rgba(255,255,255,0.35);
+  line-height: 1.7; margin-bottom: 16px;
+}
+.panel-desc strong { color: var(--giallo); }
+
+textarea.import-ta {
+  width: 100%; height: 120px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  padding: 12px;
+  font-family: 'DM Mono', monospace; font-size: 11px;
+  color: rgba(255,255,255,0.55); line-height: 1.7;
+  resize: vertical; outline: none;
+  transition: border-color 0.2s;
+}
+textarea.import-ta:focus { border-color: rgba(249,172,40,0.4); }
+textarea.import-ta::placeholder { color: rgba(255,255,255,0.1); }
+
+.panel-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; align-items: center; }
+
+.btn-p {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px; letter-spacing: 0.1em;
+  border: none; padding: 9px 28px; cursor: pointer; transition: all 0.15s;
+}
+.btn-p.yellow { background: var(--giallo); color: #000; }
+.btn-p.yellow:hover { background: #FFB93E; }
+.btn-p.blue   { background: var(--blu); color: #fff; }
+.btn-p.blue:hover { background: var(--blu-dark); }
+.btn-p.dim    { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.5); }
+.btn-p.dim:hover { background: rgba(255,255,255,0.1); }
+
+.btn-ghost {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+  background: transparent; color: rgba(255,255,255,0.2);
+  border: 1px solid var(--border); padding: 9px 16px; cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-ghost:hover { color: var(--fire); border-color: rgba(255,59,48,0.3); }
+
+.imp-status { margin-left: auto; font-family: 'DM Mono', monospace; font-size: 11px; }
+.ok  { color: var(--cool); }
+.err { color: var(--fire); }
+
+.sync-bar {
+  display: none; align-items: center; gap: 10px;
+  padding: 10px 12px; margin-bottom: 14px;
+  background: rgba(52,199,89,0.05); border: 1px solid rgba(52,199,89,0.15);
+  font-family: 'DM Mono', monospace; font-size: 11px; color: rgba(52,199,89,0.7);
+}
+.sync-bar.show { display: flex; }
+.sdot { width:6px; height:6px; border-radius:50%; background:var(--cool); animation:bl 1.5s infinite; }
+@keyframes bl { 0%,100%{opacity:1} 50%{opacity:0.2} }
+
+/* =============================================
+   PROMPT MAGICO
+   ============================================= */
+.prompt-wrap {
+  background: rgba(0,0,0,0.6);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--giallo);
+  margin-bottom: 20px;
+}
+.prompt-head {
+  padding: 12px 18px;
+  background: var(--blu-dark);
+  display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+}
+.prompt-head-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px; letter-spacing: 0.1em; color: var(--giallo);
+}
+.btn-copy {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase;
+  background: rgba(249,172,40,0.1); color: var(--giallo);
+  border: 1px solid rgba(249,172,40,0.3); padding: 6px 14px; cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-copy:hover { background: rgba(249,172,40,0.2); }
+.prompt-txt {
+  padding: 18px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; line-height: 1.9; letter-spacing: 0.02em;
+  color: rgba(255,255,255,0.45); white-space: pre-wrap;
+}
+
+.steps { display: flex; flex-direction: column; gap: 3px; }
+.step {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 14px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+.step-n {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 30px; line-height: 1; color: var(--giallo); flex-shrink: 0;
+}
+.step-t { font-size: 13px; line-height: 1.6; color: rgba(255,255,255,0.45); padding-top: 5px; }
+.step-t strong { color: rgba(255,255,255,0.85); }
+
+/* =============================================
+   DANGER
+   ============================================= */
+.danger { text-align: right; margin-top: 24px; }
+
+/* DROP ZONE */
+.drop-zone {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 8px; padding: 36px 24px;
+  border: 2px dashed rgba(249,172,40,0.25);
+  background: rgba(249,172,40,0.03);
+  cursor: pointer; transition: all 0.2s; margin-bottom: 16px;
+}
+.drop-zone:hover, .drop-zone.drag-over {
+  border-color: rgba(249,172,40,0.6);
+  background: rgba(249,172,40,0.07);
+}
+.drop-icon { font-size: 32px; }
+.drop-text { font-size: 14px; color: rgba(255,255,255,0.55); text-align: center; line-height: 1.5; }
+.drop-text strong { color: var(--giallo); }
+.drop-sub {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(255,255,255,0.2);
+}
+#importReport {
+  background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.14);
+  padding: 16px; margin-top: 4px;
+}
+.report-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 16px; letter-spacing: 0.1em; color: var(--giallo); margin-bottom: 12px;
+}
+.report-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.07);
+  font-family: 'DM Mono', monospace; font-size: 11px;
+}
+.report-row:last-child { border-bottom: none; }
+.report-file { color: rgba(255,255,255,0.6); flex: 1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.report-stats { display: flex; gap: 12px; flex-shrink: 0; margin-left: 12px; }
+.rs-add  { color: var(--cool); }
+.rs-upd  { color: var(--next); }
+.rs-skip { color: rgba(255,255,255,0.25); }
+.rs-err  { color: var(--fire); }
+.report-total {
+  margin-top: 12px; padding-top: 12px;
+  border-top: 1px solid rgba(249,172,40,0.2);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px; letter-spacing: 0.08em; color: var(--bianco);
+  display: flex; gap: 20px; flex-wrap: wrap;
+}
+</style>
+</head>
+<body>
+
+<!-- ALERT -->
+<div class="alert-banner" id="alertBanner">
+  <strong style="letter-spacing:.15em">🔴 FIRE</strong>
+  <span id="alertTxt" style="font-family:'DM Mono',monospace;font-size:11px;"></span>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="header-top">
+    <div class="brand">
+      <span style="font-size:20px;animation:hop 4s ease-in-out infinite;display:inline-block">🐸</span>
+      <div class="brand-name">THE <span>FROG</span></div>
+    </div>
+    <div class="header-right-top">
+      <div class="clock" id="clock"></div>
+      <a href="https://frankistudio.it/staff/" class="btn-staff">← Staff</a>
+    </div>
+  </div>
+  <nav class="header-nav">
+    <button class="nav-tab active" onclick="switchTab('today')">Today</button>
+    <button class="nav-tab" onclick="switchTab('pipeline')">Pipeline</button>
+    <button class="nav-tab" onclick="switchTab('import')">Importa</button>
+    <button class="nav-tab" onclick="switchTab('prompt')">Prompt Magico</button>
+  </nav>
+</header>
+
+<style>
+@keyframes hop { 0%,90%,100%{transform:translateY(0)} 95%{transform:translateY(-5px)} }
+</style>
+
+<main>
+
+  <!-- STATS -->
+  <div class="stats-grid">
+    <div class="stat s-fire">
+      <div class="stat-n" id="cnt-fire">0</div>
+      <div class="stat-l">🔴 Fire</div>
+    </div>
+    <div class="stat s-next">
+      <div class="stat-n" id="cnt-next">0</div>
+      <div class="stat-l">🟡 Next</div>
+    </div>
+    <div class="stat s-cool">
+      <div class="stat-n" id="cnt-cool">0</div>
+      <div class="stat-l">🟢 Cool</div>
+    </div>
+    <div class="stat s-done">
+      <div class="stat-n" id="cnt-done">0</div>
+      <div class="stat-l">✅ Done oggi</div>
+    </div>
+  </div>
+
+  <!-- TAB TODAY -->
+  <div id="tab-today">
+    <div class="add-row">
+      <input type="text" id="iText" placeholder="Aggiungi task..."
+        onkeydown="if(event.key==='Enter')addTask()">
+      <select id="iProg">
+        <option value="">Progetto</option>
+        <option>Fantascudetto</option><option>Franki Studio</option>
+        <option>BonBon / OASI</option><option>WinZone</option>
+        <option>CCH Corsale</option><option>Forma 88</option>
+        <option>iStadium Game</option><option>La Mendula</option>
+        <option>Generale</option>
+      </select>
+      <select id="iCat">
+        <option value="">Categoria</option>
+        <option>Sviluppo</option>
+        <option>Contenuti</option>
+        <option>Operativo</option>
+        <option>Commerciale</option>
+        <option>Legale</option>
+        <option>Strategia</option>
+      </select>
+      <select id="iPri">
+        <option value="fire">🔴 Fire</option>
+        <option value="next" selected>🟡 Next</option>
+        <option value="cool">🟢 Cool</option>
+      </select>
+      <button class="btn-add" onclick="addTask()">+ AGGIUNGI</button>
+    </div>
+
+    <div class="section">
+      <div class="sec-head">
+        <div class="sec-title fire">🔴 FIRE</div>
+        <div class="sec-count" id="lbl-fire">0 task</div>
+      </div>
+      <div id="list-fire"></div>
+    </div>
+
+    <div class="section">
+      <div class="sec-head">
+        <div class="sec-title next">🟡 NEXT</div>
+        <div class="sec-count" id="lbl-next">0 task</div>
+      </div>
+      <div id="list-next"></div>
+    </div>
+
+    <div class="section">
+      <div class="sec-head">
+        <div class="sec-title cool">🟢 COOL</div>
+        <div class="sec-count" id="lbl-cool">0 task</div>
+      </div>
+      <div id="list-cool"></div>
+    </div>
+  </div>
+
+  <!-- TAB PIPELINE -->
+  <div id="tab-pipeline" style="display:none">
+    <div class="cat-filter" id="catFilter">
+      <button class="cat-btn active" onclick="filterCat('tutti')">Tutti</button>
+      <button class="cat-btn" onclick="filterCat('Sviluppo')">Sviluppo</button>
+      <button class="cat-btn" onclick="filterCat('Contenuti')">Contenuti</button>
+      <button class="cat-btn" onclick="filterCat('Operativo')">Operativo</button>
+      <button class="cat-btn" onclick="filterCat('Commerciale')">Commerciale</button>
+      <button class="cat-btn" onclick="filterCat('Legale')">Legale</button>
+      <button class="cat-btn" onclick="filterCat('Strategia')">Strategia</button>
+    </div>
+    <div id="pipe-wrap"></div>
+  </div>
+
+  <!-- TAB IMPORT -->
+  <div id="tab-import" style="display:none">
+
+    <!-- IMPORT MASSIVO — multi file -->
+    <div class="panel">
+      <div class="panel-head">
+        <div class="panel-title">📂 PAPELE FROG — IMPORT MASSIVO</div>
+        <div class="panel-badge">Multi file</div>
+      </div>
+      <div class="panel-body">
+        <p class="panel-desc">
+          Scarica il <strong>Papele Frog</strong> da ogni chat → seleziona tutti i file insieme → IMPORTA.<br>
+          Task già <strong>chiusi</strong> in The Frog non vengono mai riaperti.
+        </p>
+        <label class="drop-zone" id="dropZone">
+          <div class="drop-icon">📂</div>
+          <div class="drop-text">Clicca per selezionare file <strong>.zip · .json · .txt · .odt · .docx</strong></div>
+          <div class="drop-sub">oppure trascina qui i file</div>
+          <input type="file" accept=".json,.zip,.txt,.odt,.docx,.doc" multiple style="display:none" id="multiFileInput" onchange="handleFileInput(this)">
+        </label>
+        <div id="importReport" style="display:none">
+          <div class="report-title">📊 REPORT IMPORT</div>
+          <div id="reportRows"></div>
+          <div class="report-total" id="reportTotal"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- IMPORT SINGOLO testo -->
+    <div class="panel">
+      <div class="panel-head">
+        <div class="panel-title">⚡ IMPORTA JSON MANUALE</div>
+        <div class="panel-badge">Testo</div>
+      </div>
+      <div class="panel-body">
+        <p class="panel-desc">Incolla il JSON direttamente se non hai il file.</p>
+        <textarea class="import-ta" id="iJson"
+placeholder='[
+  {"task":"Nome task","progetto":"Fantascudetto","priorita":"fire","stato":"da fare","fonte":"Claude"}
+]'></textarea>
+        <div class="panel-actions">
+          <button class="btn-p yellow" onclick="importJSON()">⚡ IMPORTA</button>
+          <button class="btn-ghost" onclick="document.getElementById('iJson').value=''">Pulisci</button>
+          <div class="imp-status" id="impStat"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SYNC GSHEETS -->
+    <div class="panel">
+      <div class="panel-head">
+        <div class="panel-title">📊 SYNC GOOGLE SHEETS</div>
+        <div class="panel-badge" style="background:rgba(52,199,89,0.1);color:var(--cool);border-color:rgba(52,199,89,0.2);">Backend</div>
+      </div>
+      <div class="panel-body">
+        <p class="panel-desc">Salva su GSheets via proxy Netlify — accessibile da qualsiasi device.</p>
+        <div class="sync-bar" id="syncBar">
+          <div class="sdot"></div>
+          <span id="syncMsg">Pronto</span>
+        </div>
+        <div class="panel-actions">
+          <button class="btn-p blue" onclick="syncSave()">📊 SALVA SU GSHEETS</button>
+          <button class="btn-p dim" onclick="syncLoad()">⬇️ CARICA DA GSHEETS</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="danger">
+      <button class="btn-ghost" onclick="clearAll()">🗑 Cancella tutti i task</button>
+    </div>
+  </div>
+
+  <!-- TAB PROMPT -->
+  <div id="tab-prompt" style="display:none">
+    <div class="prompt-wrap">
+      <div class="prompt-head">
+        <div class="prompt-head-title">📝 PROMPT MAGICO</div>
+        <button class="btn-copy" id="btnCopy" onclick="copyPrompt()">📋 COPIA</button>
+      </div>
+      <div class="prompt-txt" id="promptTxt">Analizza questa conversazione e estrai tutti i task emersi.
+Restituisci SOLO un array JSON valido, senza testo aggiuntivo, senza backtick, senza markdown.
+
+Formato esatto per ogni task:
+{"task":"titolo breve del task","descrizione":"contesto esteso — cosa è, perché esiste, cosa blocca, dettagli utili per chi riprende dopo settimane","progetto":"nome progetto","categoria":"Sviluppo|Contenuti|Operativo|Commerciale|Legale|Strategia","priorita":"fire|next|cool","stato":"da fare|fatto|bloccato","fonte":"Claude"}
+
+Regole priorità:
+- fire = urgente, blocca tutto, va fatto oggi
+- next = questa settimana
+- cool = quando c'è tempo
+
+Regole categoria:
+- Sviluppo = codice, HTML, script, bug fix, integrazioni tecniche
+- Contenuti = testi, documenti, guide, materiali da scrivere
+- Operativo = azioni manuali — caricare file, configurare celle, inviare messaggi
+- Commerciale = lancio, affiliati, clienti, contratti, accordi commerciali
+- Legale = TULPS, privacy, accordi formali, pareri legali
+- Strategia = decisioni, modelli, simulazioni, nodi aperti
+
+La descrizione deve essere autoesplicativa — chi la legge dopo settimane deve capire tutto senza riaprire la chat.
+Includi task DA FARE, FATTI e BLOCCATI.
+Nome progetto: usa il nome esatto del progetto di questa chat.</div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head"><div class="panel-title">COME SI USA</div></div>
+      <div class="panel-body">
+        <div class="steps">
+          <div class="step"><div class="step-n">1</div><div class="step-t">Vai nella chat del progetto (es. <strong>Fantascudetto</strong>)</div></div>
+          <div class="step"><div class="step-n">2</div><div class="step-t">Copia il <strong>Prompt Magico</strong> → incollalo nella chat → invio</div></div>
+          <div class="step"><div class="step-n">3</div><div class="step-t">Claude restituisce un <strong>array JSON</strong> con tutti i task</div></div>
+          <div class="step"><div class="step-n">4</div><div class="step-t">Copia il JSON → tab <strong>Importa</strong> → incolla → IMPORTA</div></div>
+          <div class="step"><div class="step-n">5</div><div class="step-t">Clicca <strong>SALVA SU GSHEETS</strong> per backup online</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+const SK    = 'thefrog_v2';
+const SK_BL = 'thefrog_blacklist_v1'; // lista nera task chiusi
+const PRXY  = 'https://frankistudiogen.netlify.app/.netlify/functions/save';
+const SHT   = 'frog';
+let activeCat = 'tutti';
+
+function load()    { try { return JSON.parse(localStorage.getItem(SK)) || []; } catch(e){ return []; } }
+function save(t)   { localStorage.setItem(SK, JSON.stringify(t)); }
+function loadBL()  { try { return JSON.parse(localStorage.getItem(SK_BL)) || []; } catch(e){ return []; } }
+function saveBL(b) { localStorage.setItem(SK_BL, JSON.stringify(b)); }
+function uid()     { return 't_'+Date.now()+'_'+Math.random().toString(36).substr(2,5); }
+function esc(s)    { return s?String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'):''; }
+
+// Chiave univoca per dedup e blacklist
+function taskKey(task, prog) {
+  return (String(task||'').toLowerCase().trim() + '||' + String(prog||'').toLowerCase().trim());
+}
+
+/* ── RENDER ── */
+function render() {
+  const tasks = load();
+  const todayStr = new Date().toDateString();
+  const fire = tasks.filter(t=>t.p==='fire'&&t.s!=='fatto');
+  const next = tasks.filter(t=>t.p==='next'&&t.s!=='fatto');
+  const cool = tasks.filter(t=>t.p==='cool'&&t.s!=='fatto');
+  const done = tasks.filter(t=>t.s==='fatto'&&t.dd&&new Date(t.dd).toDateString()===todayStr);
+
+  document.getElementById('cnt-fire').textContent = fire.length;
+  document.getElementById('cnt-next').textContent = next.length;
+  document.getElementById('cnt-cool').textContent = cool.length;
+  document.getElementById('cnt-done').textContent = done.length;
+  document.getElementById('lbl-fire').textContent = fire.length+' task';
+  document.getElementById('lbl-next').textContent = next.length+' task';
+  document.getElementById('lbl-cool').textContent = cool.length+' task';
+
+  rl('list-fire', fire);
+  rl('list-next', next);
+  rl('list-cool', cool);
+  renderPipe(tasks);
+
+  const ab = document.getElementById('alertBanner');
+  if (fire.length) {
+    document.getElementById('alertTxt').textContent = fire.length+' task urgenti da completare oggi';
+    ab.classList.add('show');
+  } else ab.classList.remove('show');
+}
+
+function cardH(t) {
+  const done = t.s==='fatto', blk = t.s==='bloccato';
+  const pc = {fire:'var(--fire)',next:'var(--next)',cool:'var(--cool)'};
+  const dt = t.da ? new Date(t.da).toLocaleDateString('it-IT') : '';
+  const hasDesc = t.desc && t.desc.trim().length > 0;
+  return `<div class="task ${t.p||'cool'}${done?' done':''}" onclick="toggleDone('${t.id}')">
+    <div class="task-chk">${done?'✓':blk?'⛔':'·'}</div>
+    <div class="task-body">
+      <div class="task-txt">${esc(t.task)}</div>
+      <div class="task-meta">
+        ${t.prog?`<span class="tag t-prog">${esc(t.prog)}</span>`:''}
+        ${t.cat?`<span class="tag t-cat">${esc(t.cat)}</span>`:''}
+        <span class="tag t-${t.p||'cool'}">${(t.p||'cool').toUpperCase()}</span>
+        ${blk?'<span class="tag t-blk">BLOCCATO</span>':''}
+        ${t.src?`<span class="tag t-src">${esc(t.src)}</span>`:''}
+        ${dt?`<span class="tag t-date">${dt}</span>`:''}
+      </div>
+      ${hasDesc?`<button class="btn-desc" onclick="toggleDesc(event,'desc-${t.id}')">▸ dettaglio</button>
+      <div class="task-desc" id="desc-${t.id}">${esc(t.desc)}</div>`:''}
+    </div>
+    <div class="task-pri">
+      <div class="pri-dot" style="background:${pc[t.p]||pc.cool}"></div>
+      <div class="pri-lbl">${t.p||'cool'}</div>
+    </div>
+  </div>`;
+}
+
+function toggleDesc(e, id) {
+  e.stopPropagation();
+  const el = document.getElementById(id);
+  const btn = e.target;
+  el.classList.toggle('open');
+  btn.textContent = el.classList.contains('open') ? '▾ chiudi' : '▸ dettaglio';
+}
+
+function rl(id, tasks) {
+  document.getElementById(id).innerHTML = tasks.length
+    ? tasks.map(cardH).join('')
+    : '<div class="empty">Nessun task</div>';
+}
+
+function filterCat(cat) {
+  activeCat = cat;
+  document.querySelectorAll('.cat-btn').forEach(b=>
+    b.classList.toggle('active', b.textContent.trim()===cat || (cat==='tutti'&&b.textContent.trim()==='Tutti')));
+  renderPipe(load());
+}
+
+function renderPipe(tasks) {
+  const el = document.getElementById('pipe-wrap');
+  let active = tasks.filter(t=>t.s!=='fatto');
+  if (activeCat !== 'tutti') active = active.filter(t=>t.cat===activeCat);
+  if (!active.length) { el.innerHTML='<div class="empty">Nessun task'+(activeCat!=='tutti'?' in questa categoria':'')+'</div>'; return; }
+  const g={};
+  active.forEach(t=>{ const p=t.prog||'Generale'; if(!g[p])g[p]=[]; g[p].push(t); });
+  const po={fire:0,next:1,cool:2};
+  el.innerHTML = Object.entries(g)
+    .sort(([,a],[,b])=>Math.min(...a.map(t=>po[t.p]??2))-Math.min(...b.map(t=>po[t.p]??2)))
+    .map(([prog,list])=>{
+      const fc=list.filter(t=>t.p==='fire').length;
+      return `<div class="pipe-group">
+        <div class="pipe-label">${esc(prog)}<span class="pipe-count">${list.length} task${fc?` · <span style="color:var(--fire)">${fc}🔴</span>`:''}</span></div>
+        ${list.map(cardH).join('')}
+      </div>`;
+    }).join('');
+}
+
+/* ── TOGGLE DONE — aggiunge a blacklist se fatto ── */
+function toggleDone(id) {
+  const tasks = load();
+  const t = tasks.find(x=>x.id===id);
+  if (!t) return;
+  if (t.s==='fatto') {
+    // Riapre: rimuove dalla blacklist
+    t.s = 'da fare'; t.dd = null;
+    const bl = loadBL().filter(k => k !== taskKey(t.task, t.prog));
+    saveBL(bl);
+  } else {
+    // Chiude: aggiunge a blacklist
+    t.s = 'fatto'; t.dd = new Date().toISOString();
+    const bl = loadBL();
+    const k = taskKey(t.task, t.prog);
+    if (!bl.includes(k)) bl.push(k);
+    saveBL(bl);
+  }
+  save(tasks); render();
+}
+
+function addTask() {
+  const txt = document.getElementById('iText').value.trim();
+  if (!txt) return;
+  const tasks = load();
+  tasks.unshift({
+    id:uid(), task:txt,
+    prog:document.getElementById('iProg').value||'Generale',
+    cat:document.getElementById('iCat').value||'',
+    p:document.getElementById('iPri').value,
+    s:'da fare', src:'Manuale',
+    da:new Date().toISOString(), desc:''
+  });
+  save(tasks); document.getElementById('iText').value=''; render();
+}
+
+/* ── CORE IMPORT — usato da tutti i metodi ── */
+function processItems(items, fileName) {
+  const tasks = load();
+  const bl = loadBL();
+  let imp=0, upd=0, skip=0, err=0;
+
+  items.forEach(item => {
+    if (!item.task) { err++; return; }
+
+    let p = (item.priorita||'cool').toLowerCase();
+    if (!['fire','next','cool'].includes(p)) p='cool';
+    let s = (item.stato||'da fare').toLowerCase();
+    if (!['da fare','fatto','bloccato'].includes(s)) s='da fare';
+
+    const k = taskKey(item.task, item.progetto);
+
+    // REGOLA 1+2: se è in blacklist (chiuso) → ignora sempre
+    if (bl.includes(k)) { skip++; return; }
+
+    const ex = tasks.find(t => taskKey(t.task, t.prog) === k);
+
+    if (ex) {
+      // REGOLA 1: se già fatto in The Frog → non riaprire mai
+      if (ex.s === 'fatto') { skip++; return; }
+      // Aggiorna solo se non chiuso
+      ex.p = p;
+      if (s !== 'fatto') ex.s = s; // non forzare "fatto" da import
+      if (item.categoria) ex.cat = item.categoria;
+      if (item.descrizione) ex.desc = item.descrizione;
+      upd++;
+    } else {
+      tasks.unshift({
+        id:uid(), task:item.task,
+        prog:item.progetto||'Generale',
+        cat:item.categoria||'',
+        desc:item.descrizione||'',
+        p, s, src:item.fonte||'Claude',
+        da:new Date().toISOString()
+      });
+      imp++;
+    }
+  });
+
+  save(tasks);
+  return { imp, upd, skip, err, file: fileName };
+}
+
+/* ── IMPORT TESTO MANUALE ── */
+function importJSON() {
+  const raw = document.getElementById('iJson').value.trim();
+  const st  = document.getElementById('impStat');
+  if (!raw) { st.textContent='⚠ Nessun JSON'; st.className='imp-status err'; return; }
+  let parsed;
+  try {
+    parsed = JSON.parse(raw.replace(/```json|```/g,'').trim());
+    if (!Array.isArray(parsed)) throw new Error('Non è un array');
+  } catch(e) { st.textContent='❌ '+e.message; st.className='imp-status err'; return; }
+  const r = processItems(parsed, 'manuale');
+  render();
+  st.textContent = `✅ +${r.imp} nuovi · ~${r.upd} aggiornati · ${r.skip} ignorati`;
+  st.className = 'imp-status ok';
+  document.getElementById('iJson').value = '';
+}
+
+/* ── HANDLE INPUT FILE (ZIP o JSON o TXT o ODT) ── */
+function handleFileInput(input) {
+  var files = Array.from(input.files);
+  if (!files.length) return;
+  input.value = '';
+  processFileList(files);
+}
+
+/* ── PROCESSA LISTA FILE ── */
+async function processFileList(files) {
+  var jsonFiles = [];
+  var results   = [];
+
+  for (var i = 0; i < files.length; i++) {
+    var file  = files[i];
+    var lname = file.name.toLowerCase();
+    var isZip = lname.endsWith('.zip') ||
+                file.type === 'application/zip' ||
+                file.type === 'application/x-zip-compressed';
+
+    if (isZip) {
+      try {
+        var buf = await readFileAsBuffer(file);
+        var zip = await JSZip.loadAsync(buf);
+        var entries = Object.entries(zip.files);
+        for (var j = 0; j < entries.length; j++) {
+          var ename = entries[j][0];
+          var entry = entries[j][1];
+          if (entry.dir) continue;
+          var sname = ename.split('/').pop();
+          if (sname.toLowerCase().endsWith('.json')) {
+            var txt = await entry.async('string');
+            jsonFiles.push({ name: sname, content: txt });
+          }
+        }
+      } catch(zipErr) {
+        results.push({ imp:0, upd:0, skip:0, err:1, file:file.name, parseErr:true });
+      }
+    } else {
+      var content = await readFileAsText(file);
+      jsonFiles.push({ name: file.name, content: content });
+    }
+  }
+
+  for (var k = 0; k < jsonFiles.length; k++) {
+    var jf = jsonFiles[k];
+    if (!jf.content) {
+      results.push({ imp:0, upd:0, skip:0, err:1, file:jf.name, parseErr:true });
+      continue;
+    }
+    try {
+      var clean  = jf.content.replace(/```json|```/g,'').trim();
+      var parsed = JSON.parse(clean);
+      if (!Array.isArray(parsed)) throw new Error('Non array');
+      results.push(processItems(parsed, jf.name));
+    } catch(parseErr) {
+      results.push({ imp:0, upd:0, skip:0, err:1, file:jf.name, parseErr:true });
+    }
+  }
+
+  render();
+  showReport(results);
+}
+
+function readFileAsText(file) {
+  return new Promise(function(res, rej) {
+    var r = new FileReader();
+    r.onload  = function(e) { res(e.target.result); };
+    r.onerror = function()  { rej(new Error('Lettura fallita')); };
+    r.readAsText(file);
+  });
+}
+
+function readFileAsBuffer(file) {
+  return new Promise(function(res, rej) {
+    var r = new FileReader();
+    r.onload  = function(e) { res(e.target.result); };
+    r.onerror = function()  { rej(new Error('Buffer fallito')); };
+    r.readAsArrayBuffer(file);
+  });
+}
+
+/* ── IMPORT MULTI FILE (compatibilità) ── */
+function importMultiFile(input) { handleFileInput(input); }
+
+/* ── DRAG & DROP — fix apertura nuova scheda ── */
+function initDragDrop() {
+  const zone = document.getElementById('dropZone');
+  if (!zone) return;
+
+  // Blocca drag su tutto il documento per evitare apertura file
+  document.addEventListener('dragover', e => e.preventDefault());
+  document.addEventListener('drop', e => e.preventDefault());
+
+  zone.addEventListener('dragover', e => {
+    e.preventDefault(); e.stopPropagation();
+    zone.classList.add('drag-over');
+  });
+  zone.addEventListener('dragleave', e => {
+    e.preventDefault(); e.stopPropagation();
+    zone.classList.remove('drag-over');
+  });
+  zone.addEventListener('drop', e => {
+    e.preventDefault(); e.stopPropagation();
+    zone.classList.remove('drag-over');
+    const files = Array.from(e.dataTransfer.files)
+      .filter(f => f.name.endsWith('.json') || f.name.endsWith('.zip') ||
+                   f.name.endsWith('.txt')  || f.name.endsWith('.odt') ||
+                   f.name.endsWith('.docx') || f.name.endsWith('.doc'));
+    if (files.length) processFileList(files);
+  });
+  zone.addEventListener('click', e => {
+    // Evita click su label che triggera due volte
+    if (e.target.tagName !== 'INPUT') {
+      document.getElementById('multiFileInput').click();
+    }
+  });
+}
+  const el = document.getElementById('importReport');
+  const rows = document.getElementById('reportRows');
+  const tot  = document.getElementById('reportTotal');
+  el.style.display = 'block';
+
+  let totImp=0, totUpd=0, totSkip=0;
+  rows.innerHTML = results.map(r => {
+    totImp += r.imp; totUpd += r.upd; totSkip += r.skip;
+    const name = r.file.replace('.json','');
+    return `<div class="report-row">
+      <div class="report-file">${esc(name)}</div>
+      <div class="report-stats">
+        <span class="rs-add">+${r.imp} nuovi</span>
+        <span class="rs-upd">~${r.upd} agg.</span>
+        <span class="rs-skip">${r.skip} skip</span>
+        ${r.parseErr?'<span class="rs-err">❌ errore</span>':''}
+      </div>
+    </div>`;
+  }).join('');
+
+  tot.innerHTML = `
+    <span class="rs-add">+${totImp} NUOVI</span>
+    <span class="rs-upd">~${totUpd} AGGIORNATI</span>
+    <span class="rs-skip">${totSkip} IGNORATI (chiusi)</span>`;
+}
+
+function clearAll() {
+  if (!confirm('Cancellare tutti i task? Anche la blacklist verrà azzerata.')) return;
+  save([]); saveBL([]); render();
+}
+
+/* ── GSHEETS ── */
+async function syncSave() {
+  const sb=document.getElementById('syncBar'), sm=document.getElementById('syncMsg');
+  sb.classList.add('show'); sm.textContent='Salvataggio...';
+  try {
+    const r = await fetch(PRXY,{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({action:'save',sheet:SHT,key:'tasks_all',value:load()})});
+    const d = await r.json();
+    sm.textContent = d.ok?'✅ Salvato — '+new Date().toLocaleTimeString('it-IT'):'❌ '+d.error;
+  } catch(e){ sm.textContent='❌ '+e.message; }
+}
+async function syncLoad() {
+  const sb=document.getElementById('syncBar'), sm=document.getElementById('syncMsg');
+  sb.classList.add('show'); sm.textContent='Caricamento...';
+  try {
+    const r = await fetch(PRXY,{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({action:'loadAll',sheet:SHT})});
+    const d = await r.json();
+    if (d.ok&&d.data?.tasks_all){ save(d.data.tasks_all); render(); sm.textContent='✅ Caricato — '+new Date().toLocaleTimeString('it-IT'); }
+    else sm.textContent='⚠ Nessun dato';
+  } catch(e){ sm.textContent='❌ '+e.message; }
+}
+
+/* ── TABS ── */
+function switchTab(n) {
+  ['today','pipeline','import','prompt'].forEach(t=>{
+    document.getElementById('tab-'+t).style.display=t===n?'block':'none';
+  });
+  document.querySelectorAll('.nav-tab').forEach((b,i)=>
+    b.classList.toggle('active',['today','pipeline','import','prompt'][i]===n));
+}
+
+/* ── CLOCK ── */
+function tick() {
+  const now=new Date();
+  document.getElementById('clock').textContent=
+    now.toLocaleDateString('it-IT',{weekday:'short',day:'2-digit',month:'short'})+
+    ' · '+now.toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit'});
+}
+
+/* ── COPY PROMPT ── */
+function copyPrompt() {
+  navigator.clipboard.writeText(document.getElementById('promptTxt').textContent).then(()=>{
+    const b=document.getElementById('btnCopy');
+    b.textContent='✅ COPIATO'; setTimeout(()=>b.textContent='📋 COPIA',2000);
+  });
+}
+
+/* ── INIT ── */
+window.onload=()=>{
+  tick(); setInterval(tick,30000);
+  render();
+  initDragDrop();
+  if('Notification'in window&&Notification.permission==='default')
+    Notification.requestPermission();
+};
+</script>
+</body>
+</html>
+
+  document.getElementById('cnt-fire').textContent = fire.length;
+  document.getElementById('cnt-next').textContent = next.length;
+  document.getElementById('cnt-cool').textContent = cool.length;
+  document.getElementById('cnt-done').textContent = done.length;
+  document.getElementById('lbl-fire').textContent = fire.length+' task';
+  document.getElementById('lbl-next').textContent = next.length+' task';
+  document.getElementById('lbl-cool').textContent = cool.length+' task';
+
+  rl('list-fire', fire);
+  rl('list-next', next);
+  rl('list-cool', cool);
+  renderPipe(tasks);
+
+  const ab = document.getElementById('alertBanner');
+  if (fire.length) {
+    document.getElementById('alertTxt').textContent = fire.length+' task urgenti da completare oggi';
+    ab.classList.add('show');
+  } else ab.classList.remove('show');
+}
+
+function cardH(t) {
+  const done = t.s==='fatto', blk = t.s==='bloccato';
+  const pc = {fire:'var(--fire)',next:'var(--next)',cool:'var(--cool)'};
+  const dt = t.da ? new Date(t.da).toLocaleDateString('it-IT') : '';
+  const hasDesc = t.desc && t.desc.trim().length > 0;
+  return `<div class="task ${t.p||'cool'}${done?' done':''}" onclick="toggleDone('${t.id}')">
+    <div class="task-chk">${done?'✓':blk?'⛔':'·'}</div>
+    <div class="task-body">
+      <div class="task-txt">${esc(t.task)}</div>
+      <div class="task-meta">
+        ${t.prog?`<span class="tag t-prog">${esc(t.prog)}</span>`:''}
+        ${t.cat?`<span class="tag t-cat">${esc(t.cat)}</span>`:''}
+        <span class="tag t-${t.p||'cool'}">${(t.p||'cool').toUpperCase()}</span>
+        ${blk?'<span class="tag t-blk">BLOCCATO</span>':''}
+        ${t.src?`<span class="tag t-src">${esc(t.src)}</span>`:''}
+        ${dt?`<span class="tag t-date">${dt}</span>`:''}
+      </div>
+      ${hasDesc?`<button class="btn-desc" onclick="toggleDesc(event,'desc-${t.id}')">▸ dettaglio</button>
+      <div class="task-desc" id="desc-${t.id}">${esc(t.desc)}</div>`:''}
+    </div>
+    <div class="task-pri">
+      <div class="pri-dot" style="background:${pc[t.p]||pc.cool}"></div>
+      <div class="pri-lbl">${t.p||'cool'}</div>
+    </div>
+  </div>`;
+}
+
+function toggleDesc(e, id) {
+  e.stopPropagation();
+  const el = document.getElementById(id);
+  const btn = e.target;
+  el.classList.toggle('open');
+  btn.textContent = el.classList.contains('open') ? '▾ chiudi' : '▸ dettaglio';
+}
+
+function rl(id, tasks) {
+  document.getElementById(id).innerHTML = tasks.length
+    ? tasks.map(cardH).join('')
+    : '<div class="empty">Nessun task</div>';
+}
+
+function filterCat(cat) {
+  activeCat = cat;
+  document.querySelectorAll('.cat-btn').forEach(b=>
+    b.classList.toggle('active', b.textContent.trim()===cat || (cat==='tutti'&&b.textContent.trim()==='Tutti')));
+  renderPipe(load());
+}
+
+function renderPipe(tasks) {
+  const el = document.getElementById('pipe-wrap');
+  let active = tasks.filter(t=>t.s!=='fatto');
+  if (activeCat !== 'tutti') active = active.filter(t=>t.cat===activeCat);
+  if (!active.length) { el.innerHTML='<div class="empty">Nessun task'+(activeCat!=='tutti'?' in questa categoria':'')+'</div>'; return; }
+  const g={};
+  active.forEach(t=>{ const p=t.prog||'Generale'; if(!g[p])g[p]=[]; g[p].push(t); });
+  const po={fire:0,next:1,cool:2};
+  el.innerHTML = Object.entries(g)
+    .sort(([,a],[,b])=>Math.min(...a.map(t=>po[t.p]??2))-Math.min(...b.map(t=>po[t.p]??2)))
+    .map(([prog,list])=>{
+      const fc=list.filter(t=>t.p==='fire').length;
+      return `<div class="pipe-group">
+        <div class="pipe-label">${esc(prog)}<span class="pipe-count">${list.length} task${fc?` · <span style="color:var(--fire)">${fc}🔴</span>`:''}</span></div>
+        ${list.map(cardH).join('')}
+      </div>`;
+    }).join('');
+}
+
+/* ── ACTIONS ── */
+function toggleDone(id) {
+  const tasks=load(), t=tasks.find(x=>x.id===id);
+  if(!t)return;
+  if(t.s==='fatto'){t.s='da fare';t.dd=null;}else{t.s='fatto';t.dd=new Date().toISOString();}
+  save(tasks); render();
+}
+
+function addTask() {
+  const txt=document.getElementById('iText').value.trim();
+  if(!txt)return;
+  const tasks=load();
+  tasks.unshift({
+    id:uid(), task:txt,
+    prog:document.getElementById('iProg').value||'Generale',
+    cat:document.getElementById('iCat').value||'',
+    p:document.getElementById('iPri').value,
+    s:'da fare', src:'Manuale',
+    da:new Date().toISOString(),
+    desc:''
+  });
+  save(tasks); document.getElementById('iText').value=''; render();
+}
+
+function importJSON() {
+  const raw=document.getElementById('iJson').value.trim();
+  const st=document.getElementById('impStat');
+  if(!raw){st.textContent='⚠ Nessun JSON';st.className='imp-status err';return;}
+  let parsed;
+  try {
+    parsed=JSON.parse(raw.replace(/```json|```/g,'').trim());
+    if(!Array.isArray(parsed))throw new Error('Non è un array');
+  } catch(e){st.textContent='❌ '+e.message;st.className='imp-status err';return;}
+  const tasks=load(); let imp=0,upd=0;
+  parsed.forEach(item=>{
+    if(!item.task)return;
+    let p=(item.priorita||'cool').toLowerCase(); if(!['fire','next','cool'].includes(p))p='cool';
+    let s=(item.stato||'da fare').toLowerCase(); if(!['da fare','fatto','bloccato'].includes(s))s='da fare';
+    const ex=tasks.find(t=>t.task.toLowerCase()===item.task.toLowerCase()&&t.prog===item.progetto);
+    if(ex){
+      ex.p=p; ex.s=s;
+      if(item.categoria) ex.cat=item.categoria;
+      if(item.descrizione) ex.desc=item.descrizione;
+      if(s==='fatto'&&!ex.dd)ex.dd=new Date().toISOString();
+      upd++;
+    } else {
+      tasks.unshift({
+        id:uid(), task:item.task,
+        prog:item.progetto||'Generale',
+        cat:item.categoria||'',
+        desc:item.descrizione||'',
+        p, s, src:item.fonte||'Claude',
+        da:new Date().toISOString()
+      });
+      imp++;
+    }
+  });
+  save(tasks);render();
+  st.textContent=`✅ ${imp} importati, ${upd} aggiornati`;
+  st.className='imp-status ok';
+  document.getElementById('iJson').value='';
+}
+
+function importFile(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const st = document.getElementById('impStat');
+  st.textContent = '⏳ Lettura file...';
+  st.className = 'imp-status';
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    document.getElementById('iJson').value = e.target.result;
+    importJSON();
+  };
+  reader.onerror = function() {
+    st.textContent = '❌ Errore lettura file';
+    st.className = 'imp-status err';
+  };
+  reader.readAsText(file);
+  // Reset input per permettere ricaricamento stesso file
+  input.value = '';
+}
+
+function clearAll() {
+  if(!confirm('Cancellare tutti i task?'))return;
+  save([]); render();
+}
+
+/* ── GSHEETS ── */
+async function syncSave() {
+  const sb=document.getElementById('syncBar'),sm=document.getElementById('syncMsg');
+  sb.classList.add('show'); sm.textContent='Salvataggio...';
+  try {
+    const r=await fetch(PRXY,{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({action:'save',sheet:SHT,key:'tasks_all',value:load()})});
+    const d=await r.json();
+    sm.textContent=d.ok?'✅ Salvato — '+new Date().toLocaleTimeString('it-IT'):'❌ '+d.error;
+  } catch(e){sm.textContent='❌ '+e.message;}
+}
+async function syncLoad() {
+  const sb=document.getElementById('syncBar'),sm=document.getElementById('syncMsg');
+  sb.classList.add('show'); sm.textContent='Caricamento...';
+  try {
+    const r=await fetch(PRXY,{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({action:'loadAll',sheet:SHT})});
+    const d=await r.json();
+    if(d.ok&&d.data?.tasks_all){save(d.data.tasks_all);render();sm.textContent='✅ Caricato — '+new Date().toLocaleTimeString('it-IT');}
+    else sm.textContent='⚠ Nessun dato';
+  } catch(e){sm.textContent='❌ '+e.message;}
+}
+
+/* ── TABS ── */
+function switchTab(n) {
+  ['today','pipeline','import','prompt'].forEach(t=>{
+    document.getElementById('tab-'+t).style.display=t===n?'block':'none';
+  });
+  document.querySelectorAll('.nav-tab').forEach((b,i)=>
+    b.classList.toggle('active',['today','pipeline','import','prompt'][i]===n));
+}
+
+/* ── CLOCK ── */
+function tick() {
+  const now=new Date();
+  document.getElementById('clock').textContent=
+    now.toLocaleDateString('it-IT',{weekday:'short',day:'2-digit',month:'short'})+
+    ' · '+now.toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit'});
+}
+
+/* ── COPY ── */
+function copyPrompt() {
+  navigator.clipboard.writeText(document.getElementById('promptTxt').textContent).then(()=>{
+    const b=document.getElementById('btnCopy');
+    b.textContent='✅ COPIATO'; setTimeout(()=>b.textContent='📋 COPIA',2000);
+  });
+}
+
+/* ── INIT ── */
+window.onload=()=>{
+  tick(); setInterval(tick,30000); render();
+  if('Notification'in window&&Notification.permission==='default')
+    Notification.requestPermission();
+};
+</script>
+</body>
+</html>

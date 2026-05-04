@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Franki PM Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --giallo:#F0A500;--blu:#2B38B0;--blu-dark:#1a2480;
+  --nero:#0d0d1a;--grigio:#1e1e2e;--grigio2:#2a2a3e;
+  --testo:rgba(232,238,255,0.85);--testo-dim:rgba(232,238,255,0.4);
+  --p-alta:#ef4444;--p-media:#F0A500;--p-bassa:#60a5fa;
+  --verde:#22c55e;--sidebar:240px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;overflow:hidden;}
+body{font-family:'Barlow',sans-serif;background:var(--nero);color:var(--testo);display:flex;flex-direction:column;}
+
+.topbar{height:56px;background:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 20px;border-bottom:3px solid var(--giallo);flex-shrink:0;z-index:100;}
+.logo-text{display:flex;align-items:center;}
+
+.topbar-center{font-family:'Barlow Condensed',sans-serif;font-size:18px;color:var(--blu);letter-spacing:0.08em;}
+.topbar-right{display:flex;align-items:center;gap:10px;}
+.today-badge{background:var(--giallo);color:var(--nero);font-weight:800;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;padding:6px 14px;}
+.wa-send-all{background:#25d366;color:#fff;font-weight:700;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;padding:6px 14px;border:none;cursor:pointer;}
+
+.app{display:flex;flex:1;overflow:hidden;}
+
+.sidebar{width:var(--sidebar);background:var(--grigio);display:flex;flex-direction:column;border-right:1px solid rgba(255,255,255,0.06);flex-shrink:0;overflow-y:auto;}
+.sidebar-section{padding:14px 14px 6px;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--testo-dim);font-weight:700;}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;transition:background 0.2s;border-left:3px solid transparent;font-size:13px;font-weight:500;color:var(--testo-dim);}
+.nav-item:hover{background:rgba(255,255,255,0.04);color:var(--testo);}
+.nav-item.active{background:rgba(251,194,89,0.08);border-left-color:var(--giallo);color:var(--giallo);}
+.nav-item .ico{font-size:15px;width:18px;text-align:center;}
+
+.proj-item{display:flex;align-items:center;gap:8px;padding:7px 14px;cursor:pointer;border-left:3px solid transparent;font-size:11px;color:var(--testo-dim);transition:background 0.2s;}
+.proj-item:hover{background:rgba(255,255,255,0.03);color:var(--testo);}
+.proj-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.proj-pct{margin-left:auto;font-size:10px;font-family:'Barlow Condensed',sans-serif;}
+
+.add-task-sidebar{margin:10px 14px;background:rgba(251,194,89,0.1);color:var(--giallo);border:1px dashed rgba(251,194,89,0.3);padding:9px;cursor:pointer;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;width:calc(100% - 28px);}
+
+.main{flex:1;overflow-y:auto;display:flex;flex-direction:column;}
+.view{display:none;flex:1;flex-direction:column;}
+.view.active{display:flex;}
+
+/* KPI */
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;flex-shrink:0;}
+.kpi-box{background:var(--grigio);padding:16px 20px;}
+.kpi-n{font-family:'Barlow Condensed',sans-serif;font-size:42px;color:var(--giallo);line-height:1;}
+.kpi-l{font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:var(--testo-dim);margin-top:3px;}
+
+/* MATRICE */
+.matrix-wrap{padding:16px 20px;flex:1;overflow:auto;}
+.matrix-label{font-family:'Barlow Condensed',sans-serif;font-size:18px;color:var(--testo);letter-spacing:0.05em;margin-bottom:12px;}
+.matrix{border-collapse:collapse;min-width:100%;}
+.matrix th{background:var(--grigio2);padding:8px 10px;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--testo-dim);border:1px solid rgba(255,255,255,0.05);white-space:nowrap;}
+.matrix th.fh{color:var(--giallo);text-align:center;}
+.matrix td{border:1px solid rgba(255,255,255,0.05);padding:6px 8px;background:var(--grigio);vertical-align:top;}
+.matrix td.pn{background:var(--grigio2);min-width:130px;white-space:nowrap;}
+.pn-name{font-weight:700;font-size:11px;}
+.pn-sub{font-size:9px;color:var(--testo-dim);letter-spacing:0.08em;text-transform:uppercase;display:block;margin-top:1px;}
+.pn-bar{height:3px;background:rgba(255,255,255,0.06);margin-top:5px;}
+.pn-bar-fill{height:3px;background:var(--verde);}
+.pn-stats{font-size:9px;color:var(--testo-dim);margin-top:2px;font-family:'Barlow Condensed',sans-serif;}
+
+.cell-tasks{display:flex;flex-direction:column;gap:3px;min-width:100px;}
+.mt{font-size:10px;padding:3px 6px;background:rgba(255,255,255,0.04);cursor:pointer;display:flex;align-items:flex-start;gap:4px;border-left:2px solid var(--p-bassa);transition:background 0.2s;line-height:1.3;}
+.mt:hover{background:rgba(251,194,89,0.07);}
+.mt.pa{border-left-color:var(--p-alta);}
+.mt.pm{border-left-color:var(--p-media);}
+.mt.pb{border-left-color:var(--p-bassa);}
+.mt.done{opacity:0.3;text-decoration:line-through;}
+.mt-cb{width:11px;height:11px;border:1.5px solid rgba(255,255,255,0.2);border-radius:2px;flex-shrink:0;margin-top:1px;}
+.mt-cb.ck{background:var(--verde);border-color:var(--verde);}
+.add-mini{font-size:9px;color:var(--testo-dim);cursor:pointer;padding:2px 5px;border:1px dashed rgba(255,255,255,0.1);text-align:center;margin-top:2px;}
+.add-mini:hover{border-color:var(--giallo);color:var(--giallo);}
+
+/* TODAY */
+.view-header{padding:20px 24px 14px;border-bottom:1px solid rgba(255,255,255,0.06);flex-shrink:0;}
+.view-header h2{font-family:'Barlow Condensed',sans-serif;font-size:28px;color:var(--giallo);letter-spacing:0.04em;}
+.view-header p{font-size:12px;color:var(--testo-dim);margin-top:3px;}
+
+.today-body{padding:16px 24px;flex:1;overflow-y:auto;}
+.ts-title{font-family:'Barlow Condensed',sans-serif;font-size:16px;letter-spacing:0.06em;margin-bottom:10px;display:flex;align-items:center;gap:10px;}
+.ts-title::after{content:"";flex:1;height:1px;background:rgba(255,255,255,0.06);}
+.ts-block{margin-bottom:24px;}
+
+.todo{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;background:var(--grigio);margin-bottom:2px;border-left:3px solid transparent;cursor:pointer;transition:background 0.2s;}
+.todo.pa{border-left-color:var(--p-alta);}
+.todo.pm{border-left-color:var(--p-media);}
+.todo.pb{border-left-color:var(--p-bassa);}
+.todo:hover{background:var(--grigio2);}
+.todo.done{opacity:0.35;}
+.todo-ck{width:18px;height:18px;border:2px solid rgba(255,255,255,0.2);border-radius:3px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;}
+.todo-ck.ck{background:var(--verde);border-color:var(--verde);color:#fff;}
+.todo-body{flex:1;}
+.todo-t{font-size:13px;font-weight:600;color:var(--testo);margin-bottom:4px;}
+.todo-meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+.pb-chip{font-size:9px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;padding:2px 7px;border-radius:10px;}
+.chip-a{background:rgba(239,68,68,0.15);color:var(--p-alta);}
+.chip-m{background:rgba(251,194,89,0.15);color:var(--p-media);}
+.chip-b{background:rgba(96,165,250,0.12);color:var(--p-bassa);}
+.todo-note{font-size:11px;color:var(--testo-dim);margin-top:5px;}
+.wa-btn{background:rgba(37,211,102,0.12);color:#25d366;border:1px solid rgba(37,211,102,0.2);font-size:10px;font-weight:700;padding:5px 10px;cursor:pointer;white-space:nowrap;text-decoration:none;display:inline-flex;align-items:center;gap:4px;flex-shrink:0;margin-left:auto;}
+
+/* CALENDARIO */
+.cal-controls{display:flex;align-items:center;justify-content:space-between;padding:16px 24px 12px;border-bottom:1px solid rgba(255,255,255,0.06);flex-shrink:0;}
+.cal-nav-btns{display:flex;align-items:center;gap:10px;}
+.cal-nav-btns button{background:rgba(255,255,255,0.05);color:var(--testo);border:1px solid rgba(255,255,255,0.1);padding:5px 12px;cursor:pointer;font-size:13px;}
+.cal-nav-btns button:hover{border-color:var(--giallo);color:var(--giallo);}
+.cal-heading{font-family:'Barlow Condensed',sans-serif;font-size:24px;color:var(--giallo);letter-spacing:0.05em;}
+.cal-mode-wrap{display:flex;gap:2px;}
+.cal-mode-btn{background:rgba(255,255,255,0.05);color:var(--testo-dim);border:1px solid rgba(255,255,255,0.08);padding:5px 14px;cursor:pointer;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;}
+.cal-mode-btn.active{background:rgba(251,194,89,0.15);color:var(--giallo);border-color:rgba(251,194,89,0.3);}
+.cal-body{flex:1;overflow:auto;padding:16px 24px;}
+
+.week-grid{display:grid;grid-template-columns:60px repeat(7,1fr);gap:1px;background:rgba(255,255,255,0.05);}
+.wh{background:var(--grigio2);padding:8px;text-align:center;font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--testo-dim);}
+.wh.today-h{color:var(--giallo);}
+.wtime{background:var(--grigio);padding:6px 4px;font-size:9px;color:var(--testo-dim);font-family:'Barlow Condensed',sans-serif;text-align:right;}
+.wcell{background:var(--grigio);padding:3px;min-height:44px;border-bottom:1px solid rgba(255,255,255,0.03);}
+.cev{font-size:9px;padding:2px 5px;margin-bottom:2px;border-left:2px solid var(--giallo);background:rgba(251,194,89,0.08);cursor:pointer;color:var(--testo);line-height:1.3;}
+.cev.pa{border-left-color:var(--p-alta);background:rgba(239,68,68,0.08);}
+.cev.pm{border-left-color:var(--p-media);background:rgba(251,194,89,0.08);}
+.cev.pb{border-left-color:var(--p-bassa);background:rgba(96,165,250,0.06);}
+
+.month-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;background:rgba(255,255,255,0.05);}
+.mh{background:var(--grigio2);padding:6px;text-align:center;font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--testo-dim);}
+.mcell{background:var(--grigio);padding:5px;min-height:80px;}
+.mcell.today .mnum{color:var(--giallo);font-weight:800;}
+.mcell.other{opacity:0.35;}
+.mnum{font-size:12px;font-weight:600;margin-bottom:3px;color:var(--testo-dim);}
+
+/* MODAL */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:1000;align-items:center;justify-content:center;}
+.overlay.open{display:flex;}
+.modal{background:var(--grigio);width:460px;max-width:95vw;border:1px solid rgba(251,194,89,0.2);}
+.mh2{padding:18px 22px;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:space-between;}
+.mh2 h3{font-family:'Barlow Condensed',sans-serif;font-size:20px;color:var(--giallo);letter-spacing:0.05em;}
+.mclose{background:none;border:none;color:var(--testo-dim);font-size:18px;cursor:pointer;}
+.mbody{padding:18px 22px;display:flex;flex-direction:column;gap:12px;}
+.fg{display:flex;flex-direction:column;gap:5px;}
+.fg label{font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--testo-dim);}
+.fg input,.fg select,.fg textarea{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:var(--testo);padding:9px 11px;font-family:'Barlow',sans-serif;font-size:13px;outline:none;}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--giallo);}
+.fg select option{background:var(--grigio);}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.mfoot{padding:14px 22px;border-top:1px solid rgba(255,255,255,0.06);display:flex;gap:8px;justify-content:flex-end;}
+.btn-cancel{background:rgba(255,255,255,0.05);color:var(--testo-dim);border:1px solid rgba(255,255,255,0.1);padding:9px 18px;cursor:pointer;font-size:12px;}
+.btn-save{background:var(--giallo);color:var(--nero);border:none;padding:9px 22px;cursor:pointer;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;}
+
+/* === RANKING PROGETTI === */
+.ranking-wrap{padding:20px 24px;flex:1;overflow-y:auto;}
+.ranking-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
+.ranking-title{font-family:'Barlow Condensed',sans-serif;font-size:22px;color:var(--giallo);letter-spacing:0.05em;}
+.ranking-sub{font-size:11px;color:var(--testo-dim);margin-bottom:18px;line-height:1.5;}
+.ranking-sub a{color:var(--giallo);text-decoration:none;}
+.ranking-sub a:hover{text-decoration:underline;}
+
+.rk-item{display:flex;align-items:center;gap:14px;padding:14px 18px;background:var(--grigio);margin-bottom:3px;border-left:4px solid transparent;transition:background 0.2s;cursor:default;}
+.rk-item:hover{background:var(--grigio2);}
+.rk-item.rk-alta{border-left-color:var(--p-alta);}
+.rk-item.rk-media{border-left-color:var(--p-media);}
+.rk-item.rk-bassa{border-left-color:var(--p-bassa);}
+.rk-item.rk-nd{border-left-color:rgba(255,255,255,0.1);}
+
+.rk-pos{font-family:'Barlow Condensed',sans-serif;font-size:28px;color:rgba(255,255,255,0.15);line-height:1;width:32px;text-align:center;flex-shrink:0;}
+.rk-pos.top3{color:var(--giallo);}
+
+.rk-info{flex:1;min-width:0;}
+.rk-name{font-family:'Barlow Condensed',sans-serif;font-size:18px;color:var(--testo);letter-spacing:0.03em;line-height:1;margin-bottom:4px;}
+.rk-type{font-size:10px;color:var(--testo-dim);letter-spacing:0.08em;text-transform:uppercase;}
+.rk-bar-wrap{margin-top:6px;height:4px;background:rgba(255,255,255,0.07);border-radius:2px;overflow:hidden;}
+.rk-bar-fill{height:4px;border-radius:2px;transition:width 0.4s;}
+.fill-alta{background:var(--p-alta);}
+.fill-media{background:var(--p-media);}
+.fill-bassa{background:var(--p-bassa);}
+.fill-nd{background:rgba(255,255,255,0.1);}
+
+.rk-score-block{text-align:right;flex-shrink:0;}
+.rk-score-big{font-family:'Barlow Condensed',sans-serif;font-size:38px;line-height:1;}
+.rk-score-big.sc-alta{color:var(--p-alta);}
+.rk-score-big.sc-media{color:var(--p-media);}
+.rk-score-big.sc-bassa{color:var(--p-bassa);}
+.rk-score-big.sc-nd{color:rgba(255,255,255,0.2);}
+.rk-badge{font-size:9px;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;padding:2px 8px;border-radius:10px;margin-top:3px;display:inline-block;}
+.rk-badge.alta{background:rgba(239,68,68,0.15);color:var(--p-alta);}
+.rk-badge.media{background:rgba(240,165,0,0.15);color:var(--p-media);}
+.rk-badge.bassa{background:rgba(96,165,250,0.12);color:var(--p-bassa);}
+.rk-badge.nd{background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.3);}
+
+.rk-empty{padding:40px 24px;text-align:center;color:var(--testo-dim);}
+.rk-empty a{color:var(--giallo);text-decoration:none;font-weight:700;}
+/* === FINE RANKING === */
+
+/* === LOGO FRANKI v2 === */
+.fk-logo-wrap{display:inline-flex;flex-direction:column;gap:2px;text-decoration:none;}
+.fk-logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;line-height:1;display:inline-flex;align-items:center;}
+.fk-logo .fran{color:#2B38B0;}
+.fk-logo .ki{background:#F0A500;color:#fff;border-radius:4px;padding:1px 7px;margin-left:2px;display:inline-block;}
+.fk-tagline{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(0,0,0,0.4);font-weight:400;}
+/* === FINE LOGO === */
+</style>
+</head>
+<body>
+
+<div id="pw-screen" style="position:fixed;inset:0;background:#1a2480;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;">
+  <a href="/" class="fk-logo-wrap"><div class="fk-logo" style="font-size:52px;"><span class="fran" style="color:#fff;">Fran</span><span class="ki">Ki</span></div></a>
+  <div style="font-family:'Barlow Condensed',sans-serif;font-size:32px;color:rgba(255,255,255,0.4);letter-spacing:0.2em;text-transform:uppercase;">Area Privata</div>
+  <div style="display:flex;flex-direction:column;gap:12px;align-items:center;">
+    <input id="pw-input" type="password" placeholder="Password" 
+      style="background:rgba(255,255,255,0.08);border:2px solid rgba(251,194,89,0.3);color:#fff;font-family:sans-serif;font-size:16px;padding:14px 24px;outline:none;width:280px;text-align:center;letter-spacing:0.1em;"
+      onkeydown="if(event.key==='Enter')checkPw()">
+    <button onclick="checkPw()" 
+      style="background:#F0A500;color:#1a2480;font-family:'Barlow Condensed',sans-serif;font-size:18px;letter-spacing:0.12em;padding:12px 48px;border:none;cursor:pointer;width:280px;">
+      ENTRA
+    </button>
+    <div id="pw-error" style="color:#ef4444;font-size:13px;display:none;">Password errata — riprova</div>
+  </div>
+</div>
+<script>
+(function(){
+  var ok = sessionStorage.getItem('franki_auth');
+  if(ok==='true') document.getElementById('pw-screen').style.display='none';
+})();
+function checkPw(){
+  var v = document.getElementById('pw-input').value;
+  if(v==='Franki88' || v==='Gege88'){
+    sessionStorage.setItem('franki_auth','true');
+    document.getElementById('pw-screen').style.display='none';
+  } else {
+    document.getElementById('pw-error').style.display='block';
+    document.getElementById('pw-input').value='';
+  }
+}
+</script>
+
+
+<div class="topbar">
+  <div class="logo-text" style="display:flex;align-items:center;"><a href="/" class="fk-logo-wrap"><div class="fk-logo" style="font-size:52px;"><span class="fran" style="color:#fff;">Fran</span><span class="ki">Ki</span></div></a></div>
+  <div class="topbar-center">PROJECT MANAGER</div>
+  <div class="topbar-right">
+    <a href="/staff/" style="background:transparent;color:var(--blu);border:1px solid rgba(43,56,176,0.2);font-weight:700;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;padding:6px 14px;text-decoration:none;">← Staff</a>
+    <div class="today-badge" id="topbar-date"></div>
+    <button class="wa-send-all" onclick="sendAllWA()">📱 WA To-Do Domani</button>
+  </div>
+</div>
+
+<div class="app">
+  <div class="sidebar">
+    <div class="sidebar-section">Vista</div>
+    <div class="nav-item active" onclick="showView('dashboard')" id="nav-dashboard"><span class="ico">📊</span>Dashboard</div>
+    <div class="nav-item" onclick="showView('ranking')" id="nav-ranking"><span class="ico">📈</span>Ranking</div>
+    <div class="nav-item" onclick="showView('today')" id="nav-today"><span class="ico">☀️</span>Oggi</div>
+    <div class="nav-item" onclick="showView('calendar')" id="nav-calendar"><span class="ico">📅</span>Calendario</div>
+    <div class="sidebar-section" style="margin-top:6px;">Progetti</div>
+    <div id="sb-projs"></div>
+    <div style="padding:10px 14px;margin-top:auto;">
+      <button class="add-task-sidebar" onclick="openModal()">+ Nuovo Task</button>
+    </div>
+  </div>
+
+  <div class="main">
+    <!-- DASHBOARD -->
+    <div class="view active" id="view-dashboard">
+      <div id="kpi-row" class="kpi-row"></div>
+      <div class="matrix-wrap">
+        <div class="matrix-label">MATRICE PROGETTI × METODO FRANKI</div>
+        <div style="overflow:auto;">
+          <table class="matrix" id="matrix"></table>
+        </div>
+      </div>
+    </div>
+
+    <!-- RANKING -->
+    <div class="view" id="view-ranking">
+      <div class="ranking-wrap">
+        <div class="ranking-header">
+          <div class="ranking-title">RANKING PROFITTABILITÀ</div>
+        </div>
+        <div class="ranking-sub">
+          Progetti ordinati per score (max 40). I punteggi vengono letti da <a href="/profit/" target="_blank">/profit/</a> — compilali lì per aggiornare questo ranking.
+        </div>
+        <div id="ranking-list"></div>
+      </div>
+    </div>
+
+    <!-- TODAY -->
+    <div class="view" id="view-today">
+      <div class="view-header">
+        <h2>TO-DO DI OGGI</h2>
+        <p id="today-lbl"></p>
+      </div>
+      <div class="today-body" id="today-body"></div>
+    </div>
+
+    <!-- CALENDARIO -->
+    <div class="view" id="view-calendar">
+      <div class="cal-controls">
+        <div class="cal-nav-btns">
+          <button onclick="calPrev()">←</button>
+          <div class="cal-heading" id="cal-heading"></div>
+          <button onclick="calNext()">→</button>
+        </div>
+        <div class="cal-mode-wrap">
+          <button class="cal-mode-btn active" onclick="setMode('week',this)">Settimana</button>
+          <button class="cal-mode-btn" onclick="setMode('month',this)">Mese</button>
+        </div>
+      </div>
+      <div class="cal-body" id="cal-body"></div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="overlay" id="modal-overlay">
+  <div class="modal">
+    <div class="mh2">
+      <h3 id="modal-title">NUOVO TASK</h3>
+      <button class="mclose" onclick="closeModal()">✕</button>
+    </div>
+    <div class="mbody">
+      <div class="fg"><label>Titolo *</label><input type="text" id="f-title" placeholder="es. Definire pricing ISG"></div>
+      <div class="frow">
+        <div class="fg"><label>Progetto *</label><select id="f-proj"></select></div>
+        <div class="fg"><label>Fase *</label><select id="f-fase">
+          <option value="concept">01 — Concept</option>
+          <option value="struttura">02 — Struttura</option>
+          <option value="brief">03 — Brief</option>
+          <option value="lean">04 — Lean Test</option>
+          <option value="mvp">05 — MVP</option>
+          <option value="scale">06 — Scale</option>
+        </select></div>
+      </div>
+      <div class="frow">
+        <div class="fg"><label>Priorità *</label><select id="f-prio">
+          <option value="alta">🔴 Alta</option>
+          <option value="media" selected>🟡 Media</option>
+          <option value="bassa">🔵 Bassa</option>
+        </select></div>
+        <div class="fg"><label>Scadenza *</label><input type="date" id="f-date"></div>
+      </div>
+      <div class="fg"><label>Referente</label><select id="f-ref">
+        <option>Franki</option><option>Gegé</option><option>Luca Corsale</option>
+        <option>Pane Cesare</option><option>Julietta</option>
+      </select></div>
+      <div class="fg"><label>Note</label><textarea id="f-note" rows="2" placeholder="Dettagli, link..."></textarea></div>
+    </div>
+    <div class="mfoot">
+      <button class="btn-cancel" onclick="closeModal()">Annulla</button>
+      <button class="btn-save" onclick="saveTask()">Salva</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const PROJS=[
+  {id:'cch',name:'CCH Corsale',type:'Esterno',ref:'Luca Corsale',c:'#ef4444',prio:'alta',ico:'🏡',note:'In attesa appuntamento con Luca e Guia — definire data call'},
+  {id:'bonbon',name:'BonBon/OASI',type:'In House',ref:'Franki',c:'#ef4444',prio:'alta',ico:'🏠',note:'Call 14/4 per attivazione sito — dopo call azioni operative'},
+  {id:'franki',name:'Franki Studio',type:'In House',ref:'Franki',c:'#ef4444',prio:'alta',ico:'💻',note:'Strumento operativo e di comunicazione — completare sezioni mancanti'},
+  {id:'laze',name:'Laze',type:'Esterno',ref:'Gegé',c:'#ef4444',prio:'alta',ico:'🔍',note:'Abbastanza urgente — completare analisi prima di procedere'},
+  {id:'fs',name:'Fantascudetto',type:'In House',ref:'Franki',c:'#F0A500',prio:'media',ico:'⚽',note:'Sistema funziona — mettere a punto operatività e caricare su sito'},
+  {id:'forma',name:'Forma 88',type:'Partnership',ref:'Franki/Gegé',c:'#F0A500',prio:'media',ico:'🎹',note:'Partnership da definire formalmente — in attesa di risposta'},
+  {id:'wz',name:'WinZone',type:'In House',ref:'Franki',c:'#F0A500',prio:'media',ico:'📊',note:'Segue Fantascudetto — stabilire se sono 2 prodotti separati o uno solo'},
+  {id:'jul',name:'Julietta',type:'Esterno',ref:'Julietta',c:'#F0A500',prio:'media',ico:'🎬',note:'Creare video trailer e buttare la rete — aspettare risposta mercato'},
+  {id:'pane',name:'Pane',type:'Esterno',ref:'Pane Cesare',c:'#F0A500',prio:'media',ico:'🍞',note:'Franki deve finire scelta fornitore e poi creare la proposta'},
+  {id:'isg',name:'iStadium Game',type:'In House',ref:'Franki',c:'#4ade80',prio:'bassa',ico:'🏟️',note:'Progetto definito — approfondire dati lean test prima di procedere'},
+  {id:'ia',name:'Ignoranza Art.',type:'In House',ref:'Franki',c:'#4ade80',prio:'bassa',ico:'🧠',note:'Agli albori — definire ancora obiettivi economici'},
+];
+const FASI=[
+  {id:'concept',l:'01 Concept'},{id:'struttura',l:'02 Struttura'},
+  {id:'brief',l:'03 Brief'},{id:'lean',l:'04 Lean Test'},
+  {id:'mvp',l:'05 MVP'},{id:'scale',l:'06 Scale'},
+];
+const WA={'Franki':'393357230240','Gegé':'393714990846','Luca Corsale':'393929901631','Pane Cesare':'393512678849'};
+
+let tasks=[];
+let calMode='week';
+let calDate=new Date();
+const SK='franki_pm_v2';
+
+function load(){try{tasks=JSON.parse(localStorage.getItem(SK))||[];}catch(e){tasks=[];}}
+function save(){localStorage.setItem(SK,JSON.stringify(tasks));}
+function today(){return new Date().toISOString().split('T')[0];}
+function fmtD(d){if(!d)return'';const[y,m,dd]=d.split('-');return`${dd}/${m}/${y}`;}
+function italDate(d){
+  const D=['domenica','lunedì','martedì','mercoledì','giovedì','venerdì','sabato'];
+  const M=['gennaio','febbraio','marzo','aprile','maggio','giugno','luglio','agosto','settembre','ottobre','novembre','dicembre'];
+  return`${D[d.getDay()]} ${d.getDate()} ${M[d.getMonth()]} ${d.getFullYear()}`;
+}
+function proj(id){return PROJS.find(p=>p.id===id)||{};}
+function adv(pid){const t=tasks.filter(t=>t.proj===pid);return t.length?Math.round(t.filter(t=>t.done).length/t.length*100):0;}
+function urg(pid){
+  const t=tasks.filter(t=>t.proj===pid&&!t.done);
+  if(!t.length)return 0;
+  const max=t.length*3;
+  const sc=t.reduce((a,t)=>a+(t.prio==='alta'?3:t.prio==='media'?2:1),0);
+  return Math.round(sc/max*100);
+}
+function urgC(p){return p>70?'var(--p-alta)':p>40?'var(--p-media)':'var(--verde)';}
+function prioL(p){return p==='alta'?'🔴 Alta':p==='media'?'🟡 Media':'🔵 Bassa';}
+
+// === RANKING PROFITTABILITÀ ===
+const PROFIT_SK = 'franki_profit_v1';
+const PROFIT_PARAMS = ['p1','p2','p3','p4','p5','p6','p7','p8'];
+
+function getProfitState(){
+  try{ return JSON.parse(localStorage.getItem(PROFIT_SK)) || {}; }catch(e){ return {}; }
+}
+
+function getProjScore(pid, ps){
+  const vals = PROFIT_PARAMS.map(p => ps[pid+'_'+p] || 0).filter(v => v > 0);
+  if(!vals.length) return null;
+  return vals.reduce((a,b) => a+b, 0);
+}
+
+function getProjMax(pid, ps){
+  return PROFIT_PARAMS.filter(p => ps[pid+'_'+p] > 0).length * 5;
+}
+
+function getRkPrio(score, max){
+  if(!score || max === 0) return 'nd';
+  const pct = score / max;
+  if(pct >= 0.75) return 'alta';
+  if(pct >= 0.5) return 'media';
+  return 'bassa';
+}
+
+function renderRanking(){
+  const ps = getProfitState();
+  const scored = PROJS.map(p => {
+    const score = getProjScore(p.id, ps);
+    const max = getProjMax(p.id, ps);
+    return { ...p, score, max, prio: getRkPrio(score, max) };
+  }).sort((a, b) => {
+    if(a.score === null && b.score === null) return 0;
+    if(a.score === null) return 1;
+    if(b.score === null) return -1;
+    return b.score - a.score;
+  });
+
+  const hasAny = scored.some(p => p.score !== null);
+
+  if(!hasAny){
+    document.getElementById('ranking-list').innerHTML = `
+      <div class="rk-empty">
+        <div style="font-size:36px;margin-bottom:12px;">📊</div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:20px;color:var(--testo);margin-bottom:8px;">Nessun score ancora compilato</div>
+        <div style="font-size:13px;margin-bottom:16px;">Vai su <a href="/profit/" target="_blank">/profit/</a> e compila i parametri per vedere il ranking qui.</div>
+      </div>`;
+    return;
+  }
+
+  document.getElementById('ranking-list').innerHTML = scored.map((p, i) => {
+    const pos = i + 1;
+    const isTop = pos <= 3;
+    const scoreLabel = p.score !== null ? `${p.score}/${p.max}` : '—';
+    const pct = p.max > 0 && p.score ? Math.round((p.score / p.max) * 100) : 0;
+    const prioLabel = p.prio === 'nd' ? 'DA VALUTARE' : p.prio.toUpperCase();
+
+    return `<div class="rk-item rk-${p.prio}">
+      <div class="rk-pos ${isTop ? 'top3' : ''}">#${pos}</div>
+      <div class="rk-info">
+        <div class="rk-name">${p.ico || ''} ${p.name}</div>
+        <div class="rk-type">${p.type} · ${p.ref}</div>
+        <div class="rk-bar-wrap">
+          <div class="rk-bar-fill fill-${p.prio}" style="width:${pct}%"></div>
+        </div>
+      </div>
+      <div class="rk-score-block">
+        <div class="rk-score-big sc-${p.prio}">${scoreLabel}</div>
+        <div class="rk-badge ${p.prio}">${prioLabel}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+// === FINE RANKING ===
+
+// SIDEBAR
+function renderSB(){
+  document.getElementById('sb-projs').innerHTML=PROJS.map(p=>`
+    <div class="proj-item" style="border-left-color:${p.c}">
+      <div class="proj-dot" style="background:${p.c}"></div>
+      <span>${p.name}</span>
+      <span class="proj-pct" style="color:${urgC(urg(p.id))}">${adv(p.id)}%</span>
+    </div>`).join('');
+}
+
+// KPI
+function renderKPI(){
+  const tot=tasks.length,done=tasks.filter(t=>t.done).length;
+  const td=tasks.filter(t=>t.date===today()&&!t.done).length;
+  const alta=tasks.filter(t=>t.prio==='alta'&&!t.done).length;
+  document.getElementById('kpi-row').innerHTML=`
+    <div class="kpi-box"><div class="kpi-n">${tot}</div><div class="kpi-l">Task Totali</div></div>
+    <div class="kpi-box"><div class="kpi-n" style="color:var(--verde)">${done}</div><div class="kpi-l">Completati</div></div>
+    <div class="kpi-box"><div class="kpi-n" style="color:var(--giallo)">${td}</div><div class="kpi-l">Oggi</div></div>
+    <div class="kpi-box"><div class="kpi-n" style="color:var(--p-alta)">${alta}</div><div class="kpi-l">Alta Priorità</div></div>`;
+}
+
+// MATRICE
+function renderMatrix(){
+  let h='<thead><tr><th>Progetto</th>';
+  FASI.forEach(f=>h+=`<th class="fh">${f.l}</th>`);
+  h+='</tr></thead><tbody>';
+  PROJS.forEach(p=>{
+    const a=adv(p.id),u=urg(p.id);
+    h+=`<tr><td class="pn" style="border-left:3px solid ${p.c}">
+      <div class="pn-name">${p.name}</div>
+      <span class="pn-sub">${p.type} · ${p.ref}</span>
+      <div class="pn-bar"><div class="pn-bar-fill" style="width:${a}%"></div></div>
+      <div class="pn-stats">AVZ ${a}% · <span style="color:${urgC(u)}">URG ${u}%</span></div>
+    </td>`;
+    FASI.forEach(f=>{
+      const ct=tasks.filter(t=>t.proj===p.id&&t.fase===f.id);
+      h+=`<td><div class="cell-tasks">`;
+      ct.forEach(t=>{
+        h+=`<div class="mt p${t.prio[0]} ${t.done?'done':''}" onclick="toggle('${t.id}')">
+          <div class="mt-cb ${t.done?'ck':''}" onclick="event.stopPropagation();toggle('${t.id}')"></div>
+          <span>${t.title}</span></div>`;
+      });
+      h+=`<div class="add-mini" onclick="openModal('${p.id}','${f.id}')">+ task</div></div></td>`;
+    });
+    h+='</tr>';
+  });
+  h+='</tbody>';
+  document.getElementById('matrix').innerHTML=h;
+}
+
+// TODAY
+function renderToday(){
+  const now=new Date();
+  document.getElementById('today-lbl').textContent=italDate(now);
+  const td=today();
+  const over=tasks.filter(t=>t.date&&t.date<td&&!t.done);
+  const todayT=tasks.filter(t=>t.date===td&&!t.done).sort((a,b)=>{const o={alta:0,media:1,bassa:2};return o[a.prio]-o[b.prio];});
+  const soon=tasks.filter(t=>{if(!t.date||t.done)return false;const d=(new Date(t.date)-now)/(864e5);return d>0&&d<=3;});
+  let h='';
+  if(over.length){h+=`<div class="ts-block"><div class="ts-title" style="color:var(--p-alta)">⚠️ Scaduti (${over.length})</div>`;over.forEach(t=>h+=todoEl(t));h+='</div>';}
+  h+=`<div class="ts-block"><div class="ts-title">☀️ Oggi (${todayT.length})</div>`;
+  if(todayT.length)todayT.forEach(t=>h+=todoEl(t));
+  else h+='<div style="color:var(--testo-dim);font-size:13px;padding:12px 0;">Nessun task per oggi 🎉</div>';
+  h+='</div>';
+  if(soon.length){h+=`<div class="ts-block"><div class="ts-title">📅 Prossimi 3 giorni (${soon.length})</div>`;soon.forEach(t=>h+=todoEl(t));h+='</div>';}
+  document.getElementById('today-body').innerHTML=h;
+}
+
+function todoEl(t){
+  const p=proj(t.proj);
+  const num=WA[t.ref];
+  const msg=encodeURIComponent(`📋 *FRANKI PM*\n\n*${t.title}*\nProgetto: ${p.name}\nFase: ${FASI.find(f=>f.id===t.fase)?.l||''}\nPriorità: ${prioL(t.prio)}\nScadenza: ${fmtD(t.date)}${t.note?'\nNote: '+t.note:''}\n\n_frankistudio.it_`);
+  const wa=num?`<a href="https://wa.me/${num}?text=${msg}" target="_blank" class="wa-btn">📱 ${t.ref}</a>`:`<span style="font-size:10px;color:var(--testo-dim)">${t.ref}</span>`;
+  return`<div class="todo p${t.prio[0]} ${t.done?'done':''}">
+    <div class="todo-ck ${t.done?'ck':''}" onclick="toggle('${t.id}')">${t.done?'✓':''}</div>
+    <div class="todo-body">
+      <div class="todo-t">${t.title}</div>
+      <div class="todo-meta">
+        <span style="font-size:11px;color:${p.c};font-weight:700;">${p.name}</span>
+        <span style="font-size:10px;color:var(--testo-dim);">${FASI.find(f=>f.id===t.fase)?.l||''}</span>
+        <span class="pb-chip chip-${t.prio[0]}">${prioL(t.prio)}</span>
+        <span style="font-size:10px;color:var(--testo-dim);">📅 ${fmtD(t.date)}</span>
+      </div>
+      ${t.note?`<div class="todo-note">${t.note}</div>`:''}
+    </div>${wa}</div>`;
+}
+
+// CALENDARIO
+function renderCal(){
+  const months=['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'];
+  const days=['Lun','Mar','Mer','Gio','Ven','Sab','Dom'];
+  if(calMode==='week'){
+    const sw=new Date(calDate);
+    const d=sw.getDay()||7;sw.setDate(sw.getDate()-d+1);
+    const ew=new Date(sw);ew.setDate(ew.getDate()+6);
+    document.getElementById('cal-heading').textContent=`${sw.getDate()} — ${ew.getDate()} ${months[ew.getMonth()]} ${ew.getFullYear()}`;
+    let h='<div class="week-grid"><div class="wh" style="background:transparent"></div>';
+    for(let i=0;i<7;i++){const d2=new Date(sw);d2.setDate(d2.getDate()+i);const isTd=d2.toDateString()===new Date().toDateString();h+=`<div class="wh ${isTd?'today-h':''}">${days[i]}<br><strong>${d2.getDate()}</strong></div>`;}
+    ['Mattina','Pomeriggio','Sera'].forEach(sl=>{
+      h+=`<div class="wtime">${sl}</div>`;
+      for(let i=0;i<7;i++){
+        const d2=new Date(sw);d2.setDate(d2.getDate()+i);
+        const ds=d2.toISOString().split('T')[0];
+        h+=`<div class="wcell">`;
+        tasks.filter(t=>t.date===ds).forEach(t=>{const p2=proj(t.proj);h+=`<div class="cev p${t.prio[0]}" title="${t.title}"><span style="color:${p2.c};font-weight:700;">${p2.name.substring(0,5)}</span> ${t.title.substring(0,18)}</div>`;});
+        h+=`</div>`;
+      }
+    });
+    h+='</div>';
+    document.getElementById('cal-body').innerHTML=h;
+  } else {
+    document.getElementById('cal-heading').textContent=`${months[calDate.getMonth()]} ${calDate.getFullYear()}`;
+    const fd=new Date(calDate.getFullYear(),calDate.getMonth(),1);
+    let sd=fd.getDay()||7;sd--;
+    let h='<div class="month-grid">';
+    days.forEach(d=>h+=`<div class="mh">${d}</div>`);
+    let dc=1-sd;
+    for(let r=0;r<6;r++){
+      for(let c=0;c<7;c++){
+        const d2=new Date(calDate.getFullYear(),calDate.getMonth(),dc);
+        const ds=d2.toISOString().split('T')[0];
+        const isTd=d2.toDateString()===new Date().toDateString();
+        const inM=d2.getMonth()===calDate.getMonth();
+        const dt=tasks.filter(t=>t.date===ds);
+        h+=`<div class="mcell ${isTd?'today':''} ${!inM?'other':''}"><div class="mnum">${d2.getDate()}</div>`;
+        dt.slice(0,2).forEach(t=>{const p2=proj(t.proj);h+=`<div class="cev p${t.prio[0]}" style="font-size:8px;">${t.title.substring(0,14)}</div>`;});
+        if(dt.length>2)h+=`<div style="font-size:8px;color:var(--testo-dim)">+${dt.length-2}</div>`;
+        h+=`</div>`;dc++;
+      }
+    }
+    h+='</div>';
+    document.getElementById('cal-body').innerHTML=h;
+  }
+}
+
+function calPrev(){if(calMode==='week')calDate.setDate(calDate.getDate()-7);else calDate.setMonth(calDate.getMonth()-1);renderCal();}
+function calNext(){if(calMode==='week')calDate.setDate(calDate.getDate()+7);else calDate.setMonth(calDate.getMonth()+1);renderCal();}
+function setMode(m,btn){calMode=m;document.querySelectorAll('.cal-mode-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderCal();}
+
+// NAV
+function showView(v){
+  document.querySelectorAll('.view').forEach(e=>e.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(e=>e.classList.remove('active'));
+  document.getElementById('view-'+v).classList.add('active');
+  document.getElementById('nav-'+v).classList.add('active');
+  if(v==='today')renderToday();
+  if(v==='calendar')renderCal();
+  if(v==='dashboard'){renderKPI();renderMatrix();}
+  if(v==='ranking')renderRanking();
+}
+
+// MODAL
+function openModal(pid,fid){
+  document.getElementById('f-proj').innerHTML=PROJS.map(p=>`<option value="${p.id}" ${p.id===pid?'selected':''}>${p.name}</option>`).join('');
+  if(fid)document.getElementById('f-fase').value=fid;
+  document.getElementById('f-date').value=today();
+  document.getElementById('f-title').value='';
+  document.getElementById('f-note').value='';
+  document.getElementById('modal-overlay').classList.add('open');
+}
+function closeModal(){document.getElementById('modal-overlay').classList.remove('open');}
+
+function saveTask(){
+  const title=document.getElementById('f-title').value.trim();
+  if(!title){alert('Inserisci il titolo');return;}
+  tasks.push({id:Date.now().toString(),title,proj:document.getElementById('f-proj').value,fase:document.getElementById('f-fase').value,prio:document.getElementById('f-prio').value,date:document.getElementById('f-date').value,ref:document.getElementById('f-ref').value,note:document.getElementById('f-note').value.trim(),done:false,created:today()});
+  save();closeModal();renderAll();
+}
+
+function toggle(id){const t=tasks.find(t=>t.id===id);if(t){t.done=!t.done;save();renderAll();}}
+
+// WA TUTTI
+function sendAllWA(){
+  const tmr=new Date();tmr.setDate(tmr.getDate()+1);
+  const ts=tmr.toISOString().split('T')[0];
+  const tt=tasks.filter(t=>t.date===ts&&!t.done);
+  if(!tt.length){alert('Nessun task per domani');return;}
+  const byRef={};
+  tt.forEach(t=>{if(!byRef[t.ref])byRef[t.ref]=[];byRef[t.ref].push(t);});
+  Object.entries(byRef).forEach(([ref,rt])=>{
+    const num=WA[ref];if(!num)return;
+    let msg=`📋 *FRANKI PM — To-Do di domani*\nCiao ${ref}!\n\n`;
+    rt.forEach((t,i)=>{const p=proj(t.proj);msg+=`${i+1}. *${t.title}*\n📁 ${p.name} · ${FASI.find(f=>f.id===t.fase)?.l||''}\n${prioL(t.prio)}\n\n`;});
+    msg+=`_frankistudio.it_`;
+    window.open(`https://wa.me/${num}?text=${encodeURIComponent(msg)}`,'_blank');
+  });
+}
+
+function renderAll(){renderKPI();renderMatrix();renderSB();const av=document.querySelector('.view.active');if(av){const id=av.id.replace('view-','');if(id==='today')renderToday();if(id==='calendar')renderCal();}}
+
+window.onload=function(){
+  const now=new Date();
+  document.getElementById('topbar-date').textContent=italDate(now);
+  document.getElementById('f-proj').innerHTML=PROJS.map(p=>`<option value="${p.id}">${p.name}</option>`).join('');
+  load();
+  if(!tasks.length){
+    tasks=[
+      {id:'d1',title:'Definire concept definitivo ISG',proj:'isg',fase:'concept',prio:'alta',date:today(),ref:'Franki',note:'Revisione brief con Gennaro',done:false,created:today()},
+      {id:'d2',title:'Caricare hub CCH su /cch/',proj:'cch',fase:'brief',prio:'alta',date:today(),ref:'Luca Corsale',note:'frankistudio.it/cch',done:false,created:today()},
+      {id:'d3',title:'Costruire jackpot Fantascudetto',proj:'fs',fase:'mvp',prio:'media',date:today(),ref:'Franki',note:'File HTML',done:false,created:today()},
+      {id:'d4',title:'Home page mobile responsive',proj:'franki',fase:'mvp',prio:'media',date:today(),ref:'Franki',note:'',done:true,created:today()},
+      {id:'d5',title:'Configurare email SMTP Gmail',proj:'franki',fase:'struttura',prio:'alta',date:today(),ref:'Franki',note:'smtps.aruba.it',done:false,created:today()},
+      {id:'d6',title:'Presentare Forma 88 a Gegé',proj:'forma',fase:'concept',prio:'media',date:today(),ref:'Gegé',note:'Documento FORMA già pronto',done:false,created:today()},
+    ];
+    save();
+  }
+  renderAll();
+};
+</script>
+</body>
+</html>

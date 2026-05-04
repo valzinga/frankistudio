@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checklist Affio — RCV Il Poglío</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--blu:#2B38B0;--arancio:#F0A500;--grigio:#F2F1ED;--bianco:#FFFFFF;--nero:#111118;--verde:#0f6b30;--rosso:#b02020}
+body{font-family:"Barlow",sans-serif;background:#fff;color:var(--nero);max-width:680px;margin:0 auto;font-size:16px;line-height:1.6}
+
+@media print{
+  body{max-width:100%;margin:0;font-size:14px}
+  .no-print{display:none}
+  .blocco{break-inside:avoid}
+}
+
+nav{background:var(--blu);padding:12px 20px;display:flex;align-items:center;justify-content:space-between}
+.fk-logo{font-family:"Barlow Condensed",sans-serif;font-weight:900;font-size:22px;display:inline-flex;align-items:center}
+.fk-logo .fran{color:#fff}
+.fk-logo .ki{background:#F0A500;color:#fff;border-radius:5px;padding:1px 7px;margin-left:2px}
+.nav-right{color:rgba(255,255,255,0.5);font-size:11px;font-family:"Barlow Condensed",sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+
+.hero{background:var(--blu);padding:24px 20px 20px;border-bottom:3px solid var(--arancio)}
+.hero-tag{display:inline-block;background:var(--arancio);color:#fff;font-family:"Barlow Condensed",sans-serif;font-weight:900;font-size:11px;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;border-radius:3px;margin-bottom:10px}
+.hero h1{font-family:"Barlow Condensed",sans-serif;font-weight:900;font-size:36px;color:#fff;text-transform:uppercase;line-height:1;margin-bottom:4px}
+.hero h1 span{color:var(--arancio)}
+.hero-sub{color:rgba(255,255,255,0.45);font-size:13px}
+
+.print-btn{background:var(--arancio);padding:10px 20px;text-align:right}
+.print-btn button{font-family:"Barlow Condensed",sans-serif;font-weight:900;font-size:13px;letter-spacing:1px;text-transform:uppercase;background:var(--blu);color:#fff;border:none;padding:8px 18px;border-radius:3px;cursor:pointer}
+
+/* BLOCCO TEMPO */
+.blocco{margin-bottom:3px}
+.blocco-header{background:var(--blu);padding:10px 20px;display:flex;align-items:center;justify-content:space-between}
+.blocco-header.urgente{background:var(--rosso)}
+.blocco-header.parallelo{background:var(--verde)}
+.blocco-title{font-family:"Barlow Condensed",sans-serif;font-weight:900;font-size:16px;text-transform:uppercase;letter-spacing:1px;color:#fff}
+.blocco-data{font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:12px;color:rgba(255,255,255,0.6);letter-spacing:1px}
+
+/* ITEM */
+.item{display:flex;align-items:flex-start;gap:14px;padding:12px 20px;border-bottom:1px solid var(--grigio);background:#fff}
+.item:last-child{border-bottom:none}
+.item-check{width:22px;height:22px;border:2px solid #ccc;border-radius:3px;flex-shrink:0;margin-top:2px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;transition:all .2s;user-select:none}
+.item-check.done{background:var(--verde);border-color:var(--verde);color:#fff}
+.item-body{flex:1}
+.item-title{font-weight:500;font-size:16px;color:var(--nero);line-height:1.4}
+.item-sub{font-size:13px;color:#888;margin-top:2px;font-weight:300}
+.item-chi{font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:#bbb;margin-top:4px}
+
+/* PARALLELO STRIP */
+.parallelo-strip{background:#e8f5e9;border-left:4px solid var(--verde);padding:12px 20px;margin-bottom:3px}
+.parallelo-strip-title{font-family:"Barlow Condensed",sans-serif;font-weight:900;font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--verde);margin-bottom:8px}
+.parallelo-item{display:flex;align-items:flex-start;gap:14px;padding:8px 0;border-bottom:1px solid rgba(0,100,50,0.1)}
+.parallelo-item:last-child{border-bottom:none}
+.p-check{width:20px;height:20px;border:2px solid #a5d6a7;border-radius:3px;flex-shrink:0;margin-top:2px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;transition:all .2s;user-select:none;background:#fff}
+.p-check.done{background:var(--verde);border-color:var(--verde);color:#fff}
+.p-title{font-size:15px;color:#1b5e20;font-weight:400}
+
+/* PIANO B */
+.pianob{background:#fff8e1;border-left:4px solid var(--arancio);padding:14px 20px;margin-bottom:3px}
+.pianob-title{font-family:"Barlow Condensed",sans-serif;font-weight:900;font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--arancio);margin-bottom:8px}
+.pianob p{font-size:14px;color:#5a3a00;line-height:1.6;margin-bottom:6px}
+.pianob p:last-child{margin-bottom:0}
+.trigger-list{margin:8px 0 0 16px}
+.trigger-list li{font-size:13px;color:#7c4a00;margin-bottom:4px;line-height:1.5}
+
+.footer{background:var(--nero);padding:16px 20px;text-align:center;margin-top:8px}
+.footer p{color:rgba(255,255,255,0.35);font-size:11px;margin-top:6px}
+</style>
+</head>
+<body>
+
+<nav class="no-print">
+  <div class="fk-logo"><span class="fran">Fran</span><span class="ki">Ki</span></div>
+  <div class="nav-right">Checklist &middot; Affio</div>
+</nav>
+
+<div class="hero">
+  <div class="hero-tag">Checklist Operativa</div>
+  <h1>Affio <span>Mood</span></h1>
+  <div class="hero-sub">RCV Il Poglio &middot; APR26 &rarr; SET26 &middot; FranKi Studio</div>
+</div>
+
+<div class="print-btn no-print">
+  <button onclick="window.print()">&#128438; Stampa / Salva PDF</button>
+</div>
+
+<!-- 3 LINEE PARALLELE -->
+<div class="parallelo-strip">
+  <div class="parallelo-strip-title">3 linee attive in parallelo da subito</div>
+  <div class="parallelo-item">
+    <div class="p-check" onclick="toggleP(this)"></div>
+    <div class="p-title"><strong>Linea 1 &mdash; Cordata amici Affio</strong> &rarr; chiude GIU26</div>
+  </div>
+  <div class="parallelo-item">
+    <div class="p-check" onclick="toggleP(this)"></div>
+    <div class="p-title"><strong>Linea 2 &mdash; Fondo istituzionale</strong> &rarr; chiude NOV26</div>
+  </div>
+  <div class="parallelo-item">
+    <div class="p-check" onclick="toggleP(this)"></div>
+    <div class="p-title"><strong>Linea 3 &mdash; Piano B acquirente asset</strong> &rarr; ricerca morbida da subito in parallelo</div>
+  </div>
+</div>
+
+<!-- SUBITO -->
+<div class="blocco">
+  <div class="blocco-header urgente">
+    <div class="blocco-title">&#9889; Subito &mdash; Post Meeting</div>
+    <div class="blocco-data">APR26-2Q</div>
+  </div>
+  <div class="item">
+    <div class="item-check" onclick="toggleCheck(this)"></div>
+    <div class="item-body">
+      <div class="item-title">Conferma formale — sei dentro?</div>
+      <div class="item-sub">Sì o no. Senza risposta chiara non si muove niente.</div>
+      <div class="item-chi">Affio</div>
+    </div>
+  </div>
+  <div class="item">
+    <div class="item-check" onclick="toggleCheck(this)"></div>
+    <div class="item-body">
+      <div class="item-title">Lista 6 nomi per la cordata</div>
+      <div class="item-sub">Anche informale — chi potrebbe essere pronto a €50K in 2 tranche.</div>
+      <div class="item-chi">Affio</div>
+    </div>
+  </div>
+  <div class="item">
+    <div class="item-check" onclick="toggleCheck(this)"></div>
+    <div class="item-body">
+      <div class="item-title">Annachiara — le parli tu o le mandiamo il brief?</div>
+      <div class="item-sub">Brief già pronto su frankistudio.it/affio/rcv/brief/Brief_Annachiara.html</div>
+      <div class="item-chi">Affio + FranKi</div>
+    </div>
+  </div>
+  <div class="item">
+    <div class="item-check" onclick="toggleCheck(this)"></div>
+    <div class="item-body">
+      <div class="item-title">Data prossimo incontro con avvocato fissata</div>
+      <div class="item-sub">Tribunale Sulmona o L'Aquila. Specializzato in esecuzioni.</div>
+      <div class="item-chi">FranKi + Affio</div>
+    </div>
+  </div>
+</div>
+
+<!-- SETTIMANA 1 -->
+<div class="blocco">
+  <div class="blocco-header">
+    <div class="blocco-title">Settimana 1</div>
+    <div class="blocco-data">MAY26-1Q</div>
+  </div>
+  <div class="item">
+    <div class="item-check" onclick="toggleCheck(this)"></div>
+    <div class="item-body">
+      <div class="item-title">Avvocato trovato e ingaggiato</div>
+      <div class="item-sub">Accesso fascicolo N.43/16. Due diligence avviata.</div>
+      <div class="item-chi">FranKi</div>
+    </div>
+  </div>
+  <div class="item">
+    <div class="item-check" onclick="toggleCheck(this)"></div>
+    <div class="item-body">
+      <div class="item-title">Agenzia marketing — contratto dilazionato firmato</div>
+      <div class="item-sub">Fee ridotta ora, success fee a milestone, pluriennale da M9.</div>
+      <div class="item-chi">FranKi</div>
+    </div>
+  </div>
+  <div class="item">
+    <div class="item-check" onclick="toggleCheck(this)"></div>
+    <div class="item-body">
+      <div class="item-title">Primi 2-3 soci cordata contattati informalmente</div>
+      <div class="item-sub">Affio fa il giro — niente documenti ancora, solo conversazione.</div>
+      <div class="item-chi">Affio</div>
+    </div>
+  </div>
+  <div class="item">
+    <div class="item-check" onclick="toggleCheck(this)"></div>
+    <div class="item-body">
+      <div class="item-title">Lean test avviato — landing page Il Poglio online</div>
+      <div class="item-sub">Lista pre-adesione soci club + corporate retreat + bubble room.</div>
+      <div class="item-chi">FranKi + Agenzia</div>
+    </div>
+  </div>
+  <div class="item">
+    <div class="item-check" onclick="toggleCheck(this)"></div>
+    <div class="item-body">
+      <div class="item-title">Piano B — primi sondaggi morbidi acquirenti asset</div>
+      <div class="item-sub">Investitori immobiliari, developer montagna, operatori turistici. Messaggio: asset da €13,5M periziato disponibile a €2-3M.</div>
+      <div class="item-chi">FranKi</div>
+    </div>
+  </div>
+</div>
+
+<!-- SETTIMANA 2-3 -->
+<div class="blocco">
+  <div class="blocco-header">
+    <div class="blocco-title">Settimane 2–3</div>
+    <div class="blocco-data">MAY26-2Q</div>
+  </div>
+  <div class="item">
+    <div class="item-check" onclick="toggleCheck(this)"></div>
+    <div class="item-body">
+      <div class="item-title">6 soci cordata confermati verbalmente</div>
+      <div class="item-sub">Tutti hanno detto sì. Si passa alla fase legale.</div>
+      <div class="item-chi">Affio</div>
+    </div>
+  </div>
+  <div class="item">
+    <div class="item-check" onclick="toggleCheck(this)"></div>
+    <div class="item-body">
+      <div class="item-title">Patto parasociale — bozza pronta</div>
+      <div class="item-sub">Con clausola Piano B formale e parametri trigger.</div>
+      <div class="item-chi">Avvocato + FranKi</div>
+    </div>
+  </div>
+  <div class="item">
+    <div class="item-check" onclick="toggleCheck(this)"></div>
+    <div class="item-body">
+      <div class="item-title">Primi fondi contattati con Teaser B1 + NDA</div>
+      <div class="item-sub">2-3 fondi già caldi prima dell'asta.</div>
+      <div class="item-chi">FranKi</div>
+    </div>
+  </div>
+</div>
+
+<!-- GIUGNO -->
+<div class="blocco">
+  <div class="blocco-header">
+    <div class="blocco-title">Giugno 2026</div>
+    <div class="blocco-data">GIU26</div>
+  </div>
+  <div class="item">
+    <div class="item-check" onclick="toggleCheck(this)"></div>
+    <div class="item-body">
+      <div class="item-title">Patto parasociale firmato da tutti</div>
+      <div class="item-sub">Notaio. HoldCo Srl costituita ufficialmente.</div>
+      <div class="item-chi">Tutti + Avvocato</div>
+    </div>
+  </div>
+  <div class="item">
+    <div class="item-check" onclick="toggleCheck(this)"></div>
+    <div class="item-body">
+      <div class="item-title">Tranche 1 versata — €25K a testa</div>
+      <div class="item-sub">€150K in cassa HoldCo. FranKi e Affio incassano €25K ciascuno.</div>
+      <div class="item-chi">6 soci</div>
+    </div>
+  </div>
+  <div class="item">
+    <div class="item-check" onclick="toggleCheck(this)"></div>
+    <div class="item-body">
+      <div class="item-title">Due diligence avvocato completata</div>
+      <div class="item-sub">Ipoteche, permessi, vincoli bosco, occupanti, debiti fiscali.</div>
+      <div class="item-chi">Avvocato</div>
+    </div>
+  </div>
+</div>
+
+<!-- LUGLIO-AGOSTO -->
+<div class="blocco">
+  <div class="blocco-header">
+    <div class="blocco-title">Luglio — Agosto 2026</div>
+    <div class="blocco-data">LUG26 &rarr; AGO26</div>
+  </div>
+  <div class="item">
+    <div class="item-check" onclick="toggleCheck(this)"></div>
+    <div class="item-body">
+      <div class="item-title">Tranche 2 versata — altri €25K a testa</div>
+      <div class="item-sub">€150K aggiuntivi. Totale raccolto: €300K.</div>
+      <div class="item-chi">6 soci · AGO26-2Q</div>
+    </div>
+  </div>
+  <div class="item">
+    <div class="item-check" onclick="toggleCheck(this)"></div>
+    <div class="item-body">
+      <div class="item-title">Offerta depositata al tribunale</div>
+      <div class="item-sub">Cauzione versata (cash o fideiussione ~€90K). Avvocato segue.</div>
+      <div class="item-chi">HoldCo + Avvocato · SET26-1Q</div>
+    </div>
+  </div>
+  <div class="item">
+    <div class="item-check" onclick="toggleCheck(this)"></div>
+    <div class="item-body">
+      <div class="item-title">Piano B — almeno 1-2 acquirenti caldi identificati</div>
+      <div class="item-sub">Non serve chiudere — serve avere qualcuno pronto se serve.</div>
+      <div class="item-chi">FranKi</div>
+    </div>
+  </div>
+</div>
+
+<!-- SETTEMBRE -->
+<div class="blocco">
+  <div class="blocco-header urgente">
+    <div class="blocco-title">Settembre 2026 &mdash; L'Asta</div>
+    <div class="blocco-data">SET26-2Q</div>
+  </div>
+  <div class="item">
+    <div class="item-check" onclick="toggleCheck(this)"></div>
+    <div class="item-body">
+      <div class="item-title">Asta — aggiudicazione a ~€900K</div>
+      <div class="item-sub">HoldCo si aggiudica. Asset in mano.</div>
+      <div class="item-chi">HoldCo</div>
+    </div>
+  </div>
+  <div class="item">
+    <div class="item-check" onclick="toggleCheck(this)"></div>
+    <div class="item-body">
+      <div class="item-title">Fondo — trattativa aperta con asset aggiudicato</div>
+      <div class="item-sub">Da posizione di forza. Chiudere entro NOV26.</div>
+      <div class="item-chi">FranKi + Fondo</div>
+    </div>
+  </div>
+</div>
+
+<!-- PIANO B BOX -->
+<div class="pianob">
+  <div class="pianob-title">&#127881; Piano B &mdash; Il Paracadute</div>
+  <p>Ricerca morbida di acquirenti dell'asset avviata in parallelo da subito. Non è una vendita — è un'opzione. Se si attiva uno dei parametri trigger, si ha già qualcuno pronto.</p>
+  <p><strong>Parametri trigger — basta uno:</strong></p>
+  <ul class="trigger-list">
+    <li>Fondo non entrato entro NOV26</li>
+    <li>Bubble room non aperte entro AGO27</li>
+    <li>Problemi legali gravi dalla due diligence</li>
+    <li>Cordata non completa entro GIU26</li>
+  </ul>
+  <p style="margin-top:8px"><strong>Rendimento Piano B:</strong> acquisto ~€900K &rarr; vendita €2-3M &rarr; ogni socio: 3-4&times; in 12 mesi.</p>
+</div>
+
+<div class="footer no-print">
+  <div class="fk-logo"><span class="fran">Fran</span><span class="ki">Ki</span></div>
+  <p>Checklist operativa riservata &middot; FranKi Studio (Avre Srl) &middot; Napoli &middot; Aprile 2026</p>
+</div>
+
+<script>
+function toggleCheck(el){
+  el.classList.toggle("done");
+  el.textContent = el.classList.contains("done") ? "\u2713" : "";
+}
+function toggleP(el){
+  el.classList.toggle("done");
+  el.textContent = el.classList.contains("done") ? "\u2713" : "";
+}
+</script>
+</body>
+</html>

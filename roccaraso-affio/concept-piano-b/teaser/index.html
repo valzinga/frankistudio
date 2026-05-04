@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RCV — Executive Teaser</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blu:#2B38B0;
+  --arancio:#F0A500;
+  --grigio-bg:#F2F1ED;
+  --bianco:#FFFFFF;
+  --nero:#111111;
+  --testo:#1a1a2e;
+  --blu-scuro:#1a2480;
+  --verde:#1a7a50;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Barlow',sans-serif;background:var(--grigio-bg);color:var(--testo);max-width:680px;margin:0 auto;font-size:15px;line-height:1.6}
+
+/* NAVBAR */
+.navbar{background:var(--blu);padding:12px 20px;display:flex;align-items:center;justify-content:space-between}
+.logo-fran{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;color:var(--bianco)}
+.logo-fran span{background:var(--arancio);padding:1px 6px;border-radius:4px}
+.logo-tagline{font-size:10px;color:rgba(255,255,255,.6);letter-spacing:.08em}
+.nav-doc{font-family:'Barlow Condensed',sans-serif;font-size:11px;color:rgba(255,255,255,.7);letter-spacing:.1em;text-transform:uppercase}
+
+/* HERO */
+.hero{background:var(--nero);color:var(--bianco);padding:44px 20px 40px;position:relative;overflow:hidden}
+.hero::before{content:'RCV';position:absolute;right:-20px;top:-10px;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:160px;color:rgba(255,255,255,.03);line-height:1;pointer-events:none}
+.hero-tag{display:inline-block;background:var(--arancio);color:var(--nero);font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:4px 10px;border-radius:2px;margin-bottom:12px}
+.hero-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:48px;line-height:.92;text-transform:uppercase;margin-bottom:8px}
+.hero-title em{color:var(--arancio);font-style:normal;display:block}
+.hero-sottotitolo{font-size:16px;color:rgba(255,255,255,.75);font-weight:300;margin-bottom:18px;line-height:1.5}
+.hero-location{font-family:'Barlow Condensed',sans-serif;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4)}
+
+/* DIVIDER */
+.div-orange{height:4px;background:var(--arancio)}
+.div-thin{height:1px;background:#e0ddd8;margin:0 20px}
+
+/* KPI ROW */
+.kpi-strip{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;margin:2px 0}
+.kpi-box{background:var(--bianco);padding:14px 16px}
+.kpi-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#aaa;margin-bottom:4px}
+.kpi-value{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;color:var(--blu);line-height:1}
+.kpi-sub{font-size:11px;color:#bbb;margin-top:2px}
+
+/* KPI 2 COL */
+.kpi-2{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin:2px 0}
+
+/* SEZIONE INTRO */
+.intro{background:var(--bianco);padding:22px 20px}
+.intro-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px;text-transform:uppercase;color:var(--blu);margin-bottom:12px;border-bottom:2px solid var(--arancio);padding-bottom:6px}
+.intro p{font-size:14px;color:#444;line-height:1.7;margin-bottom:10px}
+.intro p:last-child{margin-bottom:0}
+.intro strong{color:var(--nero)}
+
+/* SECTION HEADER */
+.section-header{background:var(--blu);color:var(--bianco);padding:10px 20px;display:flex;align-items:center;gap:10px;margin-top:16px}
+.section-icon{font-size:15px}
+.section-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:15px;text-transform:uppercase;letter-spacing:.06em}
+.section-count{margin-left:auto;background:var(--arancio);color:var(--nero);font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;padding:2px 8px;border-radius:2px}
+
+/* ASSET GRID */
+.asset-grid{background:var(--bianco);padding:18px 20px;margin:2px 0;display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.asset-item{}
+.asset-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--arancio);margin-bottom:4px}
+.asset-value{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:17px;color:var(--testo);line-height:1.1}
+.asset-sub{font-size:12px;color:#999;margin-top:2px}
+
+/* HIGHLIGHT STRIP */
+.highlight{background:var(--bianco);padding:18px 20px;margin:2px 0}
+.highlight-item{display:flex;gap:12px;margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid #f0f0f0}
+.highlight-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.highlight-icon{flex-shrink:0;width:36px;height:36px;background:var(--blu);border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:16px}
+.highlight-text{flex:1}
+.highlight-title{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;color:var(--testo);margin-bottom:2px}
+.highlight-desc{font-size:13px;color:#777;line-height:1.5}
+
+/* NUMERI */
+.numeri-box{background:var(--nero);color:var(--bianco);padding:20px;margin:2px 0}
+.numeri-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:var(--arancio);margin-bottom:14px}
+.numeri-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.numero-item{}
+.numero-val{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:30px;color:var(--bianco);line-height:1}
+.numero-label{font-size:12px;color:rgba(255,255,255,.5);margin-top:2px;line-height:1.4}
+
+/* OPPORTUNITY BOX */
+.opportunity{background:var(--arancio);padding:18px 20px;margin:2px 0}
+.opportunity h3{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:18px;text-transform:uppercase;color:var(--nero);margin-bottom:10px}
+.opportunity p{font-size:13px;color:rgba(0,0,0,.8);line-height:1.65;margin-bottom:8px}
+.opportunity p:last-child{margin-bottom:0}
+.opportunity strong{color:var(--nero)}
+
+/* CONTATTI CTA */
+.contatti{background:var(--blu);color:var(--bianco);padding:28px 20px;text-align:center}
+.contatti h2{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:26px;text-transform:uppercase;margin-bottom:6px}
+.contatti h2 span{color:var(--arancio)}
+.contatti-sub{font-size:13px;color:rgba(255,255,255,.6);margin-bottom:18px}
+.contatti-info{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:400px;margin:0 auto}
+.contatti-box{background:rgba(255,255,255,.08);padding:12px 16px;border-radius:3px;text-align:left}
+.contatti-box-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:4px}
+.contatti-box-value{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;color:var(--bianco)}
+.hub-btn{display:inline-block;background:var(--arancio);color:var(--nero);font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:13px;letter-spacing:.1em;text-transform:uppercase;padding:10px 24px;border-radius:2px;text-decoration:none;margin-top:16px}
+
+/* DISCLAIMER */
+.disclaimer{background:#f7f7f5;padding:12px 20px;font-size:10px;color:#bbb;line-height:1.5;border-top:1px solid #e8e8e4;text-align:center}
+
+/* CONFIDENTIAL BAND */
+.confidential{background:var(--nero);padding:7px 20px;text-align:center}
+.confidential p{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.3)}
+
+/* BADGE */
+.badge{display:inline-block;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;border-radius:2px;margin:2px}
+.badge-green{background:#e6f7f0;color:var(--verde)}
+.badge-blue{background:#e8ecff;color:var(--blu)}
+.badge-orange{background:#fff4e0;color:#c27800}
+</style>
+</head>
+<body>
+
+<!-- CONFIDENTIAL TOP -->
+<div class="confidential">
+  <p>🔒 documento riservato · uso esclusivo del destinatario · non distribuire</p>
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div>
+    <div class="logo-fran">Fran<span>Ki</span></div>
+    <div class="logo-tagline">We Start Your Ideas</div>
+  </div>
+  <div class="nav-doc">Executive Teaser · RCV</div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">Investment Opportunity · Aprile 2026</div>
+  <div class="hero-title">
+    ROCCARASO
+    <em>COUNTRY</em>
+    VILLAGE
+  </div>
+  <div class="hero-sottotitolo">Ex Soggiorno Montano Enel — Loc. Il Poggio<br>Roccaraso (AQ) — Abruzzo, Italia</div>
+  <div class="hero-location">📍 ~2h da Roma · ~2h da Napoli · ~1,5h da Pescara</div>
+</div>
+<div class="div-orange"></div>
+
+<!-- KPI PRINCIPALI -->
+<div class="kpi-2">
+  <div class="kpi-box">
+    <div class="kpi-label">Base d'asta</div>
+    <div class="kpi-value">€6,07M</div>
+    <div class="kpi-sub">Trib. Sulmona — Esec. N.43/16</div>
+  </div>
+  <div class="kpi-box">
+    <div class="kpi-label">Valore lordo perizia</div>
+    <div class="kpi-value">€13,57M</div>
+    <div class="kpi-sub">Sconto implicito del –55%</div>
+  </div>
+</div>
+<div class="kpi-strip">
+  <div class="kpi-box">
+    <div class="kpi-label">Superficie res.</div>
+    <div class="kpi-value">5.954 m²</div>
+    <div class="kpi-sub">46 app. · 3 palazzine</div>
+  </div>
+  <div class="kpi-box">
+    <div class="kpi-label">Terreni</div>
+    <div class="kpi-value">219.239 m²</div>
+    <div class="kpi-sub">22 ha bosco ceduo</div>
+  </div>
+  <div class="kpi-box">
+    <div class="kpi-label">Destinazione</div>
+    <div class="kpi-value" style="font-size:16px">Extralberghiero</div>
+    <div class="kpi-sub">L.R. 75/1995 — autorizzato</div>
+  </div>
+</div>
+
+<!-- INTRO -->
+<div class="intro">
+  <div class="intro-title">L'Opportunità in 60 Secondi</div>
+  <p>Il <strong>Soggiorno Montano Enel di Roccaraso</strong> è un compendio immobiliare di oltre <strong>20.000 mq costruiti</strong> su 219 ettari di terreni boschivi, disponibile all'asta giudiziaria con un'ipoteca da €14M che verrà <strong>cancellata automaticamente</strong> dal decreto di trasferimento. L'acquirente entra proprietario pulito, libero da ogni vincolo.</p>
+  <p>Il complesso — tre palazzine razionaliste anni '56-'71, 46 appartamenti con tagli 74-382 mq, seminterrati attrezzati con bar, mensa, cinema, palestra, pista di pattinaggio, campi da tennis — è classificato come <strong>soggiorno montano</strong> dal PRG e ha una destinazione extralberghiera già autorizzata. Permesso di costruire n. 35/2009 attivo. Variante n. 34/2010 attiva.</p>
+  <p>Roccaraso è la <strong>principale stazione sciistica del Centro-Sud Italia</strong>: 150 km di piste, tre parchi nazionali a 30 minuti, comprensorio dell'Alto Sangro. La provincia dell'Aquila, in cui ricade il sito, ha registrato <strong>+32% di presenze turistiche nel 2025</strong>.</p>
+</div>
+
+<!-- ASSET HIGHLIGHTS -->
+<div class="section-header">
+  <div class="section-icon">🏗️</div>
+  <div class="section-title">Asset — Cosa Si Acquista</div>
+  <div class="section-count">lotto unico</div>
+</div>
+
+<div class="asset-grid">
+  <div class="asset-item">
+    <div class="asset-label">Palazzina 801</div>
+    <div class="asset-value">16 appartamenti</div>
+    <div class="asset-sub">S1: bar + mensa + cucina · 784 mq seminterrato</div>
+  </div>
+  <div class="asset-item">
+    <div class="asset-label">Palazzina 802</div>
+    <div class="asset-value">15 appartamenti</div>
+    <div class="asset-sub">S1: palestra + cinema · 619 mq seminterrato</div>
+  </div>
+  <div class="asset-item">
+    <div class="asset-label">Palazzina 803</div>
+    <div class="asset-value">15 appartamenti</div>
+    <div class="asset-sub">Lavori avviati (P.d.C. attivo) · in parziale ristrutturazione</div>
+  </div>
+  <div class="asset-item">
+    <div class="asset-label">Bosco ceduo cl.2</div>
+    <div class="asset-value">169.730 m²</div>
+    <div class="asset-sub">Principale lotto Fg.11/134 · 35 anni di riforestazione spontanea</div>
+  </div>
+  <div class="asset-item">
+    <div class="asset-label">Infrastrutture sportive</div>
+    <div class="asset-value">Già sanate</div>
+    <div class="asset-sub">Campo calcio · tennis · pattinaggio · piazzale 800 mq · strade interne</div>
+  </div>
+  <div class="asset-item">
+    <div class="asset-label">Quota altimetrica</div>
+    <div class="asset-value">1.023 m s.l.m.</div>
+    <div class="asset-sub">Loc. Il Poggio · SS17 Roccaraso (AQ)</div>
+  </div>
+</div>
+
+<!-- PERCHÉ ORA -->
+<div class="section-header">
+  <div class="section-icon">⚡</div>
+  <div class="section-title">Perché Adesso</div>
+  <div class="section-count">timing</div>
+</div>
+
+<div class="highlight">
+  <div class="highlight-item">
+    <div class="highlight-icon">📉</div>
+    <div class="highlight-text">
+      <div class="highlight-title">Aste deserte = pressione sul prezzo</div>
+      <div class="highlight-desc">Il compendio è all'asta da anni senza aggiudicatari. Il Tribunale di Sulmona ha interesse ad accelerare la procedura. Il creditore (UniCredit, ipoteca €14M) vuole liquidità. Chi si presenta preparato negozia da una posizione di forza.</div>
+    </div>
+  </div>
+  <div class="highlight-item">
+    <div class="highlight-icon">📈</div>
+    <div class="highlight-text">
+      <div class="highlight-title">Mercato tourism Italia in record</div>
+      <div class="highlight-desc">€2,1 miliardi di investimenti alberghieri in Italia nel 2024 (+30%). L'Italia è il 3° paese al mondo per team corporate retreat. La provincia dell'Aquila: +32% presenze 2025. Il gap nell'Appennino centrale tra domanda e offerta di qualità è enorme.</div>
+    </div>
+  </div>
+  <div class="highlight-item">
+    <div class="highlight-icon">📋</div>
+    <div class="highlight-text">
+      <div class="highlight-title">Permessi già esistenti</div>
+      <div class="highlight-desc">Permesso di costruire attivo + variante attiva. Destinazione extralberghiera autorizzata. L'acquirente non parte da zero sul fronte urbanistico — uno degli ostacoli più lunghi e costosi nel real estate italiano è già superato.</div>
+    </div>
+  </div>
+  <div class="highlight-item">
+    <div class="highlight-icon">🌲</div>
+    <div class="highlight-text">
+      <div class="highlight-title">22 ettari di bosco = asset gratuito</div>
+      <div class="highlight-desc">Il bosco ceduo di 22 ettari, dopo 35 anni di abbandono, ha raggiunto una maturità ecologica significativa. È un capitale naturale non replicabile — carbon credits, forest therapy, eco-programs, certificazioni ambientali — tutto già lì, senza investimento.</div>
+    </div>
+  </div>
+</div>
+
+<!-- NUMERI DEL MERCATO -->
+<div class="numeri-box">
+  <div class="numeri-title">Il mercato che aspetta questo asset</div>
+  <div class="numeri-grid">
+    <div class="numero-item">
+      <div class="numero-val">$31,8B</div>
+      <div class="numero-label">Mercato globale corporate retreat 2024 — cresce al 9,1% annuo</div>
+    </div>
+    <div class="numero-item">
+      <div class="numero-val">+32%</div>
+      <div class="numero-label">Presenze turistiche provincia dell'Aquila nel 2025</div>
+    </div>
+    <div class="numero-item">
+      <div class="numero-val">$1T</div>
+      <div class="numero-label">Wellness tourism globale nel 2024. Cresce al 9,3% annuo</div>
+    </div>
+    <div class="numero-item">
+      <div class="numero-val">–55%</div>
+      <div class="numero-label">Sconto della base d'asta rispetto al valore lordo di perizia</div>
+    </div>
+  </div>
+</div>
+
+<!-- SCENARI D'USO -->
+<div class="section-header">
+  <div class="section-icon">💡</div>
+  <div class="section-title">Possibili Scenari di Sviluppo</div>
+  <div class="section-count">use cases</div>
+</div>
+
+<div class="intro" style="padding-top:16px;padding-bottom:16px">
+  <p style="margin-bottom:10px">Sono stati sviluppati 5 concept strategici dettagliati, con analisi economico-finanziaria a 3 livelli (conservativo / base / ottimistico). Il dossier completo è disponibile su richiesta. I principali scenari:</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px">
+    <div style="background:var(--grigio-bg);padding:12px;border-radius:3px">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;color:var(--arancio);margin-bottom:3px">01 WELLNESS RESORT</div>
+      <div style="font-size:12px;color:#555">EBITDA base: €1,29M/anno<br>ADR €300-450/notte</div>
+    </div>
+    <div style="background:var(--grigio-bg);padding:12px;border-radius:3px">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;color:var(--arancio);margin-bottom:3px">02 HERITAGE CULTURAL</div>
+      <div style="font-size:12px;color:#555">EBITDA base: €559K/anno<br>+ grant pubblici EU</div>
+    </div>
+    <div style="background:var(--grigio-bg);padding:12px;border-radius:3px">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;color:var(--arancio);margin-bottom:3px">03 WORK & LIFE HUB</div>
+      <div style="font-size:12px;color:#555">EBITDA base: €875K/anno<br>Corporate retreat + coliving</div>
+    </div>
+    <div style="background:var(--grigio-bg);padding:12px;border-radius:3px">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;color:var(--arancio);margin-bottom:3px">04 ECO-TECH VILLAGE</div>
+      <div style="font-size:12px;color:#555">EBITDA base: €816K/anno<br>Carbon credits + energia</div>
+    </div>
+  </div>
+  <p style="margin-top:12px;font-size:12px;color:#888">Il modello ibrido ottimale combina i concept 01+03 con raccolta via crowdfunding equity — EBITDA target a regime €900K-1,5M/anno.</p>
+</div>
+
+<!-- OPPORTUNITY BAND -->
+<div class="opportunity">
+  <h3>L'Opportunità in una Riga</h3>
+  <p>Un compendio immobiliare di 20.000+ mq costruiti + 219.000 mq di bosco, con permessi attivi e destinazione extralberghiera autorizzata, <strong>a ~1.000 €/mq lordo</strong> in un comprensorio sciistico con bacino di 20 milioni di persone entro 2 ore. In tutto l'Appennino centrale, non esiste una struttura equivalente con questa visione. Chi arriva primo definisce il benchmark.</p>
+  <p style="margin-top:8px"><span class="badge" style="background:rgba(0,0,0,.12);color:rgba(0,0,0,.8)">📄 Dossier completo disponibile su richiesta</span> <span class="badge" style="background:rgba(0,0,0,.12);color:rgba(0,0,0,.8)">🔒 NDA a disposizione</span></p>
+</div>
+
+<!-- CONTATTI -->
+<div class="contatti">
+  <h2>INTERESSATO?<br><span>PARLIAMOCI.</span></h2>
+  <div class="contatti-sub">Rispondo entro 24 ore. Il dossier completo (40+ pagine) è disponibile dopo firma NDA.</div>
+  <div class="contatti-info">
+    <div class="contatti-box">
+      <div class="contatti-box-label">Studio</div>
+      <div class="contatti-box-value">FranKi Studio</div>
+    </div>
+    <div class="contatti-box">
+      <div class="contatti-box-label">Web</div>
+      <div class="contatti-box-value">frankistudio.it</div>
+    </div>
+    <div class="contatti-box">
+      <div class="contatti-box-label">Email</div>
+      <div class="contatti-box-value">info@frankistudio.it</div>
+    </div>
+    <div class="contatti-box">
+      <div class="contatti-box-label">Sede</div>
+      <div class="contatti-box-value">Avre Srl · Napoli</div>
+    </div>
+  </div>
+  <a class="hub-btn" href="https://frankistudio.it/roccaraso-affio/hub/" target="_blank">→ Accedi al Dossier Completo</a>
+</div>
+
+<div class="disclaimer">
+  Questo documento è strettamente riservato e destinato esclusivamente al destinatario. Non costituisce offerta di vendita né sollecitazione all'investimento. I dati finanziari sono stime basate su analisi di mercato e perizia ufficiale del Tribunale di Sulmona (Rev.3, Maggio 2021). L'investimento in asset immobiliari comporta rischi. Consulenza legale e finanziaria indipendente raccomandata prima di qualsiasi decisione. FranKi Studio / Avre Srl · Napoli · frankistudio.it · Aprile 2026.
+</div>
+
+</body>
+</html>

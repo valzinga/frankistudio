@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RCV — Simulazione Completa · 4 Fasi</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blu:#2B38B0;--arancio:#F0A500;--grigio-bg:#F2F1ED;
+  --bianco:#FFFFFF;--nero:#111111;--testo:#1a1a2e;
+  --blu-scuro:#1a2480;--verde:#1a7a50;--rosso:#c0392b;
+  --viola:#7C3AED;
+  --f1:#2B38B0;--f2:#1a7a50;--f3:#c27800;--f4:#111111;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Barlow',sans-serif;background:var(--grigio-bg);color:var(--testo);max-width:680px;margin:0 auto;font-size:15px;line-height:1.6}
+
+.navbar{background:var(--blu);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.logo-fran{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;color:var(--bianco)}
+.logo-fran span{background:var(--arancio);padding:1px 6px;border-radius:4px}
+.logo-tagline{font-size:10px;color:rgba(255,255,255,.6);letter-spacing:.08em}
+.nav-doc{font-family:'Barlow Condensed',sans-serif;font-size:11px;color:rgba(255,255,255,.7);letter-spacing:.1em;text-transform:uppercase}
+
+.hero{background:var(--nero);color:var(--bianco);padding:40px 20px 36px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 50px,rgba(240,165,0,.025) 50px,rgba(240,165,0,.025) 51px)}
+.hero-kicker{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--arancio);margin-bottom:8px}
+.hero-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:40px;line-height:.92;text-transform:uppercase;margin-bottom:14px}
+.hero-title em{color:var(--arancio);font-style:normal;display:block}
+.hero-sub{font-size:13px;color:rgba(255,255,255,.6);line-height:1.7}
+.div-orange{height:4px;background:var(--arancio)}
+
+/* SEZIONE HEADER */
+.sh{background:var(--blu);color:var(--bianco);padding:11px 20px;display:flex;align-items:center;gap:10px;margin-top:20px}
+.sh-icon{font-size:16px}
+.sh-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;text-transform:uppercase;letter-spacing:.06em}
+.sh-badge{margin-left:auto;background:var(--arancio);color:var(--nero);font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;padding:2px 8px;border-radius:2px}
+
+/* ROOM MIX TABLE */
+.card{background:var(--bianco);padding:20px;margin:2px 0}
+.card h3{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;text-transform:uppercase;color:var(--blu);margin-bottom:12px;border-bottom:2px solid var(--arancio);padding-bottom:6px}
+.card p{font-size:13px;color:#444;line-height:1.65;margin-bottom:8px}
+.card p:last-child{margin-bottom:0}
+
+/* ROOM TYPE BARS */
+.room-type{display:flex;align-items:center;gap:10px;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #f5f5f5}
+.room-type:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.rt-icon{width:32px;height:32px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.rt-info{flex:1}
+.rt-name{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;color:var(--testo)}
+.rt-detail{font-size:11px;color:#888}
+.rt-count{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px;flex-shrink:0}
+.rt-adr{font-size:11px;color:#aaa;text-align:right}
+
+/* TIMELINE FASI */
+.tl{background:var(--bianco);padding:16px 20px;margin:2px 0}
+.tl-track{position:relative;padding:0 10px}
+.tl-line{position:absolute;top:18px;left:30px;right:30px;height:3px;background:#e8e8e4}
+.tl-nodes{display:flex;justify-content:space-between;position:relative;z-index:1}
+.tl-node{text-align:center;flex:1}
+.tl-dot{width:36px;height:36px;border-radius:50%;margin:0 auto 6px;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:14px;color:var(--bianco)}
+.tl-f1{background:var(--f1)}
+.tl-f2{background:var(--f2)}
+.tl-f3{background:var(--f3)}
+.tl-f4{background:var(--f4)}
+.tl-anno{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#888}
+.tl-label{font-size:10px;color:#aaa;margin-top:2px}
+.tl-rev{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:13px;margin-top:4px}
+
+/* FASE CARD */
+.fase{background:var(--bianco);margin:6px 0;overflow:hidden;border-top:5px solid}
+.fase.f1{border-color:var(--f1)}
+.fase.f2{border-color:var(--f2)}
+.fase.f3{border-color:var(--f3)}
+.fase.f4{border-color:var(--f4)}
+
+.fase-head{padding:16px 20px;display:flex;gap:14px;align-items:flex-start}
+.fase-badge{flex-shrink:0;padding:6px 12px;border-radius:2px;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--bianco)}
+.fase-badge.f1{background:var(--f1)}
+.fase-badge.f2{background:var(--f2)}
+.fase-badge.f3{background:var(--f3)}
+.fase-badge.f4{background:var(--f4)}
+.fase-info{flex:1}
+.fase-nome{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;color:var(--testo);line-height:1.05}
+.fase-timing{font-size:12px;color:#888;margin-top:2px}
+.fase-rev-big{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;flex-shrink:0;text-align:right;line-height:1}
+.fase-ebitda{font-size:11px;color:#aaa;text-align:right;margin-top:2px}
+
+.fase-body{padding:0 20px 18px}
+
+/* UNITÀ GRID */
+.unita-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin:12px 0}
+.unita-box{padding:8px;border-radius:2px;text-align:center}
+.unita-box .n{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px;display:block;line-height:1}
+.unita-box .t{font-size:9px;color:#888;text-transform:uppercase;letter-spacing:.06em;margin-top:2px;display:block}
+.unita-box.std{background:#e8ecff;color:var(--blu)}
+.unita-box.std .n{color:var(--blu)}
+.unita-box.jr{background:#e6f7f0;color:var(--verde)}
+.unita-box.jr .n{color:var(--verde)}
+.unita-box.dlx{background:#fff4e0;color:#c27800}
+.unita-box.dlx .n{color:#c27800}
+.unita-box.prm{background:#fff0f0;color:var(--rosso)}
+.unita-box.prm .n{color:var(--rosso)}
+.unita-box.prs{background:#f5f0ff;color:var(--viola)}
+.unita-box.prs .n{color:var(--viola)}
+.unita-box.bbl{background:#1a1a1a;color:var(--arancio)}
+.unita-box.bbl .n{color:var(--arancio)}
+.unita-box.tot{background:var(--nero);color:var(--bianco)}
+.unita-box.tot .n{color:var(--arancio)}
+
+/* KPI INLINE */
+.kpi-inline{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;margin:8px 0}
+.ki{background:var(--grigio-bg);padding:8px 10px}
+.ki-l{font-family:'Barlow Condensed',sans-serif;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#aaa;margin-bottom:2px}
+.ki-v{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;color:var(--testo)}
+
+/* REVENUE BREAKDOWN */
+.rev-breakdown{background:var(--grigio-bg);border-radius:2px;padding:12px;margin:10px 0}
+.rb-title{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#888;margin-bottom:10px}
+.rb-row{display:flex;justify-content:space-between;align-items:baseline;padding:5px 0;border-bottom:1px solid rgba(0,0,0,.05)}
+.rb-row:last-child{border-bottom:none;padding-top:8px;margin-top:6px;border-top:2px solid var(--arancio)}
+.rb-label{font-size:12px;color:#555}
+.rb-val{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px}
+.rb-val.blu{color:var(--blu)}
+.rb-val.grn{color:var(--verde)}
+.rb-val.org{color:#c27800}
+.rb-val.vio{color:var(--viola)}
+.rb-val.total{font-size:17px;color:var(--testo)}
+
+/* NOTE FASE */
+.fase-nota{font-size:12px;color:#666;line-height:1.6;background:#f8f8f6;padding:10px 14px;border-radius:2px;border-left:3px solid;margin-top:10px}
+.fase-nota.f1{border-color:var(--f1)}
+.fase-nota.f2{border-color:var(--f2)}
+.fase-nota.f3{border-color:var(--f3)}
+.fase-nota.f4{border-color:var(--f4)}
+
+/* RIEPILOGO COMPARATIVO */
+.riepilogo{background:var(--nero);color:var(--bianco);padding:20px;margin:2px 0}
+.riepilogo h3{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:14px;text-transform:uppercase;letter-spacing:.1em;color:var(--arancio);margin-bottom:16px}
+.riepilogo table{width:100%;border-collapse:collapse;font-size:12px}
+.riepilogo th{font-family:'Barlow Condensed',sans-serif;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.4);padding:6px 8px;text-align:left;border-bottom:1px solid rgba(255,255,255,.1)}
+.riepilogo td{padding:8px 8px;border-bottom:1px solid rgba(255,255,255,.06);color:rgba(255,255,255,.8);vertical-align:middle}
+.riepilogo td:first-child{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px}
+.riepilogo tr:last-child td{border-bottom:none;color:var(--arancio);font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:14px;padding-top:12px;border-top:2px solid rgba(240,165,0,.4)}
+.dot-f1{display:inline-block;width:8px;height:8px;background:var(--f1);border-radius:50%;margin-right:6px}
+.dot-f2{display:inline-block;width:8px;height:8px;background:var(--f2);border-radius:50%;margin-right:6px}
+.dot-f3{display:inline-block;width:8px;height:8px;background:var(--f3);border-radius:50%;margin-right:6px}
+.dot-f4{display:inline-block;width:8px;height:8px;background:var(--bianco);border-radius:50%;margin-right:6px}
+
+/* CURVA CRESCITA */
+.curva{background:var(--bianco);padding:16px 20px;margin:2px 0}
+.curva h3{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:15px;text-transform:uppercase;color:var(--blu);margin-bottom:14px;border-bottom:2px solid var(--arancio);padding-bottom:6px}
+.curva-bar-group{margin-bottom:14px}
+.curva-label{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;color:#777;margin-bottom:4px;display:flex;justify-content:space-between}
+.curva-bar-bg{height:24px;background:#f0f0f0;border-radius:3px;overflow:hidden;position:relative}
+.curva-bar-fill{height:100%;border-radius:3px;display:flex;align-items:center;padding-left:10px;transition:width .5s}
+.curva-bar-text{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:13px;color:var(--bianco)}
+
+/* OEBITDA CHART */
+.ebitda-line{display:flex;align-items:flex-end;gap:8px;height:80px;margin-top:12px;padding-bottom:4px;border-bottom:2px solid #e8e8e4}
+.ebitda-bar{flex:1;border-radius:3px 3px 0 0;display:flex;align-items:flex-end;justify-content:center;padding-bottom:4px;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;color:var(--bianco)}
+
+/* DARK CTA */
+.dark-cta{background:var(--blu);color:var(--bianco);padding:28px 20px;margin-top:4px;text-align:center}
+.dark-cta h2{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:26px;text-transform:uppercase;margin-bottom:8px}
+.dark-cta h2 span{color:var(--arancio)}
+.dark-cta p{font-size:12px;color:rgba(255,255,255,.5)}
+
+.disclaimer{background:#f7f7f5;padding:10px 20px;font-size:10px;color:#bbb;text-align:center;line-height:1.5}
+
+.fk-logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;line-height:1;display:inline-flex;align-items:center}
+.fk-logo .fran{color:#FFFFFF}
+.fk-logo .ki{background:#F0A500;color:#FFFFFF;border-radius:5px;padding:1px 7px;margin-left:2px;display:inline-block}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div>
+    <div class="fk-logo"><span class="fran">Fran</span><span class="ki">Ki</span></div>
+    <div class="logo-tagline">We Start Your Ideas</div>
+  </div>
+  <div class="nav-doc">RCV · 4 Fasi · Simulazione</div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-kicker">RCV · Simulazione Operativa Completa · Dall'Apertura al Regime</div>
+  <div class="hero-title">DA 22 KEYS<br><em>A 68 KEYS</em><br>IN 4 FASI</div>
+  <div class="hero-sub">Piano accelerato · tutto in parallelo · 30 mesi al regime. Da €1,2M (M9 bubble open) a €7,0M (M30 full regime). 68 keys · 140 soci · EBITDA €2,3M · Exit M48 a €23-31M.</div>
+</div>
+<div class="div-orange"></div>
+
+<!-- IL MIX UNITÀ FINALE -->
+<div class="sh">
+  <div class="sh-icon">🏨</div>
+  <div class="sh-title">Il Mix Unità — 68 Keys Totali a Regime</div>
+  <div class="sh-badge">asset base</div>
+</div>
+
+<div class="card">
+  <h3>Da 46 Appartamenti ENEL a 68 Unità Hospitality</h3>
+  <p>I 46 appartamenti originali (5.954 mq SLP, tagli 74-382 mq) vengono riprogettati in chiave extralberghiero. La logica: gli appartamenti grandi vengono mantenuti come suite, quelli medi vengono divisi in 2 camere. Risultato: da 46 unità si ottengono <strong>62 unità hospitality + 6 bubble room nel bosco = 68 keys totali</strong>.</p>
+
+  <div style="margin-top:16px">
+
+    <div class="room-type">
+      <div class="rt-icon" style="background:#e8ecff">🛏️</div>
+      <div class="rt-info">
+        <div class="rt-name">Standard Room</div>
+        <div class="rt-detail">40-50 mq · Da trilocali e quadrilocali divisi · Doppio bagno en-suite</div>
+      </div>
+      <div>
+        <div class="rt-count" style="color:var(--blu)">32</div>
+        <div class="rt-adr">€200-280/n</div>
+      </div>
+    </div>
+
+    <div class="room-type">
+      <div class="rt-icon" style="background:#e6f7f0">🛋️</div>
+      <div class="rt-info">
+        <div class="rt-name">Junior Suite</div>
+        <div class="rt-detail">60-70 mq · Da bilocali ristrutturati · Living + camera separata</div>
+      </div>
+      <div>
+        <div class="rt-count" style="color:var(--verde)">8</div>
+        <div class="rt-adr">€280-350/n</div>
+      </div>
+    </div>
+
+    <div class="room-type">
+      <div class="rt-icon" style="background:#fff4e0">🌿</div>
+      <div class="rt-info">
+        <div class="rt-name">Deluxe Suite</div>
+        <div class="rt-detail">80-100 mq · Da trilocali interi · Vasca + area living ampia</div>
+      </div>
+      <div>
+        <div class="rt-count" style="color:#c27800">7</div>
+        <div class="rt-adr">€350-450/n</div>
+      </div>
+    </div>
+
+    <div class="room-type">
+      <div class="rt-icon" style="background:#fff0f0">⭐</div>
+      <div class="rt-info">
+        <div class="rt-name">Premium Suite</div>
+        <div class="rt-detail">120-160 mq · Da quadrilocali e pentalocali · Sauna privata + terrazza</div>
+      </div>
+      <div>
+        <div class="rt-count" style="color:var(--rosso)">12</div>
+        <div class="rt-adr">€450-600/n</div>
+      </div>
+    </div>
+
+    <div class="room-type">
+      <div class="rt-icon" style="background:#f5f0ff">💎</div>
+      <div class="rt-info">
+        <div class="rt-name">Wellness Prestige Suite</div>
+        <div class="rt-detail">180-220 mq · Dalle 3 unità più grandi (ex dirigenti ENEL) · Suite complete con wellness privato</div>
+      </div>
+      <div>
+        <div class="rt-count" style="color:var(--viola)">3</div>
+        <div class="rt-adr">€700-900/n</div>
+      </div>
+    </div>
+
+    <div class="room-type" style="border-bottom:none">
+      <div class="rt-icon" style="background:#111">🫧</div>
+      <div class="rt-info">
+        <div class="rt-name" style="color:var(--arancio)">Bubble Room — nel Bosco</div>
+        <div class="rt-detail">~30 mq · Struttura trasparente · Jacuzzi privata · Telescopio · Dark Sky</div>
+      </div>
+      <div>
+        <div class="rt-count" style="color:var(--arancio)">6</div>
+        <div class="rt-adr" style="color:var(--arancio)">€400-500/n</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ADR MEDIO BLENDED -->
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;margin-top:16px">
+    <div style="background:var(--grigio-bg);padding:10px 12px">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#aaa;margin-bottom:3px">ADR blended camere</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px;color:var(--blu)">€315</div>
+      <div style="font-size:11px;color:#bbb">media pesata 62 unità</div>
+    </div>
+    <div style="background:var(--grigio-bg);padding:10px 12px">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#aaa;margin-bottom:3px">ADR bubble room</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px;color:var(--arancio)">€450</div>
+      <div style="font-size:11px;color:#bbb">6 unità nel bosco</div>
+    </div>
+    <div style="background:var(--grigio-bg);padding:10px 12px">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#aaa;margin-bottom:3px">Keys totali</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px;color:var(--testo)">68</div>
+      <div style="font-size:11px;color:#bbb">da 46 app. originali</div>
+    </div>
+  </div>
+</div>
+
+<!-- TIMELINE -->
+<div class="sh">
+  <div class="sh-icon">📅</div>
+  <div class="sh-title">La Traiettoria — 30 Mesi al Regime · Piano Accelerato</div>
+  <div class="sh-badge">timeline</div>
+</div>
+
+<div class="tl">
+  <div style="font-size:12px;color:#888;margin-bottom:14px">Piano accelerato: cantiere su tutte e 3 le palazzine in parallelo. Dal closing al regime: 30 mesi. Ogni fase è sovrapposta, non sequenziale.</div>
+  <div class="tl-track">
+    <div class="tl-line"></div>
+    <div class="tl-nodes">
+      <div class="tl-node">
+        <div class="tl-dot tl-f1">F1</div>
+        <div class="tl-anno">M9</div>
+        <div class="tl-label">Bubble open</div>
+        <div class="tl-rev" style="color:var(--f1)">€1,2M</div>
+      </div>
+      <div class="tl-node">
+        <div class="tl-dot tl-f2">F2</div>
+        <div class="tl-anno">M21</div>
+        <div class="tl-label">Soft opening</div>
+        <div class="tl-rev" style="color:var(--f2)">€3,2M</div>
+      </div>
+      <div class="tl-node">
+        <div class="tl-dot tl-f3">F3</div>
+        <div class="tl-anno">M27</div>
+        <div class="tl-label">68 keys</div>
+        <div class="tl-rev" style="color:var(--f3)">€6,2M</div>
+      </div>
+      <div class="tl-node">
+        <div class="tl-dot tl-f4">F4</div>
+        <div class="tl-anno">M30</div>
+        <div class="tl-label">Pieno regime</div>
+        <div class="tl-rev" style="color:var(--arancio)">€7,0M</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======= FASE 1 ======= -->
+<div class="fase f1" style="margin-top:20px">
+  <div class="fase-head">
+    <div class="fase-badge f1">M9 · Bubble</div>
+    <div class="fase-info">
+      <div class="fase-nome">Bubble Open<br>Primo Revenue</div>
+      <div class="fase-timing">Mese 9 dal closing · Bubble rooms operative nel bosco · Primo revenue</div>
+    </div>
+    <div>
+      <div class="fase-rev-big" style="color:var(--f1)">€1,2M</div>
+      <div class="fase-ebitda">run rate annuo · M9-20</div>
+    </div>
+  </div>
+  <div class="fase-body">
+
+    <div class="unita-grid">
+      <div class="unita-box std"><span class="n">11</span><span class="t">Standard</span></div>
+      <div class="unita-box jr"><span class="n">3</span><span class="t">Jr Suite</span></div>
+      <div class="unita-box dlx"><span class="n">3</span><span class="t">Deluxe</span></div>
+      <div class="unita-box prm"><span class="n">4</span><span class="t">Premium</span></div>
+      <div class="unita-box prs"><span class="n">1</span><span class="t">Prestige</span></div>
+      <div class="unita-box bbl"><span class="n">6</span><span class="t">Bubble 🫧</span></div>
+      <div class="unita-box tot" style="grid-column:span 2"><span class="n">28</span><span class="t">Keys totali apertura</span></div>
+    </div>
+
+    <div class="kpi-inline">
+      <div class="ki"><div class="ki-l">Keys operativi</div><div class="ki-v" style="color:var(--f1)">6</div></div>
+      <div class="ki"><div class="ki-l">Soci pre-venduti</div><div class="ki-v">80+</div></div>
+      <div class="ki"><div class="ki-l">Cantiere in corso</div><div class="ki-v">3 pal.</div></div>
+    </div>
+
+    <div class="rev-breakdown">
+      <div class="rb-title">Revenue M9-M20 · Solo Bubble + Membership Pre-venduta</div>
+      <div class="rb-row">
+        <span class="rb-label">Membership pre-venduta (80 soci × €10K)</span>
+        <span class="rb-val blu">€800K</span>
+      </div>
+      <div class="rb-row">
+        <span class="rb-label">Bubble room (6 × 160n × €450 · lancio graduale)</span>
+        <span class="rb-val vio">€432K</span>
+      </div>
+      <div class="rb-row">
+        <span class="rb-label">Cantiere in corso — camere non ancora aperte</span>
+        <span class="rb-val" style="color:#ccc">—</span>
+      </div>
+      <div class="rb-row">
+        <span class="rb-label"><strong>RUN RATE ANNUO M9-M20</strong></span>
+        <span class="rb-val total"><strong>~€1,2M</strong></span>
+      </div>
+    </div>
+
+    <div class="fase-nota f1">
+      <strong>Cosa succede in questa fase:</strong> Dal closing (M6) partono 3 cantieri paralleli sulle 3 palazzine. Le bubble room vengono installate nel bosco in 60-90 giorni (M9). Sono il <strong>primo prodotto visibile e vendibile</strong> — generano revenue, comunicazione e lista d'attesa. I soci fondatori sono già venduti (80+) prima ancora che apra una camera. Il cantiere è in piena attività. Il wellness hub (seminterrati) viene completato a M18.
+    </div>
+  </div>
+</div>
+
+<!-- ======= FASE 2 ======= -->
+<div class="fase f2">
+  <div class="fase-head">
+    <div class="fase-badge f2">M21 · Soft Open</div>
+    <div class="fase-info">
+      <div class="fase-nome">Soft Opening<br>Palazzina 801</div>
+      <div class="fase-timing">Mese 21 · Soft opening Palazzina 801 · Cantiere 802+803 in corso</div>
+    </div>
+    <div>
+      <div class="fase-rev-big" style="color:var(--f2)">€3,2M</div>
+      <div class="fase-ebitda">run rate annuo · M21-24</div>
+    </div>
+  </div>
+  <div class="fase-body">
+
+    <div class="unita-grid">
+      <div class="unita-box std"><span class="n">22</span><span class="t">Standard</span></div>
+      <div class="unita-box jr"><span class="n">5</span><span class="t">Jr Suite</span></div>
+      <div class="unita-box dlx"><span class="n">5</span><span class="t">Deluxe</span></div>
+      <div class="unita-box prm"><span class="n">8</span><span class="t">Premium</span></div>
+      <div class="unita-box prs"><span class="n">2</span><span class="t">Prestige</span></div>
+      <div class="unita-box bbl"><span class="n">6</span><span class="t">Bubble 🫧</span></div>
+      <div class="unita-box tot" style="grid-column:span 2"><span class="n">48</span><span class="t">Keys operativi</span></div>
+    </div>
+
+    <div class="kpi-inline">
+      <div class="ki"><div class="ki-l">Keys operativi</div><div class="ki-v" style="color:var(--f2)">28</div></div>
+      <div class="ki"><div class="ki-l">Soci attivi</div><div class="ki-v">80</div></div>
+      <div class="ki"><div class="ki-l">Corporate events</div><div class="ki-v">3/anno</div></div>
+    </div>
+
+    <div class="rev-breakdown">
+      <div class="rb-title">Revenue M21-M24 · 22 camere + 6 bubble · Soft Opening</div>
+      <div class="rb-row">
+        <span class="rb-label">Membership fees (80 soci × €10K)</span>
+        <span class="rb-val blu">€800K</span>
+      </div>
+      <div class="rb-row">
+        <span class="rb-label">Camere clienti (14 rooms × 180n × €315)</span>
+        <span class="rb-val org">€793K</span>
+      </div>
+      <div class="rb-row">
+        <span class="rb-label">Camere soci (8 rooms × 150n × €165)</span>
+        <span class="rb-val blu">€198K</span>
+      </div>
+      <div class="rb-row">
+        <span class="rb-label">Bubble room (6 × 210n × €450)</span>
+        <span class="rb-val vio">€567K</span>
+      </div>
+      <div class="rb-row">
+        <span class="rb-label">Corporate retreat (3 eventi × €65K)</span>
+        <span class="rb-val grn">€195K</span>
+      </div>
+      <div class="rb-row">
+        <span class="rb-label">F&B e servizi (+20%)</span>
+        <span class="rb-val" style="color:#888">€352K</span>
+      </div>
+      <div class="rb-row">
+        <span class="rb-label"><strong>RUN RATE ANNUO M21-M24</strong></span>
+        <span class="rb-val total"><strong>~€2,9M</strong></span>
+      </div>
+    </div>
+
+    <div class="fase-nota f2">
+      <strong>Il soft opening:</strong> Palazzina 801 apre con 22 unità. I soci fondatori entrano nella struttura per la prima volta. Wellness hub operativo (sauna, cold plunge, coworking). Primi corporate retreat. Le palazzine 802 e 803 sono ancora in cantiere — si completano a M24-M27. Revenue in rampa rapida grazie ai soci già pre-venduti e alle bubble già rodate.
+    </div>
+  </div>
+</div>
+
+<!-- ======= FASE 3 ======= -->
+<div class="fase f3">
+  <div class="fase-head">
+    <div class="fase-badge f3">M27 · 45 Keys</div>
+    <div class="fase-info">
+      <div class="fase-nome">Crescita Rapida<br>801+802 Complete</div>
+      <div class="fase-timing">Mese 27 · Palazzine 801+802 complete · 803 in chiusura</div>
+    </div>
+    <div>
+      <div class="fase-rev-big" style="color:var(--f3)">€5,2M</div>
+      <div class="fase-ebitda">run rate annuo · M24-M30</div>
+    </div>
+  </div>
+  <div class="fase-body">
+
+    <div class="unita-grid">
+      <div class="unita-box std"><span class="n">32</span><span class="t">Standard</span></div>
+      <div class="unita-box jr"><span class="n">8</span><span class="t">Jr Suite</span></div>
+      <div class="unita-box dlx"><span class="n">7</span><span class="t">Deluxe</span></div>
+      <div class="unita-box prm"><span class="n">12</span><span class="t">Premium</span></div>
+      <div class="unita-box prs"><span class="n">3</span><span class="t">Prestige</span></div>
+      <div class="unita-box bbl"><span class="n">6</span><span class="t">Bubble 🫧</span></div>
+      <div class="unita-box tot" style="grid-column:span 2"><span class="n">68</span><span class="t">Keys totali</span></div>
+    </div>
+
+    <div class="kpi-inline">
+      <div class="ki"><div class="ki-l">Keys operativi</div><div class="ki-v" style="color:var(--f3)">45</div></div>
+      <div class="ki"><div class="ki-l">Soci attivi</div><div class="ki-v">120</div></div>
+      <div class="ki"><div class="ki-l">Corporate events</div><div class="ki-v">8/anno</div></div>
+    </div>
+
+    <div class="rev-breakdown">
+      <div class="rb-title">Revenue M24-M30 · 45 Keys · Rampa Finale</div>
+      <div class="rb-row">
+        <span class="rb-label">Membership fees (120 soci × €10K)</span>
+        <span class="rb-val blu">€1.200K</span>
+      </div>
+      <div class="rb-row">
+        <span class="rb-label">Camere clienti (26 rooms × 210n × €315)</span>
+        <span class="rb-val org">€1.720K</span>
+      </div>
+      <div class="rb-row">
+        <span class="rb-label">Camere soci (15 rooms × 190n × €165)</span>
+        <span class="rb-val blu">€470K</span>
+      </div>
+      <div class="rb-row">
+        <span class="rb-label">Bubble room (6 × 215n × €450)</span>
+        <span class="rb-val vio">€581K</span>
+      </div>
+      <div class="rb-row">
+        <span class="rb-label">Corporate retreat (8 eventi × €70K)</span>
+        <span class="rb-val grn">€560K</span>
+      </div>
+      <div class="rb-row">
+        <span class="rb-label">F&B e servizi (+20%) + programmi sociali</span>
+        <span class="rb-val" style="color:#888">€579K</span>
+      </div>
+      <div class="rb-row">
+        <span class="rb-label"><strong>RUN RATE ANNUO M24-M30</strong></span>
+        <span class="rb-val total"><strong>~€5,1M</strong></span>
+      </div>
+    </div>
+
+    <div class="fase-nota f3">
+      <strong>La rampa finale:</strong> 801 e 802 sono completamente operative. La 803 chiude il cantiere a M27-M30. I soci sono 120, la lista d'attesa è strutturale. 8 corporate retreat/anno con sala da 80 pax a piena capacità. Programmi sociali avviati (5-8 settimane). Revenue in forte accelerazione verso il regime.
+    </div>
+  </div>
+</div>
+
+<!-- ======= FASE 4 ======= -->
+<div class="fase f4">
+  <div class="fase-head">
+    <div class="fase-badge f4">M30 · Regime</div>
+    <div class="fase-info">
+      <div class="fase-nome">Pieno Regime<br>+ Espansione Bosco</div>
+      <div class="fase-timing">Mese 30 · 68 keys · Exit window M48 · +4 bubble · 155 soci</div>
+    </div>
+    <div>
+      <div class="fase-rev-big" style="color:var(--arancio)">€6,1M</div>
+      <div class="fase-ebitda">EBITDA €2,14M · 35%</div>
+    </div>
+  </div>
+  <div class="fase-body">
+
+    <div class="unita-grid">
+      <div class="unita-box std"><span class="n">32</span><span class="t">Standard</span></div>
+      <div class="unita-box jr"><span class="n">8</span><span class="t">Jr Suite</span></div>
+      <div class="unita-box dlx"><span class="n">7</span><span class="t">Deluxe</span></div>
+      <div class="unita-box prm"><span class="n">12</span><span class="t">Premium</span></div>
+      <div class="unita-box prs"><span class="n">3</span><span class="t">Prestige</span></div>
+      <div class="unita-box bbl" style="background:#2a0a3a"><span class="n" style="color:var(--arancio)">10</span><span class="t" style="color:rgba(240,165,0,.6)">Bubble 🫧 ×10</span></div>
+      <div class="unita-box tot" style="grid-column:span 2"><span class="n">72</span><span class="t">Keys totali · +4 bubble</span></div>
+    </div>
+
+    <div class="kpi-inline">
+      <div class="ki"><div class="ki-l">Soci</div><div class="ki-v" style="color:var(--arancio)">155</div></div>
+      <div class="ki"><div class="ki-l">Occupancy</div><div class="ki-v">78%</div></div>
+      <div class="ki"><div class="ki-l">Corporate events</div><div class="ki-v">12</div></div>
+    </div>
+
+    <div class="rev-breakdown">
+      <div class="rb-title">Revenue M30 · Pieno Regime · 68 Keys · 140 Soci</div>
+      <div class="rb-row">
+        <span class="rb-label">Membership fees (140 soci × €10K)</span>
+        <span class="rb-val blu">€1.400K</span>
+      </div>
+      <div class="rb-row">
+        <span class="rb-label">Camere clienti esterni (36 rooms × 230n × €315)</span>
+        <span class="rb-val org">€2.608K</span>
+      </div>
+      <div class="rb-row">
+        <span class="rb-label">Camere soci soggiorno (20 rooms × 200n × €165)</span>
+        <span class="rb-val blu">€660K</span>
+      </div>
+      <div class="rb-row">
+        <span class="rb-label">Bubble room (6 × 220n × €450)</span>
+        <span class="rb-val vio">€594K</span>
+      </div>
+      <div class="rb-row">
+        <span class="rb-label">Corporate retreat (10 eventi × €75K)</span>
+        <span class="rb-val grn">€750K</span>
+      </div>
+      <div class="rb-row">
+        <span class="rb-label">F&B e servizi ancillari (+20%)</span>
+        <span class="rb-val" style="color:#888">€773K</span>
+      </div>
+      <div class="rb-row">
+        <span class="rb-label">Programmi sociali (10 settimane) + ESG</span>
+        <span class="rb-val grn">€234K</span>
+      </div>
+      <div class="rb-row">
+        <span class="rb-label"><strong>REVENUE TOTALE — REGIME M30</strong></span>
+        <span class="rb-val total"><strong>~€7,0M</strong></span>
+      </div>
+    </div>
+
+    <div class="fase-nota f4" style="border-color:var(--arancio)">
+      <strong>Il regime e la finestra di exit:</strong> Le 4 bubble room aggiuntive nel bosco (capex €360K) portano a 10 unità totali. Con EBITDA €3,08M e multiplo x10, il <strong>valore dell'asset è €23-31M</strong>. La finestra di exit ottimale è <strong>Mese 48-60</strong> (Anno 4-5 dal closing), quando tre anni di EBITDA certificato rendono l'asset appetibile per fondi istituzionali, CDP Real Asset e HNWI con visione long-term.
+    </div>
+  </div>
+</div>
+
+<!-- RIEPILOGO COMPARATIVO -->
+<div class="sh" style="margin-top:20px">
+  <div class="sh-icon">📊</div>
+  <div class="sh-title">Riepilogo — Le 4 Fasi a Confronto</div>
+  <div class="sh-badge">sintesi</div>
+</div>
+
+<div class="riepilogo">
+  <h3>Crescita Anno per Anno</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Fase</th>
+        <th>Keys</th>
+        <th>Soci</th>
+        <th>Occ.</th>
+        <th>Revenue</th>
+        <th>EBITDA</th>
+        <th>Margin</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="dot-f1"></span>F1 · M9 · Bubble open</td>
+        <td>6</td>
+        <td>40</td>
+        <td>—</td>
+        <td>€1,2M</td>
+        <td>€390K</td>
+        <td>32%</td>
+      </tr>
+      <tr>
+        <td><span class="dot-f2"></span>F2 · M21 · Soft opening</td>
+        <td>28</td>
+        <td>80</td>
+        <td>62%</td>
+        <td>€3,2M</td>
+        <td>€1,02M</td>
+        <td>32%</td>
+      </tr>
+      <tr>
+        <td><span class="dot-f3"></span>F3 · M27 · 45+ keys</td>
+        <td>51</td>
+        <td>115</td>
+        <td>70%</td>
+        <td>€5,2M</td>
+        <td>€1,72M</td>
+        <td>33%</td>
+      </tr>
+      <tr>
+        <td><span class="dot-f4"></span>F4 · M30 · Regime</td>
+        <td>68</td>
+        <td>140</td>
+        <td>75%</td>
+        <td>€7,0M</td>
+        <td>€2,30M</td>
+        <td>33%</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- CURVA CRESCITA VISUALE -->
+<div class="curva">
+  <h3>La Curva di Crescita del Revenue</h3>
+
+  <div class="curva-bar-group">
+    <div class="curva-label"><span>F1 · M9 · Bubble open · 6 keys</span><span style="color:var(--f1)">€1,2M</span></div>
+    <div class="curva-bar-bg">
+      <div class="curva-bar-fill" style="width:14%;background:var(--f1)">
+        <span class="curva-bar-text">€1,2M</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="curva-bar-group">
+    <div class="curva-label"><span>F2 · M21 · Soft opening · 28 keys</span><span style="color:var(--f2)">€3,2M</span></div>
+    <div class="curva-bar-bg">
+      <div class="curva-bar-fill" style="width:37%;background:var(--f2)">
+        <span class="curva-bar-text">€3,2M</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="curva-bar-group">
+    <div class="curva-label"><span>F3 · M27 · 51 keys operativi</span><span style="color:var(--f3)">€5,2M</span></div>
+    <div class="curva-bar-bg">
+      <div class="curva-bar-fill" style="width:60%;background:var(--f3)">
+        <span class="curva-bar-text">€5,2M</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="curva-bar-group">
+    <div class="curva-label"><span style="font-weight:700">F4 · M30 · PIENO REGIME · 68 keys · 140 soci</span><span style="color:var(--arancio);font-weight:700">€7,0M</span></div>
+    <div class="curva-bar-bg">
+      <div class="curva-bar-fill" style="width:100%;background:var(--nero)">
+        <span class="curva-bar-text" style="color:var(--arancio)">€7,0M — EBITDA €2,3M</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Exit value -->
+  <div style="background:var(--grigio-bg);padding:14px;border-radius:3px;margin-top:16px">
+    <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:#888;margin-bottom:10px">Valore Asset per Exit (multiplo EBITDA)</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:4px">
+      <div style="background:var(--bianco);padding:10px;text-align:center;border-radius:2px">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;color:var(--f1)">€3,9M</div>
+        <div style="font-size:10px;color:#aaa;text-transform:uppercase;margin-top:2px">M9 bubble</div>
+      </div>
+      <div style="background:var(--bianco);padding:10px;text-align:center;border-radius:2px">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;color:var(--f2)">€10,2M</div>
+        <div style="font-size:10px;color:#aaa;text-transform:uppercase;margin-top:2px">M21 soft open</div>
+      </div>
+      <div style="background:var(--bianco);padding:10px;text-align:center;border-radius:2px">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;color:var(--f3)">€17,2M</div>
+        <div style="font-size:10px;color:#aaa;text-transform:uppercase;margin-top:2px">M27 · 51 keys</div>
+      </div>
+      <div style="background:var(--nero);padding:10px;text-align:center;border-radius:2px">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;color:var(--arancio)">€23M+</div>
+        <div style="font-size:10px;color:rgba(255,255,255,.4);text-transform:uppercase;margin-top:2px">M30 regime</div>
+      </div>
+    </div>
+    <div style="font-size:11px;color:#aaa;margin-top:8px">Multiplo x10 EBITDA · Exit window ottimale M48-60 · Target €23-31M certificato</div>
+  </div>
+</div>
+
+<!-- NOTE METODOLOGICHE -->
+<div style="background:var(--bianco);padding:16px 20px;margin:2px 0;font-size:12px;color:#666;line-height:1.65;border-top:3px solid var(--arancio)">
+  <strong style="color:var(--testo)">Note metodologiche:</strong> Simulazione basata su parametri di mercato reali (ADR hospitality montagna Centro-Sud, occupancy comparabili, membership fee Soho House model). ADR blended camere €315 è conservativo rispetto al benchmark Lefay (€600+) — RCV si posiziona nel segmento mid-premium, non ultra-luxury. L'occupancy cresce da 62% (ramp-up F1) a 78% (regime F4) su traiettoria tipica del settore. La membership fee è trattata come revenue ricorrente separata dal soggiorno — anche il socio che non viene genera €10K/anno. F&B e servizi stimati al 20% del room revenue — conservativo rispetto al 30% dei resort internazionali. Scenario ottimistico: +20% su tutti i valori. Scenario pessimistico: –25%. Il capex cumulativo stimato (asta + 4 fasi ristrutturazione + bubble) è €11-16M, cofinanziabile con crowdfunding + PNRR + membership fondatori.
+</div>
+
+<div class="dark-cta">
+  <h2>DA €6M DI ASTA<br><span>A €23M+ IN 30 MESI.</span></h2>
+  <p>Piano accelerato · 30 mesi · 68 keys · 140 soci · €7,0M revenue · EBITDA €2,3M · Exit M48 · FranKi Studio Aprile 2026</p>
+</div>
+
+<div class="disclaimer">Simulazione elaborata da FranKi Studio sulla base di parametri di mercato pubblici e perizia ufficiale Tribunale Sulmona Rev.3/2021. Non costituisce garanzia di risultato finanziario. Uso interno riservato.</div>
+
+</body>
+</html>

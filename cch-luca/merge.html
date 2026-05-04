@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Operazione Merge v2 · Franki × Guia · CCH</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Lato:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue:#3549B5; --blue-dark:#1E2E8A; --blue-light:#EBF0FF;
+  --amber:#F9AC28; --amber-dark:#C07800; --amber-light:#FFF7E0;
+  --green:#1A7A4A; --green-light:#E0F5EC; --green-text:#0A4A28;
+  --red:#B03020; --red-light:#FDECEA;
+  --violet:#6B3FA0; --violet-light:#F0E8FF;
+  --ink:#1A1714; --gray:#6B6560; --gray-light:#F2F0EB;
+  --cream:#FAF9F6; --cream-dark:#EDEBE4; --white:#FFFFFF;
+  --display:'Bebas Neue',sans-serif;
+  --label:'DM Mono',monospace;
+  --body:'Lato',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--cream);color:var(--ink);font-family:var(--body);font-size:1rem;line-height:1.75;-webkit-font-smoothing:antialiased;}
+p{margin-bottom:.9rem;} p:last-child{margin-bottom:0;}
+
+.hdr{background:var(--blue-dark);padding:2.5rem 4rem 2rem;position:relative;overflow:hidden;}
+.hdr::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(-55deg,transparent,transparent 28px,rgba(255,255,255,.025) 28px,rgba(255,255,255,.025) 29px);}
+.hdr::after{content:'';position:absolute;bottom:0;left:0;right:0;height:4px;background:var(--amber);}
+.hdr__logo{display:flex;align-items:center;gap:.8rem;margin-bottom:.8rem;position:relative;}
+.hdr__logo-mark{font-family:var(--display);font-size:1.6rem;letter-spacing:.04em;line-height:1;color:var(--white);}
+.hdr__logo-mark em{background:var(--amber);color:var(--blue-dark);font-style:normal;padding:.04em .2em;border-radius:3px;}
+.hdr__logo-sep{width:1px;height:1.3rem;background:rgba(255,255,255,.2);}
+.hdr__logo-tag{font-family:var(--label);font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.35);}
+.hdr__brand{font-family:var(--label);font-size:.58rem;letter-spacing:.25em;text-transform:uppercase;color:var(--amber);margin-bottom:.5rem;position:relative;}
+.hdr__title{font-family:var(--display);font-size:clamp(2rem,4vw,3.2rem);letter-spacing:.04em;color:var(--white);position:relative;line-height:1;}
+.hdr__title em{color:var(--amber);font-style:normal;}
+.hdr__sub{font-size:.9rem;color:rgba(255,255,255,.45);margin-top:.5rem;position:relative;font-style:italic;}
+.hdr__meta{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.2rem;position:relative;}
+.pill{display:inline-block;font-family:var(--label);font-size:.54rem;letter-spacing:.1em;text-transform:uppercase;padding:.22rem .8rem;border-radius:20px;}
+.pill--amber{background:var(--amber-light);color:var(--amber-dark);}
+.pill--dark{background:rgba(255,255,255,.1);color:rgba(255,255,255,.6);}
+.pill--green{background:var(--green-light);color:var(--green-text);}
+.pill--blue{background:var(--blue-light);color:var(--blue-dark);}
+
+.nav{background:var(--blue-dark);display:flex;overflow-x:auto;position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(255,255,255,.08);}
+.nav__tab{font-family:var(--label);font-size:.54rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.35);padding:.85rem 1.3rem;cursor:pointer;border:none;border-bottom:3px solid transparent;background:none;white-space:nowrap;transition:color .2s;}
+.nav__tab:hover{color:rgba(255,255,255,.7);}
+.nav__tab.active{color:var(--amber);border-bottom-color:var(--amber);}
+
+.sec{display:none;max-width:980px;margin:0 auto;padding:2.5rem 4rem 4rem;}
+.sec.active{display:block;animation:fkin .25s ease;}
+@keyframes fkin{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+.sec__hdr{margin-bottom:1.5rem;display:flex;align-items:baseline;gap:1rem;}
+.sec__num{font-family:var(--display);font-size:3.5rem;color:var(--cream-dark);line-height:1;flex-shrink:0;}
+.sec__titles{flex:1;}
+.sec__title{font-family:var(--display);font-size:1.8rem;letter-spacing:.05em;color:var(--ink);}
+.sec__sub{font-size:.88rem;color:var(--gray);font-style:italic;margin-top:.25rem;}
+
+.c{padding:1rem 1.4rem;border-left:4px solid;border-radius:0 6px 6px 0;margin:1rem 0;}
+.c--amber{background:var(--amber-light);border-color:var(--amber);}
+.c--amber .c__l{color:var(--amber-dark);}
+.c--amber p{color:#5A3A00;font-size:.9rem;}
+.c--amber strong{color:var(--amber-dark);}
+.c--blue{background:var(--blue-light);border-color:var(--blue);}
+.c--blue .c__l{color:var(--blue);}
+.c--blue p{color:var(--blue-dark);font-size:.9rem;}
+.c--blue strong{color:var(--blue);}
+.c--green{background:var(--green-light);border-color:var(--green);}
+.c--green .c__l{color:var(--green);}
+.c--green p{color:var(--green-text);font-size:.9rem;}
+.c--green strong{color:var(--green);}
+.c--violet{background:var(--violet-light);border-color:var(--violet);}
+.c--violet .c__l{color:var(--violet);}
+.c--violet p{font-size:.9rem;color:#3A2060;}
+.c--violet strong{color:var(--violet);}
+.c__l{font-family:var(--label);font-size:.54rem;letter-spacing:.2em;text-transform:uppercase;margin-bottom:.3rem;}
+
+.sub{font-family:var(--display);font-size:1.2rem;letter-spacing:.05em;color:var(--ink);padding-left:.8rem;border-left:4px solid var(--amber);margin:2rem 0 .8rem;}
+.sub--blue{border-left-color:var(--blue);}
+.sub--green{border-left-color:var(--green);}
+.sub--gray{border-left-color:var(--gray);}
+.sub--violet{border-left-color:var(--violet);}
+
+.ilist{list-style:none;margin:.3rem 0;}
+.ilist li{display:flex;align-items:flex-start;gap:.65rem;padding:.5rem 0;border-bottom:1px solid var(--cream-dark);font-size:.9rem;line-height:1.65;}
+.ilist li:last-child{border-bottom:none;}
+.dot{width:6px;height:6px;border-radius:50%;margin-top:.58rem;flex-shrink:0;}
+.dot--amber{background:var(--amber);}
+.dot--blue{background:var(--blue);}
+.dot--green{background:var(--green);}
+.dot--gray{background:var(--gray);}
+.dot--violet{background:var(--violet);}
+
+.sep{height:1px;background:var(--cream-dark);margin:2rem 0;}
+
+/* RUOLI */
+.ruoli{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin:1.2rem 0;}
+.ruolo{border-radius:8px;overflow:hidden;}
+.ruolo__head{padding:1rem 1.2rem;}
+.ruolo__head--guia{background:var(--blue-dark);}
+.ruolo__head--franki{background:var(--gray-light);border-bottom:1px solid var(--cream-dark);}
+.ruolo__icon{font-size:1.4rem;margin-bottom:.4rem;}
+.ruolo__name{font-family:var(--display);font-size:1.4rem;letter-spacing:.04em;}
+.ruolo__head--guia .ruolo__name{color:var(--amber);}
+.ruolo__head--franki .ruolo__name{color:var(--ink);}
+.ruolo__role{font-family:var(--label);font-size:.54rem;letter-spacing:.14em;text-transform:uppercase;margin-top:.2rem;}
+.ruolo__head--guia .ruolo__role{color:rgba(255,255,255,.4);}
+.ruolo__head--franki .ruolo__role{color:var(--gray);}
+.ruolo__body{padding:.9rem 1.1rem;background:var(--white);border:1px solid var(--cream-dark);border-top:none;}
+.ruolo__body ul{list-style:none;}
+.ruolo__body ul li{font-size:.88rem;color:var(--ink);padding:.4rem 0;border-bottom:1px solid var(--cream-dark);line-height:1.55;}
+.ruolo__body ul li:last-child{border-bottom:none;}
+
+/* TIMELINE LEAN */
+.lean-tl{position:relative;margin:1rem 0;}
+.lean-phase{background:var(--white);border:1px solid var(--cream-dark);border-radius:10px;overflow:hidden;margin-bottom:1rem;}
+.lean-phase__head{padding:.9rem 1.2rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;}
+.lean-phase__head--pre{background:var(--blue-light);border-bottom:1px solid #C0D0F0;}
+.lean-phase__head--active{background:var(--amber-dark);border-bottom:1px solid var(--amber);}
+.lean-phase__head--read{background:var(--green-light);border-bottom:1px solid #A0D8BC;}
+.lean-phase__head--next{background:var(--violet-light);border-bottom:1px solid #D0C0F0;}
+.lean-phase__label{font-family:var(--label);font-size:.55rem;letter-spacing:.16em;text-transform:uppercase;}
+.lean-phase__head--pre .lean-phase__label{color:var(--blue);}
+.lean-phase__head--active .lean-phase__label{color:var(--amber-light);}
+.lean-phase__head--read .lean-phase__label{color:var(--green);}
+.lean-phase__head--next .lean-phase__label{color:var(--violet);}
+.lean-phase__title{font-family:var(--display);font-size:1.2rem;letter-spacing:.04em;}
+.lean-phase__head--pre .lean-phase__title{color:var(--blue-dark);}
+.lean-phase__head--active .lean-phase__title{color:var(--white);}
+.lean-phase__head--read .lean-phase__title{color:var(--green-text);}
+.lean-phase__head--next .lean-phase__title{color:var(--violet);}
+.lean-phase__timing{font-family:var(--label);font-size:.6rem;letter-spacing:.1em;white-space:nowrap;}
+.lean-phase__head--pre .lean-phase__timing{color:var(--blue);}
+.lean-phase__head--active .lean-phase__timing{color:rgba(255,255,255,.6);}
+.lean-phase__head--read .lean-phase__timing{color:var(--green);}
+.lean-phase__head--next .lean-phase__timing{color:var(--violet);}
+.lean-phase__body{padding:1rem 1.2rem;font-size:.9rem;color:var(--ink);line-height:1.7;}
+.lean-phase__body strong{font-weight:700;}
+.lean-phase__tests{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-top:.8rem;}
+.lean-test{background:var(--cream);border:1px solid var(--cream-dark);border-radius:6px;padding:.8rem 1rem;}
+.lean-test__name{font-family:var(--display);font-size:.95rem;letter-spacing:.04em;color:var(--ink);margin-bottom:.3rem;}
+.lean-test__desc{font-size:.82rem;color:var(--gray);line-height:1.55;}
+.lean-test__kpi{font-family:var(--label);font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;color:var(--amber-dark);margin-top:.5rem;}
+.lean-test__days{font-family:var(--label);font-size:.56rem;letter-spacing:.08em;color:var(--blue);margin-top:.2rem;}
+
+/* FOTO ISPIRATION */
+.foto-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:1rem 0;}
+.foto-card{background:var(--white);border:1px solid var(--cream-dark);border-radius:8px;overflow:hidden;}
+.foto-card__img{height:90px;display:flex;align-items:center;justify-content:center;font-size:2rem;}
+.foto-card__img--1{background:linear-gradient(135deg,#C8A850,#8B6520);}
+.foto-card__img--2{background:linear-gradient(135deg,#3A6A3A,#1A4A1A);}
+.foto-card__img--3{background:linear-gradient(135deg,#4A3A7A,#2A1A5A);}
+.foto-card__body{padding:.8rem;}
+.foto-card__name{font-family:var(--display);font-size:.95rem;letter-spacing:.04em;color:var(--ink);margin-bottom:.2rem;}
+.foto-card__desc{font-size:.8rem;color:var(--gray);line-height:1.5;}
+.foto-card__link{font-family:var(--label);font-size:.52rem;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);margin-top:.4rem;display:block;text-decoration:none;}
+.foto-card__link:hover{text-decoration:underline;}
+
+/* ASSESSMENT */
+.assess-block{background:var(--white);border:1px solid var(--cream-dark);border-radius:8px;overflow:hidden;margin-bottom:1rem;}
+.assess-block__head{padding:.8rem 1.2rem;display:flex;align-items:center;justify-content:space-between;}
+.assess-block__head--amber{background:var(--amber-light);border-bottom:1px solid #E8D080;}
+.assess-block__head--blue{background:var(--blue-light);border-bottom:1px solid #C0D0F0;}
+.assess-block__head--violet{background:var(--violet-light);border-bottom:1px solid #D0C0F0;}
+.assess-block__title{font-family:var(--display);font-size:1.05rem;letter-spacing:.04em;color:var(--ink);}
+.assess-block__why{font-family:var(--label);font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;}
+.assess-block__head--amber .assess-block__why{color:var(--amber-dark);}
+.assess-block__head--blue .assess-block__why{color:var(--blue);}
+.assess-block__head--violet .assess-block__why{color:var(--violet);}
+.assess-block__body{padding:.9rem 1.2rem;}
+.assess-q{font-size:.9rem;color:var(--ink);line-height:1.65;padding:.5rem 0;border-bottom:1px solid var(--cream-dark);display:flex;gap:.7rem;}
+.assess-q:last-child{border-bottom:none;}
+.assess-q__n{font-family:var(--label);font-size:.62rem;color:var(--gray);flex-shrink:0;min-width:1.5rem;}
+.assess-q__body{flex:1;}
+.assess-note{width:100%;margin-top:.5rem;padding:.55rem .75rem;font-family:var(--body);font-size:.85rem;color:var(--ink);border:1px solid var(--cream-dark);border-radius:6px;background:var(--cream);resize:vertical;min-height:52px;line-height:1.5;transition:border-color .2s;}
+.assess-note:focus{outline:none;border-color:var(--blue);background:var(--white);}
+.assess-note::placeholder{color:#C0BCBA;}
+
+/* PROSSIMI PASSI */
+.step-row{background:var(--white);border:1px solid var(--cream-dark);border-radius:8px;padding:1rem 1.2rem;margin-bottom:.7rem;display:grid;grid-template-columns:2.5rem 1fr auto;gap:.8rem;align-items:start;}
+.step-row--amber{border-left:4px solid var(--amber);}
+.step-row--blue{border-left:4px solid var(--blue);}
+.step-row--green{border-left:4px solid var(--green);}
+.step-n{font-family:var(--display);font-size:2rem;line-height:1;}
+.step-n--amber{color:var(--amber-dark);}
+.step-n--blue{color:var(--blue);}
+.step-n--green{color:var(--green);}
+.step-title{font-family:var(--display);font-size:1rem;letter-spacing:.04em;color:var(--ink);margin-bottom:.3rem;}
+.step-body{font-size:.86rem;color:var(--gray);line-height:1.6;}
+.step-meta{display:flex;flex-direction:column;gap:.3rem;align-items:flex-end;}
+
+.footer{background:var(--blue-dark);border-top:4px solid var(--amber);text-align:center;padding:1.2rem;font-family:var(--label);font-size:.54rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.3);}
+.footer strong{color:var(--amber);}
+
+@media(max-width:700px){
+  .hdr,.sec{padding-left:1.5rem;padding-right:1.5rem;}
+  .ruoli,.lean-phase__tests,.foto-grid{grid-template-columns:1fr;}
+  .step-row{grid-template-columns:2.5rem 1fr;}
+  .step-meta{display:none;}
+}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr__logo">
+    <div class="hdr__logo-mark">Frank<em>Ki</em></div>
+    <div class="hdr__logo-sep"></div>
+    <div class="hdr__logo-tag">We Start Your Ideas</div>
+  </div>
+  <div class="hdr__brand">Operazione Merge v2 · Franki × Guia · CCH · Maggio 2026</div>
+  <h1 class="hdr__title">Allineamento <em>Franki × Guia</em></h1>
+  <p class="hdr__sub">Ruoli chiari · Merge piano · Roadmap lean approfondita · Prossimi lean · Assessment</p>
+  <div class="hdr__meta">
+    <span class="pill pill--amber">Post call · Piena univocità ✓</span>
+    <span class="pill pill--dark">Guia decide · Luca valida</span>
+    <span class="pill pill--green">Franki supporta</span>
+  </div>
+</div>
+
+<div class="nav">
+  <button class="nav__tab active" onclick="show('s0')">👥 Ruoli</button>
+  <button class="nav__tab" onclick="show('s1')">🔀 Merge</button>
+  <button class="nav__tab" onclick="show('s2')">⚗️ Roadmap Lean</button>
+  <button class="nav__tab" onclick="show('s3')">📸 Fotografia</button>
+  <button class="nav__tab" onclick="show('s4')">🔮 Prossimi Lean</button>
+  <button class="nav__tab" onclick="show('s5')">🔍 Assessment</button>
+  <button class="nav__tab" onclick="show('s6')">▶️ Prossimi Passi</button>
+  <button class="nav__tab" onclick="show('s7')">📅 Roadmap Date</button>
+</div>
+
+<!-- ══ 00 — RUOLI ══ -->
+<div class="sec active" id="s0">
+  <div class="sec__hdr">
+    <div class="sec__num">00</div>
+    <div class="sec__titles">
+      <div class="sec__title">I Ruoli — Chi Decide Cosa</div>
+      <div class="sec__sub">Questo va detto chiaramente prima di tutto il resto</div>
+    </div>
+  </div>
+
+  <div class="c c--violet">
+    <div class="c__l">Il principio fondamentale</div>
+    <p>Guia e Franki condividono strategie e operatività. <strong>Ma è Guia a decidere chi fa cosa.</strong> È lei la responsabile marketing di CCH e parte della proprietà. Franki porta idee, visione e risorse — Guia valuta, sceglie e dirige. Tutto passa poi dalla condivisione e validazione di Luca.</p>
+  </div>
+
+  <div class="ruoli">
+    <div class="ruolo">
+      <div class="ruolo__head ruolo__head--guia">
+        <div class="ruolo__icon">👑</div>
+        <div class="ruolo__name">Guia</div>
+        <div class="ruolo__role">Responsabile Marketing · Proprietà · Decide</div>
+      </div>
+      <div class="ruolo__body">
+        <ul>
+          <li>Stabilisce le priorità del piano marketing CCH</li>
+          <li>Decide quali idee di Franki adottare e come</li>
+          <li>Assegna i compiti — a sé stessa e a Franki</li>
+          <li>Gestisce i canali, i contenuti, i contatti</li>
+          <li>Decide se e come utilizzare le risorse disponibili (Gennaro, Franki)</li>
+          <li>Porta le decisioni a Luca per condivisione e validazione</li>
+        </ul>
+      </div>
+    </div>
+    <div class="ruolo">
+      <div class="ruolo__head ruolo__head--franki">
+        <div class="ruolo__icon">🤝</div>
+        <div class="ruolo__name">Franki</div>
+        <div class="ruolo__role">Supporto Strategico · Risorse · Esegue su indicazione</div>
+      </div>
+      <div class="ruolo__body">
+        <ul>
+          <li>Porta idee, analisi e proposte — non decisioni</li>
+          <li>Prepara materiali operativi su richiesta di Guia</li>
+          <li>Esegue l'outreach corporate LinkedIn (se Guia lo desidera)</li>
+          <li>Supporta la candidatura alle piattaforme luxury</li>
+          <li>Analizza i dati dei test lean e restituisce lettura</li>
+          <li>Disponibile su Gennaro: lo mette a disposizione se Guia lo vuole</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="c c--amber">
+    <div class="c__l">Luca — il punto di arrivo di ogni decisione importante</div>
+    <p>Ogni scelta strategica rilevante — nuovi canali, nuovi investimenti, nuovi partner, cambio di pricing — viene condivisa e validata da Luca. <strong>Guia e Franki costruiscono le proposte, Luca dà il via libera.</strong> Questo garantisce che il piano sia sempre allineato alla volontà della proprietà.</p>
+  </div>
+</div>
+
+<!-- ══ 01 — MERGE ══ -->
+<div class="sec" id="s1">
+  <div class="sec__hdr">
+    <div class="sec__num">01</div>
+    <div class="sec__titles">
+      <div class="sec__title">Il Merge — Come Allineiamo i Piani</div>
+      <div class="sec__sub">Prima si capisce cosa c'è già · poi si costruisce il piano unificato</div>
+    </div>
+  </div>
+
+  <div class="c c--blue">
+    <div class="c__l">Perché il merge viene prima dei lean test</div>
+    <p>I test lean partono <strong>dopo</strong> l'allineamento documenti e il merge — non prima. Ha senso: se Guia ha già un calendario di comunicazione e attività in corso, i test lean devono integrarsi nel suo piano, non aggiungersi sopra creando sovrapposizioni o conflitti. <strong>Prima si mappa quello che esiste, poi si aggiunge quello che manca.</strong></p>
+  </div>
+
+  <div class="sub">Cosa chiediamo a Guia per fare il merge</div>
+  <ul class="ilist">
+    <li><div class="dot dot--amber"></div><div><strong>Il calendario di comunicazione già compilato</strong> — qualunque formato. Vogliamo vedere periodi, canali, tipologia di contenuto. Questo è il documento più importante.</div></li>
+    <li><div class="dot dot--amber"></div><div><strong>Le info sui 30 tour operator</strong> — chi sono, dove sono, cosa è stato proposto loro, perché non ha funzionato. È un dato prezioso: ci dice se il canale va abbandonato o se va riprovato in modo diverso.</div></li>
+    <li><div class="dot dot--blue"></div><div><strong>I canali social attivi</strong> — link a Instagram, Facebook, altri. Con numero di follower e tipo di contenuto attuale.</div></li>
+    <li><div class="dot dot--blue"></div><div><strong>Le piattaforme su cui CCH è già presente</strong> — Airbnb, Booking, altri. Con i profili attuali.</div></li>
+    <li><div class="dot dot--blue"></div><div><strong>Il database clienti esistente</strong> — se c'è una lista email, se è mai stato fatto follow-up post soggiorno.</div></li>
+    <li><div class="dot dot--gray"></div><div><strong>Feedback e recensioni significative</strong> — le più utili per capire cosa apprezzano davvero gli ospiti.</div></li>
+  </ul>
+
+  <div class="c c--green">
+    <div class="c__l">Come Franki restituisce il merge</div>
+    <p>Entro 48 ore dalla ricezione dei materiali di Guia, Franki restituisce il piano unificato: mappa delle attività in parallelo, sovrapposizioni eliminate, priorità dei prossimi 60 giorni, proposta di divisione dei compiti. <strong>Guia valuta, modifica e approva.</strong> Poi si porta tutto a Luca.</p>
+  </div>
+
+  <div class="sub sub--violet">I 30 tour operator — un'analisi a parte</div>
+  <div class="c c--violet">
+    <div class="c__l">Perché è importante capire cosa è successo</div>
+    <p>"Senza successo" può significare cose molto diverse: nessuna risposta, risposte negative, interesse ma nessuna conversione. Ognuno di questi scenari porta a conclusioni diverse sul canale. <strong>Prima di sapere perché non ha funzionato, non decidiamo se riprovare o abbandonare.</strong> Il tour operator potrebbe essere il canale sbagliato per CCH, oppure il messaggio era sbagliato, o il timing, o il profilo dei TO contattati. L'analisi ci dirà qual è il caso.</p>
+  </div>
+</div>
+
+<!-- ══ 02 — ROADMAP LEAN ══ -->
+<div class="sec" id="s2">
+  <div class="sec__hdr">
+    <div class="sec__num">02</div>
+    <div class="sec__titles">
+      <div class="sec__title">Roadmap Lean — In Profondità</div>
+      <div class="sec__sub">Fasi precise · tempi brevi · misurazione rapida · decisione veloce</div>
+    </div>
+  </div>
+
+  <div class="c c--amber">
+    <div class="c__l">La logica dei tempi brevi</div>
+    <p>Non si aspettano 45 giorni per avere un segnale. <strong>I test veloci danno risposta in 7–10 giorni.</strong> Si misura subito, si aggiusta subito, si decide subito se scalare. L'obiettivo è avere dati reali il prima possibile — non un piano perfetto sulla carta.</p>
+  </div>
+
+  <div class="lean-tl">
+
+    <!-- FASE 0 — PRE -->
+    <div class="lean-phase">
+      <div class="lean-phase__head lean-phase__head--pre">
+        <div>
+          <div class="lean-phase__label">Fase 0 · Pre-avvio</div>
+          <div class="lean-phase__title">Merge & Allineamento</div>
+        </div>
+        <div class="lean-phase__timing">Giorni 1–7 · Prima di tutto</div>
+      </div>
+      <div class="lean-phase__body">
+        <p>Guia invia i materiali (calendario, info TO, canali). Franki analizza e restituisce il piano unificato in 48 ore. <strong>Solo dopo aver visto il piano di Guia si decidono insieme quali test avviare, in quale ordine e con quali timing.</strong> Nessun test parte prima di questa fase.</p>
+        <p style="margin-top:.6rem;"><strong>Output atteso:</strong> piano unificato approvato da Guia e condiviso con Luca. Lista dei test da avviare con responsabili assegnati da Guia.</p>
+      </div>
+    </div>
+
+    <!-- FASE 1 — TEST VELOCI -->
+    <div class="lean-phase">
+      <div class="lean-phase__head lean-phase__head--active">
+        <div>
+          <div class="lean-phase__label">Fase 1 · Test Veloci</div>
+          <div class="lean-phase__title">Avvio & Prima Misurazione</div>
+        </div>
+        <div class="lean-phase__timing">Giorni 7–15 · Dopo il merge</div>
+      </div>
+      <div class="lean-phase__body">
+        <p>I test con risposta rapida partono subito dopo il merge. Danno un segnale in <strong>5–10 giorni</strong>. Si legge il dato, si aggiusta il messaggio o la selezione se necessario, si scala subito se funziona.</p>
+        <div class="lean-phase__tests">
+          <div class="lean-test">
+            <div class="lean-test__name">🧘 DM Yoga Retreat Leader</div>
+            <div class="lean-test__desc">5–7 DM al giorno ai profili selezionati. Messaggio già scritto in EN e IT. 10 profili già trovati con link diretti. Guia sceglie chi contattare e gestisce i messaggi.</div>
+            <div class="lean-test__kpi">Criterio: 1 risposta positiva su 10 DM</div>
+            <div class="lean-test__days">Risposta attesa: Giorni 3–7</div>
+          </div>
+          <div class="lean-test">
+            <div class="lean-test__name">🫒 Oil Tasting + Pane Maura</div>
+            <div class="lean-test__desc">WhatsApp agli ospiti prima del check-in. Testo già pronto. Luca e Maura lo avviano su indicazione di Guia sulle prossime prenotazioni confermate.</div>
+            <div class="lean-test__kpi">Criterio: 50% dei gruppi accetta almeno 1 add-on</div>
+            <div class="lean-test__days">Risposta attesa: Prima prenotazione disponibile</div>
+          </div>
+          <div class="lean-test">
+            <div class="lean-test__name">📋 BookRetreats Venue Hire</div>
+            <div class="lean-test__desc">Profilo CCH come "Retreat Venue Hire". Guia crea e gestisce il profilo — Franki prepara il testo in inglese su richiesta. Costo zero, visibilità immediata.</div>
+            <div class="lean-test__kpi">Criterio: 1 richiesta di preventivo in 30 giorni</div>
+            <div class="lean-test__days">Setup: 2–3 ore · Risultati: Giorni 7–30</div>
+          </div>
+          <div class="lean-test">
+            <div class="lean-test__name">💼 LinkedIn Corporate (se Guia lo desidera)</div>
+            <div class="lean-test__desc">Franki esegue l'outreach su 20 HR manager italiani — ma solo se Guia lo ritiene utile e lo approva. Il PDF corporate lo prepara Franki. Guia decide se e quando attivare questo canale.</div>
+            <div class="lean-test__kpi">Criterio: 3 risposte positive su 20 contatti</div>
+            <div class="lean-test__days">Risposta attesa: Giorni 7–15</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FASE 2 — PRIMA LETTURA -->
+    <div class="lean-phase">
+      <div class="lean-phase__head lean-phase__head--read">
+        <div>
+          <div class="lean-phase__label">Fase 2 · Prima Lettura</div>
+          <div class="lean-phase__title">Si Misura · Si Aggiusta · Si Decide</div>
+        </div>
+        <div class="lean-phase__timing">Giorno 15 · Call 30 minuti</div>
+      </div>
+      <div class="lean-phase__body">
+        <p>Guia porta i dati: quante risposte ai DM yoga, quanti add-on venduti, richieste su BookRetreats, eventuali risposte LinkedIn. <strong>Franki analizza e restituisce la lettura entro 24 ore.</strong></p>
+        <p style="margin-top:.6rem;"><strong>Le tre domande a cui si risponde:</strong></p>
+        <ul style="list-style:none;margin-top:.4rem;">
+          <li style="padding:.3rem 0;font-size:.9rem;">🟢 <strong>Verde</strong> — funziona: si scala immediatamente, più risorse, più frequenza</li>
+          <li style="padding:.3rem 0;font-size:.9rem;">🟡 <strong>Giallo</strong> — segnale parziale: si aggiusta il messaggio o la selezione e si riprova</li>
+          <li style="padding:.3rem 0;font-size:.9rem;">🔴 <strong>Rosso</strong> — nessun segnale: si chiude il test e si reindirizza l'energia altrove</li>
+        </ul>
+        <p style="margin-top:.8rem;font-size:.88rem;color:var(--green-text);"><strong>Non si aspetta il Giorno 45 per intervenire.</strong> Se un test funziona al Giorno 10, si scala al Giorno 11.</p>
+      </div>
+    </div>
+
+    <!-- FASE 3 — LETTURA FINALE -->
+    <div class="lean-phase">
+      <div class="lean-phase__head lean-phase__head--read">
+        <div>
+          <div class="lean-phase__label">Fase 3 · Lettura Finale</div>
+          <div class="lean-phase__title">Decisione Execution</div>
+        </div>
+        <div class="lean-phase__timing">Giorno 30–45 · Con Luca</div>
+      </div>
+      <div class="lean-phase__body">
+        <p>Mappa completa di tutti i test. Si decide dove investire energie e budget per i 3 mesi successivi. <strong>Guia porta la proposta a Luca per la validazione finale.</strong> Da qui partono i prossimi lean (vedi sezione 04).</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ 03 — FOTOGRAFIA ══ -->
+<div class="sec" id="s3">
+  <div class="sec__hdr">
+    <div class="sec__num">03</div>
+    <div class="sec__titles">
+      <div class="sec__title">Fotografia — Ispirazione per Guia</div>
+      <div class="sec__sub">Guia gestisce questo aspetto · qui trovi solo dei riferimenti visivi</div>
+    </div>
+  </div>
+
+  <div class="c c--blue">
+    <div class="c__l">Il ruolo di Franki su questo tema</div>
+    <p>La fotografia professionale è un tema che attiene completamente a Guia — è lei che conosce gli spazi, sa cosa funziona visivamente, e decide chi coinvolgere e quando. <strong>Franki si limita a condividere alcuni riferimenti che secondo noi rappresentano lo standard visivo a cui CCH dovrebbe aspirare.</strong> Niente di più. Se Guia desidera coinvolgere Gennaro in questo, è disponibile — ma la decisione è solo sua.</p>
+  </div>
+
+  <div class="sub">Riferimenti visivi — strutture comparabili a CCH</div>
+
+  <div class="foto-grid">
+    <div class="foto-card">
+      <div class="foto-card__img foto-card__img--1">🫒</div>
+      <div class="foto-card__body">
+        <div class="foto-card__name">Oliveto Estate</div>
+        <div class="foto-card__desc">Le Marche · Uliveto di famiglia, uso esclusivo, cucina autentica. Il benchmark principale — stesso DNA di CCH. Fotografia editoriale che ha portato Condé Nast e Forbes.</div>
+        <a href="https://www.olivetoestate.com" target="_blank" class="foto-card__link">olivetoestate.com →</a>
+      </div>
+    </div>
+    <div class="foto-card">
+      <div class="foto-card__img foto-card__img--2">🌿</div>
+      <div class="foto-card__body">
+        <div class="foto-card__name">Masseria Il Frantoio</div>
+        <div class="foto-card__desc">Puglia · Masseria storica con uliveto, cucina tradizionale pugliese, uso esclusivo. Fotografia caldi e autentici — luce naturale, niente set artificiali.</div>
+        <a href="https://www.masseriailfrantoio.it" target="_blank" class="foto-card__link">masseriailfrantoio.it →</a>
+      </div>
+    </div>
+    <div class="foto-card">
+      <div class="foto-card__img foto-card__img--3">🏛️</div>
+      <div class="foto-card__body">
+        <div class="foto-card__name">SopranoVillas · Gallery</div>
+        <div class="foto-card__desc">La piattaforma luxury su cui vogliamo candidare CCH. Guardare le ville italiane già listate per capire lo standard fotografico richiesto per l'accettazione.</div>
+        <a href="https://www.sopranovillas.com" target="_blank" class="foto-card__link">sopranovillas.com →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="c c--amber">
+    <div class="c__l">Le 3 cose che fanno la differenza in una foto per il mercato luxury</div>
+    <p><strong>Luce naturale sempre</strong> — alba sull'uliveto, golden hour in piscina, fuoco nel camino la sera. Mai flash artificiali o luci da studio.</p>
+    <p style="margin-top:.5rem;"><strong>Persone vere</strong> — Luca, Maura, Guia nella loro quotidianità. Non modelli. Il prodotto è la famiglia — va mostrata.</p>
+    <p style="margin-top:.5rem;"><strong>Dettagli sensoriali</strong> — le mani di Maura che impastano, le olive raccolte, l'olio che cola, il fumo del camino. Sono queste le immagini che fanno prenotare chi non è mai stato a Corsale.</p>
+  </div>
+</div>
+
+<!-- ══ 04 — PROSSIMI LEAN ══ -->
+<div class="sec" id="s4">
+  <div class="sec__hdr">
+    <div class="sec__num">04</div>
+    <div class="sec__titles">
+      <div class="sec__title">Prossimi Lean — Il Round Successivo</div>
+      <div class="sec__sub">Dopo il Giorno 15 · Si attingono dalle idee di Guia o dal piano Franki · Sempre in condivisione</div>
+    </div>
+  </div>
+
+  <div class="c c--violet">
+    <div class="c__l">Come si scelgono i prossimi lean</div>
+    <p>Il secondo round di test lean parte dopo la prima lettura del Giorno 15. La priorità assoluta è: <strong>prima si guarda il piano di comunicazione di Guia</strong> — se emergono idee o canali dal suo lavoro, quelli diventano i prossimi lean. Solo in un secondo momento si considerano i lean del piano Franki non ancora avviati. Sempre in condivisione, sempre con Guia che decide.</p>
+  </div>
+
+  <div class="sub">Idee Guia — da far emergere nel merge</div>
+  <div class="c c--blue">
+    <div class="c__l">Domande per far emergere le idee di Guia</div>
+    <p>Nel merge chiediamo a Guia: <strong>ci sono canali o iniziative che hai in testa e che non hai ancora avuto modo di testare?</strong> Esiste un pubblico che vuoi raggiungere e che non riesci a raggiungere? C'è un'esperienza di CCH che vorresti comunicare meglio? Le sue risposte diventano i prossimi lean.</p>
+  </div>
+
+  <div class="sub sub--gray">Lean Franki in attesa — da proporre se Guia li condivide</div>
+  <ul class="ilist">
+    <li><div class="dot dot--amber"></div><div><strong>Olive Harvest Landing Page</strong> — pagina EN per la raccolta olive di ottobre/novembre. Community food internazionali. Da avviare entro giugno per intercettare le prenotazioni autunnali.</div></li>
+    <li><div class="dot dot--amber"></div><div><strong>Chef Stellato — Fattibilità</strong> — contatto informale con 2–3 chef campani compatibili con CCH. Verifica disponibilità per evento in tenuta estate o dicembre.</div></li>
+    <li><div class="dot dot--blue"></div><div><strong>Mongolfiera — Fornitore + Sondaggio</strong> — trovare operatore zona BN/AV e sondare la willingness to pay degli ospiti passati. Finestra ideale: raduno ottobre.</div></li>
+    <li><div class="dot dot--blue"></div><div><strong>Wine Sannio — Cantine Partner</strong> — Luca identifica 3–4 cantine disponibili per il Wine UNICUM. Non un evento da lanciare subito, ma le partnership da costruire adesso per l'autunno.</div></li>
+    <li><div class="dot dot--gray"></div><div><strong>Dark Sky Community</strong> — post in community astrofili italiani. Parcheggiato a H2 2026 — da rivalutare con Guia dopo i primi risultati wellness.</div></li>
+    <li><div class="dot dot--gray"></div><div><strong>Slow Stay in Italy Ambassador</strong> — Luca ottimizza il profilo CCH nel network e contatta strutture simili. Parcheggiato a H2 2026 — meglio avere risultati da mostrare prima.</div></li>
+  </ul>
+
+  <div class="c c--amber">
+    <div class="c__l">La regola</div>
+    <p>Nessun lean del piano Franki parte senza l'approvazione esplicita di Guia. Sono proposte aperte — lei sceglie quali adottare, in quale ordine e con quali adattamenti. <strong>Se ha idee migliori, quelle hanno la precedenza.</strong></p>
+  </div>
+</div>
+
+<!-- ══ 05 — ASSESSMENT ══ -->
+<div class="sec" id="s5">
+  <div class="sec__hdr">
+    <div class="sec__num">05</div>
+    <div class="sec__titles">
+      <div class="sec__title">Assessment — Le Domande per Guia</div>
+      <div class="sec__sub">Rispondere in qualunque formato · anche parzialmente · serve per fare il merge</div>
+    </div>
+  </div>
+
+  <div class="assess-block">
+    <div class="assess-block__head assess-block__head--amber">
+      <div class="assess-block__title">🔍 I Tour Operator — Capire Cosa è Successo</div>
+      <div class="assess-block__why">Priorità alta</div>
+    </div>
+    <div class="assess-block__body">
+      <div class="assess-q"><span class="assess-q__n">Q1</span><div class="assess-q__body">Che tipo di TO erano? Incoming Italia, outgoing estero, luxury, generalisti, specializzati food/wine?<textarea class="assess-note" placeholder="Note / risposta Guia…"></textarea></div></div>
+      <div class="assess-q"><span class="assess-q__n">Q2</span><div class="assess-q__body">Come li ha contattati? Email fredda, LinkedIn, fiera, tramite contatto?<textarea class="assess-note" placeholder="Note / risposta Guia…"></textarea></div></div>
+      <div class="assess-q"><span class="assess-q__n">Q3</span><div class="assess-q__body">Ha ricevuto risposte? Se sì, di che tipo? Ha fatto follow-up?<textarea class="assess-note" placeholder="Note / risposta Guia…"></textarea></div></div>
+      <div class="assess-q"><span class="assess-q__n">Q4</span><div class="assess-q__body">Cosa ha proposto loro esattamente — affitto struttura, pacchetti, commissioni?<textarea class="assess-note" placeholder="Note / risposta Guia…"></textarea></div></div>
+      <div class="assess-q"><span class="assess-q__n">Q5</span><div class="assess-q__body">Qual è la sua intuizione su perché non ha funzionato?<textarea class="assess-note" placeholder="Note / risposta Guia…"></textarea></div></div>
+    </div>
+  </div>
+
+  <div class="assess-block">
+    <div class="assess-block__head assess-block__head--blue">
+      <div class="assess-block__title">📣 Marketing Attuale — Cosa c'è Già</div>
+      <div class="assess-block__why">Per non reinventare l'esistente</div>
+    </div>
+    <div class="assess-block__body">
+      <div class="assess-q"><span class="assess-q__n">Q6</span><div class="assess-q__body">Quali canali sta usando attivamente? Quale le sembra funzionare di più?<textarea class="assess-note" placeholder="Note / risposta Guia…"></textarea></div></div>
+      <div class="assess-q"><span class="assess-q__n">Q7</span><div class="assess-q__body">Ha già una community costruita su qualche canale? Anche piccola.<textarea class="assess-note" placeholder="Note / risposta Guia…"></textarea></div></div>
+      <div class="assess-q"><span class="assess-q__n">Q8</span><div class="assess-q__body">Ha già lavorato con creator o influencer? Com'è andata?<textarea class="assess-note" placeholder="Note / risposta Guia…"></textarea></div></div>
+      <div class="assess-q"><span class="assess-q__n">Q9</span><div class="assess-q__body">Quanto tempo realisticamente dedica al marketing ogni settimana?<textarea class="assess-note" placeholder="Note / risposta Guia…"></textarea></div></div>
+    </div>
+  </div>
+
+  <div class="assess-block">
+    <div class="assess-block__head assess-block__head--violet">
+      <div class="assess-block__title">💡 Idee di Guia — Il Suo Piano</div>
+      <div class="assess-block__why">Le sue idee hanno la precedenza</div>
+    </div>
+    <div class="assess-block__body">
+      <div class="assess-q"><span class="assess-q__n">Q10</span><div class="assess-q__body">Ci sono canali o iniziative che ha in testa e non ha ancora testato? Anche idee non ancora strutturate.<textarea class="assess-note" placeholder="Note / risposta Guia…"></textarea></div></div>
+      <div class="assess-q"><span class="assess-q__n">Q11</span><div class="assess-q__body">C'è un pubblico che vuole raggiungere e non riesce? Un'esperienza di CCH che vorrebbe comunicare meglio?<textarea class="assess-note" placeholder="Note / risposta Guia…"></textarea></div></div>
+      <div class="assess-q"><span class="assess-q__n">Q12</span><div class="assess-q__body">Quale UNICUM tra quelli proposti le sembra più fattibile nell'immediato? Quale la preoccupa di più?<textarea class="assess-note" placeholder="Note / risposta Guia…"></textarea></div></div>
+      <div class="assess-q"><span class="assess-q__n">Q13</span><div class="assess-q__body">C'è qualcosa nel piano Franki che pensa non funzionerà per CCH? Meglio dircelo subito.<textarea class="assess-note" placeholder="Note / risposta Guia…"></textarea></div></div>
+    </div>
+  </div>
+
+  <div class="assess-block">
+    <div class="assess-block__head assess-block__head--blue">
+      <div class="assess-block__title">⏱️ Tempi — Per un Piano Sostenibile</div>
+      <div class="assess-block__why">Il piano deve funzionare per lei</div>
+    </div>
+    <div class="assess-block__body">
+      <div class="assess-q"><span class="assess-q__n">Q14</span><div class="assess-q__body">Quali settimane dei prossimi 60 giorni hanno più disponibilità in struttura per retreat o gruppi nuovi?<textarea class="assess-note" placeholder="Note / risposta Guia…"></textarea></div></div>
+      <div class="assess-q"><span class="assess-q__n">Q15</span><div class="assess-q__body">Quanto tempo può dedicare ai DM yoga ogni settimana? 30 minuti? 2 ore? Il piano deve essere sostenibile.<textarea class="assess-note" placeholder="Note / risposta Guia…"></textarea></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 06 — PROSSIMI PASSI ══ -->
+<div class="sec" id="s6">
+  <div class="sec__hdr">
+    <div class="sec__num">06</div>
+    <div class="sec__titles">
+      <div class="sec__title">Prossimi Passi — In Ordine</div>
+      <div class="sec__sub">Sequenza precisa · nomi · date · niente ambiguità</div>
+    </div>
+  </div>
+
+  <div class="step-row step-row--amber">
+    <div class="step-n step-n--amber">1</div>
+    <div>
+      <div class="step-title">Guia invia i materiali per il merge</div>
+      <div class="step-body">Calendario comunicazione + info sui 30 TO + canali attivi. Qualunque formato, anche parziale. Questo sblocca tutto il resto.</div>
+    </div>
+    <div class="step-meta"><span class="pill pill--amber">Guia → Franki</span><span class="pill pill--dark">Entro 5 giorni</span></div>
+  </div>
+
+  <div class="step-row step-row--blue">
+    <div class="step-n step-n--blue">2</div>
+    <div>
+      <div class="step-title">Franki restituisce il piano unificato</div>
+      <div class="step-body">Entro 48 ore dalla ricezione. Piano che integra entrambi i piani, elimina sovrapposizioni, definisce priorità 60 giorni e proposta divisione compiti.</div>
+    </div>
+    <div class="step-meta"><span class="pill pill--blue">Franki → Guia</span><span class="pill pill--dark">48h dal ricevimento</span></div>
+  </div>
+
+  <div class="step-row step-row--amber">
+    <div class="step-n step-n--amber">3</div>
+    <div>
+      <div class="step-title">Guia approva il piano unificato e assegna i compiti</div>
+      <div class="step-body">Guia rivede, modifica, approva. Decide chi fa cosa — quali compiti tieni lei, quali delega a Franki. Poi si porta tutto a Luca per la validazione.</div>
+    </div>
+    <div class="step-meta"><span class="pill pill--amber">Guia decide</span><span class="pill pill--dark">Dopo ricezione piano</span></div>
+  </div>
+
+  <div class="step-row step-row--amber">
+    <div class="step-n step-n--amber">4</div>
+    <div>
+      <div class="step-title">Kick-off lean — si avviano i test approvati</div>
+      <div class="step-body">Partono i test nell'ordine deciso da Guia. I materiali operativi sono già tutti pronti online — link diretti nella sezione "Per Guia" del portale.</div>
+    </div>
+    <div class="step-meta"><span class="pill pill--amber">Guia coordina</span><span class="pill pill--dark">Post approvazione Luca</span></div>
+  </div>
+
+  <div class="step-row step-row--green">
+    <div class="step-n step-n--green">5</div>
+    <div>
+      <div class="step-title">Prima lettura risultati — Giorno 15 dai test</div>
+      <div class="step-body">Call Guia + Franki. Guia porta i dati. Franki analizza. Si scala subito su quello che funziona, si chiude quello che non funziona.</div>
+    </div>
+    <div class="step-meta"><span class="pill pill--green">Guia + Franki</span><span class="pill pill--dark">Giorno 15 dai test</span></div>
+  </div>
+
+  <div class="c c--green" style="margin-top:1.5rem;">
+    <div class="c__l">Una cosa sola da ricordare</div>
+    <p>Maggio è la finestra giusta per acquisire retreat leader per l'autunno. Il merge non rallenta — accelera. <strong>Partire allineati vale più di partire veloci nella direzione sbagliata.</strong></p>
+  </div>
+</div>
+
+<div class="footer">
+  <strong>Franki Studio</strong> · Operazione Merge v2 · Franki × Guia · CCH · Maggio 2026 · We Start Your Ideas
+</div>
+
+<!-- ══ 07 — ROADMAP DATE ══ -->
+<div class="sec" id="s7">
+  <div class="sec__hdr">
+    <div class="sec__num">07</div>
+    <div class="sec__titles">
+      <div class="sec__title">Roadmap — Date e Validazione</div>
+      <div class="sec__sub">Date proposte da Franki · ogni attività va validata da Guia e Franki · solo quando entrambi confermano si procede</div>
+    </div>
+  </div>
+
+  <div class="c c--amber">
+    <div class="c__l">Come funziona la validazione</div>
+    <p>Ogni attività ha una data proposta e due pulsanti — uno per Guia e uno per Franki. <strong>La data si considera confermata solo quando entrambi hanno cliccato il proprio pulsante.</strong> Finché uno dei due non ha confermato, l'attività resta in stato di proposta. Se la data non va bene, si discute e si aggiorna — le date sono proposte, non decisioni unilaterali.</p>
+  </div>
+
+  <!-- LEGENDA -->
+  <div style="display:flex;gap:1.2rem;flex-wrap:wrap;margin:1.2rem 0;padding:1rem 1.2rem;background:var(--white);border:1px solid var(--cream-dark);border-radius:8px;">
+    <div style="display:flex;align-items:center;gap:.5rem;font-size:.84rem;"><div style="width:12px;height:12px;border-radius:50%;background:var(--cream-dark);border:2px solid var(--cream-dark);"></div> In attesa</div>
+    <div style="display:flex;align-items:center;gap:.5rem;font-size:.84rem;"><div style="width:12px;height:12px;border-radius:50%;background:var(--amber-light);border:2px solid var(--amber);"></div> Parzialmente confermata</div>
+    <div style="display:flex;align-items:center;gap:.5rem;font-size:.84rem;"><div style="width:12px;height:12px;border-radius:50%;background:var(--green-light);border:2px solid var(--green);"></div> Confermata da entrambi</div>
+  </div>
+
+  <div id="rdm-grid" style="display:flex;flex-direction:column;gap:.8rem;"></div>
+
+  <!-- TOTALE CONFERMATO -->
+  <div id="rdm-summary" style="margin-top:1.5rem;padding:1rem 1.2rem;background:var(--white);border:1px solid var(--cream-dark);border-radius:8px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.8rem;">
+    <div style="font-family:var(--label);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gray);">Attività confermate da entrambi</div>
+    <div style="font-family:var(--display);font-size:2rem;color:var(--green);" id="rdm-count">0 / 0</div>
+  </div>
+</div>
+
+<script>
+// ── ROADMAP DATA ───────────────────────────────────────────
+const activities = [
+  { id:'r0', phase:'Fase 0 · Pre-avvio', label:'Guia invia materiali per il merge', date:'12 Mag 2026', who:'Guia → Franki', color:'blue', note:'Calendario comunicazione + info 30 TO + canali social + piattaforme + database clienti' },
+  { id:'r1', phase:'Fase 0 · Pre-avvio', label:'Franki restituisce il piano unificato', date:'14 Mag 2026', who:'Franki → Guia', color:'blue', note:'Piano integrato, sovrapposizioni eliminate, priorità 60 giorni, proposta divisione compiti' },
+  { id:'r2', phase:'Fase 0 · Pre-avvio', label:'Guia approva piano e assegna compiti', date:'16 Mag 2026', who:'Guia · poi Luca', color:'amber', note:'Guia rivede, modifica, approva. Decide chi fa cosa. Porta a Luca per validazione.' },
+  { id:'r3', phase:'Fase 1 · Test veloci', label:'Profilo CCH su BookRetreats live', date:'19 Mag 2026', who:'Guia', color:'amber', note:'Profilo "Retreat Venue Hire" con foto attuali. Franki prepara testo EN su richiesta.' },
+  { id:'r4', phase:'Fase 1 · Test veloci', label:'Avvio DM yoga retreat leader', date:'19 Mag 2026', who:'Guia', color:'amber', note:'5–7 DM al giorno ai 10 profili selezionati. Messaggio già pronto in EN e IT.' },
+  { id:'r5', phase:'Fase 1 · Test veloci', label:'Luca avvia Oil Tasting + Pane Maura', date:'19 Mag 2026', who:'Luca + Maura', color:'amber', note:'WhatsApp a ospiti prima del check-in. Testo già pronto. Su indicazione di Guia.' },
+  { id:'r6', phase:'Fase 1 · Test veloci', label:'LinkedIn corporate outreach (se Guia approva)', date:'26 Mag 2026', who:'Franki · su ok Guia', color:'gray', note:'20 HR manager italiani. PDF corporate preparato da Franki. Solo su approvazione esplicita di Guia.' },
+  { id:'r7', phase:'Fase 2 · Prima lettura', label:'Prima call lettura dati lean', date:'3 Giu 2026', who:'Guia + Franki', color:'green', note:'Giorno 15 dai test. Verde/Giallo/Rosso. Si scala subito su quello che funziona.' },
+  { id:'r8', phase:'Fase 2 · Prima lettura', label:'Shooting fotografico (Guia gestisce)', date:'10 Giu 2026', who:'Guia', color:'blue', note:'Data indicativa. Guia decide fotografo, data e modalità. Franki fornisce solo i riferimenti visivi.' },
+  { id:'r9', phase:'Fase 2 · Prima lettura', label:'Avvio prossimi lean (da idee Guia + merge)', date:'9 Giu 2026', who:'Guia + Franki', color:'amber', note:'I lean del secondo round emergono dal merge. Priorità alle idee di Guia, poi quelle Franki.' },
+  { id:'r10', phase:'Fase 3 · Execution', label:'Lettura finale + decisione scale-up', date:'30 Giu 2026', who:'Guia + Franki + Luca', color:'green', note:'Giorno 30–45 dai test. Mappa completa Verde/Giallo/Rosso. Candidatura piattaforme luxury se foto pronte.' },
+  { id:'r11', phase:'Fase 3 · Execution', label:'Candidatura SopranoVillas + Italy Charme', date:'7 Lug 2026', who:'Guia + Franki', color:'blue', note:'Solo se foto professionali pronte. Franki prepara il dossier, Guia coordina l\'invio.' },
+  { id:'r12', phase:'H2 2026 · Orizzonte', label:'Olive Harvest Landing Page EN', date:'1 Set 2026', who:'Franki + Guia', color:'amber', note:'Pagina in inglese per la raccolta olive ottobre/novembre. Da avviare entro settembre.' },
+  { id:'r13', phase:'H2 2026 · Orizzonte', label:'Prima edizione UNICUM Olive Harvest', date:'Oct 2026', who:'Team CCH', color:'green', note:'Prima edizione ottobre 2026. €1.800–2.200 p.p. Cantine Sannio partner da confermare con Luca.' },
+];
+
+// Stato validazioni (in memoria — si resetta al ricaricamento)
+const validated = {};
+activities.forEach(a => validated[a.id] = { guia: false, franki: false });
+
+const colorMap = {
+  amber: { bg:'var(--amber-light)', border:'var(--amber)', text:'var(--amber-dark)' },
+  blue:  { bg:'var(--blue-light)',  border:'var(--blue)',  text:'var(--blue-dark)' },
+  green: { bg:'var(--green-light)', border:'var(--green)', text:'var(--green-text)' },
+  gray:  { bg:'var(--gray-light)',  border:'#AAAAAA',      text:'var(--gray)' },
+};
+
+function toggleVal(id, who) {
+  validated[id][who] = !validated[id][who];
+  renderRdm();
+}
+
+function renderRdm() {
+  const grid = document.getElementById('rdm-grid');
+  grid.innerHTML = '';
+  let lastPhase = '';
+  let confirmed = 0;
+
+  activities.forEach(a => {
+    const v = validated[a.id];
+    const both = v.guia && v.franki;
+    const partial = v.guia || v.franki;
+    if (both) confirmed++;
+
+    // Phase header
+    if (a.phase !== lastPhase) {
+      lastPhase = a.phase;
+      const ph = document.createElement('div');
+      ph.style.cssText = 'font-family:var(--label);font-size:.56rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gray);margin-top:.8rem;margin-bottom:.2rem;padding-left:.4rem;';
+      ph.textContent = a.phase;
+      grid.appendChild(ph);
+    }
+
+    const c = colorMap[a.color] || colorMap.gray;
+    const card = document.createElement('div');
+    card.style.cssText = `
+      background:${both ? 'var(--green-light)' : partial ? 'var(--amber-light)' : 'var(--white)'};
+      border:1px solid ${both ? 'var(--green)' : partial ? 'var(--amber)' : 'var(--cream-dark)'};
+      border-left:4px solid ${both ? 'var(--green)' : partial ? 'var(--amber)' : c.border};
+      border-radius:8px;
+      padding:1rem 1.2rem;
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:1rem;
+      align-items:start;
+      transition:all .2s;
+    `;
+
+    const info = document.createElement('div');
+    info.innerHTML = `
+      <div style="font-family:var(--display);font-size:1rem;letter-spacing:.04em;color:${both ? 'var(--green-text)' : 'var(--ink)'};margin-bottom:.25rem;">
+        ${both ? '✅ ' : ''}${a.label}
+      </div>
+      <div style="font-size:.82rem;color:var(--gray);margin-bottom:.4rem;">${a.note}</div>
+      <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.3rem;">
+        <span style="font-family:var(--label);font-size:.52rem;letter-spacing:.08em;text-transform:uppercase;background:${c.bg};color:${c.text};padding:.12rem .5rem;border-radius:3px;">${a.who}</span>
+        <span style="font-family:var(--label);font-size:.52rem;letter-spacing:.08em;text-transform:uppercase;background:var(--cream-dark);color:var(--gray);padding:.12rem .5rem;border-radius:3px;">📅 ${a.date}</span>
+        ${both ? '<span style="font-family:var(--label);font-size:.52rem;letter-spacing:.08em;text-transform:uppercase;background:var(--green-light);color:var(--green-text);padding:.12rem .5rem;border-radius:3px;">✓ Confermata</span>' : ''}
+      </div>
+    `;
+
+    const btns = document.createElement('div');
+    btns.style.cssText = 'display:flex;flex-direction:column;gap:.4rem;align-items:flex-end;flex-shrink:0;';
+    btns.innerHTML = `
+      <button onclick="toggleVal('${a.id}','guia')" style="
+        font-family:var(--label);font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;
+        padding:.35rem .8rem;border-radius:5px;cursor:pointer;border:1.5px solid;
+        transition:all .15s;
+        background:${v.guia ? 'var(--amber-dark)' : 'var(--white)'};
+        color:${v.guia ? 'var(--white)' : 'var(--amber-dark)'};
+        border-color:var(--amber-dark);
+        white-space:nowrap;
+      ">${v.guia ? '✓' : '○'} Guia</button>
+      <button onclick="toggleVal('${a.id}','franki')" style="
+        font-family:var(--label);font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;
+        padding:.35rem .8rem;border-radius:5px;cursor:pointer;border:1.5px solid;
+        transition:all .15s;
+        background:${v.franki ? 'var(--blue)' : 'var(--white)'};
+        color:${v.franki ? 'var(--white)' : 'var(--blue)'};
+        border-color:var(--blue);
+        white-space:nowrap;
+      ">${v.franki ? '✓' : '○'} Franki</button>
+    `;
+
+    card.appendChild(info);
+    card.appendChild(btns);
+    grid.appendChild(card);
+  });
+
+  document.getElementById('rdm-count').textContent = `${confirmed} / ${activities.length}`;
+  document.getElementById('rdm-count').style.color = confirmed === activities.length ? 'var(--green)' : confirmed > 0 ? 'var(--amber-dark)' : 'var(--gray)';
+}
+
+renderRdm();
+
+// ── NAV ───────────────────────────────────────────
+function show(id){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav__tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const ids=['s0','s1','s2','s3','s4','s5','s6','s7'];
+  document.querySelectorAll('.nav__tab')[ids.indexOf(id)].classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>

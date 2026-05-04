@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roccaraso Country Village — Per Affio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --blue:    #2B38B0;
+  --orange:  #F0A500;
+  --dark:    #111118;
+  --bg:      #F2F1ED;
+  --white:   #FFFFFF;
+  --gray:    #6B6B6B;
+  --gray-lt: #E8E6E0;
+  --ink:     #1C1C2E;
+  --done:    #2E7D52;
+  --done-bg: #E8F5EE;
+  --active-bg: rgba(240,165,0,0.10);
+}
+body {
+  background: var(--bg);
+  font-family: 'Barlow', sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+.page { max-width: 680px; margin: 0 auto; }
+
+/* ── CROSS BG ─────────────────────────────── */
+.cross-bg {
+  background-color: var(--blue);
+  background-image: radial-gradient(circle, rgba(255,255,255,0.18) 1.5px, transparent 1.5px);
+  background-size: 28px 28px;
+}
+
+/* ── NAVBAR ───────────────────────────────── */
+.navbar {
+  background: var(--bg);
+  border-bottom: 1px solid var(--gray-lt);
+  padding: 0.85rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.logo-text {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 1.15rem;
+  letter-spacing: 0.04em;
+}
+.logo-fran { color: var(--blue); }
+.logo-ki-wrap {
+  background: var(--orange);
+  color: var(--white);
+  padding: 0.05rem 0.35rem 0.18rem;
+  border-radius: 4px 4px 4px 0;
+  position: relative;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 1.15rem;
+}
+.logo-ki-wrap::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 6px;
+  height: 4px;
+  background: var(--orange);
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+}
+.logo-tagline {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 500;
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  color: var(--blue);
+  text-transform: uppercase;
+  margin-left: 0.3rem;
+  display: none;
+}
+.navbar-badge {
+  background: var(--orange);
+  color: var(--dark);
+  font-family: 'Barlow', sans-serif;
+  font-weight: 700;
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.38rem 0.85rem;
+  border-radius: 4px;
+}
+
+/* ── HERO ─────────────────────────────────── */
+.hero { padding: 2.5rem 1.5rem 2rem; }
+.hero-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Barlow', sans-serif;
+  font-weight: 600;
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 1rem;
+}
+.hero-eyebrow::before { content: ''; display: inline-block; width: 14px; height: 2px; background: var(--orange); }
+.hero-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 3.8rem;
+  line-height: 0.9;
+  color: var(--white);
+  text-transform: uppercase;
+}
+.hero-title-orange { color: var(--orange); display: block; }
+.hero-sub {
+  font-family: 'Barlow', sans-serif;
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.65);
+  margin: 1rem 0 1.5rem;
+  line-height: 1.6;
+}
+.cover-tags { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+.cover-tag {
+  border: 1.5px solid rgba(255,255,255,0.3);
+  color: rgba(255,255,255,0.8);
+  font-family: 'Barlow', sans-serif;
+  font-weight: 500;
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.28rem 0.7rem;
+  border-radius: 999px;
+}
+
+/* ── INTRO AFFIO ──────────────────────────── */
+.intro-wrap {
+  background: var(--white);
+  padding: 1.8rem 1.5rem;
+  border-bottom: 3px solid var(--orange);
+}
+.intro-from {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-bottom: 1.2rem;
+}
+.intro-avatar {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: var(--blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+.intro-from-name { font-family: 'Barlow', sans-serif; font-weight: 700; font-size: 0.85rem; color: var(--ink); }
+.intro-from-role { font-family: 'Barlow', sans-serif; font-weight: 400; font-size: 0.7rem; color: var(--gray); }
+.intro-to {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 1.8rem;
+  color: var(--blue);
+  text-transform: uppercase;
+  line-height: 1;
+  margin-bottom: 1rem;
+}
+.intro-to span { color: var(--orange); }
+.intro-body {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 400;
+  font-size: 0.92rem;
+  color: #444;
+  line-height: 1.8;
+}
+.intro-body strong { color: var(--ink); font-weight: 700; }
+.intro-body em { font-style: italic; color: var(--blue); font-weight: 500; }
+.intro-highlight {
+  background: var(--active-bg);
+  border-left: 3px solid var(--orange);
+  padding: 0.8rem 1rem;
+  margin: 1rem 0;
+  font-family: 'Barlow', sans-serif;
+  font-size: 0.88rem;
+  color: var(--ink);
+  line-height: 1.7;
+  font-weight: 500;
+}
+.intro-divider { width: 100%; height: 1px; background: var(--gray-lt); margin: 1.2rem 0; }
+.intro-firma { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.1rem; color: var(--ink); letter-spacing: 0.06em; }
+.intro-firma-sub { font-family: 'Barlow', sans-serif; font-weight: 300; font-size: 0.7rem; color: var(--gray); margin-top: 0.2rem; }
+
+/* ══════════════════════════════════════════
+   METODO FRANKI MINI-MANIFESTO
+══════════════════════════════════════════ */
+.manifesto-header {
+  background: var(--ink);
+  padding: 1.8rem 1.5rem 1.4rem;
+}
+.mh-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+.mh-logo {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 1.05rem;
+  letter-spacing: 0.04em;
+  color: var(--white);
+}
+.mh-logo span { color: var(--orange); }
+.mh-badge {
+  background: var(--orange);
+  color: var(--dark);
+  font-family: 'Barlow', sans-serif;
+  font-weight: 700;
+  font-size: 0.56rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 0.28rem 0.65rem;
+  border-radius: 4px;
+}
+.mh-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 2rem;
+  line-height: 0.93;
+  text-transform: uppercase;
+  color: var(--white);
+  margin-bottom: 0.25rem;
+}
+.mh-title span { color: var(--orange); }
+.mh-sub {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 300;
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.mh-intro {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 400;
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.58);
+  line-height: 1.65;
+  padding-top: 0.9rem;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+.mh-intro strong { color: rgba(255,255,255,0.85); font-weight: 600; }
+
+.fase-attuale {
+  background: var(--orange);
+  padding: 0.8rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.fa-left { font-family: 'Barlow', sans-serif; font-weight: 700; font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(0,0,0,0.55); }
+.fa-right { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 1.05rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--dark); }
+
+.fasi-wrap { background: var(--white); }
+.fase-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.9rem;
+  padding: 0.9rem 1.5rem;
+  border-bottom: 1px solid var(--gray-lt);
+}
+.fase-item:last-child { border-bottom: none; }
+.fase-item.done { background: var(--done-bg); }
+.fase-item.active { background: var(--active-bg); border-left: 4px solid var(--orange); }
+.fase-item.future .fase-num { color: var(--gray-lt); }
+.fase-item.future .fase-name { color: #ccc; }
+.fase-item.future .fase-desc { color: #d0d0d0; }
+.fase-item.future .fase-rcv { color: #d8d8d8; border-color: var(--gray-lt); }
+.fase-item.bivio { background: var(--bg); padding: 0.65rem 1.5rem; }
+.fase-item.bivio.done-biv { background: var(--done-bg); }
+.fase-item.bivio.future-biv { background: var(--bg); opacity: 0.5; }
+
+.fase-num {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 1.5rem;
+  color: var(--blue);
+  line-height: 1;
+  min-width: 44px;
+  padding-top: 0.1rem;
+}
+.fase-item.done .fase-num { color: var(--done); }
+.fase-item.active .fase-num { color: var(--orange); }
+.fase-content { flex: 1; }
+.fase-status { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.2rem; }
+.fase-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 0.88rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--blue);
+}
+.fase-item.done .fase-name { color: var(--done); }
+.fase-item.active .fase-name { color: var(--orange); }
+.fase-desc { font-family: 'Barlow', sans-serif; font-size: 0.76rem; color: var(--gray); line-height: 1.5; margin-bottom: 0.45rem; }
+.fase-rcv {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 500;
+  font-size: 0.73rem;
+  color: var(--ink);
+  line-height: 1.55;
+  border-left: 2px solid var(--gray-lt);
+  padding-left: 0.55rem;
+}
+.fase-rcv.done-rcv { border-color: var(--done); color: var(--done); }
+.fase-rcv.active-rcv { border-color: var(--orange); color: #7A5000; }
+
+.badge-done { background: var(--done-bg); color: var(--done); border: 1px solid var(--done); font-family: 'Barlow', sans-serif; font-weight: 700; font-size: 0.54rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.16rem 0.45rem; border-radius: 4px; white-space: nowrap; }
+.badge-active { background: var(--orange); color: var(--dark); font-family: 'Barlow', sans-serif; font-weight: 700; font-size: 0.54rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.16rem 0.45rem; border-radius: 4px; white-space: nowrap; }
+.badge-future { border: 1px solid var(--gray-lt); color: var(--gray-lt); font-family: 'Barlow', sans-serif; font-weight: 600; font-size: 0.54rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.16rem 0.45rem; border-radius: 4px; white-space: nowrap; }
+
+.bivio-inner { display: flex; align-items: flex-start; gap: 0.7rem; flex: 1; }
+.bivio-icon { font-size: 0.95rem; min-width: 24px; text-align: center; padding-top: 0.1rem; }
+.bivio-label { font-family: 'Barlow', sans-serif; font-weight: 500; font-size: 0.7rem; color: var(--gray); letter-spacing: 0.05em; text-transform: uppercase; }
+.bivio-label strong { color: var(--ink); }
+.bivio-label.done-biv-label strong { color: var(--done); }
+.bivio-options { display: flex; gap: 0.3rem; margin-top: 0.3rem; }
+.biv-opt { font-family: 'Barlow', sans-serif; font-weight: 500; font-size: 0.58rem; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.14rem 0.4rem; border-radius: 3px; border: 1px solid var(--gray-lt); color: var(--gray); }
+.biv-opt.chosen { background: var(--done); color: var(--white); border-color: var(--done); }
+
+.manifesto-footer {
+  background: var(--bg);
+  padding: 1.1rem 1.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8rem;
+  border-top: 2px solid var(--ink);
+}
+.footer-label { font-family: 'Barlow', sans-serif; font-weight: 600; font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gray); margin-bottom: 0.25rem; }
+.footer-value { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 0.9rem; color: var(--ink); }
+.footer-value span { color: var(--orange); }
+.manifesto-note {
+  background: var(--ink);
+  padding: 0.85rem 1.5rem;
+  font-family: 'Barlow', sans-serif;
+  font-weight: 300;
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.35);
+  line-height: 1.65;
+  text-align: center;
+  letter-spacing: 0.04em;
+}
+.manifesto-note strong { color: rgba(255,255,255,0.65); font-weight: 600; }
+
+/* ══════════════════════════════════════════
+   REPORT COMPONENTS
+══════════════════════════════════════════ */
+.kpi-strip { background: var(--white); display: grid; grid-template-columns: repeat(2, 1fr); }
+.kpi-item { padding: 1rem 1rem; border-right: 1px solid var(--gray-lt); border-bottom: 1px solid var(--gray-lt); }
+.kpi-item:nth-child(2n) { border-right: none; }
+.kpi-item:nth-last-child(-n+2) { border-bottom: none; }
+.kpi-val { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 1.85rem; color: var(--blue); line-height: 1; display: block; }
+.kpi-label { font-family: 'Barlow', sans-serif; font-weight: 500; font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gray); margin-top: 0.25rem; display: block; }
+
+.section-label { padding: 1.6rem 1.5rem 0; }
+.section-eyebrow { display: flex; align-items: center; gap: 0.5rem; font-family: 'Barlow', sans-serif; font-weight: 600; font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--orange); margin-bottom: 0.45rem; }
+.section-eyebrow::before { content: ''; display: inline-block; width: 14px; height: 2px; background: var(--orange); }
+.section-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 2.2rem; line-height: 0.93; color: var(--ink); text-transform: uppercase; margin-bottom: 0.9rem; }
+
+.section-header-bar { background: var(--blue); padding: 0.78rem 1.5rem; display: flex; justify-content: space-between; align-items: center; margin-top: 0.3rem; }
+.section-header-bar-left { display: flex; align-items: center; gap: 0.55rem; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 0.9rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--white); }
+.section-header-bar-num { font-family: 'Barlow', sans-serif; font-weight: 600; font-size: 0.7rem; color: var(--orange); }
+
+.cards-wrap { padding: 0.4rem 1rem 1rem; display: flex; flex-direction: column; gap: 0.65rem; background: var(--bg); }
+.card { background: var(--white); border-radius: 12px; padding: 1.05rem 1.1rem; display: flex; gap: 0.85rem; align-items: flex-start; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+.card-icon { width: 42px; height: 42px; border-radius: 10px; background: var(--bg); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+.card-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 0.82rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue); margin-bottom: 0.28rem; }
+.card-text { font-family: 'Barlow', sans-serif; font-weight: 400; font-size: 0.82rem; color: var(--gray); line-height: 1.55; }
+.card-text strong { color: var(--ink); font-weight: 600; }
+
+.orange-band { background: var(--orange); padding: 1.3rem 1.5rem; }
+.orange-band-text { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 1.2rem; line-height: 1.25; color: var(--dark); text-transform: uppercase; }
+
+.pal-grid { display: flex; flex-direction: column; gap: 0; background: var(--bg); padding: 0.4rem 1rem 1rem; }
+.pal-card { background: var(--white); border-radius: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.06); margin-bottom: 0.65rem; }
+.pal-card-header { background: var(--blue); padding: 0.65rem 1.1rem; display: flex; justify-content: space-between; align-items: center; }
+.pal-card-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 0.88rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--white); }
+.pal-card-num { font-family: 'Barlow', sans-serif; font-weight: 600; font-size: 0.65rem; color: var(--orange); }
+.pal-row { display: flex; justify-content: space-between; align-items: center; padding: 0.52rem 1.1rem; border-bottom: 1px solid var(--gray-lt); }
+.pal-row:last-child { border-bottom: none; }
+.pal-key { font-family: 'Barlow', sans-serif; font-size: 0.78rem; color: var(--gray); }
+.pal-val { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 0.92rem; color: var(--orange); }
+.pal-footer { background: var(--bg); padding: 0.55rem 1.1rem; font-family: 'Barlow', sans-serif; font-weight: 500; font-size: 0.67rem; letter-spacing: 0.07em; text-transform: uppercase; color: var(--gray); }
+
+.body-text { font-family: 'Barlow', sans-serif; font-size: 0.86rem; color: var(--gray); line-height: 1.65; padding: 0.55rem 1.5rem 0.8rem; }
+.body-text strong { color: var(--ink); font-weight: 600; }
+
+.table-section { background: var(--white); }
+.table-inner { padding: 0 1.1rem; overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; min-width: 360px; }
+thead th { font-family: 'Barlow', sans-serif; font-weight: 600; font-size: 0.58rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gray); padding: 0.8rem 0.5rem 0.6rem; text-align: left; border-bottom: 2px solid var(--ink); }
+tbody tr { border-bottom: 1px solid var(--gray-lt); }
+tbody tr:last-child { border-bottom: none; }
+tbody td { padding: 0.78rem 0.5rem; font-family: 'Barlow', sans-serif; font-size: 0.8rem; color: var(--ink); vertical-align: top; }
+.td-blue { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 0.95rem; color: var(--blue); }
+.td-orange { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 0.95rem; color: var(--orange); text-align: right; white-space: nowrap; }
+.td-small { font-size: 0.68rem; color: var(--gray); display: block; margin-top: 0.1rem; }
+tfoot td { padding: 0.85rem 0.5rem; border-top: 2px solid var(--ink); font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 1.1rem; color: var(--ink); }
+.tfoot-orange { color: var(--orange) !important; text-align: right; font-size: 1.35rem !important; }
+
+.badge { display: inline-block; font-family: 'Barlow', sans-serif; font-weight: 700; font-size: 0.54rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.16rem 0.42rem; border-radius: 4px; }
+.badge-warn  { background: #FFF3CD; color: #8B5E00; }
+.badge-ok    { background: #D4EDDA; color: #155724; }
+.badge-alert { background: #F8D7DA; color: #721C24; }
+
+.steps-wrap { background: var(--white); padding: 0 1.5rem; }
+.step-item { display: flex; gap: 1rem; padding: 1.1rem 0; border-bottom: 1px solid var(--gray-lt); align-items: flex-start; }
+.step-item:last-child { border-bottom: none; }
+.step-num { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 1.9rem; color: var(--orange); line-height: 1; min-width: 38px; }
+.step-title { font-family: 'Barlow', sans-serif; font-weight: 700; font-size: 0.88rem; color: var(--ink); margin-bottom: 0.18rem; }
+.step-text { font-family: 'Barlow', sans-serif; font-size: 0.8rem; color: var(--gray); line-height: 1.55; }
+.step-text strong { color: var(--ink); font-weight: 600; }
+
+.callout { background: var(--white); border-left: 4px solid var(--orange); margin: 0.5rem 1rem; padding: 0.85rem 1.1rem; border-radius: 0 8px 8px 0; }
+.callout-head { font-family: 'Barlow', sans-serif; font-weight: 700; font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--orange); margin-bottom: 0.4rem; }
+.callout-text { font-family: 'Barlow', sans-serif; font-size: 0.8rem; color: var(--gray); line-height: 1.6; }
+.callout-text strong { color: var(--ink); font-weight: 600; }
+
+.alert-box { background: #FFF3CD; border: 1.5px solid var(--orange); border-radius: 10px; margin: 0.5rem 1rem; padding: 0.88rem 1.1rem; }
+.alert-box-head { font-family: 'Barlow', sans-serif; font-weight: 700; font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: #8B5E00; margin-bottom: 0.38rem; }
+.alert-box-text { font-family: 'Barlow', sans-serif; font-size: 0.78rem; color: #5A3E00; line-height: 1.6; }
+.alert-box-text strong { font-weight: 700; }
+
+.stima-wrap { background: var(--white); padding: 0 1.2rem; }
+.stima-row { display: flex; justify-content: space-between; align-items: flex-start; padding: 0.9rem 0; border-bottom: 1px solid var(--gray-lt); gap: 1rem; }
+.stima-row:last-child { border-bottom: none; }
+.stima-label { font-family: 'Barlow', sans-serif; font-weight: 500; font-size: 0.84rem; color: var(--ink); line-height: 1.4; flex: 1; }
+.stima-sub { display: block; font-weight: 400; font-size: 0.7rem; color: var(--gray); margin-top: 0.15rem; }
+.stima-val { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 1.02rem; color: var(--blue); white-space: nowrap; text-align: right; }
+.stima-val.deduct { color: #B04040; }
+.stima-total-row { border-top: 2.5px solid var(--ink); padding: 1.1rem 1.2rem; background: var(--bg); display: flex; justify-content: space-between; align-items: center; }
+.stima-total-label { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 0.92rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); }
+.stima-total-sub { display: block; font-family: 'Barlow', sans-serif; font-weight: 300; font-size: 0.66rem; color: var(--gray); margin-top: 0.15rem; letter-spacing: 0; }
+.stima-total-val { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 1.65rem; color: var(--orange); }
+
+.dark-cta { background: var(--dark); padding: 2.5rem 1.5rem 3rem; text-align: center; }
+.dark-cta-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 2.5rem; line-height: 0.93; text-transform: uppercase; color: var(--white); }
+.dark-cta-orange { color: var(--orange); display: block; }
+.dark-cta-sub { font-family: 'Barlow', sans-serif; font-size: 0.82rem; color: rgba(255,255,255,0.45); margin-top: 0.8rem; line-height: 1.7; }
+.dark-cta-contact { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.55rem; }
+.dark-cta-btn { display: block; background: var(--orange); color: var(--dark); font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 1rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.88rem; border-radius: 8px; text-decoration: none; }
+.dark-cta-btn-ghost { display: block; border: 1.5px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.65); font-family: 'Barlow', sans-serif; font-weight: 500; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.72rem; border-radius: 8px; text-decoration: none; }
+.dark-cta-note { margin-top: 2rem; font-family: 'Barlow', sans-serif; font-size: 0.65rem; color: rgba(255,255,255,0.2); letter-spacing: 0.15em; text-transform: uppercase; }
+
+.sp-sm { height: 0.5rem; }
+.sp-md { height: 1rem; }
+.sp-lg { height: 1.5rem; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ══ NAVBAR ════════════════════════════════════ -->
+<nav class="navbar">
+  <div class="navbar-logo">
+    <span class="logo-text">
+      <span class="logo-fran">Fran</span><span class="logo-ki-wrap">Ki</span>
+    </span>
+    <span class="logo-tagline">We Start Your Ideas</span>
+  </div>
+  <div class="navbar-badge">Dossier · Per Affio</div>
+</nav>
+
+<!-- ══ HERO ══════════════════════════════════════ -->
+<div class="cross-bg">
+  <div class="hero">
+    <div class="hero-eyebrow">Dossier Riservato — Affio</div>
+    <h1 class="hero-title">
+      ROCCARASO<br>
+      <span class="hero-title-orange">COUNTRY</span><br>
+      VILLAGE
+    </h1>
+    <p class="hero-sub">
+      Ex Soggiorno Montano Enel · Loc. Il Poggio · SS17 Roccaraso (AQ)<br>
+      Dossier di Consistenza · Perizia Tribunale di Sulmona Rev. 3 · 2021
+    </p>
+    <div class="cover-tags">
+      <span class="cover-tag">46 Appartamenti</span>
+      <span class="cover-tag">3 Palazzine</span>
+      <span class="cover-tag">22 Ettari</span>
+      <span class="cover-tag">Base d'Asta € 6,07M</span>
+      <span class="cover-tag">~€ 1.020/mq</span>
+      <span class="cover-tag">Extralberghiero</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══ INTRO PERSONALIZZATA ══════════════════════ -->
+<div class="intro-wrap">
+  <div class="intro-from">
+    <div class="intro-avatar">🏗️</div>
+    <div>
+      <div class="intro-from-name">Franki Studio</div>
+      <div class="intro-from-role">We Start Your Ideas · Analisi · Metodo · Progetto</div>
+    </div>
+  </div>
+
+  <div class="intro-to">CIAO<br><span>AFFIO.</span></div>
+
+  <div class="intro-body">
+    Ho elaborato questo dossier e penso che sia veramente <strong>una bomba</strong> — così come tu hai percepito, prima di tutti gli altri.
+    <br><br>
+    Stiamo parlando di un'operazione che raramente si presenta così: un compendio immobiliare <strong>completo e già infrastrutturato</strong>, con 46 appartamenti su tre palazzine, 22 ettari di bosco d'altura a Roccaraso, un permesso di costruire attivo per la destinazione turistica extralberghiera.
+  </div>
+
+  <div class="intro-highlight">
+    💥 Base d'asta a circa <strong>€ 1.020 al metro quadro lordo</strong> — mentre il mercato locale per immobili riqualificati vale tra <strong>€ 3.000 e € 5.000/mq</strong>.
+  </div>
+
+  <div class="intro-body">
+    Ti prego di leggere questo dossier con attenzione — è basato sulla <em>perizia ufficiale del Tribunale di Sulmona, Rev. 3 del maggio 2021, elaborata dall'Ing. Mario Farina</em> — e di dirmi se pensi ci siano degli errori che possa aver commesso.
+    <br><br>
+    Appena hai studiato il tutto, <strong>ti passo il dossier successivo</strong>, quello sullo sviluppo, e ci sediamo e costruiamo insieme il passo successivo.
+  </div>
+
+  <div class="intro-divider"></div>
+  <div class="intro-firma">Franki Studio</div>
+  <div class="intro-firma-sub">Aprile 2026 · Uso riservato per Affio</div>
+</div>
+
+<!-- ══ METODO FRANKI MINI-MANIFESTO ══════════════ -->
+<div class="manifesto-header">
+  <div class="mh-top">
+    <div class="mh-logo">FRAN<span>KI</span> STUDIO</div>
+    <div class="mh-badge">Metodo · RCV</div>
+  </div>
+  <h2 class="mh-title">IL METODO <span>FRANKI</span><br>APPLICATO</h2>
+  <div class="mh-sub">Roccaraso Country Village · Dal Compendio al Mercato</div>
+  <div class="mh-intro">
+    <strong>7 fasi operative · 3 bivii decisionali · processo circolare basato sui dati.</strong>
+    Nessun progetto prosegue per inerzia. Questa è la mappa di dove siamo e dove stiamo andando.
+    · Tipologia: <strong>Fisico + Ibrido</strong> · Modalità: <strong>Partnership</strong>
+  </div>
+</div>
+
+<div class="fase-attuale">
+  <div class="fa-left">📍 Dove siamo adesso</div>
+  <div class="fa-right">F01 · CONCEPT IN CORSO</div>
+</div>
+
+<div class="fasi-wrap">
+  <div class="fase-item done">
+    <div class="fase-num">F00</div>
+    <div class="fase-content">
+      <div class="fase-status"><div class="fase-name">SCOUTING</div><div class="badge-done">✓ Completata</div></div>
+      <div class="fase-desc">Valutazione preliminare. Vale la pena procedere?</div>
+      <div class="fase-rcv done-rcv">Perizia Trib. Sulmona Rev. 3 · 46 app., 5.954 mq, 22 ettari · Base asta €6.072.822 · Titoli edilizi attivi · Destinazione extralberghiera confermata.</div>
+    </div>
+  </div>
+  <div class="fase-item bivio done-biv">
+    <div class="bivio-inner">
+      <div class="bivio-icon">⑂</div>
+      <div>
+        <div class="bivio-label done-biv-label"><strong>BIVIO B00</strong> — Decisione su Scouting</div>
+        <div class="bivio-options"><span class="biv-opt chosen">✓ SI PROCEDE</span><span class="biv-opt">Modifica</span><span class="biv-opt">Stop</span></div>
+      </div>
+    </div>
+    <div class="badge-done">Validato</div>
+  </div>
+  <div class="fase-item active">
+    <div class="fase-num">F01</div>
+    <div class="fase-content">
+      <div class="fase-status"><div class="fase-name">CONCEPT</div><div class="badge-active">▶ In corso</div></div>
+      <div class="fase-desc">Proposta di valore: cosa si offre, a chi, perché è rilevante.</div>
+      <div class="fase-rcv active-rcv">Ricerca internazionale casi analoghi · Definizione 4–5 concept innovativi · Target primari e secondari · Posizionamento e narrativa di brand.</div>
+    </div>
+  </div>
+  <div class="fase-item future">
+    <div class="fase-num">F02</div>
+    <div class="fase-content">
+      <div class="fase-status"><div class="fase-name">STRUTTURA</div><div class="badge-future">Prossima</div></div>
+      <div class="fase-desc">Modello di business: numeri, costi, ricavi, sostenibilità.</div>
+      <div class="fase-rcv">GDV · Costi ristrutturazione per scenario · Modello crowdfunding equity · Break-even analysis.</div>
+    </div>
+  </div>
+  <div class="fase-item bivio future-biv">
+    <div class="bivio-inner">
+      <div class="bivio-icon">⑂</div>
+      <div>
+        <div class="bivio-label"><strong>BIVIO B02</strong> — Il modello regge i numeri?</div>
+        <div class="bivio-options"><span class="biv-opt">Si procede</span><span class="biv-opt">Modifica scenario</span><span class="biv-opt">Stop</span></div>
+      </div>
+    </div>
+    <div class="badge-future">Da validare</div>
+  </div>
+  <div class="fase-item future">
+    <div class="fase-num">F03</div>
+    <div class="fase-content">
+      <div class="fase-status"><div class="fase-name">BRIEF</div><div class="badge-future">Futura</div></div>
+      <div class="fase-desc">Documento operativo eseguibile.</div>
+      <div class="fase-rcv">Cronoprogramma · Dossier investitori · Pitch crowdfunding · Team legale e tecnico.</div>
+    </div>
+  </div>
+  <div class="fase-item future">
+    <div class="fase-num">F04</div>
+    <div class="fase-content">
+      <div class="fase-status"><div class="fase-name">LEAN TEST</div><div class="badge-future">Futura</div></div>
+      <div class="fase-desc">Validazione sul mercato reale. Riduzione del rischio prima di scalare.</div>
+      <div class="fase-rcv">Pre-vendita sulla carta · Crowdfunding come demand test · Sondaggio target selezionati.</div>
+    </div>
+  </div>
+  <div class="fase-item bivio future-biv">
+    <div class="bivio-inner">
+      <div class="bivio-icon">⑂</div>
+      <div>
+        <div class="bivio-label"><strong>BIVIO B04</strong> — Il mercato conferma la domanda?</div>
+        <div class="bivio-options"><span class="biv-opt">Si scala</span><span class="biv-opt">Pivot concept</span><span class="biv-opt">Stop</span></div>
+      </div>
+    </div>
+    <div class="badge-future">Da validare</div>
+  </div>
+  <div class="fase-item future">
+    <div class="fase-num">F05</div>
+    <div class="fase-content">
+      <div class="fase-status"><div class="fase-name">MVP</div><div class="badge-future">Futura</div></div>
+      <div class="fase-desc">Prima versione funzionante. Velocità di esecuzione.</div>
+      <div class="fase-rcv">Ristrutturazione P.lla 803 (già avviata) come primo corpo operativo · Prime locazioni · Primo test di gestione.</div>
+    </div>
+  </div>
+  <div class="fase-item future">
+    <div class="fase-num">F06</div>
+    <div class="fase-content">
+      <div class="fase-status"><div class="fase-name">SCALE</div><div class="badge-future">Futura</div></div>
+      <div class="fase-desc">Sistema replicabile. Ridurre la dipendenza operativa.</div>
+      <div class="fase-rcv">Palazzine 801 e 802 · Ottimizzazione format · Replicabilità su altri compendi d'Italia.</div>
+    </div>
+  </div>
+</div>
+
+<div class="manifesto-footer">
+  <div><div class="footer-label">Tipologia</div><div class="footer-value">Fisico + <span>Ibrido</span></div></div>
+  <div><div class="footer-label">Modalità</div><div class="footer-value"><span>Partnership</span></div></div>
+  <div><div class="footer-label">Fasi completate</div><div class="footer-value"><span>1</span> / 7</div></div>
+  <div><div class="footer-label">Bivii superati</div><div class="footer-value"><span>1</span> / 3</div></div>
+</div>
+
+<div class="manifesto-note">
+  <strong>Il processo non è lineare.</strong> Si torna indietro quando i dati lo richiedono. Questo non è un fallimento — è parte integrante del Metodo Franki.
+</div>
+
+<!-- ══ KPI STRIP ══════════════════════════════════ -->
+<div class="sp-lg"></div>
+<div class="kpi-strip">
+  <div class="kpi-item"><span class="kpi-val">1.200m</span><span class="kpi-label">s.l.m.</span></div>
+  <div class="kpi-item"><span class="kpi-val">19.222</span><span class="kpi-label">mc consistenza</span></div>
+  <div class="kpi-item"><span class="kpi-val">4.923</span><span class="kpi-label">mq catastali</span></div>
+  <div class="kpi-item"><span class="kpi-val">B/1</span><span class="kpi-label">categoria NCEU</span></div>
+</div>
+
+<!-- ══ § 01 ═══════════════════════════════════════ -->
+<div class="sp-lg"></div>
+<div class="section-label">
+  <div class="section-eyebrow">§ 01 — Identificazione</div>
+  <h2 class="section-title">IL COMPENDIO<br>E IL TERRITORIO</h2>
+</div>
+<div class="section-header-bar">
+  <div class="section-header-bar-left">📍 LOCALIZZAZIONE</div>
+  <div class="section-header-bar-num">01 / 08</div>
+</div>
+<div class="cards-wrap">
+  <div class="card"><div class="card-icon">📍</div><div><div class="card-title">Posizione e accessibilità</div><div class="card-text">Roccaraso (AQ) · SS17 s.n.c. · Loc. Il Poggio. <strong>Roma ~2h · Napoli ~2h · Pescara ~1,5h.</strong> Minima porzione nel Comune di Castel di Sangro.</div></div></div>
+  <div class="card"><div class="card-icon">🗺️</div><div><div class="card-title">Censimento catastale</div><div class="card-text">Foglio 11, <strong>mappali 801÷813 graffati</strong> — NCEU Roccaraso. Fg. 14 mapp. 45–47 · Fg. 6 mapp. 26 Castel di Sangro. Cat. B/1 · Classe U · Rendita € 24.818,29.</div></div></div>
+  <div class="card"><div class="card-icon">⚖️</div><div><div class="card-title">Procedura giudiziaria</div><div class="card-text">Esec. Forz. N. 43/16 — Trib. Sulmona. Creditore: <strong>UniCredit SpA.</strong> Perito: Ing. Mario Farina. Elaborato Peritale Suppletivo Rev. 3 — 20/05/2021.</div></div></div>
+</div>
+<div class="orange-band">
+  <div class="orange-band-text">🏔️ TRA I COMPRENSORI SCIISTICI PIÙ GRANDI DEL CENTRO-SUD. TRE PARCHI NAZIONALI A 30 MINUTI.</div>
+</div>
+
+<!-- ══ § 02 ═══════════════════════════════════════ -->
+<div class="sp-lg"></div>
+<div class="section-label">
+  <div class="section-eyebrow">§ 02 — Composizione</div>
+  <h2 class="section-title">LE TRE<br>PALAZZINE</h2>
+</div>
+<div class="section-header-bar">
+  <div class="section-header-bar-left">🏢 FABBRICATI PRINCIPALI</div>
+  <div class="section-header-bar-num">02 / 08</div>
+</div>
+<div class="body-text">Tre corpi edilizi realizzati tra il <strong>1956 e il 1971</strong>. Struttura mista C.A. e blocchi di cemento, solai SAP. 4 livelli ciascuno: Piano Seminterrato — Piano Terra — Piano Primo — Piano Secondo. Ascensore, scala interna e scala esterna autonoma per piano.</div>
+<div class="pal-grid">
+  <div class="pal-card"><div class="pal-card-header"><div class="pal-card-name">🏢 Palazzina 801</div><div class="pal-card-num">MAPPALE 801</div></div><div class="pal-row"><span class="pal-key">Piano S1</span><span class="pal-val">784,90 mq</span></div><div class="pal-row"><span class="pal-key">Piano Terra</span><span class="pal-val">314,05 mq</span></div><div class="pal-row"><span class="pal-key">Piano Primo</span><span class="pal-val">399,80 mq</span></div><div class="pal-row"><span class="pal-key">Piano Secondo</span><span class="pal-val">422,60 mq</span></div><div class="pal-row"><span class="pal-key">Spazi esterni</span><span class="pal-val">642,70 mq</span></div><div class="pal-row"><span class="pal-key">Appartamenti</span><span class="pal-val">16 unità</span></div><div class="pal-footer">S1: Bar · Mensa · Cucina</div></div>
+  <div class="pal-card"><div class="pal-card-header"><div class="pal-card-name">🏢 Palazzina 802</div><div class="pal-card-num">MAPPALE 802</div></div><div class="pal-row"><span class="pal-key">Piano S1</span><span class="pal-val">619,55 mq</span></div><div class="pal-row"><span class="pal-key">Piano Terra</span><span class="pal-val">311,60 mq</span></div><div class="pal-row"><span class="pal-key">Piano Primo</span><span class="pal-val">400,85 mq</span></div><div class="pal-row"><span class="pal-key">Piano Secondo</span><span class="pal-val">421,60 mq</span></div><div class="pal-row"><span class="pal-key">Spazi esterni</span><span class="pal-val">310,05 mq</span></div><div class="pal-row"><span class="pal-key">Appartamenti</span><span class="pal-val">15 unità</span></div><div class="pal-footer">S1: Palestra · Cinema · Funzioni</div></div>
+  <div class="pal-card"><div class="pal-card-header"><div class="pal-card-name">🏢 Palazzina 803</div><div class="pal-card-num">MAPPALE 803</div></div><div class="pal-row"><span class="pal-key">Piano S1</span><span class="pal-val">612,95 mq</span></div><div class="pal-row"><span class="pal-key">Piano Terra</span><span class="pal-val">312,60 mq</span></div><div class="pal-row"><span class="pal-key">Piano Primo</span><span class="pal-val">398,05 mq</span></div><div class="pal-row"><span class="pal-key">Piano Secondo</span><span class="pal-val">416,55 mq</span></div><div class="pal-row"><span class="pal-key">Pert. + Garage</span><span class="pal-val">536,80 mq</span></div><div class="pal-row"><span class="pal-key">Appartamenti</span><span class="pal-val">15 unità</span></div><div class="pal-footer">S1: Lavanderia · Spogliatoi · In ristrutturazione</div></div>
+</div>
+
+<!-- ══ § 03 ═══════════════════════════════════════ -->
+<div class="sp-lg"></div>
+<div class="section-label">
+  <div class="section-eyebrow">§ 03 — Unità Abitative</div>
+  <h2 class="section-title">46<br>APPARTAMENTI</h2>
+</div>
+<div class="section-header-bar">
+  <div class="section-header-bar-left">🛋️ CONSISTENZA RESIDENZIALE</div>
+  <div class="section-header-bar-num">03 / 08</div>
+</div>
+<div class="kpi-strip">
+  <div class="kpi-item"><span class="kpi-val">46</span><span class="kpi-label">Totale unità</span></div>
+  <div class="kpi-item"><span class="kpi-val">~5.954</span><span class="kpi-label">mq lordi res.</span></div>
+  <div class="kpi-item"><span class="kpi-val">74 mq</span><span class="kpi-label">Taglio min.</span></div>
+  <div class="kpi-item"><span class="kpi-val">382 mq</span><span class="kpi-label">Taglio max.</span></div>
+</div>
+<div class="sp-sm"></div>
+<div class="table-section"><div class="table-inner">
+  <table>
+    <thead><tr><th>Palazzina</th><th>N° App.</th><th>Range mq</th><th style="text-align:right">Tot. mq</th></tr></thead>
+    <tbody>
+      <tr><td class="td-blue">P.lla 801</td><td>16 unità<span class="td-small">app. 1–16</span></td><td><span class="td-small">75–382 mq</span></td><td class="td-orange">~2.188</td></tr>
+      <tr><td class="td-blue">P.lla 802</td><td>15 unità<span class="td-small">app. 1–15</span></td><td><span class="td-small">74–299 mq</span></td><td class="td-orange">~1.883</td></tr>
+      <tr><td class="td-blue">P.lla 803</td><td>15 unità<span class="td-small">app. 1–15</span></td><td><span class="td-small">74–299 mq</span></td><td class="td-orange">~1.883</td></tr>
+    </tbody>
+    <tfoot><tr><td colspan="3">SUPERFICIE LORDA TOTALE</td><td class="tfoot-orange">~5.954 mq</td></tr></tfoot>
+  </table>
+</div></div>
+
+<!-- ══ § 04 ═══════════════════════════════════════ -->
+<div class="sp-lg"></div>
+<div class="section-label">
+  <div class="section-eyebrow">§ 04 — Pertinenze</div>
+  <h2 class="section-title">BOX, CANTINE<br>E PARCHEGGI</h2>
+</div>
+<div class="section-header-bar">
+  <div class="section-header-bar-left">🚗 PERTINENZE — 3 CORPI</div>
+  <div class="section-header-bar-num">04 / 08</div>
+</div>
+<div class="sp-sm"></div>
+<div class="table-section"><div class="table-inner">
+  <table>
+    <thead><tr><th>Tipologia</th><th style="text-align:right">801</th><th style="text-align:right">802</th><th style="text-align:right">803</th><th style="text-align:right">Tot.</th></tr></thead>
+    <tbody>
+      <tr><td>Cantinole</td><td class="td-orange" style="font-size:.8rem">35,2</td><td class="td-orange" style="font-size:.8rem">30,9</td><td class="td-orange" style="font-size:.8rem">30,9</td><td class="td-orange">97 mq</td></tr>
+      <tr><td>Posti auto coperti</td><td class="td-orange" style="font-size:.8rem">117,3</td><td class="td-orange" style="font-size:.8rem">111,4</td><td class="td-orange" style="font-size:.8rem">111,4</td><td class="td-orange">340 mq</td></tr>
+      <tr><td>Box auto interni</td><td class="td-orange" style="font-size:.8rem">66,0</td><td class="td-orange" style="font-size:.8rem">81,3</td><td class="td-orange" style="font-size:.8rem">81,3</td><td class="td-orange">229 mq</td></tr>
+      <tr><td>Box esterni + cortili</td><td class="td-orange" style="font-size:.8rem">204,8</td><td class="td-orange" style="font-size:.8rem">146,7</td><td class="td-orange" style="font-size:.8rem">146,7</td><td class="td-orange">498 mq</td></tr>
+      <tr><td>Parcheggi esterni</td><td class="td-orange" style="font-size:.8rem">576,7</td><td class="td-orange" style="font-size:.8rem">357,3</td><td class="td-orange" style="font-size:.8rem">492,1</td><td class="td-orange">1.426 mq</td></tr>
+    </tbody>
+    <tfoot><tr><td colspan="4">TOTALE PERTINENZE</td></tr><tr><td colspan="3" style="font-family:'Barlow',sans-serif;font-weight:300;font-size:0.72rem;color:var(--gray)">Box · cantine · parcheggi · scale</td><td class="tfoot-orange">~3.622 mq</td></tr></tfoot>
+  </table>
+</div></div>
+
+<!-- ══ § 05 ═══════════════════════════════════════ -->
+<div class="sp-lg"></div>
+<div class="section-label">
+  <div class="section-eyebrow">§ 05 — Fabbricati Secondari</div>
+  <h2 class="section-title">L'INFRASTRUTTURA<br>DEL VILLAGGIO</h2>
+</div>
+<div class="section-header-bar">
+  <div class="section-header-bar-left">🏚️ 9 FABBRICATI DI SERVIZIO</div>
+  <div class="section-header-bar-num">05 / 08</div>
+</div>
+<div class="cards-wrap">
+  <div class="card"><div class="card-icon">⚡</div><div><div class="card-title">Mapp. 807 — Cabina ENEL</div><div class="card-text"><strong>17,65 mq</strong> · In funzione · Linee MT/BT attive · Servitù accesso ENEL ~100ml <span class="badge badge-ok">Operativa</span></div></div></div>
+  <div class="card"><div class="card-icon">📦</div><div><div class="card-title">Mapp. 805 · 808 · 809 · 811 — Depositi e Magazzini</div><div class="card-text">Tot. <strong>281,8 mq</strong> · Mapp. 808 e 809 in pericolo crollo <span class="badge badge-warn">Da risanare</span></div></div></div>
+  <div class="card"><div class="card-icon">💧</div><div><div class="card-title">Mapp. 806 · 810 · 812 — Serbatoi e Depuratore</div><div class="card-text">Tot. <strong>179,4 mq</strong> · Impianti abbandonati e non funzionanti <span class="badge badge-warn">Abbandonati</span></div></div></div>
+  <div class="card"><div class="card-icon">🚿</div><div><div class="card-title">Mapp. 813 — Spogliatoio (8 WC)</div><div class="card-text"><strong>29,1 mq</strong> · Impianti da rifondare <span class="badge badge-warn">Abbandonato</span></div></div></div>
+</div>
+<div class="callout">
+  <div class="callout-head">⚽ Infrastrutture sportive — tutte sanate (2005)</div>
+  <div class="callout-text">Campo calcio regolamentare · Campetto minore · Pista pattinaggio 30×15m · Campo tennis · Piazzale 800 mq · Strade interne asfaltate · Muri di contenimento · Ponticello C.A.</div>
+</div>
+
+<!-- ══ § 06 ═══════════════════════════════════════ -->
+<div class="sp-lg"></div>
+<div class="section-label">
+  <div class="section-eyebrow">§ 06 — Terreni</div>
+  <h2 class="section-title">22 ETTARI<br>DI BOSCO</h2>
+</div>
+<div class="section-header-bar">
+  <div class="section-header-bar-left">🌲 219.239 MQ AREE SCOPERTE</div>
+  <div class="section-header-bar-num">06 / 08</div>
+</div>
+<div class="sp-sm"></div>
+<div class="table-section"><div class="table-inner">
+  <table>
+    <thead><tr><th>Fg / Mapp.</th><th>Qualità</th><th style="text-align:right">mq</th><th>Natura</th></tr></thead>
+    <tbody>
+      <tr><td class="td-blue">Fg.11/134</td><td><span class="td-small">Bosco Ceduo cl.2</span></td><td class="td-orange">169.730</td><td><span class="badge badge-warn">Allodiale</span></td></tr>
+      <tr><td class="td-blue">Fg.14/45</td><td><span class="td-small">Bosco Ceduo cl.2</span></td><td class="td-orange">27.222</td><td><span class="badge badge-ok">Affrancato</span></td></tr>
+      <tr><td class="td-blue">Fg.14/47</td><td><span class="td-small">Pascolo cl.2</span></td><td class="td-orange">22.700</td><td><span class="badge badge-ok">Affrancato</span></td></tr>
+      <tr><td class="td-blue">Fg.6/26</td><td><span class="td-small">Seminativo cl.3</span></td><td class="td-orange">2.940</td><td><span class="badge badge-ok">Libero</span></td></tr>
+    </tbody>
+    <tfoot><tr><td colspan="2">TOTALE AREE IN VENDITA</td><td class="tfoot-orange">219.239 mq</td><td></td></tr></tfoot>
+  </table>
+</div></div>
+<div class="alert-box">
+  <div class="alert-box-head">⚠️ Usi Civici — da regolarizzare</div>
+  <div class="alert-box-text"><strong>~11.505 mq demaniali esclusi dalla vendita</strong> (ord. G.E. 26/04/2021). Affrancazione p.lla 134: <strong>€ 9.601,61</strong> da versare al Comune di Roccaraso.</div>
+</div>
+
+<!-- ══ § 07 ═══════════════════════════════════════ -->
+<div class="sp-lg"></div>
+<div class="section-label">
+  <div class="section-eyebrow">§ 07 — Stato e Titoli Edilizi</div>
+  <h2 class="section-title">CONDIZIONI<br>E PERMESSI</h2>
+</div>
+<div class="section-header-bar">
+  <div class="section-header-bar-left">📋 STATO DI FATTO</div>
+  <div class="section-header-bar-num">07 / 08</div>
+</div>
+<div class="steps-wrap">
+  <div class="step-item"><div class="step-num">01</div><div><div class="step-title">Palazzine 801 e 802 — Abbandonate</div><div class="step-text">Rifiniture degradate, infissi mancanti, impianti fuori norma. Struttura portante integra. Necessaria <strong>ristrutturazione integrale.</strong></div></div></div>
+  <div class="step-item"><div class="step-num">02</div><div><div class="step-title">Palazzina 803 — Lavori avviati e sospesi</div><div class="step-text">P.d.C. Variante n. 34/2010 attivo. Tramezzature e bucature realizzate. Box pertinenziali in costruzione. <strong>Non collaudata.</strong></div></div></div>
+  <div class="step-item"><div class="step-num">03</div><div><div class="step-title">Destinazione — Extralberghiero obbligatorio</div><div class="step-text">P.d.C. n. 35/2009: «case ed appartamenti per vacanze» (L.R. 75/1995). <strong>Gestione imprenditoriale obbligatoria.</strong> Nessuna residenzialità ordinaria.</div></div></div>
+  <div class="step-item"><div class="step-num">04</div><div><div class="step-title">Vincoli attivi</div><div class="step-text"><strong>Elettrodotto AT</strong> su tralicci versante ovest. <strong>Cabina ENEL 807</strong> in funzione con servitù accesso ~100ml interno al compendio.</div></div></div>
+</div>
+<div class="callout" style="margin-top:0.5rem">
+  <div class="callout-head">📁 Titoli edilizi in essere</div>
+  <div class="callout-text"><strong>Concessioni n. 07÷27/2005</strong> — Condono integrale del compendio. · <strong>P.d.C. n. 35/2009</strong> — Ristrutturazione in appartamenti per vacanze. · <strong>Variante n. 34/2010</strong> — Box auto pertinenziali. · <strong>Integrazione P.E. n. 1</strong> — Chiarimento extralberghiero, forma imprenditoriale.</div>
+</div>
+
+<!-- ══ § 08 ═══════════════════════════════════════ -->
+<div class="sp-lg"></div>
+<div class="section-label">
+  <div class="section-eyebrow">§ 08 — Stima Peritale</div>
+  <h2 class="section-title">I NUMERI<br>DELL'OPERAZIONE</h2>
+</div>
+<div class="section-header-bar">
+  <div class="section-header-bar-left">💶 BASE D'ASTA</div>
+  <div class="section-header-bar-num">08 / 08</div>
+</div>
+<div class="sp-sm"></div>
+<div class="stima-wrap">
+  <div class="stima-row"><div class="stima-label">Valore lordo complessivo<span class="stima-sub">46 app. · pertinenze · fabbricati secondari · 219.239 mq terreni</span></div><div class="stima-val">€ 13.575.739</div></div>
+  <div class="stima-row"><div class="stima-label">Riduzione 15%<span class="stima-sub">Oneri tributari · assenza garanzia vizi · vendita giudiziaria</span></div><div class="stima-val deduct">– € 2.036.361</div></div>
+  <div class="stima-row"><div class="stima-label">Riduzione 40%<span class="stima-sub">Ristrutturazione integrale · impianti · regolarizzazioni urbanistiche</span></div><div class="stima-val deduct">– € 5.430.296</div></div>
+  <div class="stima-row"><div class="stima-label">Detrazioni accesso + usi civici<span class="stima-sub">Percorso carrabile ~23 ml + affrancazione p.lla 134</span></div><div class="stima-val deduct">– € 36.261</div></div>
+</div>
+<div class="stima-total-row">
+  <div><div class="stima-total-label">BASE D'ASTA · LOTTO 001</div><span class="stima-total-sub">Perizia Rev. 3 · Ing. Mario Farina · Maggio 2021</span></div>
+  <div class="stima-total-val">€ 6.072.822</div>
+</div>
+<div class="sp-sm"></div>
+<div class="kpi-strip">
+  <div class="kpi-item"><span class="kpi-val">€ 13,5M</span><span class="kpi-label">Valore lordo</span></div>
+  <div class="kpi-item"><span class="kpi-val">–55%</span><span class="kpi-label">Sconto cumulato</span></div>
+  <div class="kpi-item"><span class="kpi-val">~€ 1.020</span><span class="kpi-label">€/mq residenziale</span></div>
+  <div class="kpi-item"><span class="kpi-val">€ 14M</span><span class="kpi-label">Ipoteca cancellata</span></div>
+</div>
+<div class="alert-box" style="margin-top:0.6rem">
+  <div class="alert-box-head">🏦 Ipoteca UniCredit — cancellata a cura della procedura</div>
+  <div class="alert-box-text">Ipoteca volontaria <strong>€ 14.000.000</strong> (capitale € 7.000.000) — sarà cancellata prima del trasferimento. Nessun'altra iscrizione o limitazione resterà a carico dell'acquirente, salvo servitù ENEL.</div>
+</div>
+
+<!-- ══ DARK CTA ═══════════════════════════════════ -->
+<div class="sp-md"></div>
+<div class="dark-cta">
+  <h2 class="dark-cta-title">
+    HAI LETTO.<br>
+    <span class="dark-cta-orange">ORA DIMMI<br>COSA NE PENSI.</span>
+  </h2>
+  <p class="dark-cta-sub">
+    Hai trovato errori? Qualcosa non torna?<br>
+    Scrivimi subito — poi ti passo il dossier<br>
+    sullo sviluppo e costruiamo il passo successivo insieme.<br><br>
+    <strong style="color:rgba(255,255,255,0.65)">Metodo Franki · F01 Concept in corso</strong>
+  </p>
+  <div class="dark-cta-contact">
+    <a class="dark-cta-btn" href="#">📞 CHIAMAMI ADESSO</a>
+    <a class="dark-cta-btn-ghost" href="#">💬 SCRIVIMI SU WHATSAPP</a>
+  </div>
+  <div class="dark-cta-note">Franki Studio · Aprile 2026 · Uso riservato per Affio</div>
+</div>
+
+</div><!-- /page -->
+</body>
+</html>

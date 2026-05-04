@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RCV — 5 Concept Commerciali · Target Buyers</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blu:#2B38B0;
+  --arancio:#F0A500;
+  --grigio-bg:#F2F1ED;
+  --bianco:#FFFFFF;
+  --nero:#111111;
+  --testo:#1a1a2e;
+  --blu-scuro:#1a2480;
+  --verde:#1a7a50;
+  --rosso:#c0392b;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Barlow',sans-serif;background:var(--grigio-bg);color:var(--testo);max-width:680px;margin:0 auto;font-size:15px;line-height:1.6}
+.navbar{background:var(--blu);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.logo-fran{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;color:var(--bianco)}
+.logo-fran span{background:var(--arancio);padding:1px 6px;border-radius:4px}
+.logo-tagline{font-size:10px;color:rgba(255,255,255,.6);letter-spacing:.08em}
+.nav-doc{font-family:'Barlow Condensed',sans-serif;font-size:11px;color:rgba(255,255,255,.7);letter-spacing:.1em;text-transform:uppercase}
+
+.hero{background:var(--nero);color:var(--bianco);padding:40px 20px 36px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 40px,rgba(240,165,0,.03) 40px,rgba(240,165,0,.03) 41px)}
+.hero-kicker{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--arancio);margin-bottom:8px}
+.hero-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:40px;line-height:.93;text-transform:uppercase;margin-bottom:14px}
+.hero-title em{color:var(--arancio);font-style:normal;display:block}
+.hero-sub{font-size:13px;color:rgba(255,255,255,.65);line-height:1.7;max-width:500px}
+.div-orange{height:4px;background:var(--arancio)}
+
+/* INTRO */
+.intro-box{background:var(--bianco);padding:20px;margin:2px 0}
+.intro-box p{font-size:14px;color:#444;line-height:1.7;margin-bottom:10px}
+.intro-box p:last-child{margin-bottom:0}
+
+/* CONCEPT CARD */
+.concept{background:var(--bianco);margin:6px 0;overflow:hidden}
+.concept-head{padding:22px 20px 0}
+.concept-letter{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:80px;color:var(--grigio-bg);line-height:1;float:right;margin-top:-12px;margin-left:8px}
+.concept-categoria{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#aaa;margin-bottom:4px}
+.concept-nome{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:28px;text-transform:uppercase;color:var(--blu);line-height:1.0;margin-bottom:4px}
+.concept-sottotitolo{font-size:13px;color:#888;font-style:italic;margin-bottom:0;clear:both;padding-bottom:16px;border-bottom:2px solid var(--arancio)}
+.concept-body{padding:16px 20px 20px}
+
+/* SEZIONI INTERNE */
+.c-section{margin-bottom:16px}
+.c-section:last-child{margin-bottom:0}
+.c-label{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--arancio);margin-bottom:6px}
+.c-text{font-size:13px;color:#444;line-height:1.65}
+
+/* NUMERI GRID */
+.numeri{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;margin:8px 0}
+.num-box{background:var(--grigio-bg);padding:10px 12px}
+.num-val{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:18px;color:var(--blu);display:block;line-height:1}
+.num-label{font-size:10px;color:#888;text-transform:uppercase;letter-spacing:.06em;margin-top:3px}
+
+/* FAIP BAR */
+.faip-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin:8px 0}
+.faip-box{background:var(--grigio-bg);padding:10px 12px}
+.faip-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#aaa;margin-bottom:4px}
+.faip-value{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:14px;color:var(--testo)}
+.faip-stars{color:var(--arancio);font-size:12px;letter-spacing:1px}
+
+/* HOOK BOX */
+.hook{background:var(--blu);color:var(--bianco);padding:14px 16px;margin:14px 0;border-radius:2px;position:relative}
+.hook::before{content:'"';position:absolute;left:10px;top:6px;font-size:40px;color:rgba(240,165,0,.3);font-family:Georgia,serif;line-height:1}
+.hook-text{font-size:13px;font-style:italic;color:rgba(255,255,255,.9);padding-left:20px;line-height:1.6}
+.hook-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--arancio);margin-top:6px;padding-left:20px}
+
+/* ESEMPI */
+.esempio{background:#f8f7f4;border-left:3px solid var(--arancio);padding:10px 14px;margin:6px 0;border-radius:0 3px 3px 0}
+.esempio-nome{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;color:var(--testo);margin-bottom:2px}
+.esempio-desc{font-size:12px;color:#777;line-height:1.5}
+
+/* VALUTAZIONE ASSET */
+.val-box{background:var(--nero);color:var(--bianco);padding:14px 16px;margin:10px 0;border-radius:2px}
+.val-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--arancio);margin-bottom:6px}
+.val-range{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:24px;color:var(--bianco)}
+.val-note{font-size:11px;color:rgba(255,255,255,.5);margin-top:4px;line-height:1.5}
+
+/* SEP */
+.concept-sep{height:6px;background:linear-gradient(90deg,var(--blu),var(--arancio));margin:4px 0}
+
+/* SECTION HEADER */
+.section-header{background:var(--blu);color:var(--bianco);padding:11px 20px;display:flex;align-items:center;gap:10px;margin-top:20px}
+.section-icon{font-size:16px}
+.section-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;text-transform:uppercase;letter-spacing:.06em}
+.section-count{margin-left:auto;background:var(--arancio);color:var(--nero);font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;padding:2px 8px;border-radius:2px}
+
+/* RANKING TABLE */
+.rank-table{background:var(--bianco);padding:0 20px 20px;margin:2px 0}
+.rank-table table{width:100%;border-collapse:collapse;font-size:13px;margin-top:16px}
+.rank-table th{background:var(--blu);color:var(--bianco);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.06em;padding:8px 10px;text-align:left}
+.rank-table td{padding:9px 10px;border-bottom:1px solid #f0f0f0;color:#444;vertical-align:middle}
+.rank-table td:first-child{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:15px;color:var(--blu)}
+.rank-table tr:nth-child(even){background:#fafafa}
+.rank-table tr:last-child td{border-bottom:none}
+.stars{color:var(--arancio);font-size:11px;letter-spacing:1px}
+.range-val{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;color:var(--verde)}
+
+/* BADGE */
+.badge{display:inline-block;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;border-radius:2px;margin:2px}
+.badge-green{background:#e6f7f0;color:var(--verde)}
+.badge-blue{background:#e8ecff;color:var(--blu)}
+.badge-orange{background:#fff4e0;color:#c27800}
+.badge-red{background:#fff0f0;color:var(--rosso)}
+
+/* DARK CTA */
+.dark-cta{background:var(--blu);color:var(--bianco);padding:28px 20px;margin-top:4px;text-align:center}
+.dark-cta h2{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:24px;text-transform:uppercase;margin-bottom:8px}
+.dark-cta h2 span{color:var(--arancio)}
+.dark-cta p{font-size:12px;color:rgba(255,255,255,.5)}
+.disclaimer{background:#f7f7f5;padding:12px 20px;font-size:10px;color:#bbb;line-height:1.5;border-top:1px solid #e8e8e4}
+
+.fk-logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;line-height:1;display:inline-flex;align-items:center}
+.fk-logo .fran{color:#FFFFFF}
+.fk-logo .ki{background:#F0A500;color:#FFFFFF;border-radius:5px;padding:1px 7px;margin-left:2px;display:inline-block}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div>
+    <div class="fk-logo"><span class="fran">Fran</span><span class="ki">Ki</span></div>
+    <div class="logo-tagline">We Start Your Ideas</div>
+  </div>
+  <div class="nav-doc">RCV · Concept Commerciali · Riservato</div>
+</nav>
+
+<div class="hero">
+  <div class="hero-kicker">Roccaraso Country Village — FAIP Fase 0B · Uso Interno</div>
+  <div class="hero-title">5 CONCEPT
+    <em>COMMERCIALI</em>
+    PER 5 ACQUIRENTI
+  </div>
+  <div class="hero-sub">Cinque scenari costruiti non sull'asset, ma sul compratore. Ogni concept è pensato per far dire "sì" a un profilo specifico — con la struttura finanziaria, gli esempi reali e il messaggio d'ingresso già pronti.</div>
+</div>
+<div class="div-orange"></div>
+
+<div class="intro-box">
+  <p>Questi 5 concept affiancano i 5 scenari architettonici già sviluppati. Se quelli rispondono alla domanda <em>"cosa può diventare fisicamente RCV?"</em>, questi rispondono a una domanda più commerciale: <strong>"come si struttura il deal per far dire sì a quel tipo specifico di acquirente?"</strong></p>
+  <p>Per ogni concept: descrizione operativa, profilo target, 1-2 esempi esistenti, range di valorizzazione dell'asset, FAIP essenziale e hook di apertura.</p>
+</div>
+
+<!-- ===== CONCEPT F ===== -->
+<div class="concept-sep"></div>
+
+<div class="concept">
+  <div class="concept-head">
+    <div class="concept-letter">F</div>
+    <div class="concept-categoria">Target: HNWI / Family Office</div>
+    <div class="concept-nome">IL CLUB PRIVÉ<br>DI MONTAGNA</div>
+    <div class="concept-sottotitolo">"Non un hotel. Un club a membership. L'unico sull'Appennino centrale."</div>
+  </div>
+  <div class="concept-body">
+
+    <div class="c-section">
+      <div class="c-label">📋 Descrizione operativa</div>
+      <div class="c-text">RCV diventa un <strong>private members club</strong> con accesso a numero chiuso — 120-180 soci fondatori. Ogni socio paga una quota di ingresso una tantum (€20-40K) più una quota annuale (€8-15K). In cambio ha diritto a un numero definito di settimane all'anno nella struttura, accesso a tutti i servizi, possibilità di portare ospiti. Il modello non è timeshare — le quote non corrispondono a una specifica unità ma all'accesso alla struttura intera. La governance è di una società che i soci co-possiedono. Il bosco di 22 ha è il parco esclusivo del club. Il seminterrato bar/mensa diventa il club-house. Il cinema diventa sala proiezioni e eventi privati.</div>
+    </div>
+
+    <div class="c-section">
+      <div class="c-label">🎯 Profilo acquirente</div>
+      <div class="c-text">HNWI o family office con patrimonio €30-200M+. Non vuole gestire operativamente — vuole possedere qualcosa di esclusivo che funziona. Conosce il modello del club privato, probabilmente è già membro di uno. Apprezza la narrativa storica (colonia operaia ENEL = storia autentica, non resort artificiale). Decisione rapida perché è una persona fisica o un nucleo familiare.</div>
+    </div>
+
+    <div class="c-section">
+      <div class="c-label">🌍 Esempi esistenti</div>
+      <div class="esempio">
+        <div class="esempio-nome">Soho House — Farmhouse (Oxfordshire, UK)</div>
+        <div class="esempio-desc">Ex fattoria convertita in private members club rurale. Membership da £1.800/anno. 26 camere + piscina + campi sportivi. Solo soci e ospiti. Sold out dalla prima settimana di apertura. Modello replicato ora in 40+ location globali.</div>
+      </div>
+      <div class="esempio">
+        <div class="esempio-nome">The Collective — Old Oak (Londra)</div>
+        <div class="esempio-desc">Co-living premium con membership e diritto di utilizzo. 550 unità. Revenue per membro £1.200+/mese. EBITDA margin 30%+. Modello applicato ora anche in location rurali europee.</div>
+      </div>
+    </div>
+
+    <div class="val-box">
+      <div class="val-label">💶 Valorizzazione asset in questo scenario</div>
+      <div class="val-range">€8,5 — €12M</div>
+      <div class="val-note">L'HNWI paga un premio rispetto alla base d'asta per l'esclusività e la "chiavi in mano". Con 150 soci × €30K quota ingresso = €4,5M soli dalle membership — che coprono gran parte del capex. Revenue annua: €150 soci × €10K = €1,5M/anno + servizi accessori. Multiplo exit (x8-10 EBITDA): €9-12M.</div>
+    </div>
+
+    <div class="numeri">
+      <div class="num-box"><span class="num-val">150</span><span class="num-label">Soci target</span></div>
+      <div class="num-box"><span class="num-val">€30K</span><span class="num-label">Quota ingresso</span></div>
+      <div class="num-box"><span class="num-val">~30%</span><span class="num-label">EBITDA margin</span></div>
+    </div>
+
+    <div class="faip-grid">
+      <div class="faip-box"><div class="faip-label">Velocità decisionale</div><div class="faip-stars">★★★★★</div></div>
+      <div class="faip-box"><div class="faip-label">Fit con RCV</div><div class="faip-stars">★★★★☆</div></div>
+      <div class="faip-box"><div class="faip-label">Capitale richiesto</div><div class="faip-value">€7-10M totale</div></div>
+      <div class="faip-box"><div class="faip-label">IRR stimato</div><div class="faip-value">15-22% annuo</div></div>
+    </div>
+
+    <div class="hook">
+      <div class="hook-text">Stai cercando qualcosa di esclusivo che non esiste ancora sull'Appennino. Non un hotel. Un luogo tuo — con una storia vera, un bosco di 22 ettari, e una lista di soci selezionati. Abbiamo strutturato il deal. Manca solo il fondatore giusto.</div>
+      <div class="hook-label">Hook di apertura → HNWI / Family Office</div>
+    </div>
+
+    <div style="padding:4px 0">
+      <span class="badge badge-green">Decisione rapida</span>
+      <span class="badge badge-blue">Zero dipendenza da banche</span>
+      <span class="badge badge-orange">Richiede operatore membership</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== CONCEPT G ===== -->
+<div class="concept-sep"></div>
+
+<div class="concept">
+  <div class="concept-head">
+    <div class="concept-letter">G</div>
+    <div class="concept-categoria">Target: Fondi SGR / Istituzionali</div>
+    <div class="concept-nome">SALE &<br>LEASEBACK</div>
+    <div class="concept-sottotitolo">"Il fondo compra l'immobile. L'operatore firma il contratto d'affitto. Il fondo incassa senza gestire nulla."</div>
+  </div>
+  <div class="concept-body">
+
+    <div class="c-section">
+      <div class="c-label">📋 Descrizione operativa</div>
+      <div class="c-text">Schema classico del real estate istituzionale applicato a RCV. La sequenza è: (1) si identifica un operatore hospitality disposto a firmare un contratto di locazione a lungo termine (15-20 anni) sull'asset sviluppato, (2) con quel contratto in mano si va al fondo, (3) il fondo acquista l'asset — o lo sviluppa con il locatario già identificato — e incassa il canone senza occuparsi della gestione operativa. L'operatore non immobilizza il capitale per acquistare — firma solo l'affitto e gestisce il brand. Il fondo ha un flusso certo, un tenant di qualità, una durata lunga: tutto ciò che serve per la delibera di investimento.</div>
+    </div>
+
+    <div class="c-section">
+      <div class="c-label">🎯 Profilo acquirente</div>
+      <div class="c-text">SGR con fondi real estate dedicati al turismo o hospitality. CDP Real Asset, Investire SGR, Fabrica Immobiliare, DeA Capital Real Estate. Cercano rendimento stabile 6-8% con asset core+ e tenant affidabile. La chiave è portargli il deal già strutturato — non solo l'immobile ma anche il locatario. Tempi di delibera: 4-6 mesi, ma con un contratto di affitto pre-firmato si dimezza.</div>
+    </div>
+
+    <div class="c-section">
+      <div class="c-label">🌍 Esempi esistenti</div>
+      <div class="esempio">
+        <div class="esempio-nome">CDP Real Asset — acquisizione Lefay Lago di Garda</div>
+        <div class="esempio-desc">CDP ha acquistato il resort Lefay per €59M in un'operazione sale & leaseback. Lefay rimane gestore con contratto trentennale. CDP incassa il canone e ha un asset core+ nel portafoglio del Fondo Turismo.</div>
+      </div>
+      <div class="esempio">
+        <div class="esempio-nome">Fondo Nazionale Turismo FT3 — PNRR</div>
+        <div class="esempio-desc">150M€ PNRR da investire in strutture ricettive con mandato specifico su aree interne e rigenerazione. Obiettivo: almeno 12 immobili entro 2026. RCV è compatibile per destinazione, territorio e narrativa ESG.</div>
+      </div>
+    </div>
+
+    <div class="val-box">
+      <div class="val-label">💶 Valorizzazione asset in questo scenario</div>
+      <div class="val-range">€9M — €14M</div>
+      <div class="val-note">Il valore per il fondo si calcola sul canone annuo capitalizzato. Con un canone stimato di €700-900K/anno (12-15% del fatturato del gestore) e un cap rate del 6-7%, il valore dell'asset si colloca in questo range. Il PNRR può abbattere il prezzo di acquisto del 30-40% tramite contributo a fondo perduto — il che alza il rendimento effettivo per il fondo.</div>
+    </div>
+
+    <div class="numeri">
+      <div class="num-box"><span class="num-val">6-8%</span><span class="num-label">Rendimento target fondo</span></div>
+      <div class="num-box"><span class="num-val">20 anni</span><span class="num-label">Durata contratto</span></div>
+      <div class="num-box"><span class="num-val">€150M</span><span class="num-label">PNRR disponibile FT3</span></div>
+    </div>
+
+    <div class="faip-grid">
+      <div class="faip-box"><div class="faip-label">Velocità decisionale</div><div class="faip-stars">★★☆☆☆</div></div>
+      <div class="faip-box"><div class="faip-label">Fit con RCV</div><div class="faip-stars">★★★☆☆</div></div>
+      <div class="faip-box"><div class="faip-label">Capitale richiesto</div><div class="faip-value">€9-14M (fondo)</div></div>
+      <div class="faip-box"><div class="faip-label">IRR stimato</div><div class="faip-value">8-12% annuo</div></div>
+    </div>
+
+    <div class="hook">
+      <div class="hook-text">Avete un mandato turismo. Avete PNRR da allocare. Abbiamo un asset da €13,5M di perizia disponibile a €6M, con destinazione extralberghiero già autorizzata e un operatore pronto a firmare il contratto di locazione. Il deal è già strutturato — manca solo il fondo.</div>
+      <div class="hook-label">Hook di apertura → SGR / Fondo Turismo</div>
+    </div>
+
+    <div style="padding:4px 0">
+      <span class="badge badge-green">PNRR compatibile</span>
+      <span class="badge badge-blue">Flusso certo e prevedibile</span>
+      <span class="badge badge-orange">Tempi delibera lunghi</span>
+      <span class="badge badge-orange">Serve operatore pre-identificato</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== CONCEPT H ===== -->
+<div class="concept-sep"></div>
+
+<div class="concept">
+  <div class="concept-head">
+    <div class="concept-letter">H</div>
+    <div class="concept-categoria">Target: Developer con exit strategy</div>
+    <div class="concept-nome">BRAND<br>FRANCHISE</div>
+    <div class="concept-sottotitolo">"Il developer compra e ristruttura. Il brand internazionale porta i clienti. L'exit è già pianificata."</div>
+  </div>
+  <div class="concept-body">
+
+    <div class="c-section">
+      <div class="c-label">📋 Descrizione operativa</div>
+      <div class="c-text">Il developer acquisisce RCV all'asta, lo ristruttura secondo gli standard e firma un accordo di affiliazione con un brand hospitality internazionale. Il brand porta: (1) sistema di prenotazione globale, (2) pricing power (ADR 20-40% superiore a un hotel indipendente equivalente), (3) fedeltà clienti via programma loyalty, (4) standard operativi e formazione. Il developer non inventa una gestione — usa il brand. Dopo 3-5 anni, con un EBITDA certificato e un brand riconoscibile, vende l'asset a un fondo istituzionale con un multiplo di 10-12x EBITDA. L'exit è pianificata dal giorno 1.</div>
+    </div>
+
+    <div class="c-section">
+      <div class="c-label">🎯 Profilo acquirente</div>
+      <div class="c-text">Developer mid-market con esperienza in hospitality o riconversione di asset complessi. Deve avere: (1) capacità finanziaria per capex di €5-8M oltre il prezzo d'acquisto, (2) relazioni con brand hospitality o advisor capaci di aprirle, (3) visione di exit a 5-7 anni. Tipicamente opera nel Centro-Sud o ha interesse a espandersi in mercati di montagna.</div>
+    </div>
+
+    <div class="c-section">
+      <div class="c-label">🌍 Esempi esistenti</div>
+      <div class="esempio">
+        <div class="esempio-nome">Tribute Portfolio by Marriott — conversioni italiane</div>
+        <div class="esempio-desc">Brand soft di Marriott pensato per hotel indipendenti con carattere storico. Nessun obbligo di restyling totale — mantieni l'identità locale ma accedi alla rete di distribuzione Marriott. Minimo 20 camere. Applicabile a RCV convertito in 40-46 unità ricettive.</div>
+      </div>
+      <div class="esempio">
+        <div class="esempio-nome">Small Luxury Hotels of the World (SLH)</div>
+        <div class="esempio-desc">Collezione di boutique hotel indipendenti con brand e distribuzione condivisi. 520+ hotel globali. Nessun fee di franchising fisso — solo commissione sulle prenotazioni. L'identità dell'hotel rimane intatta. ADR media SLH: €250-450. Molti ex edifici industriali o storici riconvertiti.</div>
+      </div>
+    </div>
+
+    <div class="val-box">
+      <div class="val-label">💶 Valorizzazione asset in questo scenario</div>
+      <div class="val-range">€10M — €16M</div>
+      <div class="val-note">Con brand affermato e EBITDA certificato di €1-1,5M/anno, il multiplo di exit è 10-12x. Il developer entra a €6-8M (asta + capex), porta il brand, crea l'EBITDA, vende a €10-16M. Margine operazione per il developer: €2-6M in 5-7 anni. IRR developer: 18-25% a seconda del capex e del timing di exit.</div>
+    </div>
+
+    <div class="numeri">
+      <div class="num-box"><span class="num-val">10-12x</span><span class="num-label">Multiplo exit EBITDA</span></div>
+      <div class="num-box"><span class="num-val">5-7 anni</span><span class="num-label">Orizzonte temporale</span></div>
+      <div class="num-box"><span class="num-val">+30%</span><span class="num-label">ADR premium vs indipendente</span></div>
+    </div>
+
+    <div class="faip-grid">
+      <div class="faip-box"><div class="faip-label">Velocità decisionale</div><div class="faip-stars">★★★★☆</div></div>
+      <div class="faip-box"><div class="faip-label">Fit con RCV</div><div class="faip-stars">★★★★☆</div></div>
+      <div class="faip-box"><div class="faip-label">Capitale richiesto</div><div class="faip-value">€12-18M totale</div></div>
+      <div class="faip-box"><div class="faip-label">IRR stimato</div><div class="faip-value">18-25% (developer)</div></div>
+    </div>
+
+    <div class="hook">
+      <div class="hook-text">Hai l'expertise per sviluppare asset complessi. Noi abbiamo un compendio da 5.954 mq con permessi attivi, destinazione extralberghiero già autorizzata e un gap del 55% tra prezzo d'asta e valore di perizia. Con un brand come Tribute o SLH la exit è pianificabile dal giorno uno. Parliamone.</div>
+      <div class="hook-label">Hook di apertura → Developer con exit strategy</div>
+    </div>
+
+    <div style="padding:4px 0">
+      <span class="badge badge-green">Exit strategy chiara</span>
+      <span class="badge badge-green">Brand riduce rischio operativo</span>
+      <span class="badge badge-orange">Capex elevato</span>
+      <span class="badge badge-blue">IRR alto per il developer</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== CONCEPT I ===== -->
+<div class="concept-sep"></div>
+
+<div class="concept">
+  <div class="concept-head">
+    <div class="concept-letter">I</div>
+    <div class="concept-categoria">Target: Piattaforme RECF + Community</div>
+    <div class="concept-nome">CO-OWNERSHIP<br>COMMUNITY</div>
+    <div class="concept-sottotitolo">"Possiedi un pezzo del villaggio ENEL. Rendimento annuo + diritto di soggiorno. La community è già il tuo mercato."</div>
+  </div>
+  <div class="concept-body">
+
+    <div class="c-section">
+      <div class="c-label">📋 Descrizione operativa</div>
+      <div class="c-text">RCV viene acquisito tramite una <strong>SPV (Special Purpose Vehicle)</strong> le cui quote vengono offerte via piattaforma di equity crowdfunding. Ogni investitore acquista quote che danno due diritti: (1) <strong>rendimento finanziario</strong> — quota proporzionale degli utili distribuiti annualmente, (2) <strong>diritto di utilizzo</strong> — numero di giorni/settimane all'anno proporzionale alla quota, a tariffa agevolata. La struttura è trasparente: bilancio pubblicato, assemblea annuale, exit prevista in 8-10 anni tramite vendita dell'asset o quotazione. Non è timeshare (non si possiede una specifica unità) — è co-proprietà collettiva con governance condivisa. La community di co-proprietari diventa automaticamente il primo nucleo di clienti fedeli e ambasciatori spontanei.</div>
+    </div>
+
+    <div class="c-section">
+      <div class="c-label">🎯 Profilo acquirente</div>
+      <div class="c-text">Due soggetti paralleli: (1) la <strong>piattaforma RECF</strong> che struttura e distribuisce la campagna (Walliance, Concrete Investing o equivalente europeo) — incassa fee di gestione e success fee, (2) la <strong>community di 300-1.500 investitori retail e professionali</strong> — ticket individuale da €2K a €100K. Il RECF non compra l'asset — è il canale. L'asset lo compra la SPV finanziata dalla campagna.</div>
+    </div>
+
+    <div class="c-section">
+      <div class="c-label">🌍 Esempi esistenti</div>
+      <div class="esempio">
+        <div class="esempio-nome">Swiss Alps Coliving — Liddes, Svizzera (2023)</div>
+        <div class="esempio-desc">Il primo coliving al mondo finanziato con crowdfunding: ex hotel comprato con co-investitori da 9 paesi diversi. Governance condivisa, diritto di utilizzo per i soci. La campagna ha generato community e marketing organico simultaneamente.</div>
+      </div>
+      <div class="esempio">
+        <div class="esempio-nome">Walliance — campagne hospitality Italia</div>
+        <div class="esempio-desc">Piattaforma italiana leader nel RECF hospitality. Ha finanziato hotel e resort con campagne da €500K a €3M. Rendimenti medi offerti: 10-13% annuo. Campagna media: 60-90 giorni. Base investitori: 40.000+ registrati.</div>
+      </div>
+    </div>
+
+    <div class="val-box">
+      <div class="val-label">💶 Valorizzazione asset in questo scenario</div>
+      <div class="val-range">€7M — €10M</div>
+      <div class="val-note">La SPV raccoglie €6-8M tramite campagna. Target rendimento distribuito: 8-10% annuo. Exit in anno 8-10 tramite vendita asset a valore di mercato stimato €9-12M. Capital gain per i soci: 30-50% del capitale investito. Il costo della raccolta (piattaforma + legale): 5-8% del totale raccolto.</div>
+    </div>
+
+    <div class="numeri">
+      <div class="num-box"><span class="num-val">8-10%</span><span class="num-label">Rendimento annuo target</span></div>
+      <div class="num-box"><span class="num-val">€5K</span><span class="num-label">Ticket minimo investitore</span></div>
+      <div class="num-box"><span class="num-val">13,22%</span><span class="num-label">Rendimento medio RECF Italia 2024</span></div>
+    </div>
+
+    <div class="faip-grid">
+      <div class="faip-box"><div class="faip-label">Velocità decisionale</div><div class="faip-stars">★★★☆☆</div></div>
+      <div class="faip-box"><div class="faip-label">Fit con RCV</div><div class="faip-stars">★★★★★</div></div>
+      <div class="faip-box"><div class="faip-label">Capitale richiesto (FranKi)</div><div class="faip-value">€0 — crowd funded</div></div>
+      <div class="faip-box"><div class="faip-label">IRR stimato (investitori)</div><div class="faip-value">12-16% annuo</div></div>
+    </div>
+
+    <div class="hook">
+      <div class="hook-text">Avete una community di investitori che cerca storie vere. Noi abbiamo l'ex villaggio ENEL di Roccaraso — 70 anni di storia operaia, 22 ettari di bosco, base d'asta a €1.020/mq in un comprensorio sciistico con bacino di 20 milioni di persone. È il tipo di deal che va sold out in 48 ore. Quando ci sediamo?</div>
+      <div class="hook-label">Hook di apertura → Piattaforma RECF</div>
+    </div>
+
+    <div style="padding:4px 0">
+      <span class="badge badge-green">Zero capitale FranKi</span>
+      <span class="badge badge-green">Narrativa perfetta per crowd</span>
+      <span class="badge badge-blue">Community = marketing gratuito</span>
+      <span class="badge badge-orange">Istruttoria piattaforma 60gg</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== CONCEPT L ===== -->
+<div class="concept-sep"></div>
+
+<div class="concept">
+  <div class="concept-head">
+    <div class="concept-letter">L</div>
+    <div class="concept-categoria">Target: Pubblico-Privato / ESG / Fondazioni</div>
+    <div class="concept-nome">DISTRETTO<br>RIGENERATIVO</div>
+    <div class="concept-sottotitolo">"Il privato entra con poco capitale. Il pubblico porta i fondi. Il territorio ci guadagna. Tutti vincono."</div>
+  </div>
+  <div class="concept-body">
+
+    <div class="c-section">
+      <div class="c-label">📋 Descrizione operativa</div>
+      <div class="c-text">RCV diventa oggetto di un <strong>Partenariato Pubblico-Privato (PPP)</strong>. La struttura: il privato (operatore o developer) acquisisce l'asset all'asta. Regione Abruzzo + Ministero del Turismo + fondi PNRR aree interne entrano con contributi a fondo perduto che coprono il 30-50% del capex di ristrutturazione. In cambio, una quota della struttura (es. 20-30%) viene dedicata a funzioni pubbliche o sociali: centro di formazione professionale turistica, residenze per ricercatori universitari (GSSI L'Aquila è a 80 km), presidio culturale, attività di educazione ambientale nel bosco. L'ala commerciale (70-80%) genera il rendimento privato. Il bosco certificato FSC genera carbon credits cedibili sul mercato volontario.</div>
+    </div>
+
+    <div class="c-section">
+      <div class="c-label">🎯 Profilo acquirente</div>
+      <div class="c-text">Due profili: (1) <strong>Operatore privato con sensibilità ESG</strong> — developer o operatore che vuole abbassare il capex privato usando fondi pubblici, in cambio di vincoli parziali sull'uso. (2) <strong>Fondazione bancaria del Centro-Sud</strong> (es. Fondazione Banco di Napoli, Fondazione Tercas) come co-investitore minoritario — mettono capitale con impatto territoriale misurabile, associano il proprio nome a un progetto di rigenerazione. I fondi PNRR abbassano il rischio privato e aprono bandi che nessun privato da solo riuscirebbe ad accedere.</div>
+    </div>
+
+    <div class="c-section">
+      <div class="c-label">🌍 Esempi esistenti</div>
+      <div class="esempio">
+        <div class="esempio-nome">Borghi PNRR — Ministero della Cultura Italia</div>
+        <div class="esempio-desc">220M€ destinati a 21 borghi pilota per rigenerazione culturale e turistica. Modello PPP: privato porta operatività, pubblico porta i fondi. Esempi: Borgomezzavalle (VB), Ollolai (NU). Il modello è replicabile su asset privati con destinazione turistica in aree interne.</div>
+      </div>
+      <div class="esempio">
+        <div class="esempio-nome">Progetto Borca — Villaggio ENI / Dolomiti Contemporanee</div>
+        <div class="esempio-desc">Il gemello dolomitico di RCV. Proprietà privata (Gruppo Minoter) che ha aperto alla collaborazione con ente culturale e fondi pubblici. Residenze artistiche internazionali, seminari, visite guidate. Il privato mantiene l'asset — il pubblico porta il progetto e la legittimazione.</div>
+      </div>
+    </div>
+
+    <div class="val-box">
+      <div class="val-label">💶 Valorizzazione asset in questo scenario</div>
+      <div class="val-range">€8M — €13M</div>
+      <div class="val-note">Il contributo pubblico (stima 30-50% del capex: €2-4M a fondo perduto) abbassa il capitale privato necessario e alza il rendimento effettivo sull'equity investito. Carbon credits dal bosco: stima €30-50K/anno a regime (certificazione FSC + mercato volontario). Il valore dell'asset sale grazie alle certificazioni ESG e alla narrativa istituzionale — elementi che i fondi ESG pagano con un premium del 10-15%.</div>
+    </div>
+
+    <div class="numeri">
+      <div class="num-box"><span class="num-val">30-50%</span><span class="num-label">Capex coperto da fondi pubblici</span></div>
+      <div class="num-box"><span class="num-val">€50K</span><span class="num-label">Carbon credits/anno stimati</span></div>
+      <div class="num-box"><span class="num-val">+15%</span><span class="num-label">Premium ESG sul valore</span></div>
+    </div>
+
+    <div class="faip-grid">
+      <div class="faip-box"><div class="faip-label">Velocità decisionale</div><div class="faip-stars">★☆☆☆☆</div></div>
+      <div class="faip-box"><div class="faip-label">Fit con RCV</div><div class="faip-stars">★★★★☆</div></div>
+      <div class="faip-box"><div class="faip-label">Capitale privato richiesto</div><div class="faip-value">€4-8M (ridotto)</div></div>
+      <div class="faip-box"><div class="faip-label">IRR stimato (privato)</div><div class="faip-value">10-15% (su equity netto)</div></div>
+    </div>
+
+    <div class="hook">
+      <div class="hook-text">C'è un'opportunità nell'Appennino abruzzese che unisce rigenerazione territoriale, storia sociale e rendimento misurabile. L'asset è già disponibile. I fondi PNRR per le aree interne esistono. Manca chi li mette insieme con la visione giusta. È quello che facciamo.</div>
+      <div class="hook-label">Hook di apertura → Fondazione / Istituzionale ESG</div>
+    </div>
+
+    <div style="padding:4px 0">
+      <span class="badge badge-green">Capex privato ridotto</span>
+      <span class="badge badge-blue">PNRR e bandi accessibili</span>
+      <span class="badge badge-green">ESG e carbon economy</span>
+      <span class="badge badge-orange">Tempi decisione molto lunghi</span>
+      <span class="badge badge-orange">Complessità governance</span>
+    </div>
+  </div>
+</div>
+
+<!-- RANKING COMPARATIVO -->
+<div class="section-header" style="margin-top:24px">
+  <div class="section-icon">📊</div>
+  <div class="section-title">Ranking Comparativo — 5 Concept Commerciali</div>
+  <div class="section-count">sintesi</div>
+</div>
+
+<div class="rank-table">
+  <table>
+    <thead>
+      <tr><th>Concept</th><th>Target</th><th>Velocità</th><th>Fit</th><th>Val. Asset</th><th>IRR</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>F — Club Privé</td>
+        <td>HNWI / FO</td>
+        <td><span class="stars">★★★★★</span></td>
+        <td><span class="stars">★★★★</span></td>
+        <td class="range-val">€8,5-12M</td>
+        <td>15-22%</td>
+      </tr>
+      <tr>
+        <td>H — Brand Franchise</td>
+        <td>Developer</td>
+        <td><span class="stars">★★★★</span></td>
+        <td><span class="stars">★★★★</span></td>
+        <td class="range-val">€10-16M</td>
+        <td>18-25%</td>
+      </tr>
+      <tr>
+        <td>I — Co-Ownership</td>
+        <td>RECF Platform</td>
+        <td><span class="stars">★★★</span></td>
+        <td><span class="stars">★★★★★</span></td>
+        <td class="range-val">€7-10M</td>
+        <td>12-16%</td>
+      </tr>
+      <tr>
+        <td>G — Sale & Leaseback</td>
+        <td>Fondi SGR</td>
+        <td><span class="stars">★★</span></td>
+        <td><span class="stars">★★★</span></td>
+        <td class="range-val">€9-14M</td>
+        <td>8-12%</td>
+      </tr>
+      <tr>
+        <td>L — Distretto PPP</td>
+        <td>ESG / Fondazioni</td>
+        <td><span class="stars">★</span></td>
+        <td><span class="stars">★★★★</span></td>
+        <td class="range-val">€8-13M</td>
+        <td>10-15%</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- DARK CTA -->
+<div class="dark-cta">
+  <h2>CONCEPT PRONTI.<br><span>ORA SI CACCIANO I TARGET.</span></h2>
+  <p>FranKi Studio · FAIP Fase 0B completata · Aprile 2026 · Uso interno riservato</p>
+</div>
+
+<div class="disclaimer">
+  Documento interno FranKi Studio — uso esclusivo team. Dati finanziari basati su analisi di mercato pubbliche e perizia ufficiale Tribunale Sulmona Rev.3/2021. Non costituisce offerta di investimento. Elaborato: Aprile 2026.
+</div>
+
+</body>
+</html>

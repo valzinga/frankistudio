@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roccaraso Country Village — Dossier Strategico · FranKi Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --blue:    #2B38B0;
+  --orange:  #F0A500;
+  --dark:    #111118;
+  --bg:      #F2F1ED;
+  --white:   #FFFFFF;
+  --gray:    #6B6B6B;
+  --gray-lt: #E8E6E0;
+  --ink:     #1C1C2E;
+  --green:   #1A7A4A;
+  --green-lt:#D4EDDA;
+  --red:     #B04040;
+  --red-bg:  #F8D7DA;
+  --alarm:   #CC2200;
+}
+body { background:var(--bg); color:var(--ink); font-family:'Barlow',sans-serif; font-weight:400; line-height:1.6; -webkit-font-smoothing:antialiased; }
+.page { max-width:680px; margin:0 auto; }
+.cross-bg { background-color:var(--blue); background-image:radial-gradient(circle,rgba(255,255,255,0.18) 1.5px,transparent 1.5px); background-size:28px 28px; }
+
+/* ALARM BANNER */
+.alarm-banner { background:var(--blue); padding:1.1rem 1.5rem; display:flex; align-items:center; gap:1rem; position:sticky; top:0; z-index:200; border-bottom:3px solid #4A5AD0; }
+.alarm-pulse { width:14px; height:14px; background:#fff; border-radius:50%; flex-shrink:0; animation:pulse 1.2s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.4;transform:scale(0.7);} }
+.alarm-text { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:1rem; letter-spacing:0.06em; text-transform:uppercase; color:#fff; line-height:1.2; flex:1; }
+.alarm-text span { display:block; font-family:'Barlow',sans-serif; font-weight:500; font-size:0.68rem; letter-spacing:0.12em; text-transform:uppercase; color:rgba(255,255,255,0.75); margin-top:0.1rem; }
+.alarm-badge { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:0.85rem; color:var(--orange); text-align:center; border:2px solid rgba(255,255,255,0.3); border-radius:8px; padding:0.3rem 0.7rem; white-space:nowrap; }
+
+/* NAV */
+.navbar { background:var(--bg); border-bottom:1px solid var(--gray-lt); padding:0.9rem 1.5rem; display:flex; justify-content:space-between; align-items:center; }
+.navbar-brand { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:1.1rem; letter-spacing:0.05em; color:var(--blue); }
+.navbar-brand span { color:var(--orange); }
+.navbar-btn { background:var(--blue); color:var(--white); font-family:'Barlow',sans-serif; font-weight:700; font-size:0.7rem; letter-spacing:0.12em; text-transform:uppercase; padding:0.55rem 1.1rem; border:none; border-radius:4px; }
+
+/* HERO */
+.hero { padding:3rem 1.5rem 2.5rem; }
+.hero-eyebrow { display:flex; align-items:center; gap:0.5rem; font-family:'Barlow',sans-serif; font-weight:600; font-size:0.7rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--orange); margin-bottom:1.2rem; }
+.hero-eyebrow::before { content:''; display:inline-block; width:18px; height:2px; background:var(--orange); }
+.hero-title { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:3.2rem; line-height:0.92; color:var(--white); text-transform:uppercase; letter-spacing:-0.01em; margin-bottom:0.3rem; }
+.hero-title-orange { color:var(--orange); display:block; }
+.hero-sub { font-family:'Barlow',sans-serif; font-size:0.95rem; color:rgba(255,255,255,0.75); margin:1.2rem 0 1.8rem; line-height:1.6; }
+.tags { display:flex; flex-wrap:wrap; gap:0.5rem; margin-bottom:1.8rem; }
+.tag { border:1.5px solid rgba(255,255,255,0.35); color:rgba(255,255,255,0.85); font-family:'Barlow',sans-serif; font-weight:500; font-size:0.65rem; letter-spacing:0.12em; text-transform:uppercase; padding:0.3rem 0.75rem; border-radius:999px; }
+.tag-warn { border-color:rgba(240,165,0,0.8); background:rgba(240,165,0,0.2); color:#FFD070; }
+.hero-cta { display:block; width:100%; background:var(--orange); color:var(--dark); font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:1.15rem; letter-spacing:0.08em; text-transform:uppercase; text-align:center; padding:1.1rem; border-radius:10px; border:none; }
+.hero-cta-sub { display:block; font-family:'Barlow',sans-serif; font-weight:500; font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase; margin-top:0.3rem; color:rgba(0,0,0,0.55); }
+
+/* KPI STRIP */
+.kpi-strip { background:var(--white); display:grid; grid-template-columns:repeat(2,1fr); }
+.kpi-item { padding:1rem 1.2rem; border-right:1px solid var(--gray-lt); border-bottom:1px solid var(--gray-lt); }
+.kpi-item:nth-child(2n) { border-right:none; }
+.kpi-item:nth-last-child(-n+2) { border-bottom:none; }
+.kpi-val { font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:1.9rem; color:var(--blue); line-height:1; display:block; }
+.kpi-val-orange { color:var(--orange) !important; }
+.kpi-val-alarm { color:var(--alarm) !important; }
+.kpi-label { font-family:'Barlow',sans-serif; font-weight:500; font-size:0.63rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--gray); margin-top:0.3rem; display:block; }
+
+/* SECTION */
+.section-label { padding:1.8rem 1.5rem 0; }
+.section-eyebrow { display:flex; align-items:center; gap:0.5rem; font-family:'Barlow',sans-serif; font-weight:600; font-size:0.65rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--orange); margin-bottom:0.6rem; }
+.section-eyebrow::before { content:''; display:inline-block; width:16px; height:2px; background:var(--orange); }
+.section-title { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:2.3rem; line-height:0.95; color:var(--ink); text-transform:uppercase; letter-spacing:-0.01em; margin-bottom:1.2rem; }
+.section-header-bar { background:var(--blue); padding:0.85rem 1.5rem; display:flex; justify-content:space-between; align-items:center; margin-top:0.4rem; }
+.section-header-bar-left { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:1rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--white); }
+.section-header-bar-num { font-family:'Barlow',sans-serif; font-weight:600; font-size:0.75rem; color:var(--orange); }
+
+/* CARDS */
+.cards-wrap { padding:0.4rem 1rem 1rem; display:flex; flex-direction:column; gap:0.75rem; background:var(--bg); }
+.card { background:var(--white); border-radius:12px; padding:1.2rem; display:flex; gap:1rem; align-items:flex-start; box-shadow:0 1px 4px rgba(0,0,0,0.06); }
+.card-icon { width:48px; height:48px; border-radius:10px; background:var(--bg); display:flex; align-items:center; justify-content:center; font-size:1.4rem; flex-shrink:0; }
+.card-title { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.9rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--blue); margin-bottom:0.35rem; }
+.card-text { font-family:'Barlow',sans-serif; font-size:0.88rem; color:var(--gray); line-height:1.55; }
+.card-text strong { color:var(--ink); font-weight:600; }
+
+/* BANDS */
+.orange-band { background:var(--orange); padding:1.4rem 1.5rem; margin:0.5rem 0; }
+.orange-band-text { font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:1.3rem; line-height:1.2; color:var(--dark); text-transform:uppercase; }
+.blue-band { background:var(--blue); padding:1.4rem 1.5rem; margin:0.5rem 0; }
+.blue-band-text { font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:1.3rem; line-height:1.2; color:#fff; text-transform:uppercase; }
+
+/* TABLE */
+.table-section { background:var(--white); margin:0.4rem 0; }
+.table-inner { padding:0 1.2rem; }
+table { width:100%; border-collapse:collapse; }
+thead th { font-family:'Barlow',sans-serif; font-weight:600; font-size:0.62rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--gray); padding:0.9rem 0.6rem 0.7rem; text-align:left; border-bottom:2px solid var(--ink); }
+tbody tr { border-bottom:1px solid var(--gray-lt); }
+tbody tr:last-child { border-bottom:none; }
+tbody td { padding:0.8rem 0.6rem; font-family:'Barlow',sans-serif; font-size:0.85rem; color:var(--ink); vertical-align:top; }
+.td-blue { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:1rem; color:var(--blue); }
+.td-orange { font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:1rem; color:var(--orange); text-align:right; white-space:nowrap; }
+.td-green { font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:1rem; color:var(--green); text-align:right; white-space:nowrap; }
+.td-red { font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.95rem; color:var(--alarm); text-align:right; white-space:nowrap; }
+.td-small { font-size:0.7rem; color:var(--gray); }
+tfoot td { padding:1rem 0.6rem; border-top:2px solid var(--ink); font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:1.2rem; color:var(--ink); }
+.tfoot-orange { color:var(--orange) !important; text-align:right; }
+
+/* BADGE */
+.badge { display:inline-block; font-family:'Barlow',sans-serif; font-weight:700; font-size:0.58rem; letter-spacing:0.12em; text-transform:uppercase; padding:0.2rem 0.5rem; border-radius:4px; }
+.badge-ok    { background:#D4EDDA; color:#155724; }
+.badge-warn  { background:#FFF3CD; color:#8B5E00; }
+.badge-alert { background:#F8D7DA; color:#721C24; }
+.badge-blue  { background:var(--blue); color:#fff; }
+
+/* PAL CARD */
+.pal-wrap { padding:0.4rem 1rem 1rem; background:var(--bg); display:flex; flex-direction:column; gap:0.75rem; }
+.pal-card { background:var(--white); border-radius:12px; overflow:hidden; box-shadow:0 1px 4px rgba(0,0,0,0.06); }
+.pal-card-header { background:var(--blue); padding:0.75rem 1.2rem; display:flex; justify-content:space-between; align-items:center; }
+.pal-card-name { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.95rem; letter-spacing:0.1em; text-transform:uppercase; color:#fff; }
+.pal-card-num { font-family:'Barlow',sans-serif; font-weight:600; font-size:0.72rem; color:var(--orange); }
+.pal-row { display:flex; justify-content:space-between; align-items:center; padding:0.6rem 1.2rem; border-bottom:1px solid var(--gray-lt); }
+.pal-row:last-child { border-bottom:none; }
+.pal-key { font-family:'Barlow',sans-serif; font-size:0.82rem; color:var(--gray); flex:1; line-height:1.4; }
+.pal-val { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:1rem; color:var(--orange); text-align:right; }
+.pal-total { background:var(--bg); padding:0.7rem 1.2rem; display:flex; justify-content:space-between; align-items:center; border-top:2px solid var(--ink); }
+.pal-total-label { font-family:'Barlow',sans-serif; font-weight:600; font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--ink); }
+.pal-total-val { font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:1.2rem; color:var(--blue); }
+
+/* CALLOUT */
+.callout { background:var(--white); border-left:4px solid var(--orange); margin:0.5rem 1rem; padding:1rem 1.2rem; border-radius:0 8px 8px 0; }
+.callout-head { font-family:'Barlow',sans-serif; font-weight:700; font-size:0.68rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--orange); margin-bottom:0.5rem; }
+.callout-text { font-family:'Barlow',sans-serif; font-size:0.85rem; color:var(--gray); line-height:1.6; }
+.callout-text strong { color:var(--ink); font-weight:600; }
+
+/* ALERT BOX */
+.alert-box { background:#FFF3CD; border:1.5px solid var(--orange); border-radius:10px; margin:0.5rem 1rem; padding:1rem 1.2rem; }
+.alert-box-head { font-family:'Barlow',sans-serif; font-weight:700; font-size:0.68rem; letter-spacing:0.18em; text-transform:uppercase; color:#8B5E00; margin-bottom:0.5rem; }
+.alert-box-text { font-family:'Barlow',sans-serif; font-size:0.82rem; color:#5A3E00; line-height:1.6; }
+.alert-box-text strong { font-weight:700; }
+
+/* STIMA */
+.stima-wrap { background:var(--white); padding:0 1.2rem; }
+.stima-row { display:flex; justify-content:space-between; align-items:flex-start; padding:0.9rem 0; border-bottom:1px solid var(--gray-lt); gap:1rem; }
+.stima-row:last-child { border-bottom:none; }
+.stima-label { font-family:'Barlow',sans-serif; font-weight:500; font-size:0.88rem; color:var(--ink); line-height:1.4; flex:1; }
+.stima-sub { display:block; font-weight:400; font-size:0.72rem; color:var(--gray); margin-top:0.2rem; }
+.stima-val { font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:1.1rem; color:var(--blue); white-space:nowrap; text-align:right; }
+.stima-val.deduct { color:var(--red); }
+.stima-total-row { border-top:2.5px solid var(--ink); padding:1.2rem 1.2rem; background:var(--bg); display:flex; justify-content:space-between; align-items:center; }
+.stima-total-label { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:1rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink); }
+.stima-total-sub { display:block; font-family:'Barlow',sans-serif; font-weight:400; font-size:0.7rem; color:var(--gray); margin-top:0.15rem; text-transform:none; letter-spacing:0; }
+.stima-total-val { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:1.8rem; color:var(--orange); text-align:right; }
+
+/* IPOTESI */
+.ipotesi-wrap { padding:0.4rem 1rem 1rem; display:flex; flex-direction:column; gap:0.75rem; background:var(--bg); }
+.ipotesi-card { background:var(--white); border-radius:14px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,0.07); }
+.ipotesi-header { padding:1.1rem 1.4rem 0.9rem; border-bottom:1px solid var(--gray-lt); display:flex; align-items:flex-start; gap:1rem; }
+.ipotesi-letter { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:3.2rem; color:var(--orange); line-height:1; min-width:48px; }
+.ipotesi-name { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:1.15rem; letter-spacing:0.06em; text-transform:uppercase; color:var(--blue); margin-bottom:0.1rem; }
+.ipotesi-tagline { font-family:'Barlow',sans-serif; font-size:0.78rem; color:var(--gray); }
+.ipotesi-body { padding:0.8rem 1.4rem; }
+.ipotesi-row { display:flex; justify-content:space-between; align-items:flex-start; padding:0.5rem 0; border-bottom:1px solid var(--gray-lt); gap:0.5rem; }
+.ipotesi-row:last-child { border-bottom:none; }
+.ipotesi-key { font-family:'Barlow',sans-serif; font-size:0.8rem; color:var(--gray); flex:1; }
+.ipotesi-val { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:1rem; color:var(--ink); text-align:right; }
+.ipotesi-val-green { color:var(--green) !important; }
+.ipotesi-val-red { color:var(--red) !important; }
+.ipotesi-footer { background:var(--blue); padding:0.85rem 1.4rem; display:flex; justify-content:space-between; align-items:center; }
+.ipotesi-footer-label { font-family:'Barlow',sans-serif; font-weight:600; font-size:0.68rem; letter-spacing:0.14em; text-transform:uppercase; color:rgba(255,255,255,0.7); }
+.ipotesi-footer-val { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:1.6rem; color:var(--orange); }
+
+/* ROADMAP */
+.roadmap-wrap { background:var(--white); padding:0 1.5rem; }
+.roadmap-item { display:flex; gap:1rem; padding:1.2rem 0; border-bottom:1px solid var(--gray-lt); align-items:flex-start; }
+.roadmap-item:last-child { border-bottom:none; }
+.roadmap-badge { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.3rem 0.7rem; border-radius:6px; flex-shrink:0; margin-top:0.15rem; white-space:nowrap; }
+.roadmap-done   { background:var(--green-lt); color:var(--green); }
+.roadmap-active { background:var(--orange); color:var(--dark); }
+.roadmap-todo   { background:var(--gray-lt); color:var(--gray); }
+.roadmap-body { flex:1; }
+.roadmap-phase { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.75rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--gray); }
+.roadmap-title { font-family:'Barlow',sans-serif; font-weight:700; font-size:0.95rem; color:var(--ink); margin:0.1rem 0 0.25rem; }
+.roadmap-desc { font-family:'Barlow',sans-serif; font-size:0.82rem; color:var(--gray); line-height:1.5; }
+.roadmap-desc strong { color:var(--ink); font-weight:600; }
+.roadmap-cost { font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:1rem; color:var(--orange); text-align:right; flex-shrink:0; }
+
+/* COSTI */
+.costi-section { background:var(--white); margin:0.4rem 0; }
+.costi-header { background:var(--bg); padding:0.7rem 1.2rem; display:flex; justify-content:space-between; border-bottom:1px solid var(--gray-lt); }
+.costi-phase-label { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.85rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--blue); }
+.costi-row { display:flex; align-items:flex-start; padding:0.7rem 1.2rem; border-bottom:1px solid var(--gray-lt); gap:0.75rem; }
+.costi-row:last-child { border-bottom:none; }
+.costi-who { width:70px; flex-shrink:0; }
+.costi-who-badge { font-family:'Barlow',sans-serif; font-weight:700; font-size:0.58rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.2rem 0.5rem; border-radius:4px; white-space:nowrap; }
+.franki-badge { background:#E8ECF8; color:var(--blue); }
+.terzi-badge { background:#FFF3CD; color:#8B5E00; }
+.costi-desc { font-family:'Barlow',sans-serif; font-size:0.82rem; color:var(--gray); flex:1; line-height:1.4; }
+.costi-price { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.95rem; color:var(--ink); text-align:right; white-space:nowrap; flex-shrink:0; }
+.costi-price-free { color:var(--green); }
+.costi-total-row { background:var(--bg); padding:0.85rem 1.2rem; display:flex; justify-content:space-between; align-items:center; border-top:2px solid var(--ink); }
+.costi-total-label { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.9rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink); }
+.costi-total-val { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:1.3rem; color:var(--orange); }
+
+/* CLOSING */
+.closing-section { background:var(--white); padding:2rem 1.5rem; margin:0.4rem 0; }
+.closing-eyebrow { font-family:'Barlow',sans-serif; font-weight:600; font-size:0.65rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--orange); margin-bottom:0.5rem; display:flex; align-items:center; gap:0.5rem; }
+.closing-eyebrow::before { content:''; display:inline-block; width:16px; height:2px; background:var(--orange); }
+.closing-title { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:2rem; line-height:0.95; color:var(--ink); text-transform:uppercase; margin-bottom:1.2rem; }
+.closing-body { font-family:'Barlow',sans-serif; font-size:0.92rem; color:var(--gray); line-height:1.75; }
+.closing-body p { margin-bottom:1rem; }
+.closing-body p:last-child { margin-bottom:0; }
+.closing-body strong { color:var(--ink); font-weight:600; }
+.closing-firma { margin-top:1.5rem; padding-top:1.2rem; border-top:1px solid var(--gray-lt); display:flex; align-items:center; gap:1rem; }
+.franki-logo-closing { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:1.5rem; color:var(--blue); }
+.franki-logo-closing span { background:var(--orange); color:#fff; padding:0.1em 0.3em; border-radius:4px; }
+.closing-firma-text { font-family:'Barlow',sans-serif; font-size:0.78rem; color:var(--gray); line-height:1.5; }
+.closing-firma-text strong { color:var(--ink); }
+
+/* DARK CTA */
+.dark-cta { background:var(--dark); padding:3rem 1.5rem 2.5rem; text-align:center; }
+.dark-cta-title { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:2.8rem; line-height:0.95; text-transform:uppercase; color:#fff; margin-bottom:0.2rem; }
+.dark-cta-orange { color:var(--orange); display:block; }
+.dark-cta-sub { font-family:'Barlow',sans-serif; font-size:0.85rem; color:rgba(255,255,255,0.5); margin-top:0.8rem; line-height:1.6; }
+
+/* WATERMARK */
+.watermark-bar { background:var(--ink); padding:0.35rem 1.5rem; display:flex; justify-content:space-between; align-items:center; }
+.watermark-text { font-family:'Barlow',sans-serif; font-weight:700; font-size:0.58rem; letter-spacing:0.22em; text-transform:uppercase; color:rgba(255,255,255,0.35); }
+.watermark-text span { color:rgba(240,165,0,0.6); margin:0 0.5rem; }
+.riservato-stamp { display:inline-flex; align-items:center; gap:0.3rem; border:1.5px solid rgba(255,255,255,0.2); border-radius:4px; padding:0.15rem 0.5rem; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.6rem; letter-spacing:0.18em; text-transform:uppercase; color:rgba(255,255,255,0.3); }
+
+/* UTILS */
+.sp-sm { height:0.5rem; }
+.sp-md { height:1rem; }
+.sp-lg { height:1.5rem; }
+.body-text { font-family:'Barlow',sans-serif; font-size:0.9rem; color:var(--gray); line-height:1.65; padding:0.6rem 1.5rem 1rem; }
+.body-text strong { color:var(--ink); font-weight:600; }
+.timeline-line { border-left:3px solid var(--orange); margin:0 1.5rem; padding-left:1.2rem; }
+.timeline-year { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:1.1rem; color:var(--orange); margin-bottom:0.15rem; }
+.timeline-event { font-family:'Barlow',sans-serif; font-size:0.85rem; color:var(--gray); margin-bottom:1rem; line-height:1.5; }
+.timeline-event strong { color:var(--ink); font-weight:600; }
+.timeline-event:last-child { margin-bottom:0; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- WATERMARK TOP -->
+<div class="watermark-bar">
+  <div class="watermark-text">FranKi Studio · Avre Srl<span>·</span>frankistudio.it</div>
+  <div class="riservato-stamp">🔒 Riservato</div>
+</div>
+
+<!-- ALARM BANNER -->
+<div class="alarm-banner">
+  <div class="alarm-pulse"></div>
+  <div class="alarm-text">
+    Data Asta — Da Confermare
+    <span>Tribunale di Sulmona · Esec. Forz. N.43/16 · Lotto Unico</span>
+  </div>
+  <div class="alarm-badge">⏳ Verificare</div>
+</div>
+
+<!-- NAV -->
+<nav class="navbar">
+  <div class="navbar-brand">RCV<span>·ROCCARASO</span></div>
+  <div style="display:flex;align-items:center;gap:0.75rem;">
+    <div style="font-family:'Barlow',sans-serif;font-weight:700;font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--blue);border:1.5px solid var(--blue);border-radius:4px;padding:0.2rem 0.5rem;">🔒 Riservato</div>
+    <button class="navbar-btn">APRILE 2026</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="cross-bg">
+  <div class="hero">
+    <div class="hero-eyebrow">Esecuzione Forzata N.43/16 — Roccaraso (AQ) · Loc. Il Poggio</div>
+    <h1 class="hero-title">
+      ROCCARASO<br>
+      <span class="hero-title-orange">COUNTRY</span><br>
+      VILLAGE
+    </h1>
+    <p class="hero-sub">
+      Ex Soggiorno Montano Enel · SS17, Loc. Il Poggio, Roccaraso (AQ)<br>
+      3 palazzine · 46 appartamenti · 22 ettari di terreno<br>
+      Destinazione extralberghiera · Tribunale di Sulmona
+    </p>
+    <div class="tags">
+      <span class="tag tag-warn">⏳ Data asta da confermare</span>
+      <span class="tag">5.954 mq residenziale</span>
+      <span class="tag">46 appartamenti</span>
+      <span class="tag">219.239 mq terreni</span>
+      <span class="tag">1.236 m s.l.m.</span>
+      <span class="tag">Roccaraso (AQ)</span>
+    </div>
+    <button class="hero-cta">
+      DOSSIER DI CONSISTENZA E ANALISI STRATEGICA
+      <span class="hero-cta-sub">Perizia Suppletiva Rev. 3 · Ing. Mario Farina · Maggio 2021 · Tribunale di Sulmona</span>
+    </button>
+  </div>
+</div>
+
+<!-- KPI STRIP -->
+<div class="kpi-strip">
+  <div class="kpi-item">
+    <span class="kpi-val kpi-val-alarm">⏳ TBD</span>
+    <span class="kpi-label">data asta — da confermare</span>
+  </div>
+  <div class="kpi-item">
+    <span class="kpi-val kpi-val-orange">€ 6,07M</span>
+    <span class="kpi-label">base d'asta</span>
+  </div>
+  <div class="kpi-item">
+    <span class="kpi-val">46</span>
+    <span class="kpi-label">appartamenti · 3 palazzine</span>
+  </div>
+  <div class="kpi-item">
+    <span class="kpi-val kpi-val-alarm">≥ €607K</span>
+    <span class="kpi-label">cauzione minima (10% base d'asta)</span>
+  </div>
+</div>
+
+<!-- §01 STORIA -->
+<div class="sp-lg"></div>
+<div class="section-label">
+  <div class="section-eyebrow">§ 01 — Storia del Compendio</div>
+  <h2 class="section-title">DA ENEL<br>ALL'ABBANDONO</h2>
+</div>
+<div class="section-header-bar">
+  <div class="section-header-bar-left">📖 RICOSTRUZIONE STORICA — 1960–2026</div>
+  <div class="section-header-bar-num">01 / 07</div>
+</div>
+
+<div class="body-text">
+  La storia del Roccaraso Country Village è la storia di un welfare aziendale che non esiste più. Un complesso nato per dare riposo ai dipendenti Enel e alle loro famiglie, trasformato in asset di un ente pubblico, poi abbandonato per oltre un decennio, e oggi in attesa di un nuovo capitolo imprenditoriale. <strong>Capire questa storia significa capire perché l'immobile è in queste condizioni e quale potenziale reale ha.</strong>
+</div>
+
+<div style="background:var(--white);padding:1.2rem 1.5rem 1.5rem;margin:0;">
+  <div style="border-left:3px solid var(--orange);padding-left:1.2rem;">
+
+    <div class="timeline-year">Anni '60 — 1970</div>
+    <div class="timeline-event"><strong>Costruzione del Soggiorno Montano Enel.</strong> Il complesso viene realizzato dall'ENEL come struttura ricreativa e di soggiorno per i propri dipendenti e le loro famiglie. Roccaraso, a 1.236 metri sul livello del mare nel cuore degli Appennini abruzzesi, è la destinazione scelta per il suo clima, la vicinanza alle piste da sci e la qualità del territorio. Vengono costruite 3 palazzine residenziali per un totale di 46 appartamenti, 9 edifici di servizio, garages e parcheggi. Il complesso è circondato da oltre 22 ettari di bosco e pascolo.</div>
+
+    <div class="timeline-year">Anni '70 — 1990</div>
+    <div class="timeline-event"><strong>Periodo di piena attività.</strong> Il Soggiorno Montano Enel è pienamente operativo. Accoglie dipendenti e famiglie in estate per la montagna e in inverno per lo sci. Roccaraso è in quegli anni una delle mete sciistiche più frequentate del centro-sud Italia, con impianti che vengono progressivamente ampliati. Il complesso è gestito direttamente dall'azienda elettrica con personale dedicato.</div>
+
+    <div class="timeline-year">Anni '90 — 2005</div>
+    <div class="timeline-event"><strong>Crisi del welfare aziendale e progressivo abbandono.</strong> La liberalizzazione del mercato energetico e la ristrutturazione del gruppo Enel portano alla revisione di tutti gli asset non strategici. Le strutture ricreative aziendali vengono progressivamente dismesse in tutta Italia. Il Soggiorno Montano di Roccaraso riduce le attività fino alla chiusura definitiva. Il compendio resta fisicamente intatto ma viene progressivamente abbandonato senza manutenzione.</div>
+
+    <div class="timeline-year">2005 — 2016</div>
+    <div class="timeline-event"><strong>Trasferimento e inizio della procedura esecutiva.</strong> L'immobile passa di mano. Le difficoltà finanziarie del nuovo proprietario portano all'avvio di una procedura di esecuzione forzata presso il <strong>Tribunale di Sulmona</strong> — Esec. Forz. N.43/16. Il compendio viene sottoposto a perizia e messo all'asta. Anni di abbandono senza manutenzione hanno deteriorato le finiture ma non le strutture portanti.</div>
+
+    <div class="timeline-year">Maggio 2021</div>
+    <div class="timeline-event"><strong>Perizia Suppletiva Rev. 3 — Ing. Mario Farina.</strong> Il CTU deposita la perizia definitiva con valore lordo stimato di circa <strong>€ 13,5M</strong> e base d'asta fissata a <strong>€ 6.072.822</strong> — il 45% del valore peritale lordo. Permesso di Costruire n.35/2009 attivo per destinazione extralberghiera (L.R. 75/1995).</div>
+
+    <div class="timeline-year" style="color:var(--orange)">2026 — DATA ASTA DA CONFERMARE</div>
+    <div class="timeline-event"><strong>Opportunità in corso.</strong> FranKi Studio ha identificato il compendio come opportunità strategica di prima fascia nel segmento hospitality montagna centro-sud Italia. La data dell'asta è in corso di verifica presso il Tribunale di Sulmona.</div>
+
+  </div>
+</div>
+
+<div class="orange-band">
+  <div class="orange-band-text">🏔️ EX SOGGIORNO MONTANO ENEL: UN BRAND STORICO, UNA POSIZIONE UNICA, 22 ETTARI DI NATURA. IL POTENZIALE È INTATTO — LE STRUTTURE ASPETTANO UN NUOVO OPERATORE.</div>
+</div>
+
+<!-- §02 IDENTIFICAZIONE -->
+<div class="sp-lg"></div>
+<div class="section-label">
+  <div class="section-eyebrow">§ 02 — Identificazione e Posizione</div>
+  <h2 class="section-title">IL COMPENDIO<br>E IL TERRITORIO</h2>
+</div>
+<div class="section-header-bar">
+  <div class="section-header-bar-left">📍 LOCALIZZAZIONE E CATASTO</div>
+  <div class="section-header-bar-num">02 / 07</div>
+</div>
+<div class="cards-wrap">
+  <div class="card">
+    <div class="card-icon">📍</div>
+    <div>
+      <div class="card-title">Posizione e accesso</div>
+      <div class="card-text"><strong>SS17, Loc. Il Poggio, Roccaraso (AQ)</strong> — Municipalità di Roccaraso, Provincia dell'Aquila, Abruzzo. Quota: <strong>1.236 m s.l.m.</strong> Accesso diretto dalla Strada Statale 17. Distanza dal centro di Roccaraso: ~2 km. Distanza dagli impianti sciistici: ~3 km. Distanza da Roma: ~170 km (circa 2h30 di auto).</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-icon">🗺️</div>
+    <div>
+      <div class="card-title">Censimento catastale</div>
+      <div class="card-text">Catasto Fabbricati — Comune di Roccaraso. Mappali principali: <strong>801, 802, 803</strong> (palazzine residenziali) + mappali accessori per edifici di servizio, garages e pertinenze. Catasto Terreni — particelle boschive e pascolive per complessivi <strong>~219.239 mq</strong>.</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-icon">⚖️</div>
+    <div>
+      <div class="card-title">Procedura</div>
+      <div class="card-text"><strong>Esecuzione Forzata N.43/16</strong> — Tribunale di Sulmona. CTU: Ing. Mario Farina. Perizia Suppletiva Rev. 3 depositata <strong>Maggio 2021</strong>. Permesso di Costruire <strong>n.35/2009</strong> attivo — destinazione extralberghiera L.R. 75/1995. Data asta: <strong>da confermare</strong>.</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-icon">⛷️</div>
+    <div>
+      <div class="card-title">Contesto turistico</div>
+      <div class="card-text">Roccaraso è la <strong>principale stazione sciistica del centro-sud Italia</strong> con oltre 100 km di piste. Il comprensorio Aremogna-Cinque Miglia è frequentato da circa <strong>1,5 milioni di presenze annue</strong>. Stagione invernale (dic-mar) + estate (giu-set) con escursionismo, trekking e mountain bike. Domanda turistica in forte crescita post-Covid.</div>
+    </div>
+  </div>
+</div>
+
+<!-- §03 CONSISTENZA -->
+<div class="sp-lg"></div>
+<div class="section-label">
+  <div class="section-eyebrow">§ 03 — Consistenza e Superfici</div>
+  <h2 class="section-title">46 APPARTAMENTI<br>22 ETTARI</h2>
+</div>
+<div class="section-header-bar">
+  <div class="section-header-bar-left">📐 METRATURE CERTIFICATE DA PERIZIA CTU</div>
+  <div class="section-header-bar-num">03 / 07</div>
+</div>
+<div class="sp-sm"></div>
+<div class="table-section">
+  <div class="table-inner">
+    <table>
+      <thead><tr><th>Voce</th><th>Note</th><th style="text-align:right">Misura</th></tr></thead>
+      <tbody>
+        <tr><td class="td-blue">Palazzine residenziali</td><td><span class="td-small">Mappali 801, 802, 803 — 46 appartamenti</span></td><td class="td-orange">5.954 mq</td></tr>
+        <tr><td class="td-blue">Edifici di servizio</td><td><span class="td-small">9 fabbricati secondari — cucine, mensa, servizi</span></td><td class="td-orange">508 mq</td></tr>
+        <tr><td class="td-blue">Garages, parcheggi, cantine</td><td><span class="td-small">Pertinenze e depositi</span></td><td class="td-orange">3.622 mq</td></tr>
+        <tr><td class="td-blue">Terreni boschivi</td><td><span class="td-small">Bosco ceduo e d'alto fusto</span></td><td class="td-orange">~185.000 mq</td></tr>
+        <tr><td class="td-blue">Terreni a pascolo</td><td><span class="td-small">Pascolo e prato-pascolo</span></td><td class="td-orange">~34.239 mq</td></tr>
+        <tr><td class="td-blue">Totale terreni</td><td><span class="td-small">Superficie catastale complessiva</span></td><td class="td-orange">219.239 mq</td></tr>
+      </tbody>
+      <tfoot><tr><td colspan="2">SUPERFICIE EDIFICATA TOTALE (fabbricati)</td><td class="tfoot-orange">~10.084 mq</td></tr></tfoot>
+    </table>
+  </div>
+</div>
+<div class="callout">
+  <div class="callout-head">🏠 Composizione degli appartamenti</div>
+  <div class="callout-text">I <strong>46 appartamenti</strong> nelle 3 palazzine (mappali 801-803) sono di tipologia uniforme: bilocali e trilocali con dotazioni essenziali. Ogni palazzina ha ingressi indipendenti e scala comune. Le unità sono tutte di proprietà del compendio — nessun frazionamento in proprietà singole. <strong>Questo è un vantaggio operativo fondamentale</strong>: l'acquirente acquisisce il 100% del complesso con piena libertà gestionale.</div>
+</div>
+
+<!-- §04 STATO DEI LUOGHI -->
+<div class="sp-lg"></div>
+<div class="section-label">
+  <div class="section-eyebrow">§ 04 — Stato dei Luoghi</div>
+  <h2 class="section-title">STRUTTURE<br>E CONDIZIONI</h2>
+</div>
+<div class="section-header-bar">
+  <div class="section-header-bar-left">🔍 SOPRALLUOGO CTU — ING. MARIO FARINA 2021</div>
+  <div class="section-header-bar-num">04 / 07</div>
+</div>
+<div class="pal-wrap">
+  <div class="pal-card">
+    <div class="pal-card-header"><div class="pal-card-name">🏗️ Strutture portanti</div><div class="pal-card-num">CERTIFICATE INTEGRE</div></div>
+    <div class="pal-row"><div class="pal-key">Tipologia costruttiva</div><div class="pal-val">C.A. + muratura</div></div>
+    <div class="pal-row"><div class="pal-key">Strutture verticali e orizzontali</div><div class="pal-val"><span class="badge badge-ok">Integre</span></div></div>
+    <div class="pal-row"><div class="pal-key">Dissesti strutturali</div><div class="pal-val"><span class="badge badge-ok">Nessuno rilevato</span></div></div>
+    <div class="pal-total"><div class="pal-total-label">Attestazione CTU de visu</div><div class="pal-total-val">✅ Confermato</div></div>
+  </div>
+  <div class="pal-card">
+    <div class="pal-card-header"><div class="pal-card-name">🔧 Finiture e impianti</div><div class="pal-card-num">DA RIVEDERE/AGGIORNARE</div></div>
+    <div class="pal-row"><div class="pal-key">Impianti elettrici e termici</div><div class="pal-val"><span class="badge badge-warn">Da adeguare</span></div></div>
+    <div class="pal-row"><div class="pal-key">Finiture interne</div><div class="pal-val"><span class="badge badge-warn">Anni '80-'90</span></div></div>
+    <div class="pal-row"><div class="pal-key">Coperture e tetti</div><div class="pal-val"><span class="badge badge-warn">Verifica necessaria</span></div></div>
+    <div class="pal-row"><div class="pal-key">Stato generale</div><div class="pal-val"><span class="badge badge-warn">Abbandono ~20 anni</span></div></div>
+    <div class="pal-total"><div class="pal-total-label">Intervento necessario</div><div class="pal-total-val">Ristrutturazione completa</div></div>
+  </div>
+</div>
+<div class="callout">
+  <div class="callout-head">💡 La lettura corretta del dato</div>
+  <div class="callout-text">Il CTU attesta che le strutture portanti sono integre. Il deterioramento riguarda esclusivamente finiture e impianti — conseguenza di circa 20 anni di abbandono senza manutenzione ordinaria. <strong>Il costo di intervento è quello di una ristrutturazione completa, non di una ricostruzione.</strong> In un complesso di questa dimensione e con questa destinazione, la ristrutturazione è già prevista e valorizzata nei piani finanziari di qualsiasi operatore hospitality che acquisti un asset simile.</div>
+</div>
+
+<!-- §05 SITUAZIONE LEGALE -->
+<div class="sp-lg"></div>
+<div class="section-label">
+  <div class="section-eyebrow">§ 05 — Situazione Legale e Titoli</div>
+  <h2 class="section-title">TITOLI<br>E VINCOLI</h2>
+</div>
+<div class="section-header-bar">
+  <div class="section-header-bar-left">📋 FORMALITÀ DA PERIZIA CTU</div>
+  <div class="section-header-bar-num">05 / 07</div>
+</div>
+<div class="sp-sm"></div>
+<div class="table-section">
+  <div class="table-inner">
+    <table>
+      <thead><tr><th>Voce</th><th>Dettaglio</th><th>Stato</th></tr></thead>
+      <tbody>
+        <tr><td class="td-blue">Permesso di Costruire</td><td><span class="td-small">P.d.C. n.35/2009 — destinazione extralberghiera L.R. 75/1995</span></td><td><span class="badge badge-ok">ATTIVO</span></td></tr>
+        <tr><td class="td-blue">Gestione imprenditoriale</td><td><span class="td-small">Obbligatoria per legge — struttura ricettiva collettiva</span></td><td><span class="badge badge-warn">Requisito</span></td></tr>
+        <tr><td class="td-blue">Vincolo paesaggistico</td><td><span class="td-small">Area montana — Regione Abruzzo</span></td><td><span class="badge badge-warn">Da verificare</span></td></tr>
+        <tr><td class="td-blue">Vincolo boschivo</td><td><span class="td-small">Terreni boscati — disciplina regionale forestale</span></td><td><span class="badge badge-warn">Da verificare</span></td></tr>
+        <tr><td class="td-blue">Ipoteche e gravami</td><td><span class="td-small">Da perizia CTU — procedura esecutiva in corso</span></td><td><span class="badge badge-alert">Da verificare</span></td></tr>
+        <tr><td class="td-blue">Conformità urbanistica</td><td><span class="td-small">Verifica PRG Comune di Roccaraso</span></td><td><span class="badge badge-warn">Da completare</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="alert-box">
+  <div class="alert-box-head">⚠️ Elemento chiave — Gestione imprenditoriale obbligatoria</div>
+  <div class="alert-box-text">Il P.d.C. n.35/2009 autorizza la destinazione extralberghiera ai sensi della L.R. 75/1995 ma impone una <strong>struttura di gestione imprenditoriale obbligatoria</strong>. Questo significa che l'acquirente non può utilizzare il compendio come semplice proprietà privata: deve attivare una gestione ricettiva organizzata. È un vincolo che seleziona la tipologia di acquirente — ma è anche la ragione per cui il potenziale di valorizzazione è così elevato.</div>
+</div>
+
+<!-- §06 NORMATIVA -->
+<div class="sp-lg"></div>
+<div class="section-label">
+  <div class="section-eyebrow">§ 06 — Normativa e Destinazioni</div>
+  <h2 class="section-title">COSA SI PUÒ<br>FARE</h2>
+</div>
+<div class="section-header-bar">
+  <div class="section-header-bar-left">🏛️ P.D.C. N.35/2009 · L.R. 75/1995 ABRUZZO</div>
+  <div class="section-header-bar-num">06 / 07</div>
+</div>
+<div class="body-text">Il Permesso di Costruire attivo autorizza la <strong>destinazione extralberghiera</strong> regolata dalla L.R. 75/1995 della Regione Abruzzo. Le possibilità di sviluppo si articolano su più livelli.</div>
+<div class="cards-wrap">
+  <div class="card">
+    <div class="card-icon">🏨</div>
+    <div>
+      <div class="card-title">Resort / Aparthotel</div>
+      <div class="card-text">La configurazione degli appartamenti (46 unità autonome in 3 palazzine) è ideale per un formato <strong>aparthotel o resort montagna</strong>. Formula già collaudata in destinazioni alpine e appenniniche. Alta marginalità, bassa complessità operativa rispetto all'hotel tradizionale. <span class="badge badge-ok">Compatibile</span></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-icon">🌲</div>
+    <div>
+      <div class="card-title">Eco-resort / Wellness</div>
+      <div class="card-text">22 ettari di bosco e pascolo integrati nel compendio aprono a formule di <strong>eco-turismo, wellness retreat, glamping</strong> nelle aree verdi. Trend in fortissima crescita a livello internazionale. Roccaraso ha già la domanda — manca l'offerta di qualità. <span class="badge badge-ok">Compatibile</span></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-icon">🎿</div>
+    <div>
+      <div class="card-title">Residenze turistiche / Vacation rental</div>
+      <div class="card-text">Gli appartamenti possono essere gestiti come <strong>residenze turistiche</strong> con formula affitto stagionale o annuale. Mercato della seconda casa a Roccaraso è molto attivo — la domanda supera l'offerta di qualità. <span class="badge badge-ok">Compatibile</span></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-icon">🤝</div>
+    <div>
+      <div class="card-title">Corporate retreat / Colonie</div>
+      <div class="card-text">La storia del compendio come struttura aziendale Enel suggerisce una naturale vocazione per <strong>corporate retreat, team building, formazione residenziale</strong>. Mercato B2B con alta stabilità di domanda e contratti pluriennali. <span class="badge badge-ok">Compatibile</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- §07 STIMA -->
+<div class="sp-lg"></div>
+<div class="section-label">
+  <div class="section-eyebrow">§ 07 — Stima Peritale e Mercato</div>
+  <h2 class="section-title">I NUMERI<br>DELL'OPERAZIONE</h2>
+</div>
+<div class="section-header-bar">
+  <div class="section-header-bar-left">💶 PERIZIA ING. FARINA + DATI MERCATO 2025</div>
+  <div class="section-header-bar-num">07 / 07</div>
+</div>
+<div class="body-text">Il CTU ha applicato il <strong>metodo comparativo e del costo</strong> su un asset per il quale non esistono comparabili diretti nel mercato locale. Il valore lordo approssimativo di €13,5M riflette il potenziale del compendio a regime operativo.</div>
+<div class="sp-sm"></div>
+<div class="stima-wrap">
+  <div class="stima-row">
+    <div class="stima-label">Valore lordo peritale stimato<span class="stima-sub">Compendio a regime — fabbricati + terreni + permesso edilizio</span></div>
+    <div class="stima-val">~€ 13.500.000</div>
+  </div>
+  <div class="stima-row">
+    <div class="stima-label">Deprezzamento applicato<span class="stima-sub">Stato di abbandono, degrado finiture, adeguamento necessario</span></div>
+    <div class="stima-val deduct">–55%</div>
+  </div>
+</div>
+<div class="stima-total-row">
+  <div>
+    <div class="stima-total-label">BASE D'ASTA — LOTTO UNICO</div>
+    <span class="stima-total-sub">Perizia Suppletiva Rev.3 · Ing. Mario Farina · Maggio 2021 · Tribunale di Sulmona</span>
+  </div>
+  <div class="stima-total-val">€ 6.072.822</div>
+</div>
+
+<div class="sp-sm"></div>
+<div class="table-section">
+  <div class="table-inner">
+    <table>
+      <thead><tr><th>Benchmark</th><th>Fonte</th><th style="text-align:right">Valore</th></tr></thead>
+      <tbody>
+        <tr><td class="td-blue">Base d'asta</td><td><span class="td-small">Perizia CTU 2021</span></td><td class="td-red">€ 6.072.822</td></tr>
+        <tr><td class="td-blue">Valore lordo peritale</td><td><span class="td-small">Perizia CTU 2021</span></td><td class="td-orange">~€ 13.500.000</td></tr>
+        <tr><td class="td-blue">Prezzi resort montagna centro-sud</td><td><span class="td-small">Mercato hospitality 2025</span></td><td class="td-orange">€ 800–2.000/mq</td></tr>
+        <tr><td class="td-blue">ADR medio resort sci Appennino</td><td><span class="td-small">Dati settore 2025</span></td><td class="td-green">€ 80–150/notte</td></tr>
+        <tr><td class="td-blue">Occupancy media annua stimabile</td><td><span class="td-small">Stagioni inv+est</span></td><td class="td-green">45–60%</td></tr>
+      </tbody>
+      <tfoot><tr><td colspan="2">GAP BASE D'ASTA vs VALORE LORDO PERITALE</td><td class="tfoot-orange">–55%</td></tr></tfoot>
+    </table>
+  </div>
+</div>
+
+<div class="orange-band">
+  <div class="orange-band-text">📌 LA BASE D'ASTA È IL 45% DEL VALORE LORDO PERITALE. CON UN PIANO DI RISTRUTTURAZIONE MIRATO, IL DIFFERENZIALE DIVENTA VALORE PER L'INVESTITORE.</div>
+</div>
+
+<!-- DUE IPOTESI -->
+<div class="sp-lg"></div>
+<div class="section-label">
+  <div class="section-eyebrow">Un primo sguardo al potenziale</div>
+  <h2 class="section-title">DUE SCENARI<br>PRELIMINARI</h2>
+</div>
+<div class="blue-band">
+  <div class="blue-band-text">🏔️ QUESTI SONO I PRIMI DUE SCENARI. FRANKI STUDIO HA IDENTIFICATO ULTERIORI IPOTESI CHE SARANNO SVILUPPATE NELLA FASE F01.</div>
+</div>
+<div class="sp-sm"></div>
+<div class="ipotesi-wrap">
+
+  <div class="ipotesi-card">
+    <div class="ipotesi-header">
+      <div class="ipotesi-letter">A</div>
+      <div>
+        <div class="ipotesi-name">🏨 Aparthotel / Resort Montagna</div>
+        <div class="ipotesi-tagline">Ristrutturazione + gestione ricettiva diretta o in franchising</div>
+      </div>
+    </div>
+    <div class="ipotesi-body">
+      <div class="ipotesi-row"><div class="ipotesi-key">Unità ricettive attivabili (46 app. → camere/suite)</div><div class="ipotesi-val">40–46 unità</div></div>
+      <div class="ipotesi-row"><div class="ipotesi-key">ADR medio stimato (inverno/estate)</div><div class="ipotesi-val">€ 90–130/notte</div></div>
+      <div class="ipotesi-row"><div class="ipotesi-key">Occupancy annua stimata</div><div class="ipotesi-val">50–60%</div></div>
+      <div class="ipotesi-row"><div class="ipotesi-key">Investimento ristrutturazione stimato</div><div class="ipotesi-val ipotesi-val-red">€ 3,5–5,0M</div></div>
+      <div class="ipotesi-row"><div class="ipotesi-key">Ricavi annui lordi a regime</div><div class="ipotesi-val ipotesi-val-green">€ 1,8–2,8M/anno</div></div>
+      <div class="ipotesi-row"><div class="ipotesi-key">Rischio operativo</div><div class="ipotesi-val"><span class="badge badge-warn">Medio</span></div></div>
+    </div>
+    <div class="ipotesi-footer">
+      <div class="ipotesi-footer-label">Yield annuo stimato a regime</div>
+      <div class="ipotesi-footer-val">12–18%</div>
+    </div>
+  </div>
+
+  <div class="ipotesi-card">
+    <div class="ipotesi-header">
+      <div class="ipotesi-letter">B</div>
+      <div>
+        <div class="ipotesi-name">🏗️ Riqualificazione + Cessione</div>
+        <div class="ipotesi-tagline">Progetto + permessi → vendita a operatore specializzato</div>
+      </div>
+    </div>
+    <div class="ipotesi-body">
+      <div class="ipotesi-row"><div class="ipotesi-key">Valore lordo peritale — Ing. Farina 2021</div><div class="ipotesi-val">~€ 13,5M</div></div>
+      <div class="ipotesi-row"><div class="ipotesi-key">Gap base d'asta vs valore lordo</div><div class="ipotesi-val ipotesi-val-green">–55%</div></div>
+      <div class="ipotesi-row"><div class="ipotesi-key">Investimento progettazione e pratiche</div><div class="ipotesi-val ipotesi-val-red">€ 80–150K</div></div>
+      <div class="ipotesi-row"><div class="ipotesi-key">Valore cessione stimato (con concept approvato)</div><div class="ipotesi-val ipotesi-val-green">€ 8,0–11,0M</div></div>
+      <div class="ipotesi-row"><div class="ipotesi-key">Margine lordo stimato</div><div class="ipotesi-val ipotesi-val-green">€ 1,8–4,5M</div></div>
+      <div class="ipotesi-row"><div class="ipotesi-key">Orizzonte temporale</div><div class="ipotesi-val">24–36 mesi</div></div>
+    </div>
+    <div class="ipotesi-footer">
+      <div class="ipotesi-footer-label">ROI stimato sull'operazione</div>
+      <div class="ipotesi-footer-val">+30–75%</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- METODO FRANKI -->
+<div class="sp-lg"></div>
+<div class="section-label">
+  <div class="section-eyebrow">Note operative · FranKi Studio</div>
+  <h2 class="section-title">COME SI LAVORA<br>SU QUESTO ASSET</h2>
+</div>
+<div class="section-header-bar">
+  <div class="section-header-bar-left">📋 PROCESSO F00→F04 · METODO FRANKI</div>
+  <div class="section-header-bar-num">F00→F04</div>
+</div>
+<div class="body-text">FranKi Studio applica a ogni opportunità immobiliare un processo strutturato in fasi progressive, con output documentati, costi trasparenti e responsabilità chiare. L'investitore ha piena visibilità su cosa viene prodotto, da chi e a quale costo.</div>
+
+<div class="sp-sm"></div>
+<div class="roadmap-wrap">
+
+  <div class="roadmap-item">
+    <div><div class="roadmap-badge roadmap-done">✅ Completata</div></div>
+    <div class="roadmap-body">
+      <div class="roadmap-phase">F00 — Scouting & Consistenza</div>
+      <div class="roadmap-title">Acquisizione e analisi della perizia CTU</div>
+      <div class="roadmap-desc">Studio integrale della Perizia Suppletiva Rev.3 di Ing. Mario Farina. Estrazione di tutti i dati rilevanti: metrature, titoli edilizi, vincoli, stato conservativo, normativa urbanistica. Ricostruzione storica del compendio. Prima lettura del potenziale di mercato. <strong>Output: questo dossier.</strong></div>
+    </div>
+    <div class="roadmap-cost" style="color:var(--green)">Incluso</div>
+  </div>
+
+  <div class="roadmap-item">
+    <div><div class="roadmap-badge roadmap-active">🟠 In corso</div></div>
+    <div class="roadmap-body">
+      <div class="roadmap-phase">F01 — Analisi Scenari & Fattibilità</div>
+      <div class="roadmap-title">Sviluppo degli scenari di valorizzazione</div>
+      <div class="roadmap-desc">Ricerca approfondita di benchmark internazionali su resort montagna analoghi. Sviluppo completo di tutti gli scenari con simulazioni finanziarie dettagliate. Contatto con operatori hospitality specializzati per validare le ipotesi. Verifica della data d'asta presso il Tribunale di Sulmona. <strong>Richiede: architetto/urbanista per verifica titoli + tecnico per due diligence edifici.</strong></div>
+    </div>
+    <div class="roadmap-cost">€ 3.500–6.000</div>
+  </div>
+
+  <div class="roadmap-item">
+    <div><div class="roadmap-badge roadmap-todo">F02</div></div>
+    <div class="roadmap-body">
+      <div class="roadmap-phase">F02 — Strategia Legale & Gestione Asta</div>
+      <div class="roadmap-title">Piano operativo per la partecipazione all'asta</div>
+      <div class="roadmap-desc">Analisi giuridica della procedura esecutiva. Verifica dei vincoli paesaggistici e boschivi con tecnico specializzato. Contatto con il Curatore per verifica data e modalità di vendita. Costruzione dell'offerta competitiva. <strong>Richiede: avvocato specializzato in esecuzioni immobiliari.</strong></div>
+    </div>
+    <div class="roadmap-cost">€ 5.500–10.800</div>
+  </div>
+
+  <div class="roadmap-item">
+    <div><div class="roadmap-badge roadmap-todo">F03</div></div>
+    <div class="roadmap-body">
+      <div class="roadmap-phase">F03 — Strutturazione dell'Operazione</div>
+      <div class="roadmap-title">Dossier bancabile, montaggio credito, partner operativi</div>
+      <div class="roadmap-desc">Post-aggiudicazione. Produzione del dossier bancabile e del piano finanziario strutturato. Attivazione relazione con <strong>Banca Intesa Sanpaolo — Divisione Real Estate & Imprese</strong>. Ricerca operatori hospitality e co-investitori. Modellazione finanziaria completa (DCF, IRR). <strong>Richiede: avvocato + due diligence tecnica + advisor finanziario.</strong></div>
+    </div>
+    <div class="roadmap-cost">€ 12.000–24.500</div>
+  </div>
+
+  <div class="roadmap-item">
+    <div><div class="roadmap-badge roadmap-todo">F04</div></div>
+    <div class="roadmap-body">
+      <div class="roadmap-phase">F04 — Esecuzione & Closing</div>
+      <div class="roadmap-title">Acquisizione definitiva e avvio operativo</div>
+      <div class="roadmap-desc">Rogito, avvio lavori, contratti con operatori hospitality, gestione della fase di cantiere e apertura. Condizioni e compenso da definire in base allo scenario attivato.</div>
+    </div>
+    <div class="roadmap-cost">TBD</div>
+  </div>
+
+</div>
+
+<!-- TABELLA COSTI -->
+<div class="sp-md"></div>
+<div class="section-label" style="padding-top:0.5rem">
+  <div class="section-eyebrow">Trasparenza sui costi</div>
+  <h2 class="section-title" style="font-size:1.8rem">CHI FA COSA<br>E QUANTO COSTA</h2>
+</div>
+
+<!-- CALLOUT NOTA METODOLOGICA -->
+<div class="callout" style="margin-bottom:0.5rem">
+  <div class="callout-head">📐 Nota metodologica — Come sono stati determinati i costi</div>
+  <div class="callout-text">
+    <strong>Tutte le stime di costo riportate in questo documento sono state costruite su fonti oggettive e verificabili, non su valutazioni soggettive.</strong><br><br>
+    Le forbici indicate per le attività di terzi sono coerenti con le tariffe di mercato correnti, ricavate dall'incrocio di tre riferimenti: <strong>i parametri tariffari dei rispettivi Ordini professionali</strong>; <strong>le prassi consolidate del settore advisory immobiliare</strong> per operazioni di analoga complessità; <strong>i dati di mercato aggiornati a 2025–2026</strong>. Le stime dei servizi di comunicazione e marketing fanno riferimento ai listini correnti di agenzie del settore nel mercato italiano.<br><br>
+    <strong>Le forbici sono intenzionalmente ampie per riflettere la variabilità reale delle condizioni di mercato.</strong> I costi effettivi verranno definiti con preventivi firmati prima di ogni impegno. Nessuna voce viene attivata senza validazione esplicita dell'investitore.
+  </div>
+</div>
+
+<!-- CALLOUT LIQUIDITÀ -->
+<div class="callout" style="margin:0.5rem 1rem 0;">
+  <div class="callout-head">💰 Fondo operativo — quanto serve per sedersi al tavolo</div>
+  <div class="callout-text">Per partecipare all'asta con piena operatività, l'investitore deve disporre della seguente liquidità:
+    <br><br>
+    <table style="width:100%;border-collapse:collapse;">
+      <tbody>
+        <tr style="border-bottom:1px solid var(--gray-lt)"><td style="padding:0.5rem 0;font-size:0.82rem;color:var(--gray);">Cauzione obbligatoria — 10% base d'asta</td><td style="padding:0.5rem 0;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1rem;color:var(--ink);text-align:right;white-space:nowrap;">€ 607.282</td></tr>
+        <tr style="border-bottom:1px solid var(--gray-lt)"><td style="padding:0.5rem 0;font-size:0.82rem;color:var(--gray);">Spese legali F02 — avvocato + procedure</td><td style="padding:0.5rem 0;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1rem;color:var(--ink);text-align:right;white-space:nowrap;">€ 5.500–10.800</td></tr>
+        <tr style="border-bottom:1px solid var(--gray-lt)"><td style="padding:0.5rem 0;font-size:0.82rem;color:var(--gray);">Analisi e fattibilità F01 — tecnici e verifiche</td><td style="padding:0.5rem 0;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1rem;color:var(--ink);text-align:right;white-space:nowrap;">€ 3.500–6.000</td></tr>
+        <tr style="border-bottom:1px solid var(--gray-lt)"><td style="padding:0.5rem 0;font-size:0.82rem;color:var(--gray);">Buffer spese accessorie — notaio, visure, varie</td><td style="padding:0.5rem 0;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1rem;color:var(--ink);text-align:right;white-space:nowrap;">€ 5.000–8.000</td></tr>
+        <tr><td style="padding:0.7rem 0 0.2rem;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:0.85rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink);border-top:2px solid var(--ink);">Liquidità minima consigliata pre-asta</td><td style="padding:0.7rem 0 0.2rem;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.3rem;color:var(--orange);text-align:right;white-space:nowrap;border-top:2px solid var(--ink);">€ 621.282–632.082</td></tr>
+      </tbody>
+    </table>
+    <br>In caso di aggiudicazione la cauzione viene <strong>imputata al prezzo finale</strong>. In caso di mancata aggiudicazione viene <strong>restituita integralmente</strong>. Il saldo va corrisposto tipicamente entro <strong>60–90 giorni</strong> dall'aggiudicazione — finestra per strutturare il finanziamento con Banca Intesa Sanpaolo.
+  </div>
+</div>
+<div class="sp-sm"></div>
+
+<div class="body-text">Per ogni attività prevista, FranKi Studio distingue tra ciò che produce direttamente e ciò che richiede professionisti abilitati esterni.</div>
+
+<!-- F01 -->
+<div class="costi-section">
+  <div class="costi-header"><div class="costi-phase-label">🟠 F01 — Analisi Scenari & Fattibilità</div></div>
+  <div class="costi-row">
+    <div class="costi-who"><div class="costi-who-badge franki-badge">FranKi</div></div>
+    <div class="costi-desc">Ricerca benchmark internazionali resort montagna · Dossier scenari completo con ranking rendimento · Analisi normativa urbanistica e vincoli · Simulazioni finanziarie (DCF, IRR) · Verifica data asta Tribunale Sulmona</div>
+    <div class="costi-price costi-price-free">Incluso</div>
+  </div>
+  <div class="costi-row">
+    <div class="costi-who"><div class="costi-who-badge terzi-badge">Terzi</div></div>
+    <div class="costi-desc">Architetto/urbanista — verifica titoli edilizi, P.d.C. n.35/2009, vincoli paesaggistici e boschivi, conformità PRG Roccaraso</div>
+    <div class="costi-price">€ 2.500–4.500</div>
+  </div>
+  <div class="costi-row">
+    <div class="costi-who"><div class="costi-who-badge terzi-badge">Terzi</div></div>
+    <div class="costi-desc">Tecnico specializzato — due diligence edifici: verifica strutturale, stima costi di ristrutturazione, APE preliminare</div>
+    <div class="costi-price">€ 1.000–1.500</div>
+  </div>
+  <div class="costi-total-row"><div class="costi-total-label">Totale F01</div><div class="costi-total-val">€ 3.500–6.000</div></div>
+</div>
+
+<!-- F02 -->
+<div class="costi-section" style="margin-top:0.5rem">
+  <div class="costi-header"><div class="costi-phase-label">⬜ F02 — Strategia Legale & Asta</div></div>
+  <div class="costi-row">
+    <div class="costi-who"><div class="costi-who-badge franki-badge">FranKi</div></div>
+    <div class="costi-desc">Analisi procedura esecutiva · Contatto con Curatore per data e modalità vendita · Memo strategico per avvocato · Monitoraggio procedura Tribunale Sulmona</div>
+    <div class="costi-price costi-price-free">Incluso</div>
+  </div>
+  <div class="costi-row">
+    <div class="costi-who"><div class="costi-who-badge terzi-badge">Terzi</div></div>
+    <div class="costi-desc">Avvocato specializzato in esecuzioni immobiliari — analisi giuridica, strategia di partecipazione, predisposizione offerta</div>
+    <div class="costi-price">€ 2.500–5.000</div>
+  </div>
+  <div class="costi-row">
+    <div class="costi-who"><div class="costi-who-badge terzi-badge">Terzi</div></div>
+    <div class="costi-desc">Eventuale opposizione o istanza — se emergono vizi procedurali</div>
+    <div class="costi-price">€ 3.000–5.800</div>
+  </div>
+  <div class="costi-total-row"><div class="costi-total-label">Totale F02</div><div class="costi-total-val">€ 5.500–10.800</div></div>
+</div>
+
+<!-- F03 -->
+<div class="costi-section" style="margin-top:0.5rem">
+  <div class="costi-header"><div class="costi-phase-label">⬜ F03 — Strutturazione Operazione</div></div>
+  <div class="costi-row">
+    <div class="costi-who"><div class="costi-who-badge franki-badge">FranKi</div></div>
+    <div class="costi-desc">Coordinamento e supervisione della produzione del dossier bancabile formale · Ricerca operatori hospitality e co-investitori · Modellazione finanziaria avanzata (DCF, IRR)</div>
+    <div class="costi-price costi-price-free">Incluso</div>
+  </div>
+  <div class="costi-row" style="background:#F8F6F0;">
+    <div class="costi-who"><div class="costi-who-badge franki-badge">FranKi</div></div>
+    <div class="costi-desc"><strong>Documento strategico di pre-presentazione a Banca Intesa Sanpaolo</strong> — executive summary operazione, scenario finanziato, piano rimborso, rendimento, gestione del rischio. Prodotto prima dell'istruttoria formale.<br><small style="color:var(--orange);font-weight:600;">➕ Success fee pattuita a parte sull'eventuale delibera di finanziamento o leasing</small></div>
+    <div class="costi-price">€ 1.500–3.000</div>
+  </div>
+  <div class="costi-row">
+    <div class="costi-who"><div class="costi-who-badge franki-badge">FranKi</div></div>
+    <div class="costi-desc">Attivazione relazione con <strong>Banca Intesa Sanpaolo</strong> — Divisione Real Estate & Imprese — per montaggio finanziario: struttura del debito, valutazione LTV, identificazione prodotto di credito</div>
+    <div class="costi-price costi-price-free">Incluso</div>
+  </div>
+  <div class="costi-row">
+    <div class="costi-who"><div class="costi-who-badge terzi-badge">Terzi</div></div>
+    <div class="costi-desc">Struttura contrattuale e negoziazione — avvocato specializzato</div>
+    <div class="costi-price">€ 3.000–6.000</div>
+  </div>
+  <div class="costi-row">
+    <div class="costi-who"><div class="costi-who-badge terzi-badge">Terzi</div></div>
+    <div class="costi-desc">Due diligence tecnica approfondita — ingegnere/architetto abilitato su tutti gli edifici</div>
+    <div class="costi-price">€ 5.000–10.000</div>
+  </div>
+  <div class="costi-row">
+    <div class="costi-who"><div class="costi-who-badge terzi-badge">Terzi</div></div>
+    <div class="costi-desc">Advisor finanziario abilitato — formalizzazione pratica di credito e negoziazione condizioni con l'istituto</div>
+    <div class="costi-price">€ 1.500–3.500</div>
+  </div>
+  <div class="costi-row">
+    <div class="costi-who"><div class="costi-who-badge terzi-badge">Terzi</div></div>
+    <div class="costi-desc">Perizia bancaria indipendente — richiesta dall'istituto di credito per la valutazione dell'asset a garanzia</div>
+    <div class="costi-price">€ 2.000–4.000</div>
+  </div>
+  <div class="costi-total-row"><div class="costi-total-label">Totale F03</div><div class="costi-total-val">€ 13.000–26.500</div></div>
+</div>
+
+<!-- RIEPILOGO -->
+<div class="sp-sm"></div>
+<div class="table-section">
+  <div class="table-inner">
+    <table>
+      <thead><tr><th>Fase</th><th>FranKi</th><th>Terzi</th><th style="text-align:right">Totale</th></tr></thead>
+      <tbody>
+        <tr><td class="td-blue">F00 — Scouting</td><td><span class="badge badge-ok">Incluso</span></td><td><span class="td-small">—</span></td><td class="td-green">€ 0</td></tr>
+        <tr><td class="td-blue">F01 — Scenari</td><td><span class="badge badge-blue">Incluso</span></td><td><span class="td-small">€ 3.500–6.000</span></td><td class="td-orange">€ 3.500–6.000</td></tr>
+        <tr><td class="td-blue">F02 — Legale</td><td><span class="badge badge-blue">Incluso</span></td><td><span class="td-small">€ 5.500–10.800</span></td><td class="td-orange">€ 5.500–10.800</td></tr>
+        <tr><td class="td-blue">F03 — Struttura + Credito</td><td><span class="badge badge-blue">€1.500–3.000 dossier</span></td><td><span class="td-small">€ 11.500–23.500</span></td><td class="td-orange">€ 13.000–26.500</td></tr>
+      </tbody>
+      <tfoot><tr><td colspan="3">INVESTIMENTO DI PROCESSO TOTALE (F01→F03)</td><td class="tfoot-orange">€ 22.000–43.300</td></tr></tfoot>
+    </table>
+  </div>
+</div>
+
+<div class="callout">
+  <div class="callout-head">🏦 Leva finanziaria con Banca Intesa Sanpaolo</div>
+  <div class="callout-text">Su un'operazione da €6,07M, una struttura <strong>60/40</strong> (60% debito, 40% equity) significa circa <strong>€2,4M di capitale proprio</strong> e €3,6M finanziati. Questo apre la possibilità di strutturare l'operazione anche con un co-investitore per la quota equity, mantenendo la governance sull'asset.<br><br><strong>FranKi Studio remunera il proprio lavoro di advisory attraverso una quota fissa per fase attivata e una success fee sull'operazione conclusa.</strong></div>
+</div>
+
+<!-- MARKETING ADD-ON -->
+<div class="sp-lg"></div>
+<div class="section-label">
+  <div class="section-eyebrow">Servizi aggiuntivi · FranKi Studio</div>
+  <h2 class="section-title" style="font-size:2rem">QUANDO IL PROGETTO<br>PRENDE FORMA</h2>
+</div>
+<div class="section-header-bar">
+  <div class="section-header-bar-left">📣 MARKETING DIGITALE — ADD-ON F03/F04</div>
+  <div class="section-header-bar-num">Add-On</div>
+</div>
+<div class="body-text">Un resort di montagna da 46 unità su 22 ettari in una delle principali stazioni sciistiche del centro-sud Italia non si presenta con un annuncio standard. Ha bisogno di una narrazione, di immagini, di un concept comunicativo che attragga sia co-investitori che operatori hospitality. FranKi Studio produce internamente video, pitch deck, landing page, profili social e render — attivati <strong>solo se e quando si sceglie uno scenario di valorizzazione attiva.</strong></div>
+<div class="sp-sm"></div>
+<div class="table-section">
+  <div class="table-inner">
+    <table>
+      <thead><tr><th>Pacchetto</th><th>Contenuto</th><th style="text-align:right">Stima</th></tr></thead>
+      <tbody>
+        <tr><td class="td-blue">Base</td><td><span class="td-small">Landing page + pitch deck investitori + 1 video di progetto</span></td><td class="td-orange">€ 3.500–5.500</td></tr>
+        <tr><td class="td-blue">Standard</td><td><span class="td-small">Base + profili social (setup + 3 mesi) + render + dossier stampa</span></td><td class="td-orange">€ 6.500–10.000</td></tr>
+        <tr><td class="td-blue">Full</td><td><span class="td-small">Standard + gestione social 6 mesi + aggiornamenti in corso d'opera + 2° video avanzamento</span></td><td class="td-orange">€ 11.000–16.000</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- CLOSING -->
+<div class="sp-md"></div>
+<div class="closing-section">
+  <div class="closing-eyebrow">Note operative · FranKi Studio</div>
+  <div class="closing-title">PERCHÉ QUESTO<br>DOSSIER ESISTE</div>
+  <div class="closing-body">
+    <p>Il presente documento è stato prodotto da <strong>FranKi Studio</strong> nell'ambito di un'attività di scouting e analisi strategica su opportunità immobiliari in procedura esecutiva nel territorio italiano.</p>
+    <p>Il dossier ha richiesto l'acquisizione e lo studio integrale della Perizia Suppletiva Rev. 3 depositata al Tribunale di Sulmona dall'Ing. Mario Farina, la ricostruzione storica del compendio a partire dalle sue origini come struttura ricreativa Enel, l'analisi del mercato hospitality nella destinazione sciistica di Roccaraso e la costruzione di due prime ipotesi di valorizzazione. Si tratta di un lavoro preliminare che consente all'investitore di avere un quadro fondato <strong>prima ancora di avvicinarsi alla procedura d'asta.</strong></p>
+    <p><strong>Le due ipotesi illustrate in questo dossier sono una prima selezione.</strong> FranKi Studio ha identificato ulteriori scenari di sviluppo — con profili di rischio e rendimento differenti, incluse formule di partnership con operatori hospitality internazionali e strutture di crowdfunding immobiliare — che richiedono approfondimenti tecnici e verifiche specifiche. Questi approfondimenti sono l'oggetto della fase F01, in corso.</p>
+    <p>Il Roccaraso Country Village è un asset raro: un compendio unitario di grande dimensione in una destinazione turistica consolidata, con un titolo edilizio attivo e un valore peritale che più che raddoppia la base d'asta. <strong>La combinazione di posizione, dimensione e prezzo di ingresso non si trova facilmente nel mercato italiano.</strong></p>
+  </div>
+  <div class="closing-firma">
+    <div class="franki-logo-closing">Fran<span>Ki</span></div>
+    <div class="closing-firma-text">
+      <strong>FranKi Studio · Avre Srl</strong><br>
+      Analisi Strategica Immobiliare · Aprile 2026<br>
+      frankistudio.it
+    </div>
+  </div>
+</div>
+
+<!-- DARK CTA -->
+<div class="sp-md"></div>
+<div class="dark-cta">
+  <h2 class="dark-cta-title">
+    ROCCARASO<br>
+    <span class="dark-cta-orange">COUNTRY VILLAGE</span>
+  </h2>
+  <p class="dark-cta-sub">
+    Dossier Strategico · FranKi Studio<br>
+    Perizia Suppletiva Rev.3 · Ing. Mario Farina · Tribunale di Sulmona<br>
+    Esec. Forz. N.43/16 · Data Asta da Confermare<br>
+    <span style="color:rgba(240,165,0,0.7);font-weight:600;letter-spacing:0.1em;">🔒 DOCUMENTO RISERVATO · USO STRETTAMENTE PERSONALE</span><br>
+    <span style="font-size:0.72rem;">Riproduzione e distribuzione non autorizzate · FranKi Studio · Avre Srl · Aprile 2026</span>
+  </p>
+</div>
+
+<!-- WATERMARK BOTTOM -->
+<div class="watermark-bar">
+  <div class="watermark-text">Documento riservato · Uso strettamente personale<span>·</span>Aprile 2026</div>
+  <div class="riservato-stamp">🔒 Confidenziale</div>
+</div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RCV — Piano 30 Mesi</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blu:#2B38B0;--arancio:#F0A500;--grigio-bg:#F2F1ED;
+  --bianco:#FFFFFF;--nero:#111111;--testo:#1a1a2e;
+  --verde:#1a7a50;--rosso:#c0392b;
+  --c-legal:#6B21A8;--c-fin:#2B38B0;--c-build:#c27800;
+  --c-comm:#1a7a50;--c-social:#c0392b;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Barlow',sans-serif;background:var(--grigio-bg);color:var(--testo);max-width:680px;margin:0 auto;font-size:15px;line-height:1.6}
+
+.navbar{background:var(--blu);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.logo-fran{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;color:var(--bianco)}
+.logo-fran span{background:var(--arancio);padding:1px 6px;border-radius:4px}
+.logo-tagline{font-size:10px;color:rgba(255,255,255,.6);letter-spacing:.08em}
+.nav-doc{font-family:'Barlow Condensed',sans-serif;font-size:11px;color:rgba(255,255,255,.7);letter-spacing:.1em;text-transform:uppercase}
+
+.hero{background:var(--nero);color:var(--bianco);padding:40px 20px 36px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 40px,rgba(240,165,0,.03) 40px,rgba(240,165,0,.03) 41px)}
+.hero-kicker{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--arancio);margin-bottom:8px}
+.hero-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:44px;line-height:.92;text-transform:uppercase;margin-bottom:14px}
+.hero-title em{color:var(--arancio);font-style:normal;display:block}
+.hero-sub{font-size:13px;color:rgba(255,255,255,.65);line-height:1.7;max-width:500px}
+.div-orange{height:4px;background:var(--arancio)}
+
+.sh{background:var(--blu);color:var(--bianco);padding:11px 20px;display:flex;align-items:center;gap:10px;margin-top:16px}
+.sh-icon{font-size:16px}
+.sh-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;text-transform:uppercase;letter-spacing:.06em}
+.sh-badge{margin-left:auto;background:var(--arancio);color:var(--nero);font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;padding:2px 8px;border-radius:2px}
+
+/* PRINCIPIO */
+.principio{background:var(--arancio);padding:16px 20px;margin:2px 0}
+.principio h3{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;text-transform:uppercase;color:var(--nero);margin-bottom:8px}
+.principio p{font-size:13px;color:rgba(0,0,0,.8);line-height:1.65}
+
+/* KPI HERO */
+.kpi-4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:2px;margin:2px 0}
+.kpi-box{background:var(--bianco);padding:12px 14px}
+.kpi-label{font-family:'Barlow Condensed',sans-serif;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#aaa;margin-bottom:3px}
+.kpi-value{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:18px;line-height:1}
+.kpi-sub{font-size:10px;color:#bbb;margin-top:2px}
+
+/* LEGENDA */
+.legenda{background:var(--bianco);padding:12px 20px;margin:2px 0;display:flex;flex-wrap:wrap;gap:10px}
+.leg{display:flex;align-items:center;gap:5px;font-size:11px;color:#555}
+.leg-dot{width:12px;height:10px;border-radius:2px}
+
+/* GANTT CONTAINER */
+.gantt-wrap{background:var(--bianco);padding:0;margin:2px 0;overflow-x:auto}
+.gantt-inner{min-width:620px;padding:0}
+
+/* GANTT HEADER - mesi */
+.gantt-header{display:flex;background:var(--nero);padding:0 0 0 160px}
+.gantt-month{flex:1;min-width:18px;text-align:center;font-family:'Barlow Condensed',sans-serif;font-size:9px;color:rgba(255,255,255,.5);padding:6px 2px;letter-spacing:.04em;border-right:1px solid rgba(255,255,255,.06)}
+.gantt-month.milestone{background:rgba(240,165,0,.15);color:var(--arancio)}
+
+/* GANTT SEZIONE */
+.gantt-section{background:var(--nero);color:var(--bianco);padding:6px 10px 6px 10px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:10px;letter-spacing:.12em;text-transform:uppercase}
+
+/* GANTT ROW */
+.gantt-row{display:flex;align-items:center;border-bottom:1px solid #f5f5f2;min-height:30px}
+.gantt-row:hover{background:#fafaf8}
+.gantt-task-name{width:160px;min-width:160px;padding:4px 12px 4px 10px;font-size:11px;color:#444;line-height:1.3;flex-shrink:0;border-right:2px solid #eee}
+.gantt-bars{flex:1;position:relative;display:flex;height:30px;align-items:center}
+.gantt-cell{flex:1;height:100%;border-right:1px solid #f8f8f8;min-width:18px}
+.gantt-bar{position:absolute;height:12px;border-radius:2px;top:9px}
+
+/* MILESTONE */
+.milestone-line{position:absolute;top:0;bottom:0;width:2px;background:rgba(240,165,0,.6);z-index:10}
+.milestone-label{position:absolute;top:-18px;font-family:'Barlow Condensed',sans-serif;font-size:9px;color:var(--arancio);font-weight:700;white-space:nowrap;transform:translateX(-50%)}
+
+/* MILESTONE CARDS */
+.ms-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:16px 20px;background:var(--bianco);margin:2px 0}
+.ms-card{background:var(--grigio-bg);padding:12px;border-radius:2px;border-left:4px solid}
+.ms-mese{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px;line-height:1}
+.ms-nome{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;text-transform:uppercase;margin-bottom:3px}
+.ms-desc{font-size:11px;color:#777;line-height:1.5}
+
+/* FASI OPERATIVE */
+.fase-op{background:var(--bianco);margin:2px 0;overflow:hidden}
+.fase-op-head{padding:14px 20px;display:flex;gap:12px;align-items:flex-start;border-left:5px solid}
+.fase-op-badge{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;text-transform:uppercase;letter-spacing:.1em;padding:4px 10px;border-radius:2px;color:var(--bianco);flex-shrink:0;margin-top:2px}
+.fase-op-nome{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:18px;color:var(--testo);line-height:1.1}
+.fase-op-mesi{font-size:12px;color:#888;margin-top:2px}
+.fase-op-body{padding:0 20px 16px}
+.fase-op-body p{font-size:13px;color:#444;line-height:1.65;margin-bottom:8px}
+.task-list{margin-top:10px}
+.task-item{display:flex;gap:10px;padding:7px 0;border-bottom:1px solid #f5f5f2;align-items:flex-start}
+.task-item:last-child{border-bottom:none}
+.task-mese{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:10px;color:var(--arancio);flex-shrink:0;width:32px;text-align:right;padding-top:1px}
+.task-text{font-size:12px;color:#444;line-height:1.5}
+.task-text strong{color:var(--testo)}
+
+/* CAPEX TABLE */
+.capex-table{background:var(--nero);color:var(--bianco);padding:20px;margin:2px 0}
+.capex-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:14px;text-transform:uppercase;letter-spacing:.1em;color:var(--arancio);margin-bottom:14px}
+.capex-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.08);align-items:baseline}
+.capex-row:last-child{border-bottom:none;border-top:2px solid rgba(240,165,0,.4);margin-top:8px;padding-top:14px}
+.capex-label{font-size:13px;color:rgba(255,255,255,.7)}
+.capex-val{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;color:var(--bianco)}
+.capex-val.total{font-size:22px;color:var(--arancio)}
+
+/* REVENUE RAMP */
+.ramp{background:var(--bianco);padding:20px;margin:2px 0}
+.ramp h3{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:15px;text-transform:uppercase;color:var(--blu);margin-bottom:14px;border-bottom:2px solid var(--arancio);padding-bottom:6px}
+.ramp-bar-group{margin-bottom:12px}
+.ramp-label{display:flex;justify-content:space-between;font-size:12px;color:#666;margin-bottom:4px}
+.ramp-bg{height:22px;background:#f0f0f0;border-radius:3px;overflow:hidden}
+.ramp-fill{height:100%;border-radius:3px;display:flex;align-items:center;padding-left:8px}
+.ramp-fill-text{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:12px;color:var(--bianco)}
+
+/* CONFRONTO */
+.confronto{background:var(--grigio-bg);padding:16px 20px;margin:2px 0}
+.confronto h3{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:15px;text-transform:uppercase;color:var(--testo);margin-bottom:12px}
+.confront-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.cv{padding:14px;border-radius:3px}
+.cv-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px;font-weight:700}
+.cv-row{display:flex;justify-content:space-between;font-size:12px;padding:4px 0;border-bottom:1px solid rgba(0,0,0,.05)}
+.cv-row:last-child{border-bottom:none}
+.cv-k{color:#666}
+.cv-v{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px}
+
+/* DARK CTA */
+.dark-cta{background:var(--blu);color:var(--bianco);padding:28px 20px;margin-top:4px;text-align:center}
+.dark-cta h2{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:28px;text-transform:uppercase;margin-bottom:8px;line-height:.95}
+.dark-cta h2 span{color:var(--arancio)}
+.dark-cta p{font-size:12px;color:rgba(255,255,255,.5)}
+.disclaimer{background:#f7f7f5;padding:10px 20px;font-size:10px;color:#bbb;text-align:center;line-height:1.5}
+
+.fk-logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;line-height:1;display:inline-flex;align-items:center}
+.fk-logo .fran{color:#FFFFFF}
+.fk-logo .ki{background:#F0A500;color:#FFFFFF;border-radius:5px;padding:1px 7px;margin-left:2px;display:inline-block}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div>
+    <div class="fk-logo"><span class="fran">Fran</span><span class="ki">Ki</span></div>
+    <div class="logo-tagline">We Start Your Ideas</div>
+  </div>
+  <div class="nav-doc">RCV · Piano 30 Mesi</div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-kicker">RCV · Piano Operativo Accelerato · Aprile 2026</div>
+  <div class="hero-title">30 MESI<br>AL<br><em>REGIME.</em></div>
+  <div class="hero-sub">Tutto in parallelo. Niente sequenziale. Cantiere su 3 palazzine contemporaneamente, crowdfunding lanciato prima dell'asta, soci venduti durante il cantiere, bubble room nel bosco operative al mese 18. Dal closing al regime: 22 mesi di cantiere, 8 mesi di ramp-up, 30 mesi totali.</div>
+</div>
+<div class="div-orange"></div>
+
+<!-- KPI CHIAVE -->
+<div class="kpi-4">
+  <div class="kpi-box">
+    <div class="kpi-label">Mesi al regime</div>
+    <div class="kpi-value" style="color:var(--arancio)">30</div>
+    <div class="kpi-sub">dal closing</div>
+  </div>
+  <div class="kpi-box">
+    <div class="kpi-label">Keys al regime</div>
+    <div class="kpi-value" style="color:var(--blu)">68</div>
+    <div class="kpi-sub">62 hotel + 6 bubble</div>
+  </div>
+  <div class="kpi-box">
+    <div class="kpi-label">Revenue regime</div>
+    <div class="kpi-value" style="color:var(--verde)">€7M</div>
+    <div class="kpi-sub">anno pieno</div>
+  </div>
+  <div class="kpi-box">
+    <div class="kpi-label">Exit window</div>
+    <div class="kpi-value" style="color:var(--nero)">M48</div>
+    <div class="kpi-sub">valore €25-31M</div>
+  </div>
+</div>
+
+<!-- PRINCIPIO -->
+<div class="principio">
+  <h3>⚡ La Regola del Piano Accelerato</h3>
+  <p>Nel piano sequenziale si apriva una palazzina alla volta — 3 anni per completare le 3 palazzine. Nel piano accelerato si lavora <strong>su tutte e 3 contemporaneamente</strong>, con 3 squadre di cantiere parallele. Si perde l'autofinanziamento progressivo ma si guadagna 18 mesi di regime — che a €7M/anno significa €10,5M di revenue aggiuntiva. Il capex extra per la parallelizzazione (stimato +15%) è ampiamente ripagato dall'anticipo dei ricavi.</p>
+</div>
+
+<!-- LEGENDA -->
+<div class="legenda">
+  <div class="leg"><div class="leg-dot" style="background:var(--c-legal)"></div>Legale / Procedurale</div>
+  <div class="leg"><div class="leg-dot" style="background:var(--c-fin)"></div>Finanziario</div>
+  <div class="leg"><div class="leg-dot" style="background:var(--c-build)"></div>Cantiere / Costruzione</div>
+  <div class="leg"><div class="leg-dot" style="background:var(--c-comm)"></div>Commerciale / Soci</div>
+  <div class="leg"><div class="leg-dot" style="background:var(--c-social)"></div>Sociale / ESG</div>
+</div>
+
+<!-- GANTT -->
+<div class="sh">
+  <div class="sh-icon">📊</div>
+  <div class="sh-title">Il Gantt — 30 Mesi Task by Task</div>
+  <div class="sh-badge">piano operativo</div>
+</div>
+
+<div class="gantt-wrap">
+ <div class="gantt-inner">
+
+  <!-- HEADER MESI -->
+  <div class="gantt-header">
+    <div class="gantt-month">1</div><div class="gantt-month">2</div><div class="gantt-month">3</div>
+    <div class="gantt-month">4</div><div class="gantt-month">5</div>
+    <div class="gantt-month milestone">6★</div>
+    <div class="gantt-month">7</div><div class="gantt-month">8</div>
+    <div class="gantt-month milestone">9★</div>
+    <div class="gantt-month">10</div><div class="gantt-month">11</div><div class="gantt-month">12</div>
+    <div class="gantt-month">13</div><div class="gantt-month">14</div><div class="gantt-month">15</div>
+    <div class="gantt-month">16</div><div class="gantt-month">17</div>
+    <div class="gantt-month milestone">18★</div>
+    <div class="gantt-month">19</div><div class="gantt-month">20</div>
+    <div class="gantt-month milestone">21★</div>
+    <div class="gantt-month">22</div><div class="gantt-month">23</div><div class="gantt-month">24</div>
+    <div class="gantt-month">25</div><div class="gantt-month">26</div><div class="gantt-month">27</div>
+    <div class="gantt-month">28</div><div class="gantt-month">29</div>
+    <div class="gantt-month milestone">30★</div>
+  </div>
+
+  <!-- SEZIONE LEGALE -->
+  <div class="gantt-section" style="background:#2d0a5a;padding:5px 10px 5px 170px;font-size:9px;letter-spacing:.14em">⚖️ LEGALE / PROCEDURALE</div>
+
+  <!-- Avvocato esecuzioni -->
+  <div class="gantt-row">
+    <div class="gantt-task-name">Avvocato esecuzioni</div>
+    <div class="gantt-bars">
+      <div style="display:flex;width:100%;height:100%;align-items:center">
+        <div style="width:6.7%;background:var(--c-legal);height:12px;border-radius:2px;opacity:.9"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Due diligence legale -->
+  <div class="gantt-row">
+    <div class="gantt-task-name">Due diligence legale</div>
+    <div class="gantt-bars">
+      <div style="display:flex;width:100%;height:100%;align-items:center">
+        <div style="margin-left:3.3%;width:13.3%;background:var(--c-legal);height:12px;border-radius:2px"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCIA / permessi -->
+  <div class="gantt-row">
+    <div class="gantt-task-name">SCIA + permessi comunali</div>
+    <div class="gantt-bars">
+      <div style="display:flex;width:100%;height:100%;align-items:center">
+        <div style="margin-left:3.3%;width:20%;background:var(--c-legal);height:12px;border-radius:2px"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Asta + decreto -->
+  <div class="gantt-row">
+    <div class="gantt-task-name" style="color:var(--c-legal);font-weight:700">★ ASTA + DECRETO</div>
+    <div class="gantt-bars">
+      <div style="display:flex;width:100%;height:100%;align-items:center">
+        <div style="margin-left:16.7%;width:10%;background:var(--c-legal);height:16px;border-radius:2px;opacity:1"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- IDA Dark Sky -->
+  <div class="gantt-row">
+    <div class="gantt-task-name">Certificazione IDA Dark Sky</div>
+    <div class="gantt-bars">
+      <div style="display:flex;width:100%;height:100%;align-items:center">
+        <div style="margin-left:20%;width:23.3%;background:var(--c-legal);height:12px;border-radius:2px;opacity:.7"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Accordi sociali -->
+  <div class="gantt-row">
+    <div class="gantt-task-name">Accordi PA / cooperative sociali</div>
+    <div class="gantt-bars">
+      <div style="display:flex;width:100%;height:100%;align-items:center">
+        <div style="margin-left:23.3%;width:20%;background:var(--c-social);height:12px;border-radius:2px;opacity:.8"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEZIONE FINANZIARIA -->
+  <div class="gantt-section" style="background:#0a1a5a;padding:5px 10px 5px 170px;font-size:9px;letter-spacing:.14em">💶 FINANZIARIO</div>
+
+  <!-- SPV + struttura -->
+  <div class="gantt-row">
+    <div class="gantt-task-name">Strutturazione SPV</div>
+    <div class="gantt-bars">
+      <div style="display:flex;width:100%;height:100%;align-items:center">
+        <div style="width:10%;background:var(--c-fin);height:12px;border-radius:2px"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Crowdfunding launch -->
+  <div class="gantt-row">
+    <div class="gantt-task-name">Crowdfunding — raccolta</div>
+    <div class="gantt-bars">
+      <div style="display:flex;width:100%;height:100%;align-items:center">
+        <div style="margin-left:6.7%;width:16.7%;background:var(--c-fin);height:12px;border-radius:2px"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PNRR -->
+  <div class="gantt-row">
+    <div class="gantt-task-name">Domanda PNRR / bandi pubblici</div>
+    <div class="gantt-bars">
+      <div style="display:flex;width:100%;height:100%;align-items:center">
+        <div style="margin-left:3.3%;width:30%;background:var(--c-fin);height:12px;border-radius:2px;opacity:.8"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pre-vendita soci fondatori -->
+  <div class="gantt-row">
+    <div class="gantt-task-name">Pre-vendita soci fondatori</div>
+    <div class="gantt-bars">
+      <div style="display:flex;width:100%;height:100%;align-items:center">
+        <div style="margin-left:3.3%;width:56.7%;background:var(--c-fin);height:12px;border-radius:2px;opacity:.9"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PNRR erogazione -->
+  <div class="gantt-row">
+    <div class="gantt-task-name">PNRR — erogazione fondi</div>
+    <div class="gantt-bars">
+      <div style="display:flex;width:100%;height:100%;align-items:center">
+        <div style="margin-left:36.7%;width:20%;background:var(--c-fin);height:12px;border-radius:2px;opacity:.7"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEZIONE CANTIERE -->
+  <div class="gantt-section" style="background:#5a3200;padding:5px 10px 5px 170px;font-size:9px;letter-spacing:.14em">🏗️ CANTIERE / COSTRUZIONE</div>
+
+  <!-- Progettazione esecutiva -->
+  <div class="gantt-row">
+    <div class="gantt-task-name">Progettazione esecutiva (tutte)</div>
+    <div class="gantt-bars">
+      <div style="display:flex;width:100%;height:100%;align-items:center">
+        <div style="width:16.7%;background:var(--c-build);height:12px;border-radius:2px"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cantiere PAL 801 -->
+  <div class="gantt-row">
+    <div class="gantt-task-name">Cantiere Palazzina 801</div>
+    <div class="gantt-bars">
+      <div style="display:flex;width:100%;height:100%;align-items:center">
+        <div style="margin-left:23.3%;width:36.7%;background:var(--c-build);height:12px;border-radius:2px"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cantiere PAL 802 -->
+  <div class="gantt-row">
+    <div class="gantt-task-name">Cantiere Palazzina 802</div>
+    <div class="gantt-bars">
+      <div style="display:flex;width:100%;height:100%;align-items:center">
+        <div style="margin-left:26.7%;width:40%;background:var(--c-build);height:12px;border-radius:2px;opacity:.85"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cantiere PAL 803 -->
+  <div class="gantt-row">
+    <div class="gantt-task-name">Cantiere Palazzina 803</div>
+    <div class="gantt-bars">
+      <div style="display:flex;width:100%;height:100%;align-items:center">
+        <div style="margin-left:30%;width:40%;background:var(--c-build);height:12px;border-radius:2px;opacity:.75"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bubble rooms -->
+  <div class="gantt-row">
+    <div class="gantt-task-name" style="color:var(--arancio)">🫧 Bubble rooms (6)</div>
+    <div class="gantt-bars">
+      <div style="display:flex;width:100%;height:100%;align-items:center">
+        <div style="margin-left:23.3%;width:13.3%;background:#6B21A8;height:12px;border-radius:2px"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Spazi comuni + wellness hub -->
+  <div class="gantt-row">
+    <div class="gantt-task-name">Wellness hub + spazi comuni</div>
+    <div class="gantt-bars">
+      <div style="display:flex;width:100%;height:100%;align-items:center">
+        <div style="margin-left:33.3%;width:30%;background:var(--c-build);height:12px;border-radius:2px;opacity:.7"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Setup e arredo -->
+  <div class="gantt-row">
+    <div class="gantt-task-name">Arredo + setup tecnologico</div>
+    <div class="gantt-bars">
+      <div style="display:flex;width:100%;height:100%;align-items:center">
+        <div style="margin-left:53.3%;width:16.7%;background:var(--c-build);height:12px;border-radius:2px;opacity:.9"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEZIONE COMMERCIALE -->
+  <div class="gantt-section" style="background:#0a3a1a;padding:5px 10px 5px 170px;font-size:9px;letter-spacing:.14em">📣 COMMERCIALE / SOCI</div>
+
+  <!-- Dossier + teaser -->
+  <div class="gantt-row">
+    <div class="gantt-task-name">Dossier + teaser investitori</div>
+    <div class="gantt-bars">
+      <div style="display:flex;width:100%;height:100%;align-items:center">
+        <div style="width:100%;background:var(--c-comm);height:4px;border-radius:2px;opacity:.3"></div>
+        <div style="position:absolute;left:0;width:10%;background:var(--c-comm);height:12px;border-radius:2px"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scouting acquirenti/soci -->
+  <div class="gantt-row">
+    <div class="gantt-task-name">Scouting soci + investitori</div>
+    <div class="gantt-bars">
+      <div style="display:flex;width:100%;height:100%;align-items:center">
+        <div style="margin-left:3.3%;width:56.7%;background:var(--c-comm);height:12px;border-radius:2px"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Corporate network -->
+  <div class="gantt-row">
+    <div class="gantt-task-name">Corporate retreat — bookings</div>
+    <div class="gantt-bars">
+      <div style="display:flex;width:100%;height:100%;align-items:center">
+        <div style="margin-left:43.3%;width:56.7%;background:var(--c-comm);height:12px;border-radius:2px;opacity:.9"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bubble pre-booking -->
+  <div class="gantt-row">
+    <div class="gantt-task-name">Bubble rooms — pre-booking</div>
+    <div class="gantt-bars">
+      <div style="display:flex;width:100%;height:100%;align-items:center">
+        <div style="margin-left:40%;width:20%;background:#6B21A8;height:12px;border-radius:2px"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Soft opening -->
+  <div class="gantt-row">
+    <div class="gantt-task-name" style="color:var(--verde);font-weight:700">★ SOFT OPENING</div>
+    <div class="gantt-bars">
+      <div style="display:flex;width:100%;height:100%;align-items:center">
+        <div style="margin-left:56.7%;width:3.3%;background:var(--verde);height:16px;border-radius:2px"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Full opening -->
+  <div class="gantt-row">
+    <div class="gantt-task-name" style="color:var(--arancio);font-weight:700">★ FULL REGIME</div>
+    <div class="gantt-bars">
+      <div style="display:flex;width:100%;height:100%;align-items:center">
+        <div style="margin-left:96.7%;width:3.3%;background:var(--arancio);height:16px;border-radius:2px"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEZIONE SOCIALE -->
+  <div class="gantt-section" style="background:#5a0a0a;padding:5px 10px 5px 170px;font-size:9px;letter-spacing:.14em">🌱 SOCIALE / ESG</div>
+
+  <!-- Accordi PA -->
+  <div class="gantt-row">
+    <div class="gantt-task-name">Accordi ASL / Comuni / Coop.</div>
+    <div class="gantt-bars">
+      <div style="display:flex;width:100%;height:100%;align-items:center">
+        <div style="margin-left:23.3%;width:20%;background:var(--c-social);height:12px;border-radius:2px"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Carbon credits -->
+  <div class="gantt-row">
+    <div class="gantt-task-name">Certificazione FSC bosco</div>
+    <div class="gantt-bars">
+      <div style="display:flex;width:100%;height:100%;align-items:center">
+        <div style="margin-left:26.7%;width:26.7%;background:var(--c-social);height:12px;border-radius:2px;opacity:.8"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Programmi sociali -->
+  <div class="gantt-row" style="border-bottom:none">
+    <div class="gantt-task-name">Programmi sociali avvio</div>
+    <div class="gantt-bars">
+      <div style="display:flex;width:100%;height:100%;align-items:center">
+        <div style="margin-left:63.3%;width:36.7%;background:var(--c-social);height:12px;border-radius:2px;opacity:.9"></div>
+      </div>
+    </div>
+  </div>
+
+ </div>
+</div>
+
+<!-- MILESTONE CHIAVE -->
+<div class="sh">
+  <div class="sh-icon">🚩</div>
+  <div class="sh-title">I 5 Milestone Critici</div>
+  <div class="sh-badge">checkpoint</div>
+</div>
+
+<div class="ms-grid">
+  <div class="ms-card" style="border-color:var(--c-legal)">
+    <div class="ms-mese" style="color:var(--c-legal)">M6</div>
+    <div class="ms-nome" style="color:var(--c-legal)">Asta Vinta</div>
+    <div class="ms-desc">Decreto di trasferimento firmato. Accesso al compendio. Crowdfunding chiuso. Primo giorno di cantiere.</div>
+  </div>
+  <div class="ms-card" style="border-color:#6B21A8">
+    <div class="ms-mese" style="color:#6B21A8">M9</div>
+    <div class="ms-nome" style="color:#6B21A8">Bubble nel Bosco</div>
+    <div class="ms-desc">6 bubble rooms installate e operative. Primo revenue. Prima comunicazione pubblica del progetto.</div>
+  </div>
+  <div class="ms-card" style="border-color:var(--c-build)">
+    <div class="ms-mese" style="color:var(--c-build)">M18</div>
+    <div class="ms-nome" style="color:var(--c-build)">Wellness Hub Ready</div>
+    <div class="ms-desc">Spazi comuni completati: sauna, cold plunge, coworking, club lounge, sala eventi 80 pax. Primi corporate events.</div>
+  </div>
+  <div class="ms-card" style="border-color:var(--verde)">
+    <div class="ms-mese" style="color:var(--verde)">M21</div>
+    <div class="ms-nome" style="color:var(--verde)">Soft Opening</div>
+    <div class="ms-desc">Palazzina 801 completa (22 unità). Soci fondatori entrano. Revenue pieno da camere avviato. Target: 80 soci attivi.</div>
+  </div>
+  <div class="ms-card" style="border-color:var(--arancio);grid-column:span 2">
+    <div class="ms-mese" style="color:var(--arancio)">M30</div>
+    <div class="ms-nome" style="color:var(--arancio)">FULL REGIME — 68 Keys Operativi</div>
+    <div class="ms-desc">Tutte e 3 le palazzine completate. 68 keys totali (62 hotel + 6 bubble). 140+ soci. 12 corporate events/anno. Revenue run rate: €7M/anno. EBITDA: €2,3M. Asset value: €23M+. Apertura finestra di exit.</div>
+  </div>
+</div>
+
+<!-- CAPEX TOTALE UPFRONT -->
+<div class="sh">
+  <div class="sh-icon">💶</div>
+  <div class="sh-title">Il Capex — Tutto Upfront</div>
+  <div class="sh-badge">struttura finanziaria</div>
+</div>
+
+<div class="capex-table">
+  <div class="capex-title">Fabbisogno Totale — Piano Accelerato</div>
+  <div class="capex-row">
+    <span class="capex-label">Acquisizione (base asta stimata)</span>
+    <span class="capex-val">€6,5M</span>
+  </div>
+  <div class="capex-row">
+    <span class="capex-label">Ristrutturazione 3 palazzine parallele</span>
+    <span class="capex-val">€5,2M</span>
+  </div>
+  <div class="capex-row">
+    <span class="capex-label">6 Bubble rooms chiavi in mano</span>
+    <span class="capex-val">€540K</span>
+  </div>
+  <div class="capex-row">
+    <span class="capex-label">Wellness hub + spazi comuni</span>
+    <span class="capex-val">€600K</span>
+  </div>
+  <div class="capex-row">
+    <span class="capex-label">Arredo + setup tecnologico + telescopio</span>
+    <span class="capex-val">€480K</span>
+  </div>
+  <div class="capex-row">
+    <span class="capex-label">Legale + progettazione + contingency (10%)</span>
+    <span class="capex-val">€1,28M</span>
+  </div>
+  <div class="capex-row">
+    <span class="capex-label"><strong>CAPEX TOTALE</strong></span>
+    <span class="capex-val total"><strong>~€14,6M</strong></span>
+  </div>
+</div>
+
+<!-- COME SI FINANZIA -->
+<div style="background:var(--bianco);padding:20px;margin:2px 0">
+  <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:15px;text-transform:uppercase;color:var(--blu);margin-bottom:14px;border-bottom:2px solid var(--arancio);padding-bottom:6px">Come Si Finanzia il Piano Accelerato</div>
+
+  <div style="margin-bottom:10px">
+    <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+      <span style="font-size:13px;color:#444">💳 Quote ingresso soci fondatori (140 × €25K)</span>
+      <span style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:14px;color:var(--blu)">€3,5M</span>
+    </div>
+    <div style="height:8px;background:#f0f0f0;border-radius:4px"><div style="height:100%;width:24%;background:var(--blu);border-radius:4px"></div></div>
+  </div>
+
+  <div style="margin-bottom:10px">
+    <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+      <span style="font-size:13px;color:#444">🌐 Crowdfunding equity SPV</span>
+      <span style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:14px;color:#6B21A8">€4,5M</span>
+    </div>
+    <div style="height:8px;background:#f0f0f0;border-radius:4px"><div style="height:100%;width:31%;background:#6B21A8;border-radius:4px"></div></div>
+  </div>
+
+  <div style="margin-bottom:10px">
+    <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+      <span style="font-size:13px;color:#444">🏛️ PNRR + bandi pubblici (30% ristrutturazione)</span>
+      <span style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:14px;color:var(--verde)">€2,1M</span>
+    </div>
+    <div style="height:8px;background:#f0f0f0;border-radius:4px"><div style="height:100%;width:14%;background:var(--verde);border-radius:4px"></div></div>
+  </div>
+
+  <div style="margin-bottom:10px">
+    <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+      <span style="font-size:13px;color:#444">🤝 Equity partner / operatore hospitality</span>
+      <span style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:14px;color:var(--arancio)">€4,5M</span>
+    </div>
+    <div style="height:8px;background:#f0f0f0;border-radius:4px"><div style="height:100%;width:31%;background:var(--arancio);border-radius:4px"></div></div>
+  </div>
+
+  <div style="background:var(--grigio-bg);padding:10px 12px;border-radius:2px;margin-top:12px;display:flex;justify-content:space-between;align-items:center">
+    <span style="font-size:12px;color:#666">Totale finanziato</span>
+    <span style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:18px;color:var(--verde)">€14,6M ✓</span>
+  </div>
+</div>
+
+<!-- CURVA DI REVENUE -->
+<div class="sh">
+  <div class="sh-icon">📈</div>
+  <div class="sh-title">La Curva di Revenue — Mese per Mese</div>
+  <div class="sh-badge">proiezione</div>
+</div>
+
+<div class="ramp">
+  <h3>Revenue Run Rate per Periodo</h3>
+
+  <div class="ramp-bar-group">
+    <div class="ramp-label">
+      <span>M1-8 · Pre-apertura · Bubble only (M9)</span>
+      <span style="color:#888">€0 → €200K/anno</span>
+    </div>
+    <div class="ramp-bg">
+      <div class="ramp-fill" style="width:3%;background:#e0ddd8">
+        <span class="ramp-fill-text" style="color:#aaa"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="ramp-bar-group">
+    <div class="ramp-label">
+      <span>M9-20 · Bubble (6) + membership soci + pre-booking</span>
+      <span style="color:#6B21A8">~€1,2M/anno</span>
+    </div>
+    <div class="ramp-bg">
+      <div class="ramp-fill" style="width:14%;background:#6B21A8">
+        <span class="ramp-fill-text">€1,2M</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="ramp-bar-group">
+    <div class="ramp-label">
+      <span>M21-24 · Soft opening · 22 keys + bubble</span>
+      <span style="color:var(--verde)">~€3,2M/anno</span>
+    </div>
+    <div class="ramp-bg">
+      <div class="ramp-fill" style="width:37%;background:var(--verde)">
+        <span class="ramp-fill-text">€3,2M</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="ramp-bar-group">
+    <div class="ramp-label">
+      <span>M24-27 · 45 keys operativi + full corporate</span>
+      <span style="color:var(--c-build)">~€5,2M/anno</span>
+    </div>
+    <div class="ramp-bg">
+      <div class="ramp-fill" style="width:60%;background:var(--c-build)">
+        <span class="ramp-fill-text">€5,2M</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="ramp-bar-group">
+    <div class="ramp-label">
+      <span>M27-30 · 68 keys + programmi sociali avvio</span>
+      <span style="color:var(--blu)">~€6,2M/anno</span>
+    </div>
+    <div class="ramp-bg">
+      <div class="ramp-fill" style="width:71%;background:var(--blu)">
+        <span class="ramp-fill-text">€6,2M</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="ramp-bar-group">
+    <div class="ramp-label">
+      <span style="font-weight:700">M30+ · PIENO REGIME · 68 keys · 140 soci</span>
+      <span style="color:var(--arancio);font-weight:700">€7,0M/anno</span>
+    </div>
+    <div class="ramp-bg">
+      <div class="ramp-fill" style="width:100%;background:var(--nero)">
+        <span class="ramp-fill-text" style="color:var(--arancio)">€7,0M — EBITDA €2,3M</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONFRONTO SCENARI -->
+<div class="confronto">
+  <h3>Scenario Sequenziale vs Accelerato</h3>
+  <div class="confront-grid">
+    <div class="cv" style="background:var(--bianco)">
+      <div class="cv-label" style="color:#aaa">⏳ PIANO SEQUENZIALE</div>
+      <div class="cv-row"><span class="cv-k">Tempo al regime</span><span class="cv-v">48 mesi</span></div>
+      <div class="cv-row"><span class="cv-k">Capex upfront</span><span class="cv-v">€5-6M</span></div>
+      <div class="cv-row"><span class="cv-k">Revenue anno 3</span><span class="cv-v">€6,97M</span></div>
+      <div class="cv-row"><span class="cv-k">Revenue totale 4 anni</span><span class="cv-v">~€14M</span></div>
+      <div class="cv-row"><span class="cv-k">Exit window</span><span class="cv-v">Anno 5-7</span></div>
+      <div class="cv-row"><span class="cv-k">Rischio cantiere</span><span class="cv-v">Basso</span></div>
+    </div>
+    <div class="cv" style="background:var(--nero)">
+      <div class="cv-label" style="color:var(--arancio)">⚡ PIANO ACCELERATO</div>
+      <div class="cv-row" style="border-color:rgba(255,255,255,.1)"><span class="cv-k" style="color:rgba(255,255,255,.6)">Tempo al regime</span><span class="cv-v" style="color:var(--arancio)">30 mesi</span></div>
+      <div class="cv-row" style="border-color:rgba(255,255,255,.1)"><span class="cv-k" style="color:rgba(255,255,255,.6)">Capex upfront</span><span class="cv-v" style="color:var(--bianco)">€14,6M</span></div>
+      <div class="cv-row" style="border-color:rgba(255,255,255,.1)"><span class="cv-k" style="color:rgba(255,255,255,.6)">Revenue anno 3</span><span class="cv-v" style="color:var(--arancio)">€7,0M</span></div>
+      <div class="cv-row" style="border-color:rgba(255,255,255,.1)"><span class="cv-k" style="color:rgba(255,255,255,.6)">Revenue totale 4 anni</span><span class="cv-v" style="color:var(--arancio)">~€22M</span></div>
+      <div class="cv-row" style="border-color:rgba(255,255,255,.1)"><span class="cv-k" style="color:rgba(255,255,255,.6)">Exit window</span><span class="cv-v" style="color:var(--arancio)">Anno 3,5-5</span></div>
+      <div class="cv-row" style="border-color:rgba(255,255,255,.1)"><span class="cv-k" style="color:rgba(255,255,255,.6)">Rischio cantiere</span><span class="cv-v" style="color:var(--bianco)">Medio</span></div>
+    </div>
+  </div>
+  <div style="margin-top:12px;font-size:12px;color:#666;line-height:1.6;background:var(--bianco);padding:10px 14px;border-radius:2px">
+    <strong>Il vantaggio finanziario del piano accelerato:</strong> 18 mesi di anticipo al regime × €7M/anno = <strong>€10,5M di revenue aggiuntiva</strong> rispetto al piano sequenziale. Il capex extra per la parallelizzazione (+15% ≈ +€700K) è ripagato nel primo mese di operatività anticipata.
+  </div>
+</div>
+
+<!-- DARK CTA -->
+<div class="dark-cta">
+  <h2>M6 CLOSING.<br>M9 BUBBLE OPEN.<br><span>M30 REGIME.</span></h2>
+  <p>FranKi Studio · Piano Operativo Accelerato · Aprile 2026 · Uso interno riservato</p>
+</div>
+
+<div class="disclaimer">Simulazione basata su parametri di mercato reali. I tempi di cantiere presuppongono general contractor selezionato pre-asta e SCIA presentata entro M3. Variabili esterne (tribunale, meteo, forniture) potrebbero causare slittamenti di 4-8 settimane per fase. Uso interno riservato.</div>
+
+</body>
+</html>

@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brief Meeting Affio — 30 Aprile 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--blu:#2B38B0;--arancio:#F0A500;--grigio:#F2F1ED;--bianco:#FFFFFF;--nero:#111118;--verde:#0f6b30;--rosso:#b02020}
+body{font-family:'Barlow',sans-serif;background:var(--grigio);color:var(--nero);max-width:700px;margin:0 auto;font-size:19px;line-height:1.75}
+nav{background:var(--blu);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.fk-logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:24px;display:inline-flex;align-items:center}
+.fk-logo .fran{color:#fff}
+.fk-logo .ki{background:#F0A500;color:#fff;border-radius:5px;padding:1px 8px;margin-left:2px}
+.nav-label{color:rgba(255,255,255,0.6);font-size:13px;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.hero{background:var(--blu);padding:28px 24px 22px;border-bottom:3px solid var(--arancio)}
+.hero-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:14px}
+.hero-tag{display:inline-block;background:var(--arancio);color:#fff;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:12px;letter-spacing:2px;text-transform:uppercase;padding:5px 12px;border-radius:3px}
+.hero-data{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;color:rgba(255,255,255,0.5);letter-spacing:1px;text-align:right;line-height:1.6}
+.hero h1{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:46px;color:#fff;text-transform:uppercase;line-height:1;margin-bottom:6px}
+.hero h1 span{color:var(--arancio)}
+.hero-sub{color:rgba(255,255,255,0.45);font-size:14px;font-weight:300}
+.istruzione{background:var(--arancio);padding:12px 24px;font-size:14px;color:#fff;font-weight:500;display:flex;align-items:center;gap:8px}
+.punto{background:var(--bianco);margin-bottom:3px;overflow:hidden}
+.punto-header{padding:18px 24px;border-bottom:2px solid var(--grigio);display:flex;align-items:flex-start;justify-content:space-between;gap:14px}
+.punto-left{display:flex;align-items:flex-start;gap:16px;flex:1}
+.punto-num{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:40px;line-height:1;min-width:48px;padding-top:2px}
+.p-red .punto-num{color:var(--rosso)}
+.p-orange .punto-num{color:var(--arancio)}
+.p-green .punto-num{color:var(--verde)}
+.punto-titolo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px;text-transform:uppercase;letter-spacing:.5px;color:var(--nero);margin-bottom:3px;line-height:1.2}
+.punto-sub{font-size:12px;color:#999;text-transform:uppercase;letter-spacing:1px;font-family:'Barlow Condensed',sans-serif;font-weight:700}
+.check-wrap{display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0}
+.check-box{width:36px;height:36px;border:2px solid #ddd;border-radius:4px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:20px;transition:all .2s;background:#fff;user-select:none}
+.check-box.ok{background:var(--verde);border-color:var(--verde);color:#fff}
+.check-label{font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#bbb;font-family:'Barlow Condensed',sans-serif;font-weight:700}
+.punto-corpo{padding:20px 24px 4px}
+.punto-corpo p{font-size:19px;color:#222;line-height:1.75;margin-bottom:14px}
+.punto-corpo p:last-child{margin-bottom:0}
+.punto-corpo strong{color:var(--nero);font-weight:500}
+.punto-corpo ul{margin:10px 0 14px 22px}
+.punto-corpo ul li{font-size:19px;color:#222;line-height:1.75;margin-bottom:6px}
+.highlight{background:#fff8e1;border-left:4px solid var(--arancio);padding:14px 18px;margin:14px 0;border-radius:0 4px 4px 0}
+.highlight p{font-size:17px;color:#5a3a00;margin:0;line-height:1.65}
+.info-blu{background:#eef1ff;border-left:4px solid var(--blu);padding:14px 18px;margin:14px 0;border-radius:0 4px 4px 0}
+.info-blu p{font-size:17px;color:#1a237e;margin:0;line-height:1.65}
+.forn-strip{background:var(--grigio);padding:14px 18px;margin:14px 0;border-left:4px solid var(--verde)}
+.forn-strip-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:14px;letter-spacing:1.5px;text-transform:uppercase;color:var(--verde);margin-bottom:6px}
+.forn-strip p{font-size:17px;color:#333;line-height:1.65;margin:0}
+.anna-card{background:var(--blu);padding:16px 18px;margin:14px 0;display:flex;align-items:center;gap:16px}
+.anna-ico{font-size:36px}
+.anna-name{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;color:#fff;letter-spacing:.5px;margin-bottom:3px}
+.anna-role{font-size:14px;color:rgba(255,255,255,0.6);margin-bottom:8px}
+.anna-badge{display:inline-block;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:3px;background:var(--arancio);color:#fff}
+.anna-nota{font-size:13px;color:rgba(255,255,255,0.45);margin-top:6px;font-style:italic}
+.link-doc{background:var(--grigio);border:1.5px solid var(--blu);border-radius:5px;padding:12px 16px;margin:10px 0;display:flex;align-items:center;gap:12px;text-decoration:none}
+.link-doc-ico{font-size:22px;flex-shrink:0}
+.link-doc-label{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:#888;margin-bottom:2px}
+.link-doc-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;color:var(--blu);text-transform:uppercase;letter-spacing:.5px}
+.link-doc-url{font-size:12px;color:#888;margin-top:2px}
+.link-doc-arrow{margin-left:auto;font-size:20px;color:var(--blu);flex-shrink:0}
+.quota-table{width:100%;border-collapse:collapse;margin:14px 0}
+.quota-table th{background:var(--blu);color:#fff;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;padding:10px 14px;text-align:left}
+.quota-table td{padding:10px 14px;border-bottom:1px solid var(--grigio);font-size:17px}
+.quota-table tr:last-child td{border-bottom:none;font-weight:500;background:var(--grigio)}
+.quota-table .td-val{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:18px}
+.td-pos{color:var(--verde)}.td-neg{color:var(--rosso)}.td-blu{color:var(--blu)}
+.step-mec{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--grigio);align-items:flex-start}
+.step-mec:last-child{border-bottom:none}
+.step-mec-num{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:32px;color:var(--arancio);line-height:1;min-width:36px}
+.step-mec-title{font-weight:500;font-size:17px;color:var(--nero);margin-bottom:4px}
+.step-mec-desc{font-size:16px;color:#555;line-height:1.65}
+.step-mec-val{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;color:var(--verde);margin-top:5px}
+.campo-wrap{padding:16px 24px;background:var(--grigio);border-top:1px solid #e0e0e0}
+.campo-label{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:#888;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.campo-label span{background:var(--arancio);color:#fff;font-size:10px;padding:2px 7px;border-radius:2px;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:1px}
+.campo-input{width:100%;border:1.5px solid #ddd;border-radius:4px;padding:12px 14px;font-family:'Barlow',sans-serif;font-size:17px;color:var(--nero);background:#fff;resize:none;min-height:50px;transition:border-color .2s;line-height:1.5}
+.campo-input:focus{outline:none;border-color:var(--blu)}
+.campo-input::placeholder{color:#bbb}
+.campo-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.domanda-finale{background:var(--nero);padding:18px 24px;margin-bottom:2px}
+.df-label{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:14px;text-transform:uppercase;letter-spacing:1px;color:var(--arancio);margin-bottom:8px}
+.df-testo{font-size:17px;color:rgba(255,255,255,0.7);line-height:1.65;margin-bottom:12px}
+.df-input{width:100%;border:1.5px solid rgba(255,255,255,0.15);border-radius:4px;padding:12px 14px;font-family:'Barlow',sans-serif;font-size:17px;color:#fff;background:rgba(255,255,255,0.06);resize:none;min-height:50px;transition:border-color .2s;line-height:1.5}
+.df-input:focus{outline:none;border-color:var(--arancio)}
+.df-input::placeholder{color:rgba(255,255,255,0.25)}
+.non-tirare{background:#f8d7da;border-left:4px solid var(--rosso);padding:18px 24px;margin-bottom:3px}
+.non-tirare h3{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;text-transform:uppercase;letter-spacing:1px;color:var(--rosso);margin-bottom:10px}
+.non-tirare ul{margin-left:18px}
+.non-tirare ul li{font-size:17px;color:#721c24;margin-bottom:6px;line-height:1.65}
+.obiettivo{background:var(--blu);padding:18px 24px;text-align:center}
+.obiettivo p{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px;color:#fff;text-transform:uppercase;letter-spacing:1px}
+.obiettivo p span{color:var(--arancio)}
+.footer{background:var(--nero);padding:18px 24px;text-align:center}
+.footer p{color:rgba(255,255,255,0.35);font-size:13px;margin-top:6px}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="fk-logo"><span class="fran">Fran</span><span class="ki">Ki</span></div>
+  <span class="nav-label">Brief Meeting &middot; Affio &middot; 30 APR 2026</span>
+</nav>
+
+<div class="hero">
+  <div class="hero-top">
+    <div class="hero-tag">Verbale di Preparazione</div>
+    <div class="hero-data">30 APR 2026<br>ORE 17:00</div>
+  </div>
+  <h1>Meeting <span>Affio</span></h1>
+  <div style="margin-top:16px;padding:16px 0 4px">
+    <div style="font-family:'Barlow',sans-serif;font-weight:300;font-size:20px;color:#fff;line-height:1.6;animation:blink 2.5s ease-in-out infinite;text-shadow:0 0 20px rgba(240,165,0,0.6)">
+      1° Domanda Affio &mdash; Mood:<br>Affio, controlla se ti &egrave; arrivato il primo bonifico da &euro;25.000,00 &#128513;
+    </div>
+  </div>
+  <style>
+    @keyframes blink{0%,100%{opacity:1}40%,60%{opacity:0.15}}
+  </style>
+</div>
+
+<div class="istruzione">
+  Clicca il quadrato a destra per segnare ogni punto come trattato &middot; Compila i campi con le risposte di Affio
+</div>
+
+<!-- 01 -->
+<div class="punto p-red">
+  <div class="punto-header">
+    <div class="punto-left">
+      <div class="punto-num">01</div>
+      <div>
+        <div class="punto-titolo">Il punto di partenza</div>
+        <div class="punto-sub">Cosa sta succedendo &mdash; spiegare dall'inizio</div>
+      </div>
+    </div>
+    <div class="check-wrap"><div class="check-box" onclick="toggleCheck(this)"></div><div class="check-label">OK</div></div>
+  </div>
+  <div class="punto-corpo">
+    <p>FranKi ha trovato un complesso abbandonato a Roccaraso, in Abruzzo &mdash; tre palazzine nel bosco, 46 appartamenti, 22 ettari di terreno. Era dell'ENEL, chiuso dagli anni '90. Oggi &egrave; in vendita forzata al Tribunale di Sulmona.</p>
+    <p>Il perito del tribunale lo ha valutato <strong>&euro;13,5 milioni</strong>. L'asta &egrave; andata deserta due volte. La prossima &egrave; a settembre/ottobre 2026 con una base stimata di circa <strong>&euro;900.000</strong> &mdash; uno sconto del 93% sul valore ufficiale. FranKi ha costruito il piano completo e oggi propone ad Affio di farne parte da co-fondatore.</p>
+  </div>
+  <div class="campo-wrap">
+    <div class="campo-label">Reazione di Affio <span>DA COMPILARE</span></div>
+    <textarea class="campo-input" placeholder="Come reagisce alla notizia? Ha domande sulla procedura o sul tribunale?" rows="2"></textarea>
+  </div>
+</div>
+
+<!-- 02 -->
+<div class="punto p-red">
+  <div class="punto-header">
+    <div class="punto-left">
+      <div class="punto-num">02</div>
+      <div>
+        <div class="punto-titolo">L'idea &mdash; cosa ci si fa</div>
+        <div class="punto-sub">Il concept de Il Poglio</div>
+      </div>
+    </div>
+    <div class="check-wrap"><div class="check-box" onclick="toggleCheck(this)"></div><div class="check-label">OK</div></div>
+  </div>
+  <div class="punto-corpo">
+    <p>Il piano &egrave; trasformare il complesso nel <strong>primo club privato di montagna dell'Appennino centrale</strong>. Non un hotel &mdash; un club dove si entra solo su invito. Si paga una quota annua, si viene per staccare completamente: bosco, silenzio, sauna, cielo buio. Sei strutture trasparenti nel bosco con jacuzzi privata e telescopio. Una sala per eventi aziendali riservati.</p>
+    <p>Il mercato: Roma e Napoli, 20 milioni di persone a 2 ore di distanza. Niente di simile esiste nel raggio di centinaia di chilometri. Il brand si chiama <strong>Il Poglio</strong> &mdash; dal nome originale del posto.</p>
+    <div class="highlight"><p>Aprire la presentazione sul telefono o portatile e lasciarlo scorrere in silenzio &mdash; le immagini e i numeri parlano da soli.</p></div>
+    <a class="link-doc" href="https://frankistudio.it/affio/rcv/POGLIO_Presentazione_Soci.html" target="_blank" rel="noopener noreferrer">
+      <div class="link-doc-ico">&#128241;</div>
+      <div class="link-doc-info">
+        <div class="link-doc-label">Aprire ora</div>
+        <div class="link-doc-title">Presentazione Il Poglio &mdash; per Affio</div>
+        <div class="link-doc-url">frankistudio.it/affio/rcv/POGLIO_Presentazione_Soci.html</div>
+      </div>
+      <div class="link-doc-arrow">&rarr;</div>
+    </a>
+  </div>
+  <div class="campo-wrap">
+    <div class="campo-label">Reazione al concept <span>DA COMPILARE</span></div>
+    <textarea class="campo-input" placeholder="Il concept lo convince? Ha riserve sul mercato o sul posizionamento?" rows="2"></textarea>
+  </div>
+</div>
+
+<!-- 03 -->
+<div class="punto p-red">
+  <div class="punto-header">
+    <div class="punto-left">
+      <div class="punto-num">03</div>
+      <div>
+        <div class="punto-titolo">La finestra temporale</div>
+        <div class="punto-sub">Settembre &egrave; vicino &mdash; non c'&egrave; margine</div>
+      </div>
+    </div>
+    <div class="check-wrap"><div class="check-box" onclick="toggleCheck(this)"></div><div class="check-label">OK</div></div>
+  </div>
+  <div class="punto-corpo">
+    <p>L'asta &egrave; a settembre o ottobre 2026. Mancano 5 mesi. Prima dell'asta bisogna trovare l'avvocato, costituire la HoldCo, trovare e far firmare i 6 soci, fare la due diligence sull'immobile e depositare l'offerta formale.</p>
+    <p>La cordata va chiusa <strong>entro giugno al massimo</strong>. Non c'&egrave; margine per rimandare &mdash; ogni settimana persa &egrave; una settimana in meno per fare le cose bene.</p>
+    <div class="highlight"><p>Due aste gi&agrave; deserte significa che siamo i soli interessati seri. <strong>Ma questa finestra si chiude a settembre.</strong></p></div>
+    <a class="link-doc" href="https://frankistudio.it/affio/rcv/brief/RCV_Gantt.html" target="_blank" rel="noopener noreferrer">
+      <div class="link-doc-ico">&#128197;</div>
+      <div class="link-doc-info">
+        <div class="link-doc-label">Mostrare la roadmap completa</div>
+        <div class="link-doc-title">Gantt &mdash; Timeline APR26 &rarr; NOV30</div>
+        <div class="link-doc-url">frankistudio.it/affio/rcv/RCV_Gantt.html</div>
+      </div>
+      <div class="link-doc-arrow">&rarr;</div>
+    </a>
+  </div>
+  <div class="campo-wrap">
+    <div class="campo-label">Sente l'urgenza? Ha impegni che rallentano? <span>DA COMPILARE</span></div>
+    <textarea class="campo-input" placeholder="Note sui tempi e disponibilita di Affio..." rows="2"></textarea>
+  </div>
+</div>
+
+<!-- 03b IL FILM -->
+<div class="punto p-red">
+  <div class="punto-header">
+    <div class="punto-left">
+      <div class="punto-num">03b</div>
+      <div>
+        <div class="punto-titolo">Il Film — mostrare il percorso completo</div>
+        <div class="punto-sub">Dall'inizio alla fine &middot; 25 passi &middot; APR26 &rarr; NOV30</div>
+      </div>
+    </div>
+    <div class="check-wrap"><div class="check-box" onclick="toggleCheck(this)"></div><div class="check-label">OK</div></div>
+  </div>
+  <div class="punto-corpo">
+    <p>Dopo aver spiegato l'urgenza, si apre il Film Completo. &Egrave; il documento che mostra ad Affio <strong>tutto il percorso dall'inizio alla fine</strong> — passo per passo, con i cash flow, i momenti chiave e i 4 possibili momenti di exit.</p>
+    <p>Non serve leggerlo tutto insieme — basta scorrere le fasi e fermarsi sui punti che interessano ad Affio. L'obiettivo &egrave; fargli vedere che l'operazione &egrave; completamente strutturata e che ogni passo &egrave; gi&agrave; pianificato.</p>
+    <div class="highlight"><p>Nel Film c'&egrave; anche il <strong>Piano B</strong> — la ricerca morbida di acquirenti dell'asset in parallelo. &Egrave; importante che Affio lo veda: rassicura i soci che esiste sempre uno scenario di uscita sicura.</p></div>
+    <a class="link-doc" href="https://frankistudio.it/affio/rcv/brief/RCV_Film_Completo.html" target="_blank" rel="noopener noreferrer">
+      <div class="link-doc-ico">&#127916;</div>
+      <div class="link-doc-info">
+        <div class="link-doc-label">Aprire e mostrare ad Affio</div>
+        <div class="link-doc-title">Il Film &mdash; Roadmap completa APR26 &rarr; NOV30</div>
+        <div class="link-doc-url">frankistudio.it/affio/rcv/brief/RCV_Film_Completo.html</div>
+      </div>
+      <div class="link-doc-arrow">&rarr;</div>
+    </a>
+  </div>
+  <div class="campo-wrap">
+    <div class="campo-label">Reazione di Affio al film <span>DA COMPILARE</span></div>
+    <textarea class="campo-input" placeholder="Cosa lo colpisce di piu? Ha domande su qualche fase specifica?" rows="2"></textarea>
+  </div>
+</div>
+
+<!-- 04 -->
+<div class="punto p-orange">
+  <div class="punto-header">
+    <div class="punto-left">
+      <div class="punto-num">04</div>
+      <div>
+        <div class="punto-titolo">Le due societ&agrave;</div>
+        <div class="punto-sub">HoldCo Srl &middot; Il Poglio SPV Srl &middot; Annachiara</div>
+      </div>
+    </div>
+    <div class="check-wrap"><div class="check-box" onclick="toggleCheck(this)"></div><div class="check-label">OK</div></div>
+  </div>
+  <div class="punto-corpo">
+    <p>Per fare questa operazione si creano <strong>due societ&agrave; distinte</strong>.</p>
+    <p>La prima &egrave; <strong>HoldCo Srl</strong> &mdash; la societ&agrave; dei fondatori. Dentro ci sono FranKi, Affio e i 6 soci della cordata. HoldCo non gestisce nulla direttamente &mdash; &egrave; la cassaforte che contiene le quote del progetto.</p>
+    <p>La seconda &egrave; <strong>Il Poglio SPV Srl</strong> &mdash; la societ&agrave; operativa. Compra l'immobile all'asta, gestisce il cantiere, apre il club, genera i ricavi e alla fine viene venduta. HoldCo possiede il <strong>60%</strong> della SPV. Un fondo di investimento istituzionale possiede il <strong>40%</strong>.</p>
+    <div class="info-blu"><p><strong>La catena:</strong> Affio e FranKi controllano HoldCo &rarr; HoldCo controlla Il Poglio SPV &rarr; SPV possiede e gestisce l'immobile.</p></div>
+    <p>Entrambe le societ&agrave; hanno la stessa Amministratrice Delegata proposta: <strong>Annachiara Calvanese</strong> &mdash; la figlia di Affio. Non &egrave; solo una figura di fiducia familiare &mdash; &egrave; la persona giusta per competenza reale. Annachiara ha lavorato per anni nel mondo dei <strong>fondi di investimento</strong>: conosce dall'interno i meccanismi, il linguaggio, le aspettative e le dinamiche dei fondi istituzionali. Questa competenza &egrave; esattamente ci&ograve; che serve per gestire il rapporto con il fondo che entrer&agrave; con &euro;2 milioni nella SPV &mdash; una delle variabili pi&ugrave; delicate e decisive dell'intera operazione.</p>
+    <div class="anna-card">
+      <div class="anna-ico">&#128105;&#8205;&#128188;</div>
+      <div>
+        <div class="anna-name">Annachiara Calvanese</div>
+        <div class="anna-role">AD proposta &mdash; HoldCo Srl + Il Poglio SPV Srl</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin:6px 0">
+          <div class="anna-badge">Candidatura da confermare</div>
+          <div class="anna-badge" style="background:rgba(255,255,255,0.15)">Background fondi investimento</div>
+        </div>
+        <div style="font-size:14px;color:rgba(255,255,255,0.75);line-height:1.6;margin-top:8px">
+          Anni di esperienza in fondi istituzionali &mdash; conosce dall'interno i meccanismi, il linguaggio e le aspettative dei fondi PE. Gestir&agrave; il rapporto con il fondo istituzionale (40% SPV, &euro;2M) e supervisioner&agrave; la governance di entrambe le societ&agrave;.
+        </div>
+        <div class="anna-nota" style="margin-top:8px">FranKi ha gi&agrave; preparato un brief dedicato da consegnarle oggi</div>
+        <a href="https://frankistudio.it/affio/rcv/brief/Brief_Annachiara.html" target="_blank" style="display:inline-block;margin-top:10px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:#fff;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);padding:5px 12px;border-radius:3px;text-decoration:none">&#8594; Apri il brief di Annachiara</a>
+      </div>
+    </div>
+  </div>
+  <div class="campo-wrap">
+    <div class="campo-label">Affio e' d'accordo sulla candidatura di Annachiara? <span>DA COMPILARE</span></div>
+    <textarea class="campo-input" placeholder="Reazione di Affio. Vuole che Annachiara venga coinvolta subito? Ha condizioni?" rows="2"></textarea>
+  </div>
+</div>
+
+<!-- 05 -->
+<div class="punto p-orange">
+  <div class="punto-header">
+    <div class="punto-left">
+      <div class="punto-num">05</div>
+      <div>
+        <div class="punto-titolo">Il ruolo di Affio</div>
+        <div class="punto-sub">Cosa gli viene chiesto concretamente</div>
+      </div>
+    </div>
+    <div class="check-wrap"><div class="check-box" onclick="toggleCheck(this)"></div><div class="check-label">OK</div></div>
+  </div>
+  <div class="punto-corpo">
+    <p>Ad Affio viene chiesto di fare <strong>due cose</strong>.</p>
+    <p><strong>Prima:</strong> entrare come co-fondatore della HoldCo insieme a FranKi, con una quota del 20%. Non mette soldi &mdash; porta il deal, la sua credibilit&agrave; e la sua rete.</p>
+    <p><strong>Seconda:</strong> trovare 6 persone della sua cerchia disposte a investire come soci della cordata. Questo &egrave; il cuore del meeting.</p>
+    <div class="highlight"><p><strong>Affio non investe un euro.</strong> Il suo contributo &egrave; la rete e la garanzia morale verso i 6 soci. In cambio guadagna &euro;25.000 subito alla firma e oltre &euro;2 milioni all'exit.</p></div>
+    <a class="link-doc" href="https://frankistudio.it/affio/rcv/brief/RCV_Report_Affio.html" target="_blank" rel="noopener noreferrer">
+      <div class="link-doc-ico">&#128202;</div>
+      <div class="link-doc-info">
+        <div class="link-doc-label">Mostrare i numeri personali di Affio</div>
+        <div class="link-doc-title">Report Affio &mdash; flussi e incassi milestone</div>
+        <div class="link-doc-url">frankistudio.it/affio/rcv/RCV_Report_Affio.html</div>
+      </div>
+      <div class="link-doc-arrow">&rarr;</div>
+    </a>
+  </div>
+  <div class="campo-wrap">
+    <div class="campo-label">Affio accetta il ruolo? Ha riserve? <span>DA COMPILARE</span></div>
+    <textarea class="campo-input" placeholder="Risposta di Affio sul ruolo proposto..." rows="2"></textarea>
+  </div>
+</div>
+
+<!-- 06 -->
+<div class="punto p-orange">
+  <div class="punto-header">
+    <div class="punto-left">
+      <div class="punto-num">06</div>
+      <div>
+        <div class="punto-titolo">La cordata &mdash; i 6 soci</div>
+        <div class="punto-sub">Chi sono &middot; Cosa portano &middot; Come versano</div>
+      </div>
+    </div>
+    <div class="check-wrap"><div class="check-box" onclick="toggleCheck(this)"></div><div class="check-label">OK</div></div>
+  </div>
+  <div class="punto-corpo">
+    <p>I 6 soci sono amici, colleghi o conoscenti di Affio con la capacit&agrave; di investire. Ognuno mette <strong>&euro;50.000 in due rate uguali</strong>:</p>
+    <ul>
+      <li><strong>Prima rata di &euro;25.000</strong> &mdash; versata alla firma del patto parasociale</li>
+      <li><strong>Seconda rata di &euro;25.000</strong> &mdash; versata prima del deposito dell'offerta per l'asta</li>
+    </ul>
+    <p>I &euro;50.000 sono strutturati in due componenti:</p>
+    <ul>
+      <li><strong>&euro;30.000</strong> comprano una quota del 10% nella HoldCo</li>
+      <li><strong>&euro;20.000</strong> sono un prestito fruttifero al 6% annuo &mdash; un credito che viene restituito con gli interessi alla fine del progetto</li>
+    </ul>
+    <div class="highlight"><p>Ogni socio ha <strong>sia una quota nell'impresa</strong> che <strong>un credito garantito</strong> da restituire. Doppia protezione sull'investimento.</p></div>
+    <a class="link-doc" href="https://frankistudio.it/affio/rcv/brief/RCV_Report_Soci.html" target="_blank" rel="noopener noreferrer">
+      <div class="link-doc-ico">&#128101;</div>
+      <div class="link-doc-info">
+        <div class="link-doc-label">Mostrare ai potenziali soci</div>
+        <div class="link-doc-title">Report Soci &mdash; flussi, scenari exit, multipli</div>
+        <div class="link-doc-url">frankistudio.it/affio/rcv/RCV_Report_Soci.html</div>
+      </div>
+      <div class="link-doc-arrow">&rarr;</div>
+    </a>
+  </div>
+  <div class="campo-wrap">
+    <div class="campo-label">I 6 nomi &mdash; appunti <span>DA COMPILARE</span></div>
+    <div class="campo-row">
+      <textarea class="campo-input" placeholder="Nome 1..." rows="1"></textarea>
+      <textarea class="campo-input" placeholder="Nome 2..." rows="1"></textarea>
+    </div>
+    <div class="campo-row" style="margin-top:8px">
+      <textarea class="campo-input" placeholder="Nome 3..." rows="1"></textarea>
+      <textarea class="campo-input" placeholder="Nome 4..." rows="1"></textarea>
+    </div>
+    <div class="campo-row" style="margin-top:8px">
+      <textarea class="campo-input" placeholder="Nome 5..." rows="1"></textarea>
+      <textarea class="campo-input" placeholder="Nome 6..." rows="1"></textarea>
+    </div>
+  </div>
+</div>
+
+<!-- 07 -->
+<div class="punto p-orange">
+  <div class="punto-header">
+    <div class="punto-left">
+      <div class="punto-num">07</div>
+      <div>
+        <div class="punto-titolo">La rete di Affio &mdash; fornitori e soci</div>
+        <div class="punto-sub">Strategia doppio ruolo &middot; Avvocato &middot; Marketing</div>
+      </div>
+    </div>
+    <div class="check-wrap"><div class="check-box" onclick="toggleCheck(this)"></div><div class="check-label">OK</div></div>
+  </div>
+  <div class="punto-corpo">
+    <p>Alcune figure possono fare due cose insieme: <strong>investire come soci e lavorare come fornitori</strong>. Chi fa cos&igrave; ha il massimo allineamento di interessi &mdash; pi&ugrave; il progetto va bene, pi&ugrave; vale la sua quota.</p>
+    <div class="forn-strip">
+      <div class="forn-strip-title">Strategia fornitori-soci</div>
+      <p>Su 6 posti nella cordata, fino a 2-3 possono essere fornitori che investono. I profili pi&ugrave; adatti: general contractor per il cantiere, architetto per la progettazione, gestore operativo per l'hotel, agenzia marketing per il pre-lancio.</p>
+    </div>
+    <p>Tre domande veloci sulla rete di Affio:</p>
+    <ul>
+      <li>Conosce un <strong>avvocato specializzato in aste giudiziarie</strong> a Sulmona o L'Aquila?</li>
+      <li>Conosce qualcuno che fa <strong>marketing per strutture hospitality o turismo di lusso</strong>?</li>
+      <li>Tra i potenziali soci c'&egrave; qualcuno con un <strong>ruolo operativo</strong> &mdash; general contractor, architetto, gestore di strutture ricettive?</li>
+    </ul>
+    <a class="link-doc" href="https://frankistudio.it/affio/rcv/brief/RCV_Fornitori.html" target="_blank" rel="noopener noreferrer">
+      <div class="link-doc-ico">&#128296;</div>
+      <div class="link-doc-info">
+        <div class="link-doc-label">Lista completa con skill richieste</div>
+        <div class="link-doc-title">Mappa fornitori &mdash; doppio ruolo socio-fornitore</div>
+        <div class="link-doc-url">frankistudio.it/affio/rcv/RCV_Fornitori.html</div>
+      </div>
+      <div class="link-doc-arrow">&rarr;</div>
+    </a>
+  </div>
+  <div class="campo-wrap">
+    <div class="campo-label">Risposte di Affio sulla sua rete <span>DA COMPILARE</span></div>
+    <div class="campo-row">
+      <div>
+        <div class="campo-label" style="margin-bottom:6px">Avvocato aste</div>
+        <textarea class="campo-input" placeholder="Nome / contatto..." rows="2"></textarea>
+      </div>
+      <div>
+        <div class="campo-label" style="margin-bottom:6px">Agenzia marketing</div>
+        <textarea class="campo-input" placeholder="Nome / contatto..." rows="2"></textarea>
+      </div>
+    </div>
+    <div style="margin-top:10px">
+      <div class="campo-label" style="margin-bottom:6px">Soci con doppio ruolo operativo</div>
+      <textarea class="campo-input" placeholder="Chi potrebbe essere anche fornitore operativo?" rows="2"></textarea>
+    </div>
+  </div>
+</div>
+
+<!-- 08 -->
+<div class="punto p-orange">
+  <div class="punto-header">
+    <div class="punto-left">
+      <div class="punto-num">08</div>
+      <div>
+        <div class="punto-titolo">Il margine immediato</div>
+        <div class="punto-sub">Come funziona passo per passo</div>
+      </div>
+    </div>
+    <div class="check-wrap"><div class="check-box" onclick="toggleCheck(this)"></div><div class="check-label">OK</div></div>
+  </div>
+  <div class="punto-corpo">
+    <p>Questo &egrave; il meccanismo attraverso cui FranKi e Affio incassano subito, senza aver messo un euro.</p>
+    <div class="step-mec">
+      <div class="step-mec-num">1</div>
+      <div>
+        <div class="step-mec-title">FranKi e Affio costituiscono HoldCo Srl</div>
+        <div class="step-mec-desc">La societ&agrave; viene creata con un capitale nominale minimo. Le quote in questo momento non valgono quasi nulla.</div>
+        <div class="step-mec-val">Valore nominale quota 10%: ~&euro;100</div>
+      </div>
+    </div>
+    <div class="step-mec">
+      <div class="step-mec-num">2</div>
+      <div>
+        <div class="step-mec-title">I soci versano &euro;30.000 per il 10% di HoldCo</div>
+        <div class="step-mec-desc">Ogni socio paga &euro;30.000 per acquistare il 10%. La differenza tra il prezzo pagato e il valore nominale si chiama <strong>premio di emissione</strong> &mdash; ed &egrave; quello che va a FranKi e Affio.</div>
+        <div class="step-mec-val">Totale raccolto dalla parte quota (6 soci): &euro;180.000</div>
+      </div>
+    </div>
+    <div class="step-mec">
+      <div class="step-mec-num">3</div>
+      <div>
+        <div class="step-mec-title">Il premio viene diviso tra FranKi e Affio</div>
+        <div class="step-mec-desc">Del totale raccolto, &euro;50.000 escono dalla HoldCo e vanno direttamente a FranKi (&euro;25.000) e ad Affio (&euro;25.000). Il resto rimane in cassa per le spese operative.</div>
+        <div class="step-mec-val">FranKi: + &euro;25.000 cash &middot; Affio: + &euro;25.000 cash</div>
+      </div>
+    </div>
+    <div class="step-mec">
+      <div class="step-mec-num">4</div>
+      <div>
+        <div class="step-mec-title">Avviene tutto alla firma del patto parasociale</div>
+        <div class="step-mec-desc">Non serve aspettare l'asta o il cantiere. Il giorno in cui i 6 soci firmano e versano la prima rata, Affio riceve &euro;25.000 in conto corrente. &Egrave; legale e standard in tutte le operazioni simili.</div>
+        <div class="step-mec-val">Data incasso: GIU26 &mdash; alla firma</div>
+      </div>
+    </div>
+    <table class="quota-table">
+      <tr><th>Elemento</th><th>Valore</th><th>Note</th></tr>
+      <tr><td>Valore nominale quota 10%</td><td class="td-val" style="color:#888">~&euro;100</td><td>Alla costituzione</td></tr>
+      <tr><td>Prezzo pagato dal socio per il 10%</td><td class="td-val td-blu">&euro;30.000</td><td>Quota su &euro;50K totali</td></tr>
+      <tr><td>Margine FranKi immediato</td><td class="td-val td-pos">+ &euro;25K</td><td>Cash alla firma GIU26</td></tr>
+      <tr><td>Margine Affio immediato</td><td class="td-val td-pos">+ &euro;25K</td><td>Cash alla firma GIU26</td></tr>
+      <tr><td>Valore quota 10% all'exit base</td><td class="td-val td-pos">~&euro;1,12M</td><td>Per ogni socio &middot; 22&times;</td></tr>
+    </table>
+  </div>
+  <div class="campo-wrap">
+    <div class="campo-label">Ha capito il meccanismo? Domande? <span>DA COMPILARE</span></div>
+    <textarea class="campo-input" placeholder="Dubbi di Affio sul meccanismo del margine immediato..." rows="2"></textarea>
+  </div>
+</div>
+
+<!-- 09 -->
+<div class="punto p-green">
+  <div class="punto-header">
+    <div class="punto-left">
+      <div class="punto-num">09</div>
+      <div>
+        <div class="punto-titolo">Cosa guadagna Affio alla fine</div>
+        <div class="punto-sub">I numeri dell'exit &mdash; da zero euro investiti</div>
+      </div>
+    </div>
+    <div class="check-wrap"><div class="check-box" onclick="toggleCheck(this)"></div><div class="check-label">OK</div></div>
+  </div>
+  <div class="punto-corpo">
+    <p>Alla fine del progetto &mdash; circa 4 anni dopo &mdash; Il Poglio SPV Srl viene venduta. Nello scenario pi&ugrave; prudente il valore &egrave; <strong>&euro;23 milioni</strong>. Dopo aver pagato il debito del crowdfunding e la preferenza del fondo, rimangono circa <strong>&euro;18,6 milioni</strong> da distribuire tra i soci.</p>
+    <p>Affio ha il 20% della HoldCo, che controlla il 60% della SPV. La sua quota finale &egrave; il 12% di &euro;18,6 milioni &mdash; cio&egrave; <strong>&euro;2,23 milioni</strong>. Da questo si detrae la success fee di FranKi del 5% sulla plusvalenza &mdash; circa &euro;111.000.</p>
+    <div class="highlight"><p><strong>Affio porta a casa circa &euro;2,14 milioni netti. Da zero euro investiti.</strong> Pi&ugrave; i &euro;25.000 incassati alla firma.</p></div>
+    <a class="link-doc" href="https://frankistudio.it/affio/rcv/brief/RCV_CashFlow_Report.html" target="_blank" rel="noopener noreferrer">
+      <div class="link-doc-ico">&#128176;</div>
+      <div class="link-doc-info">
+        <div class="link-doc-label">Mostrare il quadro completo</div>
+        <div class="link-doc-title">Cash Flow Report &mdash; tutti i movimenti milestone</div>
+        <div class="link-doc-url">frankistudio.it/affio/rcv/RCV_CashFlow_Report.html</div>
+      </div>
+      <div class="link-doc-arrow">&rarr;</div>
+    </a>
+    <a class="link-doc" href="https://frankistudio.it/affio/rcv/brief/RCV_Film_Completo.html" target="_blank" rel="noopener noreferrer">
+      <div class="link-doc-ico">&#127916;</div>
+      <div class="link-doc-info">
+        <div class="link-doc-label">Il percorso dall'inizio alla fine</div>
+        <div class="link-doc-title">Il Film &mdash; roadmap completa APR26 &rarr; NOV30</div>
+        <div class="link-doc-url">frankistudio.it/affio/rcv/RCV_Film_Completo.html</div>
+      </div>
+      <div class="link-doc-arrow">&rarr;</div>
+    </a>
+  </div>
+  <div class="campo-wrap">
+    <div class="campo-label">Reazione ai numeri dell'exit <span>DA COMPILARE</span></div>
+    <textarea class="campo-input" placeholder="Come reagisce? Ha dubbi sugli scenari o sulla valutazione?" rows="2"></textarea>
+  </div>
+</div>
+
+<!-- DOMANDE FINALI -->
+<div class="domanda-finale">
+  <div class="df-label">Domanda 1 &mdash; La pi&ugrave; importante</div>
+  <div class="df-testo">Affio &egrave; dentro? S&igrave; o no. Senza una risposta chiara il meeting non &egrave; servito a nulla.</div>
+  <textarea class="df-input" placeholder="Risposta di Affio..." rows="2"></textarea>
+</div>
+<div class="domanda-finale">
+  <div class="df-label">Domanda 2 &mdash; I nomi</div>
+  <div class="df-testo">Ha gi&agrave; in mente i 6 soci? Non serve che siano confermati oggi &mdash; serve capire se la rete esiste o se &egrave; tutto da costruire.</div>
+  <textarea class="df-input" placeholder="Quanti nomi ha gia? Sono pronti o vanno convinti?" rows="2"></textarea>
+</div>
+<div class="domanda-finale">
+  <div class="df-label">Domanda 3 &mdash; Annachiara</div>
+  <div class="df-testo">&Egrave; d'accordo sulla candidatura di sua figlia come AD? Vuole che venga coinvolta subito o preferisce aspettare?</div>
+  <textarea class="df-input" placeholder="Risposta di Affio su Annachiara..." rows="2"></textarea>
+</div>
+<div class="domanda-finale">
+  <div class="df-label">Domanda 4 &mdash; La data</div>
+  <div class="df-testo">Quando ci si rivede con l'avvocato? Non "ci sentiamo" &mdash; una data precisa entro la settimana.</div>
+  <textarea class="df-input" placeholder="Data concordata per il prossimo step..." rows="1"></textarea>
+</div>
+
+<div class="non-tirare">
+  <h3>Non tirare fuori al meeting</h3>
+  <ul>
+    <li>I dettagli del cantiere &mdash; troppo presto, distrae</li>
+    <li>Il PNRR &mdash; &egrave; condizionale, non &egrave; il punto oggi</li>
+    <li>La liquidation preference del fondo &mdash; &egrave; tecnica, confonde</li>
+    <li>Il crowdfunding minibond &mdash; &egrave; un passo successivo</li>
+    <li>Tutti i 15 documenti del sito &mdash; mostrare solo quello che serve</li>
+  </ul>
+</div>
+
+<div class="obiettivo">
+  <p>Obiettivo: uscire con un <span>SI'</span>, i <span>NOMI</span> e una <span>DATA</span></p>
+</div>
+
+<div class="campo-wrap" style="background:var(--bianco);padding:18px 24px;margin-bottom:3px">
+  <div class="campo-label">Note generali post-meeting <span>DA COMPILARE</span></div>
+  <textarea class="campo-input" placeholder="Impressioni generali, tono del meeting, cosa e' andato bene, cosa va ripreso al prossimo incontro..." rows="4"></textarea>
+</div>
+
+<div class="footer">
+  <div class="fk-logo"><span class="fran">Fran</span><span class="ki">Ki</span></div>
+  <p>Brief riservato &middot; FranKi Studio (Avre Srl) &middot; Napoli &middot; 30 Aprile 2026</p>
+</div>
+
+<script>
+function toggleCheck(el){
+  el.classList.toggle('ok');
+  el.textContent = el.classList.contains('ok') ? '\u2713' : '';
+}
+document.querySelectorAll('textarea').forEach(ta => {
+  ta.addEventListener('input', function(){
+    this.style.height = 'auto';
+    this.style.height = this.scrollHeight + 'px';
+  });
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  document.querySelectorAll('a.link-doc, a[target="_blank"]').forEach(function(a){
+    a.addEventListener('click', function(e){
+      e.preventDefault();
+      window.open(this.href, '_blank', 'noopener,noreferrer');
+    });
+  });
+});
+</script>
+</body>
+</html>

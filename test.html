@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head><title>Test GAS</title></head>
+<body>
+<h2>Test Google Apps Script</h2>
+<div id="results"></div>
+<script>
+var GAS = 'https://script.google.com/macros/s/AKfycbxv4T7lqEotP8JYiL6KwotbyK83Hei10EOAAZcl4UnKp8NQ6pcQEvqiOS7ajN6NvisfFw/exec';
+var log = document.getElementById('results');
+
+function show(msg) {
+  log.innerHTML += '<p>' + msg + '</p>';
+  console.log(msg);
+}
+
+// Test 1: GET semplice con value stringa
+fetch(GAS + '?action=save&sheet=browsertest&key=t1&value=hello')
+.then(r => r.json()).then(d => show('T1 GET stringa: ' + JSON.stringify(d)))
+.catch(e => show('T1 ERROR: ' + e.message));
+
+// Test 2: GET con value JSON encodato
+var val = encodeURIComponent(JSON.stringify({prio:'alta', test:true}));
+fetch(GAS + '?action=save&sheet=browsertest&key=t2&value=' + val)
+.then(r => r.json()).then(d => show('T2 GET JSON: ' + JSON.stringify(d)))
+.catch(e => show('T2 ERROR: ' + e.message));
+
+// Test 3: sendBeacon con Blob text/plain
+try {
+  var payload = JSON.stringify({action:'save', sheet:'browsertest', key:'t3', value:{test:true}});
+  var blob = new Blob([payload], {type:'text/plain'});
+  var ok = navigator.sendBeacon(GAS, blob);
+  show('T3 sendBeacon: inviato=' + ok + ' (nessuna risposta attesa)');
+} catch(e) {
+  show('T3 sendBeacon ERROR: ' + e.message);
+}
+
+// Test 4: POST no-cors
+fetch(GAS, {method:'POST', mode:'no-cors', body: JSON.stringify({action:'save', sheet:'browsertest', key:'t4', value:{test:true}})})
+.then(() => show('T4 POST no-cors: completato (nessuna risposta per no-cors)'))
+.catch(e => show('T4 ERROR: ' + e.message));
+</script>
+</body>
+</html>

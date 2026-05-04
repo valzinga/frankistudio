@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Mendula — Integrazione Questionario · Franki Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blu: #3549B5;
+    --giallo: #F9AC28;
+    --bianco: #FFFFFF;
+    --nero: #0a0a0a;
+    --crema: #f5f4f0;
+    --grigio: #d8d5cc;
+    --testo: #1a1a2e;
+    --medio: #555;
+    --verde: #2A6B27;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--crema); font-family: 'Lato', sans-serif; color: var(--testo); min-height: 100vh; }
+
+  /* HERO */
+  .hero {
+    background: var(--blu); padding: 36px 24px 32px;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; top: -40px; right: -40px;
+    width: 200px; height: 200px; border-radius: 50%;
+    background: var(--giallo); opacity: 0.12;
+  }
+  .hero-tag {
+    font-family: 'DM Mono', monospace; font-size: 11px;
+    letter-spacing: 3px; text-transform: uppercase;
+    color: var(--giallo); margin-bottom: 10px;
+  }
+  .hero h1 {
+    font-family: 'Bebas Neue', cursive;
+    font-size: clamp(32px, 8vw, 52px);
+    color: var(--bianco); line-height: 1; letter-spacing: 1px; margin-bottom: 8px;
+  }
+  .hero h1 span { color: var(--giallo); }
+  .hero-sub {
+    font-size: 14px; color: rgba(255,255,255,0.65);
+    font-weight: 300; line-height: 1.5;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-top: 16px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(249,172,40,0.4);
+    border-radius: 20px; padding: 5px 12px;
+    font-family: 'DM Mono', monospace; font-size: 10px;
+    color: var(--giallo); letter-spacing: 1px;
+  }
+
+  /* MAIN */
+  .main { max-width: 680px; margin: 0 auto; padding: 24px 16px 120px; }
+
+  /* RIEPILOGO */
+  .riepilogo {
+    background: var(--bianco); border-radius: 12px; margin-bottom: 20px;
+    overflow: hidden; box-shadow: 0 2px 12px rgba(53,73,181,0.07);
+  }
+  .riepilogo-header {
+    background: var(--verde); padding: 12px 20px;
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  }
+  .riepilogo-header .titolo {
+    font-family: 'Bebas Neue', cursive; font-size: 17px;
+    color: var(--bianco); letter-spacing: 1px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .riepilogo-header .check-badge {
+    font-family: 'DM Mono', monospace; font-size: 9px;
+    color: #aed6a8; letter-spacing: 1px; text-transform: uppercase;
+  }
+  .riepilogo-body { padding: 16px 20px; display: flex; flex-direction: column; gap: 6px; }
+  .riga-dato {
+    display: flex; gap: 10px; align-items: baseline;
+    font-size: 13px; padding: 4px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+  }
+  .riga-dato:last-child { border-bottom: none; }
+  .riga-dato .etichetta {
+    font-weight: 700; color: var(--testo); min-width: 140px;
+    flex-shrink: 0; font-size: 12px;
+  }
+  .riga-dato .valore { color: var(--medio); line-height: 1.4; }
+  .riga-dato .valore.ok { color: var(--verde); font-weight: 700; }
+  .riga-dato .valore.att { color: #B7720A; font-weight: 700; }
+
+  /* NOTA INTRO */
+  .nota-intro {
+    background: var(--bianco); border-radius: 12px; padding: 20px;
+    margin-bottom: 20px; border-left: 4px solid var(--giallo);
+    box-shadow: 0 2px 12px rgba(53,73,181,0.07);
+  }
+  .nota-intro .nota-tag {
+    font-family: 'DM Mono', monospace; font-size: 10px;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: var(--blu); margin-bottom: 8px;
+  }
+  .nota-intro p { font-size: 14px; color: var(--medio); line-height: 1.7; }
+  .nota-intro strong { color: var(--testo); }
+
+  /* SEZIONE NUOVA */
+  .sezione {
+    background: var(--bianco); border-radius: 12px; margin-bottom: 20px;
+    overflow: hidden; box-shadow: 0 2px 12px rgba(53,73,181,0.07);
+  }
+  .sezione-header {
+    background: var(--blu); padding: 14px 20px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .sezione-icon { font-size: 18px; flex-shrink: 0; }
+  .sezione-title {
+    font-family: 'Bebas Neue', cursive; font-size: 18px;
+    color: var(--bianco); letter-spacing: 1px;
+  }
+  .sezione-num {
+    font-family: 'DM Mono', monospace; font-size: 10px;
+    color: var(--giallo); margin-left: auto; letter-spacing: 1px;
+  }
+  .sezione-body { padding: 20px; display: flex; flex-direction: column; gap: 20px; }
+
+  /* DOMANDA */
+  .domanda label {
+    display: block; font-size: 13px; font-weight: 700;
+    color: var(--testo); margin-bottom: 7px; line-height: 1.4;
+  }
+  .domanda label span.obblig {
+    color: var(--giallo); font-size: 10px;
+    background: var(--blu); border-radius: 3px;
+    padding: 1px 5px; margin-left: 6px;
+    font-family: 'DM Mono', monospace; letter-spacing: 1px; vertical-align: middle;
+  }
+  input[type="text"], input[type="number"], select, textarea {
+    width: 100%; border: 2px solid var(--grigio); border-radius: 8px;
+    padding: 10px 14px; font-family: 'Lato', sans-serif; font-size: 14px;
+    color: var(--testo); background: var(--crema); transition: border-color 0.2s;
+    outline: none; -webkit-appearance: none;
+  }
+  input[type="text"]:focus, input[type="number"]:focus,
+  select:focus, textarea:focus { border-color: var(--blu); background: var(--bianco); }
+  textarea { resize: vertical; min-height: 100px; }
+
+  /* RADIO / CHECK */
+  .opzioni { display: flex; flex-direction: column; gap: 8px; }
+  .opzioni.inline { flex-direction: row; flex-wrap: wrap; gap: 8px; }
+  .radio-item, .check-item {
+    display: flex; align-items: center; gap: 10px; cursor: pointer;
+    padding: 10px 12px; border: 2px solid var(--grigio); border-radius: 8px;
+    transition: border-color 0.2s, background 0.2s; user-select: none;
+  }
+  .radio-item:hover, .check-item:hover { border-color: var(--blu); background: rgba(53,73,181,0.04); }
+  .radio-item input, .check-item input { display: none; }
+  .radio-item.selected, .check-item.selected { border-color: var(--giallo); background: rgba(249,172,40,0.08); }
+  .radio-dot {
+    width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--grigio);
+    flex-shrink: 0; transition: all 0.2s; display: flex; align-items: center; justify-content: center;
+  }
+  .radio-item.selected .radio-dot { border-color: var(--giallo); background: var(--giallo); }
+  .radio-dot::after { content: ''; width: 6px; height: 6px; border-radius: 50%; background: white; opacity: 0; transition: opacity 0.2s; }
+  .radio-item.selected .radio-dot::after { opacity: 1; }
+  .check-box {
+    width: 16px; height: 16px; border-radius: 4px; border: 2px solid var(--grigio);
+    flex-shrink: 0; transition: all 0.2s; display: flex; align-items: center; justify-content: center;
+  }
+  .check-item.selected .check-box { border-color: var(--giallo); background: var(--giallo); }
+  .check-box::after { content: '✓'; font-size: 10px; color: white; opacity: 0; transition: opacity 0.2s; font-weight: bold; }
+  .check-item.selected .check-box::after { opacity: 1; }
+  .opzione-label { font-size: 13px; color: var(--testo); line-height: 1.4; }
+  .hint { font-size: 11px; color: #888; font-family: 'DM Mono', monospace; margin-top: 5px; letter-spacing: 0.3px; }
+
+  /* BOTTOM BAR */
+  .save-banner {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: var(--nero); padding: 12px 16px;
+    display: flex; gap: 10px; align-items: center;
+    z-index: 100; box-shadow: 0 -4px 20px rgba(0,0,0,0.3);
+  }
+  .btn {
+    flex: 1; padding: 12px 16px; border: none; border-radius: 8px;
+    font-family: 'Bebas Neue', cursive; font-size: 16px; letter-spacing: 1px;
+    cursor: pointer; transition: transform 0.15s; text-align: center; line-height: 1;
+  }
+  .btn:active { transform: scale(0.96); }
+  .btn-save { background: var(--giallo); color: var(--nero); }
+  .btn-copy { background: var(--blu); color: var(--bianco); }
+  .btn-wa { background: #25D366; color: var(--bianco); }
+
+  /* TOAST */
+  .toast {
+    position: fixed; top: 20px; left: 50%;
+    transform: translateX(-50%) translateY(-80px);
+    background: var(--testo); color: white;
+    padding: 10px 20px; border-radius: 8px;
+    font-family: 'DM Mono', monospace; font-size: 12px;
+    letter-spacing: 1px; transition: transform 0.3s ease; z-index: 999;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* PROGRESS */
+  .progress-bar-wrap { margin-top: 16px; background: rgba(255,255,255,0.15); border-radius: 4px; height: 6px; overflow: hidden; }
+  .progress-bar { height: 100%; background: var(--giallo); border-radius: 4px; transition: width 0.4s ease; width: 0%; }
+  .progress-label { font-family: 'DM Mono', monospace; font-size: 10px; color: rgba(255,255,255,0.5); margin-top: 6px; letter-spacing: 1px; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">🌿 Franki Studio — La Mendula · Arzachena</div>
+  <h1>Ciao <span>Marco</span>,<br>ci sei quasi.</h1>
+  <p class="hero-sub">Abbiamo già le informazioni di base sul terreno. Ora abbiamo bisogno di capire meglio la tua visione — rispondici con le tue parole, senza filtri.</p>
+  <div class="progress-bar-wrap">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+  <div class="progress-label" id="progressLabel">0 / 8 risposte</div>
+  <div class="hero-badge">✅ Dati terreno già acquisiti · Solo domande nuove</div>
+</div>
+
+<div class="main">
+
+  <!-- RIEPILOGO IL TERRENO -->
+  <div class="riepilogo">
+    <div class="riepilogo-header">
+      <div class="titolo">🗺️ Il Terreno — Dati acquisiti</div>
+      <div class="check-badge">✓ Confermato</div>
+    </div>
+    <div class="riepilogo-body">
+      <div class="riga-dato"><span class="etichetta">Superficie</span><span class="valore">9 ettari (90.000 m²)</span></div>
+      <div class="riga-dato"><span class="etichetta">Catasto</span><span class="valore">Misto — agricolo + altro</span></div>
+      <div class="riga-dato"><span class="etichetta">Accesso</span><span class="valore">Strada pubblica asfaltata + viottolo privato</span></div>
+      <div class="riga-dato"><span class="etichetta">Recinzione</span><span class="valore att">Parziale — da completare</span></div>
+      <div class="riga-dato"><span class="etichetta">Fabbricato</span><span class="valore ok">Sì, abitabile ✓</span></div>
+      <div class="riga-dato"><span class="etichetta">Vincoli</span><span class="valore ok">Nessun vincolo conosciuto ✓</span></div>
+    </div>
+  </div>
+
+  <!-- RIEPILOGO ACQUA -->
+  <div class="riepilogo">
+    <div class="riepilogo-header">
+      <div class="titolo">💧 Acqua & Infrastrutture — Dati acquisiti</div>
+      <div class="check-badge">✓ Confermato</div>
+    </div>
+    <div class="riepilogo-body">
+      <div class="riga-dato"><span class="etichetta">Acqua</span><span class="valore ok">Pozzo esistente ✓</span></div>
+      <div class="riga-dato"><span class="etichetta">Elettricità</span><span class="valore ok">Presente in loco ✓</span></div>
+      <div class="riga-dato"><span class="etichetta">Connettività</span><span class="valore ok">Buona — 4G/5G ✓</span></div>
+    </div>
+  </div>
+
+  <!-- RIEPILOGO VEGETAZIONE -->
+  <div class="riepilogo">
+    <div class="riepilogo-header">
+      <div class="titolo">🌱 Vegetazione & Suolo — Dati acquisiti</div>
+      <div class="check-badge">✓ Confermato</div>
+    </div>
+    <div class="riepilogo-body">
+      <div class="riga-dato"><span class="etichetta">Vegetazione</span><span class="valore">Macchia mediterranea + ulivi abbandonati + altro</span></div>
+      <div class="riga-dato"><span class="etichetta">Morfologia</span><span class="valore">Mista</span></div>
+      <div class="riga-dato"><span class="etichetta">Analisi suolo</span><span class="valore att">Non ancora effettuata — da fare</span></div>
+    </div>
+  </div>
+
+  <!-- RIEPILOGO PROPRIETARIO -->
+  <div class="riepilogo">
+    <div class="riepilogo-header">
+      <div class="titolo">👤 Il Proprietario — Dati acquisiti</div>
+      <div class="check-badge">✓ Confermato</div>
+    </div>
+    <div class="riepilogo-body">
+      <div class="riga-dato"><span class="etichetta">Soggetto</span><span class="valore">FMA Investement Srl</span></div>
+      <div class="riga-dato"><span class="etichetta">Fascia d'età</span><span class="valore">40–60 anni</span></div>
+      <div class="riga-dato"><span class="etichetta">Residenza</span><span class="valore">Altra regione</span></div>
+      <div class="riga-dato"><span class="etichetta">Qualifica</span><span class="valore ok">IAP — Imprenditore Agricolo Professionale ✓</span></div>
+      <div class="riga-dato"><span class="etichetta">Esperienza agricola</span><span class="valore">Nessuna</span></div>
+    </div>
+  </div>
+
+  <!-- RIEPILOGO OBIETTIVI -->
+  <div class="riepilogo">
+    <div class="riepilogo-header">
+      <div class="titolo">🎯 Obiettivi & Budget — Dati acquisiti</div>
+      <div class="check-badge">✓ Confermato</div>
+    </div>
+    <div class="riepilogo-body">
+      <div class="riga-dato"><span class="etichetta">Obiettivi</span><span class="valore">Valorizzare patrimonio · Uso personale · Biologico · Affitto conduttore</span></div>
+      <div class="riga-dato"><span class="etichetta">Budget</span><span class="valore ok">Oltre €200.000 ✓</span></div>
+      <div class="riga-dato"><span class="etichetta">Orizzonte</span><span class="valore">3 anni</span></div>
+      <div class="riga-dato"><span class="etichetta">Gestione</span><span class="valore">Diretta</span></div>
+      <div class="riga-dato"><span class="etichetta">Idea dichiarata</span><span class="valore">"Uno stazzu per la pensione + 2 da affittare con piscine e orto privato"</span></div>
+    </div>
+  </div>
+
+  <!-- NOTA INTRODUTTIVA -->
+  <div class="nota-intro">
+    <div class="nota-tag">📍 Perché ti chiediamo questo</div>
+    <p>La Gallura è uno dei mercati rurali più forti d'Italia. Strutture simili alla tua generano tra <strong>€80k e €250k/anno</strong>. Ma il tipo di prodotto che costruisci cambia tutto — gli investimenti, la gestione, i clienti, i contributi ottenibili. <strong>Non vogliamo portarti in una direzione prima di capire bene la tua.</strong> Rispondici con le tue parole.</p>
+  </div>
+
+  <!-- SEZIONE NUOVA — RICETTIVITÀ -->
+  <div class="sezione">
+    <div class="sezione-header">
+      <span class="sezione-icon">🏡</span>
+      <span class="sezione-title">La tua visione — dimmi tutto</span>
+      <span class="sezione-num">Nuovo</span>
+    </div>
+    <div class="sezione-body">
+
+      <div class="domanda">
+        <label>Quante unità ricettive vuoi realizzare in totale? <span class="obblig">OBBLIG</span></label>
+        <div class="opzioni inline">
+          <label class="radio-item" onclick="selectRadio(this, 'q_unita', '1')">
+            <input type="radio" name="q_unita" value="1">
+            <div class="radio-dot"></div>
+            <span class="opzione-label">1 (+ la tua)</span>
+          </label>
+          <label class="radio-item" onclick="selectRadio(this, 'q_unita', '2')">
+            <input type="radio" name="q_unita" value="2">
+            <div class="radio-dot"></div>
+            <span class="opzione-label">2 (+ la tua)</span>
+          </label>
+          <label class="radio-item" onclick="selectRadio(this, 'q_unita', '3_piu')">
+            <input type="radio" name="q_unita" value="3_piu">
+            <div class="radio-dot"></div>
+            <span class="opzione-label">3 o più</span>
+          </label>
+          <label class="radio-item" onclick="selectRadio(this, 'q_unita', 'struttura_unica')">
+            <input type="radio" name="q_unita" value="struttura_unica">
+            <div class="radio-dot"></div>
+            <span class="opzione-label">Una struttura unica grande</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="domanda">
+        <label>Lo stazzu esistente — quanto è grande circa? (mq)</label>
+        <input type="number" id="q_mq_stazzu" placeholder="es. 200 mq" min="0">
+        <p class="hint">Una stima va benissimo — ci serve per capire le dimensioni di partenza</p>
+      </div>
+
+      <div class="domanda">
+        <label>Pensi di costruire nuovi volumi o ristrutturare solo quello che c'è?</label>
+        <div class="opzioni">
+          <label class="radio-item" onclick="selectRadio(this, 'q_costruzione', 'solo_ristruttura')">
+            <input type="radio" name="q_costruzione" value="solo_ristruttura">
+            <div class="radio-dot"></div>
+            <span class="opzione-label">Solo ristrutturazione dello stazzu esistente</span>
+          </label>
+          <label class="radio-item" onclick="selectRadio(this, 'q_costruzione', 'piccola')">
+            <input type="radio" name="q_costruzione" value="piccola">
+            <div class="radio-dot"></div>
+            <span class="opzione-label">Piccoli ampliamenti (meno di 200 mq nuovi)</span>
+          </label>
+          <label class="radio-item" onclick="selectRadio(this, 'q_costruzione', 'nuovi_stazzi')">
+            <input type="radio" name="q_costruzione" value="nuovi_stazzi">
+            <div class="radio-dot"></div>
+            <span class="opzione-label">Costruzione di nuovi stazzi da zero</span>
+          </label>
+          <label class="radio-item" onclick="selectRadio(this, 'q_costruzione', 'non_so')">
+            <input type="radio" name="q_costruzione" value="non_so">
+            <div class="radio-dot"></div>
+            <span class="opzione-label">Non lo so ancora — dipende dai permessi e dai costi</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="domanda">
+        <label>Quanto puoi essere presente a La Mendula per gestire il progetto?</label>
+        <div class="opzioni">
+          <label class="radio-item" onclick="selectRadio(this, 'q_presenza', 'spesso')">
+            <input type="radio" name="q_presenza" value="spesso">
+            <div class="radio-dot"></div>
+            <span class="opzione-label">Spesso — mi sposto facilmente e posso seguire direttamente</span>
+          </label>
+          <label class="radio-item" onclick="selectRadio(this, 'q_presenza', 'periodicamente')">
+            <input type="radio" name="q_presenza" value="periodicamente">
+            <div class="radio-dot"></div>
+            <span class="opzione-label">Periodicamente — qualche volta al mese, delego il resto</span>
+          </label>
+          <label class="radio-item" onclick="selectRadio(this, 'q_presenza', 'distanza')">
+            <input type="radio" name="q_presenza" value="distanza">
+            <div class="radio-dot"></div>
+            <span class="opzione-label">A distanza — ho bisogno di qualcuno sul posto che gestisca tutto</span>
+          </label>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SEZIONE VISIONE LIBERA -->
+  <div class="sezione">
+    <div class="sezione-header">
+      <span class="sezione-icon">💬</span>
+      <span class="sezione-title">Parlaci — senza filtri</span>
+      <span class="sezione-num">Importante</span>
+    </div>
+    <div class="sezione-body">
+
+      <div class="domanda">
+        <label>Chiudi gli occhi e immagina La Mendula tra 5 anni. Cosa vedi? <span class="obblig">CHIAVE</span></label>
+        <textarea id="q_visione" placeholder="Descrivila liberamente — come se la raccontassi a un amico. Non ci sono risposte giuste o sbagliate."></textarea>
+      </div>
+
+      <div class="domanda">
+        <label>Hai mai visto un posto — in Sardegna o altrove — che ti ha fatto pensare "voglio qualcosa così"?</label>
+        <p class="hint" style="margin-bottom:12px;">Per darti un'idea del livello a cui può arrivare una struttura come la tua — ecco tre esempi reali che abbiamo studiato:</p>
+
+        <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:16px;">
+
+          <div style="background:#f0f3ff;border-radius:10px;padding:14px 16px;border-left:4px solid #3549B5;">
+            <div style="font-size:12px;font-family:'DM Mono',monospace;color:#3549B5;letter-spacing:1px;margin-bottom:4px;">🇮🇹 ARZACHENA — A DUE PASSI DA TE</div>
+            <div style="font-size:13px;font-weight:700;color:#1a1a2e;margin-bottom:4px;">Stazzo Lu Ciaccaru — Resort stazzi con ville e piscine private</div>
+            <div style="font-size:13px;color:#555;line-height:1.5;">Antico stazzo del 1850 restaurato, 32 ettari, suite e ville con piscina privata riscaldata. Olio EVO e cucina gallurese. Ospiti raccolgono quello che mangiano. <strong style="color:#2A6B27;">Suite piscina privata — benchmark diretto per la tua visione.</strong></div>
+            <a href="https://www.stazzoluciaccaru.it" target="_blank" style="display:inline-block;margin-top:8px;font-family:'DM Mono',monospace;font-size:11px;color:#3549B5;text-decoration:none;border:1px solid #3549B5;padding:3px 10px;border-radius:4px;">→ stazzoluciaccaru.it</a>
+          </div>
+
+          <div style="background:#f0f3ff;border-radius:10px;padding:14px 16px;border-left:4px solid #3549B5;">
+            <div style="font-size:12px;font-family:'DM Mono',monospace;color:#3549B5;letter-spacing:1px;margin-bottom:4px;">🇮🇹 GALLURA — STAZZU CON PISCINA ESCLUSIVA</div>
+            <div style="font-size:13px;font-weight:700;color:#1a1a2e;margin-bottom:4px;">Cascioni Eco Retreat — orto, piscina tra le rocce, grotta degustazione</div>
+            <div style="font-size:13px;color:#555;line-height:1.5;">Retreat immerso nella macchia gallurese. Orto che alimenta la cucina, ospiti raccolgono le verdure. Cantina in grotta per degustazione salumi e formaggi. <strong style="color:#2A6B27;">Modello eco-esperienziale — molto vicino alla tua visione dell'orto.</strong></div>
+            <a href="https://cucineditalia.com/ospitalita-stazzi-galluresi/" target="_blank" style="display:inline-block;margin-top:8px;font-family:'DM Mono',monospace;font-size:11px;color:#3549B5;text-decoration:none;border:1px solid #3549B5;padding:3px 10px;border-radius:4px;">→ Leggi la storia</a>
+          </div>
+
+          <div style="background:#f0f3ff;border-radius:10px;padding:14px 16px;border-left:4px solid #3549B5;">
+            <div style="font-size:12px;font-family:'DM Mono',monospace;color:#3549B5;letter-spacing:1px;margin-bottom:4px;">🇮🇹 LE MARCHE — BENCHMARK INTERNAZIONALE</div>
+            <div style="font-size:13px;font-weight:700;color:#1a1a2e;margin-bottom:4px;">Oliveto Estate — 9 acri uliveto biologico, 3 cottages</div>
+            <div style="font-size:13px;color:#555;line-height:1.5;">Raccolta olive, cooking class, retreat yoga. Citato da Condé Nast e Forbes. 200+ retreat ospitati. <strong style="color:#2A6B27;">€1.340/notte · Retreat: €5.800–6.800 p.p./settimana. Questo è il tetto del mercato.</strong></div>
+            <a href="https://www.olivetoestate.com" target="_blank" style="display:inline-block;margin-top:8px;font-family:'DM Mono',monospace;font-size:11px;color:#3549B5;text-decoration:none;border:1px solid #3549B5;padding:3px 10px;border-radius:4px;">→ olivetoestate.com</a>
+          </div>
+
+        </div>
+
+        <div style="background:#0a0a0a;border-radius:10px;padding:14px 16px;margin-bottom:16px;">
+          <div style="font-size:12px;font-family:'DM Mono',monospace;color:#F9AC28;letter-spacing:1px;margin-bottom:6px;">📍 COSA FAREMO CON LE TUE RISPOSTE</div>
+          <div style="font-size:13px;color:rgba(255,255,255,0.7);line-height:1.6;">Una volta ricevute le tue risposte, avvieremo una <strong style="color:#fff;">ricerca di mercato dedicata</strong> — selezioneremo almeno <strong style="color:#F9AC28;">10 strutture reali</strong> con le caratteristiche che emergeranno dalla tua visione e dalla tua idea di struttura desiderata. Le analizzeremo per te: prezzi, modello di business, clientela, punti di forza. Così avrai un quadro preciso su cui costruire le tue decisioni.</div>
+        </div>
+
+        <label style="margin-top:8px;">Questi ti ispirano? Ce n'è uno che ti piace di più? O hai in mente qualcosa di completamente diverso?</label>
+        <textarea id="q_ispirazione" placeholder="Raccontaci — anche solo 'voglio qualcosa simile al primo ma più piccolo' o 'ho visto un posto in Toscana che...' va benissimo."></textarea>
+      </div>
+
+      <div class="domanda">
+        <label>Cosa conta di più per te in questo progetto?</label>
+        <div class="opzioni">
+          <label class="check-item" onclick="toggleCheck(this, 'q_val_reddito')">
+            <input type="checkbox" id="q_val_reddito">
+            <div class="check-box"></div>
+            <span class="opzione-label">💰 Massimizzare il reddito — voglio che il terreno renda il più possibile</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this, 'q_val_vita')">
+            <input type="checkbox" id="q_val_vita">
+            <div class="check-box"></div>
+            <span class="opzione-label">🌅 Progetto di vita — un posto dove stare bene, non solo un investimento</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this, 'q_val_pensione')">
+            <input type="checkbox" id="q_val_pensione">
+            <div class="check-box"></div>
+            <span class="opzione-label">🏡 La mia pensione — costruire qualcosa di bello per quando mi fermo</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this, 'q_val_legacy')">
+            <input type="checkbox" id="q_val_legacy">
+            <div class="check-box"></div>
+            <span class="opzione-label">🌳 Lasciare qualcosa — un patrimonio duraturo per i figli o la famiglia</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this, 'q_val_impresa')">
+            <input type="checkbox" id="q_val_impresa">
+            <div class="check-box"></div>
+            <span class="opzione-label">🚀 Un'impresa vera — voglio costruire un business strutturato e scalabile</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="domanda">
+        <label>C'è qualcosa che hai già deciso e che non si discute?</label>
+        <textarea id="q_deciso" placeholder="Es. Voglio assolutamente le piscine private... non voglio avere personale... voglio che sia solo biologico... la casa mia deve rimanere separata..."></textarea>
+      </div>
+
+      <div class="domanda">
+        <label>Cosa ti spaventa di più o ti tiene bloccato rispetto a questo progetto?</label>
+        <textarea id="q_paure" placeholder="Es. I costi di costruzione... la burocrazia sarda... non sapere da dove cominciare... gestire tutto da lontano..."></textarea>
+      </div>
+
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<!-- BOTTOM BAR -->
+<div class="save-banner">
+  <button class="btn btn-save" onclick="salvaDati()">💾 SALVA</button>
+  <button class="btn btn-copy" onclick="copiaTesto()">📋 COPIA</button>
+  <button class="btn btn-wa" onclick="copiaPerWA()">📲 INVIA</button>
+</div>
+
+<div style="background:#0a0a0a;padding:14px 20px 32px;text-align:center;">
+  <p style="font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.35);line-height:1.8;letter-spacing:0.5px;">
+    Come inviare le risposte a Franki:<br>
+    1. Premi <strong style="color:rgba(255,255,255,0.6);">SALVA</strong> per conservare le risposte nel browser<br>
+    2. Premi <strong style="color:rgba(255,255,255,0.6);">📲 INVIA</strong> — le risposte vengono copiate automaticamente<br>
+    3. Apri WhatsApp → cerca <strong style="color:rgba(255,255,255,0.6);">Franki Valzinga</strong> → tieni premuto nel campo testo → <strong style="color:rgba(255,255,255,0.6);">Incolla</strong> → Invia<br>
+    oppure invia il testo a <strong style="color:#F9AC28;">hello@frankistudio.it</strong>
+  </p>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const STORAGE_KEY = 'mendula_v2_marco';
+
+// RADIO
+function selectRadio(el, name, value) {
+  document.querySelectorAll(`.radio-item`).forEach(i => {
+    if (i.querySelector(`input[name="${name}"]`)) i.classList.remove('selected');
+  });
+  el.classList.add('selected');
+  el.querySelector('input[type="radio"]').checked = true;
+  aggiornaProgress(); salvaSilenzioso();
+}
+
+// CHECKBOX
+function toggleCheck(el, id) {
+  el.classList.toggle('selected');
+  const cb = document.getElementById(id);
+  if(cb) cb.checked = el.classList.contains('selected');
+  aggiornaProgress(); salvaSilenzioso();
+}
+
+// PROGRESS
+const CAMPI_TOTALI = 8;
+function contaRisposte() {
+  let count = 0;
+  ['q_mq_stazzu','q_visione','q_ispirazione','q_deciso','q_paure'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.value && el.value.trim() !== '') count++;
+  });
+  ['q_unita','q_costruzione','q_presenza'].forEach(name => {
+    if (document.querySelector(`input[name="${name}"]:checked`)) count++;
+  });
+  const valori = ['q_val_reddito','q_val_vita','q_val_pensione','q_val_legacy','q_val_impresa'];
+  // valori contano come 1 gruppo
+  // già contati nei campi totali — aggiustiamo
+  return Math.min(count, CAMPI_TOTALI);
+}
+
+function aggiornaProgress() {
+  const n = contaRisposte();
+  const pct = Math.round((n / CAMPI_TOTALI) * 100);
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('progressLabel').textContent = `${n} / ${CAMPI_TOTALI} risposte`;
+}
+
+// RACCOLTA
+function raccogliDati() {
+  const get = id => { const el = document.getElementById(id); return el ? el.value.trim() : ''; };
+  const getRadio = name => { const el = document.querySelector(`input[name="${name}"]:checked`); return el ? el.value : ''; };
+  const getChecks = ids => ids.filter(id => { const el = document.getElementById(id); return el && el.checked; }).map(id => {
+    const map = {
+      'q_val_reddito': 'Massimizzare il reddito',
+      'q_val_vita': 'Progetto di vita',
+      'q_val_pensione': 'La mia pensione',
+      'q_val_legacy': 'Lasciare qualcosa ai figli',
+      'q_val_impresa': "Un'impresa vera e scalabile"
+    };
+    return map[id] || id;
+  }).join(' · ');
+
+  return {
+    unita: getRadio('q_unita'),
+    mq_stazzu: get('q_mq_stazzu'),
+    costruzione: getRadio('q_costruzione'),
+    presenza: getRadio('q_presenza'),
+    visione: get('q_visione'),
+    ispirazione: get('q_ispirazione'),
+    valori: getChecks(['q_val_reddito','q_val_vita','q_val_pensione','q_val_legacy','q_val_impresa']),
+    deciso: get('q_deciso'),
+    paure: get('q_paure'),
+  };
+}
+
+// SALVA
+function salvaSilenzioso() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(raccogliDati())); } catch(e) {}
+}
+function salvaDati() {
+  salvaSilenzioso();
+  mostraToast('✅ Salvato!');
+}
+
+// CARICA
+function caricaDati() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (!saved) return;
+    const d = JSON.parse(saved);
+    const set = (id, val) => { const el = document.getElementById(id); if(el && val) el.value = val; };
+    set('q_mq_stazzu', d.mq_stazzu);
+    set('q_visione', d.visione);
+    set('q_ispirazione', d.ispirazione);
+    set('q_deciso', d.deciso);
+    set('q_paure', d.paure);
+    const setRadio = (name, val) => {
+      if (!val) return;
+      const el = document.querySelector(`input[name="${name}"][value="${val}"]`);
+      if (el) { el.checked = true; el.closest('.radio-item').classList.add('selected'); }
+    };
+    setRadio('q_unita', d.unita);
+    setRadio('q_costruzione', d.costruzione);
+    setRadio('q_presenza', d.presenza);
+    aggiornaProgress();
+  } catch(e) {}
+}
+
+// GENERA TESTO
+function generaTesto() {
+  const d = raccogliDati();
+  const line = (label, val) => val ? `• ${label}: ${val}\n` : '';
+  return `🌿 LA MENDULA — INTEGRAZIONE QUESTIONARIO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+DATI TERRENO GIÀ ACQUISITI
+• Superficie: 9 ettari · Catasto misto
+• Fabbricato abitabile · Nessun vincolo
+• Pozzo + elettricità + 4G ✓
+• Proprietario: FMA Investement Srl · IAP ✓
+• Budget: oltre €200.000 · Orizzonte 3 anni
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+NUOVE RISPOSTE — RICETTIVITÀ
+${line('Unità ricettive', d.unita)}${line('Mq stazzu esistente', d.mq_stazzu ? d.mq_stazzu + ' mq' : '')}${line('Costruzione', d.costruzione)}${line('Presenza / gestione', d.presenza)}
+VISIONE E VALORI
+${d.visione ? '• La Mendula tra 5 anni:\n"' + d.visione + '"\n' : ''}${d.ispirazione ? '• Ispirazioni:\n"' + d.ispirazione + '"\n' : ''}${line('Cosa conta di più', d.valori)}${d.deciso ? '• Già deciso:\n"' + d.deciso + '"\n' : ''}${d.paure ? '• Preoccupazioni:\n"' + d.paure + '"\n' : ''}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Franki Studio · frankistudio.it`;
+}
+
+// COPIA PER WA
+function copiaPerWA() {
+  const testo = generaTesto();
+  try {
+    const ta = document.createElement('textarea');
+    ta.value = testo;
+    ta.style.position = 'fixed'; ta.style.top = '0'; ta.style.left = '0';
+    ta.style.opacity = '0'; ta.style.fontSize = '16px';
+    document.body.appendChild(ta);
+    ta.focus(); ta.select(); ta.setSelectionRange(0, 99999);
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    mostraToast('✅ Copiato! Apri WhatsApp e incolla');
+  } catch(e) { mostraToast('❌ Errore — usa il tasto COPIA'); }
+}
+
+// COPIA
+function copiaTesto() {
+  const testo = generaTesto();
+  try {
+    const ta = document.createElement('textarea');
+    ta.value = testo;
+    ta.style.position = 'fixed'; ta.style.top = '0'; ta.style.left = '0';
+    ta.style.opacity = '0'; ta.style.fontSize = '16px';
+    document.body.appendChild(ta);
+    ta.focus(); ta.select(); ta.setSelectionRange(0, 99999);
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    mostraToast('✅ Copiato! Incolla su WhatsApp e mandalo a Franki');
+  } catch(e) { mostraToast('❌ Errore — riprova'); }
+}
+
+// TOAST
+function mostraToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// INPUT EVENTS
+document.querySelectorAll('input[type="number"], textarea').forEach(el => {
+  el.addEventListener('input', () => { aggiornaProgress(); salvaSilenzioso(); });
+});
+
+document.addEventListener('DOMContentLoaded', () => { caricaDati(); aggiornaProgress(); });
+</script>
+</body>
+</html>

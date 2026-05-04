@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questionario Terreno — La Mendula, Arzachena</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blu: #3549B5;
+    --giallo: #F9AC28;
+    --bianco: #FFFFFF;
+    --nero: #0a0a0a;
+    --grigio-chiaro: #f5f4f0;
+    --grigio-medio: #d8d5cc;
+    --testo: #1a1a2e;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--grigio-chiaro);
+    font-family: 'Lato', sans-serif;
+    color: var(--testo);
+    min-height: 100vh;
+  }
+
+  /* HERO */
+  .hero {
+    background: var(--blu);
+    padding: 36px 24px 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: var(--giallo);
+    opacity: 0.12;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -20px; left: 60px;
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    background: var(--giallo);
+    opacity: 0.08;
+  }
+  .hero-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--giallo);
+    margin-bottom: 10px;
+  }
+  .hero h1 {
+    font-family: 'Bebas Neue', cursive;
+    font-size: clamp(32px, 8vw, 52px);
+    color: var(--bianco);
+    line-height: 1;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+  .hero h1 span { color: var(--giallo); }
+  .hero-sub {
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    color: rgba(255,255,255,0.65);
+    font-weight: 300;
+    line-height: 1.5;
+  }
+  .progress-bar-wrap {
+    margin-top: 20px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 4px;
+    height: 6px;
+    overflow: hidden;
+  }
+  .progress-bar {
+    height: 100%;
+    background: var(--giallo);
+    border-radius: 4px;
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+  .progress-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: rgba(255,255,255,0.5);
+    margin-top: 6px;
+    letter-spacing: 1px;
+  }
+
+  /* MAIN */
+  .main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 24px 16px 120px;
+  }
+
+  /* SEZIONE */
+  .sezione {
+    margin-bottom: 28px;
+    background: var(--bianco);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(53,73,181,0.07);
+  }
+  .sezione-header {
+    background: var(--blu);
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .sezione-icon {
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .sezione-title {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 18px;
+    color: var(--bianco);
+    letter-spacing: 1px;
+  }
+  .sezione-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--giallo);
+    margin-left: auto;
+    letter-spacing: 1px;
+  }
+  .sezione-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  /* DOMANDA */
+  .domanda label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--testo);
+    margin-bottom: 7px;
+    line-height: 1.4;
+  }
+  .domanda label span.obblig {
+    color: var(--giallo);
+    font-size: 10px;
+    background: var(--blu);
+    border-radius: 3px;
+    padding: 1px 5px;
+    margin-left: 6px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 1px;
+    vertical-align: middle;
+  }
+
+  input[type="text"],
+  input[type="number"],
+  select,
+  textarea {
+    width: 100%;
+    border: 2px solid var(--grigio-medio);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    color: var(--testo);
+    background: var(--grigio-chiaro);
+    transition: border-color 0.2s, background 0.2s;
+    outline: none;
+    -webkit-appearance: none;
+  }
+  input[type="text"]:focus,
+  input[type="number"]:focus,
+  select:focus,
+  textarea:focus {
+    border-color: var(--blu);
+    background: var(--bianco);
+  }
+  textarea { resize: vertical; min-height: 80px; }
+  select {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%233549B5' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
+  }
+
+  /* RADIO / CHECKBOX CUSTOM */
+  .opzioni {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .opzioni.inline { flex-direction: row; flex-wrap: wrap; gap: 8px; }
+  .radio-item, .check-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    padding: 8px 12px;
+    border: 2px solid var(--grigio-medio);
+    border-radius: 8px;
+    transition: border-color 0.2s, background 0.2s;
+    user-select: none;
+  }
+  .radio-item:hover, .check-item:hover {
+    border-color: var(--blu);
+    background: rgba(53,73,181,0.04);
+  }
+  .radio-item input, .check-item input { display: none; }
+  .radio-item.selected, .check-item.selected {
+    border-color: var(--giallo);
+    background: rgba(249,172,40,0.08);
+  }
+  .radio-dot {
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    border: 2px solid var(--grigio-medio);
+    flex-shrink: 0;
+    transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .radio-item.selected .radio-dot {
+    border-color: var(--giallo);
+    background: var(--giallo);
+  }
+  .radio-dot::after {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: white;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .radio-item.selected .radio-dot::after { opacity: 1; }
+
+  .check-box {
+    width: 16px; height: 16px;
+    border-radius: 4px;
+    border: 2px solid var(--grigio-medio);
+    flex-shrink: 0;
+    transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .check-item.selected .check-box {
+    border-color: var(--giallo);
+    background: var(--giallo);
+  }
+  .check-box::after {
+    content: '✓';
+    font-size: 10px;
+    color: white;
+    opacity: 0;
+    transition: opacity 0.2s;
+    font-weight: bold;
+  }
+  .check-item.selected .check-box::after { opacity: 1; }
+
+  .opzione-label {
+    font-size: 13px;
+    color: var(--testo);
+    line-height: 1.3;
+  }
+
+  /* HELPER */
+  .hint {
+    font-size: 11px;
+    color: #888;
+    font-family: 'DM Mono', monospace;
+    margin-top: 5px;
+    letter-spacing: 0.3px;
+  }
+
+  /* SALVATAGGIO BANNER */
+  .save-banner {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: var(--nero);
+    padding: 12px 16px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    z-index: 100;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.3);
+  }
+  .btn {
+    flex: 1;
+    padding: 12px 16px;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Bebas Neue', cursive;
+    font-size: 16px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: transform 0.15s, opacity 0.15s;
+    text-align: center;
+    line-height: 1;
+  }
+  .btn:active { transform: scale(0.96); }
+  .btn-save { background: var(--giallo); color: var(--nero); }
+  .btn-copy { background: var(--blu); color: var(--bianco); }
+  .btn-wa { background: #25D366; color: var(--bianco); }
+  .btn-pdf { background: #dc2626; color: #fff; font-size: 15px; padding: 12px 24px; }
+
+  /* ISTRUZIONI FINALI */
+  .istruzioni-box {
+    max-width: 680px;
+    margin: 0 auto 100px;
+    padding: 0 16px;
+  }
+  .istr-titolo {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 20px;
+    letter-spacing: 1px;
+    color: var(--blu);
+    background: #fff;
+    padding: 16px 20px 12px;
+    border-top: 4px solid var(--giallo);
+    box-shadow: 0 2px 12px rgba(53,73,181,0.07);
+    border-radius: 12px 12px 0 0;
+  }
+  .istr-steps {
+    background: #fff;
+    padding: 16px 20px 20px;
+    box-shadow: 0 2px 12px rgba(53,73,181,0.07);
+    border-radius: 0 0 12px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .istr-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .istr-num {
+    background: var(--blu);
+    color: #fff;
+    font-family: 'Bebas Neue', cursive;
+    font-size: 18px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .istr-testo {
+    font-size: 14px;
+    color: var(--testo);
+    line-height: 1.5;
+    padding-top: 4px;
+  }
+  .istr-testo strong { color: var(--blu); }
+
+  @media print {
+    .save-banner { display: none !important; }
+    .istruzioni-box { display: none !important; }
+    .progress-bar-wrap { display: none !important; }
+    .hero { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .sezione-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+
+  /* TOAST */
+  .toast {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-80px);
+    background: var(--testo);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 1px;
+    transition: transform 0.3s ease;
+    z-index: 999;
+    white-space: nowrap;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* COMPLETATO */
+  .completato-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(249,172,40,0.15);
+    color: var(--blu);
+    border-radius: 20px;
+    padding: 3px 10px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    margin-top: 12px;
+    border: 1px solid rgba(249,172,40,0.4);
+  }
+
+  /* DIVIDER */
+  .divider {
+    height: 1px;
+    background: var(--grigio-medio);
+    margin: 4px 0;
+  }
+
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <a href="../" style="position:absolute;top:16px;left:16px;font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.5);text-decoration:none;letter-spacing:1px;z-index:10;">← La Mendula</a>
+  <div class="hero-tag">🌿 Franki Studio — Consulenza Agricola</div>
+  <h1>Terreno<br><span>La Mendula</span><br>Arzachena</h1>
+  <p class="hero-sub">Compila il questionario per ricevere un piano personalizzato<br>di miglioramento fondiario e agevolazioni.</p>
+  <div class="progress-bar-wrap">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+  <div class="progress-label" id="progressLabel">0 / 28 risposte</div>
+</div>
+
+<!-- MAIN -->
+<div class="main" id="mainForm">
+
+  <!-- SEZIONE 1 -->
+  <div class="sezione">
+    <div class="sezione-header">
+      <span class="sezione-icon">🗺️</span>
+      <span class="sezione-title">Il Terreno</span>
+      <span class="sezione-num">01 / 05</span>
+    </div>
+    <div class="sezione-body">
+
+      <div class="domanda">
+        <label>Superficie del terreno <span class="obblig">OBBLIG</span></label>
+        <input type="number" id="q_superficie" placeholder="es. 2.5 (ettari)" step="0.1" min="0">
+        <p class="hint">Inserisci in ettari — 1 ettaro = 10.000 m²</p>
+      </div>
+
+      <div class="domanda">
+        <label>Destinazione catastale attuale</label>
+        <select id="q_catasto">
+          <option value="">— Seleziona —</option>
+          <option value="agricolo">Agricolo</option>
+          <option value="boschivo">Boschivo</option>
+          <option value="incolto">Incolto / Pascolo</option>
+          <option value="edificabile">Edificabile</option>
+          <option value="misto">Misto (agricolo + altro)</option>
+          <option value="non_so">Non lo so ancora</option>
+        </select>
+      </div>
+
+      <div class="domanda">
+        <label>Accesso al terreno</label>
+        <div class="opzioni">
+          <label class="check-item" onclick="toggleCheck(this, 'q_accesso_strada_pubblica')">
+            <input type="checkbox" id="q_accesso_strada_pubblica">
+            <div class="check-box"></div>
+            <span class="opzione-label">Strada pubblica asfaltata</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this, 'q_accesso_strada_privata')">
+            <input type="checkbox" id="q_accesso_strada_privata">
+            <div class="check-box"></div>
+            <span class="opzione-label">Viottolo / sterrato privato</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this, 'q_accesso_nessun_accesso')">
+            <input type="checkbox" id="q_accesso_nessun_accesso">
+            <div class="check-box"></div>
+            <span class="opzione-label">Nessun accesso diretto</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="domanda">
+        <label>È presente una recinzione?</label>
+        <div class="opzioni inline">
+          <label class="check-item" onclick="toggleCheck(this, 'q_recinzione_si_totale')">
+            <input type="checkbox" id="q_recinzione_si_totale">
+            <div class="check-box"></div>
+            <span class="opzione-label">Sì, totale</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this, 'q_recinzione_si_parziale')">
+            <input type="checkbox" id="q_recinzione_si_parziale">
+            <div class="check-box"></div>
+            <span class="opzione-label">Parziale</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this, 'q_recinzione_no')">
+            <input type="checkbox" id="q_recinzione_no">
+            <div class="check-box"></div>
+            <span class="opzione-label">No</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="domanda">
+        <label>Fabbricati esistenti (anche ruderi)?</label>
+        <div class="opzioni inline">
+          <label class="check-item" onclick="toggleCheck(this, 'q_fabbricati_si_abitabile')">
+            <input type="checkbox" id="q_fabbricati_si_abitabile">
+            <div class="check-box"></div>
+            <span class="opzione-label">Sì, abitabile</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this, 'q_fabbricati_si_rudere')">
+            <input type="checkbox" id="q_fabbricati_si_rudere">
+            <div class="check-box"></div>
+            <span class="opzione-label">Rudere/deposito</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this, 'q_fabbricati_no')">
+            <input type="checkbox" id="q_fabbricati_no">
+            <div class="check-box"></div>
+            <span class="opzione-label">No</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="domanda">
+        <label>Zona vincolata?</label>
+        <div class="opzioni">
+          <label class="check-item" onclick="toggleCheck(this, 'q_vincolo_costa')">
+            <input type="checkbox" id="q_vincolo_costa">
+            <div class="check-box"></div>
+            <span class="opzione-label">Zona 300m dalla costa (vincolo paesaggistico)</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this, 'q_vincolo_sic')">
+            <input type="checkbox" id="q_vincolo_sic">
+            <div class="check-box"></div>
+            <span class="opzione-label">SIC / ZPS / Area protetta</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this, 'q_vincolo_no')">
+            <input type="checkbox" id="q_vincolo_no">
+            <div class="check-box"></div>
+            <span class="opzione-label">Nessun vincolo conosciuto</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this, 'q_vincolo_ns')">
+            <input type="checkbox" id="q_vincolo_ns">
+            <div class="check-box"></div>
+            <span class="opzione-label">Non so</span>
+          </label>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SEZIONE 2 -->
+  <div class="sezione">
+    <div class="sezione-header">
+      <span class="sezione-icon">💧</span>
+      <span class="sezione-title">Acqua & Infrastrutture</span>
+      <span class="sezione-num">02 / 05</span>
+    </div>
+    <div class="sezione-body">
+
+      <div class="domanda">
+        <label>Disponibilità idrica</label>
+        <div class="opzioni">
+          <label class="check-item" onclick="toggleCheck(this, 'q_acqua_pozzo')">
+            <input type="checkbox" id="q_acqua_pozzo">
+            <div class="check-box"></div>
+            <span class="opzione-label">Pozzo esistente</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this, 'q_acqua_sorgente')">
+            <input type="checkbox" id="q_acqua_sorgente">
+            <div class="check-box"></div>
+            <span class="opzione-label">Sorgente naturale</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this, 'q_acqua_acquedotto')">
+            <input type="checkbox" id="q_acqua_acquedotto">
+            <div class="check-box"></div>
+            <span class="opzione-label">Allaccio acquedotto disponibile</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this, 'q_acqua_nessuna')">
+            <input type="checkbox" id="q_acqua_nessuna">
+            <div class="check-box"></div>
+            <span class="opzione-label">Nessuna fonte d'acqua</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="domanda">
+        <label>Energia elettrica</label>
+        <div class="opzioni inline">
+          <label class="check-item" onclick="toggleCheck(this, 'q_luce_in_loco')">
+            <input type="checkbox" id="q_luce_in_loco">
+            <div class="check-box"></div>
+            <span class="opzione-label">Presente in loco</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this, 'q_luce_vicina')">
+            <input type="checkbox" id="q_luce_vicina">
+            <div class="check-box"></div>
+            <span class="opzione-label">Nelle vicinanze</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this, 'q_luce_assente')">
+            <input type="checkbox" id="q_luce_assente">
+            <div class="check-box"></div>
+            <span class="opzione-label">Assente</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="domanda">
+        <label>Connettività (telefonia / internet)</label>
+        <div class="opzioni inline">
+          <label class="check-item" onclick="toggleCheck(this, 'q_connettivita_buona')">
+            <input type="checkbox" id="q_connettivita_buona">
+            <div class="check-box"></div>
+            <span class="opzione-label">Buona (4G/5G)</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this, 'q_connettivita_scarsa')">
+            <input type="checkbox" id="q_connettivita_scarsa">
+            <div class="check-box"></div>
+            <span class="opzione-label">Scarsa / instabile</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this, 'q_connettivita_assente')">
+            <input type="checkbox" id="q_connettivita_assente">
+            <div class="check-box"></div>
+            <span class="opzione-label">Assente</span>
+          </label>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SEZIONE 3 -->
+  <div class="sezione">
+    <div class="sezione-header">
+      <span class="sezione-icon">🌱</span>
+      <span class="sezione-title">Vegetazione & Suolo</span>
+      <span class="sezione-num">03 / 05</span>
+    </div>
+    <div class="sezione-body">
+
+      <div class="domanda">
+        <label>Stato attuale del terreno</label>
+        <div class="opzioni">
+          <label class="check-item" onclick="toggleCheck(this, 'q_veg_macchia')">
+            <input type="checkbox" id="q_veg_macchia">
+            <div class="check-box"></div>
+            <span class="opzione-label">Macchia mediterranea (lentisco, ginepro, corbezzolo...)</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this, 'q_veg_incolto')">
+            <input type="checkbox" id="q_veg_incolto">
+            <div class="check-box"></div>
+            <span class="opzione-label">Incolto / erbacee spontanee</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this, 'q_veg_ulivi')">
+            <input type="checkbox" id="q_veg_ulivi">
+            <div class="check-box"></div>
+            <span class="opzione-label">Ulivi (anche abbandonati)</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this, 'q_veg_vigneto')">
+            <input type="checkbox" id="q_veg_vigneto">
+            <div class="check-box"></div>
+            <span class="opzione-label">Vigneto esistente</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this, 'q_veg_roccia')">
+            <input type="checkbox" id="q_veg_roccia">
+            <div class="check-box"></div>
+            <span class="opzione-label">Prevalentemente roccioso</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this, 'q_veg_altro')">
+            <input type="checkbox" id="q_veg_altro">
+            <div class="check-box"></div>
+            <span class="opzione-label">Altro (specifica sotto)</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="domanda">
+        <label>Morfologia del suolo</label>
+        <div class="opzioni inline">
+          <label class="check-item" onclick="toggleCheck(this, 'q_morfologia_pianeggiante')">
+            <input type="checkbox" id="q_morfologia_pianeggiante">
+            <div class="check-box"></div>
+            <span class="opzione-label">Pianeggiante</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this, 'q_morfologia_in_pendio')">
+            <input type="checkbox" id="q_morfologia_in_pendio">
+            <div class="check-box"></div>
+            <span class="opzione-label">In pendio</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this, 'q_morfologia_terrazzato')">
+            <input type="checkbox" id="q_morfologia_terrazzato">
+            <div class="check-box"></div>
+            <span class="opzione-label">Terrazzato</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this, 'q_morfologia_misto')">
+            <input type="checkbox" id="q_morfologia_misto">
+            <div class="check-box"></div>
+            <span class="opzione-label">Misto</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="domanda">
+        <label>Analisi del suolo già effettuata?</label>
+        <div class="opzioni inline">
+          <label class="check-item" onclick="toggleCheck(this, 'q_analisi_suolo_si')">
+            <input type="checkbox" id="q_analisi_suolo_si">
+            <div class="check-box"></div>
+            <span class="opzione-label">Sì</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this, 'q_analisi_suolo_no')">
+            <input type="checkbox" id="q_analisi_suolo_no">
+            <div class="check-box"></div>
+            <span class="opzione-label">No</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this, 'q_analisi_suolo_in_corso')">
+            <input type="checkbox" id="q_analisi_suolo_in_corso">
+            <div class="check-box"></div>
+            <span class="opzione-label">In corso</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="domanda">
+        <label>Note aggiuntive su vegetazione / suolo</label>
+        <textarea id="q_note_suolo" placeholder="Descrivi liberamente ciò che hai osservato sul terreno..."></textarea>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SEZIONE 4 -->
+  <div class="sezione">
+    <div class="sezione-header">
+      <span class="sezione-icon">👤</span>
+      <span class="sezione-title">Il Proprietario</span>
+      <span class="sezione-num">04 / 05</span>
+    </div>
+    <div class="sezione-body">
+
+      <div class="domanda">
+        <label>Nome e Cognome <span class="obblig">OBBLIG</span></label>
+        <input type="text" id="q_nome" placeholder="Come ti chiami?">
+      </div>
+
+      <div class="domanda">
+        <label>Fascia d'età</label>
+        <div class="opzioni inline">
+          <label class="check-item" onclick="toggleCheck(this, 'q_eta_under_40')">
+            <input type="checkbox" id="q_eta_under_40">
+            <div class="check-box"></div>
+            <span class="opzione-label">Under 40 🌟</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this, 'q_eta_40_60')">
+            <input type="checkbox" id="q_eta_40_60">
+            <div class="check-box"></div>
+            <span class="opzione-label">40–60 anni</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this, 'q_eta_over_60')">
+            <input type="checkbox" id="q_eta_over_60">
+            <div class="check-box"></div>
+            <span class="opzione-label">Over 60</span>
+          </label>
+        </div>
+        <p class="hint">🌟 Under 40 = accesso a misure PAC e ISMEA agevolate</p>
+      </div>
+
+      <div class="domanda">
+        <label>Residenza</label>
+        <div class="opzioni inline">
+          <label class="check-item" onclick="toggleCheck(this, 'q_residenza_sardegna')">
+            <input type="checkbox" id="q_residenza_sardegna">
+            <div class="check-box"></div>
+            <span class="opzione-label">Sardegna</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this, 'q_residenza_altra_regione')">
+            <input type="checkbox" id="q_residenza_altra_regione">
+            <div class="check-box"></div>
+            <span class="opzione-label">Altra regione</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this, 'q_residenza_estero')">
+            <input type="checkbox" id="q_residenza_estero">
+            <div class="check-box"></div>
+            <span class="opzione-label">Estero</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="domanda">
+        <label>Qualifica agricola attuale</label>
+        <div class="opzioni">
+          <label class="check-item" onclick="toggleCheck(this, 'q_qualifica_iap')">
+            <input type="checkbox" id="q_qualifica_iap">
+            <div class="check-box"></div>
+            <span class="opzione-label">IAP — Imprenditore Agricolo Professionale</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this, 'q_qualifica_coltivatore_diretto')">
+            <input type="checkbox" id="q_qualifica_coltivatore_diretto">
+            <div class="check-box"></div>
+            <span class="opzione-label">Coltivatore Diretto</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this, 'q_qualifica_piva_agricola')">
+            <input type="checkbox" id="q_qualifica_piva_agricola">
+            <div class="check-box"></div>
+            <span class="opzione-label">P.IVA agricola già aperta</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this, 'q_qualifica_nessuna')">
+            <input type="checkbox" id="q_qualifica_nessuna">
+            <div class="check-box"></div>
+            <span class="opzione-label">Nessuna qualifica (privato)</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this, 'q_qualifica_disponibile')">
+            <input type="checkbox" id="q_qualifica_disponibile">
+            <div class="check-box"></div>
+            <span class="opzione-label">Nessuna ma disponibile ad acquisirla</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="domanda">
+        <label>Esperienza nel settore agricolo?</label>
+        <div class="opzioni inline">
+          <label class="check-item" onclick="toggleCheck(this, 'q_esperienza_nessuna')">
+            <input type="checkbox" id="q_esperienza_nessuna">
+            <div class="check-box"></div>
+            <span class="opzione-label">Nessuna</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this, 'q_esperienza_base')">
+            <input type="checkbox" id="q_esperienza_base">
+            <div class="check-box"></div>
+            <span class="opzione-label">Base / hobbistica</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this, 'q_esperienza_buona')">
+            <input type="checkbox" id="q_esperienza_buona">
+            <div class="check-box"></div>
+            <span class="opzione-label">Buona</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this, 'q_esperienza_professionale')">
+            <input type="checkbox" id="q_esperienza_professionale">
+            <div class="check-box"></div>
+            <span class="opzione-label">Professionale</span>
+          </label>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SEZIONE 5 -->
+  <div class="sezione">
+    <div class="sezione-header">
+      <span class="sezione-icon">🎯</span>
+      <span class="sezione-title">Obiettivi & Budget</span>
+      <span class="sezione-num">05 / 05</span>
+    </div>
+    <div class="sezione-body">
+
+      <div class="domanda">
+        <label>Obiettivo principale <span class="obblig">OBBLIG</span></label>
+        <div class="opzioni">
+          <label class="check-item" onclick="toggleCheck(this, 'q_obj_reddito')">
+            <input type="checkbox" id="q_obj_reddito">
+            <div class="check-box"></div>
+            <span class="opzione-label">💰 Generare reddito agricolo</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this, 'q_obj_valorizzazione')">
+            <input type="checkbox" id="q_obj_valorizzazione">
+            <div class="check-box"></div>
+            <span class="opzione-label">📈 Valorizzare il patrimonio immobiliare</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this, 'q_obj_agriturismo')">
+            <input type="checkbox" id="q_obj_agriturismo">
+            <div class="check-box"></div>
+            <span class="opzione-label">🏡 Agriturismo / attività ricettiva</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this, 'q_obj_personale')">
+            <input type="checkbox" id="q_obj_personale">
+            <div class="check-box"></div>
+            <span class="opzione-label">🌿 Uso personale / familiare</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this, 'q_obj_biologico')">
+            <input type="checkbox" id="q_obj_biologico">
+            <div class="check-box"></div>
+            <span class="opzione-label">🌱 Produzione biologica certificata</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this, 'q_obj_affitto')">
+            <input type="checkbox" id="q_obj_affitto">
+            <div class="check-box"></div>
+            <span class="opzione-label">📋 Affittare a un conduttore terzo</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="domanda">
+        <label>Budget per i primi interventi</label>
+        <select id="q_budget">
+          <option value="">— Seleziona una fascia —</option>
+          <option value="sotto_10k">Sotto €10.000</option>
+          <option value="10_30k">€10.000 – €30.000</option>
+          <option value="30_80k">€30.000 – €80.000</option>
+          <option value="80_200k">€80.000 – €200.000</option>
+          <option value="oltre_200k">Oltre €200.000</option>
+          <option value="da_definire">Da definire con agevolazioni</option>
+        </select>
+      </div>
+
+      <div class="domanda">
+        <label>Orizzonte temporale del progetto</label>
+        <div class="opzioni inline">
+          <label class="check-item" onclick="toggleCheck(this, 'q_orizzonte_1_anno')">
+            <input type="checkbox" id="q_orizzonte_1_anno">
+            <div class="check-box"></div>
+            <span class="opzione-label">1 anno</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this, 'q_orizzonte_3_anni')">
+            <input type="checkbox" id="q_orizzonte_3_anni">
+            <div class="check-box"></div>
+            <span class="opzione-label">3 anni</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this, 'q_orizzonte_5_anni')">
+            <input type="checkbox" id="q_orizzonte_5_anni">
+            <div class="check-box"></div>
+            <span class="opzione-label">5 anni</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this, 'q_orizzonte_oltre_5')">
+            <input type="checkbox" id="q_orizzonte_oltre_5">
+            <div class="check-box"></div>
+            <span class="opzione-label">5+ anni</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="domanda">
+        <label>Gestione preferita</label>
+        <div class="opzioni inline">
+          <label class="check-item" onclick="toggleCheck(this, 'q_gestione_diretta')">
+            <input type="checkbox" id="q_gestione_diretta">
+            <div class="check-box"></div>
+            <span class="opzione-label">Gestione diretta</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this, 'q_gestione_affidata')">
+            <input type="checkbox" id="q_gestione_affidata">
+            <div class="check-box"></div>
+            <span class="opzione-label">Affidata a terzi</span>
+          </label>
+          <label class="check-item" onclick="toggleCheck(this, 'q_gestione_mista')">
+            <input type="checkbox" id="q_gestione_mista">
+            <div class="check-box"></div>
+            <span class="opzione-label">Mista</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="domanda">
+        <label>Note libere / idee / domande per Franki</label>
+        <textarea id="q_note_finali" placeholder="Racconta tutto quello che ti passa per la testa sul progetto..." style="min-height:100px;"></textarea>
+      </div>
+
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<!-- ISTRUZIONI FINALI -->
+<!-- NOTE LIBERE -->
+<div class="sezione" style="max-width:680px;margin:0 auto 24px;padding:0 16px;">
+  <div class="sezione-header">
+    <span class="sezione-icon">✏️</span>
+    <span class="sezione-title">Note e Commenti Liberi</span>
+  </div>
+  <div class="sezione-body">
+    <div class="domanda">
+      <label>Aggiungi qualsiasi informazione aggiuntiva — osservazioni, situazioni particolari, dubbi o domande per il team Franki</label>
+      <textarea id="q_note_libere" placeholder="Scrivi qui tutto ciò che non rientra nelle domande precedenti...&#10;&#10;Es. Il terreno confina con una proprietà in vendita... c'è un vecchio pozzo non mappato... vorrei capire se è possibile fare agriturismo..."></textarea>
+    </div>
+    <div class="domanda">
+      <label>C'è qualcosa che ti preoccupa o ti blocca rispetto a questo progetto?</label>
+      <textarea id="q_blocchi" placeholder="Es. Non so se ho i requisiti per i contributi PSR... ho dubbi sul costo... non so come gestire la parte burocratica..."></textarea>
+    </div>
+  </div>
+</div>
+
+<div class="istruzioni-box">
+  <div class="istr-titolo">📋 COME RESTITUIRE QUESTO MODULO</div>
+  <div class="istr-steps">
+    <div class="istr-step">
+      <div class="istr-num">1</div>
+      <div class="istr-testo">Compila tutti i campi del questionario</div>
+    </div>
+    <div class="istr-step">
+      <div class="istr-num">2</div>
+      <div class="istr-testo">Clicca il bottone <strong>SALVA PDF</strong> qui sotto — il browser genera automaticamente il documento</div>
+    </div>
+    <div class="istr-step">
+      <div class="istr-num">3</div>
+      <div class="istr-testo">Nella finestra di stampa seleziona <strong>"Salva come PDF"</strong> come destinazione e clicca Salva</div>
+    </div>
+    <div class="istr-step">
+      <div class="istr-num">4</div>
+      <div class="istr-testo">Invia il PDF compilato a <strong>hello@frankistudio.it</strong> oppure via WhatsApp al <strong>+39 335 7230240</strong></div>
+    </div>
+  </div>
+</div>
+
+<!-- BOTTOM BAR -->
+<div class="save-banner">
+  <button class="btn btn-pdf" onclick="salvaPDF()">📄 SALVA PDF</button>
+  <button class="btn btn-save" onclick="salvaDati()">💾 SALVA</button>
+  <button class="btn btn-copy" onclick="copiaTesto()">📋 COPIA</button>
+  <button class="btn btn-wa" onclick="copiaPerWA()">📲 COPIA x WA</button>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+const STORAGE_KEY = 'questionario_arzachena_v1';
+
+// --- RADIO ---
+function selectRadio(el, name, value) {
+  document.querySelectorAll(`.radio-item`).forEach(i => {
+    if (i.querySelector(`input[name="${name}"]`)) i.classList.remove('selected');
+  });
+  el.classList.add('selected');
+  el.querySelector('input[type="radio"]').checked = true;
+  aggiornaProgress();
+  salvaSilenzioso();
+}
+
+// --- CHECKBOX ---
+function toggleCheck(el, id) {
+  if(typeof event !== 'undefined' && event && event.preventDefault) event.preventDefault();
+  el.classList.toggle('selected');
+  const cb = document.getElementById(id);
+  if(cb) cb.checked = el.classList.contains('selected');
+  aggiornaProgress();
+  salvaSilenzioso();
+}
+
+// --- PROGRESS ---
+const CAMPI_TOTALI = 28;
+function contaRisposte() {
+  let count = 0;
+  // Text / number / select
+  ['q_superficie','q_catasto','q_budget','q_note_suolo','q_note_finali','q_nome'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.value && el.value.trim() !== '' && el.value !== '') count++;
+  });
+  // Radio groups
+  ['q_accesso','q_recinzione','q_fabbricati','q_luce','q_connettivita','q_morfologia',
+   'q_analisi_suolo','q_eta','q_residenza','q_qualifica','q_esperienza','q_orizzonte','q_gestione'].forEach(name => {
+    if (document.querySelector(`input[name="${name}"]:checked`)) count++;
+  });
+  // Checkbox groups (contano se almeno uno selezionato)
+  const gruppiCheck = [
+    ['q_vincolo_costa','q_vincolo_sic','q_vincolo_no','q_vincolo_ns'],
+    ['q_acqua_pozzo','q_acqua_sorgente','q_acqua_acquedotto','q_acqua_nessuna'],
+    ['q_veg_macchia','q_veg_incolto','q_veg_ulivi','q_veg_vigneto','q_veg_roccia','q_veg_altro'],
+    ['q_obj_reddito','q_obj_valorizzazione','q_obj_agriturismo','q_obj_personale','q_obj_biologico','q_obj_affitto'],
+  ];
+  gruppiCheck.forEach(gruppo => {
+    if (gruppo.some(id => { const el = document.getElementById(id); return el && el.checked; })) count++;
+  });
+  return Math.min(count, CAMPI_TOTALI);
+}
+
+function aggiornaProgress() {
+  const n = contaRisposte();
+  const pct = Math.round((n / CAMPI_TOTALI) * 100);
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('progressLabel').textContent = `${n} / ${CAMPI_TOTALI} risposte`;
+}
+
+// --- RACCOLTA DATI ---
+function raccogliDati() {
+  const get = id => { const el = document.getElementById(id); return el ? el.value : ''; };
+  const getRadio = name => {
+    const el = document.querySelector(`input[name="${name}"]:checked`);
+    return el ? el.value : '';
+  };
+  const getChecks = ids => ids.filter(id => { const el = document.getElementById(id); return el && el.checked; }).join(', ');
+
+  return {
+    nome: get('q_nome'),
+    // S1
+    superficie: get('q_superficie'),
+    catasto: get('q_catasto'),
+    accesso: getChecks(['q_accesso_strada_pubblica', 'q_accesso_strada_privata', 'q_accesso_nessun_accesso']),
+    recinzione: getChecks(['q_recinzione_si_totale', 'q_recinzione_si_parziale', 'q_recinzione_no']),
+    fabbricati: getChecks(['q_fabbricati_si_abitabile', 'q_fabbricati_si_rudere', 'q_fabbricati_no']),
+    vincoli: getChecks(['q_vincolo_costa','q_vincolo_sic','q_vincolo_no','q_vincolo_ns']),
+    // S2
+    acqua: getChecks(['q_acqua_pozzo','q_acqua_sorgente','q_acqua_acquedotto','q_acqua_nessuna']),
+    luce: getChecks(['q_luce_in_loco', 'q_luce_vicina', 'q_luce_assente']),
+    connettivita: getChecks(['q_connettivita_buona', 'q_connettivita_scarsa', 'q_connettivita_assente']),
+    // S3
+    vegetazione: getChecks(['q_veg_macchia','q_veg_incolto','q_veg_ulivi','q_veg_vigneto','q_veg_roccia','q_veg_altro']),
+    morfologia: getChecks(['q_morfologia_pianeggiante', 'q_morfologia_in_pendio', 'q_morfologia_terrazzato', 'q_morfologia_misto']),
+    analisi_suolo: getChecks(['q_analisi_suolo_si', 'q_analisi_suolo_no', 'q_analisi_suolo_in_corso']),
+    note_suolo: get('q_note_suolo'),
+    // S4
+    eta: getChecks(['q_eta_under_40', 'q_eta_40_60', 'q_eta_over_60']),
+    residenza: getChecks(['q_residenza_sardegna', 'q_residenza_altra_regione', 'q_residenza_estero']),
+    qualifica: getChecks(['q_qualifica_iap', 'q_qualifica_coltivatore_diretto', 'q_qualifica_piva_agricola', 'q_qualifica_nessuna', 'q_qualifica_disponibile']),
+    esperienza: getChecks(['q_esperienza_nessuna', 'q_esperienza_base', 'q_esperienza_buona', 'q_esperienza_professionale']),
+    // S5
+    obiettivi: getChecks(['q_obj_reddito','q_obj_valorizzazione','q_obj_agriturismo','q_obj_personale','q_obj_biologico','q_obj_affitto']),
+    budget: get('q_budget'),
+    orizzonte: getChecks(['q_orizzonte_1_anno', 'q_orizzonte_3_anni', 'q_orizzonte_5_anni', 'q_orizzonte_oltre_5']),
+    gestione: getChecks(['q_gestione_diretta', 'q_gestione_affidata', 'q_gestione_mista']),
+    note_finali: get('q_note_finali'),
+    note_libere: get('q_note_libere'),
+    blocchi: get('q_blocchi'),
+  };
+}
+
+// --- SALVATAGGIO localStorage ---
+function salvaSilenzioso() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(raccogliDati())); } catch(e) {}
+}
+function salvaDati() {
+  salvaSilenzioso();
+  mostraToast('✅ Salvato nel browser!');
+}
+function salvaPDF() {
+  salvaSilenzioso();
+  window.print();
+}
+
+// --- CARICA ---
+function caricaDati() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (!saved) return;
+    const d = JSON.parse(saved);
+
+    const set = (id, val) => { const el = document.getElementById(id); if(el && val) el.value = val; };
+    set('q_nome', d.nome);
+    set('q_superficie', d.superficie);
+    set('q_catasto', d.catasto);
+    set('q_note_suolo', d.note_suolo);
+    set('q_note_finali', d.note_finali);
+    set('q_note_libere', d.note_libere);
+    set('q_blocchi', d.blocchi);
+    set('q_budget', d.budget);
+
+    const setChecks = (ids, valStr) => {
+      if (!valStr) return;
+      const vals = valStr.split(', ');
+      ids.forEach(id => {
+        if (vals.includes(id)) {
+          const el = document.getElementById(id);
+          if (el) { el.checked = true; el.closest('.check-item').classList.add('selected'); }
+        }
+      });
+    };
+    // Ripristina checkbox multi-scelta (ex-radio)
+    setChecks(['q_accesso_strada_pubblica', 'q_accesso_strada_privata', 'q_accesso_nessun_accesso'], d.accesso);
+    setChecks(['q_recinzione_si_totale', 'q_recinzione_si_parziale', 'q_recinzione_no'], d.recinzione);
+    setChecks(['q_fabbricati_si_abitabile', 'q_fabbricati_si_rudere', 'q_fabbricati_no'], d.fabbricati);
+    setChecks(['q_luce_in_loco', 'q_luce_vicina', 'q_luce_assente'], d.luce);
+    setChecks(['q_connettivita_buona', 'q_connettivita_scarsa', 'q_connettivita_assente'], d.connettivita);
+    setChecks(['q_morfologia_pianeggiante', 'q_morfologia_in_pendio', 'q_morfologia_terrazzato', 'q_morfologia_misto'], d.morfologia);
+    setChecks(['q_analisi_suolo_si', 'q_analisi_suolo_no', 'q_analisi_suolo_in_corso'], d.analisi_suolo);
+    setChecks(['q_eta_under_40', 'q_eta_40_60', 'q_eta_over_60'], d.eta);
+    setChecks(['q_residenza_sardegna', 'q_residenza_altra_regione', 'q_residenza_estero'], d.residenza);
+    setChecks(['q_qualifica_iap', 'q_qualifica_coltivatore_diretto', 'q_qualifica_piva_agricola', 'q_qualifica_nessuna', 'q_qualifica_disponibile'], d.qualifica);
+    setChecks(['q_esperienza_nessuna', 'q_esperienza_base', 'q_esperienza_buona', 'q_esperienza_professionale'], d.esperienza);
+    setChecks(['q_orizzonte_1_anno', 'q_orizzonte_3_anni', 'q_orizzonte_5_anni', 'q_orizzonte_oltre_5'], d.orizzonte);
+    setChecks(['q_gestione_diretta', 'q_gestione_affidata', 'q_gestione_mista'], d.gestione);
+    // Checkbox originali
+    setChecks(['q_vincolo_costa','q_vincolo_sic','q_vincolo_no','q_vincolo_ns'], d.vincoli);
+    setChecks(['q_acqua_pozzo','q_acqua_sorgente','q_acqua_acquedotto','q_acqua_nessuna'], d.acqua);
+    setChecks(['q_veg_macchia','q_veg_incolto','q_veg_ulivi','q_veg_vigneto','q_veg_roccia','q_veg_altro'], d.vegetazione);
+    setChecks(['q_obj_reddito','q_obj_valorizzazione','q_obj_agriturismo','q_obj_personale','q_obj_biologico','q_obj_affitto'], d.obiettivi);
+
+    aggiornaProgress();
+  } catch(e) {}
+}
+
+// --- TESTO FORMATTATO ---
+function generaTesto() {
+  const d = raccogliDati();
+  const line = (label, val) => val ? `• ${label}: ${val}\n` : '';
+  return `🌿 QUESTIONARIO TERRENO — LA MENDULA, ARZACHENA
+${'─'.repeat(40)}
+👤 COMPILATO DA: ${d.nome || '(non indicato)'}
+
+📍 IL TERRENO
+${line('Superficie', d.superficie ? d.superficie + ' ettari' : '')}${line('Catasto', d.catasto)}${line('Accesso', d.accesso)}${line('Recinzione', d.recinzione)}${line('Fabbricati', d.fabbricati)}${line('Vincoli', d.vincoli)}
+💧 ACQUA & INFRASTRUTTURE
+${line('Acqua', d.acqua)}${line('Elettricità', d.luce)}${line('Connettività', d.connettivita)}
+🌱 VEGETAZIONE & SUOLO
+${line('Vegetazione', d.vegetazione)}${line('Morfologia', d.morfologia)}${line('Analisi suolo', d.analisi_suolo)}${d.note_suolo ? '• Note: ' + d.note_suolo + '\n' : ''}
+👤 IL PROPRIETARIO
+${line('Età', d.eta)}${line('Residenza', d.residenza)}${line('Qualifica', d.qualifica)}${line('Esperienza', d.esperienza)}
+🎯 OBIETTIVI & BUDGET
+${line('Obiettivi', d.obiettivi)}${line('Budget', d.budget)}${line('Orizzonte', d.orizzonte)}${line('Gestione', d.gestione)}${d.note_finali ? '• Note finali: ' + d.note_finali + '\n' : ''}
+${'─'.repeat(40)}
+Inviato via Franki Studio — We Start Your Ideas`;
+}
+
+// --- COPIA ---
+function copiaTesto() {
+  const testo = generaTesto();
+  try {
+    const ta = document.createElement('textarea');
+    ta.value = testo;
+    ta.style.position = 'fixed';
+    ta.style.top = '0'; ta.style.left = '0';
+    ta.style.opacity = '0';
+    ta.style.fontSize = '16px';
+    document.body.appendChild(ta);
+    ta.focus(); ta.select();
+    ta.setSelectionRange(0, 99999);
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    mostraToast('📋 Copiato negli appunti!');
+  } catch(e) {
+    mostraToast('❌ Errore copia');
+  }
+}
+
+// --- COPIA PER WHATSAPP ---
+function copiaPerWA() {
+  const testo = generaTesto();
+  try {
+    const ta = document.createElement('textarea');
+    ta.value = testo;
+    ta.style.position = 'fixed';
+    ta.style.top = '0';
+    ta.style.left = '0';
+    ta.style.opacity = '0';
+    ta.style.fontSize = '16px'; // evita zoom su iOS
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    ta.setSelectionRange(0, 99999);
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    mostraToast('✅ Copiato! Apri WA e incolla');
+  } catch(e) {
+    mostraToast('❌ Errore — usa il tasto COPIA');
+  }
+}
+
+// --- TOAST ---
+function mostraToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2400);
+}
+
+// --- INPUT EVENTS ---
+document.querySelectorAll('input[type="text"], input[type="number"], select, textarea').forEach(el => {
+  el.addEventListener('input', () => { aggiornaProgress(); salvaSilenzioso(); });
+});
+
+// --- INIT ---
+document.addEventListener('DOMContentLoaded', () => {
+  caricaDati();
+  aggiornaProgress();
+});
+</script>
+</body>
+</html>

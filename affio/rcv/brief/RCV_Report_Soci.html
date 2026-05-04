@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Report Soci Cordata — RCV Il Poglío</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--blu:#2B38B0;--arancio:#F0A500;--grigio:#F2F1ED;--bianco:#FFFFFF;--nero:#111118;--verde:#0f6b30;--rosso:#b02020;--viola:#4a008a}
+body{font-family:'Barlow',sans-serif;background:var(--grigio);color:var(--nero);max-width:700px;margin:0 auto;font-size:14px;line-height:1.6}
+nav{background:var(--viola);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.fk-logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;display:inline-flex;align-items:center}
+.fk-logo .fran{color:#fff}
+.fk-logo .ki{background:#F0A500;color:#fff;border-radius:5px;padding:1px 7px;margin-left:2px}
+.nav-label{color:rgba(255,255,255,0.6);font-size:11px;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.hero{background:var(--viola);padding:24px 20px 20px;position:relative;overflow:hidden}
+.hero::before{content:'SOCI';position:absolute;right:-10px;top:-10px;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:140px;color:rgba(255,255,255,0.05);line-height:1;pointer-events:none}
+.hero-tag{display:inline-block;background:var(--arancio);color:#fff;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;border-radius:3px;margin-bottom:10px}
+.hero h1{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:36px;color:#fff;text-transform:uppercase;line-height:1;margin-bottom:4px}
+.hero h1 span{color:var(--arancio)}
+.hero p{color:rgba(255,255,255,0.5);font-size:12px}
+.kpi-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;background:rgba(0,0,0,0.1)}
+.kpi{background:var(--bianco);padding:14px 16px}
+.kpi-label{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#888;margin-bottom:4px}
+.kpi-val{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:24px;line-height:1}
+.kpi-sub{font-size:11px;color:#888;margin-top:2px}
+.kv-verde{color:var(--verde)}.kv-blu{color:var(--blu)}.kv-oro{color:var(--arancio)}.kv-viola{color:var(--viola)}
+.intro-box{background:var(--bianco);padding:16px 20px;border-left:4px solid var(--viola);margin-bottom:3px}
+.intro-box p{font-size:13px;color:#444;line-height:1.7}
+.intro-box strong{color:var(--nero);font-weight:500}
+.progressione{background:var(--bianco);padding:20px;margin-bottom:3px}
+.prog-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#888;margin-bottom:14px}
+.prog-row{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid var(--grigio)}
+.prog-row:last-child{border-bottom:none;padding-top:14px;margin-top:4px;border-top:2px solid var(--viola)}
+.prog-data{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;color:var(--viola);min-width:80px;padding-top:2px}
+.prog-content{flex:1}
+.prog-voce{font-size:13px;color:#333;margin-bottom:2px}
+.prog-detail{font-size:12px;color:#888;line-height:1.5}
+.prog-num{text-align:right;min-width:90px}
+.prog-incr{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px}
+.prog-saldo{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;color:#888;margin-top:2px}
+.pos{color:var(--verde)}.neg{color:var(--rosso)}.neu{color:var(--blu)}
+.scenari-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;background:rgba(0,0,0,0.08);margin-bottom:3px}
+.sc-box{background:var(--bianco);padding:18px 16px;text-align:center}
+.sc-box.best{background:var(--viola)}
+.sc-label{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#888;margin-bottom:10px}
+.sc-box.best .sc-label{color:rgba(255,255,255,0.6)}
+.sc-exit{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:14px;color:#888;margin-bottom:6px}
+.sc-box.best .sc-exit{color:rgba(255,255,255,0.5)}
+.sc-val{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:32px;color:var(--viola);line-height:1;margin-bottom:6px}
+.sc-box.best .sc-val{color:#fff}
+.sc-mult{font-size:13px;color:#888;font-style:italic}
+.sc-box.best .sc-mult{color:rgba(255,255,255,0.7)}
+.totale-box{background:var(--nero);padding:20px}
+.totale-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:13px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:14px}
+.tot-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid rgba(255,255,255,0.07);font-size:13px}
+.tot-row:last-child{border-bottom:none;padding-top:14px;margin-top:6px;border-top:1px solid rgba(255,255,255,0.2)}
+.tot-label{color:rgba(255,255,255,0.6)}
+.tot-val{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px}
+.tot-row:last-child .tot-val{font-size:32px;color:var(--arancio)}
+.footer{background:var(--nero);padding:16px 20px;text-align:center}
+.footer p{color:rgba(255,255,255,0.35);font-size:11px;margin-top:6px}
+</style>
+</head>
+<body>
+<nav>
+  <div class="fk-logo"><span class="fran">Fran</span><span class="ki">Ki</span></div>
+  <span class="nav-label">Report Soci Cordata · RCV Il Poglío</span>
+</nav>
+<div class="hero">
+  <div class="hero-tag">📊 Report Individuale</div>
+  <h1>Report <span>Soci</span><br>Cordata</h1>
+  <p>HoldCo Srl 10% ciascuno · 6 soci totali · APR26-2Q → NOV30-1Q</p>
+</div>
+<div class="kpi-grid">
+  <div class="kpi"><div class="kpi-label">Investimento totale</div><div class="kpi-val kv-viola">€50K</div><div class="kpi-sub">In 2 tranche da €25K</div></div>
+  <div class="kpi"><div class="kpi-label">Exit scenario base</div><div class="kpi-val kv-verde">~€1,12M</div><div class="kpi-sub">Quota + rimborso finanziamento</div></div>
+  <div class="kpi"><div class="kpi-label">Moltiplicatore</div><div class="kpi-val kv-oro">22×</div><div class="kpi-sub">Il capitale investito</div></div>
+</div>
+
+<div class="intro-box">
+  <p>Ogni socio versa <strong>€50K in 2 tranche</strong> (€25K alla firma + €25K pre-asta) strutturati in due componenti: <strong>€30K per la quota</strong> del 10% nella HoldCo Srl + <strong>€20K come finanziamento soci</strong> al 6% annuo rimborsabile all'exit. Il finanziamento non è equity — è un credito garantito che viene rimborsato con gli interessi prima della distribuzione dei proventi.</p>
+</div>
+
+<div class="progressione">
+  <div class="prog-title">Flussi per ogni socio — entrate e uscite milestone per milestone</div>
+
+  <div class="prog-row">
+    <div class="prog-data">GIU26-1Q</div>
+    <div class="prog-content">
+      <div class="prog-voce">Tranche 1 versata — alla firma del patto parasociale</div>
+      <div class="prog-detail">€15K per la quota + €10K finanziamento soci (1a parte)</div>
+    </div>
+    <div class="prog-num">
+      <div class="prog-incr neg">– €25K</div>
+      <div class="prog-saldo">Saldo: – €25K</div>
+    </div>
+  </div>
+
+  <div class="prog-row">
+    <div class="prog-data">AGO26-2Q</div>
+    <div class="prog-content">
+      <div class="prog-voce">Tranche 2 versata — pre deposito offerta asta</div>
+      <div class="prog-detail">€15K per la quota + €10K finanziamento soci (2a parte)</div>
+    </div>
+    <div class="prog-num">
+      <div class="prog-incr neg">– €25K</div>
+      <div class="prog-saldo">Saldo: – €50K</div>
+    </div>
+  </div>
+
+  <div class="prog-row">
+    <div class="prog-data">NOV26-1Q</div>
+    <div class="prog-content">
+      <div class="prog-voce">Asset aggiudicato e fondo entrato — nessun movimento di cassa</div>
+      <div class="prog-detail">La quota HoldCo vale già molto più di quanto pagato</div>
+    </div>
+    <div class="prog-num">
+      <div class="prog-incr" style="color:#888">€0</div>
+      <div class="prog-saldo">Saldo: – €50K</div>
+    </div>
+  </div>
+
+  <div class="prog-row">
+    <div class="prog-data">AGO27-1Q</div>
+    <div class="prog-content">
+      <div class="prog-voce">M9 — Bubble room aperte · primo revenue certificato</div>
+      <div class="prog-detail">Il valore della quota sale con il revenue reale. 2° momento exit possibile.</div>
+    </div>
+    <div class="prog-num">
+      <div class="prog-incr" style="color:#888">€0</div>
+      <div class="prog-saldo">Saldo: – €50K</div>
+    </div>
+  </div>
+
+  <div class="prog-row">
+    <div class="prog-data">NOV26→NOV30</div>
+    <div class="prog-content">
+      <div class="prog-voce">Maturazione interessi sul finanziamento soci (6% annuo)</div>
+      <div class="prog-detail">€20K × 6% × 4 anni = €4.800 di interessi maturati all'exit</div>
+    </div>
+    <div class="prog-num">
+      <div class="prog-incr pos">+ €4,8K</div>
+      <div class="prog-saldo">Maturano all'exit</div>
+    </div>
+  </div>
+
+  <div class="prog-row">
+    <div class="prog-data">NOV30-1Q</div>
+    <div class="prog-content">
+      <div class="prog-voce">Rimborso finanziamento soci — capitale + interessi</div>
+      <div class="prog-detail">€20K capitale + €4,8K interessi maturati in 4 anni</div>
+    </div>
+    <div class="prog-num">
+      <div class="prog-incr pos">+ €24,8K</div>
+      <div class="prog-saldo">Saldo: – €25,2K</div>
+    </div>
+  </div>
+
+  <div class="prog-row">
+    <div class="prog-data">NOV30-1Q</div>
+    <div class="prog-content">
+      <div class="prog-voce">Quota equity exit — 6% residuo SPV (dopo diluzione fondo)</div>
+      <div class="prog-detail">HoldCo riceve 60% di €18,6M = €11,16M · ogni socio ha 10% HoldCo = €1,116M</div>
+    </div>
+    <div class="prog-num">
+      <div class="prog-incr pos">+ €1,116M</div>
+      <div class="prog-saldo">Saldo: + €1,09M</div>
+    </div>
+  </div>
+
+  <div class="prog-row">
+    <div class="prog-data"><strong>NETTO</strong></div>
+    <div class="prog-content">
+      <div class="prog-voce"><strong>Totale netto per ogni socio</strong></div>
+      <div class="prog-detail">Su €50K investiti · 22× il capitale · IRR ~58% annuo</div>
+    </div>
+    <div class="prog-num">
+      <div class="prog-incr pos" style="font-size:20px">+ €1,09M</div>
+    </div>
+  </div>
+</div>
+
+<!-- SCENARI -->
+<div class="scenari-grid">
+  <div class="sc-box">
+    <div class="sc-label">Scenario prudente</div>
+    <div class="sc-exit">Exit €23M · ×10 EBITDA</div>
+    <div class="sc-val">€1,12M</div>
+    <div class="sc-mult">22× il capitale</div>
+  </div>
+  <div class="sc-box">
+    <div class="sc-label">Scenario buono</div>
+    <div class="sc-exit">Exit €32M · ×14 EBITDA</div>
+    <div class="sc-val">€1,57M</div>
+    <div class="sc-mult">31× il capitale</div>
+  </div>
+  <div class="sc-box best">
+    <div class="sc-label">Scenario ottimo</div>
+    <div class="sc-exit">Exit €37M · ×16 EBITDA</div>
+    <div class="sc-val">€1,84M</div>
+    <div class="sc-mult">37× il capitale</div>
+  </div>
+</div>
+
+<div class="totale-box">
+  <div class="totale-title">Riepilogo per ogni socio cordata · NOV30-1Q</div>
+  <div class="tot-row"><span class="tot-label">Totale versato in 2 tranche</span><span class="tot-val" style="color:var(--rosso)">– €50K</span></div>
+  <div class="tot-row"><span class="tot-label">di cui quota (€30K) · di cui finanziamento (€20K)</span><span class="tot-val" style="color:#888;font-size:14px">€30K + €20K</span></div>
+  <div class="tot-row"><span class="tot-label">Rimborso finanziamento + interessi 6% × 4 anni</span><span class="tot-val" style="color:var(--arancio)">+ €24,8K</span></div>
+  <div class="tot-row"><span class="tot-label">Quota equity exit — 10% HoldCo su €11,16M</span><span class="tot-val" style="color:var(--arancio)">+ €1,116M</span></div>
+  <div class="tot-row"><span class="tot-label"><strong>Totale netto per ogni socio — su €50K investiti</strong></span><span class="tot-val">~€1,09M · 22×</span></div>
+</div>
+
+<div class="footer">
+  <div class="fk-logo"><span class="fran">Fran</span><span class="ki">Ki</span></div>
+  <p>Documento interno riservato · FranKi Studio (Avre Srl) · Napoli · Aprile 2026<br>HoldCo Srl · Il Poglío SPV Srl · AD proposta: Annachiara Calvanese</p>
+</div>
+</body>
+</html>

@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brief Meeting Guia v2 · CCH · Franki Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue:#3549B5; --blue-dark:#1E2E8A; --blue-light:#EBF0FF;
+  --amber:#F9AC28; --amber-dark:#C07800; --amber-light:#FFF7E0;
+  --green:#1A7A4A; --green-light:#E0F5EC; --green-text:#0A4A28;
+  --red:#B03020; --red-light:#FDECEA;
+  --ink:#1A1714; --gray:#6B6560; --gray-light:#F2F0EB;
+  --cream:#FAF9F6; --cream-dark:#EDEBE4; --white:#FFFFFF;
+  --display:'Bebas Neue',sans-serif;
+  --label:'DM Mono',monospace;
+  --body:'Lato',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--cream);color:var(--ink);font-family:var(--body);font-size:1rem;line-height:1.75;-webkit-font-smoothing:antialiased;}
+p{margin-bottom:.9rem;} p:last-child{margin-bottom:0;}
+
+.hdr{background:var(--blue-dark);padding:2.5rem 4rem 2rem;position:relative;overflow:hidden;}
+.hdr::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(-55deg,transparent,transparent 28px,rgba(255,255,255,.025) 28px,rgba(255,255,255,.025) 29px);}
+.hdr::after{content:'';position:absolute;bottom:0;left:0;right:0;height:4px;background:var(--amber);}
+.hdr__brand{font-family:var(--label);font-size:.58rem;letter-spacing:.25em;text-transform:uppercase;color:var(--amber);margin-bottom:.5rem;position:relative;}
+.hdr__title{font-family:var(--display);font-size:clamp(2rem,4vw,3.2rem);letter-spacing:.04em;color:var(--white);position:relative;line-height:1;}
+.hdr__title em{color:var(--amber);font-style:normal;}
+.hdr__sub{font-size:.9rem;color:rgba(255,255,255,.45);margin-top:.5rem;position:relative;font-style:italic;}
+.hdr__meta{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.2rem;position:relative;}
+.pill{display:inline-block;font-family:var(--label);font-size:.54rem;letter-spacing:.1em;text-transform:uppercase;padding:.22rem .8rem;border-radius:20px;}
+.pill--amber{background:var(--amber-light);color:var(--amber-dark);}
+.pill--dark{background:rgba(255,255,255,.1);color:rgba(255,255,255,.6);}
+.pill--green{background:var(--green-light);color:var(--green-text);}
+.pill--red{background:var(--red-light);color:var(--red);}
+
+/* TIMER BAR */
+.timer-bar{background:var(--blue-dark);padding:.6rem 4rem;border-bottom:1px solid rgba(255,255,255,.08);display:flex;gap:0;overflow-x:auto;}
+.timer-seg{font-family:var(--label);font-size:.54rem;letter-spacing:.1em;text-transform:uppercase;padding:.5rem 1.2rem;color:rgba(255,255,255,.3);border-right:1px solid rgba(255,255,255,.06);white-space:nowrap;cursor:pointer;transition:color .2s;}
+.timer-seg:hover{color:rgba(255,255,255,.6);}
+.timer-seg.active{color:var(--amber);background:rgba(255,255,255,.04);}
+.timer-seg__min{font-size:.62rem;color:var(--amber);margin-left:.3rem;}
+
+/* NAV */
+.nav{background:var(--blue-dark);display:flex;overflow-x:auto;position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(255,255,255,.08);}
+.nav__tab{font-family:var(--label);font-size:.54rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.35);padding:.85rem 1.3rem;cursor:pointer;border:none;border-bottom:3px solid transparent;background:none;white-space:nowrap;transition:color .2s;}
+.nav__tab:hover{color:rgba(255,255,255,.7);}
+.nav__tab.active{color:var(--amber);border-bottom-color:var(--amber);}
+
+/* SEZIONI */
+.sec{display:none;max-width:960px;margin:0 auto;padding:2.5rem 4rem 4rem;}
+.sec.active{display:block;animation:fkin .25s ease;}
+@keyframes fkin{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+.sec__hdr{margin-bottom:1.5rem;display:flex;align-items:baseline;gap:1rem;}
+.sec__num{font-family:var(--display);font-size:3.5rem;color:var(--cream-dark);line-height:1;flex-shrink:0;}
+.sec__titles{flex:1;}
+.sec__title{font-family:var(--display);font-size:1.8rem;letter-spacing:.05em;color:var(--ink);}
+.sec__timing{font-family:var(--label);font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:var(--amber-dark);margin-top:.2rem;}
+
+/* CALLOUT */
+.c{padding:1rem 1.4rem;border-left:4px solid;border-radius:0 6px 6px 0;margin:1rem 0;}
+.c--amber{background:var(--amber-light);border-color:var(--amber);}
+.c--amber .c__l{color:var(--amber-dark);}
+.c--amber p{color:#5A3A00;font-size:.9rem;}
+.c--amber strong{color:var(--amber-dark);}
+.c--blue{background:var(--blue-light);border-color:var(--blue);}
+.c--blue .c__l{color:var(--blue);}
+.c--blue p{color:var(--blue-dark);font-size:.9rem;}
+.c--blue strong{color:var(--blue);}
+.c--green{background:var(--green-light);border-color:var(--green);}
+.c--green .c__l{color:var(--green);}
+.c--green p{color:var(--green-text);font-size:.9rem;}
+.c--green strong{color:var(--green);}
+.c--red{background:var(--red-light);border-color:var(--red);}
+.c--red .c__l{color:var(--red);}
+.c--red p{color:var(--red);font-size:.9rem;}
+.c__l{font-family:var(--label);font-size:.54rem;letter-spacing:.2em;text-transform:uppercase;margin-bottom:.3rem;}
+
+/* KPI */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:1px;background:var(--cream-dark);border:1px solid var(--cream-dark);border-radius:8px;overflow:hidden;margin:1rem 0;}
+.kpi{background:var(--white);padding:.9rem 1.1rem;}
+.kpi--a{background:var(--amber-light);border-left:4px solid var(--amber);}
+.kpi--b{background:var(--blue-light);border-left:4px solid var(--blue);}
+.kpi--g{background:var(--green-light);border-left:4px solid var(--green);}
+.kpi--r{background:var(--red-light);border-left:4px solid var(--red);}
+.kpi__l{font-family:var(--label);font-size:.52rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gray);margin-bottom:.25rem;}
+.kpi--a .kpi__l{color:var(--amber-dark);}
+.kpi--b .kpi__l{color:var(--blue);}
+.kpi--g .kpi__l{color:var(--green);}
+.kpi--r .kpi__l{color:var(--red);}
+.kpi__v{font-family:var(--display);font-size:1.9rem;line-height:1;color:var(--ink);}
+.kpi--a .kpi__v{color:var(--amber-dark);}
+.kpi--b .kpi__v{color:var(--blue);}
+.kpi--g .kpi__v{color:var(--green-text);}
+.kpi--r .kpi__v{color:var(--red);}
+.kpi__n{font-size:.75rem;color:var(--gray);margin-top:.2rem;line-height:1.35;}
+
+/* SUB */
+.sub{font-family:var(--display);font-size:1.2rem;letter-spacing:.05em;color:var(--ink);padding-left:.8rem;border-left:4px solid var(--amber);margin:1.8rem 0 .8rem;}
+.sub--blue{border-left-color:var(--blue);}
+.sub--green{border-left-color:var(--green);}
+.sub--gray{border-left-color:var(--gray);}
+
+/* ITEM LIST */
+.ilist{list-style:none;margin:.3rem 0;}
+.ilist li{display:flex;align-items:flex-start;gap:.65rem;padding:.45rem 0;border-bottom:1px solid var(--cream-dark);font-size:.89rem;line-height:1.6;}
+.ilist li:last-child{border-bottom:none;}
+.dot{width:6px;height:6px;border-radius:50%;margin-top:.55rem;flex-shrink:0;}
+.dot--amber{background:var(--amber);}
+.dot--blue{background:var(--blue);}
+.dot--green{background:var(--green);}
+.dot--gray{background:var(--gray);}
+.dot--red{background:var(--red);}
+
+/* 2 COL */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin:1rem 0;}
+.col-block{background:var(--white);border:1px solid var(--cream-dark);border-radius:8px;overflow:hidden;}
+.col-block__head{padding:.7rem 1rem;font-family:var(--display);font-size:1rem;letter-spacing:.04em;}
+.col-block__head--amber{background:var(--amber-dark);color:var(--white);}
+.col-block__head--gray{background:var(--gray-light);color:var(--gray);}
+.col-block__body{padding:.8rem 1rem;}
+
+/* STEP */
+.step-row{display:grid;grid-template-columns:2.8rem 1fr auto;gap:.9rem;align-items:start;background:var(--white);border:1px solid var(--cream-dark);border-radius:8px;padding:.9rem 1.1rem;margin-bottom:.7rem;}
+.step-row--amber{border-left:4px solid var(--amber);}
+.step-row--blue{border-left:4px solid var(--blue);}
+.step-row--green{border-left:4px solid var(--green);}
+.step-n{font-family:var(--display);font-size:2rem;line-height:1;color:var(--cream-dark);}
+.step-n--amber{color:var(--amber-dark);}
+.step-n--blue{color:var(--blue);}
+.step-n--green{color:var(--green);}
+.step-title{font-family:var(--display);font-size:1rem;letter-spacing:.04em;color:var(--ink);margin-bottom:.25rem;}
+.step-body{font-size:.86rem;color:var(--gray);line-height:1.6;}
+.step-meta{display:flex;flex-direction:column;gap:.25rem;align-items:flex-end;}
+
+/* POV */
+.pov-area{background:var(--white);border:2px dashed var(--cream-dark);border-radius:8px;padding:1.2rem;margin:.8rem 0;}
+.pov-area__label{font-family:var(--label);font-size:.54rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gray);margin-bottom:.7rem;}
+.pov-line{border-bottom:1px solid var(--cream-dark);height:30px;margin-bottom:.3rem;}
+
+/* SEP */
+.sep{height:1px;background:var(--cream-dark);margin:1.8rem 0;}
+
+/* FOOTER */
+.footer{background:var(--blue-dark);border-top:4px solid var(--amber);text-align:center;padding:1.2rem;font-family:var(--label);font-size:.54rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.3);}
+.footer strong{color:var(--amber);}
+
+@media(max-width:700px){
+  .hdr,.sec,.timer-bar{padding-left:1.5rem;padding-right:1.5rem;}
+  .two-col{grid-template-columns:1fr;}
+  .step-row{grid-template-columns:2.5rem 1fr;}
+  .step-meta{display:none;}
+}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:1rem;position:relative;">
+    <div style="font-family:var(--display);font-size:1.6rem;letter-spacing:.04em;line-height:1;color:var(--white);">Frank<span style="background:var(--amber);color:var(--blue-dark);padding:.05em .2em;border-radius:3px;">Ki</span></div>
+    <div style="width:1px;height:1.4rem;background:rgba(255,255,255,.2);"></div>
+    <div style="font-family:var(--label);font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.4);">We Start Your Ideas</div>
+  </div>
+  <div class="hdr__brand">Brief Meeting · Corsale CCH · Aprile 2026</div>
+  <h1 class="hdr__title">Brief <em>Guia</em> — v2<br><span style="font-size:.55em;color:rgba(255,255,255,.4);letter-spacing:.06em;">Versione 30 minuti</span></h1>
+  <p class="hdr__sub">Prima conversazione · Quadro completo · Metodologia · Apertura al prossimo incontro</p>
+  <div class="hdr__meta">
+    <span class="pill pill--amber">~30 minuti</span>
+    <span class="pill pill--dark">Primo meeting Guia + Franki</span>
+    <span class="pill pill--green">Obiettivo: aprire la porta · non chiudere tutto</span>
+  </div>
+</div>
+
+<!-- TIMER BAR -->
+<div class="timer-bar">
+  <div class="timer-seg active" onclick="show('s0')">👋 Chi è Franki <span class="timer-seg__min">5'</span></div>
+  <div class="timer-seg" onclick="show('s1')">📊 Dove siamo <span class="timer-seg__min">7'</span></div>
+  <div class="timer-seg" onclick="show('s2')">🗺️ Visione & Metodo <span class="timer-seg__min">8'</span></div>
+  <div class="timer-seg" onclick="show('s3')">💬 Spazio Guia <span class="timer-seg__min">10'</span></div>
+</div>
+
+<!-- NAV -->
+<div class="nav">
+  <button class="nav__tab active" onclick="show('s0')">00 · Chi è Franki</button>
+  <button class="nav__tab" onclick="show('s1')">01 · Dove Siamo</button>
+  <button class="nav__tab" onclick="show('s2')">02 · Visione & Metodo</button>
+  <button class="nav__tab" onclick="show('s3')">03 · Spazio Guia</button>
+</div>
+
+<!-- ══ 00 — CHI È FRANKI ══ -->
+<div class="sec active" id="s0">
+  <div class="sec__hdr">
+    <div class="sec__num">00</div>
+    <div class="sec__titles">
+      <div class="sec__title">Chi è Franki — e perché sono qui</div>
+      <div class="sec__timing">5 minuti · apertura</div>
+    </div>
+  </div>
+
+  <div class="c c--amber">
+    <div class="c__l">In una frase</div>
+    <p>Sono un amico di lunga data di tuo padre. Ho competenze in strategia e marketing. Ho scelto di affiancare CCH per <strong>passione e affetto</strong> — non per contratto, non per uno stipendio fisso. Al momento lavoro gratis. Se il progetto produrrà risultati concreti, parleremo insieme di come condividere il successo.</p>
+  </div>
+
+  <div class="c c--blue">
+    <div class="c__l">Come voglio lavorare con te</div>
+    <p>Tu sei la responsabile marketing di CCH. Conosci la struttura, la famiglia, il territorio dall'interno — molto meglio di me. Io porto una visione esterna e qualche idea su dove andare.</p>
+    <p style="margin-top:.5rem;"><strong>Le mie idee sono proposte, non decisioni.</strong> Pensami come uno zio con qualche skill in più — al tuo fianco. Tu guidi, io supporto.</p>
+  </div>
+
+  <div class="c c--green">
+    <div class="c__l">Cosa ho fatto finora</div>
+    <p>Ho incontrato tuo padre il 31 marzo. Ho preparato un piano strategico completo — benchmark, pricing, 8 esperienze UNICUM, piano lean con 9 test quasi a costo zero. <strong>Luca ha letto tutto, corretto molte cose, e detto sì.</strong> Oggi ti racconto il quadro e sento cosa ne pensi tu.</p>
+  </div>
+
+  <div class="c c--blue">
+    <div class="c__l">L'obiettivo di questo incontro</div>
+    <p>Non chiudiamo tutto oggi — non ne avremmo il tempo e non sarebbe giusto. L'obiettivo è darti un quadro preciso della visione e del metodo, capire come la vedi tu, e <strong>aprire la porta al prossimo incontro</strong> dove approfondiamo fase per fase insieme.</p>
+  </div>
+</div>
+
+<!-- ══ 01 — DOVE SIAMO ══ -->
+<div class="sec" id="s1">
+  <div class="sec__hdr">
+    <div class="sec__num">01</div>
+    <div class="sec__titles">
+      <div class="sec__title">Dove Siamo — CCH Oggi</div>
+      <div class="sec__timing">7 minuti · fotografia rapida</div>
+    </div>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi"><div class="kpi__l">Occupazione</div><div class="kpi__v">~25%</div><div class="kpi__n">~12 settimane/anno</div></div>
+    <div class="kpi kpi--r"><div class="kpi__l">Revenue attuale</div><div class="kpi__v">~€35–40k</div><div class="kpi__n">stima · da confermare</div></div>
+    <div class="kpi kpi--a"><div class="kpi__l">Obiettivo anno 1</div><div class="kpi__v">€70–80k</div><div class="kpi__n">raddoppio anno su anno</div></div>
+    <div class="kpi kpi--g"><div class="kpi__l">Obiettivo anno 2</div><div class="kpi__v">€140–160k</div><div class="kpi__n">raddoppio progressivo</div></div>
+  </div>
+
+  <div class="c c--red">
+    <div class="c__l">Nota — revenue da confermare</div>
+    <p>Il dato €35–40k è una stima non ufficiale — <strong>una delle prime cose da fare è avere il numero preciso da Luca</strong>. Cambia la calibrazione di tutti gli obiettivi.</p>
+  </div>
+
+  <div class="two-col" style="margin-top:1.2rem;">
+    <div class="col-block">
+      <div class="col-block__head col-block__head--gray">✅ Cosa funziona già</div>
+      <div class="col-block__body">
+        <ul class="ilist">
+          <li><div class="dot dot--green"></div><div>Prodotto straordinario — uliveto, Maura, uso esclusivo, 50 anni storia</div></li>
+          <li><div class="dot dot--green"></div><div>Alta stagione già piena — non da spingere</div></li>
+          <li><div class="dot dot--green"></div><div>Slow Stay in Italy — rete già attiva</div></li>
+          <li><div class="dot dot--green"></div><div>Territorio ricco — cantine, parapendio, mongolfiere</div></li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-block">
+      <div class="col-block__head col-block__head--gray" style="background:var(--red-light);color:var(--red);">⚠️ Cosa manca</div>
+      <div class="col-block__body">
+        <ul class="ilist">
+          <li><div class="dot dot--red"></div><div>Fotografia professionale — prerequisito #1 per piattaforme luxury</div></li>
+          <li><div class="dot dot--red"></div><div>Presenza su piattaforme internazionali — BookRetreats, SopranoVillas</div></li>
+          <li><div class="dot dot--red"></div><div>Pricing sottostimato — Pkg B €100 vs €130–150 mercato</div></li>
+          <li><div class="dot dot--red"></div><div>Add-on non venduti — oil tasting, pane Maura, mongolfiera</div></li>
+          <li><div class="dot dot--red"></div><div>Zero video professionale per i canali internazionali</div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="c c--amber" style="margin-top:1rem;">
+    <div class="c__l">Il punto chiave</div>
+    <p>Il problema di CCH <strong>non è il prodotto</strong> — è la distribuzione. Il mercato giusto non sa che CCH esiste. Questo è il gap da colmare.</p>
+  </div>
+</div>
+
+<!-- ══ 02 — VISIONE & METODO ══ -->
+<div class="sec" id="s2">
+  <div class="sec__hdr">
+    <div class="sec__num">02</div>
+    <div class="sec__titles">
+      <div class="sec__title">Visione & Metodo — Come Ci Arriviamo</div>
+      <div class="sec__timing">8 minuti · il filo logico</div>
+    </div>
+  </div>
+
+  <div class="c c--blue">
+    <div class="c__l">Il metodo — Lean</div>
+    <p><strong>Non si investe su niente prima di validarlo.</strong> Si parte con 9 test piccoli e quasi gratuiti che ci dicono in 45 giorni quali strade funzionano davvero. Solo dopo si investe tempo e denaro sulle strade validate. Questo protegge tutti — e soprattutto non brucia energia su cose che non funzionano.</p>
+  </div>
+
+  <div class="sub">La filosofia — come si fa diventare CCH luxury</div>
+
+  <div class="c c--amber">
+    <div class="c__l">Il punto di partenza — una verità scomoda</div>
+    <p>CCH non diventa luxury cambiando i prezzi. Diventa luxury <strong>cambiando il racconto, i canali e il pubblico</strong>. Il prodotto è già straordinario — quello che manca è la lingua con cui si parla al mercato giusto.</p>
+    <p style="margin-top:.6rem;">Il mercato luxury non cerca il lusso nel senso di marmo e champagne. Cerca <strong>autenticità impossibile da replicare</strong>. Un uliveto biologico di 50 anni, le mani di Maura che impastano il pane, Luca che cammina tra i suoi alberi all'alba — questo è lusso per chi arriva da Londra, New York o Amsterdam. Cose che non si comprano, non si costruiscono, non si inventano.</p>
+  </div>
+
+  <div style="background:var(--blue-dark);border-radius:8px;padding:1.4rem 1.8rem;margin:1rem 0;">
+    <div style="font-family:var(--label);font-size:.56rem;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);margin-bottom:1rem;">I 4 pilastri del riposizionamento luxury</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+      <div style="background:rgba(255,255,255,.05);border-radius:6px;padding:1rem 1.1rem;border-left:3px solid var(--amber);">
+        <div style="font-family:var(--display);font-size:1rem;letter-spacing:.04em;color:var(--amber);margin-bottom:.4rem;">01 · Il Linguaggio</div>
+        <div style="font-size:.84rem;color:rgba(255,255,255,.6);line-height:1.6;">Da "country house" a "exclusive estate retreat". Una frase cambia il pubblico che arriva. Non è marketing — è posizionamento. Cambia chi ti cerca, non chi sei.</div>
+      </div>
+      <div style="background:rgba(255,255,255,.05);border-radius:6px;padding:1rem 1.1rem;border-left:3px solid var(--amber);">
+        <div style="font-family:var(--display);font-size:1rem;letter-spacing:.04em;color:var(--amber);margin-bottom:.4rem;">02 · I Canali</div>
+        <div style="font-size:.84rem;color:rgba(255,255,255,.6);line-height:1.6;">Il mercato luxury non è su Airbnb — è su BookRetreats, SopranoVillas, Haute Retreats, Italy Charme. Piattaforme che esistono solo per questo segmento. CCH non c'è ancora su nessuna di esse.</div>
+      </div>
+      <div style="background:rgba(255,255,255,.05);border-radius:6px;padding:1rem 1.1rem;border-left:3px solid var(--amber);">
+        <div style="font-family:var(--display);font-size:1rem;letter-spacing:.04em;color:var(--amber);margin-bottom:.4rem;">03 · Le Esperienze</div>
+        <div style="font-size:.84rem;color:rgba(255,255,255,.6);line-height:1.6;">Il luxury si vende come esperienza totale, non come struttura. Olive Harvest, Chef Stellato, Cucina di Maura, Wine Sannio — pacchetti che nessun hotel può replicare. Il prezzo sale perché il prodotto è unico.</div>
+      </div>
+      <div style="background:rgba(255,255,255,.05);border-radius:6px;padding:1rem 1.1rem;border-left:3px solid var(--amber);">
+        <div style="font-family:var(--display);font-size:1rem;letter-spacing:.04em;color:var(--amber);margin-bottom:.4rem;">04 · La Fotografia</div>
+        <div style="font-size:.84rem;color:rgba(255,255,255,.6);line-height:1.6;">Il prerequisito che sblocca tutto. Senza fotografia editoriale di qualità non si accede alle piattaforme luxury. Non è un costo — è l'investimento con il ROI più alto dell'intero progetto.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="c c--blue" style="margin-top:1rem;">
+    <div class="c__l">Il benchmark che ci ha guidato</div>
+    <p><strong>Oliveto Estate</strong> — Le Marche. Struttura quasi identica a CCH: uliveto di famiglia, uso esclusivo, cucina autentica, Italia rurale. Differenza: fotografia editoriale e presenza sulle piattaforme giuste. Risultato: <strong>€1.340/notte</strong> venue hire, retreat yoga a <strong>$5.800–6.800 p.p./settimana</strong>. Citata da Condé Nast, Forbes, Elle Décor. CCH ha lo stesso DNA — serve la stessa presentazione.</p>
+  </div>
+
+  <!-- RIQUADRO INIZIATIVE -->
+  <div class="sub sub--blue">Un'anteprima — le iniziative studiate</div>
+
+  <div style="border:1px solid var(--cream-dark);border-radius:8px;overflow:hidden;margin:1rem 0;">
+    <div style="background:var(--blue-dark);padding:.8rem 1.2rem;display:flex;justify-content:space-between;align-items:center;">
+      <div style="font-family:var(--display);font-size:1.1rem;letter-spacing:.04em;color:var(--white);">Iniziative Deliberate — Estratto</div>
+      <div style="font-family:var(--label);font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.35);">Da approfondire nel prossimo incontro</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;">
+
+      <div style="padding:.9rem 1.1rem;border-right:1px solid var(--cream-dark);border-bottom:1px solid var(--cream-dark);background:var(--white);">
+        <div style="font-family:var(--label);font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;color:var(--amber-dark);margin-bottom:.3rem;">UNICUM · Autunno</div>
+        <div style="font-family:var(--display);font-size:.95rem;color:var(--ink);margin-bottom:.25rem;">Olive Harvest Experience</div>
+        <div style="font-size:.8rem;color:var(--gray);">Raccolta olive immersiva · 2 edizioni · €1.800–2.200 p.p.</div>
+      </div>
+
+      <div style="padding:.9rem 1.1rem;border-right:1px solid var(--cream-dark);border-bottom:1px solid var(--cream-dark);background:var(--white);">
+        <div style="font-family:var(--label);font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;color:var(--amber-dark);margin-bottom:.3rem;">UNICUM · Tutto l'anno</div>
+        <div style="font-family:var(--display);font-size:.95rem;color:var(--ink);margin-bottom:.25rem;">Scuola Cucina Napoletana</div>
+        <div style="font-size:.8rem;color:var(--gray);">Weekend con Maura · €350–800 p.p. · €30–40k/anno</div>
+      </div>
+
+      <div style="padding:.9rem 1.1rem;border-bottom:1px solid var(--cream-dark);background:var(--white);">
+        <div style="font-family:var(--label);font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:.3rem;">UNICUM · Spalla</div>
+        <div style="font-family:var(--display);font-size:.95rem;color:var(--ink);margin-bottom:.25rem;">Corporate Retreat</div>
+        <div style="font-size:.8rem;color:var(--gray);">Fino 50 pax · team building · €18–30k/prenotazione</div>
+      </div>
+
+      <div style="padding:.9rem 1.1rem;border-right:1px solid var(--cream-dark);border-bottom:1px solid var(--cream-dark);background:var(--white);">
+        <div style="font-family:var(--label);font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:.3rem;">UNICUM · Estate/Inverno</div>
+        <div style="font-family:var(--display);font-size:.95rem;color:var(--ink);margin-bottom:.25rem;">Chef Stellato in Tenuta</div>
+        <div style="font-size:.8rem;color:var(--gray);">Chef campano in residenza · cena gala · €2.500–3.500 p.p.</div>
+      </div>
+
+      <div style="padding:.9rem 1.1rem;border-right:1px solid var(--cream-dark);border-bottom:1px solid var(--cream-dark);background:var(--white);">
+        <div style="font-family:var(--label);font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;color:var(--amber-dark);margin-bottom:.3rem;">UNICUM · Primavera/Autunno</div>
+        <div style="font-family:var(--display);font-size:.95rem;color:var(--ink);margin-bottom:.25rem;">Wine Sannio — Cantine</div>
+        <div style="font-size:.8rem;color:var(--gray);">Taurasi · Aglianico · importatori esteri · €1.800–2.500 p.p.</div>
+      </div>
+
+      <div style="padding:.9rem 1.1rem;border-bottom:1px solid var(--cream-dark);background:var(--white);">
+        <div style="font-family:var(--label);font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:.3rem;">CANALE · Immediato</div>
+        <div style="font-family:var(--display);font-size:.95rem;color:var(--ink);margin-bottom:.25rem;">Yoga Retreat Leader</div>
+        <div style="font-size:.8rem;color:var(--gray);">UK · USA · AUS · venue hire €7–12k/settimana · costo €0</div>
+      </div>
+
+      <div style="padding:.9rem 1.1rem;border-right:1px solid var(--cream-dark);background:var(--white);">
+        <div style="font-family:var(--label);font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:.3rem;">ADD-ON · Immediato</div>
+        <div style="font-family:var(--display);font-size:.95rem;color:var(--ink);margin-bottom:.25rem;">Oil Tasting + Pane Maura</div>
+        <div style="font-size:.8rem;color:var(--gray);">€40–50 p.p. · costo €0 · già questa settimana</div>
+      </div>
+
+      <div style="padding:.9rem 1.1rem;border-right:1px solid var(--cream-dark);background:var(--white);">
+        <div style="font-family:var(--label);font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:.3rem;">ADD-ON · Ottobre</div>
+        <div style="font-family:var(--display);font-size:.95rem;color:var(--ink);margin-bottom:.25rem;">Mongolfiera · Parapendio</div>
+        <div style="font-size:.8rem;color:var(--gray);">€80–220 p.p. · territorio già attivo · da intercettare</div>
+      </div>
+
+      <div style="padding:.9rem 1.1rem;background:var(--blue-light);">
+        <div style="font-family:var(--label);font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:.3rem;">Totale deliberato</div>
+        <div style="font-family:var(--display);font-size:.95rem;color:var(--blue-dark);margin-bottom:.25rem;">8 UNICUM + 10 Add-on</div>
+        <div style="font-size:.8rem;color:var(--blue);">Tutto documentato · tutto da approfondire insieme</div>
+      </div>
+
+    </div>
+  </div>
+  <ul class="ilist">
+    <li><div class="dot dot--amber"></div><div><strong>Yoga & Wellness Retreat Leader</strong> (UK, USA, AUS) — cercano venue esclusive in Italia. Il Sannio non è ancora nella loro mappa. Canale gratuito, risultati in 15 giorni.</div></li>
+    <li><div class="dot dot--amber"></div><div><strong>Corporate Retreat</strong> — aziende che portano il team per 3–5 giorni. Ticket alto (€18–30k/prenotazione), canale LinkedIn, nessun competitor diretto nel Sannio.</div></li>
+    <li><div class="dot dot--amber"></div><div><strong>Food & Wine International</strong> — Olive Harvest, Wine Sannio con le cantine locali. Community internazionali enormi e poco servite nel Sannio.</div></li>
+  </ul>
+
+  <div class="sub sub--blue">Le 2 azioni immediate — questa settimana</div>
+  <div class="step-row step-row--amber">
+    <div class="step-n step-n--amber">1</div>
+    <div>
+      <div class="step-title">Oil Tasting & Pane di Maura — Luca + Maura</div>
+      <div class="step-body">Messaggio WhatsApp già scritto da mandare agli ospiti prima del check-in. Costo €0. Prima risposta in pochi giorni. Tutto il materiale è pronto.</div>
+    </div>
+    <div class="step-meta"><span class="pill pill--amber">Costo €0</span><span class="pill pill--dark">Questa settimana</span></div>
+  </div>
+  <div class="step-row step-row--blue">
+    <div class="step-n step-n--blue">2</div>
+    <div>
+      <div class="step-title">Yoga Retreat Leader Outreach — Guia</div>
+      <div class="step-body">Profilo CCH su BookRetreats + 5 DM a yoga leader già selezionati da Franki. Costo €0. Il DM è già scritto in inglese e italiano. 10 profili già trovati con link diretti.</div>
+    </div>
+    <div class="step-meta"><span class="pill pill--blue">Costo €0</span><span class="pill pill--dark">Questa settimana</span></div>
+  </div>
+
+  <div class="sub sub--green">Le 8 esperienze UNICUM — la visione completa</div>
+  <div class="c c--green">
+    <div class="c__l">Solo un'anteprima — si approfondisce nel prossimo incontro</div>
+    <p>Abbiamo deliberato 8 pacchetti tematici settimanali che coprono tutto l'anno — dalla Olive Harvest di ottobre alla Scuola di Cucina Napoletana con Maura, dal Corporate Team Building al Wine Sannio con le cantine locali. <strong>Ognuno ha un prezzo, un target, un canale e un criterio di successo già definiti.</strong> Nel prossimo incontro li approfondiamo insieme.</p>
+  </div>
+</div>
+
+<!-- ══ 03 — SPAZIO GUIA ══ -->
+<div class="sec" id="s3">
+  <div class="sec__hdr">
+    <div class="sec__num">03</div>
+    <div class="sec__titles">
+      <div class="sec__title">Spazio Guia — Parla Tu</div>
+      <div class="sec__timing">10 minuti · il più importante</div>
+    </div>
+  </div>
+
+  <div class="c c--amber">
+    <div class="c__l">Le 3 domande per Guia</div>
+    <p><strong>1. Come vedi CCH tu oggi?</strong> Non l'analisi — la tua percezione dall'interno. Cosa ti entusiasma, cosa ti preoccupa, cosa non funziona che noi da fuori non vediamo.</p>
+    <p style="margin-top:.6rem;"><strong>2. Cosa stai già facendo sul marketing?</strong> Canali attivi, cosa ha funzionato, cosa no. Non voglio reinventare quello che esiste già.</p>
+    <p style="margin-top:.6rem;"><strong>3. Cosa vorresti che CCH fosse tra 2 anni?</strong> I tuoi obiettivi — non quelli che ho scritto io. Tu cosa vedi, tu dove vuoi arrivare.</p>
+  </div>
+
+  <div class="pov-area">
+    <div class="pov-area__label">Come vede CCH — cosa la entusiasma e cosa la preoccupa</div>
+    <div class="pov-line"></div>
+    <div class="pov-line"></div>
+    <div class="pov-line"></div>
+  </div>
+
+  <div class="pov-area">
+    <div class="pov-area__label">Cosa sta già facendo sul marketing — canali attivi</div>
+    <div class="pov-line"></div>
+    <div class="pov-line"></div>
+  </div>
+
+  <div class="pov-area">
+    <div class="pov-area__label">I suoi obiettivi — dove vuole arrivare</div>
+    <div class="pov-line"></div>
+    <div class="pov-line"></div>
+  </div>
+
+  <div class="pov-area">
+    <div class="pov-area__label">Cose dall'interno che cambiano il piano</div>
+    <div class="pov-line"></div>
+    <div class="pov-line"></div>
+  </div>
+
+  <div class="sep"></div>
+
+  <div class="sub sub--green">Si esce con 3 cose — non di più</div>
+
+  <div class="step-row step-row--amber">
+    <div class="step-n step-n--amber">1</div>
+    <div>
+      <div class="step-title">Guia avvia i 2 test lean immediati</div>
+      <div class="step-body">BookRetreats + DM yoga leader. Tutto già pronto — link, testi, profili selezionati. Si parte questa settimana.</div>
+    </div>
+    <div class="step-meta"><span class="pill pill--amber">Guia</span><span class="pill pill--dark">Questa settimana</span></div>
+  </div>
+
+  <div class="step-row step-row--blue">
+    <div class="step-n step-n--blue">2</div>
+    <div>
+      <div class="step-title">Kick-off ufficiale con Luca</div>
+      <div class="step-body">Tutti e tre insieme — Luca, Guia, Franki. Si approvano i 9 test lean, si assegnano i responsabili, si fissano le date della lettura risultati.</div>
+    </div>
+    <div class="step-meta"><span class="pill pill--blue">Tutti e tre</span><span class="pill pill--dark">Da fissare</span></div>
+  </div>
+
+  <div class="step-row step-row--green">
+    <div class="step-n step-n--green">3</div>
+    <div>
+      <div class="step-title">Secondo meeting Guia + Franki — approfondimento</div>
+      <div class="step-body">Approfondiamo gli 8 UNICUM, i canali, il piano editoriale Instagram, la gestione di Gennaro come risorsa. Con calma e tutto il tempo necessario.</div>
+    </div>
+    <div class="step-meta"><span class="pill pill--green">Guia + Franki</span><span class="pill pill--dark">Da fissare</span></div>
+  </div>
+
+  <div class="c c--green" style="margin-top:1.5rem;">
+    <div class="c__l">Una cosa sola da ricordare</div>
+    <p>CCH ha tutto quello che serve. Il prodotto è già straordinario. <strong>Quello che manca è solo il modo di raccontarlo al mondo giusto.</strong> Questo lo facciamo insieme — passo per passo, senza fretta e senza sprechi.</p>
+  </div>
+</div>
+
+<div class="footer">
+  <strong>Franki Studio</strong> · Brief Meeting Guia · v2 · CCH · Aprile 2026 · We Start Your Ideas
+</div>
+
+<script>
+function show(id){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav__tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.timer-seg').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const ids=['s0','s1','s2','s3'];
+  const i=ids.indexOf(id);
+  document.querySelectorAll('.nav__tab')[i].classList.add('active');
+  document.querySelectorAll('.timer-seg')[i].classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>

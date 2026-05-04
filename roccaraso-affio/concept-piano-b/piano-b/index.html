@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RCV — Piano B: Operazione Arbitrage</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blu:#2B38B0;
+  --arancio:#F0A500;
+  --grigio-bg:#F2F1ED;
+  --bianco:#FFFFFF;
+  --nero:#111111;
+  --testo:#1a1a2e;
+  --blu-scuro:#1a2480;
+  --verde:#1a7a50;
+  --rosso:#c0392b;
+  --verde-scuro:#145c3c;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Barlow',sans-serif;background:var(--grigio-bg);color:var(--testo);max-width:680px;margin:0 auto;font-size:15px;line-height:1.6}
+
+/* NAVBAR */
+.navbar{background:var(--nero);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.logo-fran{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;color:var(--bianco)}
+.logo-fran span{background:var(--arancio);padding:1px 6px;border-radius:4px}
+.logo-tagline{font-size:10px;color:rgba(255,255,255,.6);letter-spacing:.08em}
+.nav-doc{font-family:'Barlow Condensed',sans-serif;font-size:11px;color:rgba(255,255,255,.5);letter-spacing:.1em;text-transform:uppercase}
+
+/* HERO */
+.hero{background:var(--nero);color:var(--bianco);padding:40px 20px 36px;position:relative;overflow:hidden;border-bottom:4px solid var(--arancio)}
+.hero::before{content:'€';position:absolute;right:-10px;top:-20px;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:200px;color:rgba(240,165,0,.06);line-height:1}
+.hero-kicker{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--arancio);margin-bottom:8px}
+.hero-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:40px;line-height:.95;text-transform:uppercase;margin-bottom:14px}
+.hero-title em{color:var(--arancio);font-style:normal}
+.hero-sub{font-size:14px;color:rgba(255,255,255,.65);max-width:520px;line-height:1.7}
+.hero-avviso{background:rgba(240,165,0,.15);border:1px solid var(--arancio);padding:12px 16px;margin-top:18px;border-radius:2px}
+.hero-avviso p{font-size:12px;color:rgba(255,255,255,.8);line-height:1.5}
+
+/* SECTION HEADER */
+.section-header{background:var(--nero);color:var(--bianco);padding:11px 20px;display:flex;align-items:center;gap:10px;margin-top:20px}
+.section-icon{font-size:16px}
+.section-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;text-transform:uppercase;letter-spacing:.06em}
+.section-count{margin-left:auto;background:var(--arancio);color:var(--nero);font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;padding:2px 8px;border-radius:2px}
+
+/* KPI STRIP */
+.kpi-strip{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin:2px 0}
+.kpi-box{background:var(--bianco);padding:14px 18px}
+.kpi-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#888;margin-bottom:4px}
+.kpi-value{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;color:var(--nero);line-height:1}
+.kpi-sub{font-size:11px;color:#999;margin-top:3px}
+.kpi-value.green{color:var(--verde-scuro)}
+.kpi-value.orange{color:#c27800}
+
+/* CARD */
+.card{background:var(--bianco);padding:20px;margin:2px 0}
+.card h3{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:17px;text-transform:uppercase;color:var(--nero);margin-bottom:10px;padding-bottom:6px;border-bottom:2px solid var(--arancio)}
+.card p{font-size:14px;color:#444;line-height:1.7;margin-bottom:10px}
+.card p:last-child{margin-bottom:0}
+.card strong{color:var(--nero)}
+
+/* MARGINE BOX */
+.margine-box{background:var(--nero);color:var(--bianco);padding:20px;margin:2px 0}
+.margine-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;text-transform:uppercase;color:var(--arancio);margin-bottom:14px}
+.margine-row{display:flex;justify-content:space-between;align-items:baseline;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.08)}
+.margine-row:last-child{border-bottom:none;padding-top:14px;margin-top:8px;border-top:2px solid var(--arancio)}
+.margine-label{font-size:13px;color:rgba(255,255,255,.65)}
+.margine-val{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:18px;color:var(--bianco)}
+.margine-val.green{color:#4CAF50}
+.margine-val.red{color:#ef5350}
+.margine-val.orange{color:var(--arancio)}
+.margine-val.big{font-size:28px}
+
+/* STEPS */
+.step-card{background:var(--bianco);padding:0;margin:2px 0;overflow:hidden}
+.step-header{background:var(--nero);color:var(--bianco);padding:12px 20px;display:flex;align-items:center;gap:12px}
+.step-num{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:28px;color:var(--arancio);line-height:1;flex-shrink:0}
+.step-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:17px;text-transform:uppercase}
+.step-timing{margin-left:auto;font-family:'Barlow Condensed',sans-serif;font-size:11px;color:rgba(255,255,255,.5);letter-spacing:.08em;text-transform:uppercase}
+.step-body{padding:16px 20px}
+.step-body p{font-size:13px;color:#444;line-height:1.65;margin-bottom:10px}
+.step-body p:last-child{margin-bottom:0}
+.step-body strong{color:var(--nero)}
+
+/* HIGHLIGHT */
+.highlight-green{background:#e6f7f0;border-left:4px solid var(--verde);padding:12px 16px;margin:12px 0;border-radius:0 4px 4px 0}
+.highlight-green p{font-size:13px;color:var(--verde-scuro);margin:0;line-height:1.6}
+.highlight-orange{background:#fff4e0;border-left:4px solid var(--arancio);padding:12px 16px;margin:12px 0;border-radius:0 4px 4px 0}
+.highlight-orange p{font-size:13px;color:#7a5000;margin:0;line-height:1.6}
+.highlight-red{background:#fff0f0;border-left:4px solid var(--rosso);padding:12px 16px;margin:12px 0;border-radius:0 4px 4px 0}
+.highlight-red p{font-size:13px;color:#922;margin:0;line-height:1.6}
+
+/* TABLE */
+.table-wrap{background:var(--bianco);padding:0 20px 20px;margin:2px 0}
+.table-wrap h3{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;text-transform:uppercase;color:var(--nero);padding:16px 0 10px;border-bottom:2px solid var(--arancio);margin-bottom:14px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{background:var(--nero);color:var(--bianco);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.06em;padding:8px 10px;text-align:left}
+td{padding:9px 10px;border-bottom:1px solid #f0f0f0;color:#444;vertical-align:top}
+td:first-child{font-weight:600;color:var(--nero)}
+td.green{color:var(--verde-scuro);font-weight:700;font-family:'Barlow Condensed',sans-serif;font-size:14px}
+td.orange{color:#c27800;font-weight:700;font-family:'Barlow Condensed',sans-serif;font-size:14px}
+tr:nth-child(even){background:#fafafa}
+tr:last-child td{border-bottom:none}
+
+/* BADGE */
+.badge{display:inline-block;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;border-radius:2px;margin:2px}
+.badge-green{background:#e6f7f0;color:var(--verde-scuro)}
+.badge-orange{background:#fff4e0;color:#c27800}
+.badge-red{background:#fff0f0;color:var(--rosso)}
+.badge-grey{background:#f0f0f0;color:#666}
+.badge-nero{background:var(--nero);color:var(--bianco)}
+
+/* TARGET CARDS */
+.target-card{background:var(--bianco);margin:2px 0;padding:16px 20px;border-left:5px solid var(--arancio)}
+.target-nome{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:18px;color:var(--nero);margin-bottom:4px}
+.target-tipo{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--arancio);margin-bottom:8px}
+.target-desc{font-size:13px;color:#555;line-height:1.6;margin-bottom:8px}
+.target-why{font-size:12px;color:var(--verde-scuro);font-weight:600}
+
+/* ORANGE BAND */
+.orange-band{background:var(--arancio);padding:16px 20px;margin:2px 0}
+.orange-band h3{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:15px;text-transform:uppercase;color:var(--nero);margin-bottom:8px}
+.orange-band p{font-size:13px;color:rgba(0,0,0,.75);line-height:1.6}
+
+/* DARK CTA */
+.dark-cta{background:var(--nero);color:var(--bianco);padding:30px 20px;margin-top:4px;text-align:center}
+.dark-cta h2{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:26px;text-transform:uppercase;margin-bottom:10px}
+.dark-cta h2 span{color:var(--arancio)}
+.dark-cta p{font-size:13px;color:rgba(255,255,255,.55);max-width:420px;margin:0 auto}
+
+/* DISCLAIMER */
+.disclaimer{background:#f7f7f5;padding:14px 20px;font-size:11px;color:#aaa;line-height:1.5;border-top:1px solid #e8e8e4}
+
+/* SEPARATORE */
+.sep{height:3px;background:var(--arancio);margin:6px 0}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div>
+    <div class="logo-fran">Fran<span>Ki</span></div>
+    <div class="logo-tagline">We Start Your Ideas</div>
+  </div>
+  <div class="nav-doc">RCV · Piano B · Riservato</div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-kicker">Roccaraso Country Village — Operazione Arbitrage · Uso Riservato</div>
+  <div class="hero-title">PIANO B:<br><em>VENDERE</em><br>LA CARTA</div>
+  <div class="hero-sub">Entrare nell'asta al prezzo giusto, valorizzare l'asset con il minimo investimento, trovare il compratore finale e uscire con un margine netto. Un'operazione di real estate arbitrage completamente legale, strutturata passo per passo.</div>
+  <div class="hero-avviso">
+    <p>⚖️ <strong>Perimetro legale:</strong> Tutte le operazioni descritte in questo documento sono conformi alla normativa italiana vigente (artt. 571-591bis c.p.c.). L'operazione si basa su partecipazione regolare all'asta, cessione legittima dei diritti o rivendita post-aggiudicazione. Nessuna collusione con creditori o parti della procedura è contemplata.</p>
+  </div>
+</div>
+
+<!-- KPI DELL'OPERAZIONE -->
+<div class="kpi-strip">
+  <div class="kpi-box">
+    <div class="kpi-label">Base d'asta attuale</div>
+    <div class="kpi-value orange">€6,07M</div>
+    <div class="kpi-sub">Trib. Sulmona — N.43/16</div>
+  </div>
+  <div class="kpi-box">
+    <div class="kpi-label">Valore lordo perizia</div>
+    <div class="kpi-value">€13,57M</div>
+    <div class="kpi-sub">Perizia Ing. Farina Rev.3 — 2021</div>
+  </div>
+  <div class="kpi-box">
+    <div class="kpi-label">Sconto implicito</div>
+    <div class="kpi-value green">–55%</div>
+    <div class="kpi-sub">dal valore lordo alla base d'asta</div>
+  </div>
+  <div class="kpi-box">
+    <div class="kpi-label">Ipoteca UniCredit</div>
+    <div class="kpi-value">€14M</div>
+    <div class="kpi-sub">Cancellata dalla procedura pre-rogito</div>
+  </div>
+</div>
+
+<!-- SEZIONE 1: LA LOGICA -->
+<div class="section-header">
+  <div class="section-icon">🧠</div>
+  <div class="section-title">La Logica dell'Operazione</div>
+  <div class="section-count">arbitrage</div>
+</div>
+
+<div class="card">
+  <h3>Cos'è il real estate arbitrage su asta giudiziaria</h3>
+  <p>Il principio è semplice e antico quanto il commercio: comprare a un prezzo e vendere a un prezzo più alto. Applicato alle aste giudiziarie, significa identificare un asset che il mercato ha prezzato male — perché è complesso, perché richiede competenza specifica, perché la procedura spaventa — e trasformare quella complessità in vantaggio.</p>
+  <p>RCV è esattamente questo tipo di asset. <strong>La perizia ufficiale valuta il complesso €13,57 milioni</strong>. La base d'asta è €6,07 milioni — il 55% in meno. Il motivo di questo gap non è il valore reale dell'asset: è la complessità della situazione (vincolo urbanistico zona O, usi civici da regolarizzare, strutture da ristrutturare, permessi da navigare). Il nostro lavoro è trasformare quella complessità in un dossier chiaro, rassicurante e vendibile a un compratore finale che ha i capitali ma non ha il tempo o le competenze per farlo da solo.</p>
+  <div class="highlight-green">
+    <p><strong>Il vantaggio di FranKi:</strong> abbiamo già prodotto i dossier che servono — perizia analizzata, storia ricostruita, concept sviluppati, benchmark identificati, normativa mappata. La carta è già valorizzata. Adesso bisogna venderla.</p>
+  </div>
+</div>
+
+<!-- SEZIONE 2: LE 3 VIE DI INGRESSO -->
+<div class="section-header">
+  <div class="section-icon">🚪</div>
+  <div class="section-title">Le 3 Vie di Ingresso — Come Bloccare l'Asset</div>
+  <div class="section-count">meccanismi legali</div>
+</div>
+
+<div class="step-card">
+  <div class="step-header">
+    <div class="step-num">VIA A</div>
+    <div class="step-title">Offerta fuori asta — Pre-asta con creditore</div>
+    <div class="step-timing">Prima dell'asta</div>
+  </div>
+  <div class="step-body">
+    <p><strong>Come funziona:</strong> La legge italiana (art. 572 c.p.c.) consente di presentare un'offerta d'acquisto direttamente alla procedura <strong>prima che si svolga l'asta</strong>, a patto che vi sia il consenso del creditore (UniCredit) e del debitore (gli eredi Ferlaino). L'offerta viene presentata davanti al Giudice dell'Esecuzione. Se accettata, la procedura si estingue e si trasferisce la proprietà tramite rogito.</p>
+    <p><strong>Il vantaggio:</strong> Si evita la competizione dell'asta. Si può offrire un prezzo inferiore alla base d'asta, specialmente se la procedura è ferma da tempo e il creditore vuole uscire rapidamente. UniCredit ha un'ipoteca da €14M su un asset che ha già visto aste deserte: <strong>la banca vuole liquidità, non un immobile abbandonato</strong>.</p>
+    <p><strong>Il costo d'ingresso:</strong> Per questa via, non si paga prima dell'accettazione. Si negozia un prezzo e si deposita una caparra (tipicamente 10-20% del prezzo offerto) solo al momento dell'accettazione formale. Il rischio finanziario iniziale è quindi limitato alla preparazione del dossier e alla consulenza legale.</p>
+    <div class="highlight-orange">
+      <p><strong>⚠️ Attenzione:</strong> Il consenso del debitore è necessario in questa via. Se gli eredi Ferlaino non cooperano, questa strada è bloccata. Occorre prima verificare questo aspetto con un avvocato della procedura.</p>
+    </div>
+  </div>
+</div>
+
+<div class="step-card">
+  <div class="step-header">
+    <div class="step-num">VIA B</div>
+    <div class="step-title">Partecipazione all'asta telematica — Aggiudicazione</div>
+    <div class="step-timing">Il giorno dell'asta</div>
+  </div>
+  <div class="step-body">
+    <p><strong>Come funziona:</strong> Si partecipa all'asta telematica tramite il Portale delle Vendite Pubbliche. Per partecipare occorre depositare una cauzione pari al 10% della base d'asta: <strong>€607.282</strong>. Il saldo del prezzo deve essere versato entro 60-90 giorni dall'aggiudicazione. L'immobile diventa di proprietà con il Decreto di Trasferimento emesso dal Giudice — un atto che cancella automaticamente tutte le ipoteche precedenti, inclusa quella di UniCredit da €14M.</p>
+    <p><strong>Il vantaggio:</strong> Acquisto a titolo originario — si entra proprietari puliti, senza debiti del passato. La cauzione di €607K è rimborsata se non si vince l'asta. Il Decreto di Trasferimento è titolo esecutivo per il rilascio dell'immobile.</p>
+    <p><strong>La strategia:</strong> L'obiettivo non è necessariamente vincere l'asta al prezzo più basso possibile — è avere un accordo pre-firmato con il compratore finale <strong>prima dell'aggiudicazione</strong>, così che il prezzo di rivendita sia già negoziato. Si compra sapendo già a chi si vende e a quanto.</p>
+    <div class="highlight-green">
+      <p><strong>✅ Il punto di forza:</strong> Le aste di RCV sono andate deserte più volte. Questo significa che la concorrenza è bassa o nulla. Chi si presenta preparato, con la caparra pronta e un dossier solido, ha buone probabilità di aggiudicarselo alla base o quasi.</p>
+    </div>
+  </div>
+</div>
+
+<div class="step-card">
+  <div class="step-header">
+    <div class="step-num">VIA C</div>
+    <div class="step-title">Mandato di ricerca acquirente + fee di intermediazione</div>
+    <div class="step-timing">Senza investimento proprio</div>
+  </div>
+  <div class="step-body">
+    <p><strong>Come funziona:</strong> La via più leggera finanziariamente. FranKi ottiene un <strong>mandato scritto dal debitore o dal custode giudiziario</strong> per trovare un acquirente per l'asset. Si porta l'acquirente finale all'asta o alla trattativa, e si incassa una fee di mediazione al closing. Non si spende nulla di proprio — si guadagna sulla conoscenza e sul network.</p>
+    <p><strong>Il vantaggio:</strong> Zero rischio finanziario. La fee di mediazione su un asset da €6-8M è tipicamente 2-3% per parte = €120K-240K solo sulla parte venditore. Con entrambe le parti = €240K-480K totali.</p>
+    <p><strong>Il limite:</strong> Serve un mandato scritto formalizzato. Bisogna contattare il custode giudiziario nominato dal Tribunale di Sulmona e proporre formalmente la collaborazione. Il custode ha interesse ad accelerare la procedura e recuperare liquidità per i creditori.</p>
+    <div class="highlight-green">
+      <p><strong>✅ Questa è la via a rischio zero.</strong> Si lavora con il know-how già prodotto (dossier, benchmark, concept, storia) e si monetizza il lavoro fatto come mediatori professionali.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SEZIONE 3: ANALISI DEL MARGINE -->
+<div class="section-header">
+  <div class="section-icon">💶</div>
+  <div class="section-title">Analisi del Margine — I Numeri Reali</div>
+  <div class="section-count">3 scenari</div>
+</div>
+
+<div class="margine-box">
+  <div class="margine-title">📊 Scenario A — Offerta fuori asta + rivendita immediata</div>
+  <div class="margine-row"><span class="margine-label">Prezzo di offerta fuori asta (stima)</span><span class="margine-val red">– €4,5M</span></div>
+  <div class="margine-row"><span class="margine-label">Spese legali + consulenza + due diligence</span><span class="margine-val red">– €80K</span></div>
+  <div class="margine-row"><span class="margine-label">Imposta di registro (9% su base catastale B/1)</span><span class="margine-val red">– ~€120K</span></div>
+  <div class="margine-row"><span class="margine-label">Dossier e valorizzazione carta (già fatto)</span><span class="margine-val red">– €0</span></div>
+  <div class="margine-row"><span class="margine-label">Prezzo di rivendita stimato a compratore finale</span><span class="margine-val green">+ €6,0–7,5M</span></div>
+  <div class="margine-row"><span class="margine-label" style="color:var(--arancio);font-weight:700">MARGINE NETTO STIMATO</span><span class="margine-val orange big">€1,2–2,7M</span></div>
+</div>
+
+<div class="margine-box" style="background:#1a2480">
+  <div class="margine-title">📊 Scenario B — Asta + rivendita post-decreto di trasferimento</div>
+  <div class="margine-row"><span class="margine-label">Aggiudicazione asta (base o +10%)</span><span class="margine-val red">– €6,07–6,7M</span></div>
+  <div class="margine-row"><span class="margine-label">Cauzione 10% depositata pre-asta</span><span class="margine-val red">– €607K (poi imputata al prezzo)</span></div>
+  <div class="margine-row"><span class="margine-label">Spese legali + diritti d'asta (9%) + imposte</span><span class="margine-val red">– €700K</span></div>
+  <div class="margine-row"><span class="margine-label">Valorizzazione minima (pulizia, recinzione, segnaletica)</span><span class="margine-val red">– €30K</span></div>
+  <div class="margine-row"><span class="margine-label">Prezzo di rivendita a compratore finale</span><span class="margine-val green">+ €8,5–10M</span></div>
+  <div class="margine-row"><span class="margine-label" style="color:var(--arancio);font-weight:700">MARGINE NETTO STIMATO</span><span class="margine-val orange big">€1,7–2,6M</span></div>
+</div>
+
+<div class="margine-box" style="background:#145c3c">
+  <div class="margine-title">📊 Scenario C — Solo mediazione (Via C, zero investimento)</div>
+  <div class="margine-row"><span class="margine-label">Investimento proprio</span><span class="margine-val green">€ 0</span></div>
+  <div class="margine-row"><span class="margine-label">Spese dossier e ricerca (già prodotte)</span><span class="margine-val">€ 0 aggiuntivo</span></div>
+  <div class="margine-row"><span class="margine-label">Fee mediazione 2-3% su €6-8M (parte venditore)</span><span class="margine-val green">+ €120–240K</span></div>
+  <div class="margine-row"><span class="margine-label">Fee mediazione 2-3% (parte acquirente)</span><span class="margine-val green">+ €120–240K</span></div>
+  <div class="margine-row"><span class="margine-label" style="color:var(--arancio);font-weight:700">MARGINE NETTO STIMATO</span><span class="margine-val orange big">€240–480K</span></div>
+</div>
+
+<!-- SEZIONE 4: A CHI VENDERE -->
+<div class="section-header">
+  <div class="section-icon">🎯</div>
+  <div class="section-title">A Chi Vendere — I Profili dell'Acquirente Finale</div>
+  <div class="section-count">target buyer</div>
+</div>
+
+<div class="card">
+  <h3>Il mercato degli acquirenti per RCV nel 2026</h3>
+  <p>Nel 2024 il volume degli investimenti alberghieri in Italia ha raggiunto <strong>€2,1 miliardi (+30%)</strong>. Il 53% delle transazioni ha coinvolto <strong>investitori internazionali</strong>. Oltre il 50% delle operazioni riguardava <strong>conversioni e riposizionamenti</strong> — esattamente il profilo di RCV. Il mercato esiste, è liquido, e sta cercando asset come questo.</p>
+</div>
+
+<div class="target-card">
+  <div class="target-tipo">🏦 Profilo 1 — Fondo Immobiliare Specializzato Hospitality</div>
+  <div class="target-nome">SGR / Fondo Real Estate Turismo</div>
+  <div class="target-desc">Fondi come InvestiRE SGR, Fabrica Immobiliare, DeA Capital Real Estate, CDP Real Asset gestiscono fondi specializzati in hospitality e turismo. CDP stessa ha acquisito il Lefay Garda per €59M. Il Fondo Nazionale del Turismo (FT3) ha 150M PNRR da investire in almeno 12 immobili entro 2025. RCV ha esattamente il profilo target: asset turistico, area interna, potenziale di valorizzazione, prezzo interessante.</div>
+  <div class="target-why">✅ Perché comprano: mandate istituzionale su turismo e aree interne. PNRR come leva. Rendimento atteso 8-12% su asset hospitality.</div>
+</div>
+
+<div class="target-card">
+  <div class="target-tipo">🏗️ Profilo 2 — Developer / Operatore Alberghiero</div>
+  <div class="target-nome">Operatore Hospitality con Pipeline di Sviluppo</div>
+  <div class="target-desc">Gruppi come Panoram Hotels, società dello stesso livello di Lefay in fase espansione, operatori di resort montagna che cercano asset da sviluppare nel Centro-Sud. Cercano immobili con permessi attivi, destinazione turistica autorizzata, e un bacino di utenza forte. RCV ha tutto questo. Il compratore di questo profilo ha il team tecnico e gestionale per portare avanti la ristrutturazione — gli manca l'asset. Noi abbiamo l'asset — gli mancano le risorse per pagarlo.</div>
+  <div class="target-why">✅ Perché comprano: pipeline di sviluppo, destinazione già autorizzata, bacino Roma-Napoli scoperto, permessi attivi. Non devono ricominciare da zero.</div>
+</div>
+
+<div class="target-card">
+  <div class="target-tipo">💰 Profilo 3 — Family Office / HNWI del Centro-Sud</div>
+  <div class="target-nome">Investitore Privato di Alta Capacità Patrimoniale</div>
+  <div class="target-desc">Famiglie imprenditoriali di Napoli, Roma, Pescara con patrimoni da €20-100M+ che cercano diversificazione nel real estate alternativo. Non sono fondi istituzionali — sono persone che decidono velocemente, capiscono il territorio, e apprezzano la narrativa. Il dossier che abbiamo prodotto è esattamente quello che serve per convincere un investitore di questo tipo: storia, visione, numeri, benchmark. La storia di Maradona e Ferlaino la capisce chiunque a Napoli.</div>
+  <div class="target-why">✅ Perché comprano: ritorno sull'investimento, diversificazione, asset tangibile con narrativa forte, territorio vicino e conosciuto.</div>
+</div>
+
+<div class="target-card">
+  <div class="target-tipo">🌍 Profilo 4 — Investitore Internazionale Distressed Real Estate</div>
+  <div class="target-nome">Fondo Opportunistico / Special Situations</div>
+  <div class="target-desc">Fondi come PIMCO Real Estate, Cerberus Capital, Apollo Global o Arrow Global specializzati in distressed real estate europeo. Comprano asset complessi a forte sconto sul NAV, li gestiscono e rivendono. RCV è un distressed asset con un valore intrinseco molto superiore al prezzo d'asta — esattamente il tipo di deal che questi fondi cercano. L'approccio: portare il dossier completo a un placement agent italiano (CBRE, JLL, Cushman & Wakefield) che ha le relazioni dirette con questi fondi.</div>
+  <div class="target-why">✅ Perché comprano: asset a sconto del 55%, mercato tourism Italia in crescita, exit strategy chiara (sviluppo + vendita o messa a reddito).</div>
+</div>
+
+<div class="target-card">
+  <div class="target-tipo">🤝 Profilo 5 — Crowdfunding Real Estate Platform</div>
+  <div class="target-nome">Piattaforma RECF + Community di Investitori</div>
+  <div class="target-desc">Piattaforme come Walliance, Concrete Investing, Rendimento Etico (nei limiti della situazione attuale) o equivalenti europei. Il mercato RECF italiano ha raccolto €180M nel 2023 con rendimenti equity medi del 13,22%. RCV è un deal perfetto per il crowdfunding: narrativa eccezionale, asset tangibile, destinazione in crescita, prezzo competitivo. La piattaforma porta il capitale, FranKi porta il deal e il dossier.</div>
+  <div class="target-why">✅ Perché comprano: deal con narrativa forte, rendimento atteso 12-15%, ticket min basso (da €5K), community già interessata al tema.</div>
+</div>
+
+<!-- SEZIONE 5: ROADMAP OPERATIVA -->
+<div class="section-header">
+  <div class="section-icon">🗺️</div>
+  <div class="section-title">Roadmap Operativa — 5 Fasi</div>
+  <div class="section-count">90 giorni</div>
+</div>
+
+<div class="step-card">
+  <div class="step-header">
+    <div class="step-num">F1</div>
+    <div class="step-title">Verifica e contatto procedura</div>
+    <div class="step-timing">Settimana 1-2</div>
+  </div>
+  <div class="step-body">
+    <p><strong>Obiettivo:</strong> Capire esattamente dove si trova la procedura e cosa è possibile fare oggi.</p>
+    <p><strong>Azioni concrete:</strong></p>
+    <p>① Contattare il Tribunale di Sulmona — Cancelleria Esecuzioni Immobiliari — per verificare lo stato attuale della procedura N.43/16: data della prossima asta, base d'asta aggiornata, nominativo del custode giudiziario e del professionista delegato.</p>
+    <p>② Contattare il <strong>custode giudiziario</strong> per: richiedere il fascicolo completo, verificare l'interesse alla collaborazione per trovare un acquirente, capire se UniCredit è disponibile a un accordo stragiudiziale.</p>
+    <p>③ Ingaggiare un avvocato specializzato in esecuzioni immobiliari (Sulmona/L'Aquila) per la due diligence legale. Budget: €3-5K.</p>
+    <div class="highlight-green">
+      <p><strong>Output atteso:</strong> Quadro chiaro su: prossima data d'asta, possibilità di offerta fuori asta, apertura del creditore alla trattativa, eventuali criticità legali non note.</p>
+    </div>
+  </div>
+</div>
+
+<div class="step-card">
+  <div class="step-header">
+    <div class="step-num">F2</div>
+    <div class="step-title">Preparazione del Teaser e del Dossier Investitore</div>
+    <div class="step-timing">Settimana 2-3</div>
+  </div>
+  <div class="step-body">
+    <p><strong>Obiettivo:</strong> Avere in mano lo strumento di vendita definitivo — il dossier che trasforma RCV in un'opportunità d'investimento irresistibile.</p>
+    <p><strong>Quello che abbiamo già:</strong> Dossier di consistenza (perizia analizzata) · Storia del compendio · 5 Concept strategici · Analisi economico-finanziaria · 6 Benchmark internazionali. Tutto questo è già pronto e pubblicato.</p>
+    <p><strong>Quello che manca:</strong> Un <strong>Executive Teaser</strong> di 2 pagine per primo contatto (una sintesi fulminante), e un <strong>Investment Memorandum</strong> professionale di 20-30 pagine per la fase avanzata della trattativa, con tutte le sezioni standard richieste dai fondi (asset overview, market analysis, financials, risk factors, exit strategy).</p>
+    <p>Budget stimato per Investment Memorandum professionale: €5-10K (advisor specializzato) o producibile internamente con FranKi.</p>
+  </div>
+</div>
+
+<div class="step-card">
+  <div class="step-header">
+    <div class="step-num">F3</div>
+    <div class="step-title">Scouting e primo contatto degli acquirenti</div>
+    <div class="step-timing">Settimana 3-6</div>
+  </div>
+  <div class="step-body">
+    <p><strong>Obiettivo:</strong> Portare il Teaser ai profili giusti e generare interesse concreto da almeno 3-5 soggetti qualificati.</p>
+    <p><strong>Come raggiungere i target:</strong></p>
+    <p>① <strong>Placement agent</strong>: ingaggiare CBRE Italy, JLL Italy o Cushman & Wakefield per presentare il deal ai loro contatti istituzionali (fondi, family office, operatori). Il placement agent lavora a success fee (1-2% del valore della transazione) — zero costo fisso.</p>
+    <p>② <strong>Direttamente ai fondi RECF</strong>: contattare Walliance e Concrete Investing con il dossier. Entrambi hanno un team di valutazione che risponde entro 2-3 settimane.</p>
+    <p>③ <strong>Network personale</strong>: HNWI e imprenditori del Centro-Sud con capacità patrimoniale adeguata. Il teaser va come allegato WhatsApp — semplice, diretto, con il link all'hub.</p>
+    <p>④ <strong>LinkedIn targeting</strong>: head of real estate di SGR italiane, family office manager, CEO di operatori hospitality. Messaggio diretto con teaser in PDF.</p>
+    <div class="highlight-orange">
+      <p><strong>Regola d'oro:</strong> Il primo contatto deve essere brevissimo. Teaser di 2 pagine + link all'hub. Chi è interessato chiede il memorandum completo. Chi chiede il memorandum è un lead qualificato.</p>
+    </div>
+  </div>
+</div>
+
+<div class="step-card">
+  <div class="step-header">
+    <div class="step-num">F4</div>
+    <div class="step-title">Negoziazione e strutturazione del deal</div>
+    <div class="step-timing">Settimana 6-10</div>
+  </div>
+  <div class="step-body">
+    <p><strong>Obiettivo:</strong> Arrivare a una <strong>Lettera di Intenti (LOI)</strong> o Term Sheet firmata con il compratore finale, che fissi prezzo e condizioni prima che si entri nella procedura d'asta.</p>
+    <p><strong>Le strutture possibili:</strong></p>
+    <p>① <strong>Accordo di riserva pre-asta</strong>: il compratore si impegna ad acquistare da noi l'asset a un prezzo concordato (es. €7,5M) non appena lo acquistiamo all'asta. Noi partecipiamo all'asta con la sua liquidità (o un bridge financing) e al rogito rivediamo immediatamente a lui. Il margine è la differenza.</p>
+    <p>② <strong>Cessione di diritti post-aggiudicazione</strong>: legalmente, dopo l'aggiudicazione ma prima del Decreto di Trasferimento, è possibile cedere i diritti dell'aggiudicazione a un terzo. Il terzo paga il saldo e diventa il destinatario del decreto. Questa struttura consente di uscire dall'operazione senza mai diventare formalmente proprietari — limitando la fiscalità.</p>
+    <p>③ <strong>Accordo di mediazione con fee al closing</strong>: se si sceglie la Via C (zero investimento), la LOI riguarda la fee di mediazione che verrà pagata al momento della chiusura della transazione tra le parti.</p>
+  </div>
+</div>
+
+<div class="step-card">
+  <div class="step-header">
+    <div class="step-num">F5</div>
+    <div class="step-title">Entrata in procedura e closing</div>
+    <div class="step-timing">Settimana 8-12</div>
+  </div>
+  <div class="step-body">
+    <p><strong>Obiettivo:</strong> Chiudere l'operazione e incassare il margine.</p>
+    <p>① Se Via A (offerta fuori asta): l'offerta viene accettata dal Giudice, si firma il rogito con il compratore finale. FranKi incassa la differenza tra il prezzo pagato alla procedura e quello incassato dal compratore.</p>
+    <p>② Se Via B (asta): si partecipa con la cauzione (€607K), si vince l'asta, si cede i diritti al compratore finale prima del decreto o si revende post-decreto. FranKi incassa la differenza.</p>
+    <p>③ Se Via C (mediazione): al rogito tra le parti, FranKi incassa la fee di mediazione concordata nella LOI.</p>
+    <div class="highlight-green">
+      <p><strong>Timing realistico:</strong> Da avvio della F1 al closing, stima 60-90 giorni per le vie A e C. Per la via B, dipende dalla data dell'asta (da verificare al Tribunale di Sulmona).</p>
+    </div>
+  </div>
+</div>
+
+<!-- BUDGET OPERATIVO -->
+<div class="section-header">
+  <div class="section-icon">💰</div>
+  <div class="section-title">Budget Operativo Minimo</div>
+  <div class="section-count">investimento</div>
+</div>
+
+<div class="table-wrap">
+  <h3>Costi necessari per avviare l'operazione</h3>
+  <table>
+    <thead>
+      <tr><th>Voce</th><th>Via A/B</th><th>Via C</th><th>Note</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Avvocato specializzato esecuzioni</td><td class="orange">€3–5K</td><td class="orange">€1–2K</td><td>Due diligence legale + contatto procedura</td></tr>
+      <tr><td>Executive Teaser (2 pag.)</td><td class="green">€0</td><td class="green">€0</td><td>Prodotto internamente da FranKi</td></tr>
+      <tr><td>Investment Memorandum (20-30 pag.)</td><td class="orange">€5–10K</td><td class="orange">€5–10K</td><td>O prodotto internamente</td></tr>
+      <tr><td>Placement agent</td><td class="green">€0</td><td class="green">€0</td><td>Success fee al closing — nessun costo fisso</td></tr>
+      <tr><td>Sopralluogo + foto professionali</td><td class="orange">€500</td><td class="orange">€500</td><td>Per valorizzare il dossier visivamente</td></tr>
+      <tr><td>Cauzione d'asta (rimborsata se si perde)</td><td class="orange">€607K</td><td class="green">€0</td><td>Solo Via B — depositata, poi restituita o imputata</td></tr>
+      <tr><td><strong>TOTALE INVESTIMENTO INIZIALE (senza cauzione)</strong></td><td class="orange"><strong>€8–15K</strong></td><td class="green"><strong>€6–12K</strong></td><td>Il minimo per avviare l'operazione</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- RISCHI -->
+<div class="section-header">
+  <div class="section-icon">⚠️</div>
+  <div class="section-title">I Rischi — Quello che Può Andare Storto</div>
+  <div class="section-count">risk analysis</div>
+</div>
+
+<div class="card">
+  <h3>Analisi dei rischi principali</h3>
+  <div class="highlight-red">
+    <p><strong>Rischio 1 — Non si trova il compratore finale.</strong> Se non si riesce a trovare un acquirente qualificato prima dell'asta, si è esposti al rischio di aggiudicazione senza exit. Mitigazione: la ricerca del compratore deve avvenire PRIMA di qualsiasi impegno finanziario. Solo con una LOI firmata si procede.</p>
+  </div>
+  <div class="highlight-red">
+    <p><strong>Rischio 2 — Concorrenza all'asta.</strong> Un altro acquirente potrebbe partecipare e alzare il prezzo sopra il livello che rende profittevole l'operazione. Mitigazione: definire preventivamente il prezzo massimo accettabile e non superarlo mai. Se altri offrono di più, si ritira — la cauzione viene restituita.</p>
+  </div>
+  <div class="highlight-orange">
+    <p><strong>Rischio 3 — Tempi della procedura.</strong> Le procedure esecutive italiane possono allungarsi. Il Decreto di Trasferimento può richiedere 3-6 mesi dopo l'aggiudicazione. Questo prolunga il periodo di esposizione finanziaria (se si è entrati con Via B). Mitigazione: strutturare il deal con il compratore finale prevedendo questa eventualità nei termini dell'accordo.</p>
+  </div>
+  <div class="highlight-orange">
+    <p><strong>Rischio 4 — Problemi urbanistici non noti.</strong> La zona O del PRG e gli usi civici sono mappati, ma potrebbero emergere ulteriori vincoli. Mitigazione: la due diligence legale (F1) deve verificare ogni aspetto prima di qualsiasi impegno. Il compratore finale deve essere consapevole di tutti i vincoli.</p>
+  </div>
+</div>
+
+<!-- ORANGE BAND RACCOMANDAZIONE -->
+<div class="orange-band">
+  <h3>🎯 La Raccomandazione FranKi</h3>
+  <p>La via più intelligente da percorrere immediatamente è la <strong>Via C (mediazione) in parallelo con la preparazione della Via B (asta)</strong>. Avviare subito il contatto con il custode giudiziario per ottenere il mandato di mediazione, e contemporaneamente iniziare lo scouting degli acquirenti con il teaser. Se si trova un compratore finale prima dell'asta, si chiude con fee zero rischio. Se non si trova, si valuta se entrare direttamente con la cauzione avendo già un accordo in tasca. In entrambi i casi, il valore del lavoro già prodotto (dossier, storia, benchmark, concept) è il principale asset negoziale di FranKi in questa operazione.</p>
+</div>
+
+<!-- DARK CTA -->
+<div class="dark-cta">
+  <h2>LA CARTA<br><span>È GIÀ PRONTA.</span></h2>
+  <p>Tutto il lavoro di valorizzazione è stato fatto. Il dossier esiste, la storia è raccontata, i benchmark sono identificati, i numeri reggono. Adesso bisogna solo trovare chi vuole comprare. E quella è la parte più semplice.</p>
+</div>
+
+<!-- DISCLAIMER -->
+<div class="disclaimer">
+  <strong>Avvertenze legali:</strong> Questo documento è ad uso riservato e non costituisce offerta di vendita, sollecitazione all'investimento o consulenza finanziaria. I margini indicati sono stime basate su dati di mercato pubblici e non garantiti. Qualsiasi operazione deve essere condotta con assistenza legale specializzata. La partecipazione a procedure esecutive è regolata dal c.p.c. e richiede verifica caso per caso. FranKi Studio non assume responsabilità per decisioni prese sulla base di questo documento. Elaborato da <strong>FranKi Studio</strong> — Uso interno riservato — Aprile 2026.
+</div>
+
+</body>
+</html>

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RCV — Dossier Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blu:#2B38B0;
+  --arancio:#F0A500;
+  --grigio-bg:#F2F1ED;
+  --bianco:#FFFFFF;
+  --nero:#111111;
+  --testo:#1a1a2e;
+  --blu-scuro:#1a2480;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Barlow',sans-serif;background:var(--grigio-bg);color:var(--testo);max-width:680px;margin:0 auto;font-size:15px;line-height:1.55}
+
+/* NAVBAR */
+.navbar{background:var(--blu);padding:12px 20px;display:flex;align-items:center;justify-content:space-between}
+.logo-fran{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;color:var(--bianco)}
+.logo-fran span{background:var(--arancio);padding:1px 6px;border-radius:4px}
+.logo-tagline{font-size:10px;color:rgba(255,255,255,.6);letter-spacing:.08em}
+.nav-doc{font-family:'Barlow Condensed',sans-serif;font-size:11px;color:rgba(255,255,255,.7);letter-spacing:.1em;text-transform:uppercase}
+
+/* HERO */
+.hero{background:var(--blu);color:var(--bianco);padding:36px 20px 30px;position:relative;overflow:hidden}
+.hero::before{content:'RCV';position:absolute;right:-10px;top:-10px;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:120px;color:rgba(255,255,255,.04);line-height:1}
+.hero-kicker{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--arancio);margin-bottom:8px}
+.hero-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:38px;line-height:.95;text-transform:uppercase;margin-bottom:12px}
+.hero-title em{color:var(--arancio);font-style:normal}
+.hero-sub{font-size:13px;color:rgba(255,255,255,.65);line-height:1.6;max-width:480px}
+
+/* FASI */
+.fasi-strip{background:var(--blu-scuro);padding:12px 20px;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.fase-pill{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;padding:4px 10px;border-radius:20px;color:rgba(255,255,255,.5);background:rgba(255,255,255,.08)}
+.fase-pill.active{background:var(--arancio);color:var(--nero)}
+.fase-arrow{color:rgba(255,255,255,.25);font-size:11px}
+
+/* DIVIDER */
+.div-orange{height:4px;background:var(--arancio)}
+
+/* SEZIONE */
+.section-header{background:var(--blu);color:var(--bianco);padding:11px 20px;display:flex;align-items:center;gap:10px;margin-top:20px}
+.section-icon{font-size:16px}
+.section-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;text-transform:uppercase;letter-spacing:.06em}
+.section-count{margin-left:auto;background:var(--arancio);color:var(--nero);font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;padding:2px 8px;border-radius:2px}
+
+/* DOC CARD */
+.doc-card{background:var(--bianco);margin:2px 0;padding:18px 20px;display:flex;align-items:center;gap:16px;text-decoration:none;transition:box-shadow .15s}
+.doc-card:hover{box-shadow:0 2px 12px rgba(43,56,176,.12)}
+.doc-card.disabled{opacity:.45;pointer-events:none;cursor:default}
+.doc-icon{flex-shrink:0;width:44px;height:44px;background:var(--blu);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:20px}
+.doc-icon.arancio{background:var(--arancio)}
+.doc-icon.grigio{background:#ccc}
+.doc-info{flex:1}
+.doc-fase{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--arancio);margin-bottom:2px}
+.doc-fase.grey{color:#aaa}
+.doc-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:17px;color:var(--testo);margin-bottom:2px}
+.doc-desc{font-size:12px;color:#888;line-height:1.4}
+.doc-arrow{flex-shrink:0;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px;color:var(--blu)}
+.doc-card.disabled .doc-arrow{color:#ccc}
+
+/* BADGE STATUS */
+.badge{display:inline-block;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;border-radius:2px;margin-top:4px}
+.badge-live{background:#e6f7f0;color:#1a7a50}
+.badge-wip{background:#fff4e0;color:#c27800}
+.badge-next{background:#f0f0f0;color:#888}
+
+/* INFO BOX */
+.info-box{background:var(--bianco);padding:18px 20px;margin:2px 0}
+.info-box p{font-size:13px;color:#666;line-height:1.6}
+.info-box strong{color:var(--testo)}
+
+/* DARK CTA */
+.dark-cta{background:var(--nero);color:var(--bianco);padding:28px 20px;margin-top:4px;text-align:center}
+.dark-cta p{font-size:12px;color:rgba(255,255,255,.45);margin-top:8px}
+
+/* FOOTER */
+.footer{padding:14px 20px;font-size:11px;color:#aaa;text-align:center;background:#f7f7f5;border-top:1px solid #e8e8e4}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div>
+    <div class="logo-fran">Fran<span>Ki</span></div>
+    <div class="logo-tagline">We Start Your Ideas</div>
+  </div>
+  <div class="nav-doc">RCV · Dossier Hub</div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-kicker">Roccaraso Country Village — Indice Documenti</div>
+  <div class="hero-title">TUTTI I<br><em>DOSSIER</em><br>DEL PROGETTO</div>
+  <div class="hero-sub">Raccolta aggiornata di tutti i documenti prodotti da FranKi Studio per l'analisi e lo sviluppo di Roccaraso Country Village. Uso riservato.</div>
+</div>
+
+<!-- FASI -->
+<div class="fasi-strip">
+  <div class="fase-pill">F00 ✓</div>
+  <div class="fase-arrow">›</div>
+  <div class="fase-pill active">F01 ●</div>
+  <div class="fase-arrow">›</div>
+  <div class="fase-pill">B00</div>
+  <div class="fase-arrow">›</div>
+  <div class="fase-pill">F02</div>
+  <div class="fase-arrow">›</div>
+  <div class="fase-pill">F03</div>
+  <div class="fase-arrow">›</div>
+  <div class="fase-pill">F05</div>
+  <div class="fase-arrow">›</div>
+  <div class="fase-pill">F06</div>
+</div>
+<div class="div-orange"></div>
+
+<!-- SEZIONE: SCOUTING -->
+<div class="section-header">
+  <div class="section-icon">🔍</div>
+  <div class="section-title">F00 — Scouting</div>
+  <div class="section-count">completata</div>
+</div>
+
+<a class="doc-card" href="https://frankistudio.it/roccaraso-affio/" target="_blank">
+  <div class="doc-icon arancio">📋</div>
+  <div class="doc-info">
+    <div class="doc-fase">F00 · Perizia Tribunale</div>
+    <div class="doc-title">Dossier di Consistenza</div>
+    <div class="doc-desc">46 app., 3 palazzine, 22 ettari, base asta €6,07M. Basato sulla perizia ufficiale Ing. Farina Rev.3 — 2021.</div>
+    <div><span class="badge badge-live">● Live</span></div>
+  </div>
+  <div class="doc-arrow">→</div>
+</a>
+
+<!-- SEZIONE: CONCEPT -->
+<div class="section-header">
+  <div class="section-icon">💡</div>
+  <div class="section-title">F01 — Concept Research</div>
+  <div class="section-count">in corso</div>
+</div>
+
+<a class="doc-card" href="https://frankistudio.it/roccaraso-affio/storia/" target="_blank">
+  <div class="doc-icon">🏛️</div>
+  <div class="doc-info">
+    <div class="doc-fase">F01 · Ricerca Storica</div>
+    <div class="doc-title">Storia del Compendio</div>
+    <div class="doc-desc">Nascita, vita e morte del Soggiorno Montano Enel. Dalla SME all'asta giudiziaria — 70 anni di storia.</div>
+    <div><span class="badge badge-live">● Live</span></div>
+  </div>
+  <div class="doc-arrow">→</div>
+</a>
+
+<a class="doc-card" href="https://frankistudio.it/roccaraso-affio/concept/" target="_blank">
+  <div class="doc-icon">📊</div>
+  <div class="doc-info">
+    <div class="doc-fase">F01 · Concept Strategy</div>
+    <div class="doc-title">5 Concept + Analisi Finanziaria</div>
+    <div class="doc-desc">Benchmark internazionali, 5 scenari di sviluppo, valutazione economico-finanziaria a 3 livelli.</div>
+    <div><span class="badge badge-live">● Live</span></div>
+  </div>
+  <div class="doc-arrow">→</div>
+</a>
+
+<a class="doc-card" href="https://frankistudio.it/roccaraso-affio/benchmark/" target="_blank">
+  <div class="doc-icon arancio">🌍</div>
+  <div class="doc-info">
+    <div class="doc-fase">F01 · Ricerca Internazionale</div>
+    <div class="doc-title">6 Benchmark nel Mondo</div>
+    <div class="doc-desc">Chi ha già reinventato RCV altrove: Villaggio ENI, Swiss Alps Coliving, Campra Lodge, Lefay, Zoku. Numeri reali e paralleli diretti con il nostro compendio.</div>
+    <div><span class="badge badge-live">● Live</span></div>
+  </div>
+  <div class="doc-arrow">→</div>
+</a>
+
+<!-- SEZIONE: PIANO B -->
+<div class="section-header" style="margin-top:20px;background:#111">
+  <div class="section-icon">💼</div>
+  <div class="section-title">Piano B — Operazione Arbitrage</div>
+  <div class="section-count">riservato</div>
+</div>
+
+<a class="doc-card" href="https://frankistudio.it/roccaraso-affio/concept-piano-b/teaser/" target="_blank">
+  <div class="doc-icon" style="background:#111">📨</div>
+  <div class="doc-info">
+    <div class="doc-fase">Investor Relations</div>
+    <div class="doc-title">Executive Teaser</div>
+    <div class="doc-desc">Documento di primo contatto per investitori. Asset overview, KPI, scenari d'uso, opportunità di mercato. 2 pagine, pronto all'invio.</div>
+    <div><span class="badge badge-live">● Live</span></div>
+  </div>
+  <div class="doc-arrow">→</div>
+</a>
+
+<a class="doc-card" href="https://frankistudio.it/roccaraso-affio/concept-piano-b/piano-b/" target="_blank">
+  <div class="doc-icon" style="background:#111">⚙️</div>
+  <div class="doc-info">
+    <div class="doc-fase">Piano Operativo · Riservato</div>
+    <div class="doc-title">Operazione Arbitrage</div>
+    <div class="doc-desc">Le 3 vie di ingresso, analisi del margine (3 scenari), profili acquirente finale, roadmap 90 giorni e budget operativo minimo.</div>
+    <div><span class="badge badge-live">● Live</span></div>
+  </div>
+  <div class="doc-arrow">→</div>
+</a>
+
+<!-- SEZIONE: PROSSIMI -->
+<div class="section-header">
+  <div class="section-icon">🗂️</div>
+  <div class="section-title">F02 — Struttura</div>
+  <div class="section-count">prossima</div>
+</div>
+
+<div class="doc-card disabled">
+  <div class="doc-icon grigio">💶</div>
+  <div class="doc-info">
+    <div class="doc-fase grey">F02 · Business Model</div>
+    <div class="doc-title">Analisi Economico-Finanziaria</div>
+    <div class="doc-desc">GDV, costi ristrutturazione, modello crowdfunding equity, break-even analysis.</div>
+    <div><span class="badge badge-next">In arrivo</span></div>
+  </div>
+  <div class="doc-arrow">→</div>
+</div>
+
+<div class="doc-card disabled">
+  <div class="doc-icon grigio">👥</div>
+  <div class="doc-info">
+    <div class="doc-fase grey">F02 · Target</div>
+    <div class="doc-title">Analisi di Mercato e Target</div>
+    <div class="doc-desc">Domanda, competitor, bacino di utenza, posizionamento e pricing.</div>
+    <div><span class="badge badge-next">In arrivo</span></div>
+  </div>
+  <div class="doc-arrow">→</div>
+</div>
+
+<div class="section-header">
+  <div class="section-icon">📁</div>
+  <div class="section-title">F03 — Brief Operativo</div>
+  <div class="section-count">futura</div>
+</div>
+
+<div class="doc-card disabled">
+  <div class="doc-icon grigio">🚀</div>
+  <div class="doc-info">
+    <div class="doc-fase grey">F03 · Dossier Investitori</div>
+    <div class="doc-title">Pitch & Crowdfunding Brief</div>
+    <div class="doc-desc">Cronoprogramma, dossier investitori, pitch crowdfunding, team legale e tecnico.</div>
+    <div><span class="badge badge-next">In arrivo</span></div>
+  </div>
+  <div class="doc-arrow">→</div>
+</div>
+
+<!-- INFO -->
+<div class="info-box" style="margin-top:20px">
+  <p>📌 <strong>Aggiornamento automatico:</strong> questa pagina viene aggiornata da FranKi Studio ad ogni nuovo documento pubblicato. I link grigi diventano attivi man mano che le fasi avanzano.</p>
+</div>
+
+<!-- DARK CTA -->
+<div class="dark-cta">
+  <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;text-transform:uppercase;letter-spacing:.04em">FRANKI STUDIO<br><span style="color:var(--arancio)">METODO · ANALISI · PROGETTO</span></div>
+  <p>Roccaraso Country Village · Uso riservato · Aprile 2026</p>
+</div>
+
+<div class="footer">frankistudio.it · Avre Srl Napoli · Uso interno riservato</div>
+
+</body>
+</html>

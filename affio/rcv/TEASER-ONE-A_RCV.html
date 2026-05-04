@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TEASER-ONE-A · RCV · Per i Soci Fondatori</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--blu:#2B38B0;--arancio:#F0A500;--grigio-bg:#F2F1ED;--bianco:#FFFFFF;--nero:#111118;--testo:#1a1a2e;--verde:#1a7a50;}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Barlow',sans-serif;background:var(--grigio-bg);color:var(--testo);max-width:680px;margin:0 auto;font-size:15px;line-height:1.6}
+.navbar{background:var(--blu);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.logo-fran{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;color:var(--bianco)}
+.logo-fran span{background:var(--arancio);color:#FFFFFF;padding:1px 6px;border-radius:4px}
+.logo-tagline{font-size:10px;color:rgba(255,255,255,.5);letter-spacing:.08em}
+.nav-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--arancio)}
+
+/* HERO */
+.hero{background:var(--nero);color:var(--bianco);padding:52px 20px 48px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 40px,rgba(43,56,176,.06) 40px,rgba(43,56,176,.06) 41px)}
+.hero-kicker{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--arancio);margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.hero-kicker::after{content:'';flex:1;height:1px;background:rgba(240,165,0,.3)}
+.hero-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:50px;line-height:.88;text-transform:uppercase;margin-bottom:22px}
+.hero-title em{color:var(--arancio);font-style:normal;display:block}
+.hero-statement{font-size:16px;color:rgba(255,255,255,.75);line-height:1.65;font-style:italic;border-left:3px solid var(--arancio);padding-left:16px;max-width:480px;margin-bottom:32px}
+.hero-urgency{background:rgba(240,165,0,.12);border:1px solid rgba(240,165,0,.25);padding:14px 16px;border-radius:2px;display:flex;align-items:center;gap:14px}
+.hero-urgency-num{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:42px;color:var(--arancio);line-height:1;flex-shrink:0}
+.hero-urgency-text{font-size:13px;color:rgba(255,255,255,.65);line-height:1.55}
+.hero-urgency-text strong{color:var(--bianco);display:block;font-size:14px;margin-bottom:2px}
+.div-orange{height:4px;background:var(--arancio)}
+
+/* SH */
+.sh{background:var(--blu);color:var(--bianco);padding:11px 20px;display:flex;align-items:center;gap:10px;margin-top:20px}
+.sh-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:15px;text-transform:uppercase;letter-spacing:.06em}
+.sh-badge{margin-left:auto;background:var(--arancio);color:var(--nero);font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;padding:2px 8px;border-radius:2px}
+
+/* CARD */
+.card{background:var(--bianco);padding:20px;margin:2px 0}
+.card p{font-size:13px;color:#444;line-height:1.7;margin-bottom:10px}
+.card p:last-child{margin-bottom:0}
+.card strong{color:var(--nero)}
+.card h3{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;text-transform:uppercase;color:var(--blu);margin-bottom:12px;border-bottom:2px solid var(--arancio);padding-bottom:6px}
+
+/* STORIA ENEL */
+.storia{background:var(--bianco);padding:24px 20px;margin:2px 0;position:relative;overflow:hidden}
+.storia::before{content:'1956';position:absolute;right:-8px;top:10px;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:100px;color:rgba(43,56,176,.05);line-height:1}
+.storia-anno{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:60px;color:var(--arancio);line-height:1;margin-bottom:4px}
+.storia-label{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#aaa;margin-bottom:16px}
+.storia-text{font-size:14px;color:#444;line-height:1.75}
+.storia-text em{font-style:italic;color:var(--blu)}
+
+/* COSA OTTIENI */
+.benefit-list{background:var(--bianco);padding:0 20px 20px;margin:2px 0}
+.benefit-item{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid #f5f5f2;align-items:flex-start}
+.benefit-item:last-child{border-bottom:none}
+.benefit-icon{font-size:26px;flex-shrink:0;width:36px;text-align:center}
+.benefit-body{}
+.benefit-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:15px;color:var(--testo);text-transform:uppercase;letter-spacing:.04em;margin-bottom:3px}
+.benefit-desc{font-size:12px;color:#666;line-height:1.55}
+.benefit-tag{display:inline-block;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:var(--arancio);color:var(--nero);padding:2px 7px;border-radius:2px;margin-top:4px}
+
+/* QUOTA INGRESSO */
+.quota{background:var(--blu);color:var(--bianco);padding:24px 20px;margin:2px 0}
+.quota-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:13px;text-transform:uppercase;letter-spacing:.12em;color:rgba(255,255,255,.5);margin-bottom:16px}
+.quota-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:16px}
+.qbox{background:rgba(255,255,255,.07);padding:16px}
+.qbox-label{font-size:10px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px}
+.qbox-val{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:28px;color:var(--arancio);line-height:1}
+.qbox-sub{font-size:11px;color:rgba(255,255,255,.4);margin-top:4px}
+.quota-note{font-size:12px;color:rgba(255,255,255,.5);line-height:1.6;font-style:italic}
+
+/* ORANGE BAND */
+.orange-band{background:var(--arancio);padding:18px 20px;margin:2px 0}
+.orange-band h3{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;text-transform:uppercase;color:var(--nero);margin-bottom:8px}
+.orange-band p{font-size:13px;color:rgba(0,0,0,.8);line-height:1.65}
+.orange-band strong{color:var(--nero)}
+
+/* DARK CTA */
+.dark-cta{background:var(--nero);color:var(--bianco);padding:44px 20px;text-align:center}
+.dark-cta h2{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:38px;text-transform:uppercase;line-height:.9;margin-bottom:16px}
+.dark-cta h2 em{color:var(--arancio);font-style:normal;display:block}
+.dark-cta p{font-size:13px;color:rgba(255,255,255,.5);max-width:400px;margin:0 auto 28px;line-height:1.7}
+.cta-btn{display:inline-block;background:var(--arancio);color:var(--nero);font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:14px;letter-spacing:.1em;text-transform:uppercase;padding:16px 36px;border-radius:2px;text-decoration:none;margin-bottom:16px}
+.cta-sub{font-size:11px;color:rgba(255,255,255,.25);margin-top:8px}
+.confid{background:var(--blu);padding:10px 20px;font-size:10px;color:rgba(255,255,255,.3);text-align:center;letter-spacing:.06em}
+
+.fk-logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;line-height:1;display:inline-flex;align-items:center}
+.fk-logo .fran{color:#FFFFFF}
+.fk-logo .ki{background:#F0A500;color:#FFFFFF;border-radius:5px;padding:1px 7px;margin-left:2px;display:inline-block}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div><div class="fk-logo"><span class="fran">Fran</span><span class="ki">Ki</span></div><div class="logo-tagline">We Start Your Ideas</div></div>
+  <div class="nav-label">TEASER-ONE-A · Soci Fondatori</div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-kicker">Per chi vuole un posto nel mondo — non un altro hotel</div>
+  <div class="hero-title">
+    C'È UN POSTO<br>
+    TRA ROMA<br>
+    E NAPOLI<br>
+    <em>CHE NON<br>ESISTE ANCORA.</em>
+  </div>
+  <div class="hero-statement">
+    "22 ettari di bosco. Cielo stellato certificato. Sauna nel bosco. Bolle di vetro con le stelle sopra la testa. Silenzio vero. E 139 persone che la pensano come te."
+  </div>
+  <div class="hero-urgency">
+    <div class="hero-urgency-num">140</div>
+    <div class="hero-urgency-text">
+      <strong>Posti disponibili. Solo 140.</strong>
+      Il club è a membership chiusa. Una volta raggiunta la quota, la lista d'attesa rimane aperta — ma i diritti dei fondatori sono riservati a chi entra adesso.
+    </div>
+  </div>
+</div>
+<div class="div-orange"></div>
+
+<!-- LA STORIA -->
+<div class="sh">
+  <div class="sh-title">La Storia — Perché Questo Posto Ha un'Anima</div>
+  <div class="sh-badge">unica</div>
+</div>
+
+<div class="storia">
+  <div class="storia-anno">1956</div>
+  <div class="storia-label">Soggiorno Montano ENEL · Roccaraso · Appennino Centrale</div>
+  <div class="storia-text">
+    L'ENEL costruisce un villaggio in montagna per i propri dipendenti. La regola è semplice e radicale: ogni lavoratore — dall'operaio al direttore generale — ha diritto alla stessa settimana in montagna. Le quote si assegnano <em>per sorteggio</em>. Nessun privilegio. Nessuna gerarchia.<br><br>
+    Poi il villaggio chiude. Per trent'anni resta lì, nel bosco, con i suoi 46 appartamenti e i suoi 22 ettari. Aspettando.<br><br>
+    <strong>RCV 2026 restituisce a quel luogo la sua funzione originaria.</strong> Con gli strumenti di oggi.
+  </div>
+</div>
+
+<!-- COSA OTTIENI -->
+<div class="sh">
+  <div class="sh-title">Cosa Ottieni Come Socio Fondatore</div>
+  <div class="sh-badge">esclusivo</div>
+</div>
+
+<div class="benefit-list">
+  <div class="benefit-item">
+    <div class="benefit-icon">🏔️</div>
+    <div class="benefit-body">
+      <div class="benefit-title">Accesso illimitato alla struttura</div>
+      <div class="benefit-desc">Priority booking su tutte le 68 unità — camere, suite, wellness prestige suite. I soci fondatori prenotano prima di chiunque altro, inclusi i giorni più richiesti dell'anno.</div>
+      <span class="benefit-tag">Priority booking</span>
+    </div>
+  </div>
+  <div class="benefit-item">
+    <div class="benefit-icon">🫧</div>
+    <div class="benefit-body">
+      <div class="benefit-title">Accesso alle Bubble Room nel Bosco</div>
+      <div class="benefit-desc">Le 6 bolle trasparenti — jacuzzi privata, telescopio, cielo stellato dell'Appennino — a tariffa socio agevolata. Sold out strutturale per il pubblico, sempre disponibili per i soci.</div>
+      <span class="benefit-tag">Tariffa agevolata</span>
+    </div>
+  </div>
+  <div class="benefit-item">
+    <div class="benefit-icon">🧬</div>
+    <div class="benefit-body">
+      <div class="benefit-title">Wellness & Longevity Hub</div>
+      <div class="benefit-desc">Sauna a legna nel bosco, cold plunge, breathwork, sessioni di biomarker, astronomo privato nelle serate di dark sky. Non servizi extra — è compreso nella membership.</div>
+      <span class="benefit-tag">Incluso</span>
+    </div>
+  </div>
+  <div class="benefit-item">
+    <div class="benefit-icon">🍽️</div>
+    <div class="benefit-body">
+      <div class="benefit-title">Tariffa soggiorno agevolata</div>
+      <div class="benefit-desc">€165/notte vs €315 full rate. Con 2 settimane/anno di soggiorno medio, la quota annuale si ammortizza completamente nei risparmi sul soggiorno.</div>
+      <span class="benefit-tag">€165/notte soci</span>
+    </div>
+  </div>
+  <div class="benefit-item">
+    <div class="benefit-icon">🌱</div>
+    <div class="benefit-body">
+      <div class="benefit-title">Fai parte di qualcosa di vero</div>
+      <div class="benefit-desc">Il club dona 10 settimane/anno ad anziani e famiglie svantaggiate. Come socio fondatore, puoi donare una tua settimana al pool — e il tuo nome entra nella storia del luogo.</div>
+      <span class="benefit-tag">ESG reale</span>
+    </div>
+  </div>
+</div>
+
+<!-- QUOTA -->
+<div class="quota">
+  <div class="quota-title">La Quota di Accesso · Socio Fondatore</div>
+  <div class="quota-grid">
+    <div class="qbox">
+      <div class="qbox-label">Quota ingresso (una tantum)</div>
+      <div class="qbox-val">€25K</div>
+      <div class="qbox-sub">Riservata ai fondatori · sale dopo l'apertura</div>
+    </div>
+    <div class="qbox">
+      <div class="qbox-label">Fee annuale ricorrente</div>
+      <div class="qbox-val">€10K</div>
+      <div class="qbox-sub">Accesso completo · priority booking incluso</div>
+    </div>
+  </div>
+  <div class="quota-note">
+    La quota di ingresso dei soci fondatori finanzia direttamente la ristrutturazione. Chi entra adesso paga meno, ha i diritti più forti e il voto più pesante nelle decisioni del club. Chi aspetta l'apertura paga di più — se trova posto.
+  </div>
+</div>
+
+<!-- ORANGE BAND -->
+<div class="orange-band">
+  <h3>📍 Roccaraso · Appennino Abruzzese</h3>
+  <p>A 2 ore da Roma. A 2 ore da Napoli. A 1.023 metri di quota. Con il Parco della Maiella a 30 minuti, il comprensorio sciistico più grande del Centro-Sud a 5 minuti, e uno dei cieli più bui d'Italia sopra la testa. <strong>Non si costruisce. È già lì.</strong></p>
+</div>
+
+<!-- CTA -->
+<div class="dark-cta">
+  <h2>
+    140 POSTI.<br>
+    <em>UNO POTREBBE<br>ESSERE TUO.</em>
+  </h2>
+  <p>Scrivi per ricevere il dossier riservato ai potenziali soci fondatori — la struttura del club, i servizi completi, i diritti dei fondatori e il calendario di apertura. Nessun impegno. Massima riservatezza.</p>
+  <a class="cta-btn" href="mailto:info@frankistudio.it?subject=RCV%20%E2%80%94%20Richiesta%20Accesso%20Soci%20Fondatori">→ Voglio Saperne di Più</a>
+  <div class="cta-sub">Oppure: frankistudio.it/roccaraso-affio/hub/</div>
+</div>
+
+<div class="confid">TEASER-ONE-A · SOCI FONDATORI · DISTRIBUZIONE SELEZIONATA · FranKi Studio (Avre Srl) · Aprile 2026</div>
+</body>
+</html>

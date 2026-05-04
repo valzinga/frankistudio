@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checklist Completa — RCV Il Poglío</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--blu:#2B38B0;--arancio:#F0A500;--grigio:#F2F1ED;--bianco:#FFFFFF;--nero:#111118;--verde:#0f6b30;--rosso:#b02020}
+body{font-family:"Barlow",sans-serif;background:var(--grigio);color:var(--nero);max-width:700px;margin:0 auto;font-size:16px;line-height:1.6}
+@media print{body{max-width:100%;font-size:13px}.no-print{display:none}.blocco{break-inside:avoid}}
+
+nav{background:var(--blu);padding:12px 20px;display:flex;align-items:center;justify-content:space-between}
+.fk-logo{font-family:"Barlow Condensed",sans-serif;font-weight:900;font-size:22px;display:inline-flex;align-items:center}
+.fk-logo .fran{color:#fff}
+.fk-logo .ki{background:#F0A500;color:#fff;border-radius:5px;padding:1px 7px;margin-left:2px}
+.nav-right{color:rgba(255,255,255,0.5);font-size:11px;font-family:"Barlow Condensed",sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.hero{background:var(--blu);padding:22px 20px 18px;border-bottom:3px solid var(--arancio)}
+.hero-tag{display:inline-block;background:var(--arancio);color:#fff;font-family:"Barlow Condensed",sans-serif;font-weight:900;font-size:11px;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;border-radius:3px;margin-bottom:10px}
+.hero h1{font-family:"Barlow Condensed",sans-serif;font-weight:900;font-size:34px;color:#fff;text-transform:uppercase;line-height:1;margin-bottom:4px}
+.hero h1 span{color:var(--arancio)}
+.hero-sub{color:rgba(255,255,255,0.45);font-size:12px}
+.print-btn{background:var(--arancio);padding:8px 20px;text-align:right}
+.print-btn button{font-family:"Barlow Condensed",sans-serif;font-weight:900;font-size:12px;letter-spacing:1px;text-transform:uppercase;background:var(--blu);color:#fff;border:none;padding:7px 16px;border-radius:3px;cursor:pointer}
+
+/* PARALLELE */
+.parallele{background:var(--bosco,#2A3A1E);padding:14px 20px;margin-bottom:3px}
+.par-title{font-family:"Barlow Condensed",sans-serif;font-weight:900;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:10px}
+.par-item{display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.08)}
+.par-item:last-child{border-bottom:none}
+.par-check{width:20px;height:20px;border:2px solid rgba(255,255,255,0.3);border-radius:3px;flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;background:transparent;color:#fff;user-select:none;transition:all .2s}
+.par-check.done{background:var(--verde);border-color:var(--verde)}
+.par-text{font-size:15px;color:#fff;flex:1}
+.par-text strong{color:var(--arancio)}
+.par-date{font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:11px;color:rgba(255,255,255,0.4);letter-spacing:1px}
+
+/* BLOCCO */
+.blocco{margin-bottom:3px}
+.blocco-header{padding:10px 20px;display:flex;align-items:center;justify-content:space-between}
+.bh-blu{background:var(--blu)}
+.bh-rosso{background:var(--rosso)}
+.bh-verde{background:var(--verde)}
+.bh-nero{background:var(--nero)}
+.blocco-title{font-family:"Barlow Condensed",sans-serif;font-weight:900;font-size:15px;text-transform:uppercase;letter-spacing:1px;color:#fff}
+.blocco-data{font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:12px;color:rgba(255,255,255,0.5);letter-spacing:1px}
+
+/* TASK */
+.task{background:var(--bianco);border-bottom:1px solid var(--grigio)}
+.task:last-child{border-bottom:none}
+.task-main{display:flex;align-items:flex-start;gap:12px;padding:12px 20px;cursor:pointer}
+.task-check{width:22px;height:22px;border:2px solid #ccc;border-radius:3px;flex-shrink:0;margin-top:2px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;transition:all .2s;user-select:none;background:#fff}
+.task-check.done{background:var(--verde);border-color:var(--verde);color:#fff}
+.task-body{flex:1}
+.task-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+.task-title{font-weight:500;font-size:16px;color:var(--nero);line-height:1.4;flex:1}
+.task-date{font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:11px;background:var(--nero);color:#fff;padding:2px 8px;border-radius:2px;white-space:nowrap;flex-shrink:0;margin-top:2px}
+.task-chi{font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--nero);margin-top:5px}
+.task-film{font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--arancio);margin-top:3px}
+.task-note{width:100%;margin-top:8px;border:1px solid #ddd;border-radius:3px;padding:7px 10px;font-family:"Barlow",sans-serif;font-size:14px;color:var(--nero);background:#fffef8;resize:none;min-height:34px;line-height:1.5}
+.task-note:focus{outline:none;border-color:var(--blu)}
+.task-note::placeholder{color:#ccc}
+
+/* SUB-TASK */
+.subtasks{display:none;background:#fafafa;border-top:1px solid var(--grigio)}
+.subtasks.open{display:block}
+.subtask{display:flex;align-items:flex-start;gap:10px;padding:8px 20px 8px 44px;border-bottom:1px solid var(--grigio)}
+.subtask:last-child{border-bottom:none}
+.sub-check{width:16px;height:16px;border:1.5px solid #ccc;border-radius:2px;flex-shrink:0;margin-top:3px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:10px;transition:all .2s;user-select:none;background:#fff}
+.sub-check.done{background:var(--blu);border-color:var(--blu);color:#fff}
+.sub-text{font-size:14px;color:#555;flex:1;line-height:1.5}
+.sub-date{font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:10px;color:#aaa;white-space:nowrap;margin-top:2px}
+
+/* PIANO B */
+.pianob-box{background:#fff8e1;border-left:4px solid var(--arancio);padding:14px 20px;margin-bottom:3px}
+.pb-title{font-family:"Barlow Condensed",sans-serif;font-weight:900;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--arancio);margin-bottom:10px}
+.pb-trigger{font-size:14px;color:#5a3a00;margin-bottom:6px}
+.pb-trigger strong{font-weight:500;color:var(--nero)}
+
+.footer{background:var(--nero);padding:14px 20px;text-align:center;margin-top:8px}
+.footer p{color:rgba(255,255,255,0.35);font-size:11px;margin-top:4px}
+</style>
+</head>
+<body>
+
+<nav class="no-print">
+  <div class="fk-logo"><span class="fran">Fran</span><span class="ki">Ki</span></div>
+  <div class="nav-right">Checklist Completa &middot; RCV</div>
+</nav>
+
+<div class="hero">
+  <div class="hero-tag">Checklist Operativa Completa</div>
+  <h1>RCV <span>Il Poglio</span></h1>
+  <div class="hero-sub">APR26-2Q &rarr; NOV30-1Q &middot; 27 task &middot; sub-task con date</div>
+</div>
+
+<div class="print-btn no-print">
+  <button onclick="window.print()">&#128438; Stampa / PDF</button>
+</div>
+
+<!-- 3 LINEE PARALLELE -->
+<div class="parallele">
+  <div class="par-title">3 linee attive in parallelo da subito</div>
+  <div class="par-item">
+    <div class="par-check" onclick="toggleP(this)"></div>
+    <div class="par-text"><strong>Linea 1</strong> &mdash; Cordata amici Affio &rarr; chiude GIU26-2Q</div>
+    <div class="par-date">APR26 &rarr; GIU26</div>
+  </div>
+  <div class="par-item">
+    <div class="par-check" onclick="toggleP(this)"></div>
+    <div class="par-text"><strong>Linea 2</strong> &mdash; Fondo istituzionale &rarr; chiude NOV26-1Q</div>
+    <div class="par-date">LUG26 &rarr; NOV26</div>
+  </div>
+  <div class="par-item">
+    <div class="par-check" onclick="toggleP(this)"></div>
+    <div class="par-text"><strong>Linea 3</strong> &mdash; Piano B acquirenti asset &rarr; ricerca morbida continua</div>
+    <div class="par-date">MAY26 &rarr; attivo</div>
+  </div>
+</div>
+
+<!-- FASE 0 FONDAMENTA -->
+<div class="blocco">
+  <div class="blocco-header bh-rosso">
+    <div class="blocco-title">Fase 0 &mdash; Fondamenta</div>
+    <div class="blocco-data">APR26-2Q &rarr; GIU26-2Q</div>
+  </div>
+
+  <div class="task">
+    <div class="task-main" onclick="toggleSub(this)">
+      <div class="task-check" onclick="toggleCheck(event,this)"></div>
+      <div class="task-body">
+        <div class="task-top">
+          <div class="task-title">01 &mdash; Trovare avvocato esecuzioni immobiliari</div>
+          <div class="task-date">MAY26-1Q</div>
+        </div>
+        <div class="task-chi">Chi: FranKi &middot; Film passo 01</div>
+        <textarea class="task-note" placeholder="Note..." rows="1" onclick="event.stopPropagation()" oninput="this.style.height=\'auto\';this.style.height=this.scrollHeight+\'px\'"></textarea>
+      </div>
+    </div>
+    <div class="subtasks">
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Ricerca nella rete Affio e FranKi &mdash; avvocato con esperienza Tribunale Sulmona/L'Aquila</div><div class="sub-date">MAY26-1Q</div></div>
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Primo contatto e verifica disponibilit&agrave; ad accedere al fascicolo N.43/16</div><div class="sub-date">MAY26-1Q</div></div>
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Accordo su compenso e modalit&agrave; di lavoro</div><div class="sub-date">MAY26-1Q</div></div>
+    </div>
+  </div>
+
+  <div class="task">
+    <div class="task-main" onclick="toggleSub(this)">
+      <div class="task-check" onclick="toggleCheck(event,this)"></div>
+      <div class="task-body">
+        <div class="task-top">
+          <div class="task-title">02 &mdash; Costituire HoldCo Srl</div>
+          <div class="task-date">MAY26-2Q</div>
+        </div>
+        <div class="task-chi">Chi: FranKi + Affio &middot; Film passo 02</div>
+        <textarea class="task-note" placeholder="Note..." rows="1" onclick="event.stopPropagation()" oninput="this.style.height=\'auto\';this.style.height=this.scrollHeight+\'px\'"></textarea>
+      </div>
+    </div>
+    <div class="subtasks">
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Scelta notaio e appuntamento</div><div class="sub-date">MAY26-1Q</div></div>
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Redazione statuto con voto plurimo FranKi/Affio</div><div class="sub-date">MAY26-2Q</div></div>
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Firma atto costitutivo e deposito CCIAA</div><div class="sub-date">MAY26-2Q</div></div>
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Apertura conto corrente HoldCo Srl</div><div class="sub-date">MAY26-2Q</div></div>
+    </div>
+  </div>
+
+  <div class="task">
+    <div class="task-main" onclick="toggleSub(this)">
+      <div class="task-check" onclick="toggleCheck(event,this)"></div>
+      <div class="task-body">
+        <div class="task-top">
+          <div class="task-title">02b &mdash; Mappa skill necessarie da lista fornitori</div>
+          <div class="task-date">MAY26-2Q</div>
+        </div>
+        <div class="task-chi">Chi: FranKi &middot; Film passo 02b &middot; NUOVO</div>
+        <textarea class="task-note" placeholder="Note..." rows="1" onclick="event.stopPropagation()" oninput="this.style.height=\'auto\';this.style.height=this.scrollHeight+\'px\'"></textarea>
+      </div>
+    </div>
+    <div class="subtasks">
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Analisi lista fornitori &mdash; identificare le 4 skill critiche prioritarie</div><div class="sub-date">MAY26-2Q</div></div>
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Definire quanti posti cordata destinare a soci-fornitori (target: 2-3 su 6)</div><div class="sub-date">MAY26-2Q</div></div>
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Briefing ad Affio sulle skill da cercare nella sua rete</div><div class="sub-date">MAY26-2Q</div></div>
+    </div>
+  </div>
+
+  <div class="task">
+    <div class="task-main" onclick="toggleSub(this)">
+      <div class="task-check" onclick="toggleCheck(event,this)"></div>
+      <div class="task-body">
+        <div class="task-top">
+          <div class="task-title">02c &mdash; Censimento soci-fornitori nella rete</div>
+          <div class="task-date">MAY26-2Q</div>
+        </div>
+        <div class="task-chi">Chi: FranKi + Affio &middot; Film passo 02c &middot; NUOVO</div>
+        <textarea class="task-note" placeholder="Note..." rows="1" onclick="event.stopPropagation()" oninput="this.style.height=\'auto\';this.style.height=this.scrollHeight+\'px\'"></textarea>
+      </div>
+    </div>
+    <div class="subtasks">
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Affio fa giro rete &mdash; identifica 8-10 candidati con skill + capacit&agrave; €50K</div><div class="sub-date">MAY26-2Q</div></div>
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">FranKi valuta profili &mdash; bilancia skill operative e capacit&agrave; finanziaria</div><div class="sub-date">MAY26-2Q</div></div>
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Selezione lista corta 6 candidati prioritari</div><div class="sub-date">GIU26-1Q</div></div>
+    </div>
+  </div>
+
+  <div class="task">
+    <div class="task-main" onclick="toggleSub(this)">
+      <div class="task-check" onclick="toggleCheck(event,this)"></div>
+      <div class="task-body">
+        <div class="task-top">
+          <div class="task-title">03 &mdash; Ingaggiare agenzia marketing</div>
+          <div class="task-date">MAY26-1Q</div>
+        </div>
+        <div class="task-chi">Chi: FranKi &middot; Film passo 03</div>
+        <textarea class="task-note" placeholder="Note..." rows="1" onclick="event.stopPropagation()" oninput="this.style.height=\'auto\';this.style.height=this.scrollHeight+\'px\'"></textarea>
+      </div>
+    </div>
+    <div class="subtasks">
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Ricerca profili: boutique hospitality marketing Roma-Napoli</div><div class="sub-date">MAY26-1Q</div></div>
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">3 call di valutazione &mdash; verificare esperienza pre-lancio e lead gen</div><div class="sub-date">MAY26-1Q</div></div>
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Firma contratto dilazionato: fee ridotta + success fee + pluriennale da M9</div><div class="sub-date">MAY26-2Q</div></div>
+    </div>
+  </div>
+
+  <div class="task">
+    <div class="task-main" onclick="toggleSub(this)">
+      <div class="task-check" onclick="toggleCheck(event,this)"></div>
+      <div class="task-body">
+        <div class="task-top">
+          <div class="task-title">04 &mdash; Lean test di mercato</div>
+          <div class="task-date">MAY26-2Q</div>
+        </div>
+        <div class="task-chi">Chi: FranKi + Agenzia &middot; Film passo 04</div>
+        <textarea class="task-note" placeholder="Note..." rows="1" onclick="event.stopPropagation()" oninput="this.style.height=\'auto\';this.style.height=this.scrollHeight+\'px\'"></textarea>
+      </div>
+    </div>
+    <div class="subtasks">
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Landing page Il Poglio online con brand e concept visivo</div><div class="sub-date">MAY26-2Q</div></div>
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Lista pre-adesione soci club con deposito €500 rimborsabile</div><div class="sub-date">MAY26-2Q</div></div>
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">5-10 contatti HR/CEO per corporate retreat &mdash; target: 1 lettera di intento</div><div class="sub-date">GIU26-1Q</div></div>
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Lista d'attesa bubble room &mdash; misurare iscritti senza che esista ancora nulla</div><div class="sub-date">GIU26-1Q</div></div>
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Report evidenze lean test &mdash; da inserire nel dossier per il fondo</div><div class="sub-date">LUG26-1Q</div></div>
+    </div>
+  </div>
+
+  <div class="task">
+    <div class="task-main" onclick="toggleSub(this)">
+      <div class="task-check" onclick="toggleCheck(event,this)"></div>
+      <div class="task-body">
+        <div class="task-top">
+          <div class="task-title">05 &mdash; Chiudere la cordata &mdash; 6 soci confermati</div>
+          <div class="task-date">GIU26-1Q</div>
+        </div>
+        <div class="task-chi">Chi: Affio &middot; Film passo 05</div>
+        <textarea class="task-note" placeholder="Note..." rows="1" onclick="event.stopPropagation()" oninput="this.style.height=\'auto\';this.style.height=this.scrollHeight+\'px\'"></textarea>
+      </div>
+    </div>
+    <div class="subtasks">
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Affio presenta il progetto ai 6 candidati selezionati</div><div class="sub-date">MAY26-2Q</div></div>
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Condivisione Report Soci con flussi e scenari exit</div><div class="sub-date">GIU26-1Q</div></div>
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Conferma verbale da tutti e 6</div><div class="sub-date">GIU26-1Q</div></div>
+    </div>
+  </div>
+
+  <div class="task">
+    <div class="task-main" onclick="toggleSub(this)">
+      <div class="task-check" onclick="toggleCheck(event,this)"></div>
+      <div class="task-body">
+        <div class="task-top">
+          <div class="task-title">07 &mdash; Due diligence completa sull'asset &#9888; PRIMA del patto</div>
+          <div class="task-date">GIU26-1Q</div>
+        </div>
+        <div class="task-chi">Chi: Avvocato + geometra &middot; Film passo 07 &middot; ANTICIPATO</div>
+        <textarea class="task-note" placeholder="Note..." rows="1" onclick="event.stopPropagation()" oninput="this.style.height=\'auto\';this.style.height=this.scrollHeight+\'px\'"></textarea>
+      </div>
+    </div>
+    <div class="subtasks">
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Accesso fascicolo N.43/16 &mdash; verifica ipoteche residue</div><div class="sub-date">GIU26-1Q</div></div>
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Verifica validit&agrave; PdC 2009 e Variante 2010 dopo 15 anni abbandono</div><div class="sub-date">GIU26-1Q</div></div>
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Verifica vincoli paesaggistici e forestali sui 22 ha bosco</div><div class="sub-date">GIU26-1Q</div></div>
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Verifica occupanti e contratti in essere</div><div class="sub-date">GIU26-1Q</div></div>
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Stima debiti fiscali arretrati IMU e spese</div><div class="sub-date">GIU26-1Q</div></div>
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Sopralluogo tecnico &mdash; stato impianti, accessi, strutture</div><div class="sub-date">GIU26-1Q</div></div>
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Report due diligence &mdash; semaforo verde/giallo/rosso per ogni punto</div><div class="sub-date">GIU26-2Q</div></div>
+    </div>
+  </div>
+
+  <div class="task">
+    <div class="task-main" onclick="toggleSub(this)">
+      <div class="task-check" onclick="toggleCheck(event,this)"></div>
+      <div class="task-body">
+        <div class="task-top">
+          <div class="task-title">06 &mdash; Firma patto parasociale + Tranche 1</div>
+          <div class="task-date">GIU26-2Q</div>
+        </div>
+        <div class="task-chi">Chi: Tutti + Avvocato &middot; Film passo 06 &middot; DOPO due diligence</div>
+        <textarea class="task-note" placeholder="Note..." rows="1" onclick="event.stopPropagation()" oninput="this.style.height=\'auto\';this.style.height=this.scrollHeight+\'px\'"></textarea>
+      </div>
+    </div>
+    <div class="subtasks">
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Bozza patto parasociale &mdash; voto plurimo, tag/drag along, clausola Piano B</div><div class="sub-date">GIU26-1Q</div></div>
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Revisione bozza da tutti i soci &mdash; raccogliere commenti</div><div class="sub-date">GIU26-2Q</div></div>
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Firma patto parasociale davanti al notaio</div><div class="sub-date">GIU26-2Q</div></div>
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Versamento Tranche 1 &mdash; 6 soci &times; €25K sul conto HoldCo</div><div class="sub-date">GIU26-2Q</div></div>
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Distribuzione margine immediato &mdash; €25K FranKi + €25K Affio</div><div class="sub-date">GIU26-2Q</div></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FASE 1 PRE-ASTA -->
+<div class="blocco">
+  <div class="blocco-header bh-blu">
+    <div class="blocco-title">Fase 1 &mdash; Pre-Asta</div>
+    <div class="blocco-data">LUG26-1Q &rarr; SET26-1Q</div>
+  </div>
+
+  <div class="task">
+    <div class="task-main" onclick="toggleSub(this)">
+      <div class="task-check" onclick="toggleCheck(event,this)"></div>
+      <div class="task-body">
+        <div class="task-top">
+          <div class="task-title">08 &mdash; Lean test continua &mdash; raccolta evidenze</div>
+          <div class="task-date">LUG26-1Q</div>
+        </div>
+        <div class="task-chi">Chi: FranKi + Agenzia &middot; Film passo 08</div>
+        <textarea class="task-note" placeholder="Note..." rows="1" onclick="event.stopPropagation()" oninput="this.style.height=\'auto\';this.style.height=this.scrollHeight+\'px\'"></textarea>
+      </div>
+    </div>
+    <div class="subtasks">
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Report mensile: pre-adesioni soci club, iscritti bubble, lettere intento corporate</div><div class="sub-date">Mensile</div></div>
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Inserimento dati lean test nel dossier per il fondo</div><div class="sub-date">AGO26-1Q</div></div>
+    </div>
+  </div>
+
+  <div class="task">
+    <div class="task-main" onclick="toggleSub(this)">
+      <div class="task-check" onclick="toggleCheck(event,this)"></div>
+      <div class="task-body">
+        <div class="task-top">
+          <div class="task-title">09 &mdash; Primi contatti fondi istituzionali</div>
+          <div class="task-date">LUG26-1Q</div>
+        </div>
+        <div class="task-chi">Chi: FranKi &middot; Film passo 09</div>
+        <textarea class="task-note" placeholder="Note..." rows="1" onclick="event.stopPropagation()" oninput="this.style.height=\'auto\';this.style.height=this.scrollHeight+\'px\'"></textarea>
+      </div>
+    </div>
+    <div class="subtasks">
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Lista target fondi: family office Centro-Sud, SGR hospitality, CDP Ventures</div><div class="sub-date">LUG26-1Q</div></div>
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Invio Teaser B1 con NDA a 5-8 fondi target</div><div class="sub-date">LUG26-2Q</div></div>
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Raccolta NDA firmati e invio dossier completo</div><div class="sub-date">AGO26-1Q</div></div>
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Identificare 2-3 fondi gi&agrave; caldi prima dell'asta</div><div class="sub-date">SET26-1Q</div></div>
+    </div>
+  </div>
+
+  <div class="task">
+    <div class="task-main" onclick="toggleSub(this)">
+      <div class="task-check" onclick="toggleCheck(event,this)"></div>
+      <div class="task-body">
+        <div class="task-top">
+          <div class="task-title">09b &mdash; Piano B &mdash; ricerca morbida acquirenti asset</div>
+          <div class="task-date">MAY26-1Q &#9654;</div>
+        </div>
+        <div class="task-chi">Chi: FranKi &middot; Film passo 09b &middot; Continuo</div>
+        <textarea class="task-note" placeholder="Note..." rows="1" onclick="event.stopPropagation()" oninput="this.style.height=\'auto\';this.style.height=this.scrollHeight+\'px\'"></textarea>
+      </div>
+    </div>
+    <div class="subtasks">
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Lista target Piano B: investitori immobiliari, developer montagna, operatori turistici</div><div class="sub-date">MAY26-1Q</div></div>
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Contatti discreti &mdash; sondaggio interesse a €2-3M sull'asset nello stato attuale</div><div class="sub-date">GIU26-1Q</div></div>
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Almeno 1-2 acquirenti caldi identificati prima dell'asta</div><div class="sub-date">AGO26-2Q</div></div>
+    </div>
+  </div>
+
+  <div class="task">
+    <div class="task-main" onclick="toggleSub(this)">
+      <div class="task-check" onclick="toggleCheck(event,this)"></div>
+      <div class="task-body">
+        <div class="task-top">
+          <div class="task-title">10 &mdash; Tranche 2 soci + verifica fideiussione</div>
+          <div class="task-date">AGO26-2Q</div>
+        </div>
+        <div class="task-chi">Chi: 6 soci + Avvocato &middot; Film passo 10/11</div>
+        <textarea class="task-note" placeholder="Note..." rows="1" onclick="event.stopPropagation()" oninput="this.style.height=\'auto\';this.style.height=this.scrollHeight+\'px\'"></textarea>
+      </div>
+    </div>
+    <div class="subtasks">
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Versamento Tranche 2 &mdash; 6 soci &times; €25K &rarr; totale raccolto €300K</div><div class="sub-date">AGO26-2Q</div></div>
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Richiesta formale al tribunale: accetta fideiussione per cauzione?</div><div class="sub-date">AGO26-1Q</div></div>
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Deposito offerta formale all'asta &mdash; avvocato gestisce tutta la procedura</div><div class="sub-date">SET26-1Q</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- FASE 2 CLOSING -->
+<div class="blocco">
+  <div class="blocco-header" style="background:#8a4a00">
+    <div class="blocco-title">Fase 2 &mdash; Closing Asta + Fondo</div>
+    <div class="blocco-data">SET26-2Q &rarr; NOV26-1Q</div>
+  </div>
+
+  <div class="task">
+    <div class="task-main" onclick="toggleSub(this)">
+      <div class="task-check" onclick="toggleCheck(event,this)"></div>
+      <div class="task-body">
+        <div class="task-top">
+          <div class="task-title">12 &mdash; Aggiudicazione asta &mdash; asset in mano</div>
+          <div class="task-date">SET26-2Q</div>
+        </div>
+        <div class="task-chi">Chi: HoldCo &middot; Film passo 12</div>
+        <textarea class="task-note" placeholder="Note..." rows="1" onclick="event.stopPropagation()" oninput="this.style.height=\'auto\';this.style.height=this.scrollHeight+\'px\'"></textarea>
+      </div>
+    </div>
+    <div class="subtasks">
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Partecipazione asta &mdash; aggiudicazione a ~€900K</div><div class="sub-date">SET26-2Q</div></div>
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Comunicazione immediata ai fondi gi&agrave; caldi &mdash; asset aggiudicato</div><div class="sub-date">SET26-2Q</div></div>
+    </div>
+  </div>
+
+  <div class="task">
+    <div class="task-main" onclick="toggleSub(this)">
+      <div class="task-check" onclick="toggleCheck(event,this)"></div>
+      <div class="task-body">
+        <div class="task-top">
+          <div class="task-title">13/14 &mdash; Chiudere il fondo + saldo asta + decreto</div>
+          <div class="task-date">NOV26-1Q</div>
+        </div>
+        <div class="task-chi">Chi: FranKi + Fondo + Tribunale &middot; Film passo 13/14</div>
+        <textarea class="task-note" placeholder="Note..." rows="1" onclick="event.stopPropagation()" oninput="this.style.height=\'auto\';this.style.height=this.scrollHeight+\'px\'"></textarea>
+      </div>
+    </div>
+    <div class="subtasks">
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Trattativa fondo &mdash; €2M per 40% SPV con liquidation preference</div><div class="sub-date">OTT26-1Q</div></div>
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Costituzione Il Poglio SPV Srl</div><div class="sub-date">OTT26-2Q</div></div>
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Saldo prezzo asta (~€810K) + imposte + notaio</div><div class="sub-date">NOV26-1Q</div></div>
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Decreto di trasferimento &mdash; asset della SPV</div><div class="sub-date">NOV26-1Q</div></div>
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Success fee FranKi deal origination &mdash; €60K</div><div class="sub-date">NOV26-1Q</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- FASE 3 CANTIERE -->
+<div class="blocco">
+  <div class="blocco-header bh-verde">
+    <div class="blocco-title">Fase 3 &mdash; Cantiere + Prime Revenue</div>
+    <div class="blocco-data">NOV26-1Q &rarr; MAY28-1Q</div>
+  </div>
+
+  <div class="task">
+    <div class="task-main" onclick="toggleSub(this)">
+      <div class="task-check" onclick="toggleCheck(event,this)"></div>
+      <div class="task-body">
+        <div class="task-top">
+          <div class="task-title">15 &mdash; Avvio cantiere 3 palazzine + bubble room</div>
+          <div class="task-date">NOV26-1Q</div>
+        </div>
+        <div class="task-chi">Chi: General contractor + FranKi &middot; Film passo 15</div>
+        <textarea class="task-note" placeholder="Note..." rows="1" onclick="event.stopPropagation()" oninput="this.style.height=\'auto\';this.style.height=this.scrollHeight+\'px\'"></textarea>
+      </div>
+    </div>
+    <div class="subtasks">
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Selezione general contractor &mdash; esperienza montagna e zona sismica</div><div class="sub-date">NOV26-1Q</div></div>
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Permessi cantiere &mdash; SCIA o PdC per ristrutturazione</div><div class="sub-date">NOV26-2Q</div></div>
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Avvio lavori palazzine 801/802/803 in parallelo</div><div class="sub-date">NOV26-2Q</div></div>
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Avvio costruzione 6 bubble room nel bosco</div><div class="sub-date">DIC26-1Q</div></div>
+    </div>
+  </div>
+
+  <div class="task">
+    <div class="task-main" onclick="toggleSub(this)">
+      <div class="task-check" onclick="toggleCheck(event,this)"></div>
+      <div class="task-body">
+        <div class="task-top">
+          <div class="task-title">16 &mdash; Crowdfunding minibond €1,5M</div>
+          <div class="task-date">GIU27-1Q</div>
+        </div>
+        <div class="task-chi">Chi: FranKi + piattaforma &middot; Film passo 16</div>
+        <textarea class="task-note" placeholder="Note..." rows="1" onclick="event.stopPropagation()" oninput="this.style.height=\'auto\';this.style.height=this.scrollHeight+\'px\'"></textarea>
+      </div>
+    </div>
+    <div class="subtasks">
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Selezione piattaforma &mdash; Walliance o CrowdFundMe</div><div class="sub-date">MAR27-1Q</div></div>
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Preparazione dossier emissione minibond 15%</div><div class="sub-date">APR27-1Q</div></div>
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Lancio campagna &mdash; target raccolta €1,5M</div><div class="sub-date">GIU27-1Q</div></div>
+    </div>
+  </div>
+
+  <div class="task">
+    <div class="task-main" onclick="toggleSub(this)">
+      <div class="task-check" onclick="toggleCheck(event,this)"></div>
+      <div class="task-body">
+        <div class="task-top">
+          <div class="task-title">17 &mdash; M9 Bubble room aperte &mdash; primo revenue</div>
+          <div class="task-date">AGO27-1Q</div>
+        </div>
+        <div class="task-chi">Chi: Gestore + Agenzia &middot; Film passo 17</div>
+        <textarea class="task-note" placeholder="Note..." rows="1" onclick="event.stopPropagation()" oninput="this.style.height=\'auto\';this.style.height=this.scrollHeight+\'px\'"></textarea>
+      </div>
+    </div>
+    <div class="subtasks">
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Apertura ufficiale 6 bubble room &mdash; €450/notte</div><div class="sub-date">AGO27-1Q</div></div>
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Lancio comunicazione PR &mdash; media, social, influencer</div><div class="sub-date">AGO27-1Q</div></div>
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Avvio vendita membership soci club &mdash; lista pre-adesione gi&agrave; calda</div><div class="sub-date">AGO27-1Q</div></div>
+    </div>
+  </div>
+
+  <div class="task">
+    <div class="task-main" onclick="toggleSub(this)">
+      <div class="task-check" onclick="toggleCheck(event,this)"></div>
+      <div class="task-body">
+        <div class="task-top">
+          <div class="task-title">20 &mdash; M18 Wellness hub aperto</div>
+          <div class="task-date">MAY28-1Q</div>
+        </div>
+        <div class="task-chi">Chi: Gestore &middot; Film passo 20</div>
+        <textarea class="task-note" placeholder="Note..." rows="1" onclick="event.stopPropagation()" oninput="this.style.height=\'auto\';this.style.height=this.scrollHeight+\'px\'"></textarea>
+      </div>
+    </div>
+    <div class="subtasks">
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Apertura sauna, cold plunge, breathwork, sala eventi 80 pax</div><div class="sub-date">MAY28-1Q</div></div>
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Avvio corporate retreat &mdash; 10 eventi/anno target</div><div class="sub-date">MAY28-1Q</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- FASE 4 REGIME -->
+<div class="blocco">
+  <div class="blocco-header" style="background:#4a008a">
+    <div class="blocco-title">Fase 4 &mdash; Regime Completo</div>
+    <div class="blocco-data">AGO28-1Q &rarr; MAY29-1Q</div>
+  </div>
+
+  <div class="task">
+    <div class="task-main" onclick="toggleSub(this)">
+      <div class="task-check" onclick="toggleCheck(event,this)"></div>
+      <div class="task-body">
+        <div class="task-top">
+          <div class="task-title">21 &mdash; M21 Soft opening palazzina 801 &mdash; 22 camere</div>
+          <div class="task-date">AGO28-1Q</div>
+        </div>
+        <div class="task-chi">Chi: Gestore &middot; Film passo 21</div>
+        <textarea class="task-note" placeholder="Note..." rows="1" onclick="event.stopPropagation()" oninput="this.style.height=\'auto\';this.style.height=this.scrollHeight+\'px\'"></textarea>
+      </div>
+    </div>
+    <div class="subtasks">
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Apertura 22 camere palazzina 801 &mdash; run rate €2,9M/anno</div><div class="sub-date">AGO28-1Q</div></div>
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Prima rendicontazione formale a tutti i soci HoldCo</div><div class="sub-date">SET28-1Q</div></div>
+    </div>
+  </div>
+
+  <div class="task">
+    <div class="task-main" onclick="toggleSub(this)">
+      <div class="task-check" onclick="toggleCheck(event,this)"></div>
+      <div class="task-body">
+        <div class="task-top">
+          <div class="task-title">22 &mdash; M30 Pieno regime &mdash; €7M revenue &mdash; €2,3M EBITDA</div>
+          <div class="task-date">MAY29-1Q</div>
+        </div>
+        <div class="task-chi">Chi: Gestore + FranKi &middot; Film passo 22</div>
+        <textarea class="task-note" placeholder="Note..." rows="1" onclick="event.stopPropagation()" oninput="this.style.height=\'auto\';this.style.height=this.scrollHeight+\'px\'"></textarea>
+      </div>
+    </div>
+    <div class="subtasks">
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">68 camere operative &mdash; 140 soci club al completo</div><div class="sub-date">MAY29-1Q</div></div>
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">EBITDA €2,3M certificato da revisore</div><div class="sub-date">LUG29-1Q</div></div>
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Preparazione dossier di vendita per advisor M&amp;A</div><div class="sub-date">SET29-1Q</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- FASE 5 EXIT -->
+<div class="blocco">
+  <div class="blocco-header bh-rosso">
+    <div class="blocco-title">Fase 5 &mdash; Exit</div>
+    <div class="blocco-data">NOV29-1Q &rarr; NOV30-1Q</div>
+  </div>
+
+  <div class="task">
+    <div class="task-main" onclick="toggleSub(this)">
+      <div class="task-check" onclick="toggleCheck(event,this)"></div>
+      <div class="task-body">
+        <div class="task-top">
+          <div class="task-title">23 &mdash; Advisor M&amp;A + processo di vendita</div>
+          <div class="task-date">NOV29-1Q</div>
+        </div>
+        <div class="task-chi">Chi: FranKi + advisor &middot; Film passo 23/24</div>
+        <textarea class="task-note" placeholder="Note..." rows="1" onclick="event.stopPropagation()" oninput="this.style.height=\'auto\';this.style.height=this.scrollHeight+\'px\'"></textarea>
+      </div>
+    </div>
+    <div class="subtasks">
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Selezione e ingaggio advisor M&amp;A hospitality</div><div class="sub-date">NOV29-1Q</div></div>
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Information Memorandum &mdash; dossier vendita completo</div><div class="sub-date">DIC29-1Q</div></div>
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Processo vendita &mdash; LOI, due diligence acquirente, SPA</div><div class="sub-date">GEN30 &rarr; LUG30</div></div>
+    </div>
+  </div>
+
+  <div class="task">
+    <div class="task-main" onclick="toggleSub(this)">
+      <div class="task-check" onclick="toggleCheck(event,this)"></div>
+      <div class="task-body">
+        <div class="task-top">
+          <div class="task-title">25 &mdash; M48 Closing exit &mdash; distribuzione proventi</div>
+          <div class="task-date">NOV30-1Q</div>
+        </div>
+        <div class="task-chi">Chi: Tutti &middot; Film passo 25</div>
+        <textarea class="task-note" placeholder="Note..." rows="1" onclick="event.stopPropagation()" oninput="this.style.height=\'auto\';this.style.height=this.scrollHeight+\'px\'"></textarea>
+      </div>
+    </div>
+    <div class="subtasks">
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Firma contratto di vendita &mdash; incasso €23M+ scenario base</div><div class="sub-date">NOV30-1Q</div></div>
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Rimborso minibond + interessi &mdash; €2,4M</div><div class="sub-date">NOV30-1Q</div></div>
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Liquidation preference fondo &mdash; €2M</div><div class="sub-date">NOV30-1Q</div></div>
+      <div class="subtask"><div class="sub-check" onclick="toggleSub2(this)"></div><div class="sub-text">Distribuzione residuo €18,6M ai soci pro-quota</div><div class="sub-date">NOV30-1Q</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- PIANO B -->
+<div class="pianob-box">
+  <div class="pb-title">Piano B &mdash; Parametri Trigger</div>
+  <div class="pb-trigger"><strong>Attivare se si verifica uno dei seguenti:</strong></div>
+  <div class="pb-trigger">&#9654; Fondo non entrato entro NOV26</div>
+  <div class="pb-trigger">&#9654; Bubble room non aperte entro AGO27</div>
+  <div class="pb-trigger">&#9654; Problemi legali gravi dalla due diligence</div>
+  <div class="pb-trigger">&#9654; Cordata non completa entro GIU26</div>
+  <div class="pb-trigger" style="margin-top:8px"><strong>Rendimento Piano B:</strong> acquisto ~€900K &rarr; vendita €2-3M &rarr; ogni socio 3-4&times; in 12 mesi</div>
+</div>
+
+<div class="footer no-print">
+  <div class="fk-logo"><span class="fran">Fran</span><span class="ki">Ki</span></div>
+  <p>Checklist operativa completa &middot; FranKi Studio &middot; Napoli &middot; Aprile 2026<br>27 task &middot; 80+ sub-task &middot; APR26 &rarr; NOV30</p>
+</div>
+
+<script>
+function toggleCheck(e, el){
+  e.stopPropagation();
+  el.classList.toggle("done");
+  el.textContent = el.classList.contains("done") ? "\u2713" : "";
+}
+function toggleSub(head){
+  const sub = head.nextElementSibling;
+  if(sub && sub.classList.contains("subtasks")){
+    sub.classList.toggle("open");
+  }
+}
+function toggleSub2(el){
+  el.classList.toggle("done");
+  el.textContent = el.classList.contains("done") ? "\u2713" : "";
+}
+function toggleP(el){
+  el.classList.toggle("done");
+  el.textContent = el.classList.contains("done") ? "\u2713" : "";
+}
+</script>
+</body>
+</html>

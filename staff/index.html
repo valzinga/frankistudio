@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Franki Staff — Area Privata</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Barlow',sans-serif;background:#1a2480;min-height:100vh;display:flex;flex-direction:column;}
+
+#pw-screen{position:fixed;inset:0;background:#1a2480;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;}
+#pw-input{background:rgba(255,255,255,0.08);border:2px solid rgba(251,194,89,0.3);color:#fff;font-family:sans-serif;font-size:16px;padding:14px 24px;outline:none;width:280px;text-align:center;letter-spacing:0.1em;}
+#pw-btn{background:#F0A500;color:#1a2480;font-family:'Barlow Condensed',sans-serif;font-size:18px;letter-spacing:0.12em;padding:12px 48px;border:none;cursor:pointer;width:280px;}
+#pw-error{color:#ef4444;font-size:13px;display:none;}
+#pw-label{font-family:'Barlow Condensed',sans-serif;font-size:28px;color:rgba(255,255,255,0.4);letter-spacing:0.2em;}
+
+#app{display:none;flex:1;flex-direction:column;}
+
+header{background:#1a2480;border-bottom:3px solid #F0A500;padding:16px 40px;display:flex;align-items:center;justify-content:space-between;}
+.header-right{font-family:'Barlow Condensed',sans-serif;font-size:13px;color:rgba(255,255,255,0.3);letter-spacing:0.2em;}
+
+.section{padding:32px 40px 0;}
+.section-label{font-size:10px;font-weight:800;letter-spacing:0.22em;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-bottom:12px;padding-left:2px;}
+.cards-row{display:grid;gap:3px;margin-bottom:3px;}
+.row-4{grid-template-columns:repeat(4,1fr);}
+.row-3{grid-template-columns:repeat(3,1fr);}
+.row-1{grid-template-columns:repeat(1,1fr);}
+
+.staff-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.06);padding:24px 22px;text-decoration:none;transition:all 0.2s;display:flex;flex-direction:column;gap:10px;border-top:4px solid transparent;}
+.staff-card:hover{background:rgba(255,255,255,0.09);transform:translateY(-2px);}
+.c1{border-top-color:#F0A500;}
+.c2{border-top-color:#f97316;}
+.c3{border-top-color:#7c3aed;}
+.c4{border-top-color:#0891b2;}
+.c5{border-top-color:#22c55e;}
+.c6{border-top-color:#ef4444;}
+
+.card-ico{font-size:28px;}
+.card-name{font-family:'Barlow Condensed',sans-serif;font-size:22px;color:#fff;letter-spacing:0.04em;line-height:1;}
+.card-desc{font-size:12px;color:rgba(255,255,255,0.45);line-height:1.5;}
+.card-url{font-size:10px;font-family:'Barlow Condensed',sans-serif;color:rgba(255,255,255,0.18);margin-top:auto;}
+
+footer{padding:20px 40px;text-align:center;font-size:11px;color:rgba(255,255,255,0.15);letter-spacing:0.1em;text-transform:uppercase;margin-top:32px;}
+
+@media(max-width:768px){
+  .row-4,.row-3{grid-template-columns:1fr 1fr;}
+  .section{padding:20px 16px 0;}
+  header{padding:12px 16px;}
+}
+@media(max-width:480px){
+  .row-4,.row-3{grid-template-columns:1fr;}
+}
+
+/* === LOGO FRANKI v2 === */
+.fk-logo-wrap{display:inline-flex;flex-direction:column;gap:2px;text-decoration:none;}
+.fk-logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;line-height:1;display:inline-flex;align-items:center;}
+.fk-logo .fran{color:#2B38B0;}
+.fk-logo .ki{background:#F0A500;color:#fff;border-radius:4px;padding:1px 7px;margin-left:2px;display:inline-block;}
+.fk-tagline{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(0,0,0,0.4);font-weight:400;}
+/* === FINE LOGO === */
+</style>
+</head>
+<body>
+
+<div id="pw-screen">
+  <a href="/" class="fk-logo-wrap"><div class="fk-logo" style="font-size:52px;"><span class="fran" style="color:#fff;">Fran</span><span class="ki">Ki</span></div></a>
+  <div id="pw-label">Area Privata Staff</div>
+  <div style="display:flex;flex-direction:column;gap:12px;align-items:center;">
+    <input id="pw-input" type="password" placeholder="Password" onkeydown="if(event.key==='Enter')checkPw()">
+    <button id="pw-btn" onclick="checkPw()">ENTRA</button>
+    <div id="pw-error">Password errata — riprova</div>
+  </div>
+</div>
+
+<div id="app">
+  <header>
+    <a href="/" class="fk-logo-wrap"><div class="fk-logo" style="font-size:24px;"><span class="fran">Fran</span><span class="ki">Ki</span></div></a>
+    <div class="header-right">STAFF AREA · FRANKI STUDIO</div>
+  </header>
+
+  <!-- RIGA 1 — INGRESSO NUOVO PROGETTO -->
+  <div class="section">
+    <div class="section-label">01 — Ingresso nuovo progetto</div>
+    <div class="cards-row row-4">
+      <a href="/template/" class="staff-card c1">
+        <div class="card-ico">🆕</div>
+        <div class="card-name">Template Nuovo</div>
+        <div class="card-desc">Per idee da zero. Guida dalla Fase 00 Scouting con tutti i parametri del Metodo Franki.</div>
+        <div class="card-url">frankistudio.it/template/</div>
+      </a>
+      <a href="/template/franki_template_esistente_v1_20260329.html" class="staff-card c1">
+        <div class="card-ico">📋</div>
+        <div class="card-name">Template Esistente</div>
+        <div class="card-desc">Per clienti già operativi. Parte dalla Fase 00A Assessment con ingresso variabile nel Metodo.</div>
+        <div class="card-url">frankistudio.it/template/esistente</div>
+      </a>
+      <a href="/assessment/" class="staff-card c2">
+        <div class="card-ico">🔎</div>
+        <div class="card-name">Assessment Base</div>
+        <div class="card-desc">6 sezioni + diagnosi automatica + ingresso consigliato nel Metodo Franki. Per clienti esistenti.</div>
+        <div class="card-url">frankistudio.it/assessment/</div>
+      </a>
+      <a href="/assessment/franki_assessment_moduli_v1_20260329.html" class="staff-card c2">
+        <div class="card-ico">🔍</div>
+        <div class="card-name">Moduli Assessment</div>
+        <div class="card-desc">4 moduli specifici: Marketing, Vendite, Operations, Prodotto. Si usano dopo l'Assessment Base.</div>
+        <div class="card-url">frankistudio.it/assessment/moduli</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- RIGA 2 — GESTIONE OPERATIVA -->
+  <div class="section">
+    <div class="section-label">02 — Gestione operativa quotidiana</div>
+    <div class="cards-row row-3">
+      <a href="/schede/" class="staff-card c3">
+        <div class="card-ico">📁</div>
+        <div class="card-name">Schede Progetti</div>
+        <div class="card-desc">Vista completa di ogni progetto — fase nel Metodo, task, note, storico e prossima azione. Un posto solo per tutto.</div>
+        <div class="card-url">frankistudio.it/schede/</div>
+      </a>
+      <a href="/pt/" class="staff-card c3">
+        <div class="card-ico">🎯</div>
+        <div class="card-name">Priorita &amp; Task</div>
+        <div class="card-desc">Il cuore operativo. Inserisci task, pianifica la settimana automaticamente, manda i to-do via WhatsApp.</div>
+        <div class="card-url">frankistudio.it/pt/</div>
+      </a>
+      <a href="/dashboard/" class="staff-card c3">
+        <div class="card-ico">📊</div>
+        <div class="card-name">Dashboard PM</div>
+        <div class="card-desc">Vista matrice di tutti i progetti sul Metodo Franki. Calendario e riepilogo task per il team.</div>
+        <div class="card-url">frankistudio.it/dashboard/</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- RIGA 3 — ANALISI -->
+  <div class="section">
+    <div class="section-label">03 — Analisi e valutazione</div>
+    <div class="cards-row row-1">
+      <a href="/profit/" class="staff-card c5">
+        <div class="card-ico">💰</div>
+        <div class="card-name">Valutazione Profittabilita</div>
+        <div class="card-desc">Valuta ogni progetto su 8 parametri oggettivi e soggettivi. Score automatico con priorita suggerita. Collegato al Google Sheet condiviso.</div>
+        <div class="card-url">frankistudio.it/profit/</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- RIGA 4 — STRUMENTI AI -->
+  <div class="section">
+    <div class="section-label">04 — Strumenti AI</div>
+    <div class="cards-row row-1">
+      <a href="https://frankistudio.it/tools/index.html" class="staff-card c4">
+        <div class="card-ico">🤖</div>
+        <div class="card-name">Tools AI</div>
+        <div class="card-desc">Raccolta organizzata di tutti gli strumenti AI. Schede per ogni AI con tool, link e categorie. Aggiungi, filtra e accedi in un click.</div>
+        <div class="card-url">frankistudio.it/tools/</div>
+      </a>
+    </div>
+  </div>
+
+  <footer>Franki Studio · Avre Srl · Napoli · Area Riservata Staff</footer>
+</div>
+
+<script>
+(function(){
+  if(sessionStorage.getItem('franki_auth')==='true'){
+    document.getElementById('pw-screen').style.display='none';
+    document.getElementById('app').style.display='flex';
+  }
+})();
+function checkPw(){
+  var v=document.getElementById('pw-input').value;
+  if(v==='Franki88'||v==='Gege88'){
+    sessionStorage.setItem('franki_auth','true');
+    document.getElementById('pw-screen').style.display='none';
+    document.getElementById('app').style.display='flex';
+  } else {
+    document.getElementById('pw-error').style.display='block';
+    document.getElementById('pw-input').value='';
+  }
+}
+</script>
+</body>
+</html>

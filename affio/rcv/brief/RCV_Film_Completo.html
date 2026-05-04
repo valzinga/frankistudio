@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il Film — RCV Il Poglío</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--blu:#2B38B0;--arancio:#F0A500;--grigio:#F2F1ED;--bianco:#FFFFFF;--nero:#111118;--verde:#1a7a3a;--rosso:#C0392B}
+body{font-family:'Barlow',sans-serif;background:var(--grigio);color:var(--nero);max-width:680px;margin:0 auto;font-size:15px;line-height:1.6}
+nav{background:var(--blu);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.fk-logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;display:inline-flex;align-items:center}
+.fk-logo .fran{color:#fff}
+.fk-logo .ki{background:#F0A500;color:#fff;border-radius:5px;padding:1px 7px;margin-left:2px}
+.nav-label{color:rgba(255,255,255,0.6);font-size:11px;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.hero{background:var(--nero);padding:28px 20px 24px}
+.hero-tag{display:inline-block;background:var(--arancio);color:#fff;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;border-radius:3px;margin-bottom:12px}
+.hero h1{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:40px;color:#fff;text-transform:uppercase;line-height:1;margin-bottom:6px}
+.hero h1 span{color:var(--arancio)}
+.hero p{color:rgba(255,255,255,0.5);font-size:13px;font-weight:300}
+.update-band{background:var(--arancio);padding:10px 20px}
+.update-band p{font-size:12px;color:#fff;font-weight:500}
+.fase{margin-bottom:3px}
+.fase-header{display:flex;align-items:center;gap:12px;padding:14px 20px;cursor:pointer;user-select:none;transition:opacity .15s}
+.fase-header:hover{opacity:.88}
+.fase-num{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:28px;line-height:1;min-width:32px}
+.fase-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:17px;text-transform:uppercase;letter-spacing:.5px}
+.fase-time{font-size:11px;font-weight:300;opacity:.7;margin-top:1px}
+.fase-arrow{margin-left:auto;font-size:12px;opacity:.5;transition:transform .2s;flex-shrink:0}
+.fase-arrow.open{transform:rotate(90deg)}
+.f0{background:#1e3a0e;color:#a8d08a}
+.f1{background:#0e1e4a;color:#8aa0d0}
+.f2{background:#3a2000;color:#d0a050}
+.f3{background:#003a1e;color:#50d090}
+.f4{background:#1e003a;color:#a050d0}
+.f5{background:#3a0000;color:#d05050}
+.fase-body{display:none;background:var(--bianco)}
+.fase-body.open{display:block}
+.step{padding:18px 20px;border-bottom:2px solid var(--grigio)}
+.step:last-child{border-bottom:none}
+.step-header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:8px}
+.step-num{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:32px;color:var(--arancio);line-height:1}
+.step-date{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;background:var(--nero);color:#fff;padding:4px 10px;border-radius:3px;letter-spacing:1px;white-space:nowrap;margin-top:4px}
+.step-title{font-weight:500;font-size:16px;color:var(--nero);margin-bottom:10px}
+.step-body{font-size:14px;color:#333;line-height:1.8}
+.step-body p{margin-bottom:8px}
+.step-body p:last-child{margin-bottom:0}
+.step-body ul{margin:8px 0 8px 18px}
+.step-body ul li{margin-bottom:5px;color:#333;font-size:14px;line-height:1.7}
+.step-body strong{color:var(--nero);font-weight:500}
+.step-meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;padding-top:10px;border-top:1px solid var(--grigio)}
+.meta-chi{font-size:11px;color:#888;font-weight:300;text-transform:uppercase;letter-spacing:.5px}
+.badge{display:inline-block;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:10px;letter-spacing:1px;text-transform:uppercase;padding:3px 8px;border-radius:3px}
+.badge-cardine{background:#fff3cd;color:#7c4a00}
+.badge-exit{background:#d4edda;color:#155724}
+.badge-cond{background:#cce5ff;color:#004085}
+.badge-par{background:#f3e5f5;color:#4a0072}
+.badge-lean{background:#d1ecf1;color:#0c5460}
+.tranche-block{background:#f8f9fa;border:1px solid #dee2e6;border-radius:4px;padding:14px 16px;margin:12px 0}
+.tranche-title{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#888;margin-bottom:10px}
+.tranche-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #dee2e6;font-size:13px}
+.tranche-row:last-child{border-bottom:none}
+.tranche-label{color:#444}
+.tranche-val{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:16px;color:var(--blu)}
+.tranche-when{font-size:11px;color:#888;display:block;margin-top:2px}
+.cash-block{background:var(--grigio);padding:16px 20px;border-top:3px solid rgba(0,0,0,0.08)}
+.cash-title{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:#888;margin-bottom:12px}
+.cash-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid rgba(0,0,0,0.06);font-size:14px}
+.cash-row:last-child{border-bottom:none;font-weight:500;padding-top:12px;margin-top:4px;border-top:1px solid rgba(0,0,0,0.15)}
+.cash-label{color:#444}
+.cash-val{font-weight:500;font-family:'Barlow Condensed',sans-serif;font-size:17px}
+.pos{color:var(--verde)}
+.neg{color:var(--rosso)}
+.neu{color:var(--nero)}
+.franki-box{background:#eef1ff;border-left:4px solid var(--blu);padding:14px 16px;margin:12px 0;border-radius:0 4px 4px 0}
+.franki-box-title{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--blu);margin-bottom:8px}
+.franki-row{display:flex;justify-content:space-between;font-size:13px;padding:5px 0;border-bottom:1px solid rgba(43,56,176,0.1)}
+.franki-row:last-child{border-bottom:none;font-weight:500;font-size:14px;padding-top:8px;margin-top:4px;border-top:1px solid rgba(43,56,176,0.2)}
+.exit-box{background:#f0fff4;border:1px solid #b7dfc4;padding:16px 20px;margin:16px 20px;border-radius:4px}
+.exit-row{display:flex;justify-content:space-between;font-size:14px;padding:7px 0;border-bottom:1px solid rgba(0,0,0,0.07)}
+.exit-row:last-child{border-bottom:none;font-weight:500;font-size:15px;padding-top:12px;margin-top:4px;border-top:1px solid rgba(0,100,50,0.2)}
+.footer{background:var(--nero);padding:20px;text-align:center}
+.footer p{color:rgba(255,255,255,0.4);font-size:11px;margin-top:8px}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="fk-logo"><span class="fran">Fran</span><span class="ki">Ki</span></div>
+  <span class="nav-label">Il Film · RCV Il Poglío</span>
+</nav>
+
+<div class="hero">
+  <div class="hero-tag">🎬 Roadmap Completa con Date</div>
+  <h1>Il <span>Film</span><br>dall'inizio<br>all'exit</h1>
+  <p>Punto zero: APR26-2Q · Exit: NOV30-1Q · 25 passi · 6 fasi</p>
+</div>
+
+<div class="update-band">
+  <p>⚡ Date milestone: formato QQ-MMM-AA · Punto zero 30 Aprile 2026 · Asta target SET26-2Q</p>
+</div>
+
+<!-- FASE 0 -->
+<div class="fase">
+  <div class="fase-header f0" onclick="toggle(this)">
+    <div class="fase-num">0</div>
+    <div>
+      <div class="fase-title">Fondamenta</div>
+      <div class="fase-time">APR26-2Q → GIU26-1Q</div>
+    </div>
+    <div class="fase-arrow">▶</div>
+  </div>
+  <div class="fase-body">
+
+    <div class="step">
+      <div class="step-header">
+        <div>
+          <div class="step-num">01</div>
+          <div class="step-title">Trovare l'avvocato specializzato in esecuzioni immobiliari</div>
+        </div>
+        <div class="step-date">MAY26-1Q</div>
+      </div>
+      <div class="step-body">
+        <p>Ingaggiare un avvocato che conosca le procedure esecutive del Tribunale di Sulmona o L'Aquila. Non un generalista — uno che faccia questo di mestiere e abbia già gestito aste giudiziarie in quell'area.</p>
+        <p>Il suo lavoro immediato: accedere al fascicolo N.43/16 e rispondere alle domande critiche che nessuno può rispondere senza averlo letto. Ci sono ipoteche che sopravvivono all'acquisto? I permessi edilizi del 2009 sono ancora validi? Ci sono occupanti? Ci sono debiti fiscali a carico dell'acquirente? Senza queste risposte non si fa un'offerta consapevole.</p>
+      </div>
+      <div class="step-meta"><span class="meta-chi">Chi: FranKi · Settimana 1–2</span></div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <div>
+          <div class="step-num">02</div>
+          <div class="step-title">Costituire la HoldCo FranKi + Affio</div>
+        </div>
+        <div class="step-date">MAY26-2Q</div>
+      </div>
+      <div class="step-body">
+        <p>FranKi e Affio costituiscono insieme una SRL 50/50 — la HoldCo. Costo: poche centinaia di euro di notaio. Nello statuto si inserisce il <strong>voto plurimo</strong>: anche dopo aver ceduto il 60% delle quote agli amici, FranKi e Affio mantengono la maggioranza dei voti. La cordata partecipa agli utili — ma non comanda.</p>
+      </div>
+      <div class="step-meta"><span class="meta-chi">Chi: FranKi + Affio + Avvocato</span></div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <div>
+          <div class="step-num">02b</div>
+          <div class="step-title">Mappa skill necessarie — dalla lista fornitori</div>
+        </div>
+        <div class="step-date">MAY26-2Q</div>
+      </div>
+      <div class="step-body">
+        <p>Prima di selezionare i soci della cordata, si costruisce la mappa delle skill operative che il progetto richiede. Si parte dalla lista fornitori e si identifica quali figure sono strategicamente più utili come soci-fornitori: chi porta capitale E competenza vale doppio rispetto a chi porta solo i €50K.</p>
+        <p>Le skill prioritarie da coprire con i soci:</p>
+        <ul>
+          <li><strong>General contractor</strong> — gestisce il cantiere da posizione di socio, massimo allineamento sui tempi e qualità</li>
+          <li><strong>Architetto/progettista</strong> — conosce vincoli paesaggistici Abruzzo, progetta le bubble room nel bosco</li>
+          <li><strong>Gestore operativo hospitality</strong> — gestisce la struttura da M9, conosce il modello club privato</li>
+          <li><strong>Agenzia marketing hospitality</strong> — porta soci del club, costruisce il brand</li>
+        </ul>
+        <p>La regola: su 6 posti nella cordata, idealmente 2-3 coprono una skill critica. I restanti 3-4 sono soci puramente finanziari.</p>
+      </div>
+      <div class="step-meta">
+        <span class="meta-chi">Chi: FranKi · MAY26-2Q</span>
+        <span class="badge badge-cardine">Fondamentale</span>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <div>
+          <div class="step-num">02c</div>
+          <div class="step-title">Censimento soci-fornitori — identificare i profili doppio ruolo</div>
+        </div>
+        <div class="step-date">MAY26-2Q</div>
+      </div>
+      <div class="step-body">
+        <p>Con la mappa delle skill in mano, si fa un censimento nella rete di Affio e FranKi per identificare chi ha le caratteristiche giuste per il doppio ruolo. Non si cercano semplicemente 6 persone con €50K — si cercano 6 persone con €50K dove almeno 2-3 portano anche una competenza operativa critica.</p>
+        <p>Il censimento avviene in questa fase — prima della firma del patto — perché è qui che si ha la massima leva negoziale. Un socio-fornitore accetta condizioni preferenziali sul contratto di fornitura quando sta ancora decidendo se entrare. Dopo la firma la leva sparisce.</p>
+        <p>Il risultato del censimento è una lista di 8-10 candidati da cui si selezionano i 6 definitivi, bilanciando skill operative e capacità finanziaria.</p>
+      </div>
+      <div class="step-meta">
+        <span class="meta-chi">Chi: FranKi + Affio · MAY26-2Q</span>
+        <span class="badge badge-cardine">Fondamentale</span>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <div>
+          <div class="step-num">03</div>
+          <div class="step-title">Ingaggiare l'agenzia marketing — contratto dilazionato</div>
+        </div>
+        <div class="step-date">MAY26-1Q</div>
+      </div>
+      <div class="step-body">
+        <p>Boutique o freelance senior specializzato in hospitality e turismo esperienziale, con esperienza su pre-lanci di strutture ricettive e lead generation con budget contenuti. Struttura contrattuale dilazionata a milestone:</p>
+        <ul>
+          <li><strong>Fee ridotta ora:</strong> €800-1.000/mese durante la fase lean (3-4 mesi)</li>
+          <li><strong>Success fee a milestone:</strong> €3.000 a 20 pre-adesioni, €5.000 al primo socio fondatore confermato</li>
+          <li><strong>Contratto pluriennale preferenziale da M9</strong> come premio per aver creduto nel progetto nella fase iniziale</li>
+        </ul>
+      </div>
+      <div class="step-meta">
+        <span class="meta-chi">Chi: FranKi</span>
+        <span class="badge badge-lean">Lean test</span>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <div>
+          <div class="step-num">04</div>
+          <div class="step-title">Lean test di mercato — validare prima di comprare</div>
+        </div>
+        <div class="step-date">MAY26-2Q</div>
+      </div>
+      <div class="step-body">
+        <p>Prima di spendere un euro sull'asset, si mette il prodotto davanti alle persone giuste e si osserva la risposta reale — non le opinioni, ma i comportamenti concreti. Tre mercati in parallelo:</p>
+        <ul>
+          <li><strong>Soci fondatori club:</strong> lista di pre-adesione con deposito simbolico €500 rimborsabile. Target: 20-30 pre-aderenti prima dell'asta</li>
+          <li><strong>Corporate retreat:</strong> 5-10 contatti diretti con HR manager o CEO nell'area Roma-Napoli. Obiettivo: almeno una lettera di intento</li>
+          <li><strong>Bubble room:</strong> landing page con concept visivo e lista d'attesa per notti a €450. Si misura quante persone si iscrivono senza che esista ancora nulla</li>
+        </ul>
+        <p>I risultati entrano nel dossier per il fondo — trasformano le proiezioni in evidenze di mercato reali.</p>
+      </div>
+      <div class="step-meta">
+        <span class="meta-chi">Chi: FranKi + Agenzia</span>
+        <span class="badge badge-lean">Lean test</span>
+        <span class="badge badge-cardine">Fondamentale</span>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <div>
+          <div class="step-num">05</div>
+          <div class="step-title">Chiudere la cordata — 6 soci × €50K in 2 tranche</div>
+        </div>
+        <div class="step-date">GIU26-1Q</div>
+      </div>
+      <div class="step-body">
+        <p>Affio fa da aggregatore e garante morale. 6 persone della sua cerchia, €50K ciascuno strutturati in due componenti: <strong>€30K quota</strong> (10% HoldCo con sovrapprezzo) + <strong>€20K finanziamento soci</strong> al 6% rimborsabile all'exit.</p>
+        <div class="tranche-block">
+          <div class="tranche-title">Piano versamenti</div>
+          <div class="tranche-row">
+            <div class="tranche-label">Tranche 1 — alla firma patto parasociale<span class="tranche-when">GIU26-1Q</span></div>
+            <div class="tranche-val">€25K</div>
+          </div>
+          <div class="tranche-row">
+            <div class="tranche-label">Tranche 2 — pre deposito offerta asta<span class="tranche-when">AGO26-2Q</span></div>
+            <div class="tranche-val">€25K</div>
+          </div>
+          <div class="tranche-row">
+            <div class="tranche-label"><strong>Totale per socio · 6 soci · totale raccolta</strong></div>
+            <div class="tranche-val" style="color:var(--verde)">€50K · €300K</div>
+          </div>
+        </div>
+        <p>Per i soci: entrano in un deal da €13,5M periziato con €50K e a exit base portano a casa ~€1,1M — circa 22× il capitale investito.</p>
+      </div>
+      <div class="step-meta">
+        <span class="meta-chi">Chi: Affio</span>
+        <span class="badge badge-cardine">Punto cardine</span>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <div>
+          <div class="step-num">06</div>
+          <div class="step-title">Firma patto parasociale + incasso Tranche 1</div>
+        </div>
+        <div class="step-date">GIU26-2Q</div>
+      </div>
+      <div class="step-body">
+        <p>Tutti firmano. Il patto definisce: voto plurimo FranKi/Affio, tag-along, drag-along, condizioni ingresso fondo, quota aggiuntiva condizionata a milestone, prezzo minimo exit €23M. Alla firma scatta la Tranche 1 — €25K per socio. <strong>FranKi e Affio incassano €25K a testa immediatamente dal sovrapprezzo sulle quote.</strong></p>
+      </div>
+      <div class="step-meta">
+        <span class="meta-chi">Chi: Tutti i soci + Avvocato</span>
+        <span class="badge badge-cardine">Punto cardine</span>
+      </div>
+    </div>
+
+    <div class="franki-box">
+      <div class="franki-box-title">Revenue FranKi — Fase 0 · GIU26-1Q</div>
+      <div class="franki-row"><span>Margine immediato cessione quote (Tranche 1)</span><span class="pos">+ €25K</span></div>
+      <div class="franki-row"><span>Totale incassato FranKi a GIU26-1Q</span><span class="pos">€25K</span></div>
+    </div>
+
+    <div class="cash-block">
+      <div class="cash-title">Cash flow HoldCo — Fase 0</div>
+      <div class="cash-row"><span class="cash-label">Tranche 1 cordata (6 × €25K)</span><span class="cash-val pos">+ €150K</span></div>
+      <div class="cash-row"><span class="cash-label">Margine FranKi + Affio (€25K × 2)</span><span class="cash-val neg">– €50K</span></div>
+      <div class="cash-row"><span class="cash-label">Spese legali + notaio + HoldCo</span><span class="cash-val neg">– €15K</span></div>
+      <div class="cash-row"><span class="cash-label">Agenzia marketing fase lean (mese 1)</span><span class="cash-val neg">– €1K</span></div>
+      <div class="cash-row"><span class="cash-label">Cassa HoldCo a GIU26-1Q</span><span class="cash-val neu">€84K</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FASE 1 -->
+<div class="fase">
+  <div class="fase-header f1" onclick="toggle(this)">
+    <div class="fase-num">1</div>
+    <div>
+      <div class="fase-title">Pre-Asta</div>
+      <div class="fase-time">GIU26-1Q → SET26-1Q</div>
+    </div>
+    <div class="fase-arrow">▶</div>
+  </div>
+  <div class="fase-body">
+
+    <div class="step">
+      <div class="step-header">
+        <div>
+          <div class="step-num">07</div>
+          <div class="step-title">Due diligence completa sull'asset</div>
+        </div>
+        <div class="step-date">GIU26-1Q</div>
+      </div>
+      <div class="step-body">
+        <p><strong>Nota sequenza:</strong> la due diligence avviene PRIMA della firma del patto parasociale — non dopo. &Egrave; il prerequisito logico: si firma solo quando si sa esattamente cosa si sta comprando e quali rischi esistono. L'avvocato accede al fascicolo e risponde alle domande critiche. Un tecnico fa il sopralluogo fisico. Da verificare obbligatoriamente:</p>
+        <ul>
+          <li><strong>Ipoteche residue</strong> — quali sopravvivono all'aggiudicazione</li>
+          <li><strong>Permessi edilizi</strong> — PdC del 2009 e Variante 2010 ancora validi dopo 15 anni?</li>
+          <li><strong>Vincoli bosco</strong> — vincoli paesaggistici o forestali sui 22 ha che limitano le bubble room</li>
+          <li><strong>Occupanti o contratti</strong> — qualsiasi occupazione complica la presa di possesso</li>
+          <li><strong>Debiti fiscali arretrati</strong> — IMU e spese condominiali restano a carico dell'acquirente</li>
+          <li><strong>Stato impianti</strong> — allacci attivi o staccati, impatta su tempi e costi cantiere</li>
+        </ul>
+      </div>
+      <div class="step-meta"><span class="meta-chi">Chi: Avvocato + geometra</span></div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <div>
+          <div class="step-num">08</div>
+          <div class="step-title">Lean test — raccolta evidenze di mercato</div>
+        </div>
+        <div class="step-date">LUG26-1Q</div>
+      </div>
+      <div class="step-body">
+        <p>L'agenzia continua il lavoro di validazione. Si documentano e aggiornano: numero iscritti lista d'attesa bubble room, pre-adesioni al club con deposito €500, lettere di intento corporate, feedback qualitativi su prezzi e concept. Questi dati entrano direttamente nel dossier per il fondo.</p>
+      </div>
+      <div class="step-meta">
+        <span class="meta-chi">Chi: FranKi + Agenzia</span>
+        <span class="badge badge-lean">Lean test</span>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <div>
+          <div class="step-num">09</div>
+          <div class="step-title">Primi contatti con i fondi — riscaldare il mercato</div>
+        </div>
+        <div class="step-date">LUG26-1Q</div>
+      </div>
+      <div class="step-body">
+        <p>Non per chiudere adesso — per arrivare al giorno dopo l'aggiudicazione con 2-3 fondi già caldi. Si manda il Teaser B1 con NDA. Target: family office Centro-Sud, SGR hospitality, CDP Ventures. Nel dossier si inseriscono già i dati del lean test — prove di mercato reali che un fondo può leggere e verificare.</p>
+      </div>
+      <div class="step-meta">
+        <span class="meta-chi">Chi: FranKi</span>
+        <span class="badge badge-par">In parallelo</span>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <div>
+          <div class="step-num" style="color:#F0A500">09b</div>
+          <div class="step-title">Piano B — ricerca morbida acquirenti asset · da subito in parallelo</div>
+        </div>
+        <div class="step-date">MAY26-1Q</div>
+      </div>
+      <div class="step-body">
+        <p>In parallelo alla ricerca del fondo e alla costruzione della cordata, FranKi avvia una ricerca discreta di potenziali acquirenti dell'asset nello stato in cui si trova. Non è una vendita — è un'opzione che si tiene aperta.</p>
+        <p>Il messaggio è semplice: asset da €13,5M periziato, acquistato a ~€900K, disponibile a €2-3M in tempi rapidi. Chi compra ha già un 4-5× garantito dal solo delta tra prezzo d'acquisto e perizia.</p>
+        <p>Target Piano B — diverso dal fondo: investitori immobiliari puri, developer che cercano complessi in montagna, operatori turistici che vogliono la location senza il rischio di sviluppo, family office con portafoglio immobiliare.</p>
+        <p>Il Piano B si attiva formalmente se si verifica uno dei parametri trigger: fondo non entrato entro NOV26, bubble room non aperte entro AGO27, problemi legali gravi, cordata non completa entro GIU26. <strong>Rendimento Piano B per ogni socio: ~€900K acquisto → €2-3M vendita → 3-4× in 12 mesi.</strong></p>
+      </div>
+      <div class="step-meta">
+        <span class="meta-chi">Chi: FranKi · da MAY26 in parallelo</span>
+        <span class="badge badge-par">In parallelo</span>
+        <span class="badge" style="background:#fff8e1;color:#7c4a00">Piano B</span>
+      </div>
+    </div>
+        </div>
+        <div class="step-date">AGO26-2Q</div>
+      </div>
+      <div class="step-body">
+        <p>Seconda e ultima tranche. Ogni socio versa altri €25K. La HoldCo incassa €150K aggiuntivi per coprire la cauzione e le spese di procedura. Questo versamento avviene quando la due diligence è già conclusa — i soci sanno esattamente cosa si compra. Non è un salto nel buio: è un impegno informato.</p>
+      </div>
+      <div class="step-meta">
+        <span class="meta-chi">Chi: 6 soci</span>
+        <span class="badge badge-cardine">Punto cardine</span>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <div>
+          <div class="step-num">11</div>
+          <div class="step-title">Verifica fideiussione + deposito offerta formale</div>
+        </div>
+        <div class="step-date">SET26-1Q</div>
+      </div>
+      <div class="step-body">
+        <p>L'avvocato chiede formalmente al tribunale se accetta la fideiussione bancaria o assicurativa (~€90K) in sostituzione del cash. Se sì: i €90K restano in cassa. Se no: si versano cash. Con la tranche 2 incassata e la cauzione pronta, si deposita l'offerta formale per l'asta di settembre.</p>
+      </div>
+      <div class="step-meta">
+        <span class="meta-chi">Chi: HoldCo + Avvocato</span>
+        <span class="badge badge-cardine">Punto cardine</span>
+      </div>
+    </div>
+
+    <div class="cash-block">
+      <div class="cash-title">Cash flow HoldCo — Fase 1</div>
+      <div class="cash-row"><span class="cash-label">Tranche 2 cordata (6 × €25K)</span><span class="cash-val pos">+ €150K</span></div>
+      <div class="cash-row"><span class="cash-label">Cauzione asta cash o fideiussione (~€90K)</span><span class="cash-val neg">– €90K</span></div>
+      <div class="cash-row"><span class="cash-label">Due diligence avvocato + geometra + sopralluogo</span><span class="cash-val neg">– €20K</span></div>
+      <div class="cash-row"><span class="cash-label">Agenzia marketing mesi 2–4</span><span class="cash-val neg">– €3K</span></div>
+      <div class="cash-row"><span class="cash-label">Cassa HoldCo pre-asta · SET26-1Q</span><span class="cash-val neu">~€121K</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FASE 2 -->
+<div class="fase">
+  <div class="fase-header f2" onclick="toggle(this)">
+    <div class="fase-num">2</div>
+    <div>
+      <div class="fase-title">Closing Asta + Fondo</div>
+      <div class="fase-time">SET26-2Q → NOV26-1Q</div>
+    </div>
+    <div class="fase-arrow">▶</div>
+  </div>
+  <div class="fase-body">
+
+    <div class="step">
+      <div class="step-header">
+        <div>
+          <div class="step-num">12</div>
+          <div class="step-title">Aggiudicazione asta — ~€900K</div>
+        </div>
+        <div class="step-date">SET26-2Q</div>
+      </div>
+      <div class="step-body">
+        <p>L'asta si tiene al Tribunale di Sulmona. La HoldCo è l'unica offerente preparata — due aste già deserte lo dimostrano. Prezzo di aggiudicazione stimato ~€900K su asset periziato €13,5M. Sconto del 93%. Il tribunale assegna 60-90 giorni per il saldo del residuo.</p>
+        <p>Primo momento di exit possibile per la HoldCo: si potrebbe cedere il diritto di aggiudicazione a un terzo prima di pagare il saldo. Opzione teorica — nella pratica si procede al saldo.</p>
+      </div>
+      <div class="step-meta">
+        <span class="meta-chi">Chi: HoldCo</span>
+        <span class="badge badge-cardine">Punto cardine</span>
+        <span class="badge badge-exit">1° Momento exit possibile</span>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <div>
+          <div class="step-num">13</div>
+          <div class="step-title">Chiudere il fondo istituzionale — da posizione di forza</div>
+        </div>
+        <div class="step-date">OTT26-2Q</div>
+      </div>
+      <div class="step-body">
+        <p>Con l'aggiudicazione in mano la trattativa col fondo cambia tono. Non si vende un'idea — si vende un asset già aggiudicato, con prezzo certo, perizia €13,5M, piano pronto e dati lean test reali (pre-adesioni, lettere di intento corporate, lista d'attesa bubble room).</p>
+        <p>Il fondo entra con <strong>€2,0M</strong> nella SPV. Ottiene il 40% con liquidation preference. Diluzione: FranKi 20%→12%, Affio 20%→12%, ogni socio 10%→6%, Fondo 0%→40%.</p>
+      </div>
+      <div class="step-meta">
+        <span class="meta-chi">Chi: FranKi + Fondo + Avvocato</span>
+        <span class="badge badge-cardine">Punto cardine</span>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <div>
+          <div class="step-num">14</div>
+          <div class="step-title">Saldo prezzo asta + decreto di trasferimento</div>
+        </div>
+        <div class="step-date">NOV26-1Q</div>
+      </div>
+      <div class="step-body">
+        <p>Con i €2M del fondo dentro la SPV si salda il residuo (~€810K dopo cauzione). Si pagano imposte e spese notarili. Il Tribunale emette il decreto di trasferimento. L'ex Soggiorno Montano ENEL è della SPV. Il cantiere può partire.</p>
+      </div>
+      <div class="step-meta"><span class="meta-chi">Chi: SPV + Tribunale</span></div>
+    </div>
+
+    <div class="franki-box">
+      <div class="franki-box-title">Revenue FranKi — Fase 2 · NOV26-1Q</div>
+      <div class="franki-row"><span>Success fee deal origination al closing</span><span class="pos">+ €60K</span></div>
+      <div class="franki-row"><span>Totale incassato FranKi da inizio progetto</span><span class="pos">€85K</span></div>
+    </div>
+
+    <div class="cash-block">
+      <div class="cash-title">Cash flow SPV — Fase 2</div>
+      <div class="cash-row"><span class="cash-label">Ingresso fondo istituzionale</span><span class="cash-val pos">+ €2,0M</span></div>
+      <div class="cash-row"><span class="cash-label">Saldo prezzo asta (€900K – cauzione)</span><span class="cash-val neg">– €810K</span></div>
+      <div class="cash-row"><span class="cash-label">Imposte acquisto + notaio + decreto</span><span class="cash-val neg">– €80K</span></div>
+      <div class="cash-row"><span class="cash-label">Cassa SPV disponibile per cantiere · NOV26-1Q</span><span class="cash-val neu">~€1,15M</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FASE 3 -->
+<div class="fase">
+  <div class="fase-header f3" onclick="toggle(this)">
+    <div class="fase-num">3</div>
+    <div>
+      <div class="fase-title">Cantiere + Prime Revenue</div>
+      <div class="fase-time">NOV26-1Q → MAY28-1Q</div>
+    </div>
+    <div class="fase-arrow">▶</div>
+  </div>
+  <div class="fase-body">
+
+    <div class="step">
+      <div class="step-header">
+        <div>
+          <div class="step-num">15</div>
+          <div class="step-title">Avvio cantiere — 3 palazzine in parallelo</div>
+        </div>
+        <div class="step-date">NOV26-1Q</div>
+      </div>
+      <div class="step-body">
+        <p>Cantiere avviato su 801, 802 e 803 simultaneamente. 18 mesi guadagnati vs piano sequenziale. In parallelo si realizzano le 6 bubble room nel bosco — strutture leggere, pronte in 9 mesi. Budget totale stimato ~€6M.</p>
+      </div>
+      <div class="step-meta"><span class="meta-chi">Chi: General contractor + FranKi</span></div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <div>
+          <div class="step-num">16</div>
+          <div class="step-title">Crowdfunding minibond — raccolta €1,5M</div>
+        </div>
+        <div class="step-date">GIU27-1Q</div>
+      </div>
+      <div class="step-body">
+        <p>Campagna su piattaforma specializzata (es. Walliance). Minibond al 15% annuo — non equity, puro debito. Chi sottoscrive riceve rendimento fisso del 15% per 4 anni poi si riprende il capitale. Il lancio coincide con l'apertura delle bubble room — si ha una storia concreta da raccontare. L'agenzia gestisce la comunicazione della campagna.</p>
+      </div>
+      <div class="step-meta">
+        <span class="meta-chi">Chi: FranKi + piattaforma + Agenzia</span>
+        <span class="badge badge-cond">Se condizioni favorevoli</span>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <div>
+          <div class="step-num">17</div>
+          <div class="step-title">M9 — Le 6 bubble room aprono nel bosco</div>
+        </div>
+        <div class="step-date">AGO27-1Q</div>
+      </div>
+      <div class="step-body">
+        <p>Prima ancora che il cantiere delle palazzine sia finito, il Poglío apre al pubblico. Sei strutture trasparenti nel bosco. Jacuzzi privata. Telescopio. Cielo buio. €450 a notte. Primo revenue certificato — run rate €594K/anno. Le immagini diventano il contenuto che attira i 140 soci del club. L'agenzia lancia la campagna di acquisizione soci in grande.</p>
+        <p>Secondo momento di exit possibile: con revenue reale il valore è già significativamente superiore all'investimento iniziale.</p>
+      </div>
+      <div class="step-meta">
+        <span class="meta-chi">Chi: Gestore operativo + Agenzia</span>
+        <span class="badge badge-cardine">Punto cardine</span>
+        <span class="badge badge-exit">2° Momento exit possibile</span>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <div>
+          <div class="step-num">18</div>
+          <div class="step-title">Raccolta quote soci club — 140 × €25K</div>
+        </div>
+        <div class="step-date">AGO27-1Q</div>
+      </div>
+      <div class="step-body">
+        <p>Si vendono le membership del club privato. 140 posti, chiusura permanente. Quota: €25K una tantum + €10K/anno. La raccolta totale di €3,5M non è capitale di rischio — è revenue operativa prepagata che finanzia il completamento del cantiere. Chi aveva lasciato la pre-adesione nel lean test è il primo a essere contattato.</p>
+      </div>
+      <div class="step-meta"><span class="meta-chi">Chi: FranKi + Gestore + Agenzia</span></div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <div>
+          <div class="step-num">19</div>
+          <div class="step-title">PNRR M1C3 Turismo — domanda</div>
+        </div>
+        <div class="step-date">AGO27-2Q</div>
+      </div>
+      <div class="step-body">
+        <p>Domanda per contributo PNRR turismo sostenibile e rigenerazione. Contributo stimato €2,1M. I tempi sono incerti — non è nel piano base, è un acceleratore se arriva. Il Poglío è candidato ideale: area interna Appennino, storia sociale ENEL, componente ESG strutturale.</p>
+      </div>
+      <div class="step-meta">
+        <span class="meta-chi">Chi: FranKi + consulente PNRR</span>
+        <span class="badge badge-cond">Condizionale</span>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <div>
+          <div class="step-num">20</div>
+          <div class="step-title">M18 — Wellness hub aperto</div>
+        </div>
+        <div class="step-date">MAY28-1Q</div>
+      </div>
+      <div class="step-body">
+        <p>Sauna nel bosco, cold plunge, breathwork, sala eventi 80 pax. Il cuore del club è operativo. Partono le prime prenotazioni corporate retreat — €75K a evento, 10 eventi/anno, €750K revenue aggiuntiva. I soci fondatori iniziano a usufruire dei servizi.</p>
+      </div>
+      <div class="step-meta"><span class="meta-chi">Chi: Gestore operativo</span></div>
+    </div>
+
+    <div class="franki-box">
+      <div class="franki-box-title">Revenue FranKi — Fase 3 · NOV26→MAY28</div>
+      <div class="franki-row"><span>Asset management fee (€170K/anno · ~18 mesi)</span><span class="pos">+ €255K</span></div>
+      <div class="franki-row"><span>Totale incassato FranKi a MAY28-1Q</span><span class="pos">~€340K</span></div>
+    </div>
+
+    <div class="cash-block">
+      <div class="cash-title">Cash flow SPV — Fase 3</div>
+      <div class="cash-row"><span class="cash-label">Crowdfunding minibond</span><span class="cash-val pos">+ €1,5M</span></div>
+      <div class="cash-row"><span class="cash-label">Quote soci club (140 × €25K)</span><span class="cash-val pos">+ €3,5M</span></div>
+      <div class="cash-row"><span class="cash-label">Revenue bubble room AGO27–MAY28</span><span class="cash-val pos">+ €594K</span></div>
+      <div class="cash-row"><span class="cash-label">Cantiere 3 palazzine + bubble room</span><span class="cash-val neg">– €6,0M</span></div>
+      <div class="cash-row"><span class="cash-label">Gestione + interessi minibond + fee FranKi</span><span class="cash-val neg">– €767K</span></div>
+      <div class="cash-row"><span class="cash-label">Cassa SPV a MAY28-1Q</span><span class="cash-val neu">~€400K</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FASE 4 -->
+<div class="fase">
+  <div class="fase-header f4" onclick="toggle(this)">
+    <div class="fase-num">4</div>
+    <div>
+      <div class="fase-title">Regime Completo</div>
+      <div class="fase-time">AGO28-1Q → MAY29-1Q</div>
+    </div>
+    <div class="fase-arrow">▶</div>
+  </div>
+  <div class="fase-body">
+
+    <div class="step">
+      <div class="step-header">
+        <div>
+          <div class="step-num">21</div>
+          <div class="step-title">M21 — Soft opening palazzina 801 · 22 camere</div>
+        </div>
+        <div class="step-date">AGO28-1Q</div>
+      </div>
+      <div class="step-body">
+        <p>La prima palazzina è pronta. 22 camere aperte, i soci fondatori possono dormire al Poglío. Run rate €2,9M/anno. Prima rendicontazione formale a tutti i soci della cordata — numeri reali, non proiezioni. Terzo momento di exit possibile — valutazione stimata €15-18M.</p>
+      </div>
+      <div class="step-meta">
+        <span class="meta-chi">Chi: Gestore</span>
+        <span class="badge badge-cardine">Punto cardine</span>
+        <span class="badge badge-exit">3° Momento exit possibile</span>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <div>
+          <div class="step-num">22</div>
+          <div class="step-title">M30 — Pieno regime · 68 camere · 140 soci · €7M revenue</div>
+        </div>
+        <div class="step-date">MAY29-1Q</div>
+      </div>
+      <div class="step-body">
+        <p>Tutte e tre le palazzine operative. 68 camere, 140 soci fondatori, 6 bubble room, wellness hub, corporate retreat a pieno ritmo. Revenue €7,0M — EBITDA €2,3M certificato. La società vale tra €23M e €37M (multiplo 10-16× EBITDA). Quarto e migliore momento di exit — massimo valore, numeri verificabili, storia completa.</p>
+      </div>
+      <div class="step-meta">
+        <span class="meta-chi">Chi: Gestore + FranKi</span>
+        <span class="badge badge-cardine">Punto cardine</span>
+        <span class="badge badge-exit">4° Momento exit — il migliore</span>
+      </div>
+    </div>
+
+    <div class="franki-box">
+      <div class="franki-box-title">Revenue FranKi — Fase 4 · MAY28→MAY29</div>
+      <div class="franki-row"><span>Asset management fee (€170K/anno · 12 mesi)</span><span class="pos">+ €170K</span></div>
+      <div class="franki-row"><span>Totale incassato FranKi a MAY29-1Q</span><span class="pos">~€510K</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FASE 5 -->
+<div class="fase">
+  <div class="fase-header f5" onclick="toggle(this)">
+    <div class="fase-num">5</div>
+    <div>
+      <div class="fase-title">Exit</div>
+      <div class="fase-time">NOV29-1Q → NOV30-1Q</div>
+    </div>
+    <div class="fase-arrow">▶</div>
+  </div>
+  <div class="fase-body">
+
+    <div class="step">
+      <div class="step-header">
+        <div>
+          <div class="step-num">23</div>
+          <div class="step-title">Ingaggiare advisor M&A specializzato in hospitality</div>
+        </div>
+        <div class="step-date">NOV29-1Q</div>
+      </div>
+      <div class="step-body">
+        <p>Advisor specializzato in M&A nel settore hospitality. Prepara il dossier di vendita con EBITDA certificato, occupancy storica, lista 140 soci, contratti in essere. Target compratori: catene hospitality, family office leisure, fondi secondari, fondi infrastrutturali ESG.</p>
+      </div>
+      <div class="step-meta"><span class="meta-chi">Chi: FranKi + advisor M&A</span></div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <div>
+          <div class="step-num">24</div>
+          <div class="step-title">Processo di vendita</div>
+        </div>
+        <div class="step-date">NOV29 → LUG30</div>
+      </div>
+      <div class="step-body">
+        <p>6-12 mesi di processo. L'advisor contatta i potenziali compratori, raccoglie le lettere di intento, gestisce la due diligence degli acquirenti e chiude la trattativa. Il drag-along garantisce che tutti i soci vendano insieme allo stesso acquirente. Prezzo minimo accettabile: €23M di valutazione totale.</p>
+      </div>
+      <div class="step-meta"><span class="meta-chi">Chi: FranKi + advisor + Fondo</span></div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">
+        <div>
+          <div class="step-num">25</div>
+          <div class="step-title">M48 — Closing exit · tutti escono · distribuzione proventi</div>
+        </div>
+        <div class="step-date">NOV30-1Q</div>
+      </div>
+      <div class="step-body">
+        <p>Si firma. I soldi vengono distribuiti nell'ordine: rimborso minibond €2,4M (capitale + 4 anni interessi), liquidation preference fondo €2M, residuo distribuito pro-quota. FranKi trattiene la success fee del 5% sulla plusvalenza netta di Affio e di ogni socio.</p>
+      </div>
+      <div class="step-meta">
+        <span class="meta-chi">Chi: Tutti · NOV30-1Q</span>
+        <span class="badge badge-exit">Exit finale</span>
+      </div>
+    </div>
+
+    <div class="franki-box">
+      <div class="franki-box-title">Revenue FranKi totale — riepilogo completo a NOV30-1Q</div>
+      <div class="franki-row"><span>Margine cessione quote · GIU26-1Q</span><span class="pos">€25K</span></div>
+      <div class="franki-row"><span>Success fee deal origination · NOV26-1Q</span><span class="pos">€60K</span></div>
+      <div class="franki-row"><span>Asset management fee 4 anni</span><span class="pos">€680K</span></div>
+      <div class="franki-row"><span>Success fee exit 5% su Affio + 6 soci</span><span class="pos">~€450K</span></div>
+      <div class="franki-row"><span>Quota equity exit (12% di €18,6M residuo)</span><span class="pos">€2,23M</span></div>
+      <div class="franki-row"><span><strong>Totale FranKi sull'intera operazione</strong></span><span class="pos"><strong>~€3,44M</strong></span></div>
+    </div>
+
+    <div class="exit-box">
+      <div class="cash-title" style="margin-bottom:12px">Distribuzione exit · scenario base · €23M · NOV30-1Q</div>
+      <div class="exit-row"><span>Rimborso minibond + 4 anni interessi 15%</span><span style="color:var(--rosso)">– €2,4M</span></div>
+      <div class="exit-row"><span>Liquidation preference fondo</span><span style="color:var(--rosso)">– €2,0M</span></div>
+      <div class="exit-row"><span>Residuo da distribuire</span><span>€18,6M</span></div>
+      <div class="exit-row"><span>Fondo istituzionale (40% + preference)</span><span>€9,44M · 4,7× il capitale</span></div>
+      <div class="exit-row"><span>FranKi (12% + fee + success fee)</span><span style="color:var(--verde)">~€3,44M totali</span></div>
+      <div class="exit-row"><span>Affio (12% — zero investito)</span><span style="color:var(--verde)">€2,23M</span></div>
+      <div class="exit-row"><span>Ogni socio cordata (6% · su €50K investiti)</span><span style="color:var(--verde)">~€1,12M · 22× il capitale</span></div>
+    </div>
+
+  </div>
+</div>
+
+<div class="footer">
+  <div class="fk-logo"><span class="fran">Fran</span><span class="ki">Ki</span></div>
+  <p>Documento interno riservato · FranKi Studio (Avre Srl) · Napoli · Aprile 2026<br>Punto zero APR26-2Q · Exit NOV30-1Q</p>
+</div>
+
+<script>
+function toggle(header){
+  const arrow=header.querySelector('.fase-arrow');
+  const body=header.nextElementSibling;
+  const isOpen=body.classList.contains('open');
+  body.classList.toggle('open',!isOpen);
+  arrow.classList.toggle('open',!isOpen);
+}
+</script>
+</body>
+</html>

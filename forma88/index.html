@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FORMA88 - AI Video Campaign Tracker</title>
+<style>
+:root{
+  --navy:#0D1B2A;--gold:#B8860B;--gold3:#F5C518;
+  --goldpale:#FDF8E8;--goldborder:rgba(212,160,23,.25);
+  --white:#FFFFFF;--off:#FAFAF7;--surface:#F3F1EA;
+  --text:#0F172A;--muted:#475569;--subtle:#94A3B8;--border:#E2E8F0;
+  --green:#059669;--r8:8px;--r12:12px;--r16:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+     background:var(--surface);color:var(--text);min-height:100vh;font-size:18px;line-height:1.6}
+.app{max-width:880px;margin:0 auto;padding:1.5rem 1rem 4rem}
+.hdr{background:var(--navy);border-radius:var(--r16);padding:1.25rem 1.5rem;margin-bottom:1rem;
+     display:flex;align-items:center;justify-content:space-between;border:1px solid #1E3048}
+.hdr-left{display:flex;align-items:center;gap:1rem}
+.hdr-bar{width:4px;height:48px;background:var(--gold);border-radius:2px;flex-shrink:0}
+.hdr-eyebrow{font-size:12px;letter-spacing:3px;color:var(--gold);opacity:.75;text-transform:uppercase;margin-bottom:2px}
+.hdr-title{font-size:22px;font-weight:600;color:var(--white)}
+.hdr-sub{font-size:15px;color:var(--subtle);margin-top:1px}
+.hdr-right{text-align:right}
+.hdr-pct{font-size:32px;font-weight:700;color:var(--gold3);line-height:1}
+.hdr-label{font-size:12px;color:var(--subtle);margin-top:3px;letter-spacing:.5px}
+.tabs{display:flex;gap:6px;margin-bottom:1rem}
+.tab{flex:1;padding:.55rem .5rem;border:1px solid var(--border);border-radius:var(--r8);
+     background:var(--white);font-size:18px;cursor:pointer;text-align:center;
+     transition:all .15s;color:var(--muted);font-family:inherit;font-weight:400}
+.tab.active{background:var(--navy);color:var(--gold3);border-color:var(--navy);font-weight:500}
+.tab:hover:not(.active){background:var(--off)}
+.section{display:none}.section.visible{display:block}
+/* GUIDA */
+.g-hero{background:var(--navy);border-radius:var(--r16);padding:1.5rem;margin-bottom:1rem;border:1px solid #1E3048}
+.g-head{display:flex;align-items:center;gap:.75rem;margin-bottom:1rem}
+.g-bar{width:5px;height:52px;background:var(--gold);border-radius:3px;flex-shrink:0}
+.g-eyebrow{font-size:12px;letter-spacing:3px;color:var(--gold);opacity:.8;text-transform:uppercase;margin-bottom:3px}
+.g-title{font-size:22px;font-weight:600;color:var(--white)}
+.g-text{font-size:18px;color:var(--subtle);line-height:1.65}
+.g-text strong{color:var(--gold3)}
+.g-card{background:var(--white);border:1px solid var(--border);border-radius:var(--r16);padding:1.25rem;margin-bottom:.75rem}
+.g-card-h{font-size:22px;font-weight:600;color:var(--text);margin-bottom:1rem;padding-bottom:.6rem;border-bottom:2px solid var(--goldpale)}
+.g-row{display:flex;gap:.85rem;padding:.75rem 0;border-bottom:1px solid var(--off)}
+.g-row:last-child{border-bottom:none}
+.g-tag{min-width:130px;padding:.35rem .7rem;border-radius:var(--r8);font-size:15px;font-weight:600;text-align:center;align-self:flex-start;flex-shrink:0}
+.g-desc{font-size:18px;color:var(--text);margin-bottom:.3rem}
+.g-use{font-size:15px;color:var(--muted);font-style:italic}
+.g-step{display:flex;align-items:flex-start;gap:.85rem;padding:.65rem 0;border-bottom:1px solid var(--off)}
+.g-step:last-child{border-bottom:none}
+.g-num{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;flex-shrink:0;color:#fff}
+.g-step-h{font-size:18px;font-weight:600;color:var(--text);margin-bottom:2px}
+.g-step-p{font-size:15px;color:var(--muted)}
+.g-badges{display:flex;gap:.75rem;flex-wrap:wrap}
+.g-badge{flex:1;min-width:180px;padding:.85rem;border-radius:var(--r12);border-left:4px solid}
+.g-badge-h{font-size:15px;font-weight:700;margin-bottom:.3rem}
+.g-badge-p{font-size:15px;color:var(--text)}
+.g-dark{background:var(--navy);border-radius:var(--r16);padding:1.25rem;border:1px solid #1E3048;margin-bottom:.75rem}
+.g-dark .g-card-h{color:var(--gold3);border-bottom-color:#1E3048}
+.g-srow{padding:.65rem 0;border-bottom:1px solid #1E3048}
+.g-srow:last-child{border-bottom:none}
+.g-sh{font-size:15px;font-weight:600;margin-bottom:.3rem}
+.g-sp{font-size:15px;color:var(--subtle);line-height:1.55}
+.g-sp strong{color:var(--gold3)}
+.g-tip{padding-top:.85rem;font-size:15px;color:var(--subtle);font-style:italic}
+/* PANORAMICA */
+.ov-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;margin-bottom:.75rem}
+.ov-card{background:var(--white);border:1px solid var(--border);border-radius:var(--r8);padding:.7rem;text-align:center}
+.ov-pct{font-size:32px;font-weight:700;line-height:1}
+.ov-label{font-size:12px;color:var(--muted);margin-top:3px;line-height:1.35}
+.phase-card{background:var(--white);border:1px solid var(--border);border-radius:var(--r16);padding:1.1rem 1.25rem;margin-bottom:.75rem}
+.phase-head{display:flex;align-items:center;gap:.75rem;margin-bottom:.75rem}
+.ph-num{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;flex-shrink:0}
+.ph-info{flex:1}
+.ph-name{font-size:18px;font-weight:600;color:var(--text)}
+.ph-weeks{font-size:15px;color:var(--muted);margin-top:1px}
+.ph-count{font-size:15px;font-weight:600}
+.progress-bar{height:4px;background:var(--border);border-radius:2px;margin-bottom:.75rem;overflow:hidden}
+.progress-fill{height:100%;border-radius:2px;transition:width .5s}
+.ph-obj{font-size:15px;color:var(--muted);margin-bottom:.75rem;line-height:1.55;padding:.6rem .75rem;background:var(--off);border-radius:var(--r8);border-left:3px solid var(--gold)}
+.field-label{font-size:12px;font-weight:600;color:var(--subtle);margin-bottom:4px;text-transform:uppercase;letter-spacing:.7px}
+textarea{width:100%;border:1px solid var(--border);border-radius:var(--r8);padding:8px 10px;font-size:18px;font-family:inherit;resize:vertical;background:var(--off);color:var(--text);min-height:60px;transition:border-color .15s}
+textarea:focus{outline:none;border-color:var(--gold);background:var(--white)}
+.kpi-section{background:var(--white);border:1px solid var(--border);border-radius:var(--r16);padding:1.1rem 1.25rem;margin-top:.5rem}
+.kpi-title{font-size:18px;font-weight:600;color:var(--text);margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+.kpi-badge{font-size:12px;background:var(--goldpale);color:var(--gold);border:1px solid var(--goldborder);padding:2px 8px;border-radius:10px;font-weight:600}
+.kpi-row{display:flex;align-items:flex-start;gap:.6rem;padding:.5rem 0;border-bottom:1px solid var(--off)}
+.kpi-row:last-child{border-bottom:none;padding-bottom:0}
+.kpi-main{flex:1}
+.kpi-name{font-size:18px;color:var(--text)}
+.kpi-action{font-size:15px;color:var(--subtle);font-style:italic;margin-top:2px}
+.kpi-thr{font-size:15px;color:var(--muted);min-width:100px;text-align:right;padding-top:2px}
+.kpi-inp{width:78px;border:1px solid var(--border);border-radius:var(--r8);padding:4px 8px;font-size:15px;text-align:center;font-family:inherit;background:var(--off);color:var(--text)}
+.kpi-inp:focus{outline:none;border-color:var(--gold)}
+.kpi-dot{width:10px;height:10px;border-radius:50%;background:var(--border);flex-shrink:0;margin-top:6px;transition:background .3s}
+.kpi-dot.on{background:var(--green)}
+/* SETTIMANE */
+.phase-sel{display:flex;gap:5px;margin-bottom:.75rem}
+.p-btn{flex:1;padding:.4rem .3rem;border:1px solid var(--border);border-radius:var(--r8);background:var(--white);font-size:15px;cursor:pointer;text-align:center;color:var(--muted);font-family:inherit;line-height:1.35;transition:all .15s;min-width:0}
+.p-btn.active{background:var(--navy);color:var(--gold3);border-color:var(--navy)}
+.p-btn:hover:not(.active){background:var(--off)}
+.week-sel{display:flex;gap:4px;margin-bottom:.75rem;flex-wrap:wrap}
+.w-btn{padding:.3rem .65rem;border:1px solid var(--border);border-radius:var(--r8);background:var(--white);font-size:15px;cursor:pointer;color:var(--muted);font-family:inherit;transition:all .15s}
+.w-btn.active{background:var(--gold);color:var(--white);border-color:var(--gold)}
+.week-banner{font-size:18px;font-weight:600;padding:.45rem .85rem;border-radius:var(--r8);margin-bottom:.6rem;border-left:4px solid}
+.day-block{margin-bottom:.4rem;border:1px solid var(--border);border-radius:var(--r12);overflow:hidden}
+.day-head{display:flex;align-items:center;gap:.5rem;padding:.65rem .85rem;cursor:pointer;background:var(--off);user-select:none;transition:background .1s}
+.day-head:hover{background:#EEECEA}
+.day-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.day-title{font-size:18px;font-weight:600;flex:1;color:var(--text)}
+.day-sub{font-size:15px;color:var(--muted)}
+.day-stat{font-size:15px;color:var(--subtle)}
+.day-arrow{font-size:12px;color:var(--subtle);transition:transform .2s;margin-left:2px;font-weight:700}
+.day-arrow.open{transform:rotate(90deg)}
+.day-body{display:none;padding:.5rem .85rem;background:var(--white)}
+.day-body.open{display:block}
+.task-row{display:flex;align-items:flex-start;gap:.5rem;padding:.45rem 0;border-bottom:1px solid var(--off)}
+.task-row:last-child{border-bottom:none}
+.task-cb{width:17px;height:17px;accent-color:var(--gold);flex-shrink:0;margin-top:4px;cursor:pointer}
+.task-main{flex:1;min-width:0}
+.task-text{font-size:18px;color:var(--text);cursor:pointer;line-height:1.45}
+.task-text.done{text-decoration:line-through;color:var(--subtle)}
+.task-hint{font-size:15px;color:var(--subtle);margin-top:2px;font-style:italic;line-height:1.4}
+.priority{display:inline-block;font-size:12px;font-weight:600;padding:1px 7px;border-radius:10px;margin-right:5px;vertical-align:middle}
+.p-bloccante{background:#FCEBEB;color:#A32D2D}
+.p-importante{background:#FDF8E8;color:#854F0B}
+.note-btn{padding:3px 8px;border:1px solid var(--border);border-radius:6px;font-size:12px;cursor:pointer;color:var(--subtle);background:transparent;flex-shrink:0;margin-top:3px;transition:all .1s;font-family:inherit}
+.note-btn:hover,.note-btn.active{background:var(--goldpale);border-color:var(--gold);color:var(--gold)}
+.task-note{margin-top:5px;display:none}
+.task-note.open{display:block}
+.task-note textarea{min-height:48px;font-size:15px;background:var(--goldpale);border-color:var(--goldborder)}
+/* NOTE */
+.notes-2col{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:.75rem}
+.note-card{background:var(--white);border:1px solid var(--border);border-radius:var(--r12);padding:1rem}
+.nc-title{font-size:18px;font-weight:600;color:var(--text);margin-bottom:2px}
+.nc-sub{font-size:15px;color:var(--muted);margin-bottom:.5rem}
+.note-card textarea{min-height:140px}
+.note-shared{background:var(--white);border:1px solid var(--border);border-radius:var(--r12);padding:1rem;margin-bottom:.75rem}
+.note-shared textarea{min-height:110px}
+.note-tip{background:var(--navy);border-radius:var(--r12);padding:.9rem 1rem}
+.note-tip-h{font-size:18px;font-weight:600;color:var(--gold3);margin-bottom:.4rem}
+.note-tip-p{font-size:15px;color:var(--subtle);line-height:1.6}
+.note-tip-p strong{color:var(--gold3)}
+@media(max-width:560px){
+  .ov-grid{grid-template-columns:repeat(2,1fr)}
+  .notes-2col{grid-template-columns:1fr}
+  .phase-sel{flex-wrap:wrap}
+  .p-btn{min-width:calc(50% - 3px)}
+  .g-badges{flex-direction:column}
+}
+</style>
+</head>
+<body>
+<div class="app">
+<div class="hdr">
+  <div class="hdr-left">
+    <div class="hdr-bar"></div>
+    <div>
+      <div class="hdr-eyebrow">Forma88 &middot; Franki Studio &times; BEW Design</div>
+      <div class="hdr-title">AI Video Campaign Tracker</div>
+      <div class="hdr-sub">Roadmap 90 giorni &middot; Aprile 2026</div>
+    </div>
+  </div>
+  <div class="hdr-right">
+    <div class="hdr-pct" id="hpct">&mdash;</div>
+    <div class="hdr-label">task completati</div>
+  </div>
+</div>
+<div class="tabs">
+  <button class="tab active" id="tab-guida"     onclick="switchTab('guida')">Come si usa</button>
+  <button class="tab"        id="tab-settimane" onclick="switchTab('settimane')">Settimane</button>
+  <button class="tab"        id="tab-panoramica" onclick="switchTab('panoramica')">Panoramica 90gg</button>
+  <button class="tab"        id="tab-note"      onclick="switchTab('note')">Note</button>
+</div>
+<div id="sec-guida" class="section visible">
+  <div class="g-hero">
+    <div class="g-head"><div class="g-bar"></div><div><div class="g-eyebrow">Guida rapida</div><div class="g-title">Come usare questo tracker</div></div></div>
+    <div class="g-text">Questo strumento accompagna <strong>Franki</strong> e <strong>Gege</strong> lungo i 90 giorni della campagna AI Video FORMA88, dalla prima infrastruttura al primo cliente pagante. Ogni checkbox spuntato aggiorna il contatore in alto a destra.</div>
+  </div>
+  <div class="g-card">
+    <div class="g-card-h">Le 4 sezioni del tracker</div>
+    <div class="g-row">
+      <div class="g-tag" style="background:#FDF8E8;color:#854F0B">Come si usa</div>
+      <div><div class="g-desc">Questa pagina. Spiega il funzionamento del tracker, le etichette e come condividere il file.</div><div class="g-use">Come usarla: leggila la prima volta, poi non serve piu tornarci.</div></div>
+    </div>
+    <div class="g-row">
+      <div class="g-tag" style="background:#FDF8E8;color:#B8860B">Panoramica 90gg</div>
+      <div><div class="g-desc">La mappa strategica. Mostra le 4 fasi con avanzamento percentuale, note di fase e tracker KPI della settimana 1.</div><div class="g-use">Come usarla: aprila ogni lunedi per il quadro generale. Inserisci i valori KPI dopo il lancio del reel.</div></div>
+    </div>
+    <div class="g-row">
+      <div class="g-tag" style="background:#E1F5EE;color:#0F6E56">Settimane</div>
+      <div><div class="g-desc">Il cuore operativo. Naviga per fase e settimana. Ogni giorno e espandibile con task, checkbox e note individuali.</div><div class="g-use">Come usarla: aprila ogni mattina, espandi il giorno corrente e spunta i task man mano.</div></div>
+    </div>
+    <div class="g-row">
+      <div class="g-tag" style="background:#EEEDFE;color:#3C3489">Note</div>
+      <div><div class="g-desc">Tre aree libere: Franki, Gege e Note condivise. Per appunti, log call, decisioni, prossimi passi.</div><div class="g-use">Come usarla: compilala dopo ogni call di allineamento. Scrivi liberamente, senza struttura.</div></div>
+    </div>
+  </div>
+  <div class="g-card">
+    <div class="g-card-h">Come funzionano i task</div>
+    <div class="g-step"><div class="g-num" style="background:#B8860B">1</div><div><div class="g-step-h">Apri il giorno</div><div class="g-step-p">Nella sezione Settimane, clicca sulla barra di un giorno per espandere i task. I giorni con task completati si aprono automaticamente.</div></div></div>
+    <div class="g-step"><div class="g-num" style="background:#1D9E75">2</div><div><div class="g-step-h">Spunta il checkbox</div><div class="g-step-p">Clicca sul quadratino a sinistra, oppure direttamente sul testo del task. Il testo viene barrato e il contatore in alto si aggiorna.</div></div></div>
+    <div class="g-step"><div class="g-num" style="background:#7F77DD">3</div><div><div class="g-step-h">Aggiungi una nota al task</div><div class="g-step-p">Clicca il bottone <strong>nota</strong> a destra di ogni task. Scrivi aggiornamenti, blocchi, link. Il bottone diventa dorato quando contiene testo.</div></div></div>
+    <div class="g-step"><div class="g-num" style="background:#D97706">4</div><div><div class="g-step-h">Tutto si salva automaticamente</div><div class="g-step-p">Non esiste un bottone Salva. Ogni checkbox e ogni nota vengono salvati nel browser nel momento in cui li tocchi. Riapri il file domani: trovi tutto invariato.</div></div></div>
+  </div>
+  <div class="g-card">
+    <div class="g-card-h">Le etichette sui task</div>
+    <div class="g-badges">
+      <div class="g-badge" style="background:#FCEBEB;border-color:#A32D2D"><div class="g-badge-h" style="color:#A32D2D">BLOCCANTE</div><div class="g-badge-p">Blocca tutto quello che viene dopo. Va completato prima di procedere. Non si salta.</div></div>
+      <div class="g-badge" style="background:#FDF8E8;border-color:#854F0B"><div class="g-badge-h" style="color:#854F0B">IMPORTANTE</div><div class="g-badge-p">Alta priorita nella giornata. Non blocca in senso assoluto, ma ha un impatto significativo sul risultato.</div></div>
+      <div class="g-badge" style="background:var(--off);border-color:var(--border)"><div class="g-badge-h" style="color:var(--muted)">Senza etichetta</div><div class="g-badge-p">Task standard da completare nel corso della giornata o settimana, secondo le priorita del momento.</div></div>
+    </div>
+  </div>
+  <div class="g-dark">
+    <div class="g-card-h" style="color:var(--gold3);border-bottom-color:#1E3048">Come condividere il tracker con Gege</div>
+    <div class="g-srow"><div class="g-sh" style="color:#1D9E75">Opzione 1 &mdash; Netlify Drop (consigliata)</div><div class="g-sp">Vai su <strong>netlify.com/drop</strong>, trascina il file HTML nella pagina. In 30 secondi ottieni un URL pubblico gratuito. Nota: ogni browser salva i propri dati localmente, non si sincronizzano automaticamente.</div></div>
+    <div class="g-srow"><div class="g-sh" style="color:#7F77DD">Opzione 2 &mdash; Device condiviso</div><div class="g-sp">Apri il file sullo stesso computer o tablet. Tutti vedono e modificano gli stessi dati. La soluzione piu semplice per un tracking veramente unificato.</div></div>
+    <div class="g-srow"><div class="g-sh" style="color:#B8860B">Opzione 3 &mdash; Aggiornamento in call</div><div class="g-sp">Ogni lunedi in call uno dei due condivide lo schermo e si aggiornano i task insieme. Semplice, nessuna configurazione, funziona sempre.</div></div>
+    <div class="g-tip">I dati vengono salvati localmente nel browser. Questo e un file HTML statico, non un servizio cloud.</div>
+  </div>
+</div>
+<div id="sec-panoramica" class="section"></div>
+<div id="sec-settimane" class="section"></div>
+<div id="sec-note" class="section"></div>
+</div>
+<script>
+var PCOL={p0:{bg:"#FDF8E8",txt:"#854F0B",fill:"#B8860B"},p1:{bg:"#E1F5EE",txt:"#0F6E56",fill:"#1D9E75"},p2:{bg:"#EEEDFE",txt:"#3C3489",fill:"#7F77DD"},p3:{bg:"#EAF3DE",txt:"#3B6D11",fill:"#639922"}};
+var PHASES=[
+{id:"p0",num:"0",title:"Fase 0 Infrastruttura",weeks:"Settimana 1",obj:"Creare la base digitale minima: BEW Design aggiornato, landing page attiva, profili FORMA88 su Instagram e LinkedIn. Senza questa base ogni pubblicazione e incompleta.",weeks_data:[{id:"w1",title:"Settimana 1",days:[
+{id:"lun",title:"Lunedi",sub:"BEW Instagram",tasks:[
+{id:"t1",text:"Aggiorna la BIO Instagram di BEW Design",p:"bloccante",hint:"Inserisci: cosa fai, AI video per brand, link verso landing"},
+{id:"t2",text:"Cambia il link in bio verso la landing o Linktree",p:"bloccante",hint:"Se landing non e pronta: Linktree con solo email di contatto"},
+{id:"t3",text:"Controlla e aggiorna gli highlights Instagram",hint:"Elimina vecchi contenuti, tieni solo qualita"},
+{id:"t4",text:"Cattura 3 screenshot del video come anteprima per i post"},
+]},
+{id:"mar",title:"Martedi",sub:"Landing page",tasks:[
+{id:"t1",text:"Crea landing page su bew-studio.com/ai-video",p:"bloccante",hint:"Se sito non esiste: Carrd.co o Framer in 2 ore, gratis o quasi"},
+{id:"t2",text:"Inserisci: headline, video embedded, 3 bullet vantaggi, form contatto",hint:"Headline: Campagne video da brand. Budget da PMI."},
+{id:"t3",text:"Integra il form con Tally.so o Google Sheets",hint:"Tally.so e gratuito, si integra in 10 minuti"},
+{id:"t4",text:"Aggiorna il link in bio con URL definitivo della landing",p:"importante"},
+]},
+{id:"mer",title:"Mercoledi",sub:"Profili FORMA88",tasks:[
+{id:"t1",text:"Crea profilo Instagram @forma88official",p:"bloccante",hint:"Bio: Strategia e Esecuzione. Un sistema, non due agenzie. 65+23=88"},
+{id:"t2",text:"Crea pagina LinkedIn FORMA88",p:"bloccante",hint:"Tagline: Diamo forma alle idee. Forma ai risultati."},
+{id:"t3",text:"Crea profilo LinkedIn personale Gege se non esiste",p:"importante",hint:"Headline: AI Video Production e Digital Marketing BEW Design FORMA88"},
+{id:"t4",text:"Crea profilo LinkedIn personale Franki se non esiste",hint:"Headline: Strategic Consultant e Venture Builder Franki Studio FORMA88"},
+{id:"t5",text:"Foto profilo e copertina su tutti i profili",hint:"Anche placeholder con Canva: non devono essere vuoti al lancio"},
+]},
+{id:"gio",title:"Giovedi",sub:"Contenuti pronti",tasks:[
+{id:"t1",text:"Scrivi la caption del reel AI video con Claude",p:"bloccante",hint:"Usa il prompt del documento strategia. Carica il Metodo Brief FORMA88."},
+{id:"t2",text:"Scrivi 2 varianti alternative della caption",hint:"A: tecnica sul dietro le quinte. B: emozionale sul risultato."},
+{id:"t3",text:"Prepara il post LinkedIn di lancio, diverso da Instagram",hint:"Piu lungo, educativo: costi reali, differenza con shooting tradizionale"},
+{id:"t4",text:"Prepara 3-4 Stories per il giorno del lancio",hint:"Dietro le quinte e confronto costi e CTA verso landing"},
+]},
+{id:"ven",title:"Venerdi LANCIO",sub:"Pubblica tutto",tasks:[
+{id:"t1",text:"Pubblica il reel su Instagram BEW Design con caption validata",p:"bloccante",hint:"Orario: 18:00-20:00. Non pubblicare di mattina."},
+{id:"t2",text:"Pubblica le Stories su BEW subito dopo il reel",hint:"Mantieni il momentum: dietro le quinte e CTA landing"},
+{id:"t3",text:"Pubblica il post LinkedIn su FORMA88 e profilo personale Gege"},
+{id:"t4",text:"Rispondi a TUTTI i commenti e DM entro 2 ore",p:"importante",hint:"Ogni commento risposto nelle prime 2 ore aumenta la reach"},
+{id:"t5",text:"Invia il link del reel ai contatti piu caldi via WhatsApp o email",hint:"Chiedi di condividere, non solo di mettere like"},
+]},
+{id:"wknd",title:"Weekend",sub:"Misura",tasks:[
+{id:"t1",text:"Leggi le metriche del reel a 48 ore: view rate, clic, DM ricevuti",hint:"Screenshot di tutto: serve per decidere il passo successivo"},
+{id:"t2",text:"Raccogli tutti i DM e commenti di interesse in una lista"},
+{id:"t3",text:"Porta i dati a Claude per la fase Learn",hint:"Prompt: Questi sono i dati del reel a 48 ore. Cosa mi dicono?"},
+]},
+]}]},
+{id:"p1",num:"1",title:"Fase 1 Lancio organico",weeks:"Settimane 2-4",obj:"Pubblicare il video con strategia e misurare la risposta organica. Soglia: 5 DM di interesse reale. Solo dopo si investe in advertising paid.",weeks_data:[
+{id:"w2",title:"Settimana 2",days:[{id:"all",title:"Task settimana 2",sub:"Contenuto e community",tasks:[
+{id:"t1",text:"Analizza metriche settimana 1 con Claude: fase Learn",p:"bloccante"},
+{id:"t2",text:"Pubblica carosello confronto costi shooting vs AI su LinkedIn FORMA88"},
+{id:"t3",text:"Pubblica Stories dietro le quinte del processo AI video",hint:"Video del processo: da prompt a video finito."},
+{id:"t4",text:"Aggiorna bio FORMA88 Instagram con prime stories in evidenza"},
+{id:"t5",text:"Rispondi a tutti i DM, proponi call gratuita 15 min ai lead caldi",p:"importante"},
+{id:"t6",text:"Definisci ipotesi e KPI per la settimana 3"},
+]}]},
+{id:"w3",title:"Settimana 3",days:[{id:"all",title:"Task settimana 3",sub:"Consolidamento",tasks:[
+{id:"t1",text:"Pubblica secondo reel AI o versione breve con angolazione diversa"},
+{id:"t2",text:"Primo post thought leadership di Franki su LinkedIn",hint:"Tema: strategia vs esecuzione, come FORMA88 li unisce"},
+{id:"t3",text:"Verifica che il form di contatto funzioni correttamente",p:"bloccante"},
+{id:"t4",text:"Attiva Google Analytics e Meta Pixel sulla landing",hint:"Necessario per Fase 2. Senza tracking i soldi Ads sono ciechi."},
+{id:"t5",text:"Raccogli feedback dai contatti piu caldi: cosa li ha convinti"},
+]}]},
+{id:"w4",title:"Settimana 4",days:[{id:"all",title:"Task settimana 4",sub:"Validazione organica",tasks:[
+{id:"t1",text:"Leggi KPI settimane 2-3 e porta i dati a Claude per la fase Learn",p:"bloccante"},
+{id:"t2",text:"Decisione: il messaggio organico ha validato interesse? Soglia: 5 DM reali"},
+{id:"t3",text:"Se si, prepara budget e piano Meta Ads per Fase 2",p:"importante"},
+{id:"t4",text:"Aggiorna Prompt Library Claude con i template caption che hanno funzionato"},
+{id:"t5",text:"Pubblica primo case study o testimonianza se disponibile"},
+]}]},
+]},
+{id:"p2",num:"2",title:"Fase 2 Test paid",weeks:"Settimane 5-8",obj:"Validare il messaggio con 200-400 euro di Meta Ads. KPI target: CTR sopra 1%, CPL sotto 30 euro. Si scala solo cio che e gia stato validato organicamente.",weeks_data:[
+{id:"w5",title:"Settimana 5",days:[{id:"all",title:"Task settimana 5",sub:"Setup Ads",tasks:[
+{id:"t1",text:"Verifica che Meta Pixel tracci correttamente sulla landing",p:"bloccante"},
+{id:"t2",text:"Crea campagna Meta Ads con obiettivo traffico verso landing",hint:"Budget totale: 200-400 euro. E un test, non una campagna a regime."},
+{id:"t3",text:"Crea 3 varianti: A angolo problema B aspirazione C valore",hint:"Usa i prompt del documento strategia FORMA88"},
+{id:"t4",text:"Target: marketing manager e titolari PMI beauty food fashion 25-45 anni"},
+{id:"t5",text:"Definisci KPI e soglie di stop PRIMA di avviare",p:"importante",hint:"Ferma se CPL supera 60 euro dopo 50 clic"},
+]}]},
+{id:"w6_8",title:"Settimane 6-8",days:[{id:"all",title:"Task settimane 6-8",sub:"Run ottimizza chiudi",tasks:[
+{id:"t1",text:"Leggi i dati Ads ogni 3 giorni, non ogni ora",p:"bloccante",hint:"Aspetta che i dati si stabilizzino prima di ottimizzare"},
+{id:"t2",text:"Spegni le varianti con CTR sotto 0.5% dopo 100 impressioni"},
+{id:"t3",text:"Porta i dati a Claude ogni settimana per la fase Learn"},
+{id:"t4",text:"Gestisci tutti i lead dal form entro 24 ore",p:"importante"},
+{id:"t5",text:"Fine settimana 8: analisi completa, CPL validato?",hint:"CPL sotto 30 euro: vai a Fase 3. CPL sopra 30: ottimizza landing prima."},
+]}]},
+]},
+{id:"p3",num:"3",title:"Fase 3 Prima chiusura",weeks:"Settimane 9-12",obj:"Convertire i lead in clienti paganti. Obiettivo: primo contratto firmato, secondo video AI prodotto, referral attivato. Il sistema inizia a girare da solo.",weeks_data:[
+{id:"w9_12",title:"Settimane 9-12",days:[{id:"all",title:"Task settimane 9-12",sub:"Chiusura e scalatura",tasks:[
+{id:"t1",text:"Effettua discovery call con tutti i lead qualificati",p:"bloccante",hint:"15 minuti: capisci brand, budget, bisogno. Non vendere, qualifica."},
+{id:"t2",text:"Prepara proposte commerciali personalizzate con Claude per i lead caldi"},
+{id:"t3",text:"Firma primo contratto e avvia produzione video AI",p:"importante"},
+{id:"t4",text:"Documenta il processo del primo cliente: brief, produzione, risultato",hint:"Diventa il primo case study. Chiedi una testimonianza da pubblicare."},
+{id:"t5",text:"Produci il secondo video AI su settore diverso: moda, food o tech"},
+{id:"t6",text:"Attiva il referral: chiedi al primo cliente di introdurti a un altro brand"},
+{id:"t7",text:"Valuta se avviare FORMA88 Sessions come workshop mensile AI video"},
+]}]},
+]},
+];
+var KPIS=[
+{id:"k1",name:"View rate reel",thr:"> 35%",action:"Se sotto: cambia hook, i primi 2 secondi del video"},
+{id:"k2",name:"Clic verso landing",thr:"> 20 in 7gg",action:"Se sotto: riscrivi la CTA nella caption con Claude"},
+{id:"k3",name:"DM di interesse",thr:"> 5 in 7gg",action:"Se sotto: crea versione Stories piu corta del video"},
+{id:"k4",name:"Form compilati",thr:"> 2 in 7gg",action:"Se sotto: semplifica form o aggiorna headline landing"},
+{id:"k5",name:"Follower guadagnati",thr:"> 20 in 7gg",action:"Segnale positivo: algoritmo distribuisce bene, continua"},
+];
+var ST={checked:{},notes:{},phNotes:{},noteFranki:"",noteGege:"",noteShared:"",kpiVals:{},activePh:0,activeWk:0};
+function lsK(k){return "f88_"+k;}
+function lsS(k,v){try{localStorage.setItem(lsK(k),String(v));}catch(e){}}
+function loadAll(){
+  try{
+    Object.keys(localStorage).forEach(function(k){
+      if(k.indexOf("f88_")!==0)return;
+      var sk=k.slice(4),v=localStorage.getItem(k)||"";
+      if(sk.indexOf("cb_")===0)ST.checked[sk.slice(3)]=v==="1";
+      else if(sk.indexOf("nt_")===0)ST.notes[sk.slice(3)]=v;
+      else if(sk.indexOf("ph_")===0)ST.phNotes[sk.slice(3)]=v;
+      else if(sk==="noteFranki")ST.noteFranki=v;
+      else if(sk==="noteGege")ST.noteGege=v;
+      else if(sk==="noteShared")ST.noteShared=v;
+      else if(sk==="activePh")ST.activePh=parseInt(v)||0;
+      else if(sk==="activeWk")ST.activeWk=parseInt(v)||0;
+      else if(sk.indexOf("kv_")===0)ST.kpiVals[sk.slice(3)]=v;
+    });
+  }catch(e){}
+}
+function tk(a,b,c,d){return a+"_"+b+"_"+c+"_"+d;}
+function phKeys(ph){var a=[];ph.weeks_data.forEach(function(wk){wk.days.forEach(function(d){d.tasks.forEach(function(t){a.push(tk(ph.id,wk.id,d.id,t.id));});});});return a;}
+function allKeys(){var a=[];PHASES.forEach(function(ph){a=a.concat(phKeys(ph));});return a;}
+function saveCb(key,v){ST.checked[key]=v;lsS("cb_"+key,v?"1":"0");updateProgress();}
+function saveNt(key,v){ST.notes[key]=v;lsS("nt_"+key,v);}
+function savePh(id,v){ST.phNotes[id]=v;lsS("ph_"+id,v);}
+function saveKpi(id,v){ST.kpiVals[id]=v;lsS("kv_"+id,v);}
+function saveGlob(f,v){ST[f]=v;lsS(f,v);}
+function updateProgress(){
+  var all=allKeys(),done=all.filter(function(k){return ST.checked[k];}).length;
+  var h=document.getElementById("hpct");if(h)h.textContent=done+"/"+all.length;
+  PHASES.forEach(function(ph){
+    var ks=phKeys(ph),d=ks.filter(function(k){return ST.checked[k];}).length,t=ks.length,pct=t?Math.round(d/t*100):0;
+    var bar=document.getElementById("bar_"+ph.id);if(bar)bar.style.width=pct+"%";
+    var cnt=document.getElementById("cnt_"+ph.id);if(cnt)cnt.textContent=d+"/"+t;
+    var ov=document.getElementById("ov_"+ph.id);if(ov)ov.textContent=pct+"%";
+  });
+  document.querySelectorAll("[data-ds]").forEach(function(el){
+    var id=el.dataset.ds,cbs=document.querySelectorAll("[data-dg="+JSON.stringify(id)+"]");
+    el.textContent=[].filter.call(cbs,function(c){return c.checked;}).length+"/"+cbs.length;
+  });
+}
+function kpiLights(){KPIS.forEach(function(k){var d=document.getElementById("kd_"+k.id);if(d)d.classList.toggle("on",!!(ST.kpiVals[k.id]&&ST.kpiVals[k.id].trim()));});}
+function switchTab(t){
+  ["guida","panoramica","settimane","note"].forEach(function(n){
+    var b=document.getElementById("tab-"+n),s=document.getElementById("sec-"+n);
+    if(b)b.classList.toggle("active",n===t);
+    if(s)s.classList.toggle("visible",n===t);
+  });
+}
+function togDay(id){var b=document.getElementById("db_"+id),a=document.getElementById("da_"+id);if(b){b.classList.toggle("open");if(a)a.classList.toggle("open",b.classList.contains("open"));}}
+function togNote(cid){var w=document.getElementById("tn_"+cid),b=document.getElementById("nb_"+cid);if(w){w.classList.toggle("open");if(b)b.classList.toggle("active",w.classList.contains("open"));}}
+function handleCb(cb){var key=cb.dataset.key;saveCb(key,cb.checked);var tx=document.querySelector(".task-text[data-key="+JSON.stringify(key)+"]");if(tx)tx.classList.toggle("done",cb.checked);}
+function s(v){return String(v||"");}
+function renderPanoramica(){
+  var h="<div class=\"ov-grid\">";
+  PHASES.forEach(function(ph){var ks=phKeys(ph),d=ks.filter(function(k){return ST.checked[k];}).length,t=ks.length,col=PCOL[ph.id],pct=t?Math.round(d/t*100):0;
+    h+="<div class=\"ov-card\"><div class=\"ov-pct\" id=\"ov_"+ph.id+"\" style=\"color:"+col.fill+"\">"+pct+"%</div><div class=\"ov-label\">"+s(ph.title)+"<br><span style=\"color:var(--subtle);font-size:12px\">"+s(ph.weeks)+"</span></div></div>";
+  });
+  h+="</div>";
+  PHASES.forEach(function(ph){var col=PCOL[ph.id],ks=phKeys(ph),d=ks.filter(function(k){return ST.checked[k];}).length,t=ks.length,pct=t?Math.round(d/t*100):0;
+    h+="<div class=\"phase-card\"><div class=\"phase-head\"><div class=\"ph-num\" style=\"background:"+col.bg+";color:"+col.fill+"\">"+ph.num+"</div><div class=\"ph-info\"><div class=\"ph-name\">"+s(ph.title)+"</div><div class=\"ph-weeks\">"+s(ph.weeks)+"</div></div><div class=\"ph-count\" id=\"cnt_"+ph.id+"\" style=\"color:"+col.fill+"\">"+d+"/"+t+"</div></div>"
+      +"<div class=\"progress-bar\"><div class=\"progress-fill\" id=\"bar_"+ph.id+"\" style=\"width:"+pct+"%;background:"+col.fill+"\"></div></div>"
+      +"<div class=\"ph-obj\">"+s(ph.obj)+"</div>"
+      +"<div class=\"field-label\">Note di fase</div>"
+      +"<textarea placeholder=\"Appunti, decisioni...\" onchange=\"savePh('"+ph.id+"',this.value)\">"+s(ST.phNotes[ph.id])+"</textarea>"
+      +"</div>";
+  });
+  h+="<div class=\"kpi-section\"><div class=\"kpi-title\">KPI Settimana 1 <span class=\"kpi-badge\">misura dopo 7 giorni dal lancio</span></div>";
+  KPIS.forEach(function(k){
+    h+="<div class=\"kpi-row\"><div class=\"kpi-main\"><div class=\"kpi-name\">"+s(k.name)+"</div><div class=\"kpi-action\">"+s(k.action)+"</div></div>"
+      +"<div class=\"kpi-thr\">"+s(k.thr)+"</div>"
+      +"<input class=\"kpi-inp\" type=\"text\" placeholder=\"valore\" value=\""+s(ST.kpiVals[k.id])+"\" oninput=\"saveKpi('"+k.id+"',this.value);kpiLights()\">"
+      +"<div class=\"kpi-dot\" id=\"kd_"+k.id+"\"></div></div>";
+  });
+  h+="</div>";
+  document.getElementById("sec-panoramica").innerHTML=h;
+  updateProgress();kpiLights();
+}
+function renderSettimane(){
+  var ph=PHASES[ST.activePh],col=PCOL[ph.id];
+  var h="<div class=\"phase-sel\">";
+  PHASES.forEach(function(p,i){
+    h+="<button class=\"p-btn"+(i===ST.activePh?" active":"")+"\" onclick=\"ST.activePh="+i+";ST.activeWk=0;lsS('activePh','"+i+"');lsS('activeWk','0');renderSettimane()\">"+s(p.title)+"<br><span style=\"font-size:12px;opacity:.7\">"+s(p.weeks)+"</span></button>";
+  });
+  h+="</div>";
+  if(ph.weeks_data.length>1){
+    h+="<div class=\"week-sel\">";
+    ph.weeks_data.forEach(function(w,i){h+="<button class=\"w-btn"+(i===ST.activeWk?" active":"")+"\" onclick=\"ST.activeWk="+i+";lsS('activeWk','"+i+"');renderSettimane()\">"+s(w.title)+"</button>";});
+    h+="</div>";
+  }
+  var wk=ph.weeks_data[ST.activeWk]||ph.weeks_data[0];
+  h+="<div class=\"week-banner\" style=\"background:"+col.bg+";color:"+col.fill+";border-color:"+col.fill+"\">"+s(wk.title)+" &mdash; "+s(ph.weeks)+"</div>";
+  wk.days.forEach(function(d,di){
+    var dayId=ph.id+"_"+wk.id+"_"+d.id;
+    var ks=d.tasks.map(function(t){return tk(ph.id,wk.id,d.id,t.id);});
+    var don=ks.filter(function(k){return ST.checked[k];}).length,open=di===0||don>0;
+    h+="<div class=\"day-block\"><div class=\"day-head\" onclick=\"togDay('"+dayId+"')\">"
+      +"<div class=\"day-dot\" style=\"background:"+col.fill+"\"></div>"
+      +"<div class=\"day-title\">"+s(d.title)+"</div><div class=\"day-sub\">"+s(d.sub)+"</div>"
+      +"<div class=\"day-stat\" data-ds=\""+dayId+"\">"+don+"/"+ks.length+"</div>"
+      +"<div class=\"day-arrow"+(open?" open":"")+"\" id=\"da_"+dayId+"\">&#9658;</div>"
+      +"</div><div class=\"day-body"+(open?" open":"")+"\" id=\"db_"+dayId+"\">";
+    d.tasks.forEach(function(t){
+      var key=tk(ph.id,wk.id,d.id,t.id),cid=key.replace(/_/g,"-"),chk=ST.checked[key],hasN=!!(ST.notes[key]&&ST.notes[key].trim());
+      h+="<div class=\"task-row\">"
+        +"<input type=\"checkbox\" class=\"task-cb\" "+(chk?"checked ":"")+"data-dg=\""+dayId+"\" data-key=\""+key+"\" onchange=\"handleCb(this)\">"
+        +"<div class=\"task-main\">";
+      if(t.p)h+="<span class=\"priority p-"+t.p+"\">"+t.p+"</span>";
+      h+="<span class=\"task-text"+(chk?" done":"")+"\" data-key=\""+key+"\" onclick=\"this.closest('.task-row').querySelector('.task-cb').click()\">"+s(t.text)+"</span>";
+      if(t.hint)h+="<div class=\"task-hint\">"+s(t.hint)+"</div>";
+      h+="<div class=\"task-note"+(hasN?" open":"")+"\" id=\"tn_"+cid+"\">"
+        +"<textarea placeholder=\"Appunti...\" onchange=\"saveNt('"+key+"',this.value)\">"+s(ST.notes[key])+"</textarea>"
+        +"</div></div>"
+        +"<button class=\"note-btn"+(hasN?" active":"")+"\" id=\"nb_"+cid+"\" onclick=\"togNote('"+cid+"')\">nota</button>"
+        +"</div>";
+    });
+    h+="</div></div>";
+  });
+  document.getElementById("sec-settimane").innerHTML=h;
+  updateProgress();
+}
+
+function exportNotes(){
+  var lines=[];
+  lines.push('=== NOTE FORMA88 — '+new Date().toLocaleDateString('it-IT')+' ===\n');
+  lines.push('--- FRANKI STUDIO ---');
+  lines.push(ST.noteFranki||'(vuoto)');
+  lines.push('\n--- BEW DESIGN / GEGE ---');
+  lines.push(ST.noteGege||'(vuoto)');
+  lines.push('\n--- NOTE CONDIVISE ---');
+  lines.push(ST.noteShared||'(vuoto)');
+  // task notes
+  var taskNotes=[];
+  PHASES.forEach(function(ph){ph.weeks_data.forEach(function(wk){wk.days.forEach(function(d){d.tasks.forEach(function(t){
+    var key=ph.id+'_'+wk.id+'_'+d.id+'_'+t.id;
+    if(ST.notes[key]&&ST.notes[key].trim()){
+      taskNotes.push('  ['+ph.title+' / '+d.title+'] '+t.text+': '+ST.notes[key].trim());
+    }
+  });});});});
+  if(taskNotes.length){
+    lines.push('\n--- NOTE SUI TASK ---');
+    taskNotes.forEach(function(n){lines.push(n);});
+  }
+  var text=lines.join('\n');
+  navigator.clipboard.writeText(text).then(function(){
+    var btn=document.getElementById('btn-export');
+    if(btn){btn.textContent='✓ Copiato!';btn.style.borderColor='var(--green)';btn.style.color='var(--green)';setTimeout(function(){btn.textContent='Esporta note';btn.style.borderColor='';btn.style.color='';},2000);}
+  }).catch(function(){alert('Copia manuale:\n\n'+text);});
+}
+
+function importNotes(){
+  var txt=prompt('Incolla qui il testo delle note esportato da Franki o Gegé:');
+  if(!txt)return;
+  var sections={franki:'',gege:'',shared:''};
+  var cur=null;
+  txt.split('\n').forEach(function(line){
+    if(line.includes('--- FRANKI STUDIO ---'))cur='franki';
+    else if(line.includes('--- BEW DESIGN'))cur='gege';
+    else if(line.includes('--- NOTE CONDIVISE ---'))cur='shared';
+    else if(line.includes('--- NOTE SUI TASK ---'))cur=null;
+    else if(cur&&!line.startsWith('===')){sections[cur]+=(sections[cur]?'\n':'')+line;}
+  });
+  if(sections.franki.trim()){ST.noteFranki+=(ST.noteFranki?'\n\n--- importato ---\n':'')+sections.franki.trim();saveGlob('noteFranki',ST.noteFranki);}
+  if(sections.gege.trim()){ST.noteGege+=(ST.noteGege?'\n\n--- importato ---\n':'')+sections.gege.trim();saveGlob('noteGege',ST.noteGege);}
+  if(sections.shared.trim()){ST.noteShared+=(ST.noteShared?'\n\n--- importato ---\n':'')+sections.shared.trim();saveGlob('noteShared',ST.noteShared);}
+  renderNote();
+  alert('Note importate. Controlla i campi — le note precedenti sono state mantenute.');
+}
+
+function renderNote(){
+  document.getElementById("sec-note").innerHTML=
+    "<div class=\"notes-2col\">"
+    +"<div class=\"note-card\"><div class=\"nc-title\">Franki Studio</div><div class=\"nc-sub\">Considerazioni strategiche, decisioni, priorita</div>"
+    +"<textarea placeholder=\"Note Franki...\" onchange=\"saveGlob('noteFranki',this.value)\">"+s(ST.noteFranki)+"</textarea></div>"
+    +"<div class=\"note-card\"><div class=\"nc-title\">BEW Design &mdash; Gege</div><div class=\"nc-sub\">Esecuzione, blocchi, aggiornamenti operativi</div>"
+    +"<textarea placeholder=\"Note Gege...\" onchange=\"saveGlob('noteGege',this.value)\">"+s(ST.noteGege)+"</textarea></div>"
+    +"</div>"
+    +"<div class=\"note-shared\"><div class=\"nc-title\">Note condivise FORMA88</div><div class=\"nc-sub\" style=\"margin-bottom:.5rem\">Decisioni prese insieme, call log, prossimi passi concordati</div>"
+    +"<textarea placeholder=\"Note condivise...\" style=\"min-height:120px\" onchange=\"saveGlob('noteShared',this.value)\">"+s(ST.noteShared)+"</textarea></div>"
+    +"<div class=\"note-tip\"><div class=\"note-tip-h\">Come condividere il tracker</div>"
+    +"<div class=\"note-tip-p\">I dati vengono salvati nel browser locale. Per condividere: vai su <strong>netlify.com/drop</strong>, trascina il file HTML e ottieni un URL pubblico in 30 secondi. Oppure aprite il file sullo stesso device.</div></div>";
+}
+loadAll();
+renderPanoramica();
+renderSettimane();
+renderNote();
+</script>
+</body>
+</html>
