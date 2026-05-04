@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#f4f4f8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>Memo Pillole</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@700;800&display=swap');
+
+:root {
+  --bg: #f4f4f8;
+  --surface: #ffffff;
+  --border: #e0e0ea;
+  --text: #1a1a2e;
+  --muted: #8888aa;
+  --coef: #00a86b;
+  --coef-d: rgba(0,168,107,0.10);
+  --delta: #2979ff;
+  --delta-d: rgba(41,121,255,0.10);
+  --pal: #e65c00;
+  --pal-d: rgba(230,92,0,0.10);
+  --oki: #d32f2f;
+  --oki-d: rgba(211,47,47,0.10);
+  --ok: #00a86b;
+  --warn: #d32f2f;
+  --caut: #f57c00;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Space Mono", monospace;
+  min-height: 100dvh;
+  max-width: 430px;
+  margin: 0 auto;
+  padding-bottom: 60px;
+}
+
+/* HEADER */
+header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 18px 10px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.app-name {
+  font-family: "Syne", sans-serif;
+  font-weight: 800;
+  font-size: 1.3rem;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  line-height: 1.2;
+}
+
+.app-version {
+  font-size: 0.6rem;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.clock-box {
+  text-align: right;
+}
+
+#live-clock {
+  display: block;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: 0.05em;
+}
+
+#live-date {
+  display: block;
+  font-size: 0.65rem;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+/* TABS */
+.tabs {
+  display: flex;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.tab {
+  flex: 1;
+  padding: 12px 4px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  font-family: "Syne", sans-serif;
+  font-weight: 700;
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.tab.active { color: var(--text); border-bottom-color: var(--coef); }
+
+.panel { display: none; }
+.panel.active { display: block; }
+
+/* SECTION LABEL */
+.slabel {
+  font-size: 0.875rem;
+  font-family: "Syne", sans-serif;
+  font-weight: 700;
+  color: var(--muted);
+  padding: 16px 18px 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.divider { height: 1px; background: var(--border); margin: 12px 18px; }
+
+/* SUGGESTION BOX */
+#sug {
+  margin: 0 16px;
+  background: var(--surface);
+  border: 1.5px solid var(--coef);
+  border-radius: 14px;
+  padding: 14px 16px;
+  display: none;
+}
+#sug.show { display: block; }
+.sug-title { font-family: "Syne", sans-serif; font-weight: 800; font-size: 0.95rem; margin-bottom: 3px; }
+.sug-sub { font-size: 0.7rem; color: var(--muted); margin-bottom: 12px; }
+.sug-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+.sug-btn {
+  flex: 1;
+  min-width: 100px;
+  padding: 11px 10px;
+  border-radius: 10px;
+  border: none;
+  font-family: "Syne", sans-serif;
+  font-weight: 800;
+  font-size: 0.78rem;
+  cursor: pointer;
+  line-height: 1.4;
+  text-align: center;
+  transition: transform 0.1s;
+}
+.sug-btn:active { transform: scale(0.95); }
+.sug-btn:disabled { opacity: 0.4; cursor: default; }
+
+/* DAILY LOG */
+.dlog { padding: 0 16px; display: flex; flex-direction: column; gap: 6px; }
+.dlog-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 13px;
+}
+.dlog-row.done { border-color: rgba(0,168,107,0.3); background: rgba(0,168,107,0.05); }
+.dlog-row.missed { border-color: rgba(211,47,47,0.2); opacity: 0.6; }
+.dlog-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.dlog-dot.coef { background: var(--coef); }
+.dlog-dot.delta { background: var(--delta); }
+.dlog-dot.pal { background: var(--pal); }
+.dlog-dot.oki { background: var(--oki); }
+.dlog-dot.pending { background: var(--border); }
+.dlog-name { font-size: 0.875rem; font-weight: 700; flex: 1; }
+.dlog-name.coef { color: var(--coef); }
+.dlog-name.delta { color: var(--delta); }
+.dlog-name.pal { color: var(--pal); }
+.dlog-name.oki { color: var(--oki); }
+.dlog-name.muted { color: var(--muted); }
+.dlog-slot { font-size: 0.875rem; color: var(--muted); }
+.dlog-status { font-size: 0.875rem; font-weight: 700; }
+.dlog-status.ok { color: var(--ok); }
+.dlog-status.warn { color: var(--warn); }
+.dlog-status.muted { color: var(--muted); }
+
+/* DRUG BUTTONS */
+.drug-btns { display: flex; flex-direction: column; gap: 10px; padding: 0 16px; }
+.dbtn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 18px;
+  border-radius: 14px;
+  border: 1.5px solid;
+  background: var(--surface);
+  cursor: pointer;
+  font-family: "Syne", sans-serif;
+  font-weight: 800;
+  font-size: 1rem;
+  transition: transform 0.1s;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.dbtn:active { transform: scale(0.97); }
+.dbtn-coef { border-color: var(--coef); color: var(--coef); background: var(--coef-d); }
+.dbtn-delta { border-color: var(--delta); color: var(--delta); background: var(--delta-d); }
+.dbtn-pal { border-color: var(--pal); color: var(--pal); background: var(--pal-d); }
+.dbtn-oki { border-color: var(--oki); color: var(--oki); background: var(--oki-d); }
+.dbtn-info { text-align: right; font-family: "Space Mono", monospace; font-weight: 400; font-size: 0.7rem; opacity: 0.75; line-height: 1.5; }
+
+/* STATUS CARDS */
+.status-grid { display: flex; flex-direction: column; gap: 10px; padding: 0 16px; }
+.scard {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 13px 16px;
+  position: relative;
+  overflow: hidden;
+}
+.scard::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; border-radius: 0 2px 2px 0; }
+.scard-coef::before { background: var(--coef); }
+.scard-delta::before { background: var(--delta); }
+.scard-pal::before { background: var(--pal); }
+.scard-oki::before { background: var(--oki); }
+.scard-name { font-family: "Syne", sans-serif; font-weight: 700; font-size: 1rem; margin-bottom: 8px; }
+.scard-coef .scard-name { color: var(--coef); }
+.scard-delta .scard-name { color: var(--delta); }
+.scard-pal .scard-name { color: var(--pal); }
+.scard-oki .scard-name { color: var(--oki); }
+.scard-row { display: flex; justify-content: space-between; font-size: 0.875rem; margin-bottom: 3px; }
+.scard-row .lbl { color: var(--muted); }
+.scard-row .val { font-weight: 700; }
+.scard-row .val.none { color: var(--muted); font-weight: 400; }
+.scard-badge { margin-top: 8px; display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.05em; }
+.badge-ok { background: rgba(0,168,107,0.12); color: var(--ok); border: 1px solid rgba(0,168,107,0.3); }
+.badge-warn { background: rgba(211,47,47,0.1); color: var(--warn); border: 1px solid rgba(211,47,47,0.25); }
+.badge-caut { background: rgba(245,124,0,0.1); color: var(--caut); border: 1px solid rgba(245,124,0,0.25); }
+.badge-none { background: rgba(136,136,170,0.1); color: var(--muted); border: 1px solid rgba(136,136,170,0.2); }
+.scard-cd { font-size: 0.95rem; font-weight: 700; }
+.scard-cd.ok { color: var(--ok); }
+.scard-cd.warn { color: var(--warn); }
+@keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.4} }
+.pulse { animation: pulse 2s ease-in-out infinite; }
+
+/* PIANO */
+.week-nav { display: flex; align-items: center; justify-content: space-between; padding: 0 16px; margin-bottom: 10px; }
+.week-btn { background: var(--surface); border: 1px solid var(--border); color: var(--text); width: 34px; height: 34px; border-radius: 8px; font-size: 1rem; cursor: pointer; }
+.week-btn:active { opacity: 0.6; }
+.week-lbl { font-family: "Syne", sans-serif; font-weight: 700; font-size: 0.85rem; }
+.week-grid { padding: 0 16px; display: flex; flex-direction: column; gap: 7px; }
+.dcard { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+.dcard.today { border-color: var(--coef); }
+.dhead { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; cursor: pointer; user-select: none; -webkit-user-select: none; }
+.dhead:active { opacity: 0.7; }
+.dname { font-family: "Syne", sans-serif; font-weight: 700; font-size: 0.85rem; }
+.dcard.today .dname { color: var(--coef); }
+.ddate { font-size: 0.65rem; color: var(--muted); }
+.dprog { font-size: 0.65rem; color: var(--muted); }
+.dslots { border-top: 1px solid var(--border); padding: 10px 14px; display: flex; flex-direction: column; gap: 8px; }
+.dslot-row { display: flex; align-items: center; gap: 10px; }
+.dslot-time { font-size: 0.65rem; color: var(--muted); min-width: 52px; }
+.dslot-name { flex: 1; font-size: 0.875rem; font-weight: 700; }
+.dslot-name.coef { color: var(--coef); }
+.dslot-name.delta { color: var(--delta); }
+.dslot-name.pal { color: var(--pal); }
+.dslot-name.oki { color: var(--oki); }
+.schk { width: 34px; height: 34px; border-radius: 8px; border: none; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: transform 0.1s; }
+.schk:active { transform: scale(0.88); }
+.schk.taken { background: rgba(0,168,107,0.15); border: 1.5px solid var(--coef); color: var(--coef); }
+.schk.skipped { background: rgba(211,47,47,0.08); border: 1.5px solid rgba(211,47,47,0.3); color: var(--warn); opacity: 0.65; }
+.schk.pending { background: var(--bg); border: 1.5px solid var(--border); color: var(--muted); }
+.schk.future { background: var(--bg); border: 1.5px dashed var(--border); color: var(--border); cursor: default; }
+
+/* STORICO */
+.hist-list { list-style: none; padding: 0 16px; display: flex; flex-direction: column; gap: 6px; }
+.hist-item { display: flex; align-items: center; justify-content: space-between; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 10px 14px; }
+.hist-drug { font-size: 0.875rem; font-weight: 700; }
+.hist-drug.coef { color: var(--coef); }
+.hist-drug.delta { color: var(--delta); }
+.hist-drug.pal { color: var(--pal); }
+.hist-drug.oki { color: var(--oki); }
+.hist-time { font-size: 0.875rem; color: var(--muted); }
+.hist-del { background: none; border: none; color: var(--warn); font-size: 1.1rem; cursor: pointer; padding: 0 0 0 10px; line-height: 1; }
+.hist-del:active { opacity: 0.6; }
+.clear-btn { display: block; margin: 12px 16px 0; width: calc(100% - 32px); background: none; border: 1px solid var(--border); color: var(--muted); font-family: "Space Mono", monospace; font-size: 0.75rem; padding: 12px; border-radius: 10px; cursor: pointer; }
+.clear-btn:active { border-color: var(--warn); color: var(--warn); }
+
+/* TIME MODAL */
+#tmodal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 200; align-items: flex-end; justify-content: center; }
+#tmodal.show { display: flex; }
+#tmbox { background: var(--surface); border-radius: 20px 20px 0 0; padding: 24px 20px 40px; width: 100%; max-width: 430px; border-top: 1px solid var(--border); }
+.tm-title { font-family: "Syne", sans-serif; font-weight: 800; font-size: 1rem; margin-bottom: 4px; }
+.tm-sub { font-size: 0.72rem; color: var(--muted); margin-bottom: 16px; }
+.tm-inputs { display: flex; gap: 10px; margin-bottom: 16px; }
+.tm-inputs input { flex: 1; padding: 13px; border-radius: 10px; border: 1.5px solid var(--border); background: var(--bg); color: var(--text); font-family: "Space Mono", monospace; font-size: 1rem; font-weight: 700; text-align: center; }
+.tm-inputs input:focus { outline: none; border-color: var(--coef); }
+.tm-btns { display: flex; gap: 10px; }
+.tm-btn { flex: 1; padding: 14px; border-radius: 10px; border: none; font-family: "Syne", sans-serif; font-weight: 800; font-size: 0.9rem; cursor: pointer; }
+.tm-btn:active { opacity: 0.7; }
+.tm-cancel { background: var(--bg); border: 1px solid var(--border); color: var(--muted); }
+.tm-confirm { background: var(--coef-d); border: 1.5px solid var(--coef); color: var(--coef); }
+
+/* CLEAR MODAL */
+#cmodal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 200; align-items: flex-end; justify-content: center; }
+#cmodal.show { display: flex; }
+#cmbox { background: var(--surface); border-radius: 20px 20px 0 0; padding: 24px 20px 40px; width: 100%; max-width: 430px; border-top: 1px solid var(--border); }
+.cm-title { font-family: "Syne", sans-serif; font-weight: 800; font-size: 1rem; margin-bottom: 8px; }
+.cm-sub { font-size: 0.75rem; color: var(--muted); margin-bottom: 20px; line-height: 1.6; }
+.cm-btns { display: flex; gap: 10px; }
+.cm-btn { flex: 1; padding: 14px; border-radius: 10px; border: none; font-family: "Syne", sans-serif; font-weight: 800; font-size: 0.9rem; cursor: pointer; }
+.cm-btn:active { opacity: 0.7; }
+.cm-cancel { background: var(--bg); border: 1px solid var(--border); color: var(--muted); }
+.cm-ok { background: rgba(211,47,47,0.1); border: 1.5px solid var(--warn); color: var(--warn); }
+
+/* TOAST */
+#toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--text); color: var(--bg); padding: 11px 22px; border-radius: 40px; font-size: 0.8rem; font-weight: 700; white-space: nowrap; transition: transform 0.3s cubic-bezier(.34,1.56,.64,1); z-index: 300; pointer-events: none; }
+#toast.show { transform: translateX(-50%) translateY(0); }
+
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <div class="app-name">Memo Pillole</div>
+    <div class="app-version">v3.0 &nbsp;|&nbsp; <span id="ver-date">—</span></div>
+  </div>
+  <div class="clock-box">
+    <span id="live-clock">--:--</span>
+    <span id="live-date">---</span>
+  </div>
+</header>
+
+<div class="tabs">
+  <button class="tab active" onclick="switchTab('ora')">ORA</button>
+  <button class="tab" onclick="switchTab('piano')">PIANO</button>
+  <button class="tab" onclick="switchTab('storico')">STORICO</button>
+</div>
+
+<!-- ===== TAB ORA ===== -->
+<div class="panel active" id="panel-ora">
+
+  <p class="slabel">Suggerimento ora</p>
+  <div id="sug">
+    <div class="sug-title" id="sug-title"></div>
+    <div class="sug-sub" id="sug-sub"></div>
+    <div class="sug-btns" id="sug-btns"></div>
+  </div>
+
+  <div class="divider"></div>
+
+  <p class="slabel">Oggi &nbsp;<span id="oggi-lbl" style="text-transform:none;letter-spacing:0;font-size:0.8rem;font-weight:400;color:var(--text)"></span></p>
+  <div class="dlog" id="dlog"></div>
+
+  <div class="divider"></div>
+
+  <p class="slabel">Registra dose</p>
+  <div class="drug-btns">
+    <button class="dbtn dbtn-coef" onclick="openTime('Coefferalgan')">
+      <span>Coefferalgan</span>
+      <span class="dbtn-info">base ogni 6-8h</span>
+    </button>
+    <button class="dbtn dbtn-delta" onclick="openTime('DeltaCortene')">
+      <span>DeltaCortene</span>
+      <span class="dbtn-info">solo mattina 07-09</span>
+    </button>
+    <button class="dbtn dbtn-pal" onclick="openTime('Palexia 50')">
+      <span>Palexia 50</span>
+      <span class="dbtn-info">alternativa Coef<br>dolore forte · 6-8h</span>
+    </button>
+    <button class="dbtn dbtn-oki" onclick="openTime('OKI 1/2')">
+      <span>OKI 1/2</span>
+      <span class="dbtn-info">solo dolore forte<br>min. 6h tra dosi</span>
+    </button>
+  </div>
+
+  <div class="divider"></div>
+
+  <p class="slabel">Stato farmaci</p>
+  <div class="status-grid">
+    <div class="scard scard-coef">
+      <div class="scard-name">Coefferalgan</div>
+      <div class="scard-row"><span class="lbl">Ultima dose</span><span class="val" id="s-coef-last">—</span></div>
+      <div class="scard-row"><span class="lbl">Prossima</span><span class="val" id="s-coef-next">—</span></div>
+      <div class="scard-row"><span class="lbl">Attesa</span><span class="scard-cd" id="s-coef-cd">—</span></div>
+      <div id="s-coef-badge"></div>
+    </div>
+    <div class="scard scard-delta">
+      <div class="scard-name">DeltaCortene</div>
+      <div class="scard-row"><span class="lbl">Ultima dose</span><span class="val" id="s-delta-last">—</span></div>
+      <div class="scard-row"><span class="lbl">Finestra</span><span class="val">07:00 – 09:00</span></div>
+      <div id="s-delta-badge"></div>
+    </div>
+    <div class="scard scard-pal">
+      <div class="scard-name">Palexia 50</div>
+      <div class="scard-row"><span class="lbl">Ultima dose</span><span class="val" id="s-pal-last">—</span></div>
+      <div class="scard-row"><span class="lbl">Prossima</span><span class="val" id="s-pal-next">—</span></div>
+      <div class="scard-row"><span class="lbl">Attesa</span><span class="scard-cd" id="s-pal-cd">—</span></div>
+      <div id="s-pal-badge"></div>
+    </div>
+    <div class="scard scard-oki">
+      <div class="scard-name">OKI 1/2</div>
+      <div class="scard-row"><span class="lbl">Ultima dose</span><span class="val" id="s-oki-last">—</span></div>
+      <div class="scard-row"><span class="lbl">Prossima</span><span class="val" id="s-oki-next">—</span></div>
+      <div class="scard-row"><span class="lbl">Attesa</span><span class="scard-cd" id="s-oki-cd">—</span></div>
+      <div id="s-oki-badge"></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== TAB PIANO ===== -->
+<div class="panel" id="panel-piano">
+  <p class="slabel">Piano settimanale</p>
+  <div class="week-nav">
+    <button class="week-btn" onclick="shiftWeek(-1)">&#8249;</button>
+    <span class="week-lbl" id="week-lbl">—</span>
+    <button class="week-btn" onclick="shiftWeek(1)">&#8250;</button>
+  </div>
+  <div class="week-grid" id="week-grid"></div>
+</div>
+
+<!-- ===== TAB STORICO ===== -->
+<div class="panel" id="panel-storico">
+  <p class="slabel">Ultime dosi</p>
+  <ul class="hist-list" id="hist-list"></ul>
+  <button class="clear-btn" onclick="openClear()">Cancella tutto lo storico</button>
+</div>
+
+<!-- TIME MODAL -->
+<div id="tmodal">
+  <div id="tmbox">
+    <div class="tm-title" id="tm-title">Registra dose</div>
+    <div class="tm-sub">Modifica data e orario se diverso da adesso</div>
+    <div class="tm-inputs">
+      <input type="date" id="tm-date">
+      <input type="time" id="tm-time">
+    </div>
+    <div class="tm-btns">
+      <button class="tm-btn tm-cancel" onclick="closeTime()">Annulla</button>
+      <button class="tm-btn tm-confirm" onclick="confirmTime()">Registra</button>
+    </div>
+  </div>
+</div>
+
+<!-- CLEAR MODAL -->
+<div id="cmodal">
+  <div id="cmbox">
+    <div class="cm-title">Cancella storico</div>
+    <div class="cm-sub">Vuoi cancellare tutte le dosi registrate e il piano settimanale? L'operazione non e reversibile.</div>
+    <div class="cm-btns">
+      <button class="cm-btn cm-cancel" onclick="closeClear()">Annulla</button>
+      <button class="cm-btn cm-ok" onclick="confirmClear()">Cancella tutto</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+// ═══════════════════════════════════════
+// CONFIG
+// ═══════════════════════════════════════
+const VER = "3.0";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxg0G76xotFdLX9S3nBIeuC0cX2o_CVPb-bbm0lLrwuCHo80l0EE6bfbK_yEueJ25gz/exec";
+const LOG_KEY = "mp3_log";
+const SCH_KEY = "mp3_sch";
+
+const DRUGS = {
+  "Coefferalgan": { cls: "coef", interval: 6*3600000 },
+  "DeltaCortene": { cls: "delta", interval: null },
+  "Palexia 50":   { cls: "pal",  interval: 6*3600000 },
+  "OKI 1/2":      { cls: "oki",  interval: 6*3600000 }
+};
+
+const DAYS = ["Dom","Lun","Mar","Mer","Gio","Ven","Sab"];
+
+const PLAN_SLOTS = [
+  { id:"mat-coef",  name:"Coefferalgan", cls:"coef", time:"07:00", h:7  },
+  { id:"mat-delta", name:"DeltaCortene", cls:"delta", time:"07:00", h:7  },
+  { id:"pom-coef",  name:"Coefferalgan", cls:"coef", time:"13:00", h:13 },
+  { id:"ser-coef",  name:"Coefferalgan", cls:"coef", time:"19:00", h:19 },
+  { id:"not-oki",   name:"OKI 1/2",      cls:"oki",  time:"notte",  h:null}
+];
+
+// ═══════════════════════════════════════
+// STORAGE
+// ═══════════════════════════════════════
+function getLog() { try { return JSON.parse(localStorage.getItem(LOG_KEY)) || []; } catch { return []; } }
+function setLog(l) { localStorage.setItem(LOG_KEY, JSON.stringify(l)); }
+function getSch() { try { return JSON.parse(localStorage.getItem(SCH_KEY)) || {}; } catch { return {}; } }
+function setSch(s) { localStorage.setItem(SCH_KEY, JSON.stringify(s)); }
+
+function lastDose(name) {
+  var log = getLog();
+  var entries = log.filter(function(e) { return e.drug === name; });
+  return entries.length ? entries[entries.length - 1] : null;
+}
+
+function sameDay(a, b) {
+  return a.getFullYear() === b.getFullYear() &&
+         a.getMonth() === b.getMonth() &&
+         a.getDate() === b.getDate();
+}
+
+function schKey(date, slotId) {
+  var d = new Date(date);
+  return d.getFullYear() + "-" +
+         String(d.getMonth() + 1).padStart(2, "0") + "-" +
+         String(d.getDate()).padStart(2, "0") + "_" + slotId;
+}
+
+// ═══════════════════════════════════════
+// TIME MODAL
+// ═══════════════════════════════════════
+var pendingDrug = null;
+
+function openTime(drug) {
+  pendingDrug = drug;
+  var now = new Date();
+  document.getElementById("tm-title").textContent = drug + " — registra dose";
+  document.getElementById("tm-date").value =
+    now.getFullYear() + "-" +
+    String(now.getMonth() + 1).padStart(2, "0") + "-" +
+    String(now.getDate()).padStart(2, "0");
+  document.getElementById("tm-time").value =
+    String(now.getHours()).padStart(2, "0") + ":" +
+    String(now.getMinutes()).padStart(2, "0");
+  document.getElementById("tmodal").classList.add("show");
+}
+
+function closeTime() {
+  document.getElementById("tmodal").classList.remove("show");
+  pendingDrug = null;
+}
+
+function confirmTime() {
+  if (!pendingDrug) return;
+  var dval = document.getElementById("tm-date").value;
+  var tval = document.getElementById("tm-time").value;
+  if (!dval || !tval) { showToast("Inserisci data e ora"); return; }
+  var dp = dval.split("-");
+  var tp = tval.split(":");
+  var dt = new Date(
+    parseInt(dp[0]),
+    parseInt(dp[1]) - 1,
+    parseInt(dp[2]),
+    parseInt(tp[0]),
+    parseInt(tp[1]),
+    0, 0
+  );
+  var log = getLog();
+  log.push({ drug: pendingDrug, time: dt.getTime() });
+  setLog(log);
+  saveToSheets();
+  showToast(pendingDrug + " registrato alle " + tval);
+  closeTime();
+  updateAll();
+}
+
+document.getElementById("tmodal").addEventListener("click", function(e) {
+  if (e.target === this) closeTime();
+});
+
+// ═══════════════════════════════════════
+// CLEAR MODAL
+// ═══════════════════════════════════════
+function openClear() { document.getElementById("cmodal").classList.add("show"); }
+function closeClear() { document.getElementById("cmodal").classList.remove("show"); }
+function confirmClear() {
+  localStorage.removeItem(LOG_KEY);
+  localStorage.removeItem(SCH_KEY);
+  closeClear();
+  showToast("Storico cancellato");
+  updateAll();
+}
+document.getElementById("cmodal").addEventListener("click", function(e) {
+  if (e.target === this) closeClear();
+});
+
+// ═══════════════════════════════════════
+// GOOGLE SHEETS SAVE
+// ═══════════════════════════════════════
+function saveToSheets() {
+  var log = getLog();
+  fetch(SCRIPT_URL, {
+    method: "POST",
+    mode: "no-cors",
+    body: JSON.stringify(log),
+    headers: { "Content-Type": "application/json" }
+  }).catch(function() {});
+}
+
+// ═══════════════════════════════════════
+// TABS
+// ═══════════════════════════════════════
+function switchTab(name) {
+  document.querySelectorAll(".panel").forEach(function(p) { p.classList.remove("active"); });
+  document.querySelectorAll(".tab").forEach(function(b) { b.classList.remove("active"); });
+  document.getElementById("panel-" + name).classList.add("active");
+  var tabs = document.querySelectorAll(".tab");
+  var names = ["ora","piano","storico"];
+  tabs[names.indexOf(name)].classList.add("active");
+  if (name === "piano") renderWeek();
+  if (name === "storico") renderHist();
+}
+
+// ═══════════════════════════════════════
+// SUGGESTION
+// ═══════════════════════════════════════
+function updateSug() {
+  var now = new Date();
+  var h = now.getHours();
+  var box = document.getElementById("sug");
+  var slot = null;
+
+  if (h >= 7 && h < 10)       slot = { lbl:"Mattina",    sub:"07:00–09:00 · Coefferalgan + DeltaCortene", drugs:["Coefferalgan","DeltaCortene"] };
+  else if (h >= 13 && h < 16) slot = { lbl:"Pomeriggio", sub:"13:00–15:00 · Coefferalgan",               drugs:["Coefferalgan"] };
+  else if (h >= 19 && h < 22) slot = { lbl:"Sera",       sub:"19:00–21:00 · Coefferalgan",               drugs:["Coefferalgan"] };
+  else if (h >= 22 || h < 6)  slot = { lbl:"Notte",      sub:"OKI solo se dolore forte",                 drugs:["OKI 1/2"] };
+
+  if (!slot) { box.classList.remove("show"); return; }
+
+  document.getElementById("sug-title").textContent = slot.lbl;
+  document.getElementById("sug-sub").textContent = slot.sub;
+
+  var btns = document.getElementById("sug-btns");
+  btns.innerHTML = "";
+
+  slot.drugs.forEach(function(drug) {
+    var info = DRUGS[drug];
+    var last = lastDose(drug);
+    var canTake = true;
+    var reason = "";
+
+    if (drug === "DeltaCortene") {
+      if (last && sameDay(new Date(last.time), now)) { canTake = false; reason = "gia preso"; }
+    } else if (last && info.interval) {
+      var rem = (last.time + info.interval) - Date.now();
+      if (rem > 0) { canTake = false; reason = "tra " + fmtRem(rem); }
+    }
+
+    var btn = document.createElement("button");
+    btn.className = "sug-btn";
+    var col = "var(--" + info.cls + ")";
+    if (canTake) {
+      btn.style.cssText = "border:1.5px solid " + col + ";color:" + col + ";background:var(--" + info.cls + "-d)";
+      btn.innerHTML = "Ho preso<br><small style='font-weight:400;font-size:0.62rem'>" + drug + "</small>";
+      btn.onclick = function() { openTime(drug); };
+    } else {
+      btn.style.cssText = "background:var(--bg);border:1px solid var(--border);color:var(--muted)";
+      btn.innerHTML = reason + "<br><small style='font-weight:400;font-size:0.62rem'>" + drug + "</small>";
+      btn.disabled = true;
+    }
+    btns.appendChild(btn);
+  });
+
+  box.classList.add("show");
+}
+
+// ═══════════════════════════════════════
+// DAILY LOG
+// ═══════════════════════════════════════
+function renderDailyLog() {
+  var now = new Date();
+  var el = document.getElementById("dlog");
+  var ol = document.getElementById("oggi-lbl");
+  if (ol) ol.textContent = now.toLocaleDateString("it-IT", { weekday:"long", day:"2-digit", month:"long" });
+
+  var log = getLog();
+  var todayDoses = log.filter(function(e) { return sameDay(new Date(e.time), now); });
+  var html = "";
+
+  // Show actual doses taken today (sorted by time)
+  var sorted = todayDoses.slice().sort(function(a,b) { return a.time - b.time; });
+  sorted.forEach(function(e) {
+    var info = DRUGS[e.drug] || { cls:"muted" };
+    html += "<div class='dlog-row done'>" +
+      "<div class='dlog-dot " + info.cls + "'></div>" +
+      "<span class='dlog-name " + info.cls + "'>" + e.drug + "</span>" +
+      "<span class='dlog-slot'>" + fmtTime(new Date(e.time)) + "</span>" +
+      "<span class='dlog-status ok'>✓</span>" +
+      "</div>";
+  });
+
+  // Show planned slots not yet done
+  var h = now.getHours();
+  PLAN_SLOTS.forEach(function(s) {
+    var takenAfter = todayDoses.find(function(e) {
+      return e.drug === s.name && new Date(e.time).getHours() >= (s.h || 0);
+    });
+    if (takenAfter) return;
+
+    if (s.h !== null && h < s.h) {
+      html += "<div class='dlog-row'>" +
+        "<div class='dlog-dot pending'></div>" +
+        "<span class='dlog-name muted'>" + s.name + "</span>" +
+        "<span class='dlog-slot'>" + s.time + "</span>" +
+        "<span class='dlog-status muted'>" + s.time + "</span>" +
+        "</div>";
+    } else if (s.h !== null && h >= s.h) {
+      var takenToday = todayDoses.find(function(e) { return e.drug === s.name; });
+      if (!takenToday) {
+        html += "<div class='dlog-row missed'>" +
+          "<div class='dlog-dot " + s.cls + "'></div>" +
+          "<span class='dlog-name " + s.cls + "'>" + s.name + "</span>" +
+          "<span class='dlog-slot'>" + s.time + "</span>" +
+          "<span class='dlog-status warn'>?</span>" +
+          "</div>";
+      }
+    }
+  });
+
+  if (!html) html = "<div style='color:var(--muted);font-size:0.75rem;padding:8px 2px;text-align:center'>Nessuna dose oggi</div>";
+  el.innerHTML = html;
+}
+
+// ═══════════════════════════════════════
+// STATUS CARDS
+// ═══════════════════════════════════════
+function updateCards() {
+  var now = Date.now();
+  updateCard("Coefferalgan", "coef", now);
+  updateDelta(now);
+  updateCard("Palexia 50", "pal", now);
+  updateCard("OKI 1/2", "oki", now);
+}
+
+function updateCard(drug, pfx, now) {
+  var last = lastDose(drug);
+  var interval = DRUGS[drug].interval;
+  var lEl = document.getElementById("s-" + pfx + "-last");
+  var nEl = document.getElementById("s-" + pfx + "-next");
+  var cEl = document.getElementById("s-" + pfx + "-cd");
+  var bEl = document.getElementById("s-" + pfx + "-badge");
+
+  if (!last) {
+    lEl.textContent = "—"; lEl.className = "val none";
+    if (nEl) { nEl.textContent = "—"; nEl.className = "val none"; }
+    cEl.textContent = "nessuna dose"; cEl.className = "scard-cd";
+    bEl.innerHTML = badge("none", "Nessun dato");
+    return;
+  }
+
+  lEl.textContent = fmtDT(new Date(last.time)); lEl.className = "val";
+  var nextTime = new Date(last.time + interval);
+  if (nEl) { nEl.textContent = fmtTime(nextTime); nEl.className = "val"; }
+  var rem = (last.time + interval) - now;
+
+  if (rem <= 0) {
+    cEl.textContent = "Ora disponibile"; cEl.className = "scard-cd ok pulse";
+    bEl.innerHTML = badge("ok", "Puoi prendere");
+  } else {
+    cEl.textContent = fmtRem(rem); cEl.className = "scard-cd warn";
+    bEl.innerHTML = badge("warn", "Aspetta " + fmtRem(rem));
+  }
+}
+
+function updateDelta(now) {
+  var last = lastDose("DeltaCortene");
+  var lEl = document.getElementById("s-delta-last");
+  var bEl = document.getElementById("s-delta-badge");
+  var h = new Date(now).getHours();
+
+  if (last) {
+    lEl.textContent = fmtDT(new Date(last.time)); lEl.className = "val";
+    if (sameDay(new Date(last.time), new Date(now))) {
+      bEl.innerHTML = badge("ok", "Gia preso oggi");
+      return;
+    }
+  } else {
+    lEl.textContent = "—"; lEl.className = "val none";
+  }
+
+  if (h >= 7 && h < 9) bEl.innerHTML = badge("ok", "Finestra aperta");
+  else if (h < 7) bEl.innerHTML = badge("caut", "Finestra tra " + (7 - h) + "h");
+  else bEl.innerHTML = badge("warn", "Domani mattina");
+}
+
+function badge(type, text) {
+  return "<span class='scard-badge badge-" + type + "'>" + text + "</span>";
+}
+
+// ═══════════════════════════════════════
+// PIANO SETTIMANALE
+// ═══════════════════════════════════════
+var weekOffset = 0;
+
+function getWeekDays(off) {
+  var today = new Date();
+  var dow = today.getDay();
+  var mon = new Date(today);
+  mon.setDate(today.getDate() - (dow === 0 ? 6 : dow - 1) + off * 7);
+  mon.setHours(0, 0, 0, 0);
+  var days = [];
+  for (var i = 0; i < 7; i++) {
+    var d = new Date(mon);
+    d.setDate(mon.getDate() + i);
+    days.push(d);
+  }
+  return days;
+}
+
+function shiftWeek(d) { weekOffset += d; renderWeek(); }
+
+function renderWeek() {
+  var days = getWeekDays(weekOffset);
+  var today = new Date(); today.setHours(0, 0, 0, 0);
+  var sch = getSch();
+  var now = new Date();
+  var fmt = function(d) { return d.toLocaleDateString("it-IT", { day:"2-digit", month:"short" }); };
+  document.getElementById("week-lbl").textContent = fmt(days[0]) + " – " + fmt(days[6]);
+  var grid = document.getElementById("week-grid");
+  grid.innerHTML = "";
+
+  days.forEach(function(day) {
+    var isToday = day.getTime() === today.getTime();
+    var isFut = day > today;
+    var statuses = PLAN_SLOTS.map(function(s) { return sch[schKey(day, s.id)] || "pending"; });
+    var takenN = statuses.filter(function(s) { return s === "taken"; }).length;
+
+    var card = document.createElement("div");
+    card.className = "dcard" + (isToday ? " today" : "");
+
+    var head = document.createElement("div");
+    head.className = "dhead";
+    head.innerHTML =
+      "<div><span class='dname'>" + DAYS[day.getDay()] + (isToday ? " · oggi" : "") + "</span>" +
+      "<br><span class='ddate'>" + day.toLocaleDateString("it-IT", { day:"2-digit", month:"2-digit" }) + "</span></div>" +
+      "<span class='dprog'>" + takenN + "/" + PLAN_SLOTS.length + " ok</span>";
+
+    var slots = document.createElement("div");
+    slots.className = "dslots";
+    if (!isToday) slots.style.display = "none";
+    head.onclick = function() { slots.style.display = slots.style.display === "none" ? "flex" : "none"; };
+
+    PLAN_SLOTS.forEach(function(slot) {
+      var k = schKey(day, slot.id);
+      var status = sch[k] || "pending";
+      var isFutSlot = isFut || (isToday && slot.h !== null && now.getHours() < slot.h);
+
+      var row = document.createElement("div");
+      row.className = "dslot-row";
+      var td = document.createElement("span"); td.className = "dslot-time"; td.textContent = slot.time;
+      var nd = document.createElement("span"); nd.className = "dslot-name " + slot.cls; nd.textContent = slot.name;
+      var btn = document.createElement("button");
+      btn.className = "schk " + (isFutSlot && status === "pending" ? "future" : status);
+      btn.textContent = status === "taken" ? "v" : status === "skipped" ? "x" : isFutSlot ? "o" : "?";
+      if (!(isFutSlot && status === "pending")) {
+        btn.onclick = (function(k, slot, day) {
+          return function() { cycleSlot(k, slot, day); };
+        })(k, slot, day);
+      }
+      row.appendChild(td); row.appendChild(nd); row.appendChild(btn);
+      slots.appendChild(row);
+    });
+
+    card.appendChild(head);
+    card.appendChild(slots);
+    grid.appendChild(card);
+  });
+}
+
+function cycleSlot(k, slot, day) {
+  var sch = getSch();
+  var cur = sch[k] || "pending";
+  var next = cur === "pending" ? "taken" : cur === "taken" ? "skipped" : "pending";
+  sch[k] = next;
+  setSch(sch);
+  if (next === "taken" && sameDay(day, new Date())) {
+    var log = getLog();
+    log.push({ drug: slot.name, time: Date.now() });
+    setLog(log);
+    saveToSheets();
+  }
+  showToast(next === "taken" ? slot.name + " segnato" : next === "skipped" ? "Saltato" : "Ripristinato");
+  renderWeek();
+}
+
+// ═══════════════════════════════════════
+// STORICO
+// ═══════════════════════════════════════
+function renderHist() {
+  var log = getLog();
+  var list = document.getElementById("hist-list");
+  if (!log.length) {
+    list.innerHTML = "<li style='color:var(--muted);font-size:0.75rem;padding:10px 4px;text-align:center'>Nessuna dose registrata</li>";
+    return;
+  }
+  var sorted = log.slice().sort(function(a, b) { return b.time - a.time; }).slice(0, 60);
+  list.innerHTML = sorted.map(function(e) {
+    var info = DRUGS[e.drug] || { cls:"muted" };
+    return "<li class='hist-item'>" +
+      "<span class='hist-drug " + info.cls + "'>" + e.drug + "</span>" +
+      "<span class='hist-time'>" + fmtDT(new Date(e.time)) + "</span>" +
+      "<button class='hist-del' onclick='deleteDose(" + e.time + ","" + e.drug + "")'>×</button>" +
+      "</li>";
+  }).join("");
+}
+
+function deleteDose(time, drug) {
+  var log = getLog();
+  var idx = log.findIndex(function(e) { return e.time === time && e.drug === drug; });
+  if (idx !== -1) { log.splice(idx, 1); setLog(log); }
+  showToast("Dose eliminata");
+  updateAll();
+  renderHist();
+}
+
+// ═══════════════════════════════════════
+// UTILS
+// ═══════════════════════════════════════
+function fmtTime(d) {
+  return d.toLocaleTimeString("it-IT", { hour:"2-digit", minute:"2-digit" });
+}
+
+function fmtDT(d) {
+  var today = new Date();
+  var yest = new Date(today); yest.setDate(today.getDate() - 1);
+  if (sameDay(d, today)) return "oggi " + fmtTime(d);
+  if (sameDay(d, yest)) return "ieri " + fmtTime(d);
+  return d.toLocaleDateString("it-IT", { day:"2-digit", month:"2-digit" }) + " " + fmtTime(d);
+}
+
+function fmtRem(ms) {
+  var m = Math.ceil(ms / 60000);
+  var h = Math.floor(m / 60);
+  var mm = m % 60;
+  if (h === 0) return mm + "m";
+  if (mm === 0) return h + "h";
+  return h + "h " + mm + "m";
+}
+
+function showToast(msg) {
+  var t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(window._toast);
+  window._toast = setTimeout(function() { t.classList.remove("show"); }, 2800);
+}
+
+// ═══════════════════════════════════════
+// UPDATE ALL
+// ═══════════════════════════════════════
+function updateAll() {
+  updateSug();
+  renderDailyLog();
+  updateCards();
+}
+
+// ═══════════════════════════════════════
+// CLOCK
+// ═══════════════════════════════════════
+function updateClock() {
+  var now = new Date();
+  document.getElementById("live-clock").textContent =
+    now.toLocaleTimeString("it-IT", { hour:"2-digit", minute:"2-digit", second:"2-digit" });
+  document.getElementById("live-date").textContent =
+    now.toLocaleDateString("it-IT", { weekday:"short", day:"2-digit", month:"short" });
+}
+
+// ═══════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════
+(function init() {
+  var now = new Date();
+  document.getElementById("ver-date").textContent =
+    now.toLocaleDateString("it-IT", { day:"2-digit", month:"2-digit", year:"numeric" }) + " " + fmtTime(now);
+  updateClock();
+  setInterval(updateClock, 1000);
+  setInterval(updateAll, 60000);
+  updateAll();
+})();
+</script>
+
+</body>
+</html>
