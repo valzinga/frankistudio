@@ -332,6 +332,7 @@ header {
 </head>
 <body>
 
+<div id="dbg" style="background:#ffeb3b;color:#000;font-family:monospace;font-size:11px;padding:8px 12px;display:none">DEBUG: <span id="dbg-msg">loading...</span></div>
 <header>
   <div>
     <div class="app-name">Memo Pillole</div>
@@ -975,6 +976,9 @@ function updateClock() {
 // INIT
 // ═══════════════════════════════════════
 (function init() {
+  try {
+    document.getElementById("dbg").style.display = "block";
+    document.getElementById("dbg-msg").textContent = "JS OK - init started";
   var now = new Date();
   document.getElementById("ver-date").textContent =
     now.toLocaleDateString("it-IT", { day:"2-digit", month:"2-digit", year:"numeric" }) + " " + fmtTime(now);
@@ -982,6 +986,11 @@ function updateClock() {
   setInterval(updateClock, 1000);
   setInterval(updateAll, 60000);
   updateAll();
+    document.getElementById("dbg-msg").textContent = "JS OK - all loaded";
+  } catch(err) {
+    document.getElementById("dbg").style.display = "block";
+    document.getElementById("dbg-msg").textContent = "ERROR: " + err.message;
+  }
 })();
 </script>
 
