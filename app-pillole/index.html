@@ -9,14 +9,7 @@
 <title>Memo Pillole</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@700;800&display=swap');
-:root {
-  --bg:#f4f4f8; --sf:#ffffff; --br:#e0e0ea; --tx:#1a1a2e; --mu:#8888aa;
-  --coef:#00a86b; --coefd:rgba(0,168,107,.10);
-  --delta:#2979ff; --deltad:rgba(41,121,255,.10);
-  --pal:#e65c00; --pald:rgba(230,92,0,.10);
-  --oki:#d32f2f; --okid:rgba(211,47,47,.10);
-  --ok:#00a86b; --wa:#d32f2f; --ca:#f57c00;
-}
+:root{--bg:#f4f4f8;--sf:#ffffff;--br:#e0e0ea;--tx:#1a1a2e;--mu:#8888aa;--coef:#00a86b;--coefd:rgba(0,168,107,.10);--delta:#2979ff;--deltad:rgba(41,121,255,.10);--pal:#e65c00;--pald:rgba(230,92,0,.10);--oki:#d32f2f;--okid:rgba(211,47,47,.10);--ok:#00a86b;--wa:#d32f2f;--ca:#f57c00}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 body{background:var(--bg);color:var(--tx);font-family:'Space Mono',monospace;min-height:100dvh;max-width:430px;margin:0 auto;padding-bottom:60px}
 header{background:var(--sf);border-bottom:1px solid var(--br);padding:14px 18px 10px;display:flex;align-items:flex-start;justify-content:space-between}
@@ -63,8 +56,8 @@ header{background:var(--sf);border-bottom:1px solid var(--br);padding:14px 18px 
 .sc-c::before{background:var(--coef)}.sc-d::before{background:var(--delta)}.sc-p::before{background:var(--pal)}.sc-o::before{background:var(--oki)}
 .sn{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;margin-bottom:8px}
 .sc-c .sn{color:var(--coef)}.sc-d .sn{color:var(--delta)}.sc-p .sn{color:var(--pal)}.sc-o .sn{color:var(--oki)}
-.sr{display:flex;justify-content:space-between;font-size:.875rem;margin-bottom:3px}
-.sr .lb{color:var(--mu)}.sr .vl{font-weight:700}.sr .vl.n{color:var(--mu);font-weight:400}
+.sr2{display:flex;justify-content:space-between;font-size:.875rem;margin-bottom:3px}
+.sr2 .lb{color:var(--mu)}.sr2 .vl{font-weight:700}.sr2 .vl.n{color:var(--mu);font-weight:400}
 .bge{margin-top:8px;display:inline-block;padding:4px 10px;border-radius:20px;font-size:.7rem;font-weight:700;letter-spacing:.05em}
 .b-ok{background:rgba(0,168,107,.12);color:var(--ok);border:1px solid rgba(0,168,107,.3)}
 .b-wa{background:rgba(211,47,47,.1);color:var(--wa);border:1px solid rgba(211,47,47,.25)}
@@ -115,8 +108,8 @@ header{background:var(--sf);border-bottom:1px solid var(--br);padding:14px 18px 
 .tmi input{flex:1;padding:13px;border-radius:10px;border:1.5px solid var(--br);background:var(--bg);color:var(--tx);font-family:'Space Mono',monospace;font-size:1rem;font-weight:700;text-align:center}
 .tmi input:focus{outline:none;border-color:var(--coef)}
 .tma{display:flex;gap:10px}
-.tmb{flex:1;padding:14px;border-radius:10px;border:none;font-family:'Syne',sans-serif;font-weight:800;font-size:.9rem;cursor:pointer}
-.tmb:active{opacity:.7}
+.tmbtn{flex:1;padding:14px;border-radius:10px;border:none;font-family:'Syne',sans-serif;font-weight:800;font-size:.9rem;cursor:pointer}
+.tmbtn:active{opacity:.7}
 .tm-x{background:var(--bg);border:1px solid var(--br);color:var(--mu)}
 .tm-ok{background:var(--coefd);border:1.5px solid var(--coef);color:var(--coef)}
 #cm{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;align-items:flex-end;justify-content:center}
@@ -125,8 +118,8 @@ header{background:var(--sf);border-bottom:1px solid var(--br);padding:14px 18px 
 .cmt{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;margin-bottom:8px}
 .cms{font-size:.75rem;color:var(--mu);margin-bottom:20px;line-height:1.6}
 .cma{display:flex;gap:10px}
-.cmb{flex:1;padding:14px;border-radius:10px;border:none;font-family:'Syne',sans-serif;font-weight:800;font-size:.9rem;cursor:pointer}
-.cmb:active{opacity:.7}
+.cmbtn{flex:1;padding:14px;border-radius:10px;border:none;font-family:'Syne',sans-serif;font-weight:800;font-size:.9rem;cursor:pointer}
+.cmbtn:active{opacity:.7}
 .cm-x{background:var(--bg);border:1px solid var(--br);color:var(--mu)}
 .cm-ok{background:rgba(211,47,47,.1);border:1.5px solid var(--wa);color:var(--wa)}
 #toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--tx);color:var(--bg);padding:11px 22px;border-radius:40px;font-size:.8rem;font-weight:700;white-space:nowrap;transition:transform .3s cubic-bezier(.34,1.56,.64,1);z-index:300;pointer-events:none}
@@ -138,19 +131,15 @@ header{background:var(--sf);border-bottom:1px solid var(--br);padding:14px 18px 
 <header>
   <div>
     <div class="aname">Memo Pillole</div>
-    <div class="aver">v3.1 &nbsp;|&nbsp; <span id="vd"></span></div>
+    <div class="aver">v3.2 &nbsp;|&nbsp; <span id="vd"></span></div>
   </div>
-  <div class="ck">
-    <span id="lc">--:--</span>
-    <span id="ld">---</span>
-  </div>
+  <div class="ck"><span id="lc">--:--</span><span id="ld">---</span></div>
 </header>
 <div class="tabs">
-  <button class="tab active" id="t-ora" onclick="sw('ora')">ORA</button>
-  <button class="tab" id="t-piano" onclick="sw('piano')">PIANO</button>
-  <button class="tab" id="t-storico" onclick="sw('storico')">STORICO</button>
+  <button class="tab active" id="t-ora" onclick="mpSw('ora')">ORA</button>
+  <button class="tab" id="t-piano" onclick="mpSw('piano')">PIANO</button>
+  <button class="tab" id="t-storico" onclick="mpSw('storico')">STORICO</button>
 </div>
-
 <div class="pn active" id="p-ora">
   <p class="sl">Suggerimento ora</p>
   <div id="sug"><div class="sh" id="sh"></div><div class="ss" id="ss"></div><div class="sa" id="sa"></div></div>
@@ -160,60 +149,60 @@ header{background:var(--sf);border-bottom:1px solid var(--br);padding:14px 18px 
   <div class="dv"></div>
   <p class="sl">Registra dose</p>
   <div class="dbs">
-    <button class="db db-c" id="btn-coef"><span>Coefferalgan</span><span class="di">base ogni 6-8h</span></button>
-    <button class="db db-d" id="btn-delta"><span>DeltaCortene</span><span class="di">solo mattina 07-09</span></button>
-    <button class="db db-p" id="btn-pal"><span>Palexia 50</span><span class="di">alternativa Coef<br>dolore forte 6-8h</span></button>
-    <button class="db db-o" id="btn-oki"><span>OKI 1/2</span><span class="di">solo dolore forte<br>min. 6h tra dosi</span></button>
+    <button class="db db-c" onclick="mpOpenTM('Coefferalgan')"><span>Coefferalgan</span><span class="di">base ogni 6-8h</span></button>
+    <button class="db db-d" onclick="mpOpenTM('DeltaCortene')"><span>DeltaCortene</span><span class="di">solo mattina 07-09</span></button>
+    <button class="db db-p" onclick="mpOpenTM('Palexia 50')"><span>Palexia 50</span><span class="di">alternativa Coef<br>dolore forte 6-8h</span></button>
+    <button class="db db-o" onclick="mpOpenTM('OKI 1/2')"><span>OKI 1/2</span><span class="di">solo dolore forte<br>min. 6h tra dosi</span></button>
   </div>
   <div class="dv"></div>
   <p class="sl">Stato farmaci</p>
   <div class="sg">
-    <div class="sc sc-c"><div class="sn">Coefferalgan</div><div class="sr"><span class="lb">Ultima</span><span class="vl" id="c-l">-</span></div><div class="sr"><span class="lb">Prossima</span><span class="vl" id="c-n">-</span></div><div class="sr"><span class="lb">Attesa</span><span class="scd" id="c-cd">-</span></div><div id="c-b"></div></div>
-    <div class="sc sc-d"><div class="sn">DeltaCortene</div><div class="sr"><span class="lb">Ultima</span><span class="vl" id="d-l">-</span></div><div class="sr"><span class="lb">Finestra</span><span class="vl">07:00-09:00</span></div><div id="d-b"></div></div>
-    <div class="sc sc-p"><div class="sn">Palexia 50</div><div class="sr"><span class="lb">Ultima</span><span class="vl" id="p-l">-</span></div><div class="sr"><span class="lb">Prossima</span><span class="vl" id="p-n">-</span></div><div class="sr"><span class="lb">Attesa</span><span class="scd" id="p-cd">-</span></div><div id="p-b"></div></div>
-    <div class="sc sc-o"><div class="sn">OKI 1/2</div><div class="sr"><span class="lb">Ultima</span><span class="vl" id="o-l">-</span></div><div class="sr"><span class="lb">Prossima</span><span class="vl" id="o-n">-</span></div><div class="sr"><span class="lb">Attesa</span><span class="scd" id="o-cd">-</span></div><div id="o-b"></div></div>
+    <div class="sc sc-c"><div class="sn">Coefferalgan</div><div class="sr2"><span class="lb">Ultima</span><span class="vl" id="c-l">-</span></div><div class="sr2"><span class="lb">Prossima</span><span class="vl" id="c-n">-</span></div><div class="sr2"><span class="lb">Attesa</span><span class="scd" id="c-cd">-</span></div><div id="c-b"></div></div>
+    <div class="sc sc-d"><div class="sn">DeltaCortene</div><div class="sr2"><span class="lb">Ultima</span><span class="vl" id="d-l">-</span></div><div class="sr2"><span class="lb">Finestra</span><span class="vl">07:00-09:00</span></div><div id="d-b"></div></div>
+    <div class="sc sc-p"><div class="sn">Palexia 50</div><div class="sr2"><span class="lb">Ultima</span><span class="vl" id="p-l">-</span></div><div class="sr2"><span class="lb">Prossima</span><span class="vl" id="p-n">-</span></div><div class="sr2"><span class="lb">Attesa</span><span class="scd" id="p-cd">-</span></div><div id="p-b"></div></div>
+    <div class="sc sc-o"><div class="sn">OKI 1/2</div><div class="sr2"><span class="lb">Ultima</span><span class="vl" id="o-l">-</span></div><div class="sr2"><span class="lb">Prossima</span><span class="vl" id="o-n">-</span></div><div class="sr2"><span class="lb">Attesa</span><span class="scd" id="o-cd">-</span></div><div id="o-b"></div></div>
   </div>
 </div>
-
 <div class="pn" id="p-piano">
   <p class="sl">Piano settimanale</p>
-  <div class="wn"><button class="wb" id="w-prev">&#8249;</button><span class="wl" id="wl">-</span><button class="wb" id="w-next">&#8250;</button></div>
+  <div class="wn"><button class="wb" onclick="mpShiftWeek(-1)">&#8249;</button><span class="wl" id="wl">-</span><button class="wb" onclick="mpShiftWeek(1)">&#8250;</button></div>
   <div class="wg" id="wg"></div>
 </div>
-
 <div class="pn" id="p-storico">
   <p class="sl">Ultime dosi</p>
   <ul class="hl" id="hl"></ul>
-  <button class="cbtn" id="btn-clear">Cancella tutto lo storico</button>
+  <button class="cbtn" onclick="mpOpenCM()">Cancella tutto lo storico</button>
 </div>
-
 <div id="tm"><div id="tmb">
   <div class="tmt" id="tmt">Registra dose</div>
   <div class="tms">Modifica data e orario se diverso da adesso</div>
   <div class="tmi"><input type="date" id="td"><input type="time" id="tt"></div>
   <div class="tma">
-    <button class="tmb tm-x" id="btn-tx">Annulla</button>
-    <button class="tmb tm-ok" id="btn-tok">Registra</button>
+    <button class="tmbtn tm-x" onclick="mpCloseTM()">Annulla</button>
+    <button class="tmbtn tm-ok" onclick="mpConfirmTM()">Registra</button>
   </div>
 </div></div>
-
 <div id="cm"><div id="cmb">
   <div class="cmt">Cancella storico</div>
-  <div class="cms">Vuoi cancellare tutte le dosi e il piano settimanale? Operazione irreversibile.</div>
+  <div class="cms">Vuoi cancellare tutte le dosi e il piano? Operazione irreversibile.</div>
   <div class="cma">
-    <button class="cmb cm-x" id="btn-cx">Annulla</button>
-    <button class="cmb cm-ok" id="btn-cok">Cancella tutto</button>
+    <button class="cmbtn cm-x" onclick="mpCloseCM()">Annulla</button>
+    <button class="cmbtn cm-ok" onclick="mpConfirmCM()">Cancella tutto</button>
   </div>
 </div></div>
-
 <div id="toast"></div>
 
 <script>
-(function() {
-"use strict";
+// == NOTA ARCHITETTURALE ==
+// Tutte le funzioni chiamate da onclick HTML sono dichiarate
+// direttamente in scope globale con prefisso "mp" per evitare
+// conflitti e garantire accessibilita da HTML.
+// NON si usa IIFE per le funzioni chiamate da HTML.
 
-var LK = "mp31_log";
-var SK = "mp31_sch";
+var MP = (function() {
+
+var LK = "mp32_log";
+var SK = "mp32_sch";
 var SURL = "https://script.google.com/macros/s/AKfycbxg0G76xotFdLX9S3nBIeuC0cX2o_CVPb-bbm0lLrwuCHo80l0EE6bfbK_yEueJ25gz/exec";
 var DAYS = ["Dom","Lun","Mar","Mer","Gio","Ven","Sab"];
 var DRUGS = {
@@ -233,47 +222,17 @@ var wOff = 0;
 var pDrug = null;
 
 function gl() { try { return JSON.parse(localStorage.getItem(LK)) || []; } catch(e) { return []; } }
-function sl2(l) { localStorage.setItem(LK, JSON.stringify(l)); }
+function sl(l) { localStorage.setItem(LK, JSON.stringify(l)); }
 function gs() { try { return JSON.parse(localStorage.getItem(SK)) || {}; } catch(e) { return {}; } }
 function ss(s) { localStorage.setItem(SK, JSON.stringify(s)); }
-
-function lastDose(nm) {
-  var log = gl();
-  var r = log.filter(function(e) { return e.drug === nm; });
-  return r.length ? r[r.length-1] : null;
-}
-
-function sameDay(a, b) {
-  return a.getFullYear()===b.getFullYear() && a.getMonth()===b.getMonth() && a.getDate()===b.getDate();
-}
-
-function schK(date, id) {
-  var d = new Date(date);
-  return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")+"_"+id;
-}
-
+function lastDose(nm) { var r = gl().filter(function(e){return e.drug===nm;}); return r.length ? r[r.length-1] : null; }
+function sameDay(a,b) { return a.getFullYear()===b.getFullYear()&&a.getMonth()===b.getMonth()&&a.getDate()===b.getDate(); }
+function schK(date,id) { var d=new Date(date); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")+"_"+id; }
 function fmtT(d) { return d.toLocaleTimeString("it-IT",{hour:"2-digit",minute:"2-digit"}); }
-function fmtDT(d) {
-  var t = new Date(); var y = new Date(t); y.setDate(t.getDate()-1);
-  if (sameDay(d,t)) return "oggi "+fmtT(d);
-  if (sameDay(d,y)) return "ieri "+fmtT(d);
-  return d.toLocaleDateString("it-IT",{day:"2-digit",month:"2-digit"})+" "+fmtT(d);
-}
-function fmtR(ms) {
-  var m = Math.ceil(ms/60000); var h = Math.floor(m/60); var mm = m%60;
-  return h===0 ? mm+"m" : mm===0 ? h+"h" : h+"h "+mm+"m";
-}
-
-function toast(msg) {
-  var el = document.getElementById("toast");
-  el.textContent = msg; el.classList.add("show");
-  clearTimeout(window._t);
-  window._t = setTimeout(function(){ el.classList.remove("show"); }, 2800);
-}
-
-function saveSheets() {
-  fetch(SURL, {method:"POST", mode:"no-cors", body:JSON.stringify(gl()), headers:{"Content-Type":"application/json"}}).catch(function(){});
-}
+function fmtDT(d) { var t=new Date(); var y=new Date(t); y.setDate(t.getDate()-1); if(sameDay(d,t)) return "oggi "+fmtT(d); if(sameDay(d,y)) return "ieri "+fmtT(d); return d.toLocaleDateString("it-IT",{day:"2-digit",month:"2-digit"})+" "+fmtT(d); }
+function fmtR(ms) { var m=Math.ceil(ms/60000); var h=Math.floor(m/60); var mm=m%60; return h===0?mm+"m":mm===0?h+"h":h+"h "+mm+"m"; }
+function toast(msg) { var el=document.getElementById("toast"); el.textContent=msg; el.classList.add("show"); clearTimeout(window._mp_t); window._mp_t=setTimeout(function(){el.classList.remove("show");},2800); }
+function saveSheets() { fetch(SURL,{method:"POST",mode:"no-cors",body:JSON.stringify(gl()),headers:{"Content-Type":"application/json"}}).catch(function(){}); }
 
 function sw(name) {
   ["ora","piano","storico"].forEach(function(n) {
@@ -292,58 +251,50 @@ function openTM(drug) {
   document.getElementById("tt").value = String(now.getHours()).padStart(2,"0")+":"+String(now.getMinutes()).padStart(2,"0");
   document.getElementById("tm").classList.add("show");
 }
-
-function closeTM() { document.getElementById("tm").classList.remove("show"); pDrug = null; }
-
+function closeTM() { document.getElementById("tm").classList.remove("show"); pDrug=null; }
 function confirmTM() {
   if (!pDrug) return;
-  var dv = document.getElementById("td").value;
-  var tv = document.getElementById("tt").value;
+  var dv=document.getElementById("td").value; var tv=document.getElementById("tt").value;
   if (!dv||!tv) { toast("Inserisci data e ora"); return; }
-  var dp = dv.split("-"); var tp = tv.split(":");
-  var dt = new Date(+dp[0], +dp[1]-1, +dp[2], +tp[0], +tp[1], 0, 0);
-  var log = gl(); log.push({drug:pDrug, time:dt.getTime()}); sl2(log);
-  saveSheets();
-  toast(pDrug+" registrato alle "+tv);
-  closeTM(); updateAll();
+  var dp=dv.split("-"); var tp=tv.split(":");
+  var dt=new Date(+dp[0],+dp[1]-1,+dp[2],+tp[0],+tp[1],0,0);
+  var log=gl(); log.push({drug:pDrug, time:dt.getTime()}); sl(log);
+  saveSheets(); toast(pDrug+" registrato alle "+tv); closeTM(); updateAll();
 }
 
 function openCM() { document.getElementById("cm").classList.add("show"); }
 function closeCM() { document.getElementById("cm").classList.remove("show"); }
-function confirmCM() {
-  localStorage.removeItem(LK); localStorage.removeItem(SK);
-  closeCM(); toast("Storico cancellato"); updateAll();
-}
+function confirmCM() { localStorage.removeItem(LK); localStorage.removeItem(SK); closeCM(); toast("Storico cancellato"); updateAll(); }
+
+document.getElementById("tm").addEventListener("click",function(e){if(e.target===this)closeTM();});
+document.getElementById("cm").addEventListener("click",function(e){if(e.target===this)closeCM();});
 
 function updateSug() {
-  var now = new Date(); var h = now.getHours();
-  var box = document.getElementById("sug"); var slot = null;
-  if (h>=7&&h<10)  slot={l:"Mattina",    s:"07:00-09:00 Coefferalgan + DeltaCortene", dr:["Coefferalgan","DeltaCortene"]};
+  var now=new Date(); var h=now.getHours();
+  var box=document.getElementById("sug"); var slot=null;
+  if (h>=7&&h<10)       slot={l:"Mattina",    s:"07:00-09:00 Coefferalgan + DeltaCortene", dr:["Coefferalgan","DeltaCortene"]};
   else if (h>=13&&h<16) slot={l:"Pomeriggio", s:"13:00-15:00 Coefferalgan",               dr:["Coefferalgan"]};
   else if (h>=19&&h<22) slot={l:"Sera",       s:"19:00-21:00 Coefferalgan",               dr:["Coefferalgan"]};
   else if (h>=22||h<6)  slot={l:"Notte",      s:"OKI solo se dolore forte",               dr:["OKI 1/2"]};
   if (!slot) { box.classList.remove("show"); return; }
-  document.getElementById("sh").textContent = slot.l;
-  document.getElementById("ss").textContent = slot.s;
-  var sa = document.getElementById("sa"); sa.innerHTML = "";
+  document.getElementById("sh").textContent=slot.l;
+  document.getElementById("ss").textContent=slot.s;
+  var sa=document.getElementById("sa"); sa.innerHTML="";
   slot.dr.forEach(function(drug) {
-    var info = DRUGS[drug]; var last = lastDose(drug);
-    var canTake = true; var reason = "";
-    if (drug==="DeltaCortene") { if (last&&sameDay(new Date(last.time),now)){canTake=false;reason="gia preso";} }
-    else if (last&&info.intv) { var rem=(last.time+info.intv)-Date.now(); if (rem>0){canTake=false;reason="tra "+fmtR(rem);} }
-    var btn = document.createElement("button");
-    btn.className = "sb";
+    var info=DRUGS[drug]; var last=lastDose(drug); var canTake=true; var reason="";
+    if (drug==="DeltaCortene") { if(last&&sameDay(new Date(last.time),now)){canTake=false;reason="gia preso";} }
+    else if (last&&info.intv) { var rem=(last.time+info.intv)-Date.now(); if(rem>0){canTake=false;reason="tra "+fmtR(rem);} }
+    var btn=document.createElement("button"); btn.className="sb";
     if (canTake) {
-      btn.style.cssText = "border:1.5px solid var(--"+info.cls+");color:var(--"+info.cls+");background:var(--"+info.cls+"d)";
-      var sp1 = document.createElement("span"); sp1.textContent = "Ho preso";
-      var br = document.createElement("br");
-      var sp2 = document.createElement("small"); sp2.textContent = drug; sp2.style.cssText = "font-weight:400;font-size:.62rem";
-      btn.appendChild(sp1); btn.appendChild(br); btn.appendChild(sp2);
-      (function(d){ btn.addEventListener("click", function(){ openTM(d); }); })(drug);
+      btn.style.cssText="border:1.5px solid var(--"+info.cls+");color:var(--"+info.cls+");background:var(--"+info.cls+"d)";
+      var s1=document.createElement("span"); s1.textContent="Ho preso";
+      var br=document.createElement("br");
+      var s2=document.createElement("small"); s2.textContent=drug; s2.style.cssText="font-weight:400;font-size:.62rem";
+      btn.appendChild(s1); btn.appendChild(br); btn.appendChild(s2);
+      (function(d){btn.addEventListener("click",function(){openTM(d);});})(drug);
     } else {
-      btn.style.cssText = "background:var(--bg);border:1px solid var(--br);color:var(--mu)";
-      btn.textContent = reason+" - "+drug;
-      btn.disabled = true;
+      btn.style.cssText="background:var(--bg);border:1px solid var(--br);color:var(--mu)";
+      btn.textContent=reason+" - "+drug; btn.disabled=true;
     }
     sa.appendChild(btn);
   });
@@ -351,107 +302,81 @@ function updateSug() {
 }
 
 function renderDLog() {
-  var now = new Date(); var h = now.getHours();
-  var ol = document.getElementById("olbl");
-  if (ol) ol.textContent = now.toLocaleDateString("it-IT",{weekday:"long",day:"2-digit",month:"long"});
-  var el = document.getElementById("dlog"); el.innerHTML = "";
-  var log = gl();
-  var tod = log.filter(function(e){ return sameDay(new Date(e.time),now); });
-  var sorted = tod.slice().sort(function(a,b){ return a.time-b.time; });
-  sorted.forEach(function(e) {
-    var info = DRUGS[e.drug]||{cls:"mu"};
-    var row = document.createElement("div"); row.className = "dr done";
-    var dot = document.createElement("div"); dot.className = "dd "+info.cls;
-    var nm = document.createElement("span"); nm.className = "dn "+info.cls; nm.textContent = e.drug;
-    var sl3 = document.createElement("span"); sl3.className = "dsl"; sl3.textContent = fmtT(new Date(e.time));
-    var st = document.createElement("span"); st.className = "dst ok"; st.textContent = "v";
-    row.appendChild(dot); row.appendChild(nm); row.appendChild(sl3); row.appendChild(st);
-    el.appendChild(row);
+  var now=new Date(); var h=now.getHours();
+  var ol=document.getElementById("olbl"); if(ol) ol.textContent=now.toLocaleDateString("it-IT",{weekday:"long",day:"2-digit",month:"long"});
+  var el=document.getElementById("dlog"); el.innerHTML="";
+  var log=gl(); var tod=log.filter(function(e){return sameDay(new Date(e.time),now);});
+  tod.slice().sort(function(a,b){return a.time-b.time;}).forEach(function(e) {
+    var info=DRUGS[e.drug]||{cls:"mu"};
+    var row=document.createElement("div"); row.className="dr done";
+    var dot=document.createElement("div"); dot.className="dd "+info.cls;
+    var nm=document.createElement("span"); nm.className="dn "+info.cls; nm.textContent=e.drug;
+    var sl2=document.createElement("span"); sl2.className="dsl"; sl2.textContent=fmtT(new Date(e.time));
+    var st=document.createElement("span"); st.className="dst ok"; st.textContent="v";
+    row.appendChild(dot); row.appendChild(nm); row.appendChild(sl2); row.appendChild(st); el.appendChild(row);
   });
   SLOTS.forEach(function(s) {
-    var taken = tod.find(function(e){ return e.drug===s.name && (s.h===null||new Date(e.time).getHours()>=s.h); });
+    var taken=tod.find(function(e){return e.drug===s.name&&(s.h===null||new Date(e.time).getHours()>=s.h);});
     if (taken) return;
-    if (s.h!==null && h<s.h) {
-      var row = document.createElement("div"); row.className = "dr";
-      var dot = document.createElement("div"); dot.className = "dd pend";
-      var nm = document.createElement("span"); nm.className = "dn mu"; nm.textContent = s.name;
-      var sl3 = document.createElement("span"); sl3.className = "dsl"; sl3.textContent = s.tm;
-      var st = document.createElement("span"); st.className = "dst mu"; st.textContent = s.tm;
-      row.appendChild(dot); row.appendChild(nm); row.appendChild(sl3); row.appendChild(st);
-      el.appendChild(row);
-    } else if (s.h!==null && h>=s.h) {
-      var takenT = tod.find(function(e){ return e.drug===s.name; });
+    if (s.h!==null&&h<s.h) {
+      var row=document.createElement("div"); row.className="dr";
+      var dot=document.createElement("div"); dot.className="dd pend";
+      var nm=document.createElement("span"); nm.className="dn mu"; nm.textContent=s.name;
+      var sl2=document.createElement("span"); sl2.className="dsl"; sl2.textContent=s.tm;
+      var st=document.createElement("span"); st.className="dst mu"; st.textContent=s.tm;
+      row.appendChild(dot); row.appendChild(nm); row.appendChild(sl2); row.appendChild(st); el.appendChild(row);
+    } else if (s.h!==null&&h>=s.h) {
+      var takenT=tod.find(function(e){return e.drug===s.name;});
       if (!takenT) {
-        var row = document.createElement("div"); row.className = "dr miss";
-        var dot = document.createElement("div"); dot.className = "dd "+s.cls;
-        var nm = document.createElement("span"); nm.className = "dn "+s.cls; nm.textContent = s.name;
-        var sl3 = document.createElement("span"); sl3.className = "dsl"; sl3.textContent = s.tm;
-        var st = document.createElement("span"); st.className = "dst wa"; st.textContent = "?";
-        row.appendChild(dot); row.appendChild(nm); row.appendChild(sl3); row.appendChild(st);
-        el.appendChild(row);
+        var row=document.createElement("div"); row.className="dr miss";
+        var dot=document.createElement("div"); dot.className="dd "+s.cls;
+        var nm=document.createElement("span"); nm.className="dn "+s.cls; nm.textContent=s.name;
+        var sl2=document.createElement("span"); sl2.className="dsl"; sl2.textContent=s.tm;
+        var st=document.createElement("span"); st.className="dst wa"; st.textContent="?";
+        row.appendChild(dot); row.appendChild(nm); row.appendChild(sl2); row.appendChild(st); el.appendChild(row);
       }
     }
   });
-  if (!el.children.length) {
-    var msg = document.createElement("div");
-    msg.style.cssText = "color:var(--mu);font-size:.75rem;padding:8px 2px;text-align:center";
-    msg.textContent = "Nessuna dose oggi";
-    el.appendChild(msg);
-  }
+  if (!el.children.length) { var msg=document.createElement("div"); msg.style.cssText="color:var(--mu);font-size:.75rem;padding:8px 2px;text-align:center"; msg.textContent="Nessuna dose oggi"; el.appendChild(msg); }
 }
 
-function badge(t, txt) {
-  var sp = document.createElement("span"); sp.className = "bge b-"+t; sp.textContent = txt; return sp;
-}
+function badge(t,txt) { var sp=document.createElement("span"); sp.className="bge b-"+t; sp.textContent=txt; return sp; }
 
-function updateCard(drug, pfx, now) {
-  var last = lastDose(drug); var intv = DRUGS[drug].intv;
+function updateCard(drug,pfx,now) {
+  var last=lastDose(drug); var intv=DRUGS[drug].intv;
   var lE=document.getElementById(pfx+"-l"), nE=document.getElementById(pfx+"-n"), cE=document.getElementById(pfx+"-cd"), bE=document.getElementById(pfx+"-b");
-  bE.innerHTML = "";
-  if (!last) {
-    lE.textContent="-"; lE.className="vl n";
-    if(nE){nE.textContent="-";nE.className="vl n";}
-    cE.textContent="nessuna dose"; cE.className="scd";
-    bE.appendChild(badge("no","Nessun dato")); return;
-  }
+  bE.innerHTML="";
+  if (!last) { lE.textContent="-"; lE.className="vl n"; if(nE){nE.textContent="-";nE.className="vl n";} cE.textContent="nessuna dose"; cE.className="scd"; bE.appendChild(badge("no","Nessun dato")); return; }
   lE.textContent=fmtDT(new Date(last.time)); lE.className="vl";
-  if(nE){nE.textContent=fmtT(new Date(last.time+intv));nE.className="vl";}
+  if (nE) { nE.textContent=fmtT(new Date(last.time+intv)); nE.className="vl"; }
   var rem=(last.time+intv)-now;
-  if(rem<=0){cE.textContent="Ora disponibile";cE.className="scd ok pulse";bE.appendChild(badge("ok","Puoi prendere"));}
-  else{cE.textContent=fmtR(rem);cE.className="scd wa";bE.appendChild(badge("wa","Aspetta "+fmtR(rem)));}
+  if (rem<=0) { cE.textContent="Ora disponibile"; cE.className="scd ok pulse"; bE.appendChild(badge("ok","Puoi prendere")); }
+  else { cE.textContent=fmtR(rem); cE.className="scd wa"; bE.appendChild(badge("wa","Aspetta "+fmtR(rem))); }
 }
 
 function updateDelta(now) {
   var last=lastDose("DeltaCortene"); var h=new Date(now).getHours();
-  var lE=document.getElementById("d-l"), bE=document.getElementById("d-b");
-  bE.innerHTML="";
-  if(last){lE.textContent=fmtDT(new Date(last.time));lE.className="vl";if(sameDay(new Date(last.time),new Date(now))){bE.appendChild(badge("ok","Gia preso oggi"));return;}}
-  else{lE.textContent="-";lE.className="vl n";}
-  if(h>=7&&h<9) bE.appendChild(badge("ok","Finestra aperta"));
-  else if(h<7) bE.appendChild(badge("ca","Finestra tra "+(7-h)+"h"));
+  var lE=document.getElementById("d-l"); var bE=document.getElementById("d-b"); bE.innerHTML="";
+  if (last) { lE.textContent=fmtDT(new Date(last.time)); lE.className="vl"; if(sameDay(new Date(last.time),new Date(now))){bE.appendChild(badge("ok","Gia preso oggi"));return;} }
+  else { lE.textContent="-"; lE.className="vl n"; }
+  if (h>=7&&h<9) bE.appendChild(badge("ok","Finestra aperta"));
+  else if (h<7) bE.appendChild(badge("ca","Finestra tra "+(7-h)+"h"));
   else bE.appendChild(badge("wa","Domani mattina"));
 }
 
-function updateCards() {
-  var now=Date.now();
-  updateCard("Coefferalgan","c",now); updateDelta(now);
-  updateCard("Palexia 50","p",now); updateCard("OKI 1/2","o",now);
-}
-
+function updateCards() { var now=Date.now(); updateCard("Coefferalgan","c",now); updateDelta(now); updateCard("Palexia 50","p",now); updateCard("OKI 1/2","o",now); }
 function updateAll() { updateSug(); renderDLog(); updateCards(); }
 
 function renderWeek() {
   var today=new Date(); today.setHours(0,0,0,0);
-  var dow=today.getDay(); var mon=new Date(today);
-  mon.setDate(today.getDate()-(dow===0?6:dow-1)+wOff*7); mon.setHours(0,0,0,0);
+  var dow=today.getDay(); var mon=new Date(today); mon.setDate(today.getDate()-(dow===0?6:dow-1)+wOff*7); mon.setHours(0,0,0,0);
   var days=[]; for(var i=0;i<7;i++){var d=new Date(mon);d.setDate(mon.getDate()+i);days.push(d);}
   var fmt=function(d){return d.toLocaleDateString("it-IT",{day:"2-digit",month:"short"});};
   document.getElementById("wl").textContent=fmt(days[0])+" - "+fmt(days[6]);
   var sch=gs(); var now=new Date(); var grid=document.getElementById("wg"); grid.innerHTML="";
   days.forEach(function(day) {
     var isT=day.getTime()===today.getTime(); var isFut=day>today;
-    var sts=SLOTS.map(function(s){return sch[schK(day,s.id)]||"pending";});
-    var tn=sts.filter(function(s){return s==="taken";}).length;
+    var sts=SLOTS.map(function(s){return sch[schK(day,s.id)]||"pending";}); var tn=sts.filter(function(s){return s==="taken";}).length;
     var card=document.createElement("div"); card.className="dc"+(isT?" td":"");
     var head=document.createElement("div"); head.className="dh";
     var left=document.createElement("div");
@@ -461,89 +386,68 @@ function renderWeek() {
     left.appendChild(sp1); left.appendChild(br); left.appendChild(sp2);
     var prog=document.createElement("span"); prog.className="dpg"; prog.textContent=tn+"/"+SLOTS.length+" ok";
     head.appendChild(left); head.appendChild(prog);
-    var slotsDiv=document.createElement("div"); slotsDiv.className="dss";
-    if(!isT) slotsDiv.style.display="none";
-    head.addEventListener("click", function(){ slotsDiv.style.display=slotsDiv.style.display==="none"?"flex":"none"; });
+    var slotsDiv=document.createElement("div"); slotsDiv.className="dss"; if(!isT) slotsDiv.style.display="none";
+    head.addEventListener("click",function(){slotsDiv.style.display=slotsDiv.style.display==="none"?"flex":"none";});
     SLOTS.forEach(function(slot) {
-      var k=schK(day,slot.id); var status=sch[k]||"pending";
-      var isFutS=isFut||(isT&&slot.h!==null&&now.getHours()<slot.h);
+      var k=schK(day,slot.id); var status=sch[k]||"pending"; var isFutS=isFut||(isT&&slot.h!==null&&now.getHours()<slot.h);
       var row=document.createElement("div"); row.className="dsw";
       var ti=document.createElement("span"); ti.className="dt"; ti.textContent=slot.tm;
       var nm=document.createElement("span"); nm.className="dm "+slot.cls; nm.textContent=slot.name;
-      var btn=document.createElement("button");
-      btn.className="sk "+(isFutS&&status==="pending"?"future":status);
+      var btn=document.createElement("button"); btn.className="sk "+(isFutS&&status==="pending"?"future":status);
       btn.textContent=status==="taken"?"v":status==="skipped"?"x":isFutS?"o":"?";
-      if(!(isFutS&&status==="pending")){
-        (function(k2,s2,d2){ btn.addEventListener("click",function(){ cycleSlot(k2,s2,d2); }); })(k,slot,day);
-      }
-      row.appendChild(ti); row.appendChild(nm); row.appendChild(btn);
-      slotsDiv.appendChild(row);
+      if(!(isFutS&&status==="pending")){ (function(k2,s2,d2){btn.addEventListener("click",function(){cycleSlot(k2,s2,d2);});})(k,slot,day); }
+      row.appendChild(ti); row.appendChild(nm); row.appendChild(btn); slotsDiv.appendChild(row);
     });
     card.appendChild(head); card.appendChild(slotsDiv); grid.appendChild(card);
   });
 }
 
-function cycleSlot(k, slot, day) {
-  var sch=gs(); var cur=sch[k]||"pending";
-  var next=cur==="pending"?"taken":cur==="taken"?"skipped":"pending";
+function cycleSlot(k,slot,day) {
+  var sch=gs(); var cur=sch[k]||"pending"; var next=cur==="pending"?"taken":cur==="taken"?"skipped":"pending";
   sch[k]=next; ss(sch);
-  if(next==="taken"&&sameDay(day,new Date())){var log=gl();log.push({drug:slot.name,time:Date.now()});sl2(log);saveSheets();}
-  toast(next==="taken"?slot.name+" segnato":next==="skipped"?"Saltato":"Ripristinato");
-  renderWeek();
+  if(next==="taken"&&sameDay(day,new Date())){var log=gl();log.push({drug:slot.name,time:Date.now()});sl(log);saveSheets();}
+  toast(next==="taken"?slot.name+" segnato":next==="skipped"?"Saltato":"Ripristinato"); renderWeek();
 }
 
 function renderHist() {
   var log=gl(); var list=document.getElementById("hl"); list.innerHTML="";
-  if(!log.length){
-    var li=document.createElement("li"); li.style.cssText="color:var(--mu);font-size:.75rem;padding:10px 4px;text-align:center"; li.textContent="Nessuna dose registrata"; list.appendChild(li); return;
-  }
-  var sorted=log.slice().sort(function(a,b){return b.time-a.time;}).slice(0,60);
-  sorted.forEach(function(e) {
+  if (!log.length) { var li=document.createElement("li"); li.style.cssText="color:var(--mu);font-size:.75rem;padding:10px 4px;text-align:center"; li.textContent="Nessuna dose registrata"; list.appendChild(li); return; }
+  log.slice().sort(function(a,b){return b.time-a.time;}).slice(0,60).forEach(function(e) {
     var info=DRUGS[e.drug]||{cls:"mu"};
     var li=document.createElement("li"); li.className="hi";
     var dn=document.createElement("span"); dn.className="hd "+info.cls; dn.textContent=e.drug;
     var dt=document.createElement("span"); dt.className="ht"; dt.textContent=fmtDT(new Date(e.time));
     var db=document.createElement("button"); db.className="hdl"; db.textContent="x";
-    (function(t,d){ db.addEventListener("click",function(){ delDose(t,d); }); })(e.time,e.drug);
-    li.appendChild(dn); li.appendChild(dt); li.appendChild(db);
-    list.appendChild(li);
+    (function(t,d){db.addEventListener("click",function(){delDose(t,d);});})(e.time,e.drug);
+    li.appendChild(dn); li.appendChild(dt); li.appendChild(db); list.appendChild(li);
   });
 }
 
-function delDose(time, drug) {
-  var log=gl(); var idx=log.findIndex(function(e){return e.time===time&&e.drug===drug;});
-  if(idx!==-1){log.splice(idx,1);sl2(log);}
-  toast("Dose eliminata"); updateAll(); renderHist();
-}
+function delDose(time,drug) { var log=gl(); var idx=log.findIndex(function(e){return e.time===time&&e.drug===drug;}); if(idx!==-1){log.splice(idx,1);sl(log);} toast("Dose eliminata"); updateAll(); renderHist(); }
 
-function updateClock() {
-  var n=new Date();
-  document.getElementById("lc").textContent=n.toLocaleTimeString("it-IT",{hour:"2-digit",minute:"2-digit",second:"2-digit"});
-  document.getElementById("ld").textContent=n.toLocaleDateString("it-IT",{weekday:"short",day:"2-digit",month:"short"});
-}
+function updateClock() { var n=new Date(); document.getElementById("lc").textContent=n.toLocaleTimeString("it-IT",{hour:"2-digit",minute:"2-digit",second:"2-digit"}); document.getElementById("ld").textContent=n.toLocaleDateString("it-IT",{weekday:"short",day:"2-digit",month:"short"}); }
+
+// Esposizione pubblica per onclick HTML
+return {sw:sw, openTM:openTM, closeTM:closeTM, confirmTM:confirmTM, openCM:openCM, closeCM:closeCM, confirmCM:confirmCM, shiftWeek:function(d){wOff+=d;renderWeek();}};
+})();
+
+// Funzioni globali chiamate da onclick HTML - delegate al modulo MP
+function mpSw(n) { MP.sw(n); }
+function mpOpenTM(d) { MP.openTM(d); }
+function mpCloseTM() { MP.closeTM(); }
+function mpConfirmTM() { MP.confirmTM(); }
+function mpOpenCM() { MP.openCM(); }
+function mpCloseCM() { MP.closeCM(); }
+function mpConfirmCM() { MP.confirmCM(); }
+function mpShiftWeek(d) { MP.shiftWeek(d); }
 
 // INIT
-document.getElementById("btn-coef").addEventListener("click",function(){ openTM("Coefferalgan"); });
-document.getElementById("btn-delta").addEventListener("click",function(){ openTM("DeltaCortene"); });
-document.getElementById("btn-pal").addEventListener("click",function(){ openTM("Palexia 50"); });
-document.getElementById("btn-oki").addEventListener("click",function(){ openTM("OKI 1/2"); });
-document.getElementById("btn-tx").addEventListener("click", closeTM);
-document.getElementById("btn-tok").addEventListener("click", confirmTM);
-document.getElementById("tm").addEventListener("click",function(e){if(e.target===this)closeTM();});
-document.getElementById("btn-clear").addEventListener("click", openCM);
-document.getElementById("btn-cx").addEventListener("click", closeCM);
-document.getElementById("btn-cok").addEventListener("click", confirmCM);
-document.getElementById("cm").addEventListener("click",function(e){if(e.target===this)closeCM();});
-document.getElementById("w-prev").addEventListener("click",function(){ wOff--; renderWeek(); });
-document.getElementById("w-next").addEventListener("click",function(){ wOff++; renderWeek(); });
-
-var now=new Date();
-document.getElementById("vd").textContent=now.toLocaleDateString("it-IT",{day:"2-digit",month:"2-digit",year:"numeric"})+" "+fmtT(now);
-updateClock();
-setInterval(updateClock,1000);
-setInterval(updateAll,60000);
-updateAll();
-
+(function(){
+  var now=new Date();
+  document.getElementById("vd").textContent=now.toLocaleDateString("it-IT",{day:"2-digit",month:"2-digit",year:"numeric"})+" "+now.toLocaleTimeString("it-IT",{hour:"2-digit",minute:"2-digit"});
+  MP.sw("ora");
+  setInterval(function(){var n=new Date();document.getElementById("lc").textContent=n.toLocaleTimeString("it-IT",{hour:"2-digit",minute:"2-digit",second:"2-digit"});document.getElementById("ld").textContent=n.toLocaleDateString("it-IT",{weekday:"short",day:"2-digit",month:"short"});},1000);
+  setInterval(function(){if(document.getElementById("p-ora").classList.contains("active")){MP.sw("ora");}},60000);
 })();
 </script>
 </body>
