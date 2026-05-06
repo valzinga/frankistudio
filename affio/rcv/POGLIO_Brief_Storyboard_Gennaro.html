@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brief Storyboard — Il Poglío · Per Gennaro</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --blu:#2B38B0;--arancio:#F0A500;--grigio-bg:#F2F1ED;
+  --dark:#111118;--bordo:#D8D5CF;--bianco:#FFFFFF;
+  --verde:#1a7a1a;--rosso:#a00;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Barlow',sans-serif;background:var(--grigio-bg);color:#222;font-size:15px;line-height:1.6;min-height:100vh}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;background:var(--blu);padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:52px}
+.fk-logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;display:inline-flex;align-items:center;text-decoration:none}
+.fk-logo .fran{color:#FFF}
+.fk-logo .ki{background:#F0A500;color:#FFF;border-radius:5px;padding:1px 7px;margin-left:2px;display:inline-block}
+.nav-label{color:rgba(255,255,255,0.65);font-size:11px;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+
+/* HERO */
+.hero{background:var(--dark);padding:48px 20px 44px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(135deg,rgba(240,165,0,0.06) 0,rgba(240,165,0,0.06) 1px,transparent 1px,transparent 40px)}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:4px;background:var(--arancio)}
+.hero-inner{max-width:680px;margin:0 auto;position:relative;z-index:2}
+.hero-badge{display:inline-block;background:var(--arancio);color:#FFF;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;letter-spacing:2px;text-transform:uppercase;padding:4px 12px;border-radius:3px;margin-bottom:14px}
+.hero-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(32px,8vw,52px);color:#FFF;text-transform:uppercase;line-height:1.0;margin-bottom:8px}
+.hero-title span{color:var(--arancio)}
+.hero-sub{font-size:14px;color:rgba(255,255,255,0.55);margin-bottom:24px;line-height:1.6;max-width:500px}
+.hero-meta{display:flex;gap:20px;flex-wrap:wrap}
+.hm{text-align:left}
+.hm-val{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px;color:#FFF;line-height:1}
+.hm-label{font-size:10px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1px;margin-top:2px}
+
+/* BODY */
+.body{max-width:680px;margin:0 auto;padding:0 20px 48px}
+
+/* SEZIONE */
+.sez{padding:32px 0;border-bottom:1px solid var(--bordo)}
+.sez:last-child{border-bottom:none}
+.sez-bar{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+.sez-bar-line{height:3px;flex:1;background:var(--blu)}
+.sez-num{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;color:var(--blu);letter-spacing:2px;text-transform:uppercase;white-space:nowrap}
+.sez-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;text-transform:uppercase;color:var(--dark);margin-bottom:14px}
+
+/* CARD BIANCA */
+.card{background:var(--bianco);border-radius:6px;padding:18px 20px;margin-bottom:10px}
+.card-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:14px;text-transform:uppercase;color:var(--blu);letter-spacing:1px;margin-bottom:8px}
+.card p,.card li{font-size:14px;color:#444;line-height:1.7}
+.card ul{padding-left:18px;margin-top:6px}
+.card ul li{margin-bottom:4px}
+
+/* BAND ARANCIO */
+.band{background:var(--arancio);padding:16px 20px;margin:16px 0;border-radius:4px}
+.band p{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;color:#FFF;text-transform:uppercase;line-height:1.4;text-align:center}
+
+/* SCENA */
+.scena{background:var(--bianco);border-radius:8px;margin-bottom:14px;overflow:hidden;border-left:5px solid var(--bordo)}
+.scena.s1{border-left-color:#111118}
+.scena.s2{border-left-color:#6b4c2a}
+.scena.s3{border-left-color:#2B38B0}
+.scena.s4{border-left-color:#0891b2}
+.scena.s5{border-left-color:#1C2B1A}
+.scena.s6{border-left-color:#F0A500}
+.scena.s7{border-left-color:#7c3aed}
+.scena.s8{border-left-color:#22c55e}
+
+.scena-head{padding:16px 18px 12px;display:flex;align-items:flex-start;gap:14px}
+.scena-num{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:42px;line-height:1;min-width:48px;color:var(--bordo)}
+.scena.s1 .scena-num{color:#111118}
+.scena.s2 .scena-num{color:#6b4c2a}
+.scena.s3 .scena-num{color:#2B38B0}
+.scena.s4 .scena-num{color:#0891b2}
+.scena.s5 .scena-num{color:#1C2B1A}
+.scena.s6 .scena-num{color:#F0A500}
+.scena.s7 .scena-num{color:#7c3aed}
+.scena.s8 .scena-num{color:#22c55e}
+.scena-info{flex:1}
+.scena-tipo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#aaa;margin-bottom:4px}
+.scena-titolo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px;text-transform:uppercase;color:var(--dark);line-height:1.1;margin-bottom:4px}
+.scena-emozione{font-size:13px;color:#777;font-style:italic}
+.scena-durata{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:12px;color:var(--arancio);text-align:right;white-space:nowrap}
+
+.scena-body{padding:0 18px 18px;display:grid;gap:10px}
+.scena-row{display:grid;grid-template-columns:90px 1fr;gap:8px;align-items:flex-start}
+.scena-label{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#bbb;padding-top:2px}
+.scena-val{font-size:13px;color:#333;line-height:1.6}
+.scena-val strong{color:var(--dark);font-weight:600}
+.scena-val em{color:var(--arancio);font-style:normal;font-weight:600}
+
+/* DIVIDER SCENA */
+.scena-divider{height:1px;background:var(--bordo);margin:0 18px}
+
+/* REF BENCHMARK */
+.ref-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.ref-card{background:var(--grigio-bg);border-radius:6px;padding:14px;border-left:3px solid var(--bordo)}
+.ref-card.soho{border-left-color:#8B7355}
+.ref-card.campra{border-left-color:#2B38B0}
+.ref-card.bubble{border-left-color:#0891b2}
+.ref-card.zoku{border-left-color:#7c3aed}
+.ref-card.poggio{border-left-color:#6b4c2a}
+.ref-card.eni{border-left-color:#a00}
+.ref-name{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:13px;text-transform:uppercase;color:var(--dark);margin-bottom:4px}
+.ref-loc{font-size:10px;color:#888;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.ref-desc{font-size:12px;color:#555;line-height:1.5}
+.ref-uso{font-size:10px;font-weight:700;color:var(--arancio);text-transform:uppercase;letter-spacing:0.5px;margin-top:6px}
+
+/* BRIEF FOTO */
+.foto-brief{background:var(--dark);border-radius:8px;padding:24px;margin-bottom:12px}
+.fb-tag{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--arancio);margin-bottom:10px}
+.fb-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:18px;text-transform:uppercase;color:#FFF;margin-bottom:12px;line-height:1.2}
+.fb-p{font-size:13px;color:rgba(255,255,255,0.7);line-height:1.7;margin-bottom:10px}
+.fb-p:last-child{margin-bottom:0}
+.fb-p strong{color:#FFF}
+.fb-step{display:flex;gap:10px;margin-bottom:8px;align-items:flex-start}
+.fb-step-num{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:18px;color:var(--arancio);min-width:22px;line-height:1.2}
+.fb-step-text{font-size:13px;color:rgba(255,255,255,0.75);line-height:1.6}
+.fb-step-text strong{color:#FFF}
+
+/* PROMPT AI */
+.prompt-box{background:#1a1a2e;border:1px solid rgba(240,165,0,0.3);border-radius:6px;padding:14px 16px;margin-top:10px}
+.prompt-label{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--arancio);margin-bottom:8px}
+.prompt-text{font-family:monospace;font-size:12px;color:rgba(255,255,255,0.75);line-height:1.7;white-space:pre-wrap;word-break:break-word}
+
+/* MUSICA */
+.musica-row{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--bordo);align-items:flex-start}
+.musica-row:last-child{border-bottom:none}
+.musica-num{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px;color:var(--arancio);min-width:28px;line-height:1}
+.musica-info{flex:1}
+.musica-title{font-weight:600;font-size:14px;color:var(--dark)}
+.musica-desc{font-size:12px;color:#888;margin-top:2px}
+
+/* TABELLA RIEPILOGO */
+table{width:100%;border-collapse:collapse;background:var(--bianco);border-radius:6px;overflow:hidden;margin:14px 0;font-size:12px}
+th{background:var(--blu);color:#FFF;font-family:'Barlow Condensed',sans-serif;font-weight:900;text-transform:uppercase;font-size:11px;letter-spacing:1px;padding:9px 12px;text-align:left}
+td{padding:9px 12px;border-bottom:1px solid #f0ede8;color:#444;vertical-align:top;line-height:1.5}
+tr:last-child td{border-bottom:none}
+.td-emo{color:var(--arancio);font-style:italic;font-size:11px}
+.td-dur{font-family:'Barlow Condensed',sans-serif;font-weight:900;color:var(--blu)}
+
+footer{background:var(--dark);padding:24px 20px;text-align:center;margin-top:8px}
+footer p{color:rgba(255,255,255,0.3);font-size:10px;line-height:1.8}
+
+/* HUB BTN */
+.hub-btn{position:fixed;bottom:20px;right:20px;z-index:9999;width:44px;height:44px;background:var(--blu);border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,0.25);font-size:20px}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="fk-logo" href="#"><span class="fran">Fran</span><span class="ki">Ki</span></a>
+  <span class="nav-label">Brief Storyboard · Gennaro</span>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">🎬 Brief Creativo · Riservato</div>
+    <h1 class="hero-title">Storyboard<br><span>Il Poglío</span></h1>
+    <p class="hero-sub">Brief completo per la produzione della presentazione video e/o slide. 8 scene · 90 secondi · Un posto che torna a vivere.</p>
+    <div class="hero-meta">
+      <div class="hm"><div class="hm-val">8</div><div class="hm-label">Scene</div></div>
+      <div class="hm"><div class="hm-val">90"</div><div class="hm-label">Durata video</div></div>
+      <div class="hm"><div class="hm-val">2</div><div class="hm-label">Formati</div></div>
+      <div class="hm"><div class="hm-val">1</div><div class="hm-label">Foto originale</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="body">
+
+  <!-- OBIETTIVO -->
+  <div class="sez">
+    <div class="sez-bar"><div class="sez-num">00 · Obiettivo</div><div class="sez-bar-line"></div></div>
+    <div class="sez-title">Il messaggio centrale</div>
+
+    <div class="band">
+      <p>"Non è un Posto raro. Momento giusto. Il tuo nome sopra."<br><span style="font-size:13px;opacity:0.55;font-style:italic">Rare place. Right moment. Your name on it.</span></p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">La sequenza narrativa — i 5 temi</div>
+      <p style="margin-bottom:14px">Ogni tema è una scena, una transizione, un paragrafo della lettera. La sequenza costruisce il percorso — il claim chiude il pugno.</p>
+      <div style="border-left:3px solid #F0A500;padding:10px 14px;margin-bottom:8px;background:#fffdf5;border-radius:0 4px 4px 0">
+        <strong style="font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#F0A500">Rarità</strong><br>
+        <span style="font-size:14px;color:#333">Sei posti. Lista chiusa. Non ne esistono altri così.</span>
+      </div>
+      <div style="border-left:3px solid #2B38B0;padding:10px 14px;margin-bottom:8px;background:#f5f7ff;border-radius:0 4px 4px 0">
+        <strong style="font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#2B38B0">Coraggio</strong><br>
+        <span style="font-size:14px;color:#333">Credere in un posto dimenticato prima che gli altri lo vedano.</span>
+      </div>
+      <div style="border-left:3px solid #7c3aed;padding:10px 14px;margin-bottom:8px;background:#f8f5ff;border-radius:0 4px 4px 0">
+        <strong style="font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#7c3aed">Trasformazione</strong><br>
+        <span style="font-size:14px;color:#333">Settant'anni di silenzio. Ora torna a vivere.</span>
+      </div>
+      <div style="border-left:3px solid #0891b2;padding:10px 14px;margin-bottom:8px;background:#f0fafe;border-radius:0 4px 4px 0">
+        <strong style="font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#0891b2">Tempo sospeso</strong><br>
+        <span style="font-size:14px;color:#333">Il momento in cui tutto si allinea non si ripete.</span>
+      </div>
+      <div style="border-left:3px solid #1a7a1a;padding:10px 14px;margin-bottom:8px;background:#f0faf0;border-radius:0 4px 4px 0">
+        <strong style="font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#1a7a1a">Appartenenza</strong><br>
+        <span style="font-size:14px;color:#333">Non sei un investitore. Sei un fondatore.</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Tono visivo</div>
+      <ul>
+        <li><strong>Non lusso ostentato</strong> — non marmo e oro. Lusso discreto, caldo, naturale.</li>
+        <li><strong>Non rendering freddo</strong> — non un prospetto immobiliare. Un posto vissuto.</li>
+        <li><strong>Contrasto temporale</strong> — il bianco e nero del passato vs il colore del futuro.</li>
+        <li><strong>Luce naturale dominante</strong> — alba, tramonto, notte stellata. Mai luce artificiale piatta.</li>
+        <li><strong>Silenzio visivo</strong> — pochi elementi per scena, molto spazio, respiro.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Differenza tra i due formati</div>
+      <ul>
+        <li><strong>Formato VIDEO (90"):</strong> ritmo fisso, 8-12" per scena, musica porta l'emozione, testo minimo — una frase per scena. Montaggio decide tutto.</li>
+        <li><strong>Formato PRESENTAZIONE (slide):</strong> ritmo controllato da chi presenta, ogni scena è una slide autonoma, più testo, più tempo. L'immagine occupa 60% dello schermo, il testo 40%.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- FOTO ORIGINALE — BRIEF GENNARO -->
+  <div class="sez">
+    <div class="sez-bar"><div class="sez-num">01 · La foto originale</div><div class="sez-bar-line"></div></div>
+    <div class="sez-title">Brief per Gennaro —<br>La cartolina del 1960</div>
+
+    <div class="foto-brief">
+      <div class="fb-tag">📷 Unica foto originale disponibile</div>
+      <div class="fb-title">"Roccaraso m. 1236 — Colonia S.M.E."</div>
+      <p class="fb-p">È una cartolina in bianco e nero degli anni '60. Si vedono chiaramente le tre palazzine sullo sfondo con la montagna, il cancello d'ingresso in primo piano, i lampioni del vialetto, un guardiano o visitatore solitario al cancello. Il cielo è aperto, le palazzine sono pulite e abitate. È il posto quando era vivo.</p>
+      <p class="fb-p"><strong>Questa è la pietra angolare narrativa di tutto il progetto.</strong> Da questa singola immagine Gennaro costruisce l'intero capitolo "La memoria".</p>
+    </div>
+
+    <div class="foto-brief">
+      <div class="fb-tag">🤖 Brief AI Generation — Scena 2 "La Memoria"</div>
+      <div class="fb-title">Come usare la cartolina per generare le scene del passato</div>
+
+      <div class="fb-step">
+        <div class="fb-step-num">01</div>
+        <div class="fb-step-text"><strong>Usa la cartolina come immagine di riferimento (img2img)</strong> in Midjourney, Stable Diffusion o Firefly. Non come prompt testuale — come immagine di partenza con bassa variazione (strength 0.3-0.4).</div>
+      </div>
+      <div class="fb-step">
+        <div class="fb-step-num">02</div>
+        <div class="fb-step-text"><strong>Genera 5 varianti della stessa scena:</strong> estate con famiglie al cancello, inverno con neve e bambini, sera con luci accese nelle finestre, mattina con nebbia nel bosco, autunno con foglie. Stesso punto di vista, stessa architettura, stagioni diverse.</div>
+      </div>
+      <div class="fb-step">
+        <div class="fb-step-num">03</div>
+        <div class="fb-step-text"><strong>Mantieni il bianco e nero per il passato.</strong> Il colore arriva solo nella scena 7 — la trasformazione. Il contrasto B&W → colore è il momento narrativo più potente dell'intera storyboard.</div>
+      </div>
+      <div class="fb-step">
+        <div class="fb-step-num">04</div>
+        <div class="fb-step-text"><strong>Genera anche l'interno anni '60:</strong> corridoi lunghi, finestre con vista bosco, una mensa comune, bambini che giocano nel prato. Non deve essere perfetto — deve sembrare un ricordo.</div>
+      </div>
+
+      <div class="prompt-box">
+        <div class="prompt-label">Prompt Midjourney — Variante estate</div>
+        <div class="prompt-text">1960s Italian mountain resort, three modernist buildings, Roccaraso Abruzzo, summer, families at the entrance gate, children playing, black and white photograph, film grain, postcard style, warm light, 35mm, nostalgic --ar 3:2 --style raw --no color</div>
+      </div>
+
+      <div class="prompt-box">
+        <div class="prompt-label">Prompt Midjourney — Interno anni '60</div>
+        <div class="prompt-text">1960s Italian mountain resort interior, long corridor, wooden floors, large windows overlooking beech forest, workers family dining hall, black and white, film grain, ENEL welfare housing, Abruzzo mountains, nostalgic atmosphere --ar 3:2 --style raw</div>
+      </div>
+
+      <div class="prompt-box">
+        <div class="prompt-label">Prompt Midjourney — Abbandono (transizione)</div>
+        <div class="prompt-text">abandoned Italian mountain resort buildings, overgrown entrance gate, Roccaraso Abruzzo, beech forest taking over, grey winter light, melancholy, documentary photography, 35mm film --ar 3:2 --style raw</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BENCHMARK VISIVI -->
+  <div class="sez">
+    <div class="sez-bar"><div class="sez-num">02 · Benchmark visivi</div><div class="sez-bar-line"></div></div>
+    <div class="sez-title">Riferimenti per ogni scena —<br>dove cercare le immagini</div>
+
+    <div class="card">
+      <div class="card-title">Come usare i benchmark</div>
+      <p>Queste strutture non entrano nel prodotto finale. Sono <strong>mood reference</strong> — comunicano a Gennaro il livello visivo, la luce, la composizione. Gennaro le vede, capisce il tono, poi genera immagini AI equivalenti o usa Unsplash/Pexels per le scene non originali.</p>
+    </div>
+
+    <div class="ref-grid">
+      <div class="ref-card soho">
+        <div class="ref-name">Soho Farmhouse</div>
+        <div class="ref-loc">Oxfordshire, Inghilterra</div>
+        <div class="ref-desc">100 acri di campagna. Cabine private con fuoco, piscina con nebbia mattutina, barn convertito in ristorante. Il mood: lusso vissuto, non ostentato. Materiali naturali, luci calde.</div>
+        <div class="ref-uso">Usare per: Scena 6 (Club privato) · Scena 7 (Trasformazione)</div>
+      </div>
+
+      <div class="ref-card campra">
+        <div class="ref-name">Campra Alpine Lodge</div>
+        <div class="ref-loc">Canton Ticino, Svizzera · 1.500m</div>
+        <div class="ref-desc">Multi-target tutto l'anno. Corporate retreat, sport, benessere. Struttura analoga al Poglío — edificio in montagna convertito. La prova che funziona.</div>
+        <div class="ref-uso">Usare per: Scena 4 (Corporate retreat) · Scena 3 (Il cambiamento)</div>
+      </div>
+
+      <div class="ref-card bubble">
+        <div class="ref-name">Bubble Hotel Norvegia</div>
+        <div class="ref-loc">Scandinavia · foresta</div>
+        <div class="ref-desc">Capsule trasparenti nel bosco. Cielo stellato visto dall'interno. Neve intorno. Il momento più onirico e aspirazionale. Nessun lusso tecnico — solo natura e silenzio.</div>
+        <div class="ref-uso">Usare per: Scena 5 (La notte) · la scena più importante</div>
+      </div>
+
+      <div class="ref-card zoku">
+        <div class="ref-name">Zoku Amsterdam/Vienna</div>
+        <div class="ref-loc">4 città europee</div>
+        <div class="ref-desc">Community hotel. "168 ore a settimana per fare soldi." Spazi di lavoro che sembrano case, persone che si incontrano, community manager. Il modello opposto all'ufficio anonimo.</div>
+        <div class="ref-uso">Usare per: Scena 3 (Il contrasto) · Scena 4 (Corporate)</div>
+      </div>
+
+      <div class="ref-card eni">
+        <div class="ref-name">Villaggio ENI Borca di Cadore</div>
+        <div class="ref-loc">Dolomiti, Belluno · 1954-1962</div>
+        <div class="ref-desc">La storia parallela del Poglío. Enrico Mattei, welfare aziendale, dipendenti in montagna. Archivio Storico ENI Roma ha le foto d'epoca. Disponibile su progettoborca.net</div>
+        <div class="ref-uso">Usare per: Scena 2 (La memoria) · rafforza il parallelo narrativo</div>
+      </div>
+
+      <div class="ref-card poggio">
+        <div class="ref-name">Colonia S.M.E. Roccaraso</div>
+        <div class="ref-loc">Roccaraso, 1960 · unica foto originale</div>
+        <div class="ref-desc">La cartolina allegata al brief. Le tre palazzine, il cancello, i lampioni, la montagna. Punto di partenza per tutta la generazione AI delle scene del passato.</div>
+        <div class="ref-uso">BASE di tutta la narrazione storica · vedi brief dedicato</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STORYBOARD 8 SCENE -->
+  <div class="sez">
+    <div class="sez-bar"><div class="sez-num">03 · Le 8 scene</div><div class="sez-bar-line"></div></div>
+    <div class="sez-title">Storyboard completa</div>
+
+    <!-- SCENA 1 -->
+    <div class="scena s1">
+      <div class="scena-head">
+        <div class="scena-num">01</div>
+        <div class="scena-info">
+          <div class="scena-tipo">Apertura · Hook</div>
+          <div class="scena-titolo">Il Silenzio</div>
+          <div class="scena-emozione">"C'è qualcosa qui. Non so ancora cosa."</div>
+        </div>
+        <div class="scena-durata">8–10"</div>
+      </div>
+      <div class="scena-divider"></div>
+      <div class="scena-body">
+        <div class="scena-row"><div class="scena-label">Visual</div><div class="scena-val">Alba sul bosco di faggi. Nebbia bassa tra gli alberi. Lentissimo movimento — come svegliarsi. Nessun edificio ancora. Solo la montagna, la luce che filtra, il respiro della natura. Poi, in lontananza, si intravede la sagoma di una palazzina.</div></div>
+        <div class="scena-row"><div class="scena-label">Testo</div><div class="scena-val"><em>Nessun testo.</em> Solo la location in sovrimpressione: <strong>"Roccaraso, Appennino centrale. 1.023 metri."</strong> Carattere piccolo, bianco, in basso a sinistra.</div></div>
+        <div class="scena-row"><div class="scena-label">Musica</div><div class="scena-val">Silenzio quasi totale. Solo suoni naturali — vento nel bosco, uccelli lontani. Poi un singolo tono musicale, basso, che inizia a costruire.</div></div>
+        <div class="scena-row"><div class="scena-label">Camera</div><div class="scena-val">Drone lentissimo in avvicinamento al bosco. Movimento orizzontale, quasi immobile. L'orizzonte rimane stabile.</div></div>
+        <div class="scena-row"><div class="scena-label">Transizione</div><div class="scena-val">Dissolve lento al nero. Poi compare il bianco e nero della scena 2.</div></div>
+        <div class="scena-row"><div class="scena-label">AI prompt</div><div class="scena-val">Beech forest Abruzzo Italy, dawn, morning mist, golden hour light filtering through trees, mountain landscape, cinematic, 4K, slow drone movement, no people, serene --ar 16:9</div></div>
+      </div>
+    </div>
+
+    <!-- SCENA 2 -->
+    <div class="scena s2">
+      <div class="scena-head">
+        <div class="scena-num">02</div>
+        <div class="scena-info">
+          <div class="scena-tipo">Sviluppo · Memoria</div>
+          <div class="scena-titolo">Settant'anni fa</div>
+          <div class="scena-emozione">"Questo posto ha già vissuto. E poi si è fermato."</div>
+        </div>
+        <div class="scena-durata">12–15"</div>
+      </div>
+      <div class="scena-divider"></div>
+      <div class="scena-body">
+        <div class="scena-row"><div class="scena-label">Visual</div><div class="scena-val"><strong>Bianco e nero.</strong> La cartolina originale "Colonia S.M.E." — le tre palazzine, il cancello, i lampioni. Poi dissolvenza in immagini AI generate: famiglie in arrivo, bambini nel prato, finestre illuminate, corridoi interni. Poi — il silenzio. Le palazzine vuote. La natura che riprende.</div></div>
+        <div class="scena-row"><div class="scena-label">Testo</div><div class="scena-val"><strong>"1956. L'ENEL costruisce un posto per le sue famiglie."</strong><br>Poi: <strong>"Per trent'anni, qui ci si viveva davvero."</strong><br>Poi: <strong>"Poi si è fermato tutto."</strong></div></div>
+        <div class="scena-row"><div class="scena-label">Musica</div><div class="scena-val">Tema nostalgico, piano solo. Qualcosa che evoca memoria senza essere malinconico. Potrebbe usare un motivo popolare abruzzese riarrangiato in chiave moderna.</div></div>
+        <div class="scena-row"><div class="scena-label">Camera</div><div class="scena-val">Fermo sulle immagini del passato — non si muove. Il movimento arriverà con il futuro. Il passato è immobile.</div></div>
+        <div class="scena-row"><div class="scena-label">Transizione</div><div class="scena-val">L'ultima immagine B&W rimane a schermo mentre il suono cambia — la musica si interrompe, entra un silenzio breve, poi la scena 3 in colore.</div></div>
+        <div class="scena-row"><div class="scena-label">Note Gennaro</div><div class="scena-val">BASE: cartolina allegata. Generare 5 varianti AI del luogo negli anni '60 (estate, inverno, sera, mattina, abbandono). Sempre B&W. Riferimento visivo: Archivio ENI Borca di Cadore su progettoborca.net</div></div>
+      </div>
+    </div>
+
+    <!-- SCENA 3 -->
+    <div class="scena s3">
+      <div class="scena-head">
+        <div class="scena-num">03</div>
+        <div class="scena-info">
+          <div class="scena-tipo">Sviluppo · Il contrasto</div>
+          <div class="scena-titolo">Il mondo che stanca</div>
+          <div class="scena-emozione">"Riconoscimento. Questo sono io."</div>
+        </div>
+        <div class="scena-durata">8–10"</div>
+      </div>
+      <div class="scena-divider"></div>
+      <div class="scena-body">
+        <div class="scena-row"><div class="scena-label">Visual</div><div class="scena-val">Colore, ma freddo e desaturato. Uffici open space anonimi, sale riunioni senza finestre, schermo del computer di notte, aeroporto all'alba. Persone che lavorano ma sembrano assenti. Breve — solo 3-4 immagini.</div></div>
+        <div class="scena-row"><div class="scena-label">Testo</div><div class="scena-val"><em>Nessun testo.</em> Lasciare che le immagini parlino. Il contrasto con la natura della scena 1 è tutto.</div></div>
+        <div class="scena-row"><div class="scena-label">Musica</div><div class="scena-val">Il ritmo accelera leggermente. Sonorità urbane, astratte. Poi si interrompe bruscamente quando entra la scena 4.</div></div>
+        <div class="scena-row"><div class="scena-label">Camera</div><div class="scena-val">Taglio rapido tra le immagini. Ritmo diverso da tutte le altre scene — più veloce, più frammentato.</div></div>
+        <div class="scena-row"><div class="scena-label">Transizione</div><div class="scena-val">Hard cut — dal rumore della città al silenzio della montagna. L'interruzione è il messaggio.</div></div>
+        <div class="scena-row"><div class="scena-label">Ref visivo</div><div class="scena-val">Unsplash: "open office empty", "airport early morning", "meeting room night". Niente di branded o riconoscibile.</div></div>
+      </div>
+    </div>
+
+    <!-- SCENA 4 -->
+    <div class="scena s4">
+      <div class="scena-head">
+        <div class="scena-num">04</div>
+        <div class="scena-info">
+          <div class="scena-tipo">Sviluppo · Il retreat</div>
+          <div class="scena-titolo">Il lavoro che si respira</div>
+          <div class="scena-emozione">"Qui si pensa meglio. Si decide meglio."</div>
+        </div>
+        <div class="scena-durata">10–12"</div>
+      </div>
+      <div class="scena-divider"></div>
+      <div class="scena-body">
+        <div class="scena-row"><div class="scena-label">Visual</div><div class="scena-val">Colori caldi. Un piccolo team — 6-8 persone — attorno a un tavolo con vista bosco. Poi gli stessi sul sentiero nel bosco nel pomeriggio. Poi a cena intorno a un fuoco. Non una riunione di lavoro — una comunità che riflette.</div></div>
+        <div class="scena-row"><div class="scena-label">Testo</div><div class="scena-val"><strong>"Il posto dove le aziende portano i loro team a pensare."</strong></div></div>
+        <div class="scena-row"><div class="scena-label">Musica</div><div class="scena-val">Torna la calma. Tema musicale principale — più pieno ora, con archi o chitarra acustica. Senso di arrivo.</div></div>
+        <div class="scena-row"><div class="scena-label">Camera</div><div class="scena-val">Movimenti lenti e deliberati. Una persona alla finestra che guarda la montagna. Le mani sul tavolo. Il fuoco nel camino. Dettagli, non grandangoli.</div></div>
+        <div class="scena-row"><div class="scena-label">Ref visivo</div><div class="scena-val">Campra Alpine Lodge Ticino — photo ufficiali. Unsplash: "mountain meeting", "team forest retreat", "wooden cabin work".</div></div>
+      </div>
+    </div>
+
+    <!-- SCENA 5 -->
+    <div class="scena s5">
+      <div class="scena-head">
+        <div class="scena-num">05</div>
+        <div class="scena-info">
+          <div class="scena-tipo">Climax · La notte</div>
+          <div class="scena-titolo">La notte nel bosco</div>
+          <div class="scena-emozione">"Voglio essere lì. Adesso."</div>
+        </div>
+        <div class="scena-durata">12–15"</div>
+      </div>
+      <div class="scena-divider"></div>
+      <div class="scena-body">
+        <div class="scena-row"><div class="scena-label">Visual</div><div class="scena-val"><strong>La scena più importante di tutto il film.</strong> Una bubble room trasparente nel bosco di faggi. Notte. Cielo stellato visibile attraverso la cupola. Dentro — due persone sdraiate, guardano in su. Fuori — silenzio, neve leggera, alberi. Luce caldissima dall'interno che contrasta con il blu del cielo notturno.</div></div>
+        <div class="scena-row"><div class="scena-label">Testo</div><div class="scena-val"><em>Nessun testo.</em> Questa scena non ha bisogno di parole. Solo la musica.</div></div>
+        <div class="scena-row"><div class="scena-label">Musica</div><div class="scena-val">Il momento musicale più alto. La melodia principale al suo apice. Possibilmente con un elemento sonoro naturale — il vento, il silenzio della neve — che si fonde con la musica.</div></div>
+        <div class="scena-row"><div class="scena-label">Camera</div><div class="scena-val">Lentissimo avvicinamento esterno alla bubble. Poi una ripresa interna verso il cielo stellato. Poi di nuovo esterno — la bubble come una lanterna nel bosco.</div></div>
+        <div class="scena-row"><div class="scena-label">AI prompt</div><div class="scena-val">Transparent bubble dome cabin in beech forest, night, starry sky visible through dome, warm interior light glowing, snow on ground, two silhouettes inside looking up at stars, cinematic, magical realism, 8K --ar 16:9</div></div>
+        <div class="scena-row"><div class="scena-label">Ref visivo</div><div class="scena-val">Bubble hotel Norvegia/Islanda/Irlanda — ricerca "bubble hotel forest stars". Modelli visivi: Arctic Bath Sweden, Bubble Hotel Iceland.</div></div>
+      </div>
+    </div>
+
+    <!-- SCENA 6 -->
+    <div class="scena s6">
+      <div class="scena-head">
+        <div class="scena-num">06</div>
+        <div class="scena-info">
+          <div class="scena-tipo">Sviluppo · Il club</div>
+          <div class="scena-titolo">L'appartenenza</div>
+          <div class="scena-emozione">"Non sono un cliente. Sono un membro."</div>
+        </div>
+        <div class="scena-durata">8–10"</div>
+      </div>
+      <div class="scena-divider"></div>
+      <div class="scena-body">
+        <div class="scena-row"><div class="scena-label">Visual</div><div class="scena-val">Interno caldo. Fuoco in un camino. Un lounge con divani, libri, persone che parlano. Non una hall d'albergo — una casa comune. Il bar con due persone che si conoscono già. La colazione la domenica mattina con neve fuori.</div></div>
+        <div class="scena-row"><div class="scena-label">Testo</div><div class="scena-val"><strong>"140 soci fondatori. Lista chiusa."</strong></div></div>
+        <div class="scena-row"><div class="scena-label">Musica</div><div class="scena-val">Tono caldo, quasi jazz. Qualcosa che evoca convivialità senza essere festoso. La musica di un posto in cui ci si sente a casa.</div></div>
+        <div class="scena-row"><div class="scena-label">Camera</div><div class="scena-val">Riprese ravvicinate. Le mani attorno a una tazza. Il fuoco. Il dettaglio di un libro. Non grandangoli — intimità.</div></div>
+        <div class="scena-row"><div class="scena-label">Ref visivo</div><div class="scena-val">Soho Farmhouse interior — cabine, barn, fuoco. Unsplash: "mountain lodge interior fireplace", "cozy cabin winter evening".</div></div>
+      </div>
+    </div>
+
+    <!-- SCENA 7 -->
+    <div class="scena s7">
+      <div class="scena-head">
+        <div class="scena-num">07</div>
+        <div class="scena-info">
+          <div class="scena-tipo">Sviluppo · La trasformazione</div>
+          <div class="scena-titolo">Da quello che era<br>a quello che diventa</div>
+          <div class="scena-emozione">"È possibile. Sta già succedendo."</div>
+        </div>
+        <div class="scena-durata">10–12"</div>
+      </div>
+      <div class="scena-divider"></div>
+      <div class="scena-body">
+        <div class="scena-row"><div class="scena-label">Visual</div><div class="scena-val"><strong>Il momento del colore.</strong> La stessa inquadratura della cartolina B&W del '60 — ma in colore, con le palazzine rinnovate, le luci accese, gente che arriva. Poi una dissolvenza che mostra il cantiere in corso — gru, operai, materiali. Non come problema — come atto di cura.</div></div>
+        <div class="scena-row"><div class="scena-label">Testo</div><div class="scena-val"><strong>"Settant'anni dopo. Finalmente."</strong></div></div>
+        <div class="scena-row"><div class="scena-label">Musica</div><div class="scena-val">Il tema principale ritorna — pieno, completo, con tutti gli strumenti. Il climax musicale coincide con il passaggio B&W → colore.</div></div>
+        <div class="scena-row"><div class="scena-label">Camera</div><div class="scena-val">Stesso punto di ripresa della cartolina storica. Lo spettatore riconosce il luogo — è lo stesso posto, trasformato. Questo riconoscimento è il momento più potente.</div></div>
+        <div class="scena-row"><div class="scena-label">AI prompt</div><div class="scena-val">Same angle as 1960s Roccaraso mountain resort postcard, now renovated, colorful, people arriving, warm lights in windows, beech forest background, golden hour, cinematic, hopeful atmosphere --ar 3:2</div></div>
+      </div>
+    </div>
+
+    <!-- SCENA 8 -->
+    <div class="scena s8">
+      <div class="scena-head">
+        <div class="scena-num">08</div>
+        <div class="scena-info">
+          <div class="scena-tipo">Chiusura · Call to Action</div>
+          <div class="scena-titolo">Il posto ti aspetta</div>
+          <div class="scena-emozione">"Sono dentro. Voglio farne parte."</div>
+        </div>
+        <div class="scena-durata">8–10"</div>
+      </div>
+      <div class="scena-divider"></div>
+      <div class="scena-body">
+        <div class="scena-row"><div class="scena-label">Visual</div><div class="scena-val">Una persona sola — di spalle — guarda il bosco dalla finestra o da un terrazzo. Non vediamo il viso. Potrebbe essere chiunque. Potrebbe essere chi guarda. Poi — schermo nero. Poi il logo Il Poglío.</div></div>
+        <div class="scena-row"><div class="scena-label">Testo</div><div class="scena-val">Schermo nero con solo testo bianco: <strong>"Sei posti nella cordata fondatrice."</strong><br>Pausa.<br><strong>"Uno è tuo."</strong><br>Poi logo Il Poglío + contatto.</div></div>
+        <div class="scena-row"><div class="scena-label">Musica</div><div class="scena-val">La musica si abbassa lentamente fino al silenzio. L'ultima nota rimane sospesa. Poi silenzio totale sul testo finale.</div></div>
+        <div class="scena-row"><div class="scena-label">Camera</div><div class="scena-val">Fermo. Nessun movimento. La quiete dopo tutto quello che è stato mostrato.</div></div>
+        <div class="scena-row"><div class="scena-label">AI prompt</div><div class="scena-val">Person standing alone looking at beech forest from mountain cabin window, back to camera, warm interior, winter light outside, contemplative, cinematic, no face visible --ar 16:9</div></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- RIEPILOGO TABELLA -->
+  <div class="sez">
+    <div class="sez-bar"><div class="sez-num">04 · Riepilogo</div><div class="sez-bar-line"></div></div>
+    <div class="sez-title">Tabella di produzione</div>
+
+    <table>
+      <tr>
+        <th>#</th>
+        <th>Titolo</th>
+        <th>Visual</th>
+        <th>Testo chiave</th>
+        <th>Emozione</th>
+        <th>Durata</th>
+      </tr>
+      <tr>
+        <td><strong>01</strong></td>
+        <td>Il Silenzio</td>
+        <td>Bosco all'alba · drone</td>
+        <td>Solo location</td>
+        <td class="td-emo">Curiosità</td>
+        <td class="td-dur">8-10"</td>
+      </tr>
+      <tr>
+        <td><strong>02</strong></td>
+        <td>Settant'anni fa</td>
+        <td>B&W · cartolina + AI</td>
+        <td>1956. L'ENEL costruisce...</td>
+        <td class="td-emo">Nostalgia</td>
+        <td class="td-dur">12-15"</td>
+      </tr>
+      <tr>
+        <td><strong>03</strong></td>
+        <td>Il mondo che stanca</td>
+        <td>Uffici · aeroporto</td>
+        <td>Nessuno</td>
+        <td class="td-emo">Riconoscimento</td>
+        <td class="td-dur">8-10"</td>
+      </tr>
+      <tr>
+        <td><strong>04</strong></td>
+        <td>Il lavoro che si respira</td>
+        <td>Team · bosco · cena</td>
+        <td>Il posto dove si pensa</td>
+        <td class="td-emo">Sollievo</td>
+        <td class="td-dur">10-12"</td>
+      </tr>
+      <tr>
+        <td><strong>05</strong></td>
+        <td>La notte nel bosco</td>
+        <td>Bubble room · stelle</td>
+        <td>Nessuno</td>
+        <td class="td-emo">Meraviglia · CLIMAX</td>
+        <td class="td-dur">12-15"</td>
+      </tr>
+      <tr>
+        <td><strong>06</strong></td>
+        <td>L'appartenenza</td>
+        <td>Lounge · fuoco · soci</td>
+        <td>140 soci fondatori</td>
+        <td class="td-emo">Appartenenza</td>
+        <td class="td-dur">8-10"</td>
+      </tr>
+      <tr>
+        <td><strong>07</strong></td>
+        <td>La trasformazione</td>
+        <td>B&W → colore</td>
+        <td>Settant'anni dopo. Finalmente.</td>
+        <td class="td-emo">Speranza · risoluzione</td>
+        <td class="td-dur">10-12"</td>
+      </tr>
+      <tr>
+        <td><strong>08</strong></td>
+        <td>Il posto ti aspetta</td>
+        <td>Persona · bosco · logo</td>
+        <td>Sei posti. Uno è tuo.</td>
+        <td class="td-emo">Urgenza quieta</td>
+        <td class="td-dur">8-10"</td>
+      </tr>
+    </table>
+
+    <div class="card">
+      <div class="card-title">Totale durata</div>
+      <p><strong>Video:</strong> 76–92 secondi · target 90" esatti<br>
+      <strong>Presentazione:</strong> stesse 8 scene come slide · 2-4 minuti con commento orale</p>
+    </div>
+  </div>
+
+  <!-- MUSICA -->
+  <div class="sez">
+    <div class="sez-bar"><div class="sez-num">05 · Musica</div><div class="sez-bar-line"></div></div>
+    <div class="sez-title">Direttive sonore</div>
+
+    <div class="card">
+      <div class="card-title">Filosofia musicale</div>
+      <p>La musica non deve commentare le immagini — deve <strong>essere</strong> il luogo. Non musica da trailer immobiliare. Non musica da spot lifestyle. Qualcosa che suona come il bosco di faggi suona — quieto, profondo, con momenti di apertura inaspettata.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Riferimenti</div>
+      <div class="musica-row">
+        <div class="musica-num">01</div>
+        <div class="musica-info">
+          <div class="musica-title">Nils Frahm — Says / All Melody</div>
+          <div class="musica-desc">Piano minimalista con costruzione lenta. Perfetto per le scene B&W e il climax bubble.</div>
+        </div>
+      </div>
+      <div class="musica-row">
+        <div class="musica-num">02</div>
+        <div class="musica-info">
+          <div class="musica-title">Ólafur Arnalds — Near Light / Only the Winds</div>
+          <div class="musica-desc">Elettronica organica. Suona come paesaggio scandinavo — ideale per la bubble room notturna.</div>
+        </div>
+      </div>
+      <div class="musica-row">
+        <div class="musica-num">03</div>
+        <div class="musica-info">
+          <div class="musica-title">Max Richter — On the Nature of Daylight</div>
+          <div class="musica-desc">Per la scena della trasformazione B&W→colore. Emotivo senza essere sentimentale.</div>
+        </div>
+      </div>
+      <div class="musica-row">
+        <div class="musica-num">04</div>
+        <div class="musica-info">
+          <div class="musica-title">Artisti folk abruzzesi riarrangiati</div>
+          <div class="musica-desc">Per la scena della memoria. Un motivo locale che evoca appartenenza territoriale.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NOTE FINALI -->
+  <div class="sez">
+    <div class="sez-bar"><div class="sez-num">06 · Note finali</div><div class="sez-bar-line"></div></div>
+    <div class="sez-title">Per Gennaro —<br>Cosa non fare mai</div>
+
+    <div class="card" style="border-left:4px solid var(--rosso)">
+      <div class="card-title" style="color:var(--rosso)">Regole assolute</div>
+      <ul>
+        <li>❌ <strong>Nessun numero finanziario</strong> — né in sovrimpressione né in voce. Zero.</li>
+        <li>❌ <strong>Nessun rendering freddo</strong> — niente visualizzazioni architetturali in stile CAD.</li>
+        <li>❌ <strong>Nessun logo ENEL, ENI o brand riconoscibili</strong> nelle immagini generate.</li>
+        <li>❌ <strong>Nessuna musica da spot immobiliare</strong> — niente pianoforte motivazionale da agenzia.</li>
+        <li>❌ <strong>Nessun volto riconoscibile</strong> nelle immagini AI generate o di stock.</li>
+        <li>❌ <strong>Nessuna immagine di proprietà altrui</strong> nel prodotto finale — solo AI generated o Unsplash free.</li>
+      </ul>
+    </div>
+
+    <div class="card" style="border-left:4px solid var(--verde)">
+      <div class="card-title" style="color:var(--verde)">Cosa deve rimanere</div>
+      <ul>
+        <li>✓ La <strong>cartolina originale B&W</strong> — è l'unico materiale autentico e va trattata come un cimelio.</li>
+        <li>✓ Il <strong>contrasto B&W → colore</strong> nella scena 7 — è il momento narrativo più potente.</li>
+        <li>✓ Il <strong>silenzio</strong> in scena 1 e 8 — il vuoto è parte del design.</li>
+        <li>✓ La <strong>persona di spalle</strong> in scena 8 — chi guarda si deve identificare con lei.</li>
+        <li>✓ Il <strong>logo Il Poglío</strong> solo nell'ultima scena — mai prima.</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>Brief Storyboard · Il Poglío · Roccaraso<br>FranKi Studio (Avre Srl) · Napoli · frankistudio.it<br>Documento riservato · Maggio 2026</p>
+</footer>
+
+<a href="https://valzinga.github.io/frankistudio/affio/rcv/" class="hub-btn" title="Torna all'Hub">🏠</a>
+
+</body>
+</html>
