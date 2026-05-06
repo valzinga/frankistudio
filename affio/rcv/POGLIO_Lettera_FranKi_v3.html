@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Una lettera — Il Poglío · FranKi Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700;900&family=Barlow:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --blu:#2B38B0;--arancio:#F0A500;--grigio-bg:#F2F1ED;
+  --dark:#111118;--bordo:#D8D5CF;--testo:#2A2218;
+  --bosco:#1C2B1A;--oro:#C8A96E;
+}
+body{font-family:'Barlow',sans-serif;background:var(--grigio-bg);color:var(--testo);font-size:15px;line-height:1.7;min-height:100vh}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;background:var(--blu);padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:52px}
+.fk-logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;display:inline-flex;align-items:center;text-decoration:none}
+.fk-logo .fran{color:#FFF}
+.fk-logo .ki{background:#F0A500;color:#FFF;border-radius:5px;padding:1px 7px;margin-left:2px;display:inline-block}
+.v-switch{display:flex;gap:0;border-radius:4px;overflow:hidden;border:1px solid rgba(255,255,255,0.25)}
+.v-btn{padding:8px 16px;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;letter-spacing:1px;text-transform:uppercase;border:none;cursor:pointer;transition:all .2s}
+#btn-vis{background:var(--arancio);color:#FFF}
+#btn-adv{background:transparent;color:rgba(255,255,255,0.5)}
+
+/* CONTENITORI */
+.wrap{max-width:600px;margin:0 auto;padding:32px 20px 52px}
+
+/* ===== VERSIONE VISIONE ===== */
+.vis-carta{background:#FEFCF8;border-radius:4px;padding:36px 32px;border:1px solid #E8E2D8;box-shadow:0 4px 24px rgba(0,0,0,0.06);position:relative}
+.vis-carta::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--bosco),var(--oro));border-radius:4px 4px 0 0}
+.vis-data{font-family:'Barlow',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#aaa;margin-bottom:28px}
+.vis-apertura{font-family:'Lora',serif;font-size:15px;color:#666;margin-bottom:24px;font-style:italic}
+.vis-p{font-family:'Lora',serif;font-size:16px;line-height:1.85;color:var(--testo);margin-bottom:20px}
+.vis-p strong{font-weight:600;color:var(--dark)}
+.vis-p em{font-style:italic;color:var(--bosco)}
+.vis-highlight{background:#FFF8E8;border-left:3px solid var(--oro);padding:14px 16px;margin:24px 0;border-radius:0 4px 4px 0}
+.vis-highlight p{font-family:'Lora',serif;font-size:15px;font-style:italic;color:var(--bosco);line-height:1.7}
+.vis-divider{height:1px;background:linear-gradient(90deg,transparent,var(--bordo),transparent);margin:28px 0}
+.vis-firma-pre{font-family:'Barlow',sans-serif;font-size:13px;color:#888;margin-bottom:14px}
+.vis-firma{font-family:'Lora',serif;font-style:italic;font-size:24px;color:var(--bosco);margin-bottom:4px}
+.vis-firma-sub{font-family:'Barlow',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#bbb}
+.vis-ps{font-family:'Barlow',sans-serif;font-size:12px;color:#888;margin-top:24px;padding-top:18px;border-top:1px solid #f0ede8;line-height:1.7;font-style:italic}
+.vis-ps strong{color:#666;font-style:normal}
+
+/* ===== VERSIONE ADVISOR ===== */
+.adv-header{background:var(--blu);padding:28px 24px;border-radius:6px 6px 0 0;position:relative;overflow:hidden}
+.adv-header::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(135deg,rgba(255,255,255,0.03) 0,rgba(255,255,255,0.03) 1px,transparent 1px,transparent 40px)}
+.adv-header-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:18px;position:relative}
+.adv-progetto{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--arancio)}
+.adv-data-label{font-size:11px;color:rgba(255,255,255,0.4);text-align:right;letter-spacing:1px;text-transform:uppercase}
+.adv-oggetto{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(22px,5vw,30px);color:#FFF;text-transform:uppercase;line-height:1.1;margin-bottom:6px;position:relative}
+.adv-oggetto span{color:var(--arancio)}
+.adv-sub{font-size:13px;color:rgba(255,255,255,0.55);position:relative}
+.adv-body{background:#FFF;padding:24px;border-radius:0 0 6px 6px;border:1px solid var(--bordo);border-top:none}
+.adv-saluto{font-size:14px;color:#555;margin-bottom:18px}
+.adv-p{font-size:14px;line-height:1.75;color:#333;margin-bottom:14px}
+.adv-p strong{color:var(--dark);font-weight:600}
+.adv-kpi{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--bordo);border:1px solid var(--bordo);border-radius:6px;overflow:hidden;margin:18px 0}
+.adv-kpi-cell{background:var(--grigio-bg);padding:16px 12px;text-align:center}
+.adv-kpi-val{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:28px;color:var(--blu);line-height:1}
+.adv-kpi-val.arancio{color:var(--arancio)}
+.adv-kpi-label{font-size:10px;color:#999;text-transform:uppercase;letter-spacing:1px;margin-top:3px}
+.adv-band{background:var(--arancio);padding:14px 16px;border-radius:4px;margin:18px 0;text-align:center}
+.adv-band p{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;color:#FFF;text-transform:uppercase;line-height:1.3}
+.adv-steps{margin:14px 0}
+.adv-step{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid #f5f3f0;align-items:flex-start}
+.adv-step:last-child{border-bottom:none}
+.adv-step-num{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;color:var(--arancio);min-width:28px;line-height:1.1}
+.adv-step-title{font-weight:600;font-size:14px;color:var(--dark);margin-bottom:2px}
+.adv-step-desc{font-size:13px;color:#666;line-height:1.5}
+.adv-divider{height:1px;background:var(--bordo);margin:18px 0}
+.adv-firma-nome{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px;color:var(--dark);text-transform:uppercase;margin-bottom:2px}
+.adv-firma-ruolo{font-size:12px;color:#888;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px}
+.adv-fk-logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:18px;display:inline-flex;align-items:center}
+.adv-fk-logo .fran{color:var(--dark)}
+.adv-fk-logo .ki{background:var(--arancio);color:#FFF;border-radius:4px;padding:1px 6px;margin-left:2px}
+.adv-cta{display:inline-block;margin-top:16px;background:var(--blu);color:#FFF;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:13px;text-transform:uppercase;letter-spacing:1.5px;padding:10px 22px;border-radius:4px;text-decoration:none}
+.adv-ps{font-size:12px;color:#888;margin-top:18px;padding-top:14px;border-top:1px solid #f0ede8;line-height:1.7}
+.adv-ps strong{color:#555}
+
+footer{background:var(--dark);padding:20px 24px;text-align:center}
+footer p{color:rgba(255,255,255,0.25);font-size:10px;line-height:1.8}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="fk-logo" href="#"><span class="fran">Fran</span><span class="ki">Ki</span></a>
+  <div class="v-switch">
+    <button class="v-btn" id="btn-vis" onclick="mostra('vis')">Visione</button>
+    <button class="v-btn" id="btn-adv" onclick="mostra('adv')">Advisor</button>
+  </div>
+</nav>
+
+<!-- VISIONE -->
+<div id="v-vis" class="wrap">
+  <div class="vis-carta">
+    <div class="vis-data">Roccaraso, Maggio 2026</div>
+    <p class="vis-apertura">Caro [Nome],</p>
+    <p class="vis-p">
+      Ti scrivo perché ho trovato qualcosa che non capita spesso — e quando capita, le persone giuste bisogna avvisarle prima che se ne accorgano gli altri.
+    </p>
+    <p class="vis-p">
+      A Roccaraso, a 1.023 metri sull'Appennino centrale, ci sono tre palazzine che stavano ferme da vent'anni. Le aveva costruite l'ENEL negli anni '50 per i propri ingegneri — solide, ben posizionate, con 22 ettari di bosco attorno. Valore certificato dal perito del Tribunale: <strong>€13,5 milioni</strong>. Le stiamo acquisendo a una frazione di quel valore.
+    </p>
+    <p class="vis-p">
+      Non è un'operazione immobiliare. È la trasformazione di un luogo che ha già una storia in <em>qualcosa che non esiste ancora sull'Appennino</em> — un club privato chiuso, con 68 camere, sei bubble room nel bosco, uno spazio per chi ha bisogno di staccarsi davvero. Revenue stimata €7 milioni l'anno a regime. Exit stimato €23–37 milioni al mese 48.
+    </p>
+    <div class="vis-highlight">
+      <p>"Ho pensato a te perché il progetto ha bisogno di persone che capiscono le cose prima degli altri — e perché i posti sono sei, e la lista è chiusa."</p>
+    </div>
+    <p class="vis-p">
+      Stai guardando un'opportunità da <strong>€75.000</strong> — €50.000 di equity che comprano il 10% della società, più €25.000 di finanziamento soci al 6% annuo che rientrano con gli interessi. Rendimento stimato sull'equity: circa <strong>25 volte</strong> nello scenario base.
+    </p>
+    <p class="vis-p">
+      Non ti chiedo niente adesso. Ti chiedo solo di leggere quello che ti mando, con calma, quando hai un momento. E poi dimmi se ha senso parlarne.
+    </p>
+    <div class="vis-divider"></div>
+    <div class="vis-firma-pre">Con stima,</div>
+    <div class="vis-firma">FranKi Studio</div>
+    <div class="vis-firma-sub">frankistudio.it · Napoli</div>
+    <div class="vis-ps">
+      <strong>P.S.</strong> — Il documento che trovi nel link è riservato. Non distribuire. Se dopo averlo letto hai domande, scrivimi direttamente — preferisco rispondere a voce che per messaggio.
+    </div>
+  </div>
+</div>
+
+<!-- ADVISOR -->
+<div id="v-adv" class="wrap" style="display:none">
+  <div class="adv-header">
+    <div class="adv-header-top">
+      <div class="adv-progetto">Il Poglío · RCV · Roccaraso</div>
+      <div class="adv-data-label">Maggio 2026<br>Riservato</div>
+    </div>
+    <div class="adv-oggetto">Un'operazione<br>che vale <span>la tua attenzione</span></div>
+    <div class="adv-sub">Strutturata. Documentata. Con sei posti disponibili.</div>
+  </div>
+  <div class="adv-body">
+    <div class="adv-saluto">Gentile [Nome],</div>
+    <p class="adv-p">Ti contatto perché stiamo completando la cordata fondatrice di un'operazione con caratteristiche non comuni — e il tuo profilo è tra quelli che abbiamo selezionato per la lista.</p>
+
+    <p class="adv-p"><strong>A.</strong> L'asset è un complesso di <strong>tre palazzine a Roccaraso (AQ)</strong>, con 46 unità e 219.000 mq di terreno a 1.023 metri — <strong>valore certificato da perito indipendente: €13,5 milioni</strong> — attualmente sotto nostra opzione.</p>
+
+    <p class="adv-p"><strong>B.</strong> La <strong>destinazione extralberghiera</strong> è già autorizzata dalla Regione Abruzzo. I permessi di costruzione sono attivi. Non si costruisce da zero — si trasforma.</p>
+
+    <p class="adv-p"><strong>C.</strong> Il modello operativo è strutturato su tre leve: <strong>club privato chiuso a 140 soci fondatori</strong>, corporate retreat B2B e componente ESG — quest'ultima abilita i fondi PNRR Turismo per una stima di <strong>€2,1M di grant non rimborsabili</strong>.</p>
+
+    <div class="adv-kpi">
+      <div class="adv-kpi-cell">
+        <div class="adv-kpi-val">€75K</div>
+        <div class="adv-kpi-label">Investimento</div>
+      </div>
+      <div class="adv-kpi-cell">
+        <div class="adv-kpi-val">10%</div>
+        <div class="adv-kpi-label">Quota HoldCo</div>
+      </div>
+      <div class="adv-kpi-cell">
+        <div class="adv-kpi-val arancio">~25×</div>
+        <div class="adv-kpi-label">Rendimento equity</div>
+      </div>
+      <div class="adv-kpi-cell">
+        <div class="adv-kpi-val">M48</div>
+        <div class="adv-kpi-label">Exit stimato</div>
+      </div>
+    </div>
+
+    <p class="adv-p"><strong>D.</strong> La struttura prevede <strong>sei soci fondatori</strong> in HoldCo, ciascuno con il 10% a €75.000 — di cui €50K equity e €25K finanziamento soci al 6% annuo rimborsato con interessi.</p>
+
+    <p class="adv-p"><strong>E.</strong> Il rendimento stimato sull'equity è <strong>~25× nello scenario base</strong>, con exit stimato tra €23M e €37M al mese 48 dall'avvio.</p>
+
+    <div class="adv-band">
+      <p>Revenue a regime €7M/anno · EBITDA 33%<br>Exit stimato €23–37M al mese 48</p>
+    </div>
+
+    <p class="adv-p"><strong>F.</strong> Post-closing entra un <strong>fondo istituzionale con €2M</strong> per finanziare il cantiere — a fronte del 40% della società. La cordata fondatrice non è esposta al rischio cantiere.</p>
+
+    <div class="adv-divider"></div>
+    <p class="adv-p">Il prossimo passo, se c'è interesse, è semplice:</p>
+    <div class="adv-steps">
+      <div class="adv-step">
+        <div class="adv-step-num">01</div>
+        <div>
+          <div class="adv-step-title">Leggi il documento</div>
+          <div class="adv-step-desc">Asset, modello, numeri, struttura societaria e protezioni contrattuali. Riservato.</div>
+        </div>
+      </div>
+      <div class="adv-step">
+        <div class="adv-step-num">02</div>
+        <div>
+          <div class="adv-step-title">Una call di 20 minuti</div>
+          <div class="adv-step-desc">Per rispondere alle domande. Nessun impegno.</div>
+        </div>
+      </div>
+      <div class="adv-step">
+        <div class="adv-step-num">03</div>
+        <div>
+          <div class="adv-step-title">Decisione</div>
+          <div class="adv-step-desc">I posti sono sei. La lista chiude quando il sesto firma la lettera di intenti.</div>
+        </div>
+      </div>
+    </div>
+    <div class="adv-divider"></div>
+    <div class="adv-firma-nome">FranKi Studio</div>
+    <div class="adv-firma-ruolo">Deal origination · Asset Management · frankistudio.it</div>
+    <div class="adv-fk-logo"><span class="fran">Fran</span><span class="ki">Ki</span></div>
+    <br>
+    <a class="adv-cta" href="https://frankistudio.it/affio/rcv/POGLIO_Presentazione_Esterna.html" target="_blank">→ Leggi il documento</a>
+    <div class="adv-ps">
+      <strong>Nota:</strong> Documento riservato al destinatario. I rendimenti sono stime basate sullo scenario base e non costituiscono garanzia. Per info: <strong>info@frankistudio.it</strong>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>FranKi Studio (Avre Srl) · Napoli · frankistudio.it · Documento riservato · Maggio 2026</p>
+</footer>
+
+<script>
+function mostra(v) {
+  var vis = document.getElementById('v-vis');
+  var adv = document.getElementById('v-adv');
+  var bVis = document.getElementById('btn-vis');
+  var bAdv = document.getElementById('btn-adv');
+
+  if (v === 'vis') {
+    vis.style.display = 'block';
+    adv.style.display = 'none';
+    bVis.style.background = '#F0A500';
+    bVis.style.color = '#FFF';
+    bAdv.style.background = 'transparent';
+    bAdv.style.color = 'rgba(255,255,255,0.5)';
+  } else {
+    vis.style.display = 'none';
+    adv.style.display = 'block';
+    bAdv.style.background = '#F0A500';
+    bAdv.style.color = '#FFF';
+    bVis.style.background = 'transparent';
+    bVis.style.color = 'rgba(255,255,255,0.5)';
+  }
+}
+</script>
+</body>
+</html>

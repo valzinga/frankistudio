@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PAPELE v2 — RCV Il Poglío · FranKi Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--blu:#2B38B0;--arancio:#F0A500;--grigio-bg:#F2F1ED;--dark:#111118;--bordo:#D8D5CF}
+body{font-family:'Barlow',sans-serif;background:var(--grigio-bg);color:#222;font-size:15px;min-height:100vh}
+nav{position:sticky;top:0;z-index:100;background:var(--blu);padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:52px}
+.fk-logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;display:inline-flex;align-items:center;text-decoration:none}
+.fk-logo .fran{color:#FFF}.fk-logo .ki{background:#F0A500;color:#FFF;border-radius:5px;padding:1px 7px;margin-left:2px;display:inline-block}
+.nav-label{color:rgba(255,255,255,0.7);font-size:12px;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.hero{background:var(--blu);padding:36px 20px 28px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(-45deg,rgba(240,165,0,0.08) 0,rgba(240,165,0,0.08) 1px,transparent 1px,transparent 28px)}
+.hero-tag{display:inline-block;background:var(--arancio);color:#FFF;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;letter-spacing:2px;padding:4px 12px;border-radius:3px;margin-bottom:14px;text-transform:uppercase}
+.hero h1{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(36px,9vw,56px);color:#FFF;text-transform:uppercase;line-height:1;margin-bottom:4px}
+.hero-sub{color:rgba(255,255,255,0.65);font-size:13px}
+.counter-bar{background:#FFF;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--bordo)}
+.counter-text{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;color:var(--blu);text-transform:uppercase}
+.counter-nums{font-size:13px;color:#888}
+.progress-bar{height:4px;background:var(--bordo)}
+.progress-fill{height:4px;background:#22c55e;transition:width 0.3s;width:0%}
+.section{max-width:680px;margin:0 auto;padding:24px 20px 8px}
+.section-header{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.section-header-line{height:3px;flex:1;background:var(--bordo)}
+.section-label{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:12px;letter-spacing:2px;text-transform:uppercase;white-space:nowrap;padding:3px 10px;border-radius:3px;color:#FFF}
+.l-rosso{background:#ef4444}.l-giallo{background:var(--arancio)}.l-blu{background:var(--blu)}.l-grigio{background:#aaa}
+.task{background:#FFF;border-radius:6px;padding:14px 16px;margin-bottom:8px;display:flex;align-items:flex-start;gap:14px;cursor:pointer;transition:transform 0.15s,box-shadow 0.15s;border-left:4px solid var(--bordo)}
+.task:hover{transform:translateX(2px);box-shadow:0 2px 8px rgba(0,0,0,0.08)}
+.task.rosso{border-left-color:#ef4444}.task.giallo{border-left-color:var(--arancio)}.task.blu{border-left-color:var(--blu)}
+.task.done-task{opacity:0.5;border-left-color:#22c55e}
+.task.done-task .task-title{text-decoration:line-through;color:#999}
+.task-check{width:22px;height:22px;border-radius:50%;border:2px solid var(--bordo);flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:all 0.2s}
+.task.done-task .task-check{background:#22c55e;border-color:#22c55e;color:#FFF}
+.task.rosso .task-check{border-color:#ef4444}
+.task.giallo .task-check{border-color:var(--arancio)}
+.task.blu .task-check{border-color:var(--blu)}
+.check-icon{display:none;font-size:13px}
+.task.done-task .check-icon{display:block}
+.task-title{font-weight:700;font-size:14px;color:#111;margin-bottom:3px}
+.task-desc{font-size:13px;color:#666;line-height:1.5}
+.task-tag{display:inline-block;font-size:10px;font-weight:700;padding:2px 6px;border-radius:2px;text-transform:uppercase;margin-right:5px}
+.t-phone{background:#e8f0fe;color:var(--blu)}.t-email{background:#fce8e6;color:#c5221f}.t-doc{background:#e6f4ea;color:#137333}.t-legal{background:#fde0e0;color:#a00}.t-meet{background:#fff3cd;color:#856404}.t-decisione{background:#f3e8fd;color:#6200ea}
+.tag-link{font-size:10px;padding:2px 6px;border-radius:2px;font-weight:700;text-decoration:none;display:inline-block;margin-top:2px;background:#f3e8fd;color:#6200ea}
+.urgente{background:#fde0e0;border:2px solid #ef4444;border-radius:6px;padding:14px 16px;margin-bottom:12px;display:flex;gap:12px;align-items:flex-start}
+.urgente-icon{font-size:24px;flex-shrink:0}
+.urgente-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;text-transform:uppercase;color:#a00;margin-bottom:4px}
+.urgente-text{font-size:13px;color:#5a0000;line-height:1.5}
+.decisione-box{background:#f3e8fd;border:2px solid #c5a0f5;border-radius:6px;padding:14px 16px;margin-bottom:12px}
+.decisione-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:15px;text-transform:uppercase;color:#6200ea;margin-bottom:8px}
+.decisione-opts{display:flex;flex-direction:column;gap:6px}
+.decisione-opt{background:#FFF;border-radius:4px;padding:10px 12px;font-size:13px;border-left:3px solid #c5a0f5}
+.decisione-opt strong{display:block;font-size:13px;color:#333;margin-bottom:2px}
+.decisione-opt span{color:#777;font-size:12px}
+.reset-btn{display:block;margin:20px auto;background:var(--grigio-bg);border:1px solid var(--bordo);color:#888;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:13px;text-transform:uppercase;letter-spacing:1px;padding:8px 20px;border-radius:4px;cursor:pointer}
+footer{background:var(--dark);padding:24px 20px;text-align:center;margin-top:32px}
+footer p{color:rgba(255,255,255,0.4);font-size:11px;line-height:1.8}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="fk-logo" href="#"><span class="fran">Fran</span><span class="ki">Ki</span></a>
+  <span class="nav-label">PAPELE v2 · RCV</span>
+</nav>
+
+<div class="hero">
+  <div class="hero-tag">✅ Lista Azioni · Interattiva · v2</div>
+  <h1>Papele</h1>
+  <p class="hero-sub">RCV — Il Poglío · Struttura societaria definitiva · Clicca per spuntare</p>
+</div>
+
+<div class="counter-bar">
+  <div class="counter-text">Avanzamento</div>
+  <div class="counter-nums" id="counter-nums">0 / 16 completate</div>
+</div>
+<div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+
+<!-- OGGI -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-label l-rosso">🔴 OGGI — Urgente</span>
+    <div class="section-header-line"></div>
+  </div>
+
+  <div class="urgente">
+    <div class="urgente-icon">🚨</div>
+    <div>
+      <div class="urgente-title">2ª asta deserta — 15/04/2026</div>
+      <div class="urgente-text">Asset €13,5M disponibile a ~€900K. Trattativa privata possibile subito.<br>
+      📞 <strong>085 9436430</strong> · ivgpescara1@gmail.com</div>
+    </div>
+  </div>
+
+  <div class="task rosso" onclick="toggleTask(this)">
+    <div class="task-check"><span class="check-icon">✓</span></div>
+    <div>
+      <div class="task-title">📞 Chiamare IVG Abruzzo</div>
+      <div class="task-desc"><span class="task-tag t-phone">Telefono</span><strong>085 9436430</strong> · trattativa privata post 2ª asta deserta · lotto N.43/16</div>
+    </div>
+  </div>
+
+  <div class="task rosso" onclick="toggleTask(this)">
+    <div class="task-check"><span class="check-icon">✓</span></div>
+    <div>
+      <div class="task-title">📧 Email IVG Abruzzo</div>
+      <div class="task-desc"><span class="task-tag t-email">Email</span>ivgpescara1@gmail.com · interesse formale per trattativa privata</div>
+    </div>
+  </div>
+
+  <div class="decisione-box">
+    <div class="decisione-title">⚡ Decisione prioritaria — Fee deal origination</div>
+    <div class="decisione-opts">
+      <div class="decisione-opt"><strong>Opzione A — Solo asset management</strong><span>~€13.500 a testa · basso ma pulito · max trasparenza verso soci</span></div>
+      <div class="decisione-opt"><strong>Opzione B — €50K a testa subito ← In discussione</strong><span>FranKi €50K + Affio €50K · da raccolta €450K · 22% del raccolto · come fattura o rimborso?</span></div>
+      <div class="decisione-opt"><strong>Opzione C — Solo equity, zero fee</strong><span>Nessun prelievo · equity 20% + mgmt €680K + success fee 6 soci</span></div>
+    </div>
+  </div>
+
+  <div class="task rosso" onclick="toggleTask(this)">
+    <div class="task-check"><span class="check-icon">✓</span></div>
+    <div>
+      <div class="task-title">✅ Decidere opzione fee (A / B / C)</div>
+      <div class="task-desc"><span class="task-tag t-decisione">Decisione</span>Blocca la raccolta soci e la stesura del patto parasociale</div>
+    </div>
+  </div>
+
+  <div class="task rosso" onclick="toggleTask(this)">
+    <div class="task-check"><span class="check-icon">✓</span></div>
+    <div>
+      <div class="task-title">📤 Mandare Teaser Guya</div>
+      <div class="task-desc"><span class="task-tag t-email">Invio</span>
+        <a class="tag-link" href="https://frankistudio.it/affio/rcv/POGLIO_Teaser_Guya.html" target="_blank">POGLIO_Teaser_Guya.html →</a>
+        <br>Narrativo · no numeri · domanda finale: "Come lo racconteresti tu?"</div>
+    </div>
+  </div>
+</div>
+
+<!-- QUESTA SETTIMANA -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-label l-giallo">🟡 QUESTA SETTIMANA</span>
+    <div class="section-header-line"></div>
+  </div>
+
+  <div class="task giallo" onclick="toggleTask(this)">
+    <div class="task-check"><span class="check-icon">✓</span></div>
+    <div>
+      <div class="task-title">🤝 Presentazione struttura v2 ad Affio</div>
+      <div class="task-desc"><span class="task-tag t-meet">Meeting</span>
+        <a class="tag-link" href="https://frankistudio.it/affio/rcv/POGLIO_Presentazione_Soci.html" target="_blank">Presentazione Soci →</a>
+        <br>Cap table v2 · compensi FranKi · fee definitiva · parasociale</div>
+    </div>
+  </div>
+
+  <div class="task giallo" onclick="toggleTask(this)">
+    <div class="task-check"><span class="check-icon">✓</span></div>
+    <div>
+      <div class="task-title">⚖️ Trovare avvocato esecuzioni Sulmona</div>
+      <div class="task-desc"><span class="task-tag t-legal">Legale</span>Specialista in procedure esecutive · zona Sulmona / L'Aquila</div>
+    </div>
+  </div>
+
+  <div class="task giallo" onclick="toggleTask(this)">
+    <div class="task-check"><span class="check-icon">✓</span></div>
+    <div>
+      <div class="task-title">🏗️ Iniziare raccolta 6 soci</div>
+      <div class="task-desc"><span class="task-tag t-meet">Outreach</span>€75K ciascuno (€50K equity + €25K prestito 6%) · profilo: fiducia + liquidità · max 6 posti</div>
+    </div>
+  </div>
+
+  <div class="task giallo" onclick="toggleTask(this)">
+    <div class="task-check"><span class="check-icon">✓</span></div>
+    <div>
+      <div class="task-title">☁️ Aggiornare file su Aruba</div>
+      <div class="task-desc"><span class="task-tag t-doc">File</span>Caricare PROGETTO_MASTER v2 · STATO_PROGETTO v2 · PAPELE v2 su frankistudio.it/affio/rcv/</div>
+    </div>
+  </div>
+</div>
+
+<!-- ENTRO DUE SETTIMANE -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-label l-blu">🔵 ENTRO DUE SETTIMANE</span>
+    <div class="section-header-line"></div>
+  </div>
+
+  <div class="task blu" onclick="toggleTask(this)">
+    <div class="task-check"><span class="check-icon">✓</span></div>
+    <div>
+      <div class="task-title">📝 Patto parasociale HoldCo — 9 clausole</div>
+      <div class="task-desc"><span class="task-tag t-legal">Legale</span>Tag/drag-along · anti-dil. · min 5% FranKi · ROFR · put M30 · change ctrl · plural voting 3× · lock-up M24</div>
+    </div>
+  </div>
+
+  <div class="task blu" onclick="toggleTask(this)">
+    <div class="task-check"><span class="check-icon">✓</span></div>
+    <div>
+      <div class="task-title">✍️ 4 contratti FrankiLegal</div>
+      <div class="task-desc"><span class="task-tag t-legal">Legale</span>1) Deal origination · 2) Asset mgmt €170K/a · 3) Success fee 5% soci · 4) Finanziamento soci 6%</div>
+    </div>
+  </div>
+
+  <div class="task blu" onclick="toggleTask(this)">
+    <div class="task-check"><span class="check-icon">✓</span></div>
+    <div>
+      <div class="task-title">📊 Investment Memorandum per fondo</div>
+      <div class="task-desc"><span class="task-tag t-doc">Documento</span>20-30 pag · IRR 51% · 5,2× base · liq. preference €2M · exit €23-37M</div>
+    </div>
+  </div>
+
+  <div class="task blu" onclick="toggleTask(this)">
+    <div class="task-check"><span class="check-icon">✓</span></div>
+    <div>
+      <div class="task-title">📩 Primo contatto fondo istituzionale</div>
+      <div class="task-desc"><span class="task-tag t-meet">Outreach</span>Lista fondi PE/RE target · proposta con numeri aggiornati struttura v2</div>
+    </div>
+  </div>
+
+  <div class="task blu" onclick="toggleTask(this)">
+    <div class="task-check"><span class="check-icon">✓</span></div>
+    <div>
+      <div class="task-title">📄 Teaser B2 — Operatori hospitality</div>
+      <div class="task-desc"><span class="task-tag t-doc">Documento</span>Focus: opportunity + management deal · no dati societari</div>
+    </div>
+  </div>
+
+  <div class="task blu" onclick="toggleTask(this)">
+    <div class="task-check"><span class="check-icon">✓</span></div>
+    <div>
+      <div class="task-title">📄 Teaser B3 — Privati e minibond</div>
+      <div class="task-desc"><span class="task-tag t-doc">Documento</span>Focus: rendimento 15% · creditore non socio · sicurezza strutturale</div>
+    </div>
+  </div>
+</div>
+
+<!-- DOPO CLOSING -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-label l-grigio">⚪ DOPO CLOSING</span>
+    <div class="section-header-line"></div>
+  </div>
+
+  <div class="task" onclick="toggleTask(this)">
+    <div class="task-check"><span class="check-icon">✓</span></div>
+    <div>
+      <div class="task-title">🎨 Brand identity visiva Poglío completa</div>
+      <div class="task-desc"><span class="task-tag t-doc">Brand</span>Logo · sito one-pager · social · PR · da affidare a Guya (freelance, non socia)</div>
+    </div>
+  </div>
+
+  <div class="task" onclick="toggleTask(this)">
+    <div class="task-check"><span class="check-icon">✓</span></div>
+    <div>
+      <div class="task-title">🏛️ Domanda PNRR M1C3 Turismo</div>
+      <div class="task-desc"><span class="task-tag t-doc">Grant</span>Componente ESG 10 sett/anno come leva di accesso · €2,1M target</div>
+    </div>
+  </div>
+
+  <div class="task" onclick="toggleTask(this)">
+    <div class="task-check"><span class="check-icon">✓</span></div>
+    <div>
+      <div class="task-title">🏢 HoldCo — SPV atto costitutivo</div>
+      <div class="task-desc"><span class="task-tag t-legal">Legale</span>Struttura SRL con capitale simbolico €10K · FranKi + Affio 50/50 · poi entrano 6 soci</div>
+    </div>
+  </div>
+
+  <button class="reset-btn" onclick="resetAll()">Azzera tutte le spunte</button>
+</div>
+
+<footer>
+  <p>PAPELE v2 · RCV — Il Poglío<br>FranKi Studio (Avre Srl · Napoli) · frankistudio.it<br>Documento interno · Aprile 2026</p>
+</footer>
+
+<script>
+const STORAGE_KEY='rcv-papele-v2-state';
+function getState(){try{return JSON.parse(localStorage.getItem(STORAGE_KEY))||{}}catch(e){return{}}}
+function saveState(s){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(s))}catch(e){}}
+function toggleTask(el){el.classList.toggle('done-task');updateCounter();persistState()}
+function updateCounter(){
+  const all=document.querySelectorAll('.task').length;
+  const done=document.querySelectorAll('.task.done-task').length;
+  document.getElementById('counter-nums').textContent=done+' / '+all+' completate';
+  document.getElementById('progress-fill').style.width=Math.round(done/all*100)+'%';
+}
+function persistState(){
+  const tasks=document.querySelectorAll('.task');
+  const s={};
+  tasks.forEach((t,i)=>{s[i]=t.classList.contains('done-task')});
+  saveState(s);
+}
+function restoreState(){
+  const s=getState();
+  document.querySelectorAll('.task').forEach((t,i)=>{if(s[i])t.classList.add('done-task')});
+  updateCounter();
+}
+function resetAll(){
+  if(!confirm('Azzerare tutte le spunte?'))return;
+  document.querySelectorAll('.task').forEach(t=>t.classList.remove('done-task'));
+  saveState({});updateCounter();
+}
+restoreState();
+</script>
+</body>
+</html>

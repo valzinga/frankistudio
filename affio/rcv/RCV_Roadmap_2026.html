@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roadmap 2026 — RCV Il Poglío · FranKi Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--blu:#2B38B0;--arancio:#F0A500;--grigio-bg:#F2F1ED;--dark:#111118;--bordo:#D8D5CF;--verde:#22c55e;--rosso:#ef4444}
+body{font-family:'Barlow',sans-serif;background:var(--grigio-bg);color:#222;font-size:15px;line-height:1.6}
+
+nav{position:sticky;top:0;z-index:100;background:var(--blu);padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:52px}
+.fk-logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;display:inline-flex;align-items:center;text-decoration:none}
+.fk-logo .fran{color:#FFF}.fk-logo .ki{background:#F0A500;color:#FFF;border-radius:5px;padding:1px 7px;margin-left:2px;display:inline-block}
+.nav-label{color:rgba(255,255,255,0.7);font-size:12px;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+
+.hero{background:var(--dark);padding:44px 20px 36px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(135deg,rgba(43,56,176,0.2) 0,rgba(43,56,176,0.2) 1px,transparent 1px,transparent 36px)}
+.hero-tag{display:inline-block;background:var(--arancio);color:#FFF;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;letter-spacing:2px;padding:4px 12px;border-radius:3px;margin-bottom:14px;text-transform:uppercase}
+.hero h1{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(32px,8vw,52px);color:#FFF;text-transform:uppercase;line-height:1.0;margin-bottom:6px}
+.hero-sub{color:rgba(255,255,255,0.55);font-size:13px;letter-spacing:0.3px}
+
+/* KPI */
+.kpi-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--bordo)}
+.kpi-cell{background:#FFF;padding:14px 10px;text-align:center}
+.kpi-val{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;line-height:1}
+.kpi-label{font-size:10px;color:#888;text-transform:uppercase;letter-spacing:0.8px;margin-top:3px}
+.kv-rosso{color:var(--rosso)}.kv-arancio{color:var(--arancio)}.kv-blu{color:var(--blu)}.kv-verde{color:var(--verde)}
+
+/* BLOCCO MESE */
+.mese-wrap{max-width:680px;margin:0 auto;padding:0 20px}
+
+.mese-block{margin-bottom:4px}
+
+.mese-header{display:flex;align-items:stretch;gap:0;margin-bottom:6px;margin-top:28px}
+.mese-pill{background:var(--blu);color:#FFF;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:13px;text-transform:uppercase;letter-spacing:1.5px;padding:8px 14px;border-radius:4px 0 0 4px;display:flex;align-items:center;white-space:nowrap}
+.mese-pill.urgente{background:var(--rosso)}
+.mese-pill.attivo{background:var(--arancio)}
+.mese-pill.cantiere{background:#1a5c2e}
+.mese-pill.closing{background:#6200ea}
+.mese-desc{background:#FFF;flex:1;padding:8px 14px;border-radius:0 4px 4px 0;border:1px solid var(--bordo);border-left:none;font-size:12px;color:#666;display:flex;align-items:center;font-style:italic}
+
+/* TASK */
+.task-list{display:grid;gap:7px;margin-bottom:4px}
+.task{background:#FFF;border-radius:6px;padding:13px 15px;display:flex;gap:12px;align-items:flex-start;border-left:4px solid var(--bordo);cursor:pointer;transition:transform 0.12s,box-shadow 0.12s}
+.task:hover{transform:translateX(2px);box-shadow:0 2px 10px rgba(0,0,0,0.07)}
+.task.done-task{opacity:0.45;border-left-color:var(--verde)}
+.task.done-task .task-title{text-decoration:line-through;color:#999}
+.task.t-rosso{border-left-color:var(--rosso)}
+.task.t-arancio{border-left-color:var(--arancio)}
+.task.t-blu{border-left-color:var(--blu)}
+.task.t-viola{border-left-color:#6200ea}
+.task.t-verde{border-left-color:#1a5c2e}
+
+.chk{width:20px;height:20px;border-radius:50%;border:2px solid var(--bordo);flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;font-size:12px;transition:all 0.15s}
+.task.t-rosso .chk{border-color:var(--rosso)}
+.task.t-arancio .chk{border-color:var(--arancio)}
+.task.t-blu .chk{border-color:var(--blu)}
+.task.t-viola .chk{border-color:#6200ea}
+.task.t-verde .chk{border-color:#1a5c2e}
+.task.done-task .chk{background:var(--verde);border-color:var(--verde);color:#FFF}
+.chk-icon{display:none}
+.task.done-task .chk-icon{display:block}
+
+.task-body{flex:1}
+.task-title{font-weight:700;font-size:14px;color:#111;margin-bottom:3px;line-height:1.3}
+.task-desc{font-size:12px;color:#666;line-height:1.5}
+.tag{display:inline-block;font-size:10px;font-weight:700;padding:2px 6px;border-radius:2px;text-transform:uppercase;margin-right:4px;margin-bottom:2px}
+.tg-legale{background:#fde0e0;color:#a00}
+.tg-soci{background:#fff3cd;color:#856404}
+.tg-doc{background:#e6f4ea;color:#137333}
+.tg-tel{background:#e8f0fe;color:var(--blu)}
+.tg-fondo{background:#f3e8fd;color:#6200ea}
+.tg-cantiere{background:#e6f4ea;color:#1a5c2e}
+.tg-cash{background:#fce8e6;color:#c5221f}
+
+/* MILESTONE BANNER */
+.milestone{background:var(--arancio);padding:16px 20px;margin:20px 0 4px;border-radius:6px;display:flex;align-items:center;gap:14px}
+.ms-icon{font-size:28px;flex-shrink:0}
+.ms-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px;color:#FFF;text-transform:uppercase;line-height:1.1}
+.ms-sub{font-size:13px;color:rgba(255,255,255,0.8);margin-top:2px}
+
+.milestone.m-viola{background:#6200ea}
+.milestone.m-verde{background:#1a5c2e}
+.milestone.m-blu{background:var(--blu)}
+
+/* PROGRESS */
+.progress-sticky{position:sticky;top:52px;z-index:90;background:#FFF;border-bottom:2px solid var(--blu);padding:10px 20px;display:flex;align-items:center;justify-content:space-between}
+.prog-label{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:14px;color:var(--blu);text-transform:uppercase}
+.prog-nums{font-size:12px;color:#888}
+.prog-bar-wrap{height:4px;background:var(--bordo);margin-top:6px;border-radius:2px;overflow:hidden}
+.prog-bar-fill{height:4px;background:var(--verde);border-radius:2px;transition:width 0.3s;width:0%}
+
+/* LEGENDA */
+.legenda{max-width:680px;margin:12px auto 0;padding:0 20px;display:flex;gap:12px;flex-wrap:wrap}
+.leg{display:flex;align-items:center;gap:5px;font-size:11px;color:#666}
+.leg-line{width:14px;height:4px;border-radius:2px}
+
+/* DONE BANNER */
+.done-banner{background:var(--verde);padding:28px 20px;margin:20px 0;border-radius:8px;text-align:center;max-width:680px;margin:20px auto}
+.done-banner h2{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:28px;color:#FFF;text-transform:uppercase;margin-bottom:6px}
+.done-banner p{color:rgba(255,255,255,0.8);font-size:14px}
+
+
+.doc-link{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:2px;text-transform:uppercase;margin-top:4px;background:#e8f0fe;color:#2B38B0;text-decoration:none;border:1px solid #b8caf5}
+.doc-link.warn{background:#fff8e1;color:#856404;border-color:#ffe082}
+.reset-btn{display:block;margin:20px auto 0;background:var(--grigio-bg);border:1px solid var(--bordo);color:#888;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:12px;text-transform:uppercase;letter-spacing:1px;padding:8px 20px;border-radius:4px;cursor:pointer}
+.mese-wrap 
+.doc-link{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:2px;text-transform:uppercase;margin-top:4px;background:#e8f0fe;color:#2B38B0;text-decoration:none;border:1px solid #b8caf5}
+.doc-link.warn{background:#fff8e1;color:#856404;border-color:#ffe082}
+.reset-btn{margin-bottom:32px}
+
+footer{background:var(--dark);padding:24px 20px;text-align:center;margin-top:8px}
+footer p{color:rgba(255,255,255,0.4);font-size:11px;line-height:1.8}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="fk-logo" href="#"><span class="fran">Fran</span><span class="ki">Ki</span></a>
+  <span class="nav-label">ROADMAP 2026 · RCV</span>
+</nav>
+
+<div class="hero">
+  <div class="hero-tag">🗓️ Piano Operativo · Ora → Done 2026</div>
+  <h1>Roadmap<br>Il Poglío 2026</h1>
+  <p class="hero-sub">Dalla raccolta soci al closing · FranKi Studio · Maggio 2026</p>
+</div>
+
+<div class="kpi-strip">
+  <div class="kpi-cell"><div class="kpi-val kv-rosso">ORA</div><div class="kpi-label">Partenza</div></div>
+  <div class="kpi-cell"><div class="kpi-val kv-arancio">~8</div><div class="kpi-label">Mesi al closing</div></div>
+  <div class="kpi-cell"><div class="kpi-val kv-blu">€450K</div><div class="kpi-label">Raccolta soci</div></div>
+  <div class="kpi-cell"><div class="kpi-val kv-verde">DIC '26</div><div class="kpi-label">Target done</div></div>
+</div>
+
+<div class="progress-sticky">
+  <div>
+    <div class="prog-label">Avanzamento roadmap</div>
+    <div class="prog-bar-wrap"><div class="prog-bar-fill" id="prog-fill"></div></div>
+  </div>
+  <div class="prog-nums" id="prog-nums">0 / 38 attività</div>
+</div>
+
+<div class="legenda">
+  <div class="leg"><div class="leg-line" style="background:var(--rosso)"></div>Urgente</div>
+  <div class="leg"><div class="leg-line" style="background:var(--arancio)"></div>Raccolta soci</div>
+  <div class="leg"><div class="leg-line" style="background:var(--blu)"></div>Legale / struttura</div>
+  <div class="leg"><div class="leg-line" style="background:#6200ea"></div>Fondo / finanza</div>
+  <div class="leg"><div class="leg-line" style="background:#1a5c2e"></div>Asset / cantiere</div>
+</div>
+
+<!-- ============================================================ -->
+<div class="mese-wrap">
+
+<!-- MAGGIO 2026 -->
+<div class="mese-block">
+  <div class="mese-header">
+    <div class="mese-pill urgente">🔴 Maggio 2026</div>
+    <div class="mese-desc">Settimana 1–4 · Attivazione immediata · Istruttoria mutuo avviata in parallelo</div>
+  </div>
+  <div class="task-list">
+
+    <div class="task t-rosso" onclick="toggle(this)">
+      <div class="chk"><span class="chk-icon">✓</span></div>
+      <div class="task-body">
+        <div class="task-title">📞 Chiamare IVG Abruzzo — 085 9436430</div>
+        <div class="task-desc"><span class="tag tg-tel">Telefono</span>Trattativa privata post 2ª asta deserta · chiedere modalità e tempistiche · lotto N.43/16</div>
+      </div>
+    </div>
+
+    <div class="task t-rosso" onclick="toggle(this)">
+      <div class="chk"><span class="chk-icon">✓</span></div>
+      <div class="task-body">
+        <div class="task-title">📧 Email formale a IVG Abruzzo</div>
+        <div class="task-desc"><span class="tag tg-tel">Email</span>ivgpescara1@gmail.com · manifestazione interesse formale per trattativa privata</div>
+      </div>
+    </div>
+
+    <div class="task t-rosso" onclick="toggle(this)">
+      <div class="chk"><span class="chk-icon">✓</span></div>
+      <div class="task-body">
+        <div class="task-title">✅ Decisione definitiva fee (25K + 5% closing)</div>
+        <div class="task-desc"><span class="tag tg-cash">Fee</span>Confermare struttura: €25K a testa immediati + 5% sul prezzo di aggiudicazione · base per tutti i contratti</div>
+      </div>
+    </div>
+
+    <div class="task t-blu" onclick="toggle(this)">
+      <div class="chk"><span class="chk-icon">✓</span></div>
+      <div class="task-body">
+        <div class="task-title">⚖️ Trovare avvocato esecuzioni — candidato socio operativo</div>
+        <div class="task-desc"><span class="tag tg-legale">Legale</span><span class="tag tg-soci">Socio operativo</span>Specialista procedure esecutive Sulmona/L'Aquila · valutare come slot 1 operativo · prestito €25K compensabile con parcelle</div>
+      </div>
+    </div>
+
+    <div class="task t-arancio" onclick="toggle(this)">
+      <div class="chk"><span class="chk-icon">✓</span></div>
+      <div class="task-body">
+        <div class="task-title">🗣️ Briefing Affio — 3 domande rete</div>
+        <div class="task-desc"><span class="tag tg-soci">Soci</span>Avvocato aste nella sua rete?<br><a class="doc-link warn" href="https://frankistudio.it/affio/rcv/RCV_Fornitori_v2.html" target="_blank">→ Mappa Fornitori ⚠ da caricare</a> · Marketing hospitality? · Candidati doppio ruolo operativo? · Base per la lista contatti</div>
+      </div>
+    </div>
+
+    <div class="task t-arancio" onclick="toggle(this)">
+      <div class="chk"><span class="chk-icon">✓</span></div>
+      <div class="task-body">
+        <div class="task-title">📋 Lista 15–20 contatti candidati soci</div>
+        <div class="task-desc"><span class="tag tg-soci">Soci</span>FranKi + Affio ciascuno fa la propria lista · profilo: liquidità €75K, orizzonte 4-5 anni, non ha bisogno dei soldi a breve · 2 slot operativi da identificare</div>
+      </div>
+    </div>
+
+    <div class="task t-arancio" onclick="toggle(this)">
+      <div class="chk"><span class="chk-icon">✓</span></div>
+      <div class="task-body">
+        <div class="task-title">📄 Documento socio — versione finanziario puro</div>
+        <div class="task-desc"><span class="tag tg-doc">Documento</span>Una pagina · brand Poglío · storia asset · numeri chiave · rendimento 25× equity · scarcity 6 posti · call to action</div>
+      </div>
+    </div>
+
+    <div class="task t-arancio" onclick="toggle(this)">
+      <div class="chk"><span class="chk-icon">✓</span></div>
+      <div class="task-body">
+        <div class="task-title">📄 Documento socio — versione operativo</div>
+        <div class="task-desc"><span class="tag tg-doc">Documento</span>Stessa base + ruolo operativo esplicitato · meccanica compensazione prestito con parcelle · doppio rendimento equity + lavoro<br><a class="doc-link warn" href="https://frankistudio.it/affio/rcv/RCV_MagLug_Soci.html" target="_blank">→ Documento Socio Operativo ⚠ da caricare</a></div>
+      </div>
+    </div>
+
+    <div class="task t-arancio" onclick="toggle(this)">
+      <div class="chk"><span class="chk-icon">✓</span></div>
+      <div class="task-body">
+        <div class="task-title">📤 Mandare Teaser Guya</div>
+        <div class="task-desc"><span class="tag tg-doc">Marketing</span>frankistudio.it/affio/rcv/POGLIO_Teaser_Guya.html · narrativo · no numeri<br><a class="doc-link" href="https://frankistudio.it/affio/rcv/POGLIO_Teaser_Guya.html" target="_blank">→ Teaser Guya</a> · domanda finale: "Come lo racconteresti tu?"</div>
+      </div>
+    </div>
+
+    <div class="task t-blu" onclick="toggle(this)">
+      <div class="chk"><span class="chk-icon">✓</span></div>
+      <div class="task-body">
+        <div class="task-title">🏦 Avviare istruttoria mutuo — percorso critico</div>
+        <div class="task-desc"><span class="tag tg-cash">Mutuo</span><span class="tag tg-legale">Critico</span>60–90 gg di istruttoria · partire subito senza aspettare soci · perizia Farina €13,5M già disponibile · LTV effettivo 3,3% · pre-delibera necessaria prima della cauzione asta agosto</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- GIUGNO 2026 -->
+<div class="mese-block">
+  <div class="mese-header">
+    <div class="mese-pill attivo">🟠 Giugno 2026</div>
+    <div class="mese-desc">Raccolta soci · Struttura legale · Primi contatti fondo</div>
+  </div>
+  <div class="task-list">
+
+    <div class="task t-arancio" onclick="toggle(this)">
+      <div class="chk"><span class="chk-icon">✓</span></div>
+      <div class="task-body">
+        <div class="task-title">📞 Primi contatti soci — tornata 1</div>
+        <div class="task-desc"><span class="tag tg-soci">Soci</span>Primi 8–10 contatti dalla lista · solo verbale<br><a class="doc-link warn" href="https://frankistudio.it/affio/rcv/RCV_MagLug_Soci.html" target="_blank">→ Documento Socio ⚠ da caricare</a> · no documenti ancora · obiettivo: capire interesse e disponibilità entro 7 giorni</div>
+      </div>
+    </div>
+
+    <div class="task t-arancio" onclick="toggle(this)">
+      <div class="chk"><span class="chk-icon">✓</span></div>
+      <div class="task-body">
+        <div class="task-title">📨 Invio documento socio ai qualificati</div>
+        <div class="task-desc"><span class="tag tg-soci">Soci</span>Solo a chi ha mostrato interesse nel primo contatto · versione corretta (finanziario o operativo) · follow-up entro 5 giorni<br><a class="doc-link warn" href="https://frankistudio.it/affio/rcv/RCV_MagLug_Soci.html" target="_blank">→ MagLug Soci + Obiezioni ⚠ da caricare</a></div>
+      </div>
+    </div>
+
+    <div class="task t-arancio" onclick="toggle(this)">
+      <div class="chk"><span class="chk-icon">✓</span></div>
+      <div class="task-body">
+        <div class="task-title">🤝 Identificare e bloccare i 2 soci operativi</div>
+        <div class="task-desc"><span class="tag tg-soci">Soci</span><span class="tag tg-legale">Operativo</span>Slot 1: avvocato · Slot 2: general contractor o gestore · Lettera di intenti firmata per bloccare il posto</div>
+      </div>
+    </div>
+
+    <div class="task t-blu" onclick="toggle(this)">
+      <div class="chk"><span class="chk-icon">✓</span></div>
+      <div class="task-body">
+        <div class="task-title">🏢 Costituzione HoldCo SRL</div>
+        <div class="task-desc"><span class="tag tg-legale">Legale</span>FranKi + Affio 50/50 · capitale simbolico €10K · atto costitutivo con clausole governance · plural voting FranKi già nello statuto</div>
+      </div>
+    </div>
+
+    <div class="task t-blu" onclick="toggle(this)">
+      <div class="chk"><span class="chk-icon">✓</span></div>
+      <div class="task-body">
+        <div class="task-title">📝 Contratti FrankiLegal — bozze</div>
+        <div class="task-desc"><span class="tag tg-legale">Legale</span>1) Fee origination 25K + 5% closing · 2) Asset mgmt €170K/anno · 3) Success fee 5% soci · 4) Finanziamento soci con clausola compensazione parcelle</div>
+      </div>
+    </div>
+
+    <div class="task t-blu" onclick="toggle(this)">
+      <div class="chk"><span class="chk-icon">✓</span></div>
+      <div class="task-body">
+        <div class="task-title">📝 Patto parasociale — bozza (9 clausole)</div>
+        <div class="task-desc"><span class="tag tg-legale">Legale</span>Tag/drag-along · anti-dil. · min 5% FranKi · ROFR · put M30 · change ctrl · plural voting 3× · lock-up M24 · rimborso differenziato soci operativi</div>
+      </div>
+    </div>
+
+    <div class="task t-viola" onclick="toggle(this)">
+      <div class="chk"><span class="chk-icon">✓</span></div>
+      <div class="task-body">
+        <div class="task-title">📊 Investment Memorandum per fondo — bozza</div>
+        <div class="task-desc"><span class="tag tg-fondo">Fondo</span>20–30 pag · IRR 51% · 5,2× base · liq. preference €2M · exit €23–37M · struttura 8 soci + fondo</div>
+      </div>
+    </div>
+
+    <div class="task t-arancio" onclick="toggle(this)">
+      <div class="chk"><span class="chk-icon">✓</span></div>
+      <div class="task-body">
+        <div class="task-title">🎨 Ingaggiare Guya — brief operativo</div>
+        <div class="task-desc"><span class="tag tg-doc">Marketing</span>Dopo risposta al teaser · POGLIO_Brief_Guya.html · definire scope freelance<br><a class="doc-link" href="https://frankistudio.it/affio/rcv/POGLIO_Brief_Guya.html" target="_blank">→ Brief Guya</a>: brand identity + pre-lancio soci club</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- LUGLIO 2026 -->
+<div class="mese-block">
+  <div class="mese-header">
+    <div class="mese-pill attivo">🟠 Luglio 2026</div>
+    <div class="mese-desc">Chiusura raccolta soci · Firma contratti · Contatto fondo</div>
+  </div>
+  <div class="task-list">
+
+    <div class="task t-arancio" onclick="toggle(this)">
+      <div class="chk"><span class="chk-icon">✓</span></div>
+      <div class="task-body">
+        <div class="task-title">✅ Chiudere tutti e 6 i soci</div>
+        <div class="task-desc"><span class="tag tg-soci">Soci</span>2 operativi + 4 finanziari · lettera di intenti firmata da tutti · raccolta €450K confermata · nessuno lasciato in attesa oltre 7 giorni</div>
+      </div>
+    </div>
+
+    <div class="task t-blu" onclick="toggle(this)">
+      <div class="chk"><span class="chk-icon">✓</span></div>
+      <div class="task-body">
+        <div class="task-title">✍️ Firma patto parasociale e contratti</div>
+        <div class="task-desc"><span class="tag tg-legale">Legale</span>Tutti e 8 i soci firmano · versamenti €75K (o €50K per operativi) in HoldCo · fee €25K a testa FranKi+Affio erogata</div>
+      </div>
+    </div>
+
+    <div class="task t-arancio" onclick="toggle(this)">
+      <div class="chk"><span class="chk-icon">✓</span></div>
+      <div class="task-body">
+        <div class="task-title">💰 Raccolta €450K in cassa HoldCo</div>
+        <div class="task-desc"><span class="tag tg-cash">Cash</span>Equity + prestiti soci versati · fee origination €50K erogata · cassa operativa disponibile per cauzione e spese</div>
+      </div>
+    </div>
+
+    <div class="task t-viola" onclick="toggle(this)">
+      <div class="chk"><span class="chk-icon">✓</span></div>
+      <div class="task-body">
+        <div class="task-title">📩 Primo contatto fondi istituzionali</div>
+        <div class="task-desc"><span class="tag tg-fondo">Fondo</span>Lista 5–8 fondi PE/RE target · invio Investment Memorandum<br><a class="doc-link" href="https://frankistudio.it/affio/rcv/RCV_BusinessModel.html" target="_blank">→ Business Model</a> · obiettivo: term sheet entro settembre</div>
+      </div>
+    </div>
+
+    <div class="task t-arancio" onclick="toggle(this)">
+      <div class="chk"><span class="chk-icon">✓</span></div>
+      <div class="task-body">
+        <div class="task-title">📄 Teaser B2 — Operatori hospitality</div>
+        <div class="task-desc"><span class="tag tg-doc">Documento</span>Per gestori hotel, operatori hospitality · focus: opportunity + management deal · nessun dato societario interno</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- AGOSTO 2026 -->
+<div class="mese-block">
+  <div class="mese-header">
+    <div class="mese-pill">🔵 Agosto 2026</div>
+    <div class="mese-desc">Trattativa asset · Pre-closing · Verifica strutturale</div>
+  </div>
+  <div class="task-list">
+
+    <div class="task t-rosso" onclick="toggle(this)">
+      <div class="chk"><span class="chk-icon">✓</span></div>
+      <div class="task-body">
+        <div class="task-title">🏛️ Trattativa privata IVG o partecipazione 3ª asta</div>
+        <div class="task-desc"><span class="tag tg-legale">Asset</span>3ª asta stimata estate 2026 · base ~€900K · obiettivo: chiudere trattativa privata sotto base asta · avvocato esecuzioni operativo</div>
+      </div>
+    </div>
+
+    <div class="task t-verde" onclick="toggle(this)">
+      <div class="chk"><span class="chk-icon">✓</span></div>
+      <div class="task-body">
+        <div class="task-title">🔩 Verifica strutturale 3 palazzine</div>
+        <div class="task-desc"><span class="tag tg-cantiere">Asset</span>Ingegnere strutturale · verifica sismica edifici anni '60 · APE energetico · report prima del closing · identificare criticità<br><a class="doc-link" href="https://frankistudio.it/affio/rcv/RCV_Benchmark.html" target="_blank">→ Benchmark</a></div>
+      </div>
+    </div>
+
+    <div class="task t-verde" onclick="toggle(this)">
+      <div class="chk"><span class="chk-icon">✓</span></div>
+      <div class="task-body">
+        <div class="task-title">🏛️ Due diligence urbanistica e catastale</div>
+        <div class="task-desc"><span class="tag tg-cantiere">Asset</span>Verifica PdC n.35/2009<br><a class="doc-link" href="https://frankistudio.it/affio/rcv/RCV_Scheda_Storica.html" target="_blank">→ Scheda Storica</a> · Variante n.34/2010 · conformità destinazione extralberghiera L.R. 75/1995 · nessuna sorpresa al closing</div>
+      </div>
+    </div>
+
+    <div class="task t-viola" onclick="toggle(this)">
+      <div class="chk"><span class="chk-icon">✓</span></div>
+      <div class="task-body">
+        <div class="task-title">🤝 Incontri con fondi — presentazione deal</div>
+        <div class="task-desc"><span class="tag tg-fondo">Fondo</span>Call o meeting con i fondi rispondenti · presentare struttura con 8 soci già dentro · liquidation preference €2M · IRR 51%</div>
+      </div>
+    </div>
+
+    <div class="task t-blu" onclick="toggle(this)">
+      <div class="chk"><span class="chk-icon">✓</span></div>
+      <div class="task-body">
+        <div class="task-title">💳 Cauzione versata per asta / trattativa</div>
+        <div class="task-desc"><span class="tag tg-cash">Cash</span>~10% del prezzo offerta · uscita temporanea dalla cassa HoldCo · recuperata al closing o imputata al prezzo</div>
+      </div>
+    </div>
+
+    <div class="task t-arancio" onclick="toggle(this)">
+      <div class="chk"><span class="chk-icon">✓</span></div>
+      <div class="task-body">
+        <div class="task-title">🎯 Pre-lancio soci club — lista interesse</div>
+        <div class="task-desc"><span class="tag tg-soci">Marketing</span>Con Guya · costruire lista dei primi 30–40 potenziali soci fondatori club · prima dell'apertura fisica · scarcity narrativa</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- SETTEMBRE 2026 -->
+<div class="mese-block">
+  <div class="mese-header">
+    <div class="mese-pill">🔵 Settembre 2026</div>
+    <div class="mese-desc">Term sheet fondo · Conferma pre-delibera mutuo · Preparazione closing</div>
+  </div>
+  <div class="task-list">
+
+    <div class="task t-viola" onclick="toggle(this)">
+      <div class="chk"><span class="chk-icon">✓</span></div>
+      <div class="task-body">
+        <div class="task-title">📋 Term sheet fondo istituzionale</div>
+        <div class="task-desc"><span class="tag tg-fondo">Fondo</span>40% equity · liq. preference €2M · IRR target 51% · condizioni ingresso · negoziazione clausole · obiettivo firma entro ottobre</div>
+      </div>
+    </div>
+
+    <div class="task t-blu" onclick="toggle(this)">
+      <div class="chk"><span class="chk-icon">✓</span></div>
+      <div class="task-body">
+        <div class="task-title">🏦 Pre-delibera mutuo confermata (istruttoria avviata a maggio)</div>
+        <div class="task-desc"><span class="tag tg-cash">Mutuo</span>€400–500K · banca selezionata a giugno · condizioni definite · erogazione pronta al closing · se avviata a maggio arrivi comodo</div>
+      </div>
+    </div>
+
+    <div class="task t-verde" onclick="toggle(this)">
+      <div class="chk"><span class="chk-icon">✓</span></div>
+      <div class="task-body">
+        <div class="task-title">🏗️ Architetto operativo — progetto preliminare</div>
+        <div class="task-desc"><span class="tag tg-cantiere">Cantiere</span>Layout 68 keys + 6 bubble room · prima stima costi cantiere · cronoprogramma M6–M21 · input per capitolato GC</div>
+      </div>
+    </div>
+
+    <div class="task t-arancio" onclick="toggle(this)">
+      <div class="chk"><span class="chk-icon">✓</span></div>
+      <div class="task-body">
+        <div class="task-title">📄 Teaser B3 — Minibond / privati</div>
+        <div class="task-desc"><span class="tag tg-doc">Documento</span>Investitori retail · rendimento 15% fisso · creditore non socio · sicurezza strutturale · advisor crowdfunding identificato</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- OTTOBRE 2026 -->
+<div class="mese-block">
+  <div class="mese-header">
+    <div class="mese-pill cantiere">🟢 Ottobre 2026</div>
+    <div class="mese-desc">Firma fondo · Struttura finanziaria completa · Pre-closing operativo</div>
+  </div>
+  <div class="task-list">
+
+    <div class="task t-viola" onclick="toggle(this)">
+      <div class="chk"><span class="chk-icon">✓</span></div>
+      <div class="task-body">
+        <div class="task-title">✍️ Firma accordo fondo istituzionale</div>
+        <div class="task-desc"><span class="tag tg-fondo">Fondo</span>€2M impegnati · 40% HoldCo post-closing · liquidation preference formalizzata · clausole veto su straordinarie</div>
+      </div>
+    </div>
+
+    <div class="task t-blu" onclick="toggle(this)">
+      <div class="chk"><span class="chk-icon">✓</span></div>
+      <div class="task-body">
+        <div class="task-title">📐 Progetto definitivo e CILA</div>
+        <div class="task-desc"><span class="tag tg-cantiere">Cantiere</span>Architetto deposita CILA conversione · approvazione Comune Roccaraso · verifica vincoli paesaggistici · tempi autorizzativi</div>
+      </div>
+    </div>
+
+    <div class="task t-verde" onclick="toggle(this)">
+      <div class="chk"><span class="chk-icon">✓</span></div>
+      <div class="task-body">
+        <div class="task-title">📋 Capitolato e selezione general contractor</div>
+        <div class="task-desc"><span class="tag tg-cantiere">Cantiere</span>3 preventivi · valutazione profilo socio-fornitore · offerta migliore con meccanica incentivo risparmio budget · contratto pronto</div>
+      </div>
+    </div>
+
+    <div class="task t-arancio" onclick="toggle(this)">
+      <div class="chk"><span class="chk-icon">✓</span></div>
+      <div class="task-body">
+        <div class="task-title">🚀 Lancio campagna minibond</div>
+        <div class="task-desc"><span class="tag tg-fondo">Minibond</span>Con advisor crowdfunding · piattaforma selezionata · target €1,5M al 15% · durata campagna 60–90 giorni</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- NOVEMBRE 2026 -->
+<div class="mese-block">
+  <div class="mese-header">
+    <div class="mese-pill cantiere">🟢 Novembre 2026</div>
+    <div class="mese-desc">Closing imminente · Tutto pronto · Ultima verifica</div>
+  </div>
+  <div class="task-list">
+
+    <div class="task t-verde" onclick="toggle(this)">
+      <div class="chk"><span class="chk-icon">✓</span></div>
+      <div class="task-body">
+        <div class="task-title">🔍 Verifica finale pre-closing</div>
+        <div class="task-desc"><span class="tag tg-legale">Legale</span>Avvocato controlla: cancellazione ipoteca UniCredit · decreto trasferimento pulito · nessun gravame residuo · tutto in ordine</div>
+      </div>
+    </div>
+
+    <div class="task t-viola" onclick="toggle(this)">
+      <div class="chk"><span class="chk-icon">✓</span></div>
+      <div class="task-body">
+        <div class="task-title">💰 Chiusura minibond €1,5M</div>
+        <div class="task-desc"><span class="tag tg-fondo">Minibond</span>Raccolta completata · fondi disponibili per cantiere · creditore non socio · nessun conflitto con liq. preference fondo</div>
+      </div>
+    </div>
+
+    <div class="task t-verde" onclick="toggle(this)">
+      <div class="chk"><span class="chk-icon">✓</span></div>
+      <div class="task-body">
+        <div class="task-title">🏗️ Contratto GC firmato · cantiere pronto</div>
+        <div class="task-desc"><span class="tag tg-cantiere">Cantiere</span>General contractor ingaggiato · cronoprogramma M6–M21 confermato · subappaltatori locali identificati · cantiere avviabile al closing</div>
+      </div>
+    </div>
+
+    <div class="task t-arancio" onclick="toggle(this)">
+      <div class="chk"><span class="chk-icon">✓</span></div>
+      <div class="task-body">
+        <div class="task-title">👥 Lista soci club — 40+ pre-iscritti</div>
+        <div class="task-desc"><span class="tag tg-soci">Marketing</span>Con Guya · 40 nominativi qualificati interessati ai 140 posti fondatori · lista calda pronta per il lancio post-closing</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- DICEMBRE 2026 — DONE -->
+<div class="milestone m-verde">
+  <div class="ms-icon">🏆</div>
+  <div>
+    <div class="ms-title">Dicembre 2026 — Done</div>
+    <div class="ms-sub">Closing completato · Asset acquisito · Cantiere avviato · Struttura finanziaria completa</div>
+  </div>
+</div>
+
+<div class="task-list" style="margin-bottom:12px">
+
+  <div class="task t-viola" onclick="toggle(this)">
+    <div class="chk"><span class="chk-icon">✓</span></div>
+    <div class="task-body">
+      <div class="task-title">🏛️ CLOSING — Decreto di trasferimento</div>
+      <div class="task-desc"><span class="tag tg-legale">Closing</span>Tribunale Sulmona emette decreto · HoldCo diventa proprietaria · ipoteca UniCredit cancellata · mutuo erogato · fee 5% closing pagata</div>
+    </div>
+  </div>
+
+  <div class="task t-viola" onclick="toggle(this)">
+    <div class="chk"><span class="chk-icon">✓</span></div>
+    <div class="task-body">
+      <div class="task-title">💼 Ingresso fondo — €2M in cassa</div>
+      <div class="task-desc"><span class="tag tg-fondo">Fondo</span>Fondo versa €2M · cap table post-fondo: FranKi 12% · Affio 12% · 6 soci 6% c. · Fondo 40% · cantiere finanziato</div>
+    </div>
+  </div>
+
+  <div class="task t-verde" onclick="toggle(this)">
+    <div class="chk"><span class="chk-icon">✓</span></div>
+    <div class="task-body">
+      <div class="task-title">⛏️ Cantiere avviato — 3 palazzine in parallelo</div>
+      <div class="task-desc"><span class="tag tg-cantiere">Cantiere</span>GC inizia lavori · milestone M9 bubble room nel mirino · cronoprogramma attivo · FranKi supervisiona come asset manager</div>
+    </div>
+  </div>
+
+  <div class="task t-blu" onclick="toggle(this)">
+    <div class="chk"><span class="chk-icon">✓</span></div>
+    <div class="task-body">
+      <div class="task-title">📋 Domanda PNRR M1C3 Turismo</div>
+      <div class="task-desc"><span class="tag tg-legale">Grant</span>Con consulente PNRR · componente ESG 10 settimane/anno come leva · target €2,1M · tempistiche bandi Abruzzo</div>
+    </div>
+  </div>
+
+  <div class="task t-arancio" onclick="toggle(this)">
+    <div class="chk"><span class="chk-icon">✓</span></div>
+    <div class="task-body">
+      <div class="task-title">🎉 Lancio ufficiale raccolta 140 soci club</div>
+      <div class="task-desc"><span class="tag tg-soci">Marketing</span>Lista pre-iscritti attivata · sito Il Poglío live · €25K quota fondatore + €10K/anno · scarcity reale: 140 posti, lista chiusa<br><a class="doc-link" href="https://frankistudio.it/affio/rcv/RCV_Piano30Mesi.html" target="_blank">→ Piano 30 Mesi</a></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="done-banner">
+  <h2>🏔️ Done 2026</h2>
+  <p>Asset acquisito · €450K cordata · €2M fondo · Cantiere avviato · 140 soci club in raccolta<br>FranKi: fee €25K + 5% closing incassati · Asset management €170K/anno attivo</p>
+</div>
+
+<button class="reset-btn" onclick="resetAll()">Azzera tutte le spunte</button>
+
+</div><!-- fine mese-wrap -->
+
+<footer>
+  <p>ROADMAP 2026 · RCV — Il Poglío<br>FranKi Studio (Avre Srl · Napoli) · frankistudio.it<br>Documento interno riservato · Maggio 2026</p>
+</footer>
+
+<script>
+const KEY='rcv-roadmap-2026';
+function getS(){try{return JSON.parse(localStorage.getItem(KEY))||{}}catch(e){return{}}}
+function saveS(s){try{localStorage.setItem(KEY,JSON.stringify(s))}catch(e){}}
+function toggle(el){
+  el.classList.toggle('done-task');
+  updateProg();persist();
+}
+function updateProg(){
+  const all=document.querySelectorAll('.task').length;
+  const done=document.querySelectorAll('.task.done-task').length;
+  document.getElementById('prog-nums').textContent=done+' / '+all+' attività';
+  document.getElementById('prog-fill').style.width=Math.round(done/all*100)+'%';
+}
+function persist(){
+  const tasks=document.querySelectorAll('.task');
+  const s={};
+  tasks.forEach((t,i)=>{s[i]=t.classList.contains('done-task')});
+  saveS(s);
+}
+function restore(){
+  const s=getS();
+  document.querySelectorAll('.task').forEach((t,i)=>{if(s[i])t.classList.add('done-task')});
+  updateProg();
+}
+function resetAll(){
+  if(!confirm('Azzerare tutte le spunte?'))return;
+  document.querySelectorAll('.task').forEach(t=>t.classList.remove('done-task'));
+  saveS({});updateProg();
+}
+restore();
+</script>
+</body>
+</html>

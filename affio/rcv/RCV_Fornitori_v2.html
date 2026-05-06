@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mappa Fornitori — RCV Il Poglío · FranKi Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--blu:#2B38B0;--arancio:#F0A500;--grigio-bg:#F2F1ED;--dark:#111118;--bordo:#D8D5CF;--verde:#22c55e;--verde-bg:#d4f0d4;--rosso:#ef4444;--rosso-bg:#fde0e0;--giallo-bg:#fff8e1}
+body{font-family:'Barlow',sans-serif;background:var(--grigio-bg);color:#222;font-size:15px;line-height:1.6}
+
+nav{position:sticky;top:0;z-index:100;background:var(--blu);padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:52px}
+.fk-logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;display:inline-flex;align-items:center;text-decoration:none}
+.fk-logo .fran{color:#FFF}.fk-logo .ki{background:#F0A500;color:#FFF;border-radius:5px;padding:1px 7px;margin-left:2px;display:inline-block}
+.nav-label{color:rgba(255,255,255,0.7);font-size:12px;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+
+.hero{background:var(--blu);padding:40px 20px 32px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(135deg,rgba(255,255,255,0.03) 0,rgba(255,255,255,0.03) 1px,transparent 1px,transparent 40px)}
+.hero-tag{display:inline-block;background:var(--arancio);color:#FFF;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;letter-spacing:2px;padding:4px 12px;border-radius:3px;margin-bottom:14px;text-transform:uppercase}
+.hero h1{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(28px,7vw,46px);color:#FFF;text-transform:uppercase;line-height:1.05;margin-bottom:6px}
+.hero-sub{color:rgba(255,255,255,0.65);font-size:13px}
+
+/* KPI */
+.kpi-strip{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--bordo)}
+.kpi-cell{background:#FFF;padding:16px 12px;text-align:center}
+.kpi-val{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:26px;color:var(--blu);line-height:1}
+.kpi-label{font-size:10px;color:#888;text-transform:uppercase;letter-spacing:1px;margin-top:3px}
+
+/* LEGENDA */
+.legenda{display:flex;gap:8px;flex-wrap:wrap;padding:16px 20px;max-width:680px;margin:0 auto}
+.leg-item{display:flex;align-items:center;gap:6px;font-size:12px;color:#555}
+.leg-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.leg-dot.socio{background:var(--arancio)}
+.leg-dot.fornitore{background:var(--blu)}
+.leg-dot.urgente{background:var(--rosso)}
+
+/* CATEGORIA */
+.cat-header{max-width:680px;margin:0 auto;padding:20px 20px 8px}
+.cat-bar{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+.cat-line{height:3px;flex:1;background:var(--blu)}
+.cat-label{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;color:var(--blu);letter-spacing:2px;text-transform:uppercase;white-space:nowrap}
+.cat-timing{font-size:11px;color:#888;text-align:right;padding:0 20px;max-width:680px;margin:0 auto 12px}
+
+/* CARD FORNITORE */
+.cards{max-width:680px;margin:0 auto;padding:0 20px;display:grid;gap:10px;margin-bottom:8px}
+
+.fcard{background:#FFF;border-radius:8px;overflow:hidden;border-left:5px solid var(--bordo)}
+.fcard.doppio{border-left-color:var(--arancio)}
+.fcard.urgente{border-left-color:var(--rosso)}
+.fcard.standard{border-left-color:var(--blu)}
+
+.fcard-head{padding:14px 16px 10px;display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.fcard-left{}
+.fcard-icon{font-size:20px;margin-bottom:4px}
+.fcard-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:18px;text-transform:uppercase;color:var(--dark);line-height:1.1}
+.fcard-sub{font-size:12px;color:#777;margin-top:2px}
+.fcard-badges{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0}
+
+.badge{display:inline-block;font-size:10px;font-weight:700;padding:3px 8px;border-radius:3px;text-transform:uppercase;letter-spacing:0.5px;white-space:nowrap}
+.badge-doppio{background:var(--arancio);color:#FFF}
+.badge-urgente{background:var(--rosso-bg);color:#a00}
+.badge-timing{background:#e8f0fe;color:var(--blu)}
+.badge-solo{background:#f0f0f0;color:#555}
+
+.fcard-body{padding:0 16px 14px;display:grid;gap:6px}
+.fcard-row{display:flex;gap:8px;align-items:flex-start}
+.fcard-row-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#aaa;min-width:64px;padding-top:2px;flex-shrink:0}
+.fcard-row-val{font-size:13px;color:#444;line-height:1.5}
+
+/* PLUS SOCIO */
+.plus-box{margin:0 16px 14px;background:var(--giallo-bg);border:1px solid #ffe082;border-radius:6px;padding:10px 12px}
+.plus-box-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:12px;text-transform:uppercase;color:#856404;margin-bottom:4px;letter-spacing:1px}
+.plus-box p{font-size:13px;color:#5a3e00;line-height:1.5}
+
+/* COMPOSIZIONE CORDATA */
+.cordata-box{max-width:680px;margin:20px auto;padding:0 20px}
+.cordata-inner{background:var(--dark);border-radius:8px;padding:24px 20px;text-align:center}
+.cordata-inner h2{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:24px;color:#FFF;text-transform:uppercase;margin-bottom:8px}
+.cordata-inner p{color:rgba(255,255,255,0.65);font-size:14px;margin-bottom:20px}
+.cordata-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;text-align:left}
+.cordata-slot{background:rgba(255,255,255,0.07);border-radius:6px;padding:12px 14px}
+.cordata-slot.operativo{border-left:3px solid var(--arancio)}
+.cordata-slot.finanziario{border-left:3px solid rgba(255,255,255,0.3)}
+.cordata-slot-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.cordata-slot.operativo .cordata-slot-label{color:var(--arancio)}
+.cordata-slot.finanziario .cordata-slot-label{color:rgba(255,255,255,0.4)}
+.cordata-slot-val{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:15px;color:#FFF;text-transform:uppercase}
+.cordata-slot-sub{font-size:12px;color:rgba(255,255,255,0.5);margin-top:2px}
+
+.domande-box{max-width:680px;margin:0 auto 24px;padding:0 20px}
+.domande-inner{background:#FFF;border-radius:8px;padding:20px;border-left:4px solid var(--arancio)}
+.domande-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;text-transform:uppercase;color:var(--arancio);margin-bottom:12px}
+.domanda{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--bordo)}
+.domanda:last-child{border-bottom:none}
+.domanda-num{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px;color:var(--arancio);min-width:28px;line-height:1}
+.domanda-testo{font-size:14px;color:#333}
+
+footer{background:var(--dark);padding:24px 20px;text-align:center;margin-top:16px}
+footer p{color:rgba(255,255,255,0.4);font-size:11px;line-height:1.8}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="fk-logo" href="#"><span class="fran">Fran</span><span class="ki">Ki</span></a>
+  <span class="nav-label">MAPPA FORNITORI · RCV</span>
+</nav>
+
+<div class="hero">
+  <div class="hero-tag">🔧 Documento Interno · Riservato</div>
+  <h1>Mappa Fornitori<br>Il Poglío</h1>
+  <p class="hero-sub">10 profili · 4 candidati doppio ruolo socio/fornitore · Aprile 2026</p>
+</div>
+
+<div class="kpi-strip">
+  <div class="kpi-cell"><div class="kpi-val">10</div><div class="kpi-label">Fornitori totali</div></div>
+  <div class="kpi-cell"><div class="kpi-val" style="color:var(--arancio)">4</div><div class="kpi-label">Doppio ruolo</div></div>
+  <div class="kpi-cell"><div class="kpi-val" style="color:var(--rosso)">3</div><div class="kpi-label">Urgenti ora</div></div>
+</div>
+
+<div class="legenda">
+  <div class="leg-item"><div class="leg-dot socio"></div>Candidato socio-fornitore</div>
+  <div class="leg-item"><div class="leg-dot fornitore"></div>Solo fornitore</div>
+  <div class="leg-item"><div class="leg-dot urgente"></div>Urgente — questa settimana</div>
+</div>
+
+<!-- ===== CATEGORIA 1: URGENTI ===== -->
+<div class="cat-header">
+  <div class="cat-bar"><div class="cat-label">⚡ 01 · Urgenti — Ora</div><div class="cat-line"></div></div>
+</div>
+<div class="cat-timing">Da ingaggiare entro questa settimana · bloccano tutto il resto</div>
+
+<div class="cards">
+
+  <div class="fcard urgente">
+    <div class="fcard-head">
+      <div class="fcard-left">
+        <div class="fcard-icon">⚖️</div>
+        <div class="fcard-title">Avvocato Esecuzioni</div>
+        <div class="fcard-sub">Specialista procedure esecutive · Sulmona / L'Aquila</div>
+      </div>
+      <div class="fcard-badges">
+        <span class="badge badge-urgente">🔴 Urgente</span>
+        <span class="badge badge-timing">Ora · pre-closing</span>
+        <span class="badge badge-solo">Solo fornitore</span>
+      </div>
+    </div>
+    <div class="fcard-body">
+      <div class="fcard-row"><div class="fcard-row-label">Skill</div><div class="fcard-row-val">Procedure esecutive Tribunale Sulmona / L'Aquila · aste giudiziarie · trattativa privata con custode IVG · decreti di trasferimento</div></div>
+      <div class="fcard-row"><div class="fcard-row-label">Cosa fa</div><div class="fcard-row-val">Gestisce il rapporto con IVG Abruzzo · presidia la trattativa privata · redige il patto parasociale con avvocato societario</div></div>
+      <div class="fcard-row"><div class="fcard-row-label">Budget</div><div class="fcard-row-val">€5.000–10.000 per l'intera fase pre-closing</div></div>
+      <div class="fcard-row"><div class="fcard-row-label">Come trovare</div><div class="fcard-row-val">Ordine avvocati L'Aquila · referral da notai locali · network Affio in Abruzzo</div></div>
+    </div>
+  </div>
+
+  <div class="fcard urgente">
+    <div class="fcard-head">
+      <div class="fcard-left">
+        <div class="fcard-icon">📊</div>
+        <div class="fcard-title">Commercialista / Fiscalista</div>
+        <div class="fcard-sub">Strutture SRL · minibond · exit taxation</div>
+      </div>
+      <div class="fcard-badges">
+        <span class="badge badge-urgente">🔴 Urgente</span>
+        <span class="badge badge-timing">Giugno 2026</span>
+        <span class="badge badge-solo">Solo fornitore</span>
+      </div>
+    </div>
+    <div class="fcard-body">
+      <div class="fcard-row"><div class="fcard-row-label">Skill</div><div class="fcard-row-val">SRL costituzione e governance · liquidation preference · success fee · minibond D.L. 83/2012 · exit taxation plusvalenze soci</div></div>
+      <div class="fcard-row"><div class="fcard-row-label">Cosa fa</div><div class="fcard-row-val">Struttura HoldCo e SPV · imposta i contratti FrankiLegal dal punto di vista fiscale · gestisce il finanziamento soci 6%</div></div>
+      <div class="fcard-row"><div class="fcard-row-label">Budget</div><div class="fcard-row-val">€3.000–5.000 setup + €1.500/anno gestione</div></div>
+      <div class="fcard-row"><div class="fcard-row-label">Come trovare</div><div class="fcard-row-val">Studio con esperienza in operazioni di PE / real estate · non un commercialista generico</div></div>
+    </div>
+  </div>
+
+  <div class="fcard doppio">
+    <div class="fcard-head">
+      <div class="fcard-left">
+        <div class="fcard-icon">📣</div>
+        <div class="fcard-title">Agenzia Marketing Hospitality</div>
+        <div class="fcard-sub">Pre-lancio · raccolta soci club · brand narrativo</div>
+      </div>
+      <div class="fcard-badges">
+        <span class="badge badge-doppio">⭐ Doppio ruolo</span>
+        <span class="badge badge-urgente">🔴 Urgente</span>
+        <span class="badge badge-timing">Ora → M30</span>
+      </div>
+    </div>
+    <div class="fcard-body">
+      <div class="fcard-row"><div class="fcard-row-label">Skill</div><div class="fcard-row-val">Luxury / esperienziale hospitality · lead gen pre-lancio · brand storytelling · Roma-Napoli · conosce il target HNW</div></div>
+      <div class="fcard-row"><div class="fcard-row-label">Cosa fa</div><div class="fcard-row-val">Costruisce la lista dei 140 soci fondatori del club · gestisce il pre-lancio digitale · presidia social e PR fino all'apertura</div></div>
+      <div class="fcard-row"><div class="fcard-row-label">Budget</div><div class="fcard-row-val">€3.000–5.000 setup + €1.500–2.500/mese gestione · dilazionato con success fee su soci club convertiti</div></div>
+    </div>
+    <div class="plus-box">
+      <div class="plus-box-title">⭐ Come socio-fornitore</div>
+      <p>Versa €50K (no prestito) · entra al 10% · finanzia il proprio lavoro · incentivata a convertire soci club perché il club vale la sua quota. Compenso dilazionato: parte upfront ridotta + % sui soci club acquisiti.</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== CATEGORIA 2: CANTIERE ===== -->
+<div class="cat-header">
+  <div class="cat-bar"><div class="cat-label">🏗️ 02 · Cantiere</div><div class="cat-line"></div></div>
+</div>
+<div class="cat-timing">Da ingaggiare entro M2–M4 · fase più critica per il budget</div>
+
+<div class="cards">
+
+  <div class="fcard doppio">
+    <div class="fcard-head">
+      <div class="fcard-left">
+        <div class="fcard-icon">🏛️</div>
+        <div class="fcard-title">Architetto / Progettista</div>
+        <div class="fcard-sub">Conversione hospitality · recupero anni '60 · bubble room</div>
+      </div>
+      <div class="fcard-badges">
+        <span class="badge badge-doppio">⭐ Doppio ruolo</span>
+        <span class="badge badge-timing">M2 — due diligence</span>
+      </div>
+    </div>
+    <div class="fcard-body">
+      <div class="fcard-row"><div class="fcard-row-label">Skill</div><div class="fcard-row-val">Hospitality design · recupero edifici anni '60 · vincoli paesaggistici Abruzzo · progettazione bubble room legno/acciaio · zone sismiche</div></div>
+      <div class="fcard-row"><div class="fcard-row-label">Cosa fa</div><div class="fcard-row-val">DL e CILA per la conversione · progetta le 68 keys + 6 bubble room · coordina con ingegnere strutturale · presidia la qualità del cantiere</div></div>
+      <div class="fcard-row"><div class="fcard-row-label">Budget</div><div class="fcard-row-val">€60.000–90.000 per l'intero progetto · ridotto se socio</div></div>
+    </div>
+    <div class="plus-box">
+      <div class="plus-box-title">⭐ Come socio-fornitore</div>
+      <p>Versa €50K · entra al 10% · progetta a tariffa ridotta (–30%) · ha massimo incentivo a contenere i costi perché la quota vale di più se il cantiere non sfora. Nessun briefing: conosce il progetto dall'interno.</p>
+    </div>
+  </div>
+
+  <div class="fcard standard">
+    <div class="fcard-head">
+      <div class="fcard-left">
+        <div class="fcard-icon">🔩</div>
+        <div class="fcard-title">Ingegnere Strutturale</div>
+        <div class="fcard-sub">Verifica sismica · APE energetico · collaudo</div>
+      </div>
+      <div class="fcard-badges">
+        <span class="badge badge-timing">M2 — due diligence</span>
+        <span class="badge badge-solo">Solo fornitore</span>
+      </div>
+    </div>
+    <div class="fcard-body">
+      <div class="fcard-row"><div class="fcard-row-label">Skill</div><div class="fcard-row-val">Verifica sismica edifici anni '60 · certificazione energetica APE · collaudo strutturale · zona sismica Abruzzo</div></div>
+      <div class="fcard-row"><div class="fcard-row-label">Cosa fa</div><div class="fcard-row-val">Verifica lo stato strutturale delle 3 palazzine prima del closing · identifica eventuali criticità · firma il collaudo finale</div></div>
+      <div class="fcard-row"><div class="fcard-row-label">Budget</div><div class="fcard-row-val">€8.000–15.000 per verifica + collaudo · critico prima di impegnare il prezzo d'acquisto</div></div>
+    </div>
+  </div>
+
+  <div class="fcard doppio">
+    <div class="fcard-head">
+      <div class="fcard-left">
+        <div class="fcard-icon">🏗️</div>
+        <div class="fcard-title">General Contractor</div>
+        <div class="fcard-sub">Ristrutturazione montagna · 3 palazzine in parallelo</div>
+      </div>
+      <div class="fcard-badges">
+        <span class="badge badge-doppio">⭐ Doppio ruolo</span>
+        <span class="badge badge-timing">M6 — cantiere</span>
+      </div>
+    </div>
+    <div class="fcard-body">
+      <div class="fcard-row"><div class="fcard-row-label">Skill</div><div class="fcard-row-val">Ristrutturazioni in montagna · cantieri in zone sismiche · esperienza centro-sud Italia · gestione 3 cantieri in parallelo · subappaltatori locali</div></div>
+      <div class="fcard-row"><div class="fcard-row-label">Cosa fa</div><div class="fcard-row-val">Esegue la conversione delle 46 unità in 68 keys · coordina i sub · presidia il budget · garantisce le milestone (M9 bubble, M21 soft opening)</div></div>
+      <div class="fcard-row"><div class="fcard-row-label">Budget</div><div class="fcard-row-val">€2,5–3,5M lavori · il profilo più critico di tutto il progetto</div></div>
+    </div>
+    <div class="plus-box">
+      <div class="plus-box-title">⭐ Come socio-fornitore</div>
+      <p>Versa €50K · entra al 10% · esegue i lavori a prezzo concordato con incentivo su risparmio: se porta il cantiere sotto budget del 10%, prende il 20% del risparmio. Massimo allineamento interessi — nessuno vuole sforare il budget più di lui.</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== CATEGORIA 3: OPERATIVO ===== -->
+<div class="cat-header">
+  <div class="cat-bar"><div class="cat-label">🏨 03 · Operativo</div><div class="cat-line"></div></div>
+</div>
+<div class="cat-timing">Da ingaggiare entro M6 · deve essere inside prima dell'apertura bubble (M9)</div>
+
+<div class="cards">
+
+  <div class="fcard doppio">
+    <div class="fcard-head">
+      <div class="fcard-left">
+        <div class="fcard-icon">🗝️</div>
+        <div class="fcard-title">Gestore Operativo Hospitality</div>
+        <div class="fcard-sub">Club privato · wellness · F&B · revenue management</div>
+      </div>
+      <div class="fcard-badges">
+        <span class="badge badge-doppio">⭐ Doppio ruolo</span>
+        <span class="badge badge-timing">M6 → M30+</span>
+      </div>
+    </div>
+    <div class="fcard-body">
+      <div class="fcard-row"><div class="fcard-row-label">Skill</div><div class="fcard-row-val">Gestione club privati o boutique hotel · wellness hub · F&B · revenue management · selezione e gestione staff · relazione con soci fondatori</div></div>
+      <div class="fcard-row"><div class="fcard-row-label">Cosa fa</div><div class="fcard-row-val">Dirige la struttura operativamente da M9 · gestisce il rapporto con i 140 soci · coordina corporate retreat · supervisiona F&B e wellness</div></div>
+      <div class="fcard-row"><div class="fcard-row-label">Budget</div><div class="fcard-row-val">€50.000–70.000/anno come direttore · ridotto se socio + success fee su EBITDA</div></div>
+    </div>
+    <div class="plus-box">
+      <div class="plus-box-title">⭐ Come socio-fornitore</div>
+      <p>Versa €50K · entra al 10% · stipendio ridotto (–30%) + bonus su EBITDA effettivo. Il profilo più difficile da trovare e il più prezioso: un gestore che è anche socio lavora come se fosse casa sua, perché lo è.</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== CATEGORIA 4: FINANZIARIO ===== -->
+<div class="cat-header">
+  <div class="cat-bar"><div class="cat-label">💰 04 · Finanziario</div><div class="cat-line"></div></div>
+</div>
+<div class="cat-timing">Da ingaggiare post-closing · abilitano PNRR e minibond</div>
+
+<div class="cards">
+
+  <div class="fcard standard">
+    <div class="fcard-head">
+      <div class="fcard-left">
+        <div class="fcard-icon">📈</div>
+        <div class="fcard-title">Advisor Crowdfunding / Minibond</div>
+        <div class="fcard-sub">Piattaforme equity e lending · D.L. 83/2012</div>
+      </div>
+      <div class="fcard-badges">
+        <span class="badge badge-timing">M7 — pre-lancio</span>
+        <span class="badge badge-solo">Solo fornitore</span>
+      </div>
+    </div>
+    <div class="fcard-body">
+      <div class="fcard-row"><div class="fcard-row-label">Skill</div><div class="fcard-row-val">Piattaforme minibond (Walliance, CrowdFundMe, Mamacrowd) · D.L. 83/2012 · strutturazione obbligazioni · relazioni con investitori retail</div></div>
+      <div class="fcard-row"><div class="fcard-row-label">Cosa fa</div><div class="fcard-row-val">Struttura il minibond €1,5M al 15% · sceglie la piattaforma · gestisce la campagna · presidia il closing dell'emissione</div></div>
+      <div class="fcard-row"><div class="fcard-row-label">Budget</div><div class="fcard-row-val">2–3% sull'ammontare raccolto = €30.000–45.000 · success-based</div></div>
+    </div>
+  </div>
+
+  <div class="fcard standard">
+    <div class="fcard-head">
+      <div class="fcard-left">
+        <div class="fcard-icon">🏛️</div>
+        <div class="fcard-title">Consulente PNRR</div>
+        <div class="fcard-sub">M1C3 Turismo · bandi Abruzzo · ESG</div>
+      </div>
+      <div class="fcard-badges">
+        <span class="badge badge-timing">M9 — post opening</span>
+        <span class="badge badge-solo">Solo fornitore</span>
+      </div>
+    </div>
+    <div class="fcard-body">
+      <div class="fcard-row"><div class="fcard-row-label">Skill</div><div class="fcard-row-val">PNRR M1C3 Turismo · rigenerazione aree interne · componente ESG · bandi Regione Abruzzo · rendicontazione europea</div></div>
+      <div class="fcard-row"><div class="fcard-row-label">Cosa fa</div><div class="fcard-row-val">Costruisce la domanda PNRR usando le 10 settimane/anno ESG come leva · presidia la rendicontazione · monitora i bandi regionali</div></div>
+      <div class="fcard-row"><div class="fcard-row-label">Budget</div><div class="fcard-row-val">€8.000–15.000 + % sul grant ottenuto · target €2,1M PNRR</div></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== CATEGORIA 5: EXIT ===== -->
+<div class="cat-header">
+  <div class="cat-bar"><div class="cat-label">🚀 05 · Exit</div><div class="cat-line"></div></div>
+</div>
+<div class="cat-timing">Da ingaggiare M36 · prepara la vendita M48</div>
+
+<div class="cards">
+  <div class="fcard standard">
+    <div class="fcard-head">
+      <div class="fcard-left">
+        <div class="fcard-icon">💼</div>
+        <div class="fcard-title">Advisor M&A Hospitality</div>
+        <div class="fcard-sub">Exit hotel / resort · fondi PE · family office turismo</div>
+      </div>
+      <div class="fcard-badges">
+        <span class="badge badge-timing">M36 — inizio exit</span>
+        <span class="badge badge-solo">Solo fornitore</span>
+      </div>
+    </div>
+    <div class="fcard-body">
+      <div class="fcard-row"><div class="fcard-row-label">Skill</div><div class="fcard-row-val">Exit hotel/resort Italia · relazioni fondi PE hospitality · family office turismo · valutazione EBITDA × multiplo · strutturazione SPA</div></div>
+      <div class="fcard-row"><div class="fcard-row-label">Cosa fa</div><div class="fcard-row-val">Individua i compratori target · gestisce il processo di vendita · massimizza il multiplo exit · chiude la transazione M48</div></div>
+      <div class="fcard-row"><div class="fcard-row-label">Budget</div><div class="fcard-row-val">1,5–2% del valore di vendita = €350.000–740.000 su exit €23-37M · success-based totale</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- COMPOSIZIONE CORDATA -->
+<div class="cordata-box">
+  <div class="cordata-inner">
+    <h2>Composizione cordata consigliata</h2>
+    <p>6 posti totali · 2 fornitori-soci + 4 soci finanziari puri</p>
+    <div class="cordata-grid">
+      <div class="cordata-slot operativo">
+        <div class="cordata-slot-label">Slot 1 — Operativo</div>
+        <div class="cordata-slot-val">General Contractor</div>
+        <div class="cordata-slot-sub">€50K · 10% · cantiere a prezzo certo</div>
+      </div>
+      <div class="cordata-slot operativo">
+        <div class="cordata-slot-label">Slot 2 — Operativo</div>
+        <div class="cordata-slot-val">Gestore o Architetto</div>
+        <div class="cordata-slot-sub">€50K · 10% · operations o progetto</div>
+      </div>
+      <div class="cordata-slot finanziario">
+        <div class="cordata-slot-label">Slot 3–6 — Finanziario</div>
+        <div class="cordata-slot-val">4 × Socio puro</div>
+        <div class="cordata-slot-sub">€75K · 10% · investitori passivi</div>
+      </div>
+      <div class="cordata-slot finanziario" style="border-color:rgba(255,255,255,0.1);opacity:0.4">
+        <div class="cordata-slot-label">Raccolta totale</div>
+        <div class="cordata-slot-val">€400K equity</div>
+        <div class="cordata-slot-sub">+ €100K prestiti soci (4 puri) + €150K prestiti 6 soci se tutti puri</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DOMANDE AD AFFIO -->
+<div class="domande-box">
+  <div class="domande-inner">
+    <div class="domande-title">3 domande da fare ad Affio — subito</div>
+    <div class="domanda">
+      <div class="domanda-num">01</div>
+      <div class="domanda-testo">Conosce un <strong>avvocato specializzato in aste giudiziarie</strong> a Sulmona o L'Aquila? — sblocca la trattativa con IVG</div>
+    </div>
+    <div class="domanda">
+      <div class="domanda-num">02</div>
+      <div class="domanda-testo">Nella sua rete c'è qualcuno che fa <strong>marketing per hospitality o turismo di lusso</strong>? — candidato naturale al doppio ruolo</div>
+    </div>
+    <div class="domanda">
+      <div class="domanda-num">03</div>
+      <div class="domanda-testo">Tra i potenziali soci c'è qualcuno con ruolo <strong>operativo concreto</strong> — general contractor, architetto, gestore strutture ricettive? — vale doppio come profilo</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>MAPPA FORNITORI v2 · RCV — Il Poglío<br>FranKi Studio (Avre Srl · Napoli) · frankistudio.it<br>Documento interno riservato · Aprile 2026</p>
+</footer>
+
+</body>
+</html>

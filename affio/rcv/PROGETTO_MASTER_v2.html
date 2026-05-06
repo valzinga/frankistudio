@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PROGETTO MASTER — RCV Il Poglío · FranKi Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--blu:#2B38B0;--arancio:#F0A500;--grigio-bg:#F2F1ED;--dark:#111118;--bordo:#D8D5CF}
+body{font-family:'Barlow',sans-serif;background:var(--grigio-bg);color:#222;font-size:15px;line-height:1.6}
+nav{position:sticky;top:0;z-index:100;background:var(--blu);padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:52px}
+.fk-logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;display:inline-flex;align-items:center;text-decoration:none}
+.fk-logo .fran{color:#FFF}.fk-logo .ki{background:#F0A500;color:#FFF;border-radius:5px;padding:1px 7px;margin-left:2px;display:inline-block}
+.nav-label{color:rgba(255,255,255,0.7);font-size:12px;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.hero{background:var(--blu);padding:48px 20px 40px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(135deg,rgba(255,255,255,0.03) 0,rgba(255,255,255,0.03) 1px,transparent 1px,transparent 40px)}
+.hero-tag{display:inline-block;background:var(--arancio);color:#FFF;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;letter-spacing:2px;padding:4px 12px;border-radius:3px;margin-bottom:16px;text-transform:uppercase}
+.hero h1{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(32px,8vw,52px);color:#FFF;text-transform:uppercase;line-height:1.05;margin-bottom:8px}
+.hero-sub{color:rgba(255,255,255,0.7);font-size:14px}
+.kpi-strip{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--bordo);border-top:1px solid var(--bordo);border-bottom:1px solid var(--bordo)}
+.kpi-cell{background:#FFF;padding:20px 16px;text-align:center}
+.kpi-val{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:28px;color:var(--blu);line-height:1}
+.kpi-label{font-size:11px;color:#888;text-transform:uppercase;letter-spacing:1px;margin-top:4px}
+.section{padding:32px 20px;max-width:680px;margin:0 auto}
+.section-bar{display:flex;align-items:center;gap:10px;margin-bottom:20px}
+.section-bar-line{height:3px;flex:1;background:var(--blu)}
+.section-num{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;color:var(--blu);letter-spacing:2px;text-transform:uppercase;white-space:nowrap}
+.section-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;color:var(--dark);text-transform:uppercase}
+.card{background:#FFF;border-radius:6px;padding:20px;margin-bottom:12px;border-left:4px solid var(--blu)}
+.card-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;text-transform:uppercase;color:var(--blu);margin-bottom:8px}
+.card p,.card li{font-size:14px;color:#444;line-height:1.6}
+.card ul{padding-left:18px}
+table{width:100%;border-collapse:collapse;background:#FFF;border-radius:6px;overflow:hidden;margin-bottom:12px;font-size:13px}
+th{background:var(--blu);color:#FFF;font-family:'Barlow Condensed',sans-serif;font-weight:900;text-transform:uppercase;font-size:12px;letter-spacing:1px;padding:10px 12px;text-align:left}
+td{padding:10px 12px;border-bottom:1px solid #f0ede8;color:#333}
+tr:last-child td{border-bottom:none}
+.td-orange{color:var(--arancio);font-weight:700;font-family:'Barlow Condensed',sans-serif;font-size:15px}
+.td-blu{color:var(--blu);font-weight:700}
+.td-bold{font-weight:700;color:var(--dark)}
+tr:hover td{background:#fafaf8}
+.badge{display:inline-block;font-size:11px;font-weight:700;padding:3px 8px;border-radius:3px;text-transform:uppercase;letter-spacing:0.5px}
+.badge-ok{background:#d4f0d4;color:#1a7a1a}
+.badge-warn{background:#fff3cd;color:#856404}
+.badge-alert{background:#fde0e0;color:#a00}
+.badge-active{background:var(--arancio);color:#FFF}
+.badge-open{background:#e8f0fe;color:var(--blu)}
+.band-orange{background:var(--arancio);padding:24px 20px;text-align:center}
+.band-orange p{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px;color:#FFF;text-transform:uppercase;line-height:1.3}
+.metodo-strip{display:flex;gap:0;overflow-x:auto;background:#FFF;border-radius:6px;border:1px solid var(--bordo);margin-bottom:20px}
+.metodo-fase{flex:1;min-width:70px;padding:12px 6px;text-align:center;border-right:1px solid var(--bordo);font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;text-transform:uppercase;color:#aaa}
+.metodo-fase:last-child{border-right:none}
+.metodo-fase.done{color:var(--blu)}
+.metodo-fase.active{background:var(--arancio);color:#FFF;border-radius:4px}
+.metodo-fase span{display:block;font-size:9px;font-weight:400;margin-top:2px}
+.regola{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--bordo)}
+.regola:last-child{border-bottom:none}
+.regola-num{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:28px;color:var(--arancio);line-height:1;min-width:36px}
+.regola-testo{font-size:14px;color:#444}
+.regola-testo strong{color:var(--dark);display:block;margin-bottom:2px;font-size:15px}
+.nda-box{background:#fde0e0;border:1px solid #f5b5b5;border-radius:6px;padding:14px 16px;margin-bottom:12px;font-size:13px;color:#7a0000}
+.nda-box strong{display:block;margin-bottom:4px;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:15px;text-transform:uppercase}
+.highlight-box{background:#FFF;border:2px solid var(--arancio);border-radius:6px;padding:16px 20px;margin-bottom:12px}
+.highlight-box p{font-size:14px;color:#333}
+.info-box{background:#e8f0fe;border:1px solid #b8caf5;border-radius:6px;padding:14px 16px;margin-bottom:12px;font-size:13px;color:#1a2a7a}
+.info-box strong{display:block;margin-bottom:4px;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:15px;text-transform:uppercase}
+.sub-label{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:13px;text-transform:uppercase;color:#888;letter-spacing:1px;margin:16px 0 8px}
+.dark-section{background:var(--dark);padding:40px 20px;text-align:center}
+.dark-section h2{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:28px;color:#FFF;text-transform:uppercase;margin-bottom:8px}
+.dark-section p{color:rgba(255,255,255,0.65);font-size:14px;margin-bottom:20px}
+.cta-btn{display:inline-block;background:var(--arancio);color:#FFF;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;text-transform:uppercase;padding:14px 32px;border-radius:4px;text-decoration:none;letter-spacing:1px}
+footer{background:var(--dark);padding:24px 20px;text-align:center}
+footer p{color:rgba(255,255,255,0.4);font-size:11px;line-height:1.8}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="fk-logo" href="#"><span class="fran">Fran</span><span class="ki">Ki</span></a>
+  <span class="nav-label">PROGETTO MASTER · RCV</span>
+</nav>
+
+<div class="hero">
+  <div class="hero-tag">📋 Documento Interno · Riservato</div>
+  <h1>Progetto Master<br>Il Poglío</h1>
+  <p class="hero-sub">RCV — Roccaraso Country Village · FranKi Studio · Aprile 2026</p>
+</div>
+
+<div class="kpi-strip">
+  <div class="kpi-cell"><div class="kpi-val">€13,5M</div><div class="kpi-label">Valore perizia</div></div>
+  <div class="kpi-cell"><div class="kpi-val">~€900K</div><div class="kpi-label">Stima acquisizione</div></div>
+  <div class="kpi-cell"><div class="kpi-val">€7,0M</div><div class="kpi-label">Revenue a regime M30</div></div>
+  <div class="kpi-cell"><div class="kpi-val">€23–37M</div><div class="kpi-label">Exit stimato M48</div></div>
+</div>
+
+<!-- METODO -->
+<div class="section">
+  <div class="section-bar"><div class="section-num">00/10 · METODO FRANKI V2</div><div class="section-bar-line"></div></div>
+  <div class="metodo-strip">
+    <div class="metodo-fase done">F00<span>✓ Scouting</span></div>
+    <div class="metodo-fase active">F01<span>Concept</span></div>
+    <div class="metodo-fase">F02<span>Struttura</span></div>
+    <div class="metodo-fase">F03<span>Brief</span></div>
+    <div class="metodo-fase">F04<span>Lean Test</span></div>
+    <div class="metodo-fase">F05<span>MVP</span></div>
+    <div class="metodo-fase">F06<span>Scale</span></div>
+  </div>
+</div>
+
+<!-- IDENTITÀ -->
+<div class="section">
+  <div class="section-bar"><div class="section-num">01/10 · IDENTITÀ PROGETTO</div><div class="section-bar-line"></div></div>
+  <table>
+    <tr><th>Campo</th><th>Valore</th></tr>
+    <tr><td>Nome progetto</td><td class="td-blu">Roccaraso Country Village (RCV)</td></tr>
+    <tr><td>Brand commerciale</td><td class="td-orange">Il Poglío</td></tr>
+    <tr><td>Asset</td><td>Ex Soggiorno Montano ENEL · Roccaraso (AQ)</td></tr>
+    <tr><td>Loc. catastale</td><td>Loc. Il Poggio · SS17</td></tr>
+    <tr><td>Procedura</td><td>Esec. Forz. N.43/16 — Tribunale di Sulmona</td></tr>
+    <tr><td>Destinazione</td><td>Extralberghiero (L.R. 75/1995)</td></tr>
+    <tr><td>Custode IVG</td><td>IVG Abruzzo · 085 9436430 · ivgpescara1@gmail.com</td></tr>
+    <tr><td>Hub documenti</td><td>frankistudio.it/affio/rcv/</td></tr>
+  </table>
+</div>
+
+<!-- ASSET FISICO -->
+<div class="section">
+  <div class="section-bar"><div class="section-num">02/10 · ASSET FISICO</div><div class="section-bar-line"></div></div>
+  <table>
+    <tr><th>Dato</th><th>Valore</th></tr>
+    <tr><td>Palazzine</td><td class="td-blu">3 (mapp. 801, 802, 803)</td></tr>
+    <tr><td>Appartamenti</td><td>46 unità</td></tr>
+    <tr><td>SLP residenziale</td><td>5.954 mq</td></tr>
+    <tr><td>Terreni</td><td>219.239 mq (bosco + pascolo)</td></tr>
+    <tr><td>Bosco ceduo</td><td>~22 ettari</td></tr>
+    <tr><td>Quota altimetrica</td><td>1.023 m s.l.m.</td></tr>
+    <tr><td>PdC</td><td>n.35/2009 + Variante n.34/2010 · attivi</td></tr>
+    <tr><td>Valore perizia</td><td class="td-orange">€13.570.000 (Ing. Farina · Rev.3 · Mag 2021)</td></tr>
+    <tr><td>Ipoteca UniCredit</td><td>€14M → cancellata dal decreto di trasferimento</td></tr>
+  </table>
+</div>
+
+<!-- PROCEDURA -->
+<div class="section">
+  <div class="section-bar"><div class="section-num">03/10 · PROCEDURA ESECUTIVA</div><div class="section-bar-line"></div></div>
+  <div class="nda-box">
+    <strong>⚠️ USO INTERNO — Non citare in documenti per soci o investitori</strong>
+    Usare sempre: "valore di acquisto vs perizia ufficiale €13,5M"
+  </div>
+  <table>
+    <tr><th>Asta</th><th>Data</th><th>Base</th><th>Esito</th></tr>
+    <tr><td>1ª asta</td><td>18/12/2025</td><td>€1.633.258</td><td><span class="badge badge-alert">Deserta</span></td></tr>
+    <tr><td>2ª asta</td><td>15/04/2026</td><td>€1.224.944</td><td><span class="badge badge-alert">Deserta</span></td></tr>
+    <tr><td>3ª asta (stima)</td><td>Estate 2026</td><td>~€900.000</td><td><span class="badge badge-warn">Da confermare</span></td></tr>
+    <tr><td>Trattativa privata</td><td>Disponibile ora</td><td>Negoziabile</td><td><span class="badge badge-ok">Contattare IVG</span></td></tr>
+  </table>
+  <div class="highlight-box"><p>📞 <strong>URGENTE:</strong> Chiamare IVG Abruzzo <strong>085 9436430</strong> · ivgpescara1@gmail.com<br>Due aste deserte → trattativa privata disponibile. Sconto da perizia: <strong>–93%</strong></p></div>
+</div>
+
+<!-- CAP TABLE — STRUTTURA DEFINITIVA -->
+<div class="section">
+  <div class="section-bar"><div class="section-num">04/10 · STRUTTURA SOCIETARIA DEFINITIVA</div><div class="section-bar-line"></div></div>
+
+  <div class="info-box">
+    <strong>Regola di compartimentazione</strong>
+    I 6 soci non vengono citati in documenti verso il fondo. Il fondo non viene citato in documenti verso i 6 soci. La struttura completa è riservata a FranKi, Affio e avvocato.
+  </div>
+
+  <div class="sub-label">Fase 1 — Costituzione HoldCo (FranKi + Affio)</div>
+  <table>
+    <tr><th>Socio</th><th>Quota</th><th>Cash</th><th>Tipo</th></tr>
+    <tr><td class="td-blu">FranKi Studio</td><td class="td-orange">50%</td><td>€0</td><td>Sweat equity</td></tr>
+    <tr><td>Affio</td><td class="td-orange">50%</td><td>€0</td><td>Sweat equity</td></tr>
+  </table>
+
+  <div class="sub-label">Fase 2 — Entrano i 6 Soci</div>
+  <table>
+    <tr><th>Socio</th><th>Quota</th><th>Equity versata</th><th>Prestito 6%</th><th>Totale</th></tr>
+    <tr><td class="td-blu">FranKi Studio</td><td class="td-orange">20%</td><td>€0</td><td>—</td><td>€0</td></tr>
+    <tr><td>Affio</td><td class="td-orange">20%</td><td>€0</td><td>—</td><td>€0</td></tr>
+    <tr><td>Socio 1</td><td>10%</td><td>€50.000</td><td>€25.000</td><td class="td-bold">€75.000</td></tr>
+    <tr><td>Socio 2</td><td>10%</td><td>€50.000</td><td>€25.000</td><td class="td-bold">€75.000</td></tr>
+    <tr><td>Socio 3</td><td>10%</td><td>€50.000</td><td>€25.000</td><td class="td-bold">€75.000</td></tr>
+    <tr><td>Socio 4</td><td>10%</td><td>€50.000</td><td>€25.000</td><td class="td-bold">€75.000</td></tr>
+    <tr><td>Socio 5</td><td>10%</td><td>€50.000</td><td>€25.000</td><td class="td-bold">€75.000</td></tr>
+    <tr><td>Socio 6</td><td>10%</td><td>€50.000</td><td>€25.000</td><td class="td-bold">€75.000</td></tr>
+    <tr><td class="td-bold">TOTALE</td><td class="td-bold">100%</td><td class="td-orange">€300.000</td><td class="td-orange">€150.000</td><td class="td-orange">€450.000</td></tr>
+  </table>
+
+  <div class="sub-label">Fase 3 — Post ingresso Fondo (definitiva)</div>
+  <table>
+    <tr><th>Socio</th><th>Quota</th><th>Voti</th><th>Note</th></tr>
+    <tr><td class="td-blu">FranKi Studio</td><td class="td-orange">12%</td><td class="td-orange">~30% (3x)</td><td>Plural voting · asset manager</td></tr>
+    <tr><td>Affio</td><td>12%</td><td>12%</td><td>Co-founder · CdA</td></tr>
+    <tr><td>6 Soci (×6)</td><td>6% c.</td><td>6% c.</td><td>Lock-up M24 · passivi</td></tr>
+    <tr><td>Fondo istituzionale</td><td>40%</td><td>Veto straord.</td><td>Liq. preference €2M · IRR 51%</td></tr>
+    <tr><td class="td-bold">TOTALE</td><td class="td-bold">100%</td><td></td><td></td></tr>
+  </table>
+</div>
+
+<!-- FEE DEAL ORIGINATION -->
+<div class="section">
+  <div class="section-bar"><div class="section-num">05/10 · FEE DEAL ORIGINATION — DECISIONE APERTA</div><div class="section-bar-line"></div></div>
+  <table>
+    <tr><th>Opzione</th><th>Struttura</th><th>Immediato</th><th>Status</th></tr>
+    <tr>
+      <td class="td-bold">A — Solo tempo</td>
+      <td>1,5% asset = ~€13.500 a testa · + mgmt fee</td>
+      <td>~€27K totale</td>
+      <td><span class="badge badge-warn">Conservativa</span></td>
+    </tr>
+    <tr>
+      <td class="td-bold">B — Fee + equity</td>
+      <td>€50K FranKi + €50K Affio subito · da raccolta €450K</td>
+      <td>€100K totale</td>
+      <td><span class="badge badge-open">In discussione</span></td>
+    </tr>
+    <tr>
+      <td class="td-bold">C — Solo equity</td>
+      <td>Zero fee immediata · solo equity 20% + mgmt + exit</td>
+      <td>€0</td>
+      <td><span class="badge badge-ok">Più pulita</span></td>
+    </tr>
+  </table>
+  <div class="card" style="border-left-color:var(--arancio)">
+    <div class="card-title" style="color:var(--arancio)">Domande aperte</div>
+    <ul>
+      <li>Se opzione B: la fee è fattura "deal origination" o rimborso spese?</li>
+      <li>Come si presenta ai 6 soci?</li>
+      <li>Priorità rimborso prestiti soci vs fondo: M30 o all'exit?</li>
+      <li>Plural voting: va nello statuto o nel patto parasociale?</li>
+      <li>Lock-up soci: M24 o M30? Eccezioni (morte, invalidità)?</li>
+    </ul>
+  </div>
+</div>
+
+<!-- COMPENSI FRANKI -->
+<div class="section">
+  <div class="section-bar"><div class="section-num">06/10 · COMPENSI FRANKI TOTALI</div><div class="section-bar-line"></div></div>
+  <div class="regola">
+    <div class="regola-num">01</div>
+    <div class="regola-testo"><strong>Deal origination fee (se opzione B)</strong>€50.000 alla firma · fattura o rimborso spese · da raccolta €450K</div>
+  </div>
+  <div class="regola">
+    <div class="regola-num">02</div>
+    <div class="regola-testo"><strong>Asset management fee</strong>€170.000/anno × 4 anni = €680.000 totali</div>
+  </div>
+  <div class="regola">
+    <div class="regola-num">03</div>
+    <div class="regola-testo"><strong>Success fee exit — 6 soci</strong>5% sulla plusvalenza netta di ogni socio all'exit<br>Ogni socio: (€1,26M − €50K) × 5% = ~€60.500<br>Totale da 6 soci: <strong>~€363.000</strong></div>
+  </div>
+  <div class="regola">
+    <div class="regola-num">04</div>
+    <div class="regola-testo"><strong>Equity 12% post-fondo</strong>Scenario base €23M: residuo €21M × 12% = <strong>€2,52M</strong></div>
+  </div>
+  <div class="highlight-box" style="margin-top:16px">
+    <p><strong>Rendimento FranKi scenario base €23M — su €0 investiti:</strong><br>
+    Equity: €2,52M + Fee mgmt: €680K + Success fee soci: €363K + Fee origination (se B): €50K<br>
+    <span style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;color:var(--blu)">TOTALE: ~€3,61M</span></p>
+  </div>
+</div>
+
+<!-- RENDIMENTO SOCI -->
+<div class="band-orange">
+  <p>RENDIMENTO OGNI SOCIO — Scenario base €23M<br>€1,29M incassati su €75K versati = <strong>17× sul totale</strong> · 25× sull'equity</p>
+</div>
+
+<div class="section">
+  <table>
+    <tr><th>Componente</th><th>Importo</th><th>Note</th></tr>
+    <tr><td>Exit equity (6% × €21M residuo)</td><td class="td-orange">€1.260.000</td><td>25× sull'equity €50K</td></tr>
+    <tr><td>Rimborso prestito</td><td class="td-orange">€25.000</td><td>Capitale rimborsato</td></tr>
+    <tr><td>Interessi 6% × 4 anni</td><td class="td-orange">€6.000</td><td>€1.500/anno</td></tr>
+    <tr><td>Meno success fee FranKi</td><td style="color:#a00">−€60.500</td><td>5% su plusvalenza</td></tr>
+    <tr><td class="td-bold">TOTALE INCASSATO</td><td class="td-blu"><strong>~€1.230.500</strong></td><td>Su €75K versati = <strong>~16×</strong></td></tr>
+  </table>
+</div>
+
+<!-- EXIT M48 -->
+<div class="section">
+  <div class="section-bar"><div class="section-num">07/10 · EXIT M48 — SCENARI</div><div class="section-bar-line"></div></div>
+  <table>
+    <tr><th>Scenario</th><th>Exit</th><th>Residuo</th><th>FranKi equity</th><th>Affio</th><th>Ogni socio</th><th>Fondo</th></tr>
+    <tr><td>Base ×10</td><td class="td-orange">€23M</td><td>€21M</td><td>€2,52M</td><td>€2,52M</td><td>€1,26M</td><td>€10,4M</td></tr>
+    <tr><td>Buono ×14</td><td class="td-orange">€32M</td><td>€30M</td><td>€3,60M</td><td>€3,60M</td><td>€1,80M</td><td>€14,0M</td></tr>
+    <tr><td>Ottimo ×16</td><td class="td-orange">€37M</td><td>€35M</td><td>€4,20M</td><td>€4,20M</td><td>€2,10M</td><td>€16,0M</td></tr>
+  </table>
+  <div class="card">
+    <div class="card-title">Formula liquidation preference fondo</div>
+    <p>Residuo = Exit − €2,0M (preference fondo)<br>
+    Fondo = €2,0M + (Residuo × 40%)<br>
+    FranKi equity = Residuo × 12% · Affio = Residuo × 12%<br>
+    Ogni socio = Residuo × 6%<br>
+    Success fee = (plusvalenza socio) × 5% → FranKi<br>
+    Multiplo fondo base: 5,2× · IRR ~51%</p>
+  </div>
+</div>
+
+<!-- STRUTTURA FINANZIARIA -->
+<div class="section">
+  <div class="section-bar"><div class="section-num">08/10 · STRUTTURA FINANZIARIA ~€9M</div><div class="section-bar-line"></div></div>
+  <table>
+    <tr><th>Fonte</th><th>Importo</th><th>Tipo</th></tr>
+    <tr><td>Acquisizione asset</td><td class="td-orange">~€900K</td><td>Cash HoldCo + mutuo bancario</td></tr>
+    <tr><td>Prestiti soci al 6%</td><td class="td-orange">€150K</td><td>6 × €25K · creditore · non equity</td></tr>
+    <tr><td>Quote soci club (140 × €25K)</td><td class="td-orange">€3,5M</td><td>Prefunding · non equity</td></tr>
+    <tr><td>Fondo istituzionale</td><td class="td-orange">€2,0M</td><td>Equity 40% + liq. preference</td></tr>
+    <tr><td>PNRR + bandi pubblici</td><td class="td-orange">€2,1M</td><td>Grant · non rimborsabile</td></tr>
+    <tr><td>Crowdfunding minibond 15%</td><td class="td-orange">€1,5M</td><td>Creditore · non socio</td></tr>
+    <tr><td class="td-bold">TOTALE CAPEX</td><td class="td-blu"><strong>~€9,0M</strong></td><td></td></tr>
+  </table>
+</div>
+
+<!-- CLAUSOLE PARASOCIALE -->
+<div class="section">
+  <div class="section-bar"><div class="section-num">09/10 · PATTO PARASOCIALE — 9 CLAUSOLE</div><div class="section-bar-line"></div></div>
+  <div class="regola"><div class="regola-num">01</div><div class="regola-testo"><strong>Tag-along</strong>Se un socio vende, tutti possono vendere alle stesse condizioni</div></div>
+  <div class="regola"><div class="regola-num">02</div><div class="regola-testo"><strong>Drag-along</strong>Se la maggioranza vende, tutti sono obbligati a vendere</div></div>
+  <div class="regola"><div class="regola-num">03</div><div class="regola-testo"><strong>Anti-diluizione + ratchet</strong>Aumenti di capitale non penalizzano le quote esistenti</div></div>
+  <div class="regola"><div class="regola-num">04</div><div class="regola-testo"><strong>Quota minima FranKi 5%</strong>Non scende sotto il 5% per nessun aumento di capitale</div></div>
+  <div class="regola"><div class="regola-num">05</div><div class="regola-testo"><strong>Right of First Refusal</strong>Prima di vendere a terzi si offre ai soci esistenti</div></div>
+  <div class="regola"><div class="regola-num">06</div><div class="regola-testo"><strong>Put option FranKi dal M30</strong>FranKi può vendere la propria quota a prezzo predefinito (EBITDA × multiplo concordato)</div></div>
+  <div class="regola"><div class="regola-num">07</div><div class="regola-testo"><strong>Change of control put</strong>Cambio maggioranza → diritto di uscita per tutti i soci</div></div>
+  <div class="regola"><div class="regola-num">08</div><div class="regola-testo"><strong>Plural voting FranKi</strong>Ogni quota FranKi vale 3 voti — controllo operativo garantito (~30% voti con 12% quote)</div></div>
+  <div class="regola"><div class="regola-num">09</div><div class="regola-testo"><strong>Lock-up 6 soci fino M24</strong>I soci non possono vendere prima del mese 24 senza approvazione del CdA</div></div>
+</div>
+
+<!-- REGOLE FISSE -->
+<div class="section">
+  <div class="section-bar"><div class="section-num">10/10 · REGOLE FISSE — NON SI DEROGA</div><div class="section-bar-line"></div></div>
+  <table>
+    <tr><th colspan="2">COSA NON SI FA MAI</th></tr>
+    <tr><td>❌</td><td>Non si cita l'asta in documenti verso soci o investitori</td></tr>
+    <tr><td>❌</td><td>Non si citano i 6 soci in documenti verso il fondo</td></tr>
+    <tr><td>❌</td><td>Non si cita il fondo in documenti verso i 6 soci</td></tr>
+    <tr><td>❌</td><td>Non si cede equity ai soci del club</td></tr>
+    <tr><td>❌</td><td>Non si usa il crowdfunding come equity</td></tr>
+    <tr><td>❌</td><td>Non si porta Guya come socia — freelance sempre</td></tr>
+    <tr><td>❌</td><td>Non si presentano numeri senza specificare che sono stime</td></tr>
+    <tr><td>❌</td><td>Non si manda Teaser B1 senza NDA firmato</td></tr>
+    <tr><td>❌</td><td>Non si modifica la destinazione extralberghiera</td></tr>
+  </table>
+</div>
+
+<div class="dark-section">
+  <h2>FranKi Studio</h2>
+  <p>Roccaraso Country Village · Il Poglío · Aprile 2026<br>Documento interno riservato — non distribuire</p>
+  <a href="https://frankistudio.it/affio/rcv/" class="cta-btn">→ HUB DOCUMENTI</a>
+</div>
+
+<footer>
+  <p>PROGETTO MASTER v2 · RCV — Il Poglío<br>FranKi Studio (Avre Srl · Napoli) · frankistudio.it<br>Riservato · Aprile 2026</p>
+</footer>
+
+</body>
+</html>

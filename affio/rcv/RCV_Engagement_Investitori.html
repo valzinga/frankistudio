@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Engagement Investitori — Il Poglío · FranKi Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --blu:#2B38B0;--arancio:#F0A500;--grigio-bg:#F2F1ED;--dark:#111118;--bordo:#D8D5CF;
+  --verde:#22c55e;--verde-bg:#d4f0d4;--verde-t:#1a7a1a;
+  --rosso:#ef4444;--rosso-bg:#fde0e0;--rosso-t:#a00;
+  --giallo:#F0A500;--giallo-bg:#fff8e1;--giallo-t:#856404;
+  --viola:#7c3aed;--viola-bg:#f3e8fd;--viola-t:#5b21b6;
+  --grigio:#6b7280;--grigio-bg2:#f9f9f7;
+}
+body{font-family:'Barlow',sans-serif;background:var(--grigio-bg);color:#222;font-size:14px;line-height:1.5;min-height:100vh}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:200;background:var(--blu);padding:0 16px;display:flex;align-items:center;justify-content:space-between;height:52px;gap:10px}
+.fk-logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px;display:inline-flex;align-items:center;text-decoration:none;flex-shrink:0}
+.fk-logo .fran{color:#FFF}.fk-logo .ki{background:#F0A500;color:#FFF;border-radius:5px;padding:1px 6px;margin-left:2px}
+.nav-title{color:rgba(255,255,255,0.7);font-size:11px;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase;flex:1;text-align:center}
+.nav-add-btn{background:var(--arancio);color:#FFF;border:none;border-radius:4px;padding:6px 12px;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:12px;text-transform:uppercase;letter-spacing:1px;cursor:pointer;flex-shrink:0}
+
+/* PROGRESS BAR */
+.prog-bar-wrap{background:#FFF;padding:12px 16px;border-bottom:1px solid var(--bordo);display:flex;align-items:center;gap:12px}
+.prog-slots{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:13px;color:var(--blu);text-transform:uppercase;white-space:nowrap}
+.prog-bar-bg{flex:1;height:6px;background:var(--bordo);border-radius:3px;overflow:hidden}
+.prog-bar-fill{height:6px;background:var(--verde);border-radius:3px;transition:width .4s}
+.prog-pct{font-size:12px;color:#888;white-space:nowrap}
+
+/* FILTRI */
+.filtri{display:flex;gap:6px;padding:10px 16px;overflow-x:auto;background:#FFF;border-bottom:1px solid var(--bordo)}
+.filtro-btn{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;letter-spacing:1px;text-transform:uppercase;padding:5px 12px;border-radius:3px;border:1px solid var(--bordo);background:transparent;color:#888;cursor:pointer;white-space:nowrap;transition:all .15s}
+.filtro-btn.active{background:var(--blu);color:#FFF;border-color:var(--blu)}
+
+/* SCRIPT PANEL */
+.script-panel{background:var(--dark);border-bottom:3px solid var(--arancio);overflow:hidden;max-height:0;transition:max-height .3s ease}
+.script-panel.open{max-height:800px}
+.script-inner{padding:20px 16px;max-width:680px;margin:0 auto}
+.script-tabs{display:flex;gap:0;margin-bottom:16px;border-radius:4px;overflow:hidden;border:1px solid rgba(255,255,255,0.15)}
+.script-tab{flex:1;padding:8px;text-align:center;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;text-transform:uppercase;letter-spacing:1px;cursor:pointer;color:rgba(255,255,255,0.4);background:transparent;border:none;transition:all .15s}
+.script-tab.active{background:var(--arancio);color:#FFF}
+.script-content{display:none}
+.script-content.visible{display:block}
+.script-label{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--arancio);margin-bottom:8px}
+.script-box{background:rgba(255,255,255,0.06);border-left:2px solid var(--arancio);border-radius:0 4px 4px 0;padding:12px 14px;margin-bottom:10px}
+.script-box p{font-size:13px;color:rgba(255,255,255,0.8);line-height:1.6;font-style:italic}
+.script-box .script-note{font-size:11px;color:rgba(255,255,255,0.35);margin-top:6px;font-style:normal}
+.script-steps{list-style:none;margin-bottom:10px}
+.script-step{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.07);align-items:flex-start}
+.script-step:last-child{border-bottom:none}
+.ss-num{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:18px;color:var(--arancio);min-width:24px;line-height:1.1}
+.ss-text{font-size:12px;color:rgba(255,255,255,0.7);line-height:1.5}
+.ss-text strong{color:#FFF}
+.script-toggle{background:rgba(255,255,255,0.07);border:none;color:rgba(255,255,255,0.5);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;letter-spacing:1px;text-transform:uppercase;padding:6px 14px;border-radius:3px;cursor:pointer;margin-top:4px}
+
+/* INVESTITORI GRID */
+.investitori{max-width:680px;margin:0 auto;padding:12px 16px}
+
+/* CARD INVESTITORE */
+.inv-card{background:#FFF;border-radius:8px;margin-bottom:10px;overflow:hidden;border-left:4px solid var(--bordo);transition:box-shadow .15s}
+.inv-card:hover{box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.inv-card.fase-0{border-left-color:#aaa}
+.inv-card.fase-1{border-left-color:var(--giallo)}
+.inv-card.fase-2{border-left-color:var(--blu)}
+.inv-card.fase-3{border-left-color:var(--viola)}
+.inv-card.fase-done{border-left-color:var(--verde)}
+.inv-card.fase-no{border-left-color:var(--rosso);opacity:.55}
+
+/* CARD HEADER */
+.inv-head{padding:12px 14px;display:flex;align-items:center;gap:10px;cursor:pointer}
+.inv-avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;color:#FFF;flex-shrink:0}
+.inv-info{flex:1;min-width:0}
+.inv-nome{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;color:var(--dark);text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.inv-ruolo{font-size:11px;color:#888;text-transform:uppercase;letter-spacing:0.5px}
+.inv-fase-badge{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:10px;text-transform:uppercase;letter-spacing:1px;padding:3px 8px;border-radius:3px;white-space:nowrap;flex-shrink:0}
+.fb-0{background:#f0f0f0;color:#888}
+.fb-1{background:var(--giallo-bg);color:var(--giallo-t)}
+.fb-2{background:#e8f0fe;color:var(--blu)}
+.fb-3{background:var(--viola-bg);color:var(--viola-t)}
+.fb-done{background:var(--verde-bg);color:var(--verde-t)}
+.fb-no{background:var(--rosso-bg);color:var(--rosso-t)}
+.inv-expand-icon{font-size:16px;color:#bbb;flex-shrink:0;transition:transform .2s}
+.inv-card.expanded .inv-expand-icon{transform:rotate(180deg)}
+
+/* CARD BODY */
+.inv-body{display:none;padding:0 14px 14px;border-top:1px solid var(--bordo)}
+.inv-card.expanded .inv-body{display:block}
+
+/* FUNNEL STEPS */
+.funnel{display:flex;gap:0;margin:12px 0;border-radius:4px;overflow:hidden;border:1px solid var(--bordo)}
+.f-step{flex:1;padding:8px 6px;text-align:center;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:10px;text-transform:uppercase;letter-spacing:0.8px;color:#bbb;background:#fafaf8;border-right:1px solid var(--bordo);cursor:pointer;transition:all .15s;position:relative}
+.f-step:last-child{border-right:none}
+.f-step.done{background:var(--verde-bg);color:var(--verde-t)}
+.f-step.active{background:var(--blu);color:#FFF}
+.f-step.no{background:var(--rosso-bg);color:var(--rosso-t)}
+.f-step span{display:block;font-size:8px;font-weight:400;margin-top:2px;opacity:0.7}
+
+/* DETTAGLI INVESTITORE */
+.inv-details{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
+.inv-detail{background:var(--grigio-bg);border-radius:4px;padding:8px 10px}
+.id-label{font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:2px}
+.id-val{font-size:13px;color:var(--dark);font-weight:600}
+
+/* NOTE */
+.inv-note-wrap{margin-top:10px}
+.inv-note-label{font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:4px}
+.inv-note{width:100%;border:1px solid var(--bordo);border-radius:4px;padding:8px 10px;font-family:'Barlow',sans-serif;font-size:13px;color:var(--dark);background:#fff;resize:vertical;min-height:60px;outline:none}
+.inv-note:focus{border-color:var(--blu)}
+
+/* SCRIPT INLINE */
+.inv-script-btn{display:inline-block;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:10px;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;border-radius:3px;border:1px solid var(--bordo);background:transparent;color:#888;cursor:pointer;margin-top:8px;margin-right:4px}
+.inv-script-btn:hover{background:var(--blu);color:#FFF;border-color:var(--blu)}
+
+/* AZIONI CARD */
+.inv-actions{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+.inv-action-btn{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:10px;letter-spacing:1px;text-transform:uppercase;padding:6px 12px;border-radius:3px;border:none;cursor:pointer;transition:all .15s}
+.btn-avanza{background:var(--blu);color:#FFF}
+.btn-no{background:var(--rosso-bg);color:var(--rosso-t)}
+.btn-edit{background:var(--grigio-bg);color:#666;border:1px solid var(--bordo)}
+.btn-del{background:transparent;color:#ccc;border:1px solid #eee}
+
+/* MODAL AGGIUNGI */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:300;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.open{display:flex}
+.modal{background:#FFF;border-radius:8px;width:100%;max-width:460px;overflow:hidden}
+.modal-head{background:var(--blu);padding:16px 20px;display:flex;align-items:center;justify-content:space-between}
+.modal-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:18px;color:#FFF;text-transform:uppercase}
+.modal-close{background:none;border:none;color:rgba(255,255,255,0.6);font-size:20px;cursor:pointer;line-height:1}
+.modal-body{padding:20px}
+.form-group{margin-bottom:14px}
+.form-label{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-bottom:5px;display:block}
+.form-input,.form-select{width:100%;border:1px solid var(--bordo);border-radius:4px;padding:9px 12px;font-family:'Barlow',sans-serif;font-size:14px;color:var(--dark);background:#fff;outline:none}
+.form-input:focus,.form-select:focus{border-color:var(--blu)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.modal-footer{padding:0 20px 20px;display:flex;gap:8px;justify-content:flex-end}
+.btn-primary{background:var(--arancio);color:#FFF;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:13px;text-transform:uppercase;letter-spacing:1px;padding:10px 20px;border-radius:4px;border:none;cursor:pointer}
+.btn-secondary{background:var(--grigio-bg);color:#666;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:13px;text-transform:uppercase;letter-spacing:1px;padding:10px 20px;border-radius:4px;border:1px solid var(--bordo);cursor:pointer}
+
+/* EMPTY STATE */
+.empty{text-align:center;padding:40px 20px;color:#bbb}
+.empty-icon{font-size:40px;margin-bottom:10px}
+.empty-text{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;text-transform:uppercase;color:#ccc}
+
+/* SCRIPT INLINE PER INVESTITORE */
+.inv-script-panel{background:var(--dark);border-radius:6px;padding:14px;margin-top:10px;display:none}
+.inv-script-panel.open{display:block}
+.isp-label{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--arancio);margin-bottom:8px}
+.isp-text{font-size:13px;color:rgba(255,255,255,0.75);line-height:1.6;font-style:italic}
+.isp-note{font-size:11px;color:rgba(255,255,255,0.35);margin-top:6px;font-style:normal}
+
+footer{background:var(--dark);padding:20px 16px;text-align:center;margin-top:20px}
+footer p{color:rgba(255,255,255,0.3);font-size:10px;line-height:1.8}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="fk-logo" href="#"><span class="fran">Fran</span><span class="ki">Ki</span></a>
+  <span class="nav-title">Engagement · Il Poglío</span>
+  <button class="nav-add-btn" onclick="openModal()">+ Aggiungi</button>
+</nav>
+
+<!-- PROGRESS -->
+<div class="prog-bar-wrap">
+  <div class="prog-slots" id="prog-slots">0 / 6 posti</div>
+  <div class="prog-bar-bg"><div class="prog-bar-fill" id="prog-fill" style="width:0%"></div></div>
+  <div class="prog-pct" id="prog-pct">0%</div>
+</div>
+
+<!-- FILTRI -->
+<div class="filtri">
+  <button class="filtro-btn active" onclick="filtra('tutti',this)">Tutti</button>
+  <button class="filtro-btn" onclick="filtra('0',this)">🔘 Da contattare</button>
+  <button class="filtro-btn" onclick="filtra('1',this)">🟡 Call fatta</button>
+  <button class="filtro-btn" onclick="filtra('2',this)">🔵 Doc inviato</button>
+  <button class="filtro-btn" onclick="filtra('3',this)">🟣 In chiusura</button>
+  <button class="filtro-btn" onclick="filtra('done',this)">✅ Firmato</button>
+  <button class="filtro-btn" onclick="filtra('no',this)">❌ No</button>
+</div>
+
+<!-- SCRIPT PANEL GLOBALE -->
+<div class="script-panel" id="script-panel">
+  <div class="script-inner">
+    <div class="script-tabs">
+      <button class="script-tab active" onclick="switchScript('m0',this)">M0 · Semina</button>
+      <button class="script-tab" onclick="switchScript('m1',this)">M1 · Call</button>
+      <button class="script-tab" onclick="switchScript('m2',this)">M2 · Documento</button>
+      <button class="script-tab" onclick="switchScript('m3',this)">M3 · Chiusura</button>
+    </div>
+
+    <!-- M0 SEMINA -->
+    <div class="script-content visible" id="sc-m0">
+      <div class="script-label">Obiettivo — Aprire la porta senza spiegare nulla</div>
+      <div class="script-box">
+        <p>"Sto lavorando a una cosa interessante in Abruzzo — un posto che non ti aspetti. Quando hai dieci minuti ti racconto?"</p>
+        <div class="script-note">Per chi conosci direttamente · WA o telefono · nessun documento</div>
+      </div>
+      <div class="script-box">
+        <p>"Mi ha parlato di te [nome comune] — stai lavorando su cose interessanti. Ho un progetto in montagna che potrebbe avere senso mostrarti, se ti va."</p>
+        <div class="script-note">Per contatti di secondo livello · email o WA · sempre personale</div>
+      </div>
+      <div class="script-box">
+        <p>"Sto cercando una persona con la tua competenza per un ruolo specifico in un progetto che sto strutturando. Non ti chiedo nulla adesso — ma se hai curiosità ti racconto in dieci minuti."</p>
+        <div class="script-note">Per profili operativi · enfatizza il ruolo prima del rendimento</div>
+      </div>
+      <ul class="script-steps">
+        <li class="script-step"><div class="ss-num">!</div><div class="ss-text"><strong>Non mandare nessun documento</strong> — brucia la curiosità e toglie la leva del contatto personale</div></li>
+        <li class="script-step"><div class="ss-num">!</div><div class="ss-text"><strong>Non spiegare la struttura societaria</strong> — troppo complessa senza il contesto visivo</div></li>
+        <li class="script-step"><div class="ss-num">!</div><div class="ss-text"><strong>Obiettivo unico:</strong> ottenere un sì alla call di 15-20 minuti</div></li>
+      </ul>
+    </div>
+
+    <!-- M1 CALL -->
+    <div class="script-content" id="sc-m1">
+      <div class="script-label">Struttura call — 20 minuti · 3 blocchi</div>
+      <ul class="script-steps">
+        <li class="script-step"><div class="ss-num">01</div><div class="ss-text"><strong>5 min — La storia (non i numeri)</strong><br>ENEL, 1956, Roccaraso, 1.023m, tre palazzine ferme da vent'anni. Apri con: "Conosci Roccaraso?" — se sì, ha già l'immagine. Se no, la costruisci tu.</div></li>
+        <li class="script-step"><div class="ss-num">02</div><div class="ss-text"><strong>5 min — Cosa diventa</strong><br>Club privato 140 soci, bubble room nel bosco, corporate retreat. L'esperienza, non il business plan. Deve sentire che vuole essere lì.</div></li>
+        <li class="script-step"><div class="ss-num">03</div><div class="ss-text"><strong>5 min — La struttura in 3 righe</strong><br>6 posti, €75K (€50K equity + €25K prestito 6%), rendimento stimato 25× sull'equity, exit M48. Se fa domande sui numeri → è qualificato. Se non le fa → non è pronto.</div></li>
+        <li class="script-step"><div class="ss-num">→</div><div class="ss-text"><strong>Chiudi con una sola domanda:</strong><br>"Ha senso che ti mando il documento per leggerlo con calma?"</div></li>
+      </ul>
+      <div class="script-box">
+        <p>Per profili operativi: inverti blocco 02 e 03 — prima il ruolo concreto ("cosa faresti tu"), poi la struttura. Il rendimento viene dopo, come conseguenza del lavoro.</p>
+        <div class="script-note">Versione operativo · usare documento ?v=op</div>
+      </div>
+    </div>
+
+    <!-- M2 DOCUMENTO -->
+    <div class="script-content" id="sc-m2">
+      <div class="script-label">Invio documento — solo dopo call positiva</div>
+      <div class="script-box">
+        <p>"Ti mando il link — leggilo quando hai 15 minuti tranquilli. Poi mi dici."</p>
+        <div class="script-note">Nessun commento aggiuntivo · nessuna spiegazione via messaggio · solo il link</div>
+      </div>
+      <ul class="script-steps">
+        <li class="script-step"><div class="ss-num">→</div><div class="ss-text"><strong>Link investitore:</strong> frankistudio.it/affio/rcv/POGLIO_Presentazione_Esterna.html</div></li>
+        <li class="script-step"><div class="ss-num">→</div><div class="ss-text"><strong>Link operativo:</strong> frankistudio.it/affio/rcv/POGLIO_Presentazione_Esterna.html?v=op</div></li>
+        <li class="script-step"><div class="ss-num">5gg</div><div class="ss-text"><strong>Follow-up dopo 5 giorni se non si fa vivo:</strong><br>"Hai avuto modo di dare un'occhiata?" — una sola volta. Se non risponde è un no silenzioso. Archivia.</div></li>
+        <li class="script-step"><div class="ss-num">!</div><div class="ss-text"><strong>Non fare più di un follow-up</strong> — chi è interessato risponde, chi non risponde ha già deciso</div></li>
+      </ul>
+    </div>
+
+    <!-- M3 CHIUSURA -->
+    <div class="script-content" id="sc-m3">
+      <div class="script-label">Chiusura — obiettivo: lettera di intenti firmata entro 7 giorni</div>
+      <ul class="script-steps">
+        <li class="script-step"><div class="ss-num">01</div><div class="ss-text"><strong>Qualifica le domande</strong><br>Chi fa domande dopo il documento è qualificato. Risponde con precisione — non cercare di chiudere per telefono su domande tecniche complesse.</div></li>
+        <li class="script-step"><div class="ss-num">02</div><div class="ss-text"><strong>Proponi incontro breve</strong><br>Call o di persona — 30 minuti. Porta il patto parasociale in bozza e la lettera di intenti.</div></li>
+        <li class="script-step"><div class="ss-num">03</div><div class="ss-text"><strong>Obiettivo firma lettera di intenti</strong><br>Entro 7 giorni dall'incontro. Dopo 7 giorni la probabilità di chiusura crolla. Se non firma in 7 giorni: una ripresa, poi si archivia.</div></li>
+        <li class="script-step"><div class="ss-num">!</div><div class="ss-text"><strong>Obiezione "aspetto l'asta":</strong> No. Il deal si struttura prima. Chi aspetta l'asta non capisce il progetto o non ha la liquidità.</div></li>
+        <li class="script-step"><div class="ss-num">!</div><div class="ss-text"><strong>Obiezione "metto meno di €75K":</strong> No. Struttura calibrata. Si può ragionare sulla composizione equity/prestito ma non sull'importo.</div></li>
+      </ul>
+    </div>
+
+    <button class="script-toggle" onclick="toggleScript()">✕ Chiudi script</button>
+  </div>
+</div>
+
+<!-- LISTA INVESTITORI -->
+<div class="investitori" id="lista-investitori">
+  <div class="empty" id="empty-state">
+    <div class="empty-icon">👤</div>
+    <div class="empty-text">Nessun contatto ancora<br>Premi + Aggiungi per iniziare</div>
+  </div>
+</div>
+
+<!-- MODAL AGGIUNGI/MODIFICA -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal">
+    <div class="modal-head">
+      <span class="modal-title" id="modal-title">Nuovo contatto</span>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="edit-id">
+      <div class="form-group">
+        <label class="form-label">Nome e cognome *</label>
+        <input class="form-input" id="f-nome" type="text" placeholder="Es. Mario Rossi">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Ruolo / Professione</label>
+          <input class="form-input" id="f-ruolo" type="text" placeholder="Es. Imprenditore">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tipo profilo</label>
+          <select class="form-select" id="f-tipo">
+            <option value="fin">Investitore puro</option>
+            <option value="op">Socio operativo</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Canale (FranKi / Affio)</label>
+          <select class="form-select" id="f-canale">
+            <option value="FranKi">FranKi</option>
+            <option value="Affio">Affio</option>
+            <option value="Altro">Altro</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Fase attuale</label>
+          <select class="form-select" id="f-fase">
+            <option value="0">🔘 Da contattare</option>
+            <option value="1">🟡 Call fatta</option>
+            <option value="2">🔵 Documento inviato</option>
+            <option value="3">🟣 In chiusura</option>
+            <option value="done">✅ Firmato</option>
+            <option value="no">❌ No</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Note</label>
+        <textarea class="form-input" id="f-note" rows="3" placeholder="Note libere sul contatto..."></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="closeModal()">Annulla</button>
+      <button class="btn-primary" onclick="salvaContatto()">Salva</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>ENGAGEMENT INVESTITORI · RCV — Il Poglío<br>FranKi Studio (Avre Srl · Napoli) · frankistudio.it · Uso interno riservato</p>
+</footer>
+
+<script>
+const KEY = 'rcv-engagement-v1';
+const FASI = {
+  '0':    { label: 'Da contattare', badge: 'fb-0', color: '#aaa' },
+  '1':    { label: 'Call fatta',    badge: 'fb-1', color: '#F0A500' },
+  '2':    { label: 'Doc inviato',   badge: 'fb-2', color: '#2B38B0' },
+  '3':    { label: 'In chiusura',   badge: 'fb-3', color: '#7c3aed' },
+  'done': { label: 'Firmato',       badge: 'fb-done', color: '#22c55e' },
+  'no':   { label: 'No',           badge: 'fb-no', color: '#ef4444' },
+};
+const SCRIPTS = {
+  '0':    { label: 'Script M0 — Semina', tab: 'm0' },
+  '1':    { label: 'Script M1 — Call',   tab: 'm1' },
+  '2':    { label: 'Script M2 — Documento', tab: 'm2' },
+  '3':    { label: 'Script M3 — Chiusura', tab: 'm3' },
+  'done': { label: null, tab: null },
+  'no':   { label: null, tab: null },
+};
+const COLORS = ['#2B38B0','#F0A500','#1a7a1a','#7c3aed','#c5221f','#0891b2','#be185d','#b45309'];
+let filtroAttivo = 'tutti';
+let scriptOpen = false;
+
+function getData(){ try{ return JSON.parse(localStorage.getItem(KEY)) || []; }catch(e){ return []; } }
+function saveData(d){ try{ localStorage.setItem(KEY, JSON.stringify(d)); }catch(e){} }
+
+function iniziali(nome){
+  const p = nome.trim().split(' ');
+  if(p.length >= 2) return (p[0][0]+p[1][0]).toUpperCase();
+  return nome.substring(0,2).toUpperCase();
+}
+
+function colorePer(nome){
+  let h = 0;
+  for(let i=0;i<nome.length;i++) h = (h*31 + nome.charCodeAt(i)) & 0xFFFFFF;
+  return COLORS[Math.abs(h) % COLORS.length];
+}
+
+function nextFase(f){
+  const ord = ['0','1','2','3','done'];
+  const i = ord.indexOf(f);
+  return i >= 0 && i < ord.length-1 ? ord[i+1] : f;
+}
+
+function aggiornaProgresso(){
+  const d = getData();
+  const firmati = d.filter(c => c.fase === 'done').length;
+  const pct = Math.round(firmati/6*100);
+  document.getElementById('prog-slots').textContent = firmati + ' / 6 posti';
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('prog-pct').textContent = pct + '%';
+}
+
+function renderLista(){
+  const d = getData();
+  const lista = document.getElementById('lista-investitori');
+  const empty = document.getElementById('empty-state');
+  const filtrati = filtroAttivo === 'tutti' ? d : d.filter(c => c.fase === filtroAttivo);
+
+  // Rimuovi card esistenti (non empty state)
+  lista.querySelectorAll('.inv-card').forEach(el => el.remove());
+
+  if(filtrati.length === 0){
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+
+  filtrati.forEach(c => {
+    const card = document.createElement('div');
+    card.className = 'inv-card fase-' + c.fase;
+    card.dataset.id = c.id;
+    if(c.expanded) card.classList.add('expanded');
+
+    const f = FASI[c.fase];
+    const scriptInfo = SCRIPTS[c.fase];
+    const linkBase = 'https://frankistudio.it/affio/rcv/POGLIO_Presentazione_Esterna.html';
+    const linkInv = linkBase;
+    const linkOp = linkBase + '?v=op';
+    const docLink = c.tipo === 'op' ? linkOp : linkInv;
+
+    const prossima = nextFase(c.fase);
+    const prossimaPuoAvanzare = c.fase !== 'done' && c.fase !== 'no';
+
+    const scriptBtnHtml = scriptInfo.tab ? 
+      `<button class="inv-script-btn" onclick="toggleInvScript('${c.id}')">📋 Script ${scriptInfo.label.split('—')[0].trim()}</button>` : '';
+
+    const scriptPanelHtml = scriptInfo.tab ? `
+      <div class="inv-script-panel" id="isp-${c.id}">
+        <div class="isp-label">${scriptInfo.label}</div>
+        <div class="isp-text" id="isp-text-${c.id}"></div>
+        <div class="isp-note" id="isp-note-${c.id}"></div>
+      </div>` : '';
+
+    card.innerHTML = `
+      <div class="inv-head" onclick="toggleCard('${c.id}')">
+        <div class="inv-avatar" style="background:${colorePer(c.nome)}">${iniziali(c.nome)}</div>
+        <div class="inv-info">
+          <div class="inv-nome">${c.nome}</div>
+          <div class="inv-ruolo">${c.ruolo || '—'} · ${c.canale}</div>
+        </div>
+        <span class="inv-fase-badge ${f.badge}">${f.label}</span>
+        <span class="inv-expand-icon">▾</span>
+      </div>
+      <div class="inv-body">
+        <div class="funnel">
+          <div class="f-step ${c.fase==='0'?'active':['1','2','3','done'].includes(c.fase)?'done':''}" onclick="setFase('${c.id}','0')">M0<span>Semina</span></div>
+          <div class="f-step ${c.fase==='1'?'active':['2','3','done'].includes(c.fase)?'done':''}" onclick="setFase('${c.id}','1')">M1<span>Call</span></div>
+          <div class="f-step ${c.fase==='2'?'active':['3','done'].includes(c.fase)?'done':''}" onclick="setFase('${c.id}','2')">M2<span>Doc</span></div>
+          <div class="f-step ${c.fase==='3'?'active':c.fase==='done'?'done':''}" onclick="setFase('${c.id}','3')">M3<span>Chiusura</span></div>
+          <div class="f-step ${c.fase==='done'?'done':''}" onclick="setFase('${c.id}','done')">✓<span>Firmato</span></div>
+          <div class="f-step ${c.fase==='no'?'no':''}" onclick="setFase('${c.id}','no')">✗<span>No</span></div>
+        </div>
+        <div class="inv-details">
+          <div class="inv-detail"><div class="id-label">Profilo</div><div class="id-val">${c.tipo === 'op' ? '⭐ Operativo' : '💰 Investitore'}</div></div>
+          <div class="inv-detail"><div class="id-label">Canale</div><div class="id-val">${c.canale}</div></div>
+          <div class="inv-detail"><div class="id-label">Link documento</div><div class="id-val"><a href="${docLink}" target="_blank" style="color:var(--blu);font-size:12px">Apri →</a></div></div>
+          <div class="inv-detail"><div class="id-label">Aggiunto</div><div class="id-val">${c.data || '—'}</div></div>
+        </div>
+        <div class="inv-note-wrap">
+          <div class="inv-note-label">Note</div>
+          <textarea class="inv-note" placeholder="Note libere..." onchange="salvaNota('${c.id}',this.value)">${c.note || ''}</textarea>
+        </div>
+        ${scriptBtnHtml}
+        ${scriptPanelHtml}
+        <div class="inv-actions">
+          ${prossimaPuoAvanzare ? `<button class="inv-action-btn btn-avanza" onclick="avanza('${c.id}')">→ Avanza a ${FASI[prossima].label}</button>` : ''}
+          <button class="inv-action-btn btn-edit" onclick="openEdit('${c.id}')">✏ Modifica</button>
+          <button class="inv-action-btn btn-no" onclick="setFase('${c.id}','no')">❌ No</button>
+          <button class="inv-action-btn btn-del" onclick="elimina('${c.id}')">🗑</button>
+        </div>
+      </div>`;
+
+    lista.appendChild(card);
+  });
+
+  aggiornaProgresso();
+}
+
+function toggleCard(id){
+  const d = getData();
+  const c = d.find(x => x.id === id);
+  if(c){ c.expanded = !c.expanded; saveData(d); renderLista(); }
+}
+
+function avanza(id){
+  const d = getData();
+  const c = d.find(x => x.id === id);
+  if(c){ c.fase = nextFase(c.fase); saveData(d); renderLista(); }
+}
+
+function setFase(id, fase){
+  const d = getData();
+  const c = d.find(x => x.id === id);
+  if(c){ c.fase = fase; saveData(d); renderLista(); }
+}
+
+function salvaNota(id, val){
+  const d = getData();
+  const c = d.find(x => x.id === id);
+  if(c){ c.note = val; saveData(d); }
+}
+
+function elimina(id){
+  if(!confirm('Eliminare questo contatto?')) return;
+  const d = getData().filter(x => x.id !== id);
+  saveData(d); renderLista();
+}
+
+// SCRIPT INLINE PER CONTATTO
+const SCRIPT_TESTI = {
+  '0': {
+    fin:  { text: '"Sto lavorando a una cosa interessante in Abruzzo — un posto che non ti aspetti. Quando hai dieci minuti ti racconto?"', note: 'WA o telefono · nessun documento · obiettivo: sì alla call' },
+    op:   { text: '"Sto cercando una persona con la tua competenza per un ruolo specifico in un progetto che sto strutturando. Non ti chiedo nulla adesso — ma se hai curiosità ti racconto in dieci minuti."', note: 'Per profili operativi · enfatizza il ruolo, non il rendimento' },
+  },
+  '1': {
+    fin:  { text: 'Call 20 min: 5 min storia ENEL → 5 min cosa diventa (club, bubble) → 5 min struttura (6 posti, €75K, 25× equity, M48). Chiudi: "Ha senso che ti mando il documento per leggerlo?"', note: 'Se fa domande sui numeri → qualificato. Se non le fa → non è pronto.' },
+    op:   { text: 'Call 20 min: 5 min storia ENEL → 5 min il tuo ruolo concreto → 5 min rendimento come conseguenza. Chiudi: "Ha senso che ti mando il documento?"', note: 'Versione operativo: ruolo prima, rendimento dopo' },
+  },
+  '2': {
+    fin:  { text: '"Ti mando il link — leggilo quando hai 15 minuti tranquilli. Poi mi dici." · Link: POGLIO_Presentazione_Esterna.html', note: 'Follow-up dopo 5 giorni se non risponde · una sola volta · poi archivia' },
+    op:   { text: '"Ti mando il link — leggilo quando hai 15 minuti tranquilli. Poi mi dici." · Link: POGLIO_Presentazione_Esterna.html?v=op', note: 'Versione operativo con ?v=op · follow-up dopo 5 giorni · una sola volta' },
+  },
+  '3': {
+    fin:  { text: 'Proponi incontro 30 min. Porta patto parasociale bozza + lettera di intenti. Obiettivo: firma entro 7 giorni. Dopo 7 giorni: una ripresa, poi si archivia.', note: 'Obiezione "aspetto asta": No. Obiezione "metto meno": No.' },
+    op:   { text: 'Proponi incontro 30 min. Porta patto parasociale bozza + contratto collaborazione + lettera di intenti. Obiettivo: firma entro 7 giorni.', note: 'Per operativo: porta anche bozza contratto ruolo operativo con meccanica compensazione prestito' },
+  },
+};
+
+function toggleInvScript(id){
+  const panel = document.getElementById('isp-' + id);
+  if(!panel) return;
+  const d = getData();
+  const c = d.find(x => x.id === id);
+  if(!c) return;
+  const isOpen = panel.classList.contains('open');
+  if(!isOpen){
+    const testi = SCRIPT_TESTI[c.fase];
+    if(testi){
+      const vers = c.tipo === 'op' ? testi.op : testi.fin;
+      document.getElementById('isp-text-' + id).textContent = vers.text;
+      document.getElementById('isp-note-' + id).textContent = vers.note;
+    }
+  }
+  panel.classList.toggle('open');
+}
+
+// FILTRI
+function filtra(fase, btn){
+  filtroAttivo = fase;
+  document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderLista();
+}
+
+// SCRIPT PANEL GLOBALE
+function toggleScript(){
+  const p = document.getElementById('script-panel');
+  scriptOpen = !scriptOpen;
+  p.classList.toggle('open', scriptOpen);
+}
+
+function switchScript(tab, btn){
+  document.querySelectorAll('.script-tab').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.script-content').forEach(c => c.classList.remove('visible'));
+  btn.classList.add('active');
+  document.getElementById('sc-' + tab).classList.add('visible');
+}
+
+// MODAL
+function openModal(){
+  document.getElementById('modal-title').textContent = 'Nuovo contatto';
+  document.getElementById('edit-id').value = '';
+  document.getElementById('f-nome').value = '';
+  document.getElementById('f-ruolo').value = '';
+  document.getElementById('f-tipo').value = 'fin';
+  document.getElementById('f-canale').value = 'FranKi';
+  document.getElementById('f-fase').value = '0';
+  document.getElementById('f-note').value = '';
+  document.getElementById('modal-overlay').classList.add('open');
+  document.getElementById('f-nome').focus();
+}
+
+function openEdit(id){
+  const d = getData();
+  const c = d.find(x => x.id === id);
+  if(!c) return;
+  document.getElementById('modal-title').textContent = 'Modifica contatto';
+  document.getElementById('edit-id').value = id;
+  document.getElementById('f-nome').value = c.nome;
+  document.getElementById('f-ruolo').value = c.ruolo || '';
+  document.getElementById('f-tipo').value = c.tipo;
+  document.getElementById('f-canale').value = c.canale;
+  document.getElementById('f-fase').value = c.fase;
+  document.getElementById('f-note').value = c.note || '';
+  document.getElementById('modal-overlay').classList.add('open');
+}
+
+function closeModal(){
+  document.getElementById('modal-overlay').classList.remove('open');
+}
+
+function salvaContatto(){
+  const nome = document.getElementById('f-nome').value.trim();
+  if(!nome){ alert('Inserisci il nome'); return; }
+  const d = getData();
+  const editId = document.getElementById('edit-id').value;
+  if(editId){
+    const c = d.find(x => x.id === editId);
+    if(c){
+      c.nome = nome;
+      c.ruolo = document.getElementById('f-ruolo').value.trim();
+      c.tipo = document.getElementById('f-tipo').value;
+      c.canale = document.getElementById('f-canale').value;
+      c.fase = document.getElementById('f-fase').value;
+      c.note = document.getElementById('f-note').value.trim();
+    }
+  } else {
+    d.push({
+      id: Date.now().toString(),
+      nome,
+      ruolo: document.getElementById('f-ruolo').value.trim(),
+      tipo: document.getElementById('f-tipo').value,
+      canale: document.getElementById('f-canale').value,
+      fase: document.getElementById('f-fase').value,
+      note: document.getElementById('f-note').value.trim(),
+      data: new Date().toLocaleDateString('it-IT'),
+      expanded: true,
+    });
+  }
+  saveData(d);
+  closeModal();
+  renderLista();
+}
+
+// Chiudi modal su overlay click
+document.getElementById('modal-overlay').addEventListener('click', function(e){
+  if(e.target === this) closeModal();
+});
+
+// Bottone script globale nella navbar (aggiungo dopo DOMContentLoaded)
+document.addEventListener('DOMContentLoaded', function(){
+  // Aggiungi bottone script accanto al + aggiungi
+  const nav = document.querySelector('nav');
+  const scriptBtn = document.createElement('button');
+  scriptBtn.className = 'nav-add-btn';
+  scriptBtn.style.background = 'rgba(255,255,255,0.12)';
+  scriptBtn.textContent = '📋 Script';
+  scriptBtn.onclick = toggleScript;
+  nav.insertBefore(scriptBtn, nav.querySelector('.nav-add-btn'));
+  renderLista();
+});
+</script>
+</body>
+</html>

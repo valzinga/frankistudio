@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Task Mag–Lug + Documento Socio — RCV · FranKi Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--blu:#2B38B0;--arancio:#F0A500;--grigio-bg:#F2F1ED;--dark:#111118;--bordo:#D8D5CF;--verde:#22c55e;--rosso:#ef4444;--viola:#6200ea}
+body{font-family:'Barlow',sans-serif;background:var(--grigio-bg);color:#222;font-size:15px;line-height:1.6}
+
+nav{position:sticky;top:0;z-index:100;background:var(--blu);padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:52px}
+.fk-logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;display:inline-flex;align-items:center;text-decoration:none}
+.fk-logo .fran{color:#FFF}.fk-logo .ki{background:#F0A500;color:#FFF;border-radius:5px;padding:1px 7px;margin-left:2px;display:inline-block}
+.nav-label{color:rgba(255,255,255,0.7);font-size:12px;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+
+/* HERO */
+.hero{background:var(--dark);padding:36px 20px 28px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(135deg,rgba(43,56,176,0.18) 0,rgba(43,56,176,0.18) 1px,transparent 1px,transparent 32px)}
+.hero-tag{display:inline-block;background:var(--arancio);color:#FFF;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;letter-spacing:2px;padding:4px 12px;border-radius:3px;margin-bottom:12px;text-transform:uppercase}
+.hero h1{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(28px,7vw,44px);color:#FFF;text-transform:uppercase;line-height:1.0;margin-bottom:5px}
+.hero-sub{color:rgba(255,255,255,0.55);font-size:13px}
+
+/* PROGRESS */
+.prog-bar-wrap{background:var(--bordo);height:4px}
+.prog-bar-fill{height:4px;background:var(--verde);transition:width .3s;width:0%}
+.prog-row{background:#FFF;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--bordo)}
+.prog-label{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:13px;color:var(--blu);text-transform:uppercase}
+.prog-nums{font-size:12px;color:#888}
+
+/* MESE */
+.mese{max-width:680px;margin:0 auto;padding:0 20px}
+.mese-head{margin:28px 0 14px;display:flex;align-items:center;gap:0}
+.mese-pill{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:14px;text-transform:uppercase;letter-spacing:1.5px;color:#FFF;padding:9px 16px;border-radius:4px 0 0 4px;white-space:nowrap}
+.mp-rosso{background:var(--rosso)}
+.mp-arancio{background:var(--arancio)}
+.mp-blu{background:var(--blu)}
+.mese-sub{background:#FFF;flex:1;padding:9px 14px;border-radius:0 4px 4px 0;border:1px solid var(--bordo);border-left:none;font-size:12px;color:#666;font-style:italic}
+
+/* SETTIMANE */
+.sett-label{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;text-transform:uppercase;letter-spacing:2px;color:#aaa;margin:16px 0 8px;padding-left:2px}
+
+/* TASK */
+.task{background:#FFF;border-radius:6px;padding:14px 15px;display:flex;gap:12px;align-items:flex-start;border-left:4px solid var(--bordo);cursor:pointer;transition:transform .12s,box-shadow .12s;margin-bottom:7px}
+.task:hover{transform:translateX(2px);box-shadow:0 2px 10px rgba(0,0,0,.07)}
+.task.done-task{opacity:.45;border-left-color:var(--verde)}
+.task.done-task .ttitle{text-decoration:line-through;color:#999}
+.t-r{border-left-color:var(--rosso)}.t-a{border-left-color:var(--arancio)}.t-b{border-left-color:var(--blu)}.t-v{border-left-color:var(--viola)}.t-g{border-left-color:#856404}
+
+.chk{width:20px;height:20px;border-radius:50%;border:2px solid var(--bordo);flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;font-size:11px;transition:all .15s}
+.t-r .chk{border-color:var(--rosso)}.t-a .chk{border-color:var(--arancio)}.t-b .chk{border-color:var(--blu)}.t-v .chk{border-color:var(--viola)}
+.task.done-task .chk{background:var(--verde);border-color:var(--verde);color:#FFF}
+.chi{display:none}.task.done-task .chi{display:block}
+
+.tb{}
+.ttitle{font-weight:700;font-size:14px;color:#111;line-height:1.3;margin-bottom:4px}
+.tdesc{font-size:12px;color:#555;line-height:1.55}
+
+/* TAG */
+.tag{display:inline-block;font-size:10px;font-weight:700;padding:2px 6px;border-radius:2px;text-transform:uppercase;margin-right:4px;margin-bottom:3px}
+.tg-r{background:#fde0e0;color:#a00}.tg-a{background:#fff3cd;color:#856404}.tg-b{background:#e8f0fe;color:var(--blu)}.tg-v{background:#f3e8fd;color:var(--viola)}.tg-g{background:#e6f4ea;color:#137333}.tg-k{background:#f5f5f5;color:#555}
+
+/* DETAIL CARD */
+.detail{background:#FFF;border-radius:6px;margin-bottom:7px;overflow:hidden;border-left:4px solid var(--bordo)}
+.detail.t-r{border-left-color:var(--rosso)}.detail.t-a{border-left-color:var(--arancio)}.detail.t-b{border-left-color:var(--blu)}.detail.t-v{border-left-color:var(--viola)}
+.detail-head{padding:14px 15px;display:flex;gap:12px;align-items:flex-start;cursor:pointer}
+.detail-head .ttitle{margin-bottom:2px}
+.detail-body{padding:0 15px 14px;border-top:1px solid var(--bordo)}
+.detail-row{display:flex;gap:8px;padding:7px 0;border-bottom:1px solid #f5f3f0;align-items:flex-start}
+.detail-row:last-child{border-bottom:none}
+.dr-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#bbb;min-width:72px;padding-top:2px;flex-shrink:0}
+.dr-val{font-size:13px;color:#333;line-height:1.55}
+.dr-val strong{color:var(--dark)}
+.dr-val a{color:var(--blu);font-weight:700;text-decoration:none}
+
+/* OBIEZIONI */
+.obiezioni{background:#FFF;border-radius:6px;padding:18px 16px;margin-bottom:12px}
+.ob-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:15px;text-transform:uppercase;color:var(--rosso);margin-bottom:12px;letter-spacing:0.5px}
+.ob-item{padding:10px 0;border-bottom:1px solid var(--bordo)}
+.ob-item:last-child{border-bottom:none}
+.ob-q{font-weight:700;font-size:13px;color:#333;margin-bottom:4px}
+.ob-a{font-size:13px;color:#555;line-height:1.55;padding-left:12px;border-left:2px solid var(--arancio)}
+
+/* SEPARATORE SEZIONE */
+.sep{max-width:680px;margin:32px auto 0;padding:0 20px}
+.sep-inner{display:flex;align-items:center;gap:12px}
+.sep-line{height:3px;flex:1;background:var(--blu)}
+.sep-label{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:12px;text-transform:uppercase;letter-spacing:2px;color:var(--blu);white-space:nowrap}
+
+/* DOCUMENTO SOCIO */
+.doc-socio{max-width:680px;margin:16px auto;padding:0 20px}
+
+/* SWITCHER versioni */
+.switcher{display:flex;gap:0;background:#FFF;border-radius:6px;border:1px solid var(--bordo);overflow:hidden;margin-bottom:16px}
+.sw-btn{flex:1;padding:12px;text-align:center;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:13px;text-transform:uppercase;letter-spacing:1px;cursor:pointer;border:none;background:transparent;color:#888;transition:all .2s}
+.sw-btn.active{background:var(--blu);color:#FFF}
+
+/* DOCUMENTO CARD */
+.doc-card{background:#FFF;border-radius:8px;padding:28px 22px;display:none}
+.doc-card.visible{display:block}
+.doc-brand{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#aaa;margin-bottom:20px}
+.doc-titolo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(26px,6vw,36px);color:var(--dark);text-transform:uppercase;line-height:1.05;margin-bottom:6px}
+.doc-sub{font-size:13px;color:#777;margin-bottom:24px;line-height:1.5}
+.doc-divider{height:2px;background:var(--bordo);margin:20px 0}
+.doc-section-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:13px;text-transform:uppercase;color:var(--blu);letter-spacing:1.5px;margin-bottom:8px}
+.doc-p{font-size:14px;color:#333;line-height:1.7;margin-bottom:14px}
+.doc-p strong{color:var(--dark)}
+.doc-numeri{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0}
+.doc-num{background:var(--grigio-bg);border-radius:6px;padding:14px 12px;text-align:center}
+.doc-num-val{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:24px;color:var(--blu);line-height:1}
+.doc-num-label{font-size:11px;color:#888;text-transform:uppercase;letter-spacing:0.8px;margin-top:3px}
+.doc-highlight{background:var(--arancio);border-radius:6px;padding:16px 16px;margin:16px 0;text-align:center}
+.doc-highlight p{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:18px;color:#FFF;text-transform:uppercase;line-height:1.3}
+.doc-plus{background:#e8f4e8;border:1px solid #b8ddb8;border-radius:6px;padding:14px 16px;margin:12px 0}
+.doc-plus-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:13px;text-transform:uppercase;color:#1a7a1a;margin-bottom:6px}
+.doc-plus p{font-size:13px;color:#2a4a2a;line-height:1.6}
+.doc-cta{background:var(--dark);border-radius:6px;padding:18px 16px;margin-top:20px;text-align:center}
+.doc-cta p{color:rgba(255,255,255,0.65);font-size:12px;margin-bottom:8px}
+.doc-cta strong{display:block;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:18px;color:#FFF;text-transform:uppercase;margin-bottom:12px}
+.doc-cta-btn{display:inline-block;background:var(--arancio);color:#FFF;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:14px;text-transform:uppercase;padding:10px 24px;border-radius:4px;text-decoration:none;letter-spacing:1px}
+.doc-note{font-size:11px;color:#aaa;text-align:center;margin-top:12px;font-style:italic}
+
+.reset-btn{display:block;margin:24px auto 32px;background:var(--grigio-bg);border:1px solid var(--bordo);color:#888;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:12px;text-transform:uppercase;letter-spacing:1px;padding:8px 20px;border-radius:4px;cursor:pointer}
+
+footer{background:var(--dark);padding:24px 20px;text-align:center}
+footer p{color:rgba(255,255,255,0.4);font-size:11px;line-height:1.8}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="fk-logo" href="#"><span class="fran">Fran</span><span class="ki">Ki</span></a>
+  <span class="nav-label">DETTAGLIO MAG–LUG · SOCI</span>
+</nav>
+
+<div class="hero">
+  <div class="hero-tag">📋 Task + Documento Socio</div>
+  <h1>Maggio · Giugno<br>Luglio 2026</h1>
+  <p class="hero-sub">Dettaglio attività · Chi · Come · Quando · Documento socio finale</p>
+</div>
+
+<div class="prog-row">
+  <div class="prog-label">Avanzamento</div>
+  <div class="prog-nums" id="prog-nums">0 / 27 completate</div>
+</div>
+<div class="prog-bar-wrap"><div class="prog-bar-fill" id="prog-fill"></div></div>
+
+<!-- ======================================================= -->
+<!-- MAGGIO -->
+<!-- ======================================================= -->
+<div class="mese">
+  <div class="mese-head">
+    <div class="mese-pill mp-rosso">🔴 Maggio 2026</div>
+    <div class="mese-sub">Attivazione · 9 attività · tutte bloccanti per giugno</div>
+  </div>
+
+  <div class="sett-label">Settimana 1 — Asset e struttura</div>
+
+  <div class="detail t-r">
+    <div class="detail-head" onclick="toggle(this.parentNode)">
+      <div class="chk"><span class="chi">✓</span></div>
+      <div class="tb">
+        <div class="ttitle">📞 Chiamare IVG Abruzzo — 085 9436430</div>
+        <div class="tdesc"><span class="tag tg-r">Urgente</span><span class="tag tg-k">Telefono</span>Trattativa privata post 2ª asta deserta</div>
+      </div>
+    </div>
+    <div class="detail-body">
+      <div class="detail-row"><div class="dr-label">Chi chiama</div><div class="dr-val">FranKi — voce del deal originator. Non Affio.</div></div>
+      <div class="detail-row"><div class="dr-label">Cosa dire</div><div class="dr-val">"Siamo interessati al lotto N.43/16 — esecuzione forzata Tribunale di Sulmona. Le due aste sono andate deserte, volevamo capire se c'è la possibilità di una trattativa privata e quali sono le modalità."</div></div>
+      <div class="detail-row"><div class="dr-label">Obiettivo</div><div class="dr-val">Capire: (1) trattativa privata possibile? (2) a che prezzo? (3) chi decide — il giudice o il custode? (4) tempistiche</div></div>
+      <div class="detail-row"><div class="dr-label">Risultato atteso</div><div class="dr-val">Appuntamento o indicazione scritta entro 48 ore. Se no risponde → email + seconda chiamata dopo 3 giorni.</div></div>
+      <div class="detail-row"><div class="dr-label">Se dicono no</div><div class="dr-val">Chiedere data 3ª asta e base d'asta stimata. Preparare partecipazione diretta.</div></div>
+    </div>
+  </div>
+
+  <div class="detail t-r">
+    <div class="detail-head" onclick="toggle(this.parentNode)">
+      <div class="chk"><span class="chi">✓</span></div>
+      <div class="tb">
+        <div class="ttitle">📧 Email formale a IVG Abruzzo</div>
+        <div class="tdesc"><span class="tag tg-r">Urgente</span><span class="tag tg-k">Email</span>Contestuale o subito dopo la chiamata</div>
+      </div>
+    </div>
+    <div class="detail-body">
+      <div class="detail-row"><div class="dr-label">A chi</div><div class="dr-val"><a href="mailto:ivgpescara1@gmail.com">ivgpescara1@gmail.com</a></div></div>
+      <div class="detail-row"><div class="dr-label">Oggetto</div><div class="dr-val">Interesse acquisizione — Lotto N.43/16 Esec. Forz. Tribunale Sulmona</div></div>
+      <div class="detail-row"><div class="dr-label">Testo</div><div class="dr-val">Presentazione HoldCo (nome) · interesse formale per trattativa privata · disponibilità immediata · richiesta appuntamento o documentazione su modalità e tempistiche</div></div>
+      <div class="detail-row"><div class="dr-label">Allegare</div><div class="dr-val">Niente — solo lettera di interesse. Non mandare documenti finanziari interni.</div></div>
+    </div>
+  </div>
+
+  <div class="detail t-r">
+    <div class="detail-head" onclick="toggle(this.parentNode)">
+      <div class="chk"><span class="chi">✓</span></div>
+      <div class="tb">
+        <div class="ttitle">✅ Confermare fee definitiva (25K + 5% closing)</div>
+        <div class="tdesc"><span class="tag tg-r">Decisione</span>FranKi + Affio allineati · base per tutti i contratti</div>
+      </div>
+    </div>
+    <div class="detail-body">
+      <div class="detail-row"><div class="dr-label">Struttura</div><div class="dr-val"><strong>€25K a testa</strong> alla firma soci (FranKi €25K + Affio €25K = €50K totali) + <strong>5% sul prezzo di aggiudicazione</strong> al closing. Base: prezzo effettivo, non perizia.</div></div>
+      <div class="detail-row"><div class="dr-label">Esempi</div><div class="dr-val">Su €900K → fee closing €45K tot (€22.5K a testa) · Su €700K → €35K tot (€17.5K a testa)</div></div>
+      <div class="detail-row"><div class="dr-label">Come si documenta</div><div class="dr-val">Contratto advisory/deal origination tra FranKi e HoldCo. Separato dal contratto asset management. Va firmato prima che i soci versino.</div></div>
+      <div class="detail-row"><div class="dr-label">Come si presenta</div><div class="dr-val">Ai soci: "fee di strutturazione del deal, standard di mercato, legata al risultato del closing". Non serve dettagliare i €25K immediati — sono nella documentazione contrattuale.</div></div>
+    </div>
+  </div>
+
+  <div class="sett-label">Settimana 1–2 — Soci operativi</div>
+
+  <div class="detail t-b">
+    <div class="detail-head" onclick="toggle(this.parentNode)">
+      <div class="chk"><span class="chi">✓</span></div>
+      <div class="tb">
+        <div class="ttitle">⚖️ Trovare avvocato — candidato socio operativo slot 1</div>
+        <div class="tdesc"><span class="tag tg-b">Legale</span><span class="tag tg-a">Socio operativo</span>Profilo più prezioso strategicamente</div>
+      </div>
+    </div>
+    <div class="detail-body">
+      <div class="detail-row"><div class="dr-label">Profilo cercato</div><div class="dr-val">Specialista procedure esecutive + societario · zona Sulmona/L'Aquila/Roma · under 50 · disponibile a entrare come socio · non conflitti con altri clienti sul deal</div></div>
+      <div class="detail-row"><div class="dr-label">Come trovarlo</div><div class="dr-val">1) Rete Affio in Abruzzo · 2) Ordine avvocati L'Aquila sezione esecuzioni · 3) Referral da notai locali · 4) Avvocati che hanno già lavorato su aste Tribunale Sulmona</div></div>
+      <div class="detail-row"><div class="dr-label">Cosa gli proponi</div><div class="dr-val">Entra con €75K (€50K equity 10% + €25K prestito) · il prestito viene rimborsato scalando le sue parcelle · gestisce tutto il legale del deal dall'asta all'exit · nessun conflitto perché è dentro</div></div>
+      <div class="detail-row"><div class="dr-label">Cosa gli copre</div><div class="dr-val">Pre-closing con IVG · patto parasociale · contratti FrankiLegal · ingresso fondo · SPA exit M48. Non ha senso pagare un avvocato esterno per tutto questo se ne hai uno dentro.</div></div>
+      <div class="detail-row"><div class="dr-label">Criterio esclusione</div><div class="dr-val">Fuori se: vuole guardare tutto prima di decidere, non ha €75K liquidi, ha già clienti in conflitto sul deal.</div></div>
+    </div>
+  </div>
+
+  <div class="detail t-a">
+    <div class="detail-head" onclick="toggle(this.parentNode)">
+      <div class="chk"><span class="chi">✓</span></div>
+      <div class="tb">
+        <div class="ttitle">🗣️ Briefing Affio — 3 domande rete</div>
+        <div class="tdesc"><span class="tag tg-a">Soci</span>30 minuti · risponde lui · non delegare</div>
+      </div>
+    </div>
+    <div class="detail-body">
+      <div class="detail-row"><div class="dr-label">Domanda 1</div><div class="dr-val">Conosce un avvocato specializzato in aste giudiziarie a Sulmona/L'Aquila? → candidato naturale slot 1 operativo</div></div>
+      <div class="detail-row"><div class="dr-label">Domanda 2</div><div class="dr-val">Nella sua rete c'è qualcuno che fa marketing per hospitality o turismo di lusso? → candidato slot agenzia marketing</div></div>
+      <div class="detail-row"><div class="dr-label">Domanda 3</div><div class="dr-val">Tra i potenziali soci c'è qualcuno con ruolo operativo concreto — contractor, architetto, gestore strutture? → slot 2 operativo</div></div>
+      <div class="detail-row"><div class="dr-label">Output atteso</div><div class="dr-val">Lista di nomi con contatto diretto. Anche solo 3–4 nomi su 3 domande è sufficiente per partire.</div></div>
+    </div>
+  </div>
+
+  <div class="sett-label">Settimana 2–3 — Lista e documenti soci</div>
+
+  <div class="detail t-a">
+    <div class="detail-head" onclick="toggle(this.parentNode)">
+      <div class="chk"><span class="chi">✓</span></div>
+      <div class="tb">
+        <div class="ttitle">📋 Lista 15–20 contatti candidati soci</div>
+        <div class="tdesc"><span class="tag tg-a">Soci</span>FranKi + Affio ciascuno la propria · poi si uniscono e si valutano</div>
+      </div>
+    </div>
+    <div class="detail-body">
+      <div class="detail-row"><div class="dr-label">Profilo giusto</div><div class="dr-val">Liquidità €75K senza stress · orizzonte 4–5 anni · non ha bisogno di questi soldi nel breve · si fida di FranKi o Affio personalmente · idealmente ha già fatto investimenti alternativi</div></div>
+      <div class="detail-row"><div class="dr-label">Profilo sbagliato</div><div class="dr-val">Fa domande sulla governance prima di capire il progetto · porta un avvocato proprio al primo incontro · i €75K sono tutti i suoi risparmi · ha urgenza di liquidità · vuole quote o ruoli non previsti</div></div>
+      <div class="detail-row"><div class="dr-label">Formato lista</div><div class="dr-val">Nome · tipo (finanziario / potenziale operativo) · canale (rete FranKi / rete Affio) · priorità (alto/medio) · note relazione</div></div>
+      <div class="detail-row"><div class="dr-label">Target numerico</div><div class="dr-val">15–20 contatti → 8–10 qualificati al primo filtro → 6 che firmano. Tasso di conversione realistico: 30–40% dalla lista iniziale.</div></div>
+    </div>
+  </div>
+
+  <div class="task t-a" onclick="toggle(this)" style="margin-bottom:7px">
+    <div class="chk"><span class="chi">✓</span></div>
+    <div class="tb">
+      <div class="ttitle">📄 Produrre documento socio — 2 versioni</div>
+      <div class="tdesc"><span class="tag tg-a">Documento</span>Finanziario puro + Operativo · vedi sezione dedicata sotto</div>
+    </div>
+  </div>
+
+  <div class="task t-a" onclick="toggle(this)">
+    <div class="chk"><span class="chi">✓</span></div>
+    <div class="tb">
+      <div class="ttitle">📤 Mandare Teaser Guya</div>
+      <div class="tdesc"><span class="tag tg-a">Marketing</span>frankistudio.it/affio/rcv/POGLIO_Teaser_Guya.html · domanda finale: "Come lo racconteresti tu?"</div>
+    </div>
+  </div>
+
+  <div class="sett-label">Settimana 2 — Mutuo (percorso critico)</div>
+
+  <div class="detail t-b">
+    <div class="detail-head" onclick="toggle(this.parentNode)">
+      <div class="chk"><span class="chi">✓</span></div>
+      <div class="tb">
+        <div class="ttitle">🏦 Avviare istruttoria mutuo acquisto — subito</div>
+        <div class="tdesc"><span class="tag tg-b">Mutuo</span><span class="tag tg-r">⚠ Percorso critico</span>60–90 gg · serve pre-delibera prima della cauzione agosto</div>
+      </div>
+    </div>
+    <div class="detail-body">
+      <div class="detail-row"><div class="dr-label">Perché maggio</div><div class="dr-val">L'istruttoria richiede 60–90 giorni. La cauzione asta è ad agosto. Se parti a luglio arrivi tardi — senza pre-delibera non puoi partecipare. Partire a maggio ti dà margine pieno.</div></div>
+      <div class="detail-row"><div class="dr-label">Non serve HoldCo</div><div class="dr-val">Per la pre-valutazione informale la banca usa la perizia Farina Rev.3 (già disponibile) e i garanti personali. L'istruttoria formale parte quando la HoldCo è costituita (giugno).</div></div>
+      <div class="detail-row"><div class="dr-label">A chi rivolgersi</div><div class="dr-val">Banche locali Abruzzo (Banca Popolare di Lanciano, Cassa di Risparmio dell'Aquila) + 1–2 istituti nazionali specializzati in real estate / hospitality. Contatti in parallelo, non in sequenza.</div></div>
+      <div class="detail-row"><div class="dr-label">Leva con la banca</div><div class="dr-val">LTV effettivo: prezzo acquisto ~€900K su perizia certificata €13,5M = 3,3%. Praticamente zero rischio per la banca. Il valore è certificato dal perito del Tribunale di Sulmona.</div></div>
+      <div class="detail-row"><div class="dr-label">Target</div><div class="dr-val">€400–500K · pre-delibera entro luglio · erogazione al closing · tasso da negoziare (indicativo 4–5,5% su questo LTV)</div></div>
+    </div>
+  </div>
+
+</div><!-- fine mese maggio -->
+
+<!-- ======================================================= -->
+<!-- GIUGNO -->
+<!-- ======================================================= -->
+<div class="mese">
+  <div class="mese-head">
+    <div class="mese-pill mp-arancio">🟠 Giugno 2026</div>
+    <div class="mese-sub">Raccolta soci · Struttura legale · Fondo in outreach · Istruttoria mutuo in corso</div>
+  </div>
+
+  <div class="sett-label">Settimana 1–2 — Primi contatti soci</div>
+
+  <div class="detail t-a">
+    <div class="detail-head" onclick="toggle(this.parentNode)">
+      <div class="chk"><span class="chi">✓</span></div>
+      <div class="tb">
+        <div class="ttitle">📞 Primi contatti soci — tornata 1</div>
+        <div class="tdesc"><span class="tag tg-a">Soci</span>8–10 contatti · solo verbale · nessun documento ancora</div>
+      </div>
+    </div>
+    <div class="detail-body">
+      <div class="detail-row"><div class="dr-label">Script apertura</div><div class="dr-val">"Sto lavorando a un'operazione interessante — un asset in montagna con una storia straordinaria. Potrei raccontartela in 10 minuti? Non ti chiedo nulla adesso, voglio solo capire se ti può interessare."</div></div>
+      <div class="detail-row"><div class="dr-label">Cosa NON dire</div><div class="dr-val">Non citare l'asta. Non citare gli altri soci. Non dire i numeri al telefono. Non mandare documenti senza prima aver parlato.</div></div>
+      <div class="detail-row"><div class="dr-label">Timing</div><div class="dr-val">Risposta entro 7 giorni: sì / no / forse. Chi non risponde in 7 giorni → una ripresa · poi si archivio e si passa al prossimo.</div></div>
+      <div class="detail-row"><div class="dr-label">Chi chiama chi</div><div class="dr-val">FranKi chiama i suoi contatti · Affio chiama i suoi. Non si incrociano senza accordo preventivo. Evitare che la stessa persona riceva due chiamate diverse sullo stesso progetto.</div></div>
+    </div>
+  </div>
+
+  <div class="detail t-a">
+    <div class="detail-head" onclick="toggle(this.parentNode)">
+      <div class="chk"><span class="chi">✓</span></div>
+      <div class="tb">
+        <div class="ttitle">📨 Invio documento socio ai qualificati</div>
+        <div class="tdesc"><span class="tag tg-a">Soci</span>Solo a chi ha detto sì o forse al primo contatto verbale</div>
+      </div>
+    </div>
+    <div class="detail-body">
+      <div class="detail-row"><div class="dr-label">Timing</div><div class="dr-val">Entro 24 ore dal primo contatto positivo · mai aspettare oltre 48 ore · il momentum si raffredda velocemente</div></div>
+      <div class="detail-row"><div class="dr-label">Versione giusta</div><div class="dr-val">Finanziario puro → documento standard · Candidato operativo → documento con sezione ruolo · Mai mandare quella sbagliata</div></div>
+      <div class="detail-row"><div class="dr-label">Follow-up</div><div class="dr-val">Dopo 5 giorni: "Hai avuto modo di leggere? Hai domande?" · un solo follow-up · se non risponde è un no.</div></div>
+      <div class="detail-row"><div class="dr-label">Lettera di intenti</div><div class="dr-val">Chi dice sì firma subito una lettera di intenti semplice (1 pagina) · blocca il posto · non è vincolante ma crea commitment psicologico · prima del patto formale</div></div>
+    </div>
+  </div>
+
+  <div class="detail t-a">
+    <div class="detail-head" onclick="toggle(this.parentNode)">
+      <div class="chk"><span class="chi">✓</span></div>
+      <div class="tb">
+        <div class="ttitle">🤝 Bloccare i 2 soci operativi</div>
+        <div class="tdesc"><span class="tag tg-a">Soci</span><span class="tag tg-b">Operativo</span>Avvocato + Contractor / Gestore · priorità assoluta sulla cordata</div>
+      </div>
+    </div>
+    <div class="detail-body">
+      <div class="detail-row"><div class="dr-label">Perché prima</div><div class="dr-val">I soci operativi sono più difficili da trovare e più preziosi. Se li blocchi prima, puoi completare i 4 finanziari con più calma. Se parti dai finanziari e non trovi gli operativi, hai un problema di governance.</div></div>
+      <div class="detail-row"><div class="dr-label">Slot 1 — Avvocato</div><div class="dr-val">Lettera di intenti + accordo verbale su compensazione parcelle dal prestito · formalizzi con il patto a luglio</div></div>
+      <div class="detail-row"><div class="dr-label">Slot 2 — Contractor o Gestore</div><div class="dr-val">Stesso meccanismo · se non trovi un contractor ideale in giugno, il gestore operativo è un'ottima alternativa per slot 2</div></div>
+      <div class="detail-row"><div class="dr-label">Se non li trovi</div><div class="dr-val">Non forzare. Meglio 2 finanziari in più e cercare i fornitori operativi come non-soci. La struttura regge anche con 6 finanziari puri — perde qualcosa in governance ma non è bloccante.</div></div>
+    </div>
+  </div>
+
+  <div class="sett-label">Settimana 2–3 — Struttura legale</div>
+
+  <div class="detail t-b">
+    <div class="detail-head" onclick="toggle(this.parentNode)">
+      <div class="chk"><span class="chi">✓</span></div>
+      <div class="tb">
+        <div class="ttitle">🏢 Costituzione HoldCo SRL</div>
+        <div class="tdesc"><span class="tag tg-b">Legale</span>FranKi + Affio 50/50 · capitale simbolico €10K</div>
+      </div>
+    </div>
+    <div class="detail-body">
+      <div class="detail-row"><div class="dr-label">Chi la fa</div><div class="dr-val">Notaio + avvocato societario (idealmente il socio operativo slot 1)</div></div>
+      <div class="detail-row"><div class="dr-label">Cosa va nello statuto</div><div class="dr-val">Plural voting FranKi (ogni quota = 3 voti) · oggetto sociale extralberghiero · clausola lock-up soci · ROFR · meccanismo di ingresso nuovi soci</div></div>
+      <div class="detail-row"><div class="dr-label">Timing</div><div class="dr-val">Va costituita PRIMA che i 6 soci versino. Serve la SRL per ricevere i versamenti. Tempi notarili: 7–14 giorni.</div></div>
+      <div class="detail-row"><div class="dr-label">Costo</div><div class="dr-val">€2.500–4.000 tra notaio e avvocato · esce dalla cassa FranKi/Affio in anticipo · rimborsata alla firma soci</div></div>
+    </div>
+  </div>
+
+  <div class="task t-b" onclick="toggle(this)" style="margin-bottom:7px">
+    <div class="chk"><span class="chi">✓</span></div>
+    <div class="tb">
+      <div class="ttitle">📝 Bozze contratti FrankiLegal (4 documenti)</div>
+      <div class="tdesc"><span class="tag tg-b">Legale</span>Fee origination · Asset mgmt · Success fee soci · Finanziamento soci con compensazione parcelle</div>
+    </div>
+  </div>
+
+  <div class="task t-b" onclick="toggle(this)" style="margin-bottom:7px">
+    <div class="chk"><span class="chi">✓</span></div>
+    <div class="tb">
+      <div class="ttitle">📝 Bozza patto parasociale (9 clausole)</div>
+      <div class="tdesc"><span class="tag tg-b">Legale</span>Con clausola compensazione prestito soci operativi · lock-up M24 · plural voting · tag/drag-along</div>
+    </div>
+  </div>
+
+  <div class="task t-v" onclick="toggle(this)" style="margin-bottom:7px">
+    <div class="chk"><span class="chi">✓</span></div>
+    <div class="tb">
+      <div class="ttitle">📊 Bozza Investment Memorandum per fondo</div>
+      <div class="tdesc"><span class="tag tg-v">Fondo</span>20–30 pag · IRR 51% · 5,2× base · struttura 8 soci + fondo · exit €23–37M</div>
+    </div>
+  </div>
+
+  <div class="task t-a" onclick="toggle(this)">
+    <div class="chk"><span class="chi">✓</span></div>
+    <div class="tb">
+      <div class="ttitle">🎨 Ingaggiare Guya — brief operativo</div>
+      <div class="tdesc"><span class="tag tg-a">Marketing</span>Dopo risposta al teaser · scope: brand identity + pre-lancio 140 soci club · compenso dilazionato con success fee</div>
+    </div>
+  </div>
+
+</div><!-- fine mese giugno -->
+
+<!-- ======================================================= -->
+<!-- LUGLIO -->
+<!-- ======================================================= -->
+<div class="mese">
+  <div class="mese-head">
+    <div class="mese-pill mp-blu">🔵 Luglio 2026</div>
+    <div class="mese-sub">Chiusura cordata · Firma contratti · €450K in cassa</div>
+  </div>
+
+  <div class="sett-label">Settimana 1–2 — Chiusura raccolta</div>
+
+  <div class="detail t-a">
+    <div class="detail-head" onclick="toggle(this.parentNode)">
+      <div class="chk"><span class="chi">✓</span></div>
+      <div class="tb">
+        <div class="ttitle">✅ Chiudere tutti e 6 i soci</div>
+        <div class="tdesc"><span class="tag tg-a">Soci</span>2 operativi + 4 finanziari · nessuno in attesa oltre 7 giorni dalla proposta</div>
+      </div>
+    </div>
+    <div class="detail-body">
+      <div class="detail-row"><div class="dr-label">Scadenza</div><div class="dr-val">Chi non decide entro 7 giorni dalla proposta formale → il posto viene offerto al successivo in lista. Non si aspetta. La scarcity è reale: 6 posti, lista chiusa.</div></div>
+      <div class="detail-row"><div class="dr-label">Obiezione più comune</div><div class="dr-val">"Posso aspettare l'asta per decidere?" → No. Il deal si struttura prima. Chi aspetta l'asta non capisce il progetto o non ha la liquidità.</div></div>
+      <div class="detail-row"><div class="dr-label">Obiezione 2</div><div class="dr-val">"Posso mettere meno di €75K?" → No. La struttura è calibrata su €75K per 6 soci. Variazioni rompono la cap table. Si può ragionare sulla composizione equity/prestito ma non sull'importo totale.</div></div>
+      <div class="detail-row"><div class="dr-label">Obiezione 3</div><div class="dr-val">"Posso coinvolgere anche mia moglie/socio?" → Dipende. Se entrano come un unico soggetto (es. società) ok. Se vogliono due posti separati → non è previsto, salvo riaprire la struttura.</div></div>
+    </div>
+  </div>
+
+  <div class="detail t-b">
+    <div class="detail-head" onclick="toggle(this.parentNode)">
+      <div class="chk"><span class="chi">✓</span></div>
+      <div class="tb">
+        <div class="ttitle">✍️ Firma patto parasociale + tutti i contratti</div>
+        <div class="tdesc"><span class="tag tg-b">Legale</span>Tutti e 8 i soci · versamenti in HoldCo · fee €50K erogata</div>
+      </div>
+    </div>
+    <div class="detail-body">
+      <div class="detail-row"><div class="dr-label">Sequenza firma</div><div class="dr-val">1) Statuto HoldCo già registrato · 2) Patto parasociale · 3) Contratti finanziamento soci (con clausola compensazione per operativi) · 4) Contratti FrankiLegal · 5) Versamento quote</div></div>
+      <div class="detail-row"><div class="dr-label">Versamenti</div><div class="dr-val">Soci finanziari: €75K ciascuno · Soci operativi: €75K ciascuno (€50K equity + €25K prestito compensabile) · tutto su conto HoldCo</div></div>
+      <div class="detail-row"><div class="dr-label">Fee erogata</div><div class="dr-val">Subito dopo i versamenti: €25K a FranKi + €25K ad Affio come da contratto advisory. Rimane €400K in cassa HoldCo.</div></div>
+      <div class="detail-row"><div class="dr-label">Chi coordina</div><div class="dr-val">L'avvocato socio operativo slot 1 — è il momento in cui il suo ruolo si attiva immediatamente.</div></div>
+    </div>
+  </div>
+
+  <div class="task t-a" onclick="toggle(this)" style="margin-bottom:7px">
+    <div class="chk"><span class="chi">✓</span></div>
+    <div class="tb">
+      <div class="ttitle">💰 €450K confermati in cassa HoldCo</div>
+      <div class="tdesc"><span class="tag tg-a">Cash</span>Equity + prestiti soci · fee €50K erogata · cassa netta ~€400K disponibile per cauzione e spese</div>
+    </div>
+  </div>
+
+  <div class="sett-label">Settimana 2–4 — Fondo e chiusura</div>
+
+  <div class="task t-v" onclick="toggle(this)" style="margin-bottom:7px">
+    <div class="chk"><span class="chi">✓</span></div>
+    <div class="tb">
+      <div class="ttitle">📩 Primo contatto fondi istituzionali</div>
+      <div class="tdesc"><span class="tag tg-v">Fondo</span>5–8 fondi PE/RE target · Investment Memorandum · obiettivo term sheet entro settembre</div>
+    </div>
+  </div>
+
+  <div class="detail t-b">
+    <div class="detail-head" onclick="toggle(this.parentNode)">
+      <div class="chk"><span class="chi">✓</span></div>
+      <div class="tb">
+        <div class="ttitle">🏦 Istruttoria mutuo — aggiornamento stato</div>
+        <div class="tdesc"><span class="tag tg-b">Mutuo</span>Avviata a maggio · verificare avanzamento · selezionare banca entro fine luglio</div>
+      </div>
+    </div>
+    <div class="detail-body">
+      <div class="detail-row"><div class="dr-label">Stato atteso</div><div class="dr-val">Se avviata a maggio: siamo a settimana 8–12 di istruttoria. La banca dovrebbe avere già fatto la valutazione preliminare e stare preparando la pre-delibera.</div></div>
+      <div class="detail-row"><div class="dr-label">Cosa fare</div><div class="dr-val">Selezionare la banca migliore tra le 2–3 in istruttoria · confermare importo €400–500K · definire condizioni · pre-delibera formale attesa entro agosto</div></div>
+      <div class="detail-row"><div class="dr-label">Se in ritardo</div><div class="dr-val">Sollecitare con urgenza — la cauzione asta è prevista ad agosto. Senza pre-delibera confermata non si può partecipare. Questo è il motivo per cui si parte a maggio.</div></div>
+    </div>
+  </div>
+
+  <div class="task t-a" onclick="toggle(this)">
+    <div class="chk"><span class="chi">✓</span></div>
+    <div class="tb">
+      <div class="ttitle">📄 Teaser B2 — Operatori hospitality</div>
+      <div class="tdesc"><span class="tag tg-a">Documento</span>Per gestori hotel, operatori · focus: management deal · nessun dato societario</div>
+    </div>
+  </div>
+
+</div><!-- fine mese luglio -->
+
+<button class="reset-btn" onclick="resetAll()">Azzera spunte</button>
+
+<!-- ======================================================= -->
+<!-- DOCUMENTO SOCIO -->
+<!-- ======================================================= -->
+<div class="sep">
+  <div class="sep-inner">
+    <div class="sep-label">📄 Documento Socio — 2 versioni</div>
+    <div class="sep-line"></div>
+  </div>
+</div>
+
+<div class="doc-socio">
+  <div class="switcher">
+    <button class="sw-btn active" onclick="switchDoc('fin')">Finanziario puro</button>
+    <button class="sw-btn" onclick="switchDoc('op')">Socio operativo</button>
+  </div>
+
+  <!-- VERSIONE FINANZIARIO -->
+  <div class="doc-card visible" id="doc-fin">
+    <div class="doc-brand">Il Poglío · Roccaraso · Opportunità riservata</div>
+    <div class="doc-titolo">Un posto<br>in montagna<br>che rende.</div>
+    <div class="doc-sub">Sei posti. Lista chiusa. Rendimento stimato 16× sul totale versato.</div>
+
+    <div class="doc-divider"></div>
+
+    <div class="doc-section-title">L'asset</div>
+    <div class="doc-p">
+      A Roccaraso, a 1.023 metri, ci sono tre palazzine che stavano ferme da vent'anni. Le aveva costruite l'ENEL negli anni '50 per i propri dipendenti — 46 appartamenti, 22 ettari di bosco, una vista sull'Appennino centrale che non si dimentica. Valore certificato dal perito del tribunale: <strong>€13,5 milioni</strong>.
+    </div>
+    <div class="doc-p">
+      Noi le stiamo acquisendo e trasformando nel primo <strong>reset club privato dell'Appennino</strong> — 68 camere, 6 bubble room nel bosco, wellness hub, sala per corporate retreat. Membership chiusa a 140 soci fondatori.
+    </div>
+
+    <div class="doc-divider"></div>
+
+    <div class="doc-section-title">I numeri</div>
+    <div class="doc-numeri">
+      <div class="doc-num"><div class="doc-num-val">€75K</div><div class="doc-num-label">Investimento totale</div></div>
+      <div class="doc-num"><div class="doc-num-val">10%</div><div class="doc-num-label">Quota HoldCo</div></div>
+      <div class="doc-num"><div class="doc-num-val">~16×</div><div class="doc-num-label">Rendimento stimato</div></div>
+      <div class="doc-num"><div class="doc-num-val">M48</div><div class="doc-num-label">Exit stimato</div></div>
+    </div>
+
+    <div class="doc-p">
+      I €75K si dividono in <strong>€50K equity</strong> (compra il 10% della società) e <strong>€25K finanziamento soci al 6%</strong> annuo, rimborsato con interessi. All'exit stimato al mese 48, ogni socio incassa circa <strong>€1,23 milioni</strong> tra quota equity e rimborso prestito.
+    </div>
+
+    <div class="doc-highlight">
+      <p>Revenue a regime €7M/anno · EBITDA 33%<br>Exit stimato €23–37M · 6 posti · lista chiusa</p>
+    </div>
+
+    <div class="doc-divider"></div>
+
+    <div class="doc-section-title">Come funziona</div>
+    <div class="doc-p">
+      Entri nella cordata fondatrice insieme ad altri 5 soci selezionati. La società acquisisce l'asset, avvia il cantiere, apre le prime camere al mese 9. Al mese 30 la struttura è a regime. Al mese 48 vendiamo a un operatore istituzionale.
+    </div>
+    <div class="doc-p">
+      Il tuo ruolo è quello dell'investitore: <strong>nessun obbligo operativo</strong>, nessuna riunione settimanale, nessuna decisione da prendere sulla gestione. Decidi solo sulle grandi scelte — vendita, aumento di capitale, cambio oggetto sociale. Per il resto gestisce FranKi Studio come asset manager contrattualizzato.
+    </div>
+    <div class="doc-p">
+      I tuoi soldi sono protetti da un patto parasociale con clausole tag-along (se vendiamo, vendi anche tu alle stesse condizioni), lock-up (non puoi uscire prima del mese 24 senza approvazione), e right of first refusal (prima di vendere la tua quota la offri ai soci esistenti).
+    </div>
+
+    <div class="doc-cta">
+      <p>Sei posti disponibili · lista chiusa alla firma</p>
+      <strong>Vuoi saperne di più?</strong>
+      <a class="doc-cta-btn" href="#">Parliamone →</a>
+    </div>
+    <div class="doc-note">Documento riservato · non distribuire · i rendimenti indicati sono stime basate su scenario base — non costituiscono garanzia di risultato</div>
+  </div>
+
+  <!-- VERSIONE OPERATIVO -->
+  <div class="doc-card" id="doc-op">
+    <div class="doc-brand">Il Poglío · Roccaraso · Proposta riservata</div>
+    <div class="doc-titolo">Entra.<br>Costruisci.<br>Guadagna doppio.</div>
+    <div class="doc-sub">Un posto nella cordata fondatrice — più un ruolo operativo centrale nel progetto.</div>
+
+    <div class="doc-divider"></div>
+
+    <div class="doc-section-title">Il progetto</div>
+    <div class="doc-p">
+      A Roccaraso, a 1.023 metri, tre palazzine dell'ENEL costruite negli anni '50 stanno per diventare il primo reset club privato dell'Appennino centrale. 68 camere, 6 bubble room nel bosco, wellness hub, corporate retreat. Valore certificato: <strong>€13,5 milioni</strong>. Revenue a regime: <strong>€7 milioni/anno</strong>.
+    </div>
+    <div class="doc-p">
+      Stiamo costruendo una cordata di 6 soci fondatori. <strong>Due dei sei posti sono riservati a profili operativi</strong> — persone che portano competenze concrete oltre al capitale. È il profilo che stiamo cercando per te.
+    </div>
+
+    <div class="doc-divider"></div>
+
+    <div class="doc-section-title">La tua quota</div>
+    <div class="doc-numeri">
+      <div class="doc-num"><div class="doc-num-val">€75K</div><div class="doc-num-label">Investimento uguale agli altri</div></div>
+      <div class="doc-num"><div class="doc-num-val">10%</div><div class="doc-num-label">Quota HoldCo</div></div>
+      <div class="doc-num"><div class="doc-num-val">~16×</div><div class="doc-num-label">Rendimento stimato exit</div></div>
+      <div class="doc-num"><div class="doc-num-val">+lavoro</div><div class="doc-num-label">Compenso operativo</div></div>
+    </div>
+
+    <div class="doc-p">
+      Entri con gli stessi €75K degli altri soci (€50K equity + €25K finanziamento al 6%). Il tuo vantaggio è nella struttura del prestito: <strong>i €25K ti vengono restituiti progressivamente scalando le tue fatture</strong> — ogni volta che la società ti paga un lavoro, quella somma estingue il prestito. Rientri molto prima dell'exit, senza aspettare il mese 48.
+    </div>
+
+    <div class="doc-plus">
+      <div class="doc-plus-title">⭐ Il meccanismo di compensazione</div>
+      <p>Versi €75K. Quando la HoldCo ti affida lavori (legale, cantiere, gestione, progettazione), invece di pagarti cash scala dal tuo prestito di €25K. Dopo €25K di fatture, il prestito è estinto — poi il resto lo ricevi cash come qualsiasi fornitore. Rientri sui tuoi soldi lavorando, non aspettando.</p>
+    </div>
+
+    <div class="doc-divider"></div>
+
+    <div class="doc-section-title">Perché ha senso per te</div>
+    <div class="doc-p">
+      Se sei un professionista con competenze nel settore — legale, costruzioni, hospitality, architettura — stai comunque cercando clienti per il tuo lavoro. Qui hai un cliente che ti paga, <strong>e una quota del risultato finale</strong>. Non è un rapporto cliente-fornitore — è un rapporto di co-proprietà con compenso operativo incluso.
+    </div>
+    <div class="doc-p">
+      La tua competenza non è un servizio che compri e paghi — è parte di ciò che rende il progetto possibile. È giusto che tu ci guadagni due volte: sul lavoro e sull'equity.
+    </div>
+
+    <div class="doc-highlight">
+      <p>6 posti fondatori · 2 riservati a profili operativi<br>Rendimento equity ~16× + compenso operativo</p>
+    </div>
+
+    <div class="doc-cta">
+      <p>Due posti operativi · selezione in corso</p>
+      <strong>Parliamo del tuo ruolo specifico.</strong>
+      <a class="doc-cta-btn" href="#">Contattaci →</a>
+    </div>
+    <div class="doc-note">Documento riservato · non distribuire · i rendimenti indicati sono stime basate su scenario base — non costituiscono garanzia di risultato</div>
+  </div>
+</div>
+
+<!-- OBIEZIONI -->
+<div class="sep">
+  <div class="sep-inner">
+    <div class="sep-label">❓ Obiezioni frequenti — risposte pronte</div>
+    <div class="sep-line"></div>
+  </div>
+</div>
+
+<div class="doc-socio" style="padding-bottom:8px">
+  <div class="obiezioni">
+    <div class="ob-title">Le 8 domande che faranno</div>
+
+    <div class="ob-item">
+      <div class="ob-q">«Perché non aspettate l'asta per strutturare tutto?»</div>
+      <div class="ob-a">Perché chi entra prima entra alle condizioni fondatori. Dopo il closing le quote valgono già il valore del deal strutturato — non €75K.</div>
+    </div>
+
+    <div class="ob-item">
+      <div class="ob-q">«Cosa succede se non riuscite ad acquisire l'asset?»</div>
+      <div class="ob-a">I versamenti restano in HoldCo. Si restituiscono i capitali (equity e prestiti) dedotte le spese documentate di strutturazione. Il rischio pre-closing è reale ma limitato nel quantum.</div>
+    </div>
+
+    <div class="ob-item">
+      <div class="ob-q">«Come faccio a uscire se ho bisogno di liquidità prima del mese 48?»</div>
+      <div class="ob-a">Il lock-up è fino al mese 24. Dopo il 24 puoi vendere la quota ai soci esistenti (ROFR) o a terzi con approvazione del CdA. Non è un investimento liquido — è un impegno a 4-5 anni.</div>
+    </div>
+
+    <div class="ob-item">
+      <div class="ob-q">«Il rendimento è garantito?»</div>
+      <div class="ob-a">No — sono stime basate sullo scenario base. Il documento lo dice esplicitamente. Quello che è certo: l'asset esiste fisicamente, la perizia è certificata, la destinazione extralberghiera è già autorizzata.</div>
+    </div>
+
+    <div class="ob-item">
+      <div class="ob-q">«Chi gestisce il progetto? Posso controllare?»</div>
+      <div class="ob-a">FranKi Studio come asset manager contrattualizzato, con reporting trimestrale ai soci. Non gestisci operativamente — ma hai accesso ai numeri. Le decisioni straordinarie (vendita, aumenti di capitale) richiedono il tuo voto.</div>
+    </div>
+
+    <div class="ob-item">
+      <div class="ob-q">«€75K sono tanti — posso entrare con meno?»</div>
+      <div class="ob-a">La struttura è calibrata su €75K per 6 soci. Non è modificabile senza riaprire la cap table. Se la cifra è un problema di liquidità immediata possiamo ragionare su come strutturare il versamento — ma l'importo totale rimane quello.</div>
+    </div>
+
+    <div class="ob-item">
+      <div class="ob-q">«Quanti altri soci ci sono già?»</div>
+      <div class="ob-a">La cordata è in formazione — i posti vengono assegnati in ordine di conferma. Non comunico quanti hanno già firmato: la lista è riservata per rispetto della privacy degli altri soci.</div>
+    </div>
+
+    <div class="ob-item">
+      <div class="ob-q">«Posso far vedere i documenti al mio avvocato/commercialista?»</div>
+      <div class="ob-a">Sì, con NDA. Non prima. Il progetto è riservato — i documenti interni non circolano senza accordo di riservatezza firmato.</div>
+    </div>
+
+  </div>
+</div>
+
+<button class="reset-btn" onclick="resetAll()">Azzera tutte le spunte</button>
+
+<footer>
+  <p>DETTAGLIO MAG–LUG + DOCUMENTO SOCIO · RCV Il Poglío<br>FranKi Studio (Avre Srl · Napoli) · frankistudio.it<br>Documento interno riservato · Maggio 2026</p>
+</footer>
+
+<script>
+const KEY='rcv-maglug-state';
+function getS(){try{return JSON.parse(localStorage.getItem(KEY))||{}}catch(e){return{}}}
+function saveS(s){try{localStorage.setItem(KEY,JSON.stringify(s))}catch(e){}}
+
+function toggle(el){
+  el.classList.toggle('done-task');
+  updateProg();persist();
+}
+function updateProg(){
+  const all=document.querySelectorAll('.task,.detail').length;
+  const done=document.querySelectorAll('.task.done-task,.detail.done-task').length;
+  document.getElementById('prog-nums').textContent=done+' / '+all+' completate';
+  document.getElementById('prog-fill').style.width=Math.round(done/all*100)+'%';
+}
+function persist(){
+  const els=document.querySelectorAll('.task,.detail');
+  const s={};
+  els.forEach((t,i)=>{s[i]=t.classList.contains('done-task')});
+  saveS(s);
+}
+function restore(){
+  const s=getS();
+  document.querySelectorAll('.task,.detail').forEach((t,i)=>{if(s[i])t.classList.add('done-task')});
+  updateProg();
+}
+function resetAll(){
+  if(!confirm('Azzerare tutte le spunte?'))return;
+  document.querySelectorAll('.task,.detail').forEach(t=>t.classList.remove('done-task'));
+  saveS({});updateProg();
+}
+function switchDoc(v){
+  document.getElementById('doc-fin').classList.remove('visible');
+  document.getElementById('doc-op').classList.remove('visible');
+  document.getElementById('doc-'+v).classList.add('visible');
+  document.querySelectorAll('.sw-btn').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+}
+restore();
+</script>
+</body>
+</html>
