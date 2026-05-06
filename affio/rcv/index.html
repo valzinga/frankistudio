@@ -3,109 +3,108 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HUB · RCV Il Poglío · FranKi Studio</title>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<title>Il Poglío · Roccaraso · FranKi Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
   --blu:#2B38B0;--arancio:#F0A500;--grigio-bg:#F2F1ED;
   --dark:#111118;--bordo:#D8D5CF;--bianco:#FFFFFF;
-  --verde:#22c55e;--verde-bg:#d4f0d4;--verde-t:#1a7a1a;
+  --c1:#F0A500;--c2:#2B38B0;--c3:#0891b2;
+  --c4:#7c3aed;--c5:#1a7a1a;--c6:#6b7280;
 }
 html{scroll-behavior:smooth}
-body{font-family:'Barlow',sans-serif;background:var(--grigio-bg);color:#222;font-size:14px;line-height:1.5;min-height:100vh}
+body{font-family:'Barlow',sans-serif;background:var(--grigio-bg);color:#222;font-size:15px;line-height:1.6;min-height:100vh}
 
 /* NAV */
-nav{position:sticky;top:0;z-index:100;background:var(--blu);padding:0 16px;display:flex;align-items:center;justify-content:space-between;height:52px}
+nav{position:sticky;top:0;z-index:100;background:var(--blu);padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:52px}
 .fk-logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;display:inline-flex;align-items:center;text-decoration:none}
 .fk-logo .fran{color:#FFF}
 .fk-logo .ki{background:#F0A500;color:#FFF;border-radius:5px;padding:1px 7px;margin-left:2px;display:inline-block}
-.nav-label{color:rgba(255,255,255,0.65);font-size:11px;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.nav-label{color:rgba(255,255,255,0.6);font-size:11px;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase}
 
 /* HERO */
-.hero{background:var(--blu);padding:40px 16px 36px;position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(135deg,rgba(255,255,255,0.03) 0,rgba(255,255,255,0.03) 1px,transparent 1px,transparent 40px)}
+.hero{background:var(--dark);padding:48px 20px 44px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(135deg,rgba(43,56,176,0.2) 0,rgba(43,56,176,0.2) 1px,transparent 1px,transparent 40px)}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:4px;background:var(--arancio)}
 .hero-inner{max-width:680px;margin:0 auto;position:relative;z-index:2}
-.hero-badge{display:inline-block;background:var(--arancio);color:#FFF;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;letter-spacing:2px;text-transform:uppercase;padding:4px 12px;border-radius:3px;margin-bottom:14px}
-.hero-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(32px,8vw,48px);color:#FFF;text-transform:uppercase;line-height:1.0;margin-bottom:6px}
+.hero-location{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--arancio);margin-bottom:16px}
+.hero-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(40px,10vw,64px);color:#FFF;text-transform:uppercase;line-height:1.0;margin-bottom:10px}
 .hero-title span{color:var(--arancio)}
-.hero-sub{font-size:13px;color:rgba(255,255,255,0.55);margin-bottom:24px}
+.hero-desc{font-size:15px;color:rgba(255,255,255,0.6);max-width:480px;line-height:1.7;margin-bottom:28px}
+.hero-desc strong{color:#FFF}
 
-/* METODO STRIP */
-.metodo-strip{display:flex;gap:0;background:rgba(255,255,255,0.08);border-radius:6px;overflow:hidden;border:1px solid rgba(255,255,255,0.12)}
-.mf{flex:1;padding:10px 4px;text-align:center;border-right:1px solid rgba(255,255,255,0.1);font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;text-transform:uppercase;color:rgba(255,255,255,0.35)}
-.mf:last-child{border-right:none}
-.mf.done{color:rgba(255,255,255,0.7)}
-.mf.active{background:var(--arancio);color:#FFF;border-radius:4px}
-.mf span{display:block;font-size:8px;font-weight:400;margin-top:2px;opacity:0.7}
+/* HERO KPI */
+.hero-kpi{display:flex;gap:24px;flex-wrap:wrap}
+.hk{text-align:left}
+.hk-val{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:24px;color:#FFF;line-height:1}
+.hk-label{font-size:10px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1px;margin-top:2px}
 
-/* CORPO */
-.corpo{max-width:680px;margin:0 auto;padding:16px 16px 40px}
+/* DOMANDA GUIDA */
+.guida{background:var(--bianco);border-bottom:3px solid var(--arancio);padding:20px;text-align:center}
+.guida-inner{max-width:680px;margin:0 auto}
+.guida p{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:18px;text-transform:uppercase;color:var(--dark);letter-spacing:0.5px}
+.guida sub{font-family:'Barlow',sans-serif;font-weight:400;font-size:13px;text-transform:none;color:#888;display:block;margin-top:4px;letter-spacing:0}
 
-/* MACROCARD */
-.macro{background:var(--bianco);border-radius:8px;margin-bottom:10px;overflow:hidden;border-left:5px solid var(--bordo)}
-.macro.mc-1{border-left-color:#F0A500}
-.macro.mc-2{border-left-color:#2B38B0}
-.macro.mc-3{border-left-color:#22c55e}
-.macro.mc-4{border-left-color:#7c3aed}
-.macro.mc-5{border-left-color:#0891b2}
-.macro.mc-6{border-left-color:#6b7280}
+/* PORTE */
+.porte{max-width:680px;margin:0 auto;padding:16px 20px 40px}
 
-/* MACROCARD HEADER */
-.macro-head{padding:16px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;user-select:none}
-.macro-icon{font-size:24px;flex-shrink:0;width:36px;text-align:center}
-.macro-info{flex:1}
-.macro-num{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-bottom:2px}
-.mc-1 .macro-num{color:#F0A500}
-.mc-2 .macro-num{color:#2B38B0}
-.mc-3 .macro-num{color:#22c55e}
-.mc-4 .macro-num{color:#7c3aed}
-.mc-5 .macro-num{color:#0891b2}
-.mc-6 .macro-num{color:#6b7280}
-.macro-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px;text-transform:uppercase;color:var(--dark);line-height:1.1}
-.macro-desc{font-size:12px;color:#888;margin-top:3px}
-.macro-count{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:12px;color:#bbb;flex-shrink:0;text-align:right}
-.macro-count span{display:block;font-size:18px;color:#ccc;font-weight:900}
-.macro-arrow{font-size:18px;color:#ccc;flex-shrink:0;transition:transform .2s}
-.macro.open .macro-arrow{transform:rotate(180deg)}
+/* PORTA */
+.porta{border-radius:8px;margin-bottom:12px;overflow:hidden;border-left:5px solid var(--bordo)}
+.porta.p1{border-left-color:var(--c1)}
+.porta.p2{border-left-color:var(--c2)}
+.porta.p3{border-left-color:var(--c3)}
+.porta.p4{border-left-color:var(--c4)}
+.porta.p5{border-left-color:var(--c5)}
+.porta.p6{border-left-color:var(--c6)}
 
-/* MACRO BODY */
-.macro-body{display:none;border-top:1px solid var(--bordo)}
-.macro.open .macro-body{display:block}
+/* PORTA HEADER */
+.porta-head{background:var(--bianco);padding:18px 18px;display:flex;align-items:flex-start;gap:14px;cursor:pointer;user-select:none}
+.porta-emoji{font-size:28px;flex-shrink:0;width:36px;margin-top:2px;text-align:center}
+.porta-info{flex:1}
+.porta-chi{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px}
+.p1 .porta-chi{color:var(--c1)}
+.p2 .porta-chi{color:var(--c2)}
+.p3 .porta-chi{color:var(--c3)}
+.p4 .porta-chi{color:var(--c4)}
+.p5 .porta-chi{color:var(--c5)}
+.p6 .porta-chi{color:var(--c6)}
+.porta-titolo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;text-transform:uppercase;color:var(--dark);line-height:1.1;margin-bottom:6px}
+.porta-desc{font-size:13px;color:#777;line-height:1.5}
+.porta-arrow{font-size:20px;color:#ccc;flex-shrink:0;transition:transform .2s;margin-top:4px}
+.porta.open .porta-arrow{transform:rotate(180deg)}
 
-/* FILE ITEM */
-.file-item{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid #f5f3f0;text-decoration:none;transition:background .15s}
-.file-item:last-child{border-bottom:none}
-.file-item:hover{background:#fafaf8}
-.fi-icon{font-size:16px;flex-shrink:0;width:24px;text-align:center}
-.fi-body{flex:1;min-width:0}
-.fi-name{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:15px;color:var(--dark);text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.fi-desc{font-size:11px;color:#888;margin-top:1px}
-.fi-tags{display:flex;gap:4px;margin-top:4px;flex-wrap:wrap}
-.fi-tag{font-size:9px;font-weight:700;padding:2px 6px;border-radius:2px;text-transform:uppercase;letter-spacing:0.5px}
-.tag-new{background:#d4f0d4;color:#1a7a1a}
-.tag-nda{background:#fde0e0;color:#a00}
-.tag-int{background:#f5f5f5;color:#666}
-.tag-ext{background:#e8f0fe;color:#2B38B0}
-.tag-key{background:#fff3cd;color:#856404}
-.fi-arrow{color:#ccc;font-size:14px;flex-shrink:0}
+/* PORTA BODY */
+.porta-body{display:none;background:var(--grigio-bg);border-top:1px solid var(--bordo)}
+.porta.open .porta-body{display:block}
 
-/* SEPARATOR */
-.macro-section-label{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#bbb;padding:10px 16px 4px;background:#fafaf8}
+/* DOCUMENTO */
+.doc{display:flex;align-items:flex-start;gap:14px;padding:14px 18px;border-bottom:1px solid var(--bordo);background:var(--bianco);text-decoration:none;transition:background .15s}
+.doc:last-child{border-bottom:none}
+.doc:hover{background:#fafaf8}
+.doc-icon{font-size:20px;flex-shrink:0;width:28px;text-align:center;margin-top:2px}
+.doc-body{flex:1}
+.doc-titolo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:17px;text-transform:uppercase;color:var(--dark);line-height:1.1;margin-bottom:4px}
+.doc-desc{font-size:13px;color:#555;line-height:1.55}
+.doc-tags{display:flex;gap:4px;margin-top:6px;flex-wrap:wrap;align-items:center}
+.dtag{font-size:10px;font-weight:700;padding:2px 7px;border-radius:2px;text-transform:uppercase;letter-spacing:0.5px}
+.dtag-new{background:#d4f0d4;color:#1a7a1a}
+.dtag-nda{background:#fde0e0;color:#a00}
+.dtag-key{background:#fff3cd;color:#856404}
+.dtag-int{background:#f0f0f0;color:#666}
+.dtag-start{background:#e8f0fe;color:var(--blu)}
+.doc-arrow{color:#ccc;font-size:16px;flex-shrink:0;margin-top:4px}
 
-/* BADGE FASE */
-.fase-badge{display:inline-block;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:10px;letter-spacing:1px;text-transform:uppercase;padding:2px 8px;border-radius:3px;margin-left:6px}
-.fase-active{background:var(--arancio);color:#FFF}
-.fase-done{background:var(--verde-bg);color:var(--verde-t)}
+/* SEZIONE LABEL */
+.doc-section{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#aaa;padding:10px 18px 4px;background:var(--grigio-bg)}
 
-/* INFO BAR */
-.info-bar{background:#FFF;padding:10px 16px;border-bottom:1px solid var(--bordo);display:flex;align-items:center;justify-content:space-between;gap:8px}
-.info-bar-left{font-size:11px;color:#888}
-.info-bar-left strong{color:var(--blu)}
-.info-url{font-size:10px;color:#bbb;font-family:monospace;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:200px}
+/* NDA warning */
+.nda-warn{background:#fde0e0;padding:12px 18px;display:flex;gap:10px;align-items:center}
+.nda-warn p{font-size:12px;color:#7a0000;line-height:1.5}
+.nda-warn-icon{font-size:18px;flex-shrink:0}
 
 /* DARK FOOTER */
-footer{background:var(--dark);padding:28px 16px;text-align:center;margin-top:8px}
+footer{background:var(--dark);padding:32px 20px;text-align:center}
 footer p{color:rgba(255,255,255,0.3);font-size:10px;line-height:1.9}
 footer strong{color:rgba(255,255,255,0.5)}
 </style>
@@ -114,394 +113,456 @@ footer strong{color:rgba(255,255,255,0.5)}
 
 <nav>
   <a class="fk-logo" href="#"><span class="fran">Fran</span><span class="ki">Ki</span></a>
-  <span class="nav-label">HUB · RCV Il Poglío</span>
+  <span class="nav-label">RCV · Il Poglío</span>
 </nav>
 
+<!-- HERO -->
 <div class="hero">
   <div class="hero-inner">
-    <div class="hero-badge">Hub Documenti · Uso Interno</div>
-    <h1 class="hero-title">RCV <span>Il Poglío</span></h1>
-    <p class="hero-sub">FranKi Studio · Maggio 2026 · valzinga.github.io/frankistudio/affio/rcv/</p>
-    <div class="metodo-strip">
-      <div class="mf done">F00<span>✓ Scouting</span></div>
-      <div class="mf active">F01<span>Concept</span></div>
-      <div class="mf">F02<span>Struttura</span></div>
-      <div class="mf">F03<span>Brief</span></div>
-      <div class="mf">F04<span>Test</span></div>
-      <div class="mf">F05<span>MVP</span></div>
-      <div class="mf">F06<span>Scale</span></div>
+    <div class="hero-location">Roccaraso · Abruzzo · 1.023 m</div>
+    <h1 class="hero-title">Il <span>Poglío</span></h1>
+    <p class="hero-desc">
+      <strong>Tre palazzine ENEL a 1.023 metri, ferme da vent'anni.</strong> Valore certificato €13,5 milioni. Le stiamo trasformando nel primo reset club privato dell'Appennino centrale — 68 camere, 6 bubble room nel bosco, 140 soci fondatori.
+    </p>
+    <div class="hero-kpi">
+      <div class="hk"><div class="hk-val">€13,5M</div><div class="hk-label">Valore certificato</div></div>
+      <div class="hk"><div class="hk-val">€7M</div><div class="hk-label">Revenue a regime</div></div>
+      <div class="hk"><div class="hk-val">M48</div><div class="hk-label">Exit stimato</div></div>
+      <div class="hk"><div class="hk-val">6</div><div class="hk-label">Posti cordata</div></div>
     </div>
   </div>
 </div>
 
-<div class="info-bar">
-  <div class="info-bar-left">Ultimo aggiornamento: <strong>Maggio 2026</strong> · 25 documenti</div>
-  <div class="info-url">valzinga.github.io/frankistudio/</div>
+<!-- GUIDA -->
+<div class="guida">
+  <div class="guida-inner">
+    <p>Chi sei? Scegli la tua sezione.
+      <sub>Ogni sezione contiene solo i documenti rilevanti per te.</sub>
+    </p>
+  </div>
 </div>
 
-<div class="corpo">
+<div class="porte">
 
-  <!-- ===== MC1 ENGAGEMENT SOCI ===== -->
-  <div class="macro mc-1" id="mc1">
-    <div class="macro-head" onclick="toggleMacro('mc1')">
-      <div class="macro-icon">🎯</div>
-      <div class="macro-info">
-        <div class="macro-num">01 · Engagement Soci</div>
-        <div class="macro-title">Trovare e chiudere<br>i 6 soci fondatori</div>
-        <div class="macro-desc">Lettere, presentazioni, tracker, script M0→M3</div>
+  <!-- PORTA 1 — SOCI FONDATORI -->
+  <div class="porta p1" id="p1">
+    <div class="porta-head" onclick="apri('p1')">
+      <div class="porta-emoji">🤝</div>
+      <div class="porta-info">
+        <div class="porta-chi">01 · Cordata fondatrice</div>
+        <div class="porta-titolo">Sei un potenziale<br>socio fondatore?</div>
+        <div class="porta-desc">Stai valutando di entrare nella cordata. Trovi tutto quello che ti serve per capire l'opportunità, i numeri e come funziona la tua protezione.</div>
       </div>
-      <div class="macro-count"><span>6</span>file</div>
-      <div class="macro-arrow">▾</div>
+      <div class="porta-arrow">▾</div>
     </div>
-    <div class="macro-body">
+    <div class="porta-body">
 
-      <div class="macro-section-label">Strumenti di contatto</div>
+      <div class="doc-section">Inizia da qui</div>
 
-      <a class="file-item" href="https://valzinga.github.io/frankistudio/affio/rcv/POGLIO_Lettera_FranKi_v3.html" target="_blank">
-        <div class="fi-icon">✉️</div>
-        <div class="fi-body">
-          <div class="fi-name">Lettera FranKi</div>
-          <div class="fi-desc">Due versioni: Visione (emotiva) · Advisor (professionale). Prima del documento.</div>
-          <div class="fi-tags"><span class="fi-tag tag-new">Nuovo</span><span class="fi-tag tag-ext">M0 Semina</span></div>
+      <a class="doc" href="https://valzinga.github.io/frankistudio/affio/rcv/POGLIO_Lettera_FranKi_v3.html" target="_blank">
+        <div class="doc-icon">✉️</div>
+        <div class="doc-body">
+          <div class="doc-titolo">La Lettera</div>
+          <div class="doc-desc">Il punto di partenza. Spiega perché questo progetto esiste e perché stiamo cercando te. Leggila prima di tutto il resto.</div>
+          <div class="doc-tags"><span class="dtag dtag-start">Inizia qui</span><span class="dtag dtag-key">Prima della call</span></div>
         </div>
-        <div class="fi-arrow">→</div>
+        <div class="doc-arrow">→</div>
       </a>
 
-      <a class="file-item" href="https://valzinga.github.io/frankistudio/affio/rcv/POGLIO_Presentazione_Esterna.html" target="_blank">
-        <div class="fi-icon">📄</div>
-        <div class="fi-body">
-          <div class="fi-name">Presentazione Il Poglío</div>
-          <div class="fi-desc">Documento socio completo. Due versioni: Investitore · Operativo (?v=op)</div>
-          <div class="fi-tags"><span class="fi-tag tag-new">Nuovo</span><span class="fi-tag tag-ext">M2 Documento</span><span class="fi-tag tag-key">Principale</span></div>
+      <a class="doc" href="https://valzinga.github.io/frankistudio/affio/rcv/POGLIO_Presentazione_Esterna.html" target="_blank">
+        <div class="doc-icon">📄</div>
+        <div class="doc-body">
+          <div class="doc-titolo">La Presentazione Completa</div>
+          <div class="doc-desc">Asset, progetto, numeri, struttura dell'investimento e protezioni contrattuali. Leggila dopo la prima call. Due versioni: investitore puro o profilo operativo.</div>
+          <div class="doc-tags"><span class="dtag dtag-key">Documento principale</span><span class="dtag dtag-new">Aggiornato</span></div>
         </div>
-        <div class="fi-arrow">→</div>
+        <div class="doc-arrow">→</div>
       </a>
 
-      <a class="file-item" href="https://valzinga.github.io/frankistudio/affio/rcv/POGLIO_Documento_Socio_v2.html" target="_blank">
-        <div class="fi-icon">📋</div>
-        <div class="fi-body">
-          <div class="fi-name">Documento Socio v2</div>
-          <div class="fi-desc">Versione FranKi branded · investitore / operativo con switcher</div>
-          <div class="fi-tags"><span class="fi-tag tag-new">Nuovo</span><span class="fi-tag tag-int">Interno</span></div>
+      <div class="doc-section">Approfondisci</div>
+
+      <a class="doc" href="https://valzinga.github.io/frankistudio/affio/rcv/RCV_BusinessModel.html" target="_blank">
+        <div class="doc-icon">💰</div>
+        <div class="doc-body">
+          <div class="doc-titolo">Come Guadagna Il Poglío</div>
+          <div class="doc-desc">Le tre leve di revenue — club privato, corporate retreat, componente ESG. Revenue €7M/anno a regime, EBITDA 33%.</div>
         </div>
-        <div class="fi-arrow">→</div>
+        <div class="doc-arrow">→</div>
       </a>
 
-      <div class="macro-section-label">Gestione e strategia</div>
-
-      <a class="file-item" href="https://valzinga.github.io/frankistudio/affio/rcv/RCV_Engagement_Investitori.html" target="_blank">
-        <div class="fi-icon">📊</div>
-        <div class="fi-body">
-          <div class="fi-name">Tracker Engagement Investitori</div>
-          <div class="fi-desc">CRM interattivo · aggiungi contatti · spunta le fasi M0→M3 · script inline</div>
-          <div class="fi-tags"><span class="fi-tag tag-new">Nuovo</span><span class="fi-tag tag-int">Uso quotidiano</span></div>
+      <a class="doc" href="https://valzinga.github.io/frankistudio/affio/rcv/RCV_Benchmark.html" target="_blank">
+        <div class="doc-icon">🌍</div>
+        <div class="doc-body">
+          <div class="doc-titolo">Benchmark Internazionale</div>
+          <div class="doc-desc">Progetti simili nel mondo che hanno funzionato. Mostra che il mercato esiste e che Il Poglío si inserisce in una tendenza consolidata.</div>
         </div>
-        <div class="fi-arrow">→</div>
+        <div class="doc-arrow">→</div>
       </a>
 
-      <a class="file-item" href="https://valzinga.github.io/frankistudio/affio/rcv/RCV_MagLug_Soci.html" target="_blank">
-        <div class="fi-icon">🗓️</div>
-        <div class="fi-body">
-          <div class="fi-name">Dettaglio Mag–Lug + Script Soci</div>
-          <div class="fi-desc">Task dettagliati · chi dice cosa · obiezioni e risposte · link documenti</div>
-          <div class="fi-tags"><span class="fi-tag tag-new">Nuovo</span><span class="fi-tag tag-int">Operativo</span></div>
+      <a class="doc" href="https://valzinga.github.io/frankistudio/affio/rcv/RCV_Scheda_Storica.html" target="_blank">
+        <div class="doc-icon">📜</div>
+        <div class="doc-body">
+          <div class="doc-titolo">La Storia dell'Asset</div>
+          <div class="doc-desc">Chi ha costruito queste palazzine, perché, e cosa è successo negli anni. L'asset non nasce dal nulla — ha settant'anni di storia alle spalle.</div>
         </div>
-        <div class="fi-arrow">→</div>
-      </a>
-
-      <a class="file-item" href="https://valzinga.github.io/frankistudio/affio/rcv/RCV_Fornitori_v2.html" target="_blank">
-        <div class="fi-icon">🔧</div>
-        <div class="fi-body">
-          <div class="fi-name">Mappa Fornitori e Profili Operativi</div>
-          <div class="fi-desc">10 profili · 4 doppio ruolo socio/fornitore · 3 domande ad Affio</div>
-          <div class="fi-tags"><span class="fi-tag tag-new">Nuovo</span><span class="fi-tag tag-int">Strategico</span></div>
-        </div>
-        <div class="fi-arrow">→</div>
+        <div class="doc-arrow">→</div>
       </a>
 
     </div>
   </div>
 
-  <!-- ===== MC2 STRUTTURA E GOVERNANCE ===== -->
-  <div class="macro mc-2" id="mc2">
-    <div class="macro-head" onclick="toggleMacro('mc2')">
-      <div class="macro-icon">🏛️</div>
-      <div class="macro-info">
-        <div class="macro-num">02 · Struttura e Governance</div>
-        <div class="macro-title">La macchina societaria</div>
-        <div class="macro-desc">Cap table, contratti, modello finanziario</div>
+  <!-- PORTA 2 — INVESTITORI ISTITUZIONALI -->
+  <div class="porta p2" id="p2">
+    <div class="porta-head" onclick="apri('p2')">
+      <div class="porta-emoji">🏦</div>
+      <div class="porta-info">
+        <div class="porta-chi">02 · Investitori</div>
+        <div class="porta-titolo">Sei un fondo,<br>SGR o family office?</div>
+        <div class="porta-desc">Stai valutando un'operazione con IRR target 51%, liquidation preference €2M e exit stimato €23-37M al mese 48. I documenti tecnici sono qui sotto — alcuni richiedono NDA firmato.</div>
       </div>
-      <div class="macro-count"><span>4</span>file</div>
-      <div class="macro-arrow">▾</div>
+      <div class="porta-arrow">▾</div>
     </div>
-    <div class="macro-body">
+    <div class="porta-body">
 
-      <a class="file-item" href="https://valzinga.github.io/frankistudio/affio/rcv/PROGETTO_MASTER_v2.html" target="_blank">
-        <div class="fi-icon">📌</div>
-        <div class="fi-body">
-          <div class="fi-name">Progetto Master v2</div>
-          <div class="fi-desc">Documento hub completo · struttura definitiva 8 soci · fee · clausole · regole fisse</div>
-          <div class="fi-tags"><span class="fi-tag tag-new">Nuovo</span><span class="fi-tag tag-key">Riferimento</span></div>
+      <div class="nda-warn">
+        <div class="nda-warn-icon">⚠️</div>
+        <p>Alcuni documenti sono riservati e richiedono NDA firmato prima dell'accesso. Contatta FranKi Studio: <strong>info@frankistudio.it</strong></p>
+      </div>
+
+      <div class="doc-section">Accesso libero</div>
+
+      <a class="doc" href="https://valzinga.github.io/frankistudio/affio/rcv/RCV_BusinessModel.html" target="_blank">
+        <div class="doc-icon">📊</div>
+        <div class="doc-body">
+          <div class="doc-titolo">Business Model</div>
+          <div class="doc-desc">Struttura operativa, tre leve di revenue, proiezioni a regime M30. Revenue €7M/anno, EBITDA 33%, exit stimato €23-37M.</div>
         </div>
-        <div class="fi-arrow">→</div>
+        <div class="doc-arrow">→</div>
       </a>
 
-      <a class="file-item" href="https://valzinga.github.io/frankistudio/affio/rcv/RCV_CapTable_v2.html" target="_blank">
-        <div class="fi-icon">📊</div>
-        <div class="fi-body">
-          <div class="fi-name">Cap Table v2</div>
-          <div class="fi-desc">Struttura quote · fasi · diluizione · fondo · simulazione exit</div>
-          <div class="fi-tags"><span class="fi-tag tag-int">Interno</span></div>
+      <a class="doc" href="https://valzinga.github.io/frankistudio/affio/rcv/RCV_Benchmark.html" target="_blank">
+        <div class="doc-icon">🌍</div>
+        <div class="doc-body">
+          <div class="doc-titolo">Benchmark Internazionale</div>
+          <div class="doc-desc">Case study mondiali comparabili. Contesto di mercato, multipli di uscita, trend del segmento mountain hospitality premium.</div>
         </div>
-        <div class="fi-arrow">→</div>
+        <div class="doc-arrow">→</div>
       </a>
 
-      <a class="file-item" href="https://valzinga.github.io/frankistudio/affio/rcv/RCV_BusinessModel.html" target="_blank">
-        <div class="fi-icon">💰</div>
-        <div class="fi-body">
-          <div class="fi-name">Business Model</div>
-          <div class="fi-desc">Revenue €7M · EBITDA 33% · tre leve operative · club + B2B + ESG</div>
-          <div class="fi-tags"><span class="fi-tag tag-int">Interno</span></div>
+      <div class="doc-section">Con NDA firmato</div>
+
+      <a class="doc" href="https://valzinga.github.io/frankistudio/affio/rcv/TEASER-ONE-B1_RCV.html" target="_blank">
+        <div class="doc-icon">📑</div>
+        <div class="doc-body">
+          <div class="doc-titolo">Teaser B1 — Deal Structure</div>
+          <div class="doc-desc">Struttura del deal, cap table, liquidation preference €2M, IRR target 51%, multiplo 5,2×. Solo per investitori istituzionali qualificati.</div>
+          <div class="doc-tags"><span class="dtag dtag-nda">NDA richiesto</span></div>
         </div>
-        <div class="fi-arrow">→</div>
+        <div class="doc-arrow">→</div>
       </a>
 
-      <a class="file-item" href="https://valzinga.github.io/frankistudio/affio/rcv/RCV_PianoB_Arbitrage.html" target="_blank">
-        <div class="fi-icon">🔄</div>
-        <div class="fi-body">
-          <div class="fi-name">Piano B — Arbitrage</div>
-          <div class="fi-desc">Scenario alternativo · exit rapido senza sviluppo</div>
-          <div class="fi-tags"><span class="fi-tag tag-int">Interno</span></div>
+      <a class="doc" href="https://valzinga.github.io/frankistudio/affio/rcv/RCV_SimulazioneFasi.html" target="_blank">
+        <div class="doc-icon">📈</div>
+        <div class="doc-body">
+          <div class="doc-titolo">Simulazione Fasi e Scenari</div>
+          <div class="doc-desc">Tre scenari (conservativo, base, ottimistico) con cash flow per fase, sensitivities e analisi del rischio operativo.</div>
+          <div class="doc-tags"><span class="dtag dtag-nda">NDA richiesto</span></div>
         </div>
-        <div class="fi-arrow">→</div>
+        <div class="doc-arrow">→</div>
+      </a>
+
+      <a class="doc" href="https://valzinga.github.io/frankistudio/affio/rcv/RCV_SimulazioneOperativa.html" target="_blank">
+        <div class="doc-icon">⚙️</div>
+        <div class="doc-body">
+          <div class="doc-titolo">P&L Operativo Dettagliato</div>
+          <div class="doc-desc">Costi di gestione, break-even analysis, sensitivity sui tassi di occupazione. Dati operativi completi.</div>
+          <div class="doc-tags"><span class="dtag dtag-nda">NDA richiesto</span></div>
+        </div>
+        <div class="doc-arrow">→</div>
       </a>
 
     </div>
   </div>
 
-  <!-- ===== MC3 PIANO OPERATIVO ===== -->
-  <div class="macro mc-3" id="mc3">
-    <div class="macro-head" onclick="toggleMacro('mc3')">
-      <div class="macro-icon">🗺️</div>
-      <div class="macro-info">
-        <div class="macro-num">03 · Piano Operativo</div>
-        <div class="macro-title">Roadmap, milestone<br>e task settimanali</div>
-        <div class="macro-desc">Dalla raccolta soci al closing · Maggio→Dicembre 2026</div>
+  <!-- PORTA 3 — OPERATIVI ESTERNI -->
+  <div class="porta p3" id="p3">
+    <div class="porta-head" onclick="apri('p3')">
+      <div class="porta-emoji">🔧</div>
+      <div class="porta-info">
+        <div class="porta-chi">03 · Operativi esterni</div>
+        <div class="porta-titolo">Sei un professionista<br>con un ruolo nel progetto?</div>
+        <div class="porta-desc">Avvocato, general contractor, gestore hospitality, commercialista. Trovi il contesto del progetto, il tuo ruolo specifico e come si inserisce nella struttura.</div>
       </div>
-      <div class="macro-count"><span>5</span>file</div>
-      <div class="macro-arrow">▾</div>
+      <div class="porta-arrow">▾</div>
     </div>
-    <div class="macro-body">
+    <div class="porta-body">
 
-      <a class="file-item" href="https://valzinga.github.io/frankistudio/affio/rcv/RCV_Roadmap_2026.html" target="_blank">
-        <div class="fi-icon">🗓️</div>
-        <div class="fi-body">
-          <div class="fi-name">Roadmap 2026</div>
-          <div class="fi-desc">46 attività spuntabili · Maggio→Dicembre · link ai documenti per ogni task</div>
-          <div class="fi-tags"><span class="fi-tag tag-new">Nuovo</span><span class="fi-tag tag-key">Principale</span></div>
+      <div class="doc-section">Il progetto in sintesi</div>
+
+      <a class="doc" href="https://valzinga.github.io/frankistudio/affio/rcv/RCV_BusinessModel.html" target="_blank">
+        <div class="doc-icon">💰</div>
+        <div class="doc-body">
+          <div class="doc-titolo">Business Model</div>
+          <div class="doc-desc">La logica economica del progetto. Utile per capire il contesto in cui operi e come il tuo ruolo si inserisce nella catena del valore.</div>
         </div>
-        <div class="fi-arrow">→</div>
+        <div class="doc-arrow">→</div>
       </a>
 
-      <a class="file-item" href="https://valzinga.github.io/frankistudio/affio/rcv/STATO_PROGETTO_v2.html" target="_blank">
-        <div class="fi-icon">📍</div>
-        <div class="fi-body">
-          <div class="fi-name">Stato Progetto v2</div>
-          <div class="fi-desc">Snapshot operativo · semafori · decisioni aperte · contratti da firmare</div>
-          <div class="fi-tags"><span class="fi-tag tag-new">Nuovo</span></div>
+      <a class="doc" href="https://valzinga.github.io/frankistudio/affio/rcv/RCV_Piano30Mesi.html" target="_blank">
+        <div class="doc-icon">📅</div>
+        <div class="doc-body">
+          <div class="doc-titolo">Piano 30 Mesi</div>
+          <div class="doc-desc">Timeline dall'acquisizione all'apertura. Mostra le milestone, le fasi di cantiere e i momenti in cui il tuo contributo è più critico.</div>
         </div>
-        <div class="fi-arrow">→</div>
+        <div class="doc-arrow">→</div>
       </a>
 
-      <a class="file-item" href="https://valzinga.github.io/frankistudio/affio/rcv/PAPELE_v2.html" target="_blank">
-        <div class="fi-icon">✅</div>
-        <div class="fi-body">
-          <div class="fi-name">Papele v2</div>
-          <div class="fi-desc">Lista azioni interattiva · spuntabile · persistente · ordinata per priorità</div>
-          <div class="fi-tags"><span class="fi-tag tag-new">Nuovo</span><span class="fi-tag tag-int">Quotidiano</span></div>
+      <a class="doc" href="https://valzinga.github.io/frankistudio/affio/rcv/RCV_Scheda_Storica.html" target="_blank">
+        <div class="doc-icon">📜</div>
+        <div class="doc-body">
+          <div class="doc-titolo">Scheda Storica Asset</div>
+          <div class="doc-desc">Dati catastali, stato attuale, permessi, perizia. Documento tecnico fondamentale per avvocati, ingegneri e general contractor.</div>
         </div>
-        <div class="fi-arrow">→</div>
+        <div class="doc-arrow">→</div>
       </a>
 
-      <a class="file-item" href="https://valzinga.github.io/frankistudio/affio/rcv/RCV_Piano30Mesi.html" target="_blank">
-        <div class="fi-icon">📅</div>
-        <div class="fi-body">
-          <div class="fi-name">Piano 30 Mesi</div>
-          <div class="fi-desc">Timeline completa M0→M30 · milestone · revenue · aperture</div>
-          <div class="fi-tags"></div>
-        </div>
-        <div class="fi-arrow">→</div>
-      </a>
+      <div class="doc-section">Se stai valutando un ruolo da socio operativo</div>
 
-      <a class="file-item" href="https://valzinga.github.io/frankistudio/affio/rcv/RCV_SimulazioneFasi.html" target="_blank">
-        <div class="fi-icon">📈</div>
-        <div class="fi-body">
-          <div class="fi-name">Simulazione Fasi</div>
-          <div class="fi-desc">Tre scenari · conservative / base / ottimistico · cash flow per fase</div>
-          <div class="fi-tags"></div>
+      <a class="doc" href="https://valzinga.github.io/frankistudio/affio/rcv/POGLIO_Presentazione_Esterna.html?v=op" target="_blank">
+        <div class="doc-icon">⭐</div>
+        <div class="doc-body">
+          <div class="doc-titolo">Presentazione Socio Operativo</div>
+          <div class="doc-desc">Due posti nella cordata sono riservati a profili con competenze specifiche. Spiega come funziona il doppio ruolo socio + fornitore e la meccanica di compensazione del prestito.</div>
+          <div class="doc-tags"><span class="dtag dtag-key">Solo profili operativi</span></div>
         </div>
-        <div class="fi-arrow">→</div>
+        <div class="doc-arrow">→</div>
       </a>
 
     </div>
   </div>
 
-  <!-- ===== MC4 RICERCA E CONCEPT ===== -->
-  <div class="macro mc-4" id="mc4">
-    <div class="macro-head" onclick="toggleMacro('mc4')">
-      <div class="macro-icon">🔬</div>
-      <div class="macro-info">
-        <div class="macro-num">04 · Ricerca e Concept</div>
-        <div class="macro-title">Analisi, benchmark<br>e posizionamento</div>
-        <div class="macro-desc">Storia dell'asset · mercato · concept F01</div>
+  <!-- PORTA 4 — MARKETING E COMUNICAZIONE -->
+  <div class="porta p4" id="p4">
+    <div class="porta-head" onclick="apri('p4')">
+      <div class="porta-emoji">📣</div>
+      <div class="porta-info">
+        <div class="porta-chi">04 · Marketing, comunicazione e stampa</div>
+        <div class="porta-titolo">Sei un'agenzia,<br>giornalista o PR?</div>
+        <div class="porta-desc">Trovi il concept del progetto, il brand, il posizionamento e i materiali di riferimento per raccontare Il Poglío all'esterno.</div>
       </div>
-      <div class="macro-count"><span>5</span>file</div>
-      <div class="macro-arrow">▾</div>
+      <div class="porta-arrow">▾</div>
     </div>
-    <div class="macro-body">
+    <div class="porta-body">
 
-      <a class="file-item" href="https://valzinga.github.io/frankistudio/affio/rcv/RCV_Benchmark.html" target="_blank">
-        <div class="fi-icon">🌍</div>
-        <div class="fi-body">
-          <div class="fi-name">Benchmark Internazionale</div>
-          <div class="fi-desc">Case study mondiali · reset club · mountain hospitality · bubble rooms</div>
-          <div class="fi-tags"></div>
+      <div class="doc-section">Il progetto e la sua identità</div>
+
+      <a class="doc" href="https://valzinga.github.io/frankistudio/affio/rcv/RCV_BrandContext.html" target="_blank">
+        <div class="doc-icon">🎨</div>
+        <div class="doc-body">
+          <div class="doc-titolo">Brand Context — Chi è Il Poglío</div>
+          <div class="doc-desc">Naming, palette, tono di voce, posizionamento. Il documento di riferimento per chi deve comunicare il progetto verso l'esterno.</div>
         </div>
-        <div class="fi-arrow">→</div>
+        <div class="doc-arrow">→</div>
       </a>
 
-      <a class="file-item" href="https://valzinga.github.io/frankistudio/affio/rcv/RCV_Concept_Report_F01.html" target="_blank">
-        <div class="fi-icon">💡</div>
-        <div class="fi-body">
-          <div class="fi-name">Concept Report F01</div>
-          <div class="fi-desc">4 concept sviluppati · raccomandazione hybrid · posizionamento</div>
-          <div class="fi-tags"><span class="fi-tag fase-active">F01 Attivo</span></div>
+      <a class="doc" href="https://valzinga.github.io/frankistudio/affio/rcv/RCV_Scheda_Storica.html" target="_blank">
+        <div class="doc-icon">📜</div>
+        <div class="doc-body">
+          <div class="doc-titolo">La Storia dell'Asset</div>
+          <div class="doc-desc">L'ENEL, gli anni '50, le palazzine ferme. La narrativa più potente del progetto — quella che rende Il Poglío diverso da qualsiasi altro hotel di montagna.</div>
         </div>
-        <div class="fi-arrow">→</div>
+        <div class="doc-arrow">→</div>
       </a>
 
-      <a class="file-item" href="https://valzinga.github.io/frankistudio/affio/rcv/RCV_ConceptCommerciali.html" target="_blank">
-        <div class="fi-icon">🏨</div>
-        <div class="fi-body">
-          <div class="fi-name">Concept Commerciali</div>
-          <div class="fi-desc">Bubble room · wellness hub · corporate retreat · membership club</div>
-          <div class="fi-tags"></div>
+      <a class="doc" href="https://valzinga.github.io/frankistudio/affio/rcv/RCV_Concept_Report_F01.html" target="_blank">
+        <div class="doc-icon">💡</div>
+        <div class="doc-body">
+          <div class="doc-titolo">Concept Report F01</div>
+          <div class="doc-desc">Il concept strategico: cosa diventa Il Poglío, a chi si rivolge, perché in questo momento, perché sull'Appennino. Base per qualsiasi comunicazione esterna.</div>
         </div>
-        <div class="fi-arrow">→</div>
+        <div class="doc-arrow">→</div>
       </a>
 
-      <a class="file-item" href="https://valzinga.github.io/frankistudio/affio/rcv/RCV_Scheda_Storica.html" target="_blank">
-        <div class="fi-icon">📜</div>
-        <div class="fi-body">
-          <div class="fi-name">Scheda Storica Asset</div>
-          <div class="fi-desc">Storia ENEL · cronologia · stato attuale · dati catastali · perizia</div>
-          <div class="fi-tags"></div>
+      <a class="doc" href="https://valzinga.github.io/frankistudio/affio/rcv/RCV_ConceptCommerciali.html" target="_blank">
+        <div class="doc-icon">🏨</div>
+        <div class="doc-body">
+          <div class="doc-titolo">Concept Commerciali</div>
+          <div class="doc-desc">Bubble room nel bosco, wellness hub, corporate retreat, membership club. I prodotti concreti con cui Il Poglío va sul mercato.</div>
         </div>
-        <div class="fi-arrow">→</div>
+        <div class="doc-arrow">→</div>
       </a>
 
-      <a class="file-item" href="https://valzinga.github.io/frankistudio/affio/rcv/RCV_BrandContext.html" target="_blank">
-        <div class="fi-icon">🎨</div>
-        <div class="fi-body">
-          <div class="fi-name">Brand Context</div>
-          <div class="fi-desc">Naming Il Poglío · palette · tono · design system · identità</div>
-          <div class="fi-tags"></div>
+      <div class="doc-section">Materiali per il pre-lancio</div>
+
+      <a class="doc" href="https://valzinga.github.io/frankistudio/affio/rcv/TEASER-ONE-A_RCV.html" target="_blank">
+        <div class="doc-icon">🌿</div>
+        <div class="doc-body">
+          <div class="doc-titolo">Teaser Soci Fondatori Club</div>
+          <div class="doc-desc">Documento lifestyle per i 140 posti del club privato. Tono aspirazionale, emotivo. Mostra come si comunica l'appartenenza al progetto.</div>
         </div>
-        <div class="fi-arrow">→</div>
+        <div class="doc-arrow">→</div>
+      </a>
+
+      <a class="doc" href="https://valzinga.github.io/frankistudio/affio/rcv/POGLIO_Presentazione_Esterna.html" target="_blank">
+        <div class="doc-icon">📄</div>
+        <div class="doc-body">
+          <div class="doc-titolo">Presentazione Esterna</div>
+          <div class="doc-desc">Il documento principale del progetto. Utile per capire come racconta se stesso Il Poglío verso il mercato.</div>
+        </div>
+        <div class="doc-arrow">→</div>
       </a>
 
     </div>
   </div>
 
-  <!-- ===== MC5 PER IL FONDO ===== -->
-  <div class="macro mc-5" id="mc5">
-    <div class="macro-head" onclick="toggleMacro('mc5')">
-      <div class="macro-icon">🏦</div>
-      <div class="macro-info">
-        <div class="macro-num">05 · Per il Fondo</div>
-        <div class="macro-title">Investitori istituzionali<br>e operatori</div>
-        <div class="macro-desc">Solo con NDA firmato · SGR · family office · hospitality operator</div>
+  <!-- PORTA 5 — ISTITUZIONALI E PUBBLICI -->
+  <div class="porta p5" id="p5">
+    <div class="porta-head" onclick="apri('p5')">
+      <div class="porta-emoji">🏛️</div>
+      <div class="porta-info">
+        <div class="porta-chi">05 · Istituzionali e pubblici</div>
+        <div class="porta-titolo">Consulente PNRR<br>o ente pubblico?</div>
+        <div class="porta-desc">La componente ESG e sociale del progetto è strutturale — dieci settimane l'anno di attività pubblica che abilitano i fondi PNRR Turismo e i bandi regionali Abruzzo.</div>
       </div>
-      <div class="macro-count"><span>3</span>file</div>
-      <div class="macro-arrow">▾</div>
+      <div class="porta-arrow">▾</div>
     </div>
-    <div class="macro-body">
+    <div class="porta-body">
 
-      <a class="file-item" href="https://valzinga.github.io/frankistudio/affio/rcv/TEASER-ONE-B1_RCV.html" target="_blank">
-        <div class="fi-icon">📑</div>
-        <div class="fi-body">
-          <div class="fi-name">Teaser B1 — Investitori Istituzionali</div>
-          <div class="fi-desc">Deal-oriented · IRR 51% · liquidation preference · exit M48</div>
-          <div class="fi-tags"><span class="fi-tag tag-nda">Solo con NDA</span></div>
+      <div class="doc-section">Contesto del progetto</div>
+
+      <a class="doc" href="https://valzinga.github.io/frankistudio/affio/rcv/RCV_Concept_Report_F01.html" target="_blank">
+        <div class="doc-icon">💡</div>
+        <div class="doc-body">
+          <div class="doc-titolo">Concept Report F01</div>
+          <div class="doc-desc">Il progetto completo con la sua componente sociale. Mostra come l'attività pubblica non è accessoria ma strutturale al modello di business.</div>
         </div>
-        <div class="fi-arrow">→</div>
+        <div class="doc-arrow">→</div>
       </a>
 
-      <a class="file-item" href="https://valzinga.github.io/frankistudio/affio/rcv/TEASER-ONE-A_RCV.html" target="_blank">
-        <div class="fi-icon">📑</div>
-        <div class="fi-body">
-          <div class="fi-name">Teaser A — Soci Fondatori Club</div>
-          <div class="fi-desc">Per i 140 soci del club · lifestyle · membership · esperienze</div>
-          <div class="fi-tags"><span class="fi-tag tag-ext">Esterno</span></div>
+      <a class="doc" href="https://valzinga.github.io/frankistudio/affio/rcv/RCV_Scheda_Storica.html" target="_blank">
+        <div class="doc-icon">📜</div>
+        <div class="doc-body">
+          <div class="doc-titolo">Scheda Storica e Dati Asset</div>
+          <div class="doc-desc">Localizzazione, dati catastali, destinazione urbanistica autorizzata, permessi attivi. Documento tecnico di riferimento per enti e consulenti.</div>
         </div>
-        <div class="fi-arrow">→</div>
+        <div class="doc-arrow">→</div>
       </a>
 
-      <a class="file-item" href="https://valzinga.github.io/frankistudio/affio/rcv/RCV_SimulazioneOperativa.html" target="_blank">
-        <div class="fi-icon">⚙️</div>
-        <div class="fi-body">
-          <div class="fi-name">Simulazione Operativa</div>
-          <div class="fi-desc">P&L operativo · costi gestione · break-even · sensitivity analysis</div>
-          <div class="fi-tags"><span class="fi-tag tag-nda">Solo con NDA</span></div>
+      <a class="doc" href="https://valzinga.github.io/frankistudio/affio/rcv/RCV_BusinessModel.html" target="_blank">
+        <div class="doc-icon">📊</div>
+        <div class="doc-body">
+          <div class="doc-titolo">Business Model con Componente ESG</div>
+          <div class="doc-desc">Le dieci settimane annuali di attività sociale, il loro impatto sul territorio e come abilitano l'accesso ai grant PNRR M1C3 Turismo (stima €2,1M).</div>
         </div>
-        <div class="fi-arrow">→</div>
+        <div class="doc-arrow">→</div>
+      </a>
+
+      <a class="doc" href="https://valzinga.github.io/frankistudio/affio/rcv/RCV_Piano30Mesi.html" target="_blank">
+        <div class="doc-icon">📅</div>
+        <div class="doc-body">
+          <div class="doc-titolo">Piano 30 Mesi</div>
+          <div class="doc-desc">Timeline completa con le milestone operative. Utile per verificare la coerenza del progetto con i requisiti dei bandi pubblici.</div>
+        </div>
+        <div class="doc-arrow">→</div>
       </a>
 
     </div>
   </div>
 
-  <!-- ===== MC6 INTERNO FRANKI ===== -->
-  <div class="macro mc-6" id="mc6">
-    <div class="macro-head" onclick="toggleMacro('mc6')">
-      <div class="macro-icon">🔒</div>
-      <div class="macro-info">
-        <div class="macro-num">06 · Interno FranKi</div>
-        <div class="macro-title">Non esce<br>Uso operativo</div>
-        <div class="macro-desc">Reference, guide, strumenti interni</div>
+  <!-- PORTA 6 — FRANKI INTERNO -->
+  <div class="porta p6" id="p6">
+    <div class="porta-head" onclick="apri('p6')">
+      <div class="porta-emoji">🔒</div>
+      <div class="porta-info">
+        <div class="porta-chi">06 · FranKi Studio · Interno</div>
+        <div class="porta-titolo">Strumenti operativi<br>uso quotidiano</div>
+        <div class="porta-desc">Roadmap, tracker investitori, stato progetto, papele. Non esce da qui.</div>
       </div>
-      <div class="macro-count"><span>3</span>file</div>
-      <div class="macro-arrow">▾</div>
+      <div class="porta-arrow">▾</div>
     </div>
-    <div class="macro-body">
+    <div class="porta-body">
 
-      <a class="file-item" href="https://valzinga.github.io/frankistudio/affio/rcv/FranKi_DesignGuide.html" target="_blank">
-        <div class="fi-icon">🎨</div>
-        <div class="fi-body">
-          <div class="fi-name">FranKi Design Guide</div>
-          <div class="fi-desc">Colori · font · componenti · pattern · regole stilistiche</div>
-          <div class="fi-tags"><span class="fi-tag tag-int">Solo FranKi</span></div>
+      <div class="doc-section">Gestione quotidiana</div>
+
+      <a class="doc" href="https://valzinga.github.io/frankistudio/affio/rcv/RCV_Engagement_Investitori.html" target="_blank">
+        <div class="doc-icon">📊</div>
+        <div class="doc-body">
+          <div class="doc-titolo">Tracker Engagement Investitori</div>
+          <div class="doc-desc">CRM interattivo per la raccolta soci — aggiungi contatti, spunta le fasi M0→M3, accedi allo script giusto per ogni fase e ogni profilo.</div>
+          <div class="doc-tags"><span class="dtag dtag-new">Nuovo</span></div>
         </div>
-        <div class="fi-arrow">→</div>
+        <div class="doc-arrow">→</div>
       </a>
 
-      <a class="file-item" href="https://valzinga.github.io/frankistudio/affio/rcv/RCV_SoggettiInCampo.html" target="_blank">
-        <div class="fi-icon">👥</div>
-        <div class="fi-body">
-          <div class="fi-name">Soggetti in Campo</div>
-          <div class="fi-desc">Chi fa cosa · ruoli · responsabilità · contatti chiave</div>
-          <div class="fi-tags"><span class="fi-tag tag-int">Solo FranKi</span></div>
+      <a class="doc" href="https://valzinga.github.io/frankistudio/affio/rcv/PAPELE_v2.html" target="_blank">
+        <div class="doc-icon">✅</div>
+        <div class="doc-body">
+          <div class="doc-titolo">Papele — Lista Azioni</div>
+          <div class="doc-desc">Tutte le attività prioritizzate con spunta interattiva. Si salva automaticamente. Apri qui ogni mattina per sapere cosa fare.</div>
+          <div class="doc-tags"><span class="dtag dtag-new">Nuovo</span></div>
         </div>
-        <div class="fi-arrow">→</div>
+        <div class="doc-arrow">→</div>
       </a>
 
-      <a class="file-item" href="https://valzinga.github.io/frankistudio/affio/rcv/POGLIO_Presentazione_Soci.html" target="_blank">
-        <div class="fi-icon">📄</div>
-        <div class="fi-body">
-          <div class="fi-name">Presentazione Soci (v1)</div>
-          <div class="fi-desc">Versione precedente · sostituita da Presentazione Esterna</div>
-          <div class="fi-tags"><span class="fi-tag tag-int">Archivio</span></div>
+      <a class="doc" href="https://valzinga.github.io/frankistudio/affio/rcv/RCV_Roadmap_2026.html" target="_blank">
+        <div class="doc-icon">🗓️</div>
+        <div class="doc-body">
+          <div class="doc-titolo">Roadmap Maggio → Dicembre 2026</div>
+          <div class="doc-desc">46 attività spuntabili dalla raccolta soci al closing. Include link ai documenti pertinenti per ogni task e barra di avanzamento.</div>
+          <div class="doc-tags"><span class="dtag dtag-new">Nuovo</span></div>
         </div>
-        <div class="fi-arrow">→</div>
+        <div class="doc-arrow">→</div>
+      </a>
+
+      <a class="doc" href="https://valzinga.github.io/frankistudio/affio/rcv/RCV_MagLug_Soci.html" target="_blank">
+        <div class="doc-icon">🗓️</div>
+        <div class="doc-body">
+          <div class="doc-titolo">Dettaglio Task Mag–Lug + Script Soci</div>
+          <div class="doc-desc">Task espansi con chi fa cosa, cosa dire, script verbatim per ogni fase di engagement. Include documento socio nelle due versioni.</div>
+          <div class="doc-tags"><span class="dtag dtag-new">Nuovo</span></div>
+        </div>
+        <div class="doc-arrow">→</div>
+      </a>
+
+      <div class="doc-section">Riferimento e archivio</div>
+
+      <a class="doc" href="https://valzinga.github.io/frankistudio/affio/rcv/PROGETTO_MASTER_v2.html" target="_blank">
+        <div class="doc-icon">📌</div>
+        <div class="doc-body">
+          <div class="doc-titolo">Progetto Master v2</div>
+          <div class="doc-desc">Documento unico con struttura societaria definitiva, fee, clausole parasociale, regole fisse. Il riferimento quando hai dubbi su qualsiasi aspetto del deal.</div>
+          <div class="doc-tags"><span class="dtag dtag-new">Nuovo</span></div>
+        </div>
+        <div class="doc-arrow">→</div>
+      </a>
+
+      <a class="doc" href="https://valzinga.github.io/frankistudio/affio/rcv/STATO_PROGETTO_v2.html" target="_blank">
+        <div class="doc-icon">📍</div>
+        <div class="doc-body">
+          <div class="doc-titolo">Stato Progetto</div>
+          <div class="doc-desc">Snapshot della situazione attuale — semafori verde/arancio/rosso, decisioni aperte, contratti da firmare, prossime azioni.</div>
+          <div class="doc-tags"><span class="dtag dtag-new">Nuovo</span></div>
+        </div>
+        <div class="doc-arrow">→</div>
+      </a>
+
+      <a class="doc" href="https://valzinga.github.io/frankistudio/affio/rcv/RCV_Fornitori_v2.html" target="_blank">
+        <div class="doc-icon">🔧</div>
+        <div class="doc-body">
+          <div class="doc-titolo">Mappa Fornitori e Profili Operativi</div>
+          <div class="doc-desc">I 10 profili da ingaggiare, i 4 candidati doppio ruolo socio/fornitore, le 3 domande da fare ad Affio. Urgenti evidenziati.</div>
+          <div class="doc-tags"><span class="dtag dtag-new">Nuovo</span></div>
+        </div>
+        <div class="doc-arrow">→</div>
+      </a>
+
+      <a class="doc" href="https://valzinga.github.io/frankistudio/affio/rcv/FranKi_DesignGuide.html" target="_blank">
+        <div class="doc-icon">🎨</div>
+        <div class="doc-body">
+          <div class="doc-titolo">FranKi Design Guide</div>
+          <div class="doc-desc">Colori, font, componenti, regole stilistiche. Da consultare ogni volta che si produce un documento nuovo.</div>
+        </div>
+        <div class="doc-arrow">→</div>
       </a>
 
     </div>
@@ -510,19 +571,71 @@ footer strong{color:rgba(255,255,255,0.5)}
 </div>
 
 <footer>
-  <p><strong>RCV Il Poglío · FranKi Studio</strong><br>
-  HoldCo Srl · Il Poglío SPV Srl · Avre Srl Napoli<br>
-  valzinga.github.io/frankistudio/affio/rcv/ · Maggio 2026<br>
-  Riservato · Distribuzione selezionata</p>
+  <p><strong>Il Poglío · Roccaraso · FranKi Studio</strong><br>
+  Avre Srl · Napoli · frankistudio.it<br>
+  valzinga.github.io/frankistudio/affio/rcv/<br>
+  Maggio 2026 · Distribuzione selezionata</p>
 </footer>
 
 <script>
-function toggleMacro(id) {
+var PASSWORDS = {
+  'p1': 'Socio88',
+  'p2': 'Fondo88',
+  'p3': 'Professionista88',
+  'p4': 'Marketing88',
+  'p5': 'Consulente88',
+  'p6': 'FranKi88'
+};
+var MASTER = 'FranKi88';
+var unlocked = {};
+
+function apri(id) {
   var el = document.getElementById(id);
-  el.classList.toggle('open');
+  var wasOpen = el.classList.contains('open');
+
+  // Chiudi tutte
+  var porte = document.querySelectorAll('.porta');
+  for (var i = 0; i < porte.length; i++) {
+    porte[i].classList.remove('open');
+  }
+
+  if (wasOpen) return;
+
+  // Se già sbloccata, apri direttamente
+  if (unlocked[id]) {
+    el.classList.add('open');
+    setTimeout(function() {
+      el.scrollIntoView({behavior: 'smooth', block: 'start'});
+    }, 50);
+    return;
+  }
+
+  // Chiedi password
+  var pwd = prompt('Inserisci la password per accedere a questa sezione:');
+  if (pwd === null) return;
+
+  if (pwd === MASTER) {
+    // Master: sblocca tutto
+    unlocked['p1'] = true;
+    unlocked['p2'] = true;
+    unlocked['p3'] = true;
+    unlocked['p4'] = true;
+    unlocked['p5'] = true;
+    unlocked['p6'] = true;
+    el.classList.add('open');
+    setTimeout(function() {
+      el.scrollIntoView({behavior: 'smooth', block: 'start'});
+    }, 50);
+  } else if (pwd === PASSWORDS[id]) {
+    unlocked[id] = true;
+    el.classList.add('open');
+    setTimeout(function() {
+      el.scrollIntoView({behavior: 'smooth', block: 'start'});
+    }, 50);
+  } else {
+    alert('Password non corretta.');
+  }
 }
-// Apri il primo di default
-document.getElementById('mc1').classList.add('open');
 </script>
 </body>
 </html>
