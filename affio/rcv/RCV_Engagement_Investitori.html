@@ -8,925 +8,713 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --blu:#2B38B0;--arancio:#F0A500;--grigio-bg:#F2F1ED;--dark:#111118;--bordo:#D8D5CF;
-  --verde:#22c55e;--verde-bg:#d4f0d4;--verde-t:#1a7a1a;
-  --rosso:#ef4444;--rosso-bg:#fde0e0;--rosso-t:#a00;
-  --giallo:#F0A500;--giallo-bg:#fff8e1;--giallo-t:#856404;
-  --viola:#7c3aed;--viola-bg:#f3e8fd;--viola-t:#5b21b6;
-  --grigio:#6b7280;--grigio-bg2:#f9f9f7;
+  --blu:#2B38B0;--arancio:#F0A500;--grigio-bg:#F2F1ED;--dark:#111118;
+  --bordo:#D8D5CF;--verde:#22c55e;--rosso:#ef4444;--giallo:#F0A500;
+  --viola:#7c3aed;
 }
-body{font-family:'Barlow',sans-serif;background:var(--grigio-bg);color:#222;font-size:14px;line-height:1.5;min-height:100vh}
+body{font-family:'Barlow',sans-serif;background:var(--grigio-bg);color:#222;font-size:14px;min-height:100vh}
 
 /* NAV */
-nav{position:sticky;top:0;z-index:200;background:var(--blu);padding:0 16px;display:flex;align-items:center;justify-content:space-between;height:52px;gap:10px}
+nav{position:sticky;top:0;z-index:200;background:var(--blu);padding:0 16px;display:flex;align-items:center;justify-content:space-between;height:52px;gap:8px}
 .fk-logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:20px;display:inline-flex;align-items:center;text-decoration:none;flex-shrink:0}
-.fk-logo .fran{color:#FFF}.fk-logo .ki{background:#F0A500;color:#FFF;border-radius:5px;padding:1px 6px;margin-left:2px}
-.nav-title{color:rgba(255,255,255,0.7);font-size:11px;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase;flex:1;text-align:center}
-.nav-add-btn{background:var(--arancio);color:#FFF;border:none;border-radius:4px;padding:6px 12px;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:12px;text-transform:uppercase;letter-spacing:1px;cursor:pointer;flex-shrink:0}
+.fk-logo .fran{color:#FFF}
+.fk-logo .ki{background:#F0A500;color:#FFF;border-radius:5px;padding:1px 6px;margin-left:2px;display:inline-block}
+.nav-title{color:rgba(255,255,255,0.65);font-size:11px;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase;flex:1;text-align:center}
+.nav-btn{background:var(--arancio);color:#FFF;border:none;border-radius:4px;padding:7px 14px;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:12px;text-transform:uppercase;letter-spacing:1px;cursor:pointer;flex-shrink:0}
+.nav-btn-ghost{background:rgba(255,255,255,0.12);color:#FFF;border:none;border-radius:4px;padding:7px 12px;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;text-transform:uppercase;letter-spacing:1px;cursor:pointer;flex-shrink:0}
 
-/* PROGRESS BAR */
-.prog-bar-wrap{background:#FFF;padding:12px 16px;border-bottom:1px solid var(--bordo);display:flex;align-items:center;gap:12px}
-.prog-slots{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:13px;color:var(--blu);text-transform:uppercase;white-space:nowrap}
-.prog-bar-bg{flex:1;height:6px;background:var(--bordo);border-radius:3px;overflow:hidden}
-.prog-bar-fill{height:6px;background:var(--verde);border-radius:3px;transition:width .4s}
-.prog-pct{font-size:12px;color:#888;white-space:nowrap}
+/* SYNC BANNER */
+.sync-banner{background:var(--blu);color:rgba(255,255,255,0.8);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:1px;padding:8px 16px;text-align:center;display:none;border-bottom:1px solid rgba(255,255,255,0.1)}
+
+/* PROGRESS */
+.prog-wrap{background:#FFF;padding:10px 16px;border-bottom:1px solid var(--bordo);display:flex;align-items:center;gap:10px}
+.prog-label{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:12px;color:var(--blu);text-transform:uppercase;white-space:nowrap}
+.prog-bar-bg{flex:1;height:5px;background:var(--bordo);border-radius:3px;overflow:hidden}
+.prog-bar-fill{height:5px;background:var(--verde);border-radius:3px;transition:width .4s}
+.prog-pct{font-size:11px;color:#aaa;white-space:nowrap}
 
 /* FILTRI */
 .filtri{display:flex;gap:6px;padding:10px 16px;overflow-x:auto;background:#FFF;border-bottom:1px solid var(--bordo)}
-.filtro-btn{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;letter-spacing:1px;text-transform:uppercase;padding:5px 12px;border-radius:3px;border:1px solid var(--bordo);background:transparent;color:#888;cursor:pointer;white-space:nowrap;transition:all .15s}
-.filtro-btn.active{background:var(--blu);color:#FFF;border-color:var(--blu)}
+.f-btn{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:10px;letter-spacing:1px;text-transform:uppercase;padding:5px 12px;border-radius:3px;border:1px solid var(--bordo);background:transparent;color:#888;cursor:pointer;white-space:nowrap;flex-shrink:0}
+.f-btn.active{background:var(--blu);color:#FFF;border-color:var(--blu)}
 
-/* SCRIPT PANEL */
-.script-panel{background:var(--dark);border-bottom:3px solid var(--arancio);overflow:hidden;max-height:0;transition:max-height .3s ease}
-.script-panel.open{max-height:800px}
-.script-inner{padding:20px 16px;max-width:680px;margin:0 auto}
-.script-tabs{display:flex;gap:0;margin-bottom:16px;border-radius:4px;overflow:hidden;border:1px solid rgba(255,255,255,0.15)}
-.script-tab{flex:1;padding:8px;text-align:center;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;text-transform:uppercase;letter-spacing:1px;cursor:pointer;color:rgba(255,255,255,0.4);background:transparent;border:none;transition:all .15s}
-.script-tab.active{background:var(--arancio);color:#FFF}
-.script-content{display:none}
-.script-content.visible{display:block}
-.script-label{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--arancio);margin-bottom:8px}
-.script-box{background:rgba(255,255,255,0.06);border-left:2px solid var(--arancio);border-radius:0 4px 4px 0;padding:12px 14px;margin-bottom:10px}
-.script-box p{font-size:13px;color:rgba(255,255,255,0.8);line-height:1.6;font-style:italic}
-.script-box .script-note{font-size:11px;color:rgba(255,255,255,0.35);margin-top:6px;font-style:normal}
-.script-steps{list-style:none;margin-bottom:10px}
-.script-step{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.07);align-items:flex-start}
-.script-step:last-child{border-bottom:none}
-.ss-num{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:18px;color:var(--arancio);min-width:24px;line-height:1.1}
-.ss-text{font-size:12px;color:rgba(255,255,255,0.7);line-height:1.5}
-.ss-text strong{color:#FFF}
-.script-toggle{background:rgba(255,255,255,0.07);border:none;color:rgba(255,255,255,0.5);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;letter-spacing:1px;text-transform:uppercase;padding:6px 14px;border-radius:3px;cursor:pointer;margin-top:4px}
+/* INDICE */
+.indice-wrap{max-width:680px;margin:0 auto;padding:12px 16px 0}
+.indice-toggle-btn{width:100%;padding:10px 16px;background:#FFF;border:1px solid var(--bordo);border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:13px;text-transform:uppercase;letter-spacing:1px;color:var(--dark);margin-bottom:8px}
+.indice-toggle-btn span{font-size:12px;color:var(--arancio)}
+.indice-box{background:#FFF;border-radius:6px;border:1px solid var(--bordo);overflow:hidden;display:none;margin-bottom:10px}
+.indice-box.open{display:block}
+.indice-head-row{display:grid;grid-template-columns:1fr 70px 80px 60px;gap:0;background:var(--blu);padding:8px 14px}
+.indice-head-row span{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:10px;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,0.7)}
+.indice-row{display:grid;grid-template-columns:1fr 70px 80px 60px;gap:0;padding:9px 14px;border-bottom:1px solid #f5f3f0;align-items:center;cursor:pointer;transition:background .1s}
+.indice-row:last-child{border-bottom:none}
+.indice-row:hover{background:#fafaf8}
+.ir-nome{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:13px;color:var(--dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ir-fase{font-size:10px;color:#888;margin-top:2px}
+.ir-stelle{color:var(--arancio);font-size:12px;letter-spacing:1px}
+.ir-urg-bar{height:6px;border-radius:3px;background:#eee;overflow:hidden;margin-bottom:2px}
+.ir-urg-fill{height:6px;border-radius:3px}
+.ir-urg-label{font-size:9px}
+.ir-prossimo{font-size:10px;color:#888;text-align:right}
 
-/* INVESTITORI GRID */
-.investitori{max-width:680px;margin:0 auto;padding:12px 16px}
+/* LISTA */
+.lista{max-width:680px;margin:0 auto;padding:10px 16px 40px}
 
-/* CARD INVESTITORE */
-.inv-card{background:#FFF;border-radius:8px;margin-bottom:10px;overflow:hidden;border-left:4px solid var(--bordo);transition:box-shadow .15s}
-.inv-card:hover{box-shadow:0 2px 12px rgba(0,0,0,.08)}
-.inv-card.fase-0{border-left-color:#aaa}
-.inv-card.fase-1{border-left-color:var(--giallo)}
-.inv-card.fase-2{border-left-color:var(--blu)}
-.inv-card.fase-3{border-left-color:var(--viola)}
-.inv-card.fase-done{border-left-color:var(--verde)}
-.inv-card.fase-no{border-left-color:var(--rosso);opacity:.55}
+/* CARD */
+.card{background:#FFF;border-radius:8px;margin-bottom:10px;overflow:hidden;border-left:4px solid var(--bordo)}
+.card.f-0{border-left-color:#aaa}
+.card.f-1{border-left-color:var(--giallo)}
+.card.f-2{border-left-color:var(--blu)}
+.card.f-3{border-left-color:var(--viola)}
+.card.f-done{border-left-color:var(--verde)}
+.card.f-no{border-left-color:var(--rosso);opacity:.5}
 
-/* CARD HEADER */
-.inv-head{padding:12px 14px;display:flex;align-items:center;gap:10px;cursor:pointer}
-.inv-avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;color:#FFF;flex-shrink:0}
-.inv-info{flex:1;min-width:0}
-.inv-nome{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;color:var(--dark);text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.inv-ruolo{font-size:11px;color:#888;text-transform:uppercase;letter-spacing:0.5px}
-.inv-fase-badge{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:10px;text-transform:uppercase;letter-spacing:1px;padding:3px 8px;border-radius:3px;white-space:nowrap;flex-shrink:0}
-.fb-0{background:#f0f0f0;color:#888}
-.fb-1{background:var(--giallo-bg);color:var(--giallo-t)}
-.fb-2{background:#e8f0fe;color:var(--blu)}
-.fb-3{background:var(--viola-bg);color:var(--viola-t)}
-.fb-done{background:var(--verde-bg);color:var(--verde-t)}
-.fb-no{background:var(--rosso-bg);color:var(--rosso-t)}
-.inv-expand-icon{font-size:16px;color:#bbb;flex-shrink:0;transition:transform .2s}
-.inv-card.expanded .inv-expand-icon{transform:rotate(180deg)}
+/* CARD HEAD */
+.card-head{padding:12px 14px;display:flex;align-items:center;gap:10px;cursor:pointer}
+.card-avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;color:#FFF;flex-shrink:0}
+.card-info{flex:1;min-width:0}
+.card-nome{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;color:var(--dark);text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card-sub{font-size:11px;color:#888;text-transform:uppercase;letter-spacing:.5px}
+.card-badge{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:10px;text-transform:uppercase;letter-spacing:1px;padding:3px 8px;border-radius:3px;white-space:nowrap;flex-shrink:0}
+.cb-0{background:#f0f0f0;color:#888}
+.cb-1{background:#fff3cd;color:#856404}
+.cb-2{background:#e8f0fe;color:var(--blu)}
+.cb-3{background:#f3e8fd;color:var(--viola)}
+.cb-done{background:#d4f0d4;color:#1a7a1a}
+.cb-no{background:#fde0e0;color:#a00}
+.card-arrow{font-size:16px;color:#bbb;flex-shrink:0;transition:transform .2s}
+.card.expanded .card-arrow{transform:rotate(180deg)}
 
 /* CARD BODY */
-.inv-body{display:none;padding:0 14px 14px;border-top:1px solid var(--bordo)}
-.inv-card.expanded .inv-body{display:block}
+.card-body{display:none;border-top:1px solid var(--bordo);padding:14px}
+.card.expanded .card-body{display:block}
 
-/* FUNNEL STEPS */
-.funnel{display:flex;gap:0;margin:12px 0;border-radius:4px;overflow:hidden;border:1px solid var(--bordo)}
-.f-step{flex:1;padding:8px 6px;text-align:center;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:10px;text-transform:uppercase;letter-spacing:0.8px;color:#bbb;background:#fafaf8;border-right:1px solid var(--bordo);cursor:pointer;transition:all .15s;position:relative}
-.f-step:last-child{border-right:none}
-.f-step.done{background:var(--verde-bg);color:var(--verde-t)}
-.f-step.active{background:var(--blu);color:#FFF}
-.f-step.no{background:var(--rosso-bg);color:var(--rosso-t)}
-.f-step span{display:block;font-size:8px;font-weight:400;margin-top:2px;opacity:0.7}
+/* FUNNEL */
+.funnel{display:flex;border-radius:4px;overflow:hidden;border:1px solid var(--bordo);margin-bottom:12px}
+.fn-step{flex:1;padding:7px 4px;text-align:center;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:9px;text-transform:uppercase;letter-spacing:.6px;color:#bbb;background:#fafaf8;border-right:1px solid var(--bordo);cursor:pointer;transition:all .1s}
+.fn-step:last-child{border-right:none}
+.fn-step span{display:block;font-size:7px;margin-top:2px;opacity:.7}
+.fn-step.active{background:var(--blu);color:#FFF}
+.fn-step.done{background:#d4f0d4;color:#1a7a1a}
+.fn-step.no{background:#fde0e0;color:#a00}
 
-/* DETTAGLI INVESTITORE */
-.inv-details{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
-.inv-detail{background:var(--grigio-bg);border-radius:4px;padding:8px 10px}
-.id-label{font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:2px}
-.id-val{font-size:13px;color:var(--dark);font-weight:600}
+/* DETTAGLI */
+.det-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.det-cell{background:var(--grigio-bg);border-radius:4px;padding:8px 10px}
+.det-label{font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:.8px;margin-bottom:2px}
+.det-val{font-size:13px;color:var(--dark);font-weight:600}
+.det-val a{color:var(--blu);font-size:12px;text-decoration:none}
 
 /* NOTE */
-.inv-note-wrap{margin-top:10px}
-.inv-note-label{font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:4px}
-.inv-note{width:100%;border:1px solid var(--bordo);border-radius:4px;padding:8px 10px;font-family:'Barlow',sans-serif;font-size:13px;color:var(--dark);background:#fff;resize:vertical;min-height:60px;outline:none}
-.inv-note:focus{border-color:var(--blu)}
+.note-label{font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px}
+.note-ta{width:100%;border:1px solid var(--bordo);border-radius:4px;padding:8px 10px;font-family:'Barlow',sans-serif;font-size:13px;color:var(--dark);background:#fff;resize:vertical;min-height:56px;outline:none}
+.note-ta:focus{border-color:var(--blu)}
 
-/* SCRIPT INLINE */
-.inv-script-btn{display:inline-block;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:10px;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;border-radius:3px;border:1px solid var(--bordo);background:transparent;color:#888;cursor:pointer;margin-top:8px;margin-right:4px}
-.inv-script-btn:hover{background:var(--blu);color:#FFF;border-color:var(--blu)}
+/* STELLE */
+.stelle-label{font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px;margin-top:12px}
+.stelle-row{display:flex;gap:6px;margin-bottom:10px}
+.stella{font-size:24px;cursor:pointer;color:#ddd;user-select:none;transition:transform .1s}
+.stella.on{color:var(--arancio)}
+.stella:hover{transform:scale(1.15)}
 
-/* AZIONI CARD */
-.inv-actions{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
-.inv-action-btn{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:10px;letter-spacing:1px;text-transform:uppercase;padding:6px 12px;border-radius:3px;border:none;cursor:pointer;transition:all .15s}
-.btn-avanza{background:var(--blu);color:#FFF}
-.btn-no{background:var(--rosso-bg);color:var(--rosso-t)}
-.btn-edit{background:var(--grigio-bg);color:#666;border:1px solid var(--bordo)}
-.btn-del{background:transparent;color:#ccc;border:1px solid #eee}
+/* DATE */
+.date-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.date-cell label{font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:.8px;display:block;margin-bottom:4px}
+.date-cell input[type=date]{width:100%;border:1px solid var(--bordo);border-radius:4px;padding:7px 10px;font-family:'Barlow',sans-serif;font-size:13px;color:var(--dark);background:#fff;outline:none}
+.date-cell input[type=date]:focus{border-color:var(--blu)}
 
-/* MODAL AGGIUNGI */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:300;display:none;align-items:center;justify-content:center;padding:20px}
-.modal-overlay.open{display:flex}
-.modal{background:#FFF;border-radius:8px;width:100%;max-width:460px;overflow:hidden}
-.modal-head{background:var(--blu);padding:16px 20px;display:flex;align-items:center;justify-content:space-between}
-.modal-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:18px;color:#FFF;text-transform:uppercase}
-.modal-close{background:none;border:none;color:rgba(255,255,255,0.6);font-size:20px;cursor:pointer;line-height:1}
-.modal-body{padding:20px}
-.form-group{margin-bottom:14px}
-.form-label{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-bottom:5px;display:block}
-.form-input,.form-select{width:100%;border:1px solid var(--bordo);border-radius:4px;padding:9px 12px;font-family:'Barlow',sans-serif;font-size:14px;color:var(--dark);background:#fff;outline:none}
-.form-input:focus,.form-select:focus{border-color:var(--blu)}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.modal-footer{padding:0 20px 20px;display:flex;gap:8px;justify-content:flex-end}
-.btn-primary{background:var(--arancio);color:#FFF;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:13px;text-transform:uppercase;letter-spacing:1px;padding:10px 20px;border-radius:4px;border:none;cursor:pointer}
-.btn-secondary{background:var(--grigio-bg);color:#666;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:13px;text-transform:uppercase;letter-spacing:1px;padding:10px 20px;border-radius:4px;border:1px solid var(--bordo);cursor:pointer}
+/* URGENZA */
+.urg-wrap{margin-bottom:12px}
+.urg-bar-bg{height:8px;background:#eee;border-radius:4px;overflow:hidden;margin:4px 0}
+.urg-bar-fill{height:8px;border-radius:4px;transition:width .3s}
+.urg-text{font-size:11px;font-weight:700}
 
-/* EMPTY STATE */
+/* AZIONI */
+.azioni{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;padding-top:10px;border-top:1px solid #f0ede8}
+.btn-avanza{background:var(--blu);color:#FFF;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;text-transform:uppercase;letter-spacing:1px;padding:7px 14px;border-radius:3px;border:none;cursor:pointer}
+.btn-edit{background:var(--grigio-bg);color:#555;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;text-transform:uppercase;letter-spacing:1px;padding:7px 12px;border-radius:3px;border:1px solid var(--bordo);cursor:pointer}
+.btn-no{background:#fde0e0;color:#a00;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;text-transform:uppercase;letter-spacing:1px;padding:7px 12px;border-radius:3px;border:none;cursor:pointer}
+.btn-del{background:transparent;color:#ccc;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;text-transform:uppercase;letter-spacing:1px;padding:7px 10px;border-radius:3px;border:1px solid #eee;cursor:pointer}
+
+/* EMPTY */
 .empty{text-align:center;padding:40px 20px;color:#bbb}
 .empty-icon{font-size:40px;margin-bottom:10px}
 .empty-text{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;text-transform:uppercase;color:#ccc}
 
-/* INDICE */
-.indice{max-width:680px;margin:0 auto;padding:12px 16px 0}
-.indice-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-.indice-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:14px;text-transform:uppercase;letter-spacing:1px;color:var(--dark)}
-.indice-toggle{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:10px;text-transform:uppercase;letter-spacing:1px;padding:4px 10px;border-radius:3px;border:1px solid var(--bordo);background:transparent;color:#888;cursor:pointer}
-.indice-toggle.open{background:var(--blu);color:#FFF;border-color:var(--blu)}
-.indice-table{background:#FFF;border-radius:6px;overflow:hidden;border:1px solid var(--bordo);display:none;margin-bottom:12px}
-.indice-table.open{display:block}
-.it-head{display:grid;grid-template-columns:1fr 60px 90px 80px 60px;gap:0;background:var(--blu);padding:8px 12px}
-.it-head span{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:10px;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,0.7)}
-.it-row{display:grid;grid-template-columns:1fr 60px 90px 80px 60px;gap:0;padding:9px 12px;border-bottom:1px solid #f0ede8;align-items:center}
-.it-row:last-child{border-bottom:none}
-.it-row:hover{background:#fafaf8;cursor:pointer}
-.it-nome{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:13px;color:var(--dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.it-fase{font-size:10px;color:#888}
-.it-stelle{color:#F0A500;font-size:12px;letter-spacing:1px}
-.it-urgenza{height:8px;border-radius:4px;background:#eee;overflow:hidden;margin:0 4px}
-.it-urgenza-fill{height:8px;border-radius:4px;transition:width .3s}
-.it-urgenza-label{font-size:9px;color:#aaa;text-align:center;margin-top:2px}
+/* MODAL */
+.modal-ov{position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:300;display:none;align-items:center;justify-content:center;padding:16px}
+.modal-ov.open{display:flex}
+.modal{background:#FFF;border-radius:8px;width:100%;max-width:460px;max-height:90vh;overflow-y:auto}
+.modal-head{background:var(--blu);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:2}
+.modal-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:18px;color:#FFF;text-transform:uppercase}
+.modal-close{background:none;border:none;color:rgba(255,255,255,0.6);font-size:22px;cursor:pointer;line-height:1;padding:0 4px}
+.modal-body{padding:18px}
+.fg{margin-bottom:14px}
+.fg label{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#888;display:block;margin-bottom:5px}
+.fg input,.fg select,.fg textarea{width:100%;border:1px solid var(--bordo);border-radius:4px;padding:9px 12px;font-family:'Barlow',sans-serif;font-size:14px;color:var(--dark);background:#fff;outline:none}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--blu)}
+.fg textarea{resize:vertical;min-height:56px}
+.fg-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fg-stelle{display:flex;gap:6px;margin-top:4px}
+.fg-stella{font-size:28px;cursor:pointer;color:#ddd;user-select:none;transition:transform .1s}
+.fg-stella.on{color:var(--arancio)}
+.fg-stella:hover{transform:scale(1.1)}
+.modal-foot{padding:0 18px 18px;display:flex;gap:8px;justify-content:flex-end}
+.btn-save{background:var(--arancio);color:#FFF;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:13px;text-transform:uppercase;letter-spacing:1px;padding:10px 22px;border-radius:4px;border:none;cursor:pointer}
+.btn-cancel{background:var(--grigio-bg);color:#666;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:13px;text-transform:uppercase;letter-spacing:1px;padding:10px 18px;border-radius:4px;border:1px solid var(--bordo);cursor:pointer}
 
-/* STELLE */
-.stelle-wrap{display:flex;gap:4px;margin:10px 0}
-.stella{font-size:22px;cursor:pointer;transition:transform .1s;user-select:none;color:#ddd}
-.stella.attiva{color:#F0A500}
-.stella:hover{transform:scale(1.2)}
+.hub-btn{position:fixed;bottom:20px;right:20px;z-index:9999;width:44px;height:44px;background:var(--blu);border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.25);font-size:20px}
 
-/* DATE CONTATTO */
-.date-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
-.date-field label{font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:3px;display:block}
-.date-field input{width:100%;border:1px solid var(--bordo);border-radius:4px;padding:7px 10px;font-family:'Barlow',sans-serif;font-size:13px;color:var(--dark);background:#fff;outline:none}
-.date-field input:focus{border-color:var(--blu)}
-
-/* URGENZA BADGE */
-.urgenza-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:3px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-top:8px}
-.urg-verde{background:#d4f0d4;color:#1a7a1a}
-.urg-giallo{background:#fff3cd;color:#856404}
-.urg-rosso{background:#fde0e0;color:#a00}
-
-/* SCRIPT INLINE PER INVESTITORE */
-.inv-script-panel{background:var(--dark);border-radius:6px;padding:14px;margin-top:10px;display:none}
-.inv-script-panel.open{display:block}
-.isp-label{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--arancio);margin-bottom:8px}
-.isp-text{font-size:13px;color:rgba(255,255,255,0.75);line-height:1.6;font-style:italic}
-.isp-note{font-size:11px;color:rgba(255,255,255,0.35);margin-top:6px;font-style:normal}
-
-footer{background:var(--dark);padding:20px 16px;text-align:center;margin-top:20px}
-footer p{color:rgba(255,255,255,0.3);font-size:10px;line-height:1.8}
+footer{background:var(--dark);padding:20px 16px;text-align:center;margin-top:8px}
+footer p{color:rgba(255,255,255,.3);font-size:10px;line-height:1.8}
 </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
   <a class="fk-logo" href="#"><span class="fran">Fran</span><span class="ki">Ki</span></a>
   <span class="nav-title">Engagement · Il Poglío</span>
-  <button class="nav-add-btn" onclick="openModal()">+ Aggiungi</button>
+  <button class="nav-btn-ghost" id="btn-script" onclick="toggleScript()">📋 Script</button>
+  <button class="nav-btn" id="btn-aggiungi" onclick="openModal()">+ Aggiungi</button>
 </nav>
 
-<!-- PROGRESS -->
-<div id="sync-banner" style="display:none;background:#2B38B0;color:#FFF;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:1px;padding:8px 16px;text-align:center">Caricamento...</div>
-<div class="prog-bar-wrap">
-  <div class="prog-slots" id="prog-slots">0 / 6 posti</div>
+<div class="sync-banner" id="sync-banner">Sincronizzazione Google Sheet...</div>
+
+<div class="prog-wrap">
+  <div class="prog-label" id="prog-label">0 / 6 posti</div>
   <div class="prog-bar-bg"><div class="prog-bar-fill" id="prog-fill" style="width:0%"></div></div>
   <div class="prog-pct" id="prog-pct">0%</div>
 </div>
 
-<!-- FILTRI -->
 <div class="filtri">
-  <button class="filtro-btn active" onclick="filtra('tutti',this)">Tutti</button>
-  <button class="filtro-btn" onclick="filtra('0',this)">🔘 Da contattare</button>
-  <button class="filtro-btn" onclick="filtra('1',this)">🟡 Call fatta</button>
-  <button class="filtro-btn" onclick="filtra('2',this)">🔵 Doc inviato</button>
-  <button class="filtro-btn" onclick="filtra('3',this)">🟣 In chiusura</button>
-  <button class="filtro-btn" onclick="filtra('done',this)">✅ Firmato</button>
-  <button class="filtro-btn" onclick="filtra('no',this)">❌ No</button>
+  <button class="f-btn active" onclick="setFiltro('tutti',this)">Tutti</button>
+  <button class="f-btn" onclick="setFiltro('0',this)">🔘 Da contattare</button>
+  <button class="f-btn" onclick="setFiltro('1',this)">🟡 Call fatta</button>
+  <button class="f-btn" onclick="setFiltro('2',this)">🔵 Doc inviato</button>
+  <button class="f-btn" onclick="setFiltro('3',this)">🟣 In chiusura</button>
+  <button class="f-btn" onclick="setFiltro('done',this)">✅ Firmato</button>
+  <button class="f-btn" onclick="setFiltro('no',this)">❌ No</button>
 </div>
 
-<!-- SCRIPT PANEL GLOBALE -->
-<div class="script-panel" id="script-panel">
-  <div class="script-inner">
-    <div class="script-tabs">
-      <button class="script-tab active" onclick="switchScript('m0',this)">M0 · Semina</button>
-      <button class="script-tab" onclick="switchScript('m1',this)">M1 · Call</button>
-      <button class="script-tab" onclick="switchScript('m2',this)">M2 · Documento</button>
-      <button class="script-tab" onclick="switchScript('m3',this)">M3 · Chiusura</button>
-    </div>
-
-    <!-- M0 SEMINA -->
-    <div class="script-content visible" id="sc-m0">
-      <div class="script-label">Obiettivo — Aprire la porta senza spiegare nulla</div>
-      <div class="script-box">
-        <p>"Sto lavorando a una cosa interessante in Abruzzo — un posto che non ti aspetti. Quando hai dieci minuti ti racconto?"</p>
-        <div class="script-note">Per chi conosci direttamente · WA o telefono · nessun documento</div>
-      </div>
-      <div class="script-box">
-        <p>"Mi ha parlato di te [nome comune] — stai lavorando su cose interessanti. Ho un progetto in montagna che potrebbe avere senso mostrarti, se ti va."</p>
-        <div class="script-note">Per contatti di secondo livello · email o WA · sempre personale</div>
-      </div>
-      <div class="script-box">
-        <p>"Sto cercando una persona con la tua competenza per un ruolo specifico in un progetto che sto strutturando. Non ti chiedo nulla adesso — ma se hai curiosità ti racconto in dieci minuti."</p>
-        <div class="script-note">Per profili operativi · enfatizza il ruolo prima del rendimento</div>
-      </div>
-      <ul class="script-steps">
-        <li class="script-step"><div class="ss-num">!</div><div class="ss-text"><strong>Non mandare nessun documento</strong> — brucia la curiosità e toglie la leva del contatto personale</div></li>
-        <li class="script-step"><div class="ss-num">!</div><div class="ss-text"><strong>Non spiegare la struttura societaria</strong> — troppo complessa senza il contesto visivo</div></li>
-        <li class="script-step"><div class="ss-num">!</div><div class="ss-text"><strong>Obiettivo unico:</strong> ottenere un sì alla call di 15-20 minuti</div></li>
-      </ul>
-    </div>
-
-    <!-- M1 CALL -->
-    <div class="script-content" id="sc-m1">
-      <div class="script-label">Struttura call — 20 minuti · 3 blocchi</div>
-      <ul class="script-steps">
-        <li class="script-step"><div class="ss-num">01</div><div class="ss-text"><strong>5 min — La storia (non i numeri)</strong><br>ENEL, 1956, Roccaraso, 1.023m, tre palazzine ferme da vent'anni. Apri con: "Conosci Roccaraso?" — se sì, ha già l'immagine. Se no, la costruisci tu.</div></li>
-        <li class="script-step"><div class="ss-num">02</div><div class="ss-text"><strong>5 min — Cosa diventa</strong><br>Club privato 140 soci, bubble room nel bosco, corporate retreat. L'esperienza, non il business plan. Deve sentire che vuole essere lì.</div></li>
-        <li class="script-step"><div class="ss-num">03</div><div class="ss-text"><strong>5 min — La struttura in 3 righe</strong><br>6 posti, €75K (€50K equity + €25K prestito 6%), rendimento stimato 25× sull'equity, exit M48. Se fa domande sui numeri → è qualificato. Se non le fa → non è pronto.</div></li>
-        <li class="script-step"><div class="ss-num">→</div><div class="ss-text"><strong>Chiudi con una sola domanda:</strong><br>"Ha senso che ti mando il documento per leggerlo con calma?"</div></li>
-      </ul>
-      <div class="script-box">
-        <p>Per profili operativi: inverti blocco 02 e 03 — prima il ruolo concreto ("cosa faresti tu"), poi la struttura. Il rendimento viene dopo, come conseguenza del lavoro.</p>
-        <div class="script-note">Versione operativo · usare documento ?v=op</div>
-      </div>
-    </div>
-
-    <!-- M2 DOCUMENTO -->
-    <div class="script-content" id="sc-m2">
-      <div class="script-label">Invio documento — solo dopo call positiva</div>
-      <div class="script-box">
-        <p>"Ti mando il link — leggilo quando hai 15 minuti tranquilli. Poi mi dici."</p>
-        <div class="script-note">Nessun commento aggiuntivo · nessuna spiegazione via messaggio · solo il link</div>
-      </div>
-      <ul class="script-steps">
-        <li class="script-step"><div class="ss-num">→</div><div class="ss-text"><strong>Link investitore:</strong> https://valzinga.github.io/frankistudio/affio/rcv/POGLIO_Presentazione_Esterna.html</div></li>
-        <li class="script-step"><div class="ss-num">→</div><div class="ss-text"><strong>Link operativo:</strong> https://valzinga.github.io/frankistudio/affio/rcv/POGLIO_Presentazione_Esterna.html?v=op</div></li>
-        <li class="script-step"><div class="ss-num">5gg</div><div class="ss-text"><strong>Follow-up dopo 5 giorni se non si fa vivo:</strong><br>"Hai avuto modo di dare un'occhiata?" — una sola volta. Se non risponde è un no silenzioso. Archivia.</div></li>
-        <li class="script-step"><div class="ss-num">!</div><div class="ss-text"><strong>Non fare più di un follow-up</strong> — chi è interessato risponde, chi non risponde ha già deciso</div></li>
-      </ul>
-    </div>
-
-    <!-- M3 CHIUSURA -->
-    <div class="script-content" id="sc-m3">
-      <div class="script-label">Chiusura — obiettivo: lettera di intenti firmata entro 7 giorni</div>
-      <ul class="script-steps">
-        <li class="script-step"><div class="ss-num">01</div><div class="ss-text"><strong>Qualifica le domande</strong><br>Chi fa domande dopo il documento è qualificato. Risponde con precisione — non cercare di chiudere per telefono su domande tecniche complesse.</div></li>
-        <li class="script-step"><div class="ss-num">02</div><div class="ss-text"><strong>Proponi incontro breve</strong><br>Call o di persona — 30 minuti. Porta il patto parasociale in bozza e la lettera di intenti.</div></li>
-        <li class="script-step"><div class="ss-num">03</div><div class="ss-text"><strong>Obiettivo firma lettera di intenti</strong><br>Entro 7 giorni dall'incontro. Dopo 7 giorni la probabilità di chiusura crolla. Se non firma in 7 giorni: una ripresa, poi si archivia.</div></li>
-        <li class="script-step"><div class="ss-num">!</div><div class="ss-text"><strong>Obiezione "aspetto l'asta":</strong> No. Il deal si struttura prima. Chi aspetta l'asta non capisce il progetto o non ha la liquidità.</div></li>
-        <li class="script-step"><div class="ss-num">!</div><div class="ss-text"><strong>Obiezione "metto meno di €75K":</strong> No. Struttura calibrata. Si può ragionare sulla composizione equity/prestito ma non sull'importo.</div></li>
-      </ul>
-    </div>
-
-    <button class="script-toggle" onclick="toggleScript()">✕ Chiudi script</button>
-  </div>
-</div>
-
-<!-- LISTA INVESTITORI -->
 <!-- INDICE -->
-<div class="indice">
-  <div class="indice-head">
-    <span class="indice-title">📋 Indice contatti</span>
-    <button class="indice-toggle" id="indice-toggle" onclick="toggleIndice()">Mostra indice</button>
-  </div>
-  <div class="indice-table" id="indice-table">
-    <div class="it-head">
-      <span>Nome</span>
-      <span>Fase</span>
-      <span>Urgenza</span>
+<div class="indice-wrap">
+  <button class="indice-toggle-btn" onclick="toggleIndice()">
+    <span>📋 Indice contatti</span>
+    <span id="indice-toggle-label">▾ Mostra</span>
+  </button>
+  <div class="indice-box" id="indice-box">
+    <div class="indice-head-row">
+      <span>Nome · Fase</span>
       <span>Stelle</span>
+      <span>Urgenza</span>
       <span>Prossimo</span>
     </div>
     <div id="indice-rows"></div>
   </div>
 </div>
 
-<div class="investitori" id="lista-investitori">
-  <div class="empty" id="empty-state">
-    <div class="empty-icon">👤</div>
-    <div class="empty-text">Nessun contatto ancora<br>Premi + Aggiungi per iniziare</div>
-  </div>
-</div>
+<!-- LISTA -->
+<div class="lista" id="lista"></div>
 
-<!-- MODAL AGGIUNGI/MODIFICA -->
-<div class="modal-overlay" id="modal-overlay">
+<!-- MODAL -->
+<div class="modal-ov" id="modal-ov">
   <div class="modal">
     <div class="modal-head">
       <span class="modal-title" id="modal-title">Nuovo contatto</span>
       <button class="modal-close" onclick="closeModal()">✕</button>
     </div>
     <div class="modal-body">
-      <input type="hidden" id="edit-id">
-      <div class="form-group">
-        <label class="form-label">Nome e cognome *</label>
-        <input class="form-input" id="f-nome" type="text" placeholder="Es. Mario Rossi">
+      <input type="hidden" id="f-id">
+      <div class="fg">
+        <label>Nome e cognome *</label>
+        <input type="text" id="f-nome" placeholder="Es. Mario Rossi">
       </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Ruolo / Professione</label>
-          <input class="form-input" id="f-ruolo" type="text" placeholder="Es. Imprenditore">
+      <div class="fg-row">
+        <div class="fg">
+          <label>Ruolo / Professione</label>
+          <input type="text" id="f-ruolo" placeholder="Es. Imprenditore">
         </div>
-        <div class="form-group">
-          <label class="form-label">Tipo profilo</label>
-          <select class="form-select" id="f-tipo">
+        <div class="fg">
+          <label>Tipo profilo</label>
+          <select id="f-tipo">
             <option value="fin">Investitore puro</option>
             <option value="op">Socio operativo</option>
           </select>
         </div>
       </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Canale (FranKi / Affio)</label>
-          <select class="form-select" id="f-canale">
+      <div class="fg-row">
+        <div class="fg">
+          <label>Canale</label>
+          <select id="f-canale">
             <option value="FranKi">FranKi</option>
             <option value="Affio">Affio</option>
             <option value="Altro">Altro</option>
           </select>
         </div>
-        <div class="form-group">
-          <label class="form-label">Fase attuale</label>
-          <select class="form-select" id="f-fase">
+        <div class="fg">
+          <label>Fase attuale</label>
+          <select id="f-fase">
             <option value="0">🔘 Da contattare</option>
             <option value="1">🟡 Call fatta</option>
-            <option value="2">🔵 Documento inviato</option>
+            <option value="2">🔵 Doc inviato</option>
             <option value="3">🟣 In chiusura</option>
             <option value="done">✅ Firmato</option>
             <option value="no">❌ No</option>
           </select>
         </div>
       </div>
-      <div class="form-group">
-        <label class="form-label">Note</label>
-        <textarea class="form-input" id="f-note" rows="3" placeholder="Note libere sul contatto..."></textarea>
+      <div class="fg">
+        <label>Note</label>
+        <textarea id="f-note" placeholder="Note libere..."></textarea>
       </div>
-      <div class="form-group">
-        <label class="form-label">Probabilità partecipazione</label>
-        <div class="stelle-wrap" id="f-stelle-wrap">
-          <span class="stella" data-val="1" onclick="setStelleModal(1)">★</span>
-          <span class="stella" data-val="2" onclick="setStelleModal(2)">★</span>
-          <span class="stella" data-val="3" onclick="setStelleModal(3)">★</span>
-          <span class="stella" data-val="4" onclick="setStelleModal(4)">★</span>
-          <span class="stella" data-val="5" onclick="setStelleModal(5)">★</span>
+      <div class="fg">
+        <label>Probabilità partecipazione</label>
+        <div class="fg-stelle" id="fg-stelle">
+          <span class="fg-stella" data-v="1" onclick="setModalStelle(1)">★</span>
+          <span class="fg-stella" data-v="2" onclick="setModalStelle(2)">★</span>
+          <span class="fg-stella" data-v="3" onclick="setModalStelle(3)">★</span>
+          <span class="fg-stella" data-v="4" onclick="setModalStelle(4)">★</span>
+          <span class="fg-stella" data-v="5" onclick="setModalStelle(5)">★</span>
         </div>
         <input type="hidden" id="f-stelle" value="0">
       </div>
-      <div class="form-row">
-        <div class="date-field">
+      <div class="fg-row">
+        <div class="fg">
           <label>Ultimo contatto</label>
-          <input type="date" id="f-data-ultimo">
+          <input type="date" id="f-data-u">
         </div>
-        <div class="date-field">
+        <div class="fg">
           <label>Prossimo contatto</label>
-          <input type="date" id="f-data-prossimo">
+          <input type="date" id="f-data-p">
         </div>
       </div>
     </div>
-    <div class="modal-footer">
-      <button class="btn-secondary" onclick="closeModal()">Annulla</button>
-      <button class="btn-primary" onclick="salvaContatto()">Salva</button>
+    <div class="modal-foot">
+      <button class="btn-cancel" onclick="closeModal()">Annulla</button>
+      <button class="btn-save" onclick="salva()">Salva</button>
     </div>
   </div>
 </div>
 
 <footer>
-  <p>ENGAGEMENT INVESTITORI · RCV — Il Poglío<br>FranKi Studio (Avre Srl · Napoli) · frankistudio.it · Uso interno riservato</p>
+  <p>Engagement Investitori · RCV Il Poglío · FranKi Studio (Avre Srl) · Napoli</p>
 </footer>
 
+<a href="https://valzinga.github.io/frankistudio/affio/rcv/" class="hub-btn" title="Hub">🏠</a>
+
 <script>
-const KEY = 'rcv-engagement-v1';
-const SHEET_URL = 'https://script.google.com/macros/s/AKfycbw11lIO4uJHCVAr6yh99kKgUym1i1gpbQAcrkiM6FkE5OuwrNSSC4eXJXuW0zOal2lrVg/exec';
-let syncingSheet = false;
-const FASI = {
-  '0':    { label: 'Da contattare', badge: 'fb-0', color: '#aaa' },
-  '1':    { label: 'Call fatta',    badge: 'fb-1', color: '#F0A500' },
-  '2':    { label: 'Doc inviato',   badge: 'fb-2', color: '#2B38B0' },
-  '3':    { label: 'In chiusura',   badge: 'fb-3', color: '#7c3aed' },
-  'done': { label: 'Firmato',       badge: 'fb-done', color: '#22c55e' },
-  'no':   { label: 'No',           badge: 'fb-no', color: '#ef4444' },
+// ============================================================
+// CONFIGURAZIONE
+// ============================================================
+var SHEET_URL = 'https://script.google.com/macros/s/AKfycbw11lIO4uJHCVAr6yh99kKgUym1i1gpbQAcrkiM6FkE5OuwrNSSC4eXJXuW0zOal2lrVg/exec';
+var LS_KEY = 'rcv-eng-v2';
+var filtroAttivo = 'tutti';
+var indiceAperto = false;
+var scriptAperto = false;
+
+// ============================================================
+// DATI
+// ============================================================
+var FASI = {
+  '0':    {label:'Da contattare', badge:'cb-0', color:'#aaa'},
+  '1':    {label:'Call fatta',    badge:'cb-1', color:'#F0A500'},
+  '2':    {label:'Doc inviato',   badge:'cb-2', color:'#2B38B0'},
+  '3':    {label:'In chiusura',   badge:'cb-3', color:'#7c3aed'},
+  'done': {label:'Firmato',       badge:'cb-done', color:'#22c55e'},
+  'no':   {label:'No',           badge:'cb-no', color:'#ef4444'},
 };
-const SCRIPTS = {
-  '0':    { label: 'Script M0 — Semina', tab: 'm0' },
-  '1':    { label: 'Script M1 — Call',   tab: 'm1' },
-  '2':    { label: 'Script M2 — Documento', tab: 'm2' },
-  '3':    { label: 'Script M3 — Chiusura', tab: 'm3' },
-  'done': { label: null, tab: null },
-  'no':   { label: null, tab: null },
-};
-const COLORS = ['#2B38B0','#F0A500','#1a7a1a','#7c3aed','#c5221f','#0891b2','#be185d','#b45309'];
-let filtroAttivo = 'tutti';
-let scriptOpen = false;
 
-function getData(){ try{ return JSON.parse(localStorage.getItem(KEY)) || []; }catch(e){ return []; } }
-function saveData(d){
-  try{ localStorage.setItem(KEY, JSON.stringify(d)); }catch(e){}
-  saveToSheet(d);
+var COLORI = ['#2B38B0','#F0A500','#1a7a1a','#7c3aed','#c5221f','#0891b2','#be185d','#b45309'];
+
+function getData() {
+  try { return JSON.parse(localStorage.getItem(LS_KEY)) || []; } catch(e) { return []; }
 }
 
-function saveToSheet(d) {
-  if (syncingSheet) return;
-  fetch(SHEET_URL, {
-    method: 'POST',
-    body: JSON.stringify({ action: 'save_all', rows: d }),
-  }).catch(function(){});
+function setData(d) {
+  try { localStorage.setItem(LS_KEY, JSON.stringify(d)); } catch(e) {}
+  syncSheet(d);
 }
 
-function loadFromSheet() {
-  showSyncBanner('Caricamento dati dal foglio Google...');
-  fetch(SHEET_URL)
-    .then(function(r){ return r.json(); })
-    .then(function(rows) {
-      if (rows && rows.length > 0) {
-        syncingSheet = true;
-        localStorage.setItem(KEY, JSON.stringify(rows));
-        syncingSheet = false;
-        hideSyncBanner();
-        renderLista();
-      } else {
-        hideSyncBanner();
-      }
-    })
-    .catch(function(){
-      hideSyncBanner();
-    });
+function iniziali(nome) {
+  var p = nome.trim().split(' ');
+  return p.length >= 2 ? (p[0][0]+p[1][0]).toUpperCase() : nome.substring(0,2).toUpperCase();
 }
 
-function showSyncBanner(msg) {
-  var b = document.getElementById('sync-banner');
-  if (b) { b.textContent = msg; b.style.display = 'block'; }
-}
-function hideSyncBanner() {
-  var b = document.getElementById('sync-banner');
-  if (b) b.style.display = 'none';
+function colore(nome) {
+  var h = 0;
+  for (var i=0;i<nome.length;i++) h = (h*31+nome.charCodeAt(i)) & 0xFFFFFF;
+  return COLORI[Math.abs(h) % COLORI.length];
 }
 
-function iniziali(nome){
-  const p = nome.trim().split(' ');
-  if(p.length >= 2) return (p[0][0]+p[1][0]).toUpperCase();
-  return nome.substring(0,2).toUpperCase();
-}
-
-function colorePer(nome){
-  let h = 0;
-  for(let i=0;i<nome.length;i++) h = (h*31 + nome.charCodeAt(i)) & 0xFFFFFF;
-  return COLORS[Math.abs(h) % COLORS.length];
-}
-
-function nextFase(f){
-  const ord = ['0','1','2','3','done'];
-  const i = ord.indexOf(f);
+function nextFase(f) {
+  var ord = ['0','1','2','3','done'];
+  var i = ord.indexOf(f);
   return i >= 0 && i < ord.length-1 ? ord[i+1] : f;
 }
 
-function aggiornaProgresso(){
-  const d = getData();
-  const firmati = d.filter(c => c.fase === 'done').length;
-  const pct = Math.round(firmati/6*100);
-  document.getElementById('prog-slots').textContent = firmati + ' / 6 posti';
-  document.getElementById('prog-fill').style.width = pct + '%';
-  document.getElementById('prog-pct').textContent = pct + '%';
+// ============================================================
+// URGENZA
+// ============================================================
+function urgenza(c) {
+  var oggi = new Date(); oggi.setHours(0,0,0,0);
+  if (c.fase === 'done' || c.fase === 'no') return {color:'#ccc', pct:0, label:'—'};
+  if (c.dataProssimo) {
+    var p = new Date(c.dataProssimo);
+    var diff = Math.round((p-oggi)/(86400000));
+    if (diff < 0)  return {color:'#ef4444', pct:100, label:'Scaduto '+Math.abs(diff)+'gg fa'};
+    if (diff === 0) return {color:'#ef4444', pct:100, label:'Oggi!'};
+    if (diff <= 2)  return {color:'#ef4444', pct:85,  label:'Fra '+diff+' gg'};
+    if (diff <= 5)  return {color:'#F0A500', pct:60,  label:'Fra '+diff+' gg'};
+    if (diff <= 10) return {color:'#F0A500', pct:35,  label:'Fra '+diff+' gg'};
+    return {color:'#22c55e', pct:15, label:'Fra '+diff+' gg'};
+  }
+  if (c.dataUltimo) {
+    var u = new Date(c.dataUltimo);
+    var diff2 = Math.round((oggi-u)/(86400000));
+    if (diff2 > 14) return {color:'#ef4444', pct:90, label:'Fermo da '+diff2+'gg'};
+    if (diff2 > 7)  return {color:'#F0A500', pct:55, label:'Fermo da '+diff2+'gg'};
+    return {color:'#22c55e', pct:20, label:'Contattato '+diff2+'gg fa'};
+  }
+  return {color:'#F0A500', pct:50, label:'Nessuna data'};
 }
 
-function renderLista(){
-  const d = getData();
-  const lista = document.getElementById('lista-investitori');
-  const empty = document.getElementById('empty-state');
-  const filtrati = filtroAttivo === 'tutti' ? d : d.filter(c => c.fase === filtroAttivo);
+// ============================================================
+// SYNC GOOGLE SHEET
+// ============================================================
+function syncSheet(d) {
+  fetch(SHEET_URL, {
+    method:'POST',
+    body:JSON.stringify({action:'save_all', rows:d}),
+  }).catch(function(){});
+}
 
-  // Rimuovi card esistenti (non empty state)
-  lista.querySelectorAll('.inv-card').forEach(el => el.remove());
+function loadSheet() {
+  document.getElementById('sync-banner').style.display = 'block';
+  fetch(SHEET_URL)
+    .then(function(r){ return r.json(); })
+    .then(function(rows) {
+      document.getElementById('sync-banner').style.display = 'none';
+      if (rows && Array.isArray(rows) && rows.length > 0 && rows[0].id) {
+        localStorage.setItem(LS_KEY, JSON.stringify(rows));
+        render();
+      }
+    })
+    .catch(function(){
+      document.getElementById('sync-banner').style.display = 'none';
+    });
+}
 
-  if(filtrati.length === 0){
-    empty.style.display = 'block';
+// ============================================================
+// RENDER LISTA
+// ============================================================
+function render() {
+  var d = getData();
+  var lista = document.getElementById('lista');
+  lista.innerHTML = '';
+
+  // Progresso
+  var firmati = d.filter(function(c){ return c.fase==='done'; }).length;
+  var pct = Math.round(firmati/6*100);
+  document.getElementById('prog-label').textContent = firmati+' / 6 posti';
+  document.getElementById('prog-fill').style.width = pct+'%';
+  document.getElementById('prog-pct').textContent = pct+'%';
+
+  var filtrati = filtroAttivo==='tutti' ? d : d.filter(function(c){ return c.fase===filtroAttivo; });
+
+  if (filtrati.length === 0) {
+    lista.innerHTML = '<div class="empty"><div class="empty-icon">👤</div><div class="empty-text">Nessun contatto ancora<br>Premi + Aggiungi</div></div>';
+    renderIndice(d);
     return;
   }
-  empty.style.display = 'none';
 
-  filtrati.forEach(c => {
-    const card = document.createElement('div');
-    card.className = 'inv-card fase-' + c.fase;
-    card.dataset.id = c.id;
-    if(c.expanded) card.classList.add('expanded');
+  filtrati.forEach(function(c) {
+    var f = FASI[c.fase] || FASI['0'];
+    var u = urgenza(c);
+    var stelle = '';
+    for (var i=1;i<=5;i++) {
+      stelle += '<span class="stella'+(i<=(c.stelle||0)?' on':'')+'" onclick="setStelle(\''+c.id+'\','+i+')">★</span>';
+    }
+    var docLink = 'https://valzinga.github.io/frankistudio/affio/rcv/POGLIO_Presentazione_Esterna.html'+(c.tipo==='op'?'?v=op':'');
+    var prossima = nextFase(c.fase);
+    var puoAvanzare = c.fase!=='done' && c.fase!=='no';
 
-    const f = FASI[c.fase];
-    const scriptInfo = SCRIPTS[c.fase];
-    const linkBase = 'https://valzinga.github.io/frankistudio/affio/rcv/POGLIO_Presentazione_Esterna.html';
-    const linkInv = linkBase;
-    const linkOp = linkBase + '?v=op';
-    const docLink = c.tipo === 'op' ? linkOp : linkInv;
+    var div = document.createElement('div');
+    div.className = 'card f-'+c.fase+(c.expanded?' expanded':'');
+    div.dataset.id = c.id;
 
-    const prossima = nextFase(c.fase);
-    const prossimaPuoAvanzare = c.fase !== 'done' && c.fase !== 'no';
+    div.innerHTML =
+      '<div class="card-head" onclick="toggleCard(\''+c.id+'\')">' +
+        '<div class="card-avatar" style="background:'+colore(c.nome)+'">'+iniziali(c.nome)+'</div>' +
+        '<div class="card-info">' +
+          '<div class="card-nome">'+c.nome+'</div>' +
+          '<div class="card-sub">'+(c.ruolo||'—')+' · '+c.canale+'</div>' +
+        '</div>' +
+        '<span class="card-badge '+f.badge+'">'+f.label+'</span>' +
+        '<span class="card-arrow">▾</span>' +
+      '</div>' +
+      '<div class="card-body">' +
+        '<div class="funnel">' +
+          '<div class="fn-step '+(c.fase==='0'?'active':['1','2','3','done'].includes(c.fase)?'done':'')+'" onclick="setFase(\''+c.id+'\',\'0\')">M0<span>Semina</span></div>' +
+          '<div class="fn-step '+(c.fase==='1'?'active':['2','3','done'].includes(c.fase)?'done':'')+'" onclick="setFase(\''+c.id+'\',\'1\')">M1<span>Call</span></div>' +
+          '<div class="fn-step '+(c.fase==='2'?'active':['3','done'].includes(c.fase)?'done':'')+'" onclick="setFase(\''+c.id+'\',\'2\')">M2<span>Doc</span></div>' +
+          '<div class="fn-step '+(c.fase==='3'?'active':c.fase==='done'?'done':'')+'" onclick="setFase(\''+c.id+'\',\'3\')">M3<span>Chiusura</span></div>' +
+          '<div class="fn-step '+(c.fase==='done'?'done':'')+'" onclick="setFase(\''+c.id+'\',\'done\')">✓<span>Firmato</span></div>' +
+          '<div class="fn-step '+(c.fase==='no'?'no':'')+'" onclick="setFase(\''+c.id+'\',\'no\')">✗<span>No</span></div>' +
+        '</div>' +
+        '<div class="det-grid">' +
+          '<div class="det-cell"><div class="det-label">Profilo</div><div class="det-val">'+(c.tipo==='op'?'⭐ Operativo':'💰 Investitore')+'</div></div>' +
+          '<div class="det-cell"><div class="det-label">Canale</div><div class="det-val">'+c.canale+'</div></div>' +
+          '<div class="det-cell"><div class="det-label">Documento</div><div class="det-val"><a href="'+docLink+'" target="_blank">Apri →</a></div></div>' +
+          '<div class="det-cell"><div class="det-label">Aggiunto</div><div class="det-val">'+(c.dataAgg||'—')+'</div></div>' +
+        '</div>' +
+        '<div class="note-label">Note</div>' +
+        '<textarea class="note-ta" placeholder="Note libere..." onchange="salvaNota(\''+c.id+'\',this.value)">'+escapeHtml(c.note||'')+'</textarea>' +
+        '<div class="stelle-label">Probabilità partecipazione</div>' +
+        '<div class="stelle-row">'+stelle+'</div>' +
+        '<div class="date-grid">' +
+          '<div class="date-cell"><label>Ultimo contatto</label><input type="date" value="'+(c.dataUltimo||'')+'" onchange="salvaData(\''+c.id+'\',\'dataUltimo\',this.value)"></div>' +
+          '<div class="date-cell"><label>Prossimo contatto</label><input type="date" value="'+(c.dataProssimo||'')+'" onchange="salvaData(\''+c.id+'\',\'dataProssimo\',this.value)"></div>' +
+        '</div>' +
+        '<div class="urg-wrap">' +
+          '<div class="note-label">Urgenza contatto</div>' +
+          '<div class="urg-bar-bg"><div class="urg-bar-fill" style="width:'+u.pct+'%;background:'+u.color+'"></div></div>' +
+          '<div class="urg-text" style="color:'+u.color+'">'+u.label+'</div>' +
+        '</div>' +
+        '<div class="azioni">' +
+          (puoAvanzare?'<button class="btn-avanza" onclick="avanza(\''+c.id+'\')">→ '+FASI[prossima].label+'</button>':'')+
+          '<button class="btn-edit" onclick="openEdit(\''+c.id+'\')">✏ Modifica</button>' +
+          '<button class="btn-no" onclick="setFase(\''+c.id+'\',\'no\')">❌ No</button>' +
+          '<button class="btn-del" onclick="elimina(\''+c.id+'\')">🗑</button>' +
+        '</div>' +
+      '</div>';
 
-    const scriptBtnHtml = scriptInfo.tab ? 
-      `<button class="inv-script-btn" onclick="toggleInvScript('${c.id}')">📋 Script ${scriptInfo.label.split('—')[0].trim()}</button>` : '';
-
-    const scriptPanelHtml = scriptInfo.tab ? `
-      <div class="inv-script-panel" id="isp-${c.id}">
-        <div class="isp-label">${scriptInfo.label}</div>
-        <div class="isp-text" id="isp-text-${c.id}"></div>
-        <div class="isp-note" id="isp-note-${c.id}"></div>
-      </div>` : '';
-
-    card.innerHTML = `
-      <div class="inv-head" onclick="toggleCard('${c.id}')">
-        <div class="inv-avatar" style="background:${colorePer(c.nome)}">${iniziali(c.nome)}</div>
-        <div class="inv-info">
-          <div class="inv-nome">${c.nome}</div>
-          <div class="inv-ruolo">${c.ruolo || '—'} · ${c.canale}</div>
-        </div>
-        <span class="inv-fase-badge ${f.badge}">${f.label}</span>
-        <span class="inv-expand-icon">▾</span>
-      </div>
-      <div class="inv-body">
-        <div class="funnel">
-          <div class="f-step ${c.fase==='0'?'active':['1','2','3','done'].includes(c.fase)?'done':''}" onclick="setFase('${c.id}','0')">M0<span>Semina</span></div>
-          <div class="f-step ${c.fase==='1'?'active':['2','3','done'].includes(c.fase)?'done':''}" onclick="setFase('${c.id}','1')">M1<span>Call</span></div>
-          <div class="f-step ${c.fase==='2'?'active':['3','done'].includes(c.fase)?'done':''}" onclick="setFase('${c.id}','2')">M2<span>Doc</span></div>
-          <div class="f-step ${c.fase==='3'?'active':c.fase==='done'?'done':''}" onclick="setFase('${c.id}','3')">M3<span>Chiusura</span></div>
-          <div class="f-step ${c.fase==='done'?'done':''}" onclick="setFase('${c.id}','done')">✓<span>Firmato</span></div>
-          <div class="f-step ${c.fase==='no'?'no':''}" onclick="setFase('${c.id}','no')">✗<span>No</span></div>
-        </div>
-        <div class="inv-details">
-          <div class="inv-detail"><div class="id-label">Profilo</div><div class="id-val">${c.tipo === 'op' ? '⭐ Operativo' : '💰 Investitore'}</div></div>
-          <div class="inv-detail"><div class="id-label">Canale</div><div class="id-val">${c.canale}</div></div>
-          <div class="inv-detail"><div class="id-label">Link documento</div><div class="id-val"><a href="${docLink}" target="_blank" style="color:var(--blu);font-size:12px">Apri →</a></div></div>
-          <div class="inv-detail"><div class="id-label">Aggiunto</div><div class="id-val">${c.data || '—'}</div></div>
-        </div>
-        <div class="inv-note-wrap">
-          <div class="inv-note-label">Note</div>
-          <textarea class="inv-note" placeholder="Note libere..." onchange="salvaNota('${c.id}',this.value)">${c.note || ''}</textarea>
-        </div>
-        <div style="margin-top:10px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
-          <div>
-            <div class="inv-note-label">Probabilità partecipazione</div>
-            <div class="stelle-wrap" style="margin:6px 0">
-              ${[1,2,3,4,5].map(n => `<span class="stella ${n <= (c.stelle||0) ? 'attiva' : ''}" onclick="setStelle('${c.id}',${n})" style="font-size:20px">★</span>`).join('')}
-            </div>
-          </div>
-          <div>
-            <div class="inv-note-label">Urgenza contatto</div>
-            ${urgenzaHtml(c)}
-          </div>
-        </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">
-          <div class="date-field">
-            <label>Ultimo contatto</label>
-            <input type="date" value="${c.dataUltimo||''}" onchange="salvaData('${c.id}','dataUltimo',this.value)">
-          </div>
-          <div class="date-field">
-            <label>Prossimo contatto</label>
-            <input type="date" value="${c.dataProssimo||''}" onchange="salvaData('${c.id}','dataProssimo',this.value)">
-          </div>
-        </div>
-        ${scriptBtnHtml}
-        ${scriptPanelHtml}
-        <div class="inv-actions">
-          ${prossimaPuoAvanzare ? `<button class="inv-action-btn btn-avanza" onclick="avanza('${c.id}')">→ Avanza a ${FASI[prossima].label}</button>` : ''}
-          <button class="inv-action-btn btn-edit" onclick="openEdit('${c.id}')">✏ Modifica</button>
-          <button class="inv-action-btn btn-no" onclick="setFase('${c.id}','no')">❌ No</button>
-          <button class="inv-action-btn btn-del" onclick="elimina('${c.id}')">🗑</button>
-        </div>
-      </div>`;
-
-    lista.appendChild(card);
+    lista.appendChild(div);
   });
 
-  aggiornaProgresso();
-  aggiornaIndice();
+  renderIndice(d);
 }
 
-function toggleCard(id){
-  const d = getData();
-  const c = d.find(x => x.id === id);
-  if(c){ c.expanded = !c.expanded; saveData(d); renderLista(); }
+function escapeHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-function avanza(id){
-  const d = getData();
-  const c = d.find(x => x.id === id);
-  if(c){ c.fase = nextFase(c.fase); saveData(d); renderLista(); }
+// ============================================================
+// INDICE
+// ============================================================
+function renderIndice(d) {
+  var rows = document.getElementById('indice-rows');
+  if (!rows) return;
+  var ordFase = {'done':0,'3':1,'2':2,'1':3,'0':4,'no':5};
+  var sorted = d.slice().sort(function(a,b){
+    var fa = ordFase[a.fase]!==undefined?ordFase[a.fase]:6;
+    var fb = ordFase[b.fase]!==undefined?ordFase[b.fase]:6;
+    if (fa!==fb) return fa-fb;
+    return (b.stelle||0)-(a.stelle||0);
+  });
+  rows.innerHTML = sorted.map(function(c){
+    var u = urgenza(c);
+    var stelle = '';
+    for(var i=1;i<=5;i++) stelle+='<span style="color:'+(i<=(c.stelle||0)?'#F0A500':'#ddd')+';font-size:11px">★</span>';
+    var prossimo = c.dataProssimo?c.dataProssimo.split('-').reverse().join('/'):'—';
+    return '<div class="indice-row" onclick="jumpToCard(\''+c.id+'\')">' +
+      '<div><div class="ir-nome">'+c.nome+'</div><div class="ir-fase">'+(FASI[c.fase]||{}).label+'</div></div>' +
+      '<div class="ir-stelle">'+stelle+'</div>' +
+      '<div><div class="ir-urg-bar"><div class="ir-urg-fill" style="width:'+u.pct+'%;background:'+u.color+'"></div></div><div class="ir-urg-label" style="color:'+u.color+'">'+u.label+'</div></div>' +
+      '<div class="ir-prossimo">'+prossimo+'</div>' +
+    '</div>';
+  }).join('');
 }
 
-function setFase(id, fase){
-  const d = getData();
-  const c = d.find(x => x.id === id);
-  if(c){ c.fase = fase; saveData(d); renderLista(); }
+function toggleIndice() {
+  indiceAperto = !indiceAperto;
+  document.getElementById('indice-box').classList.toggle('open', indiceAperto);
+  document.getElementById('indice-toggle-label').textContent = indiceAperto ? '▴ Nascondi' : '▾ Mostra';
+  if (indiceAperto) renderIndice(getData());
 }
 
-function salvaNota(id, val){
-  const d = getData();
-  const c = d.find(x => x.id === id);
-  if(c){ c.note = val; saveData(d); }
+function jumpToCard(id) {
+  var d = getData();
+  var c = d.find(function(x){ return x.id===id; });
+  if (c) { c.expanded = true; setData(d); render(); }
+  setTimeout(function(){
+    var el = document.querySelector('[data-id="'+id+'"]');
+    if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
+  }, 150);
 }
 
-function elimina(id){
-  if(!confirm('Eliminare questo contatto?')) return;
-  const d = getData().filter(x => x.id !== id);
-  saveData(d); renderLista();
+// ============================================================
+// AZIONI
+// ============================================================
+function toggleCard(id) {
+  var d = getData();
+  var c = d.find(function(x){ return x.id===id; });
+  if (c) { c.expanded = !c.expanded; setData(d); render(); }
 }
 
-// SCRIPT INLINE PER CONTATTO
-const SCRIPT_TESTI = {
-  '0': {
-    fin:  { text: '"Sto lavorando a una cosa interessante in Abruzzo — un posto che non ti aspetti. Quando hai dieci minuti ti racconto?"', note: 'WA o telefono · nessun documento · obiettivo: sì alla call' },
-    op:   { text: '"Sto cercando una persona con la tua competenza per un ruolo specifico in un progetto che sto strutturando. Non ti chiedo nulla adesso — ma se hai curiosità ti racconto in dieci minuti."', note: 'Per profili operativi · enfatizza il ruolo, non il rendimento' },
-  },
-  '1': {
-    fin:  { text: 'Call 20 min: 5 min storia ENEL → 5 min cosa diventa (club, bubble) → 5 min struttura (6 posti, €75K, 25× equity, M48). Chiudi: "Ha senso che ti mando il documento per leggerlo?"', note: 'Se fa domande sui numeri → qualificato. Se non le fa → non è pronto.' },
-    op:   { text: 'Call 20 min: 5 min storia ENEL → 5 min il tuo ruolo concreto → 5 min rendimento come conseguenza. Chiudi: "Ha senso che ti mando il documento?"', note: 'Versione operativo: ruolo prima, rendimento dopo' },
-  },
-  '2': {
-    fin:  { text: '"Ti mando il link — leggilo quando hai 15 minuti tranquilli. Poi mi dici." · Link: POGLIO_Presentazione_Esterna.html', note: 'Follow-up dopo 5 giorni se non risponde · una sola volta · poi archivia' },
-    op:   { text: '"Ti mando il link — leggilo quando hai 15 minuti tranquilli. Poi mi dici." · Link: POGLIO_Presentazione_Esterna.html?v=op', note: 'Versione operativo con ?v=op · follow-up dopo 5 giorni · una sola volta' },
-  },
-  '3': {
-    fin:  { text: 'Proponi incontro 30 min. Porta patto parasociale bozza + lettera di intenti. Obiettivo: firma entro 7 giorni. Dopo 7 giorni: una ripresa, poi si archivia.', note: 'Obiezione "aspetto asta": No. Obiezione "metto meno": No.' },
-    op:   { text: 'Proponi incontro 30 min. Porta patto parasociale bozza + contratto collaborazione + lettera di intenti. Obiettivo: firma entro 7 giorni.', note: 'Per operativo: porta anche bozza contratto ruolo operativo con meccanica compensazione prestito' },
-  },
-};
-
-function toggleInvScript(id){
-  const panel = document.getElementById('isp-' + id);
-  if(!panel) return;
-  const d = getData();
-  const c = d.find(x => x.id === id);
-  if(!c) return;
-  const isOpen = panel.classList.contains('open');
-  if(!isOpen){
-    const testi = SCRIPT_TESTI[c.fase];
-    if(testi){
-      const vers = c.tipo === 'op' ? testi.op : testi.fin;
-      document.getElementById('isp-text-' + id).textContent = vers.text;
-      document.getElementById('isp-note-' + id).textContent = vers.note;
-    }
-  }
-  panel.classList.toggle('open');
+function avanza(id) {
+  var d = getData();
+  var c = d.find(function(x){ return x.id===id; });
+  if (c) { c.fase = nextFase(c.fase); setData(d); render(); }
 }
 
-// FILTRI
-function filtra(fase, btn){
-  filtroAttivo = fase;
-  document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('active'));
+function setFase(id, fase) {
+  var d = getData();
+  var c = d.find(function(x){ return x.id===id; });
+  if (c) { c.fase = fase; setData(d); render(); }
+}
+
+function salvaNota(id, val) {
+  var d = getData();
+  var c = d.find(function(x){ return x.id===id; });
+  if (c) { c.note = val; setData(d); }
+}
+
+function salvaData(id, campo, val) {
+  var d = getData();
+  var c = d.find(function(x){ return x.id===id; });
+  if (c) { c[campo] = val; setData(d); renderIndice(d); render(); }
+}
+
+function setStelle(id, val) {
+  var d = getData();
+  var c = d.find(function(x){ return x.id===id; });
+  if (c) { c.stelle = val; setData(d); render(); }
+}
+
+function elimina(id) {
+  if (!confirm('Eliminare questo contatto?')) return;
+  var d = getData().filter(function(x){ return x.id!==id; });
+  setData(d); render();
+}
+
+function setFiltro(f, btn) {
+  filtroAttivo = f;
+  document.querySelectorAll('.f-btn').forEach(function(b){ b.classList.remove('active'); });
   btn.classList.add('active');
-  renderLista();
+  render();
 }
 
-// SCRIPT PANEL GLOBALE
-function toggleScript(){
-  const p = document.getElementById('script-panel');
-  scriptOpen = !scriptOpen;
-  p.classList.toggle('open', scriptOpen);
+// ============================================================
+// MODAL STELLE
+// ============================================================
+function setModalStelle(val) {
+  document.getElementById('f-stelle').value = val;
+  document.querySelectorAll('.fg-stella').forEach(function(s){
+    s.classList.toggle('on', parseInt(s.dataset.v) <= val);
+  });
 }
 
-function switchScript(tab, btn){
-  document.querySelectorAll('.script-tab').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.script-content').forEach(c => c.classList.remove('visible'));
-  btn.classList.add('active');
-  document.getElementById('sc-' + tab).classList.add('visible');
+function resetModalStelle() {
+  document.getElementById('f-stelle').value = '0';
+  document.querySelectorAll('.fg-stella').forEach(function(s){ s.classList.remove('on'); });
 }
 
-// MODAL
-function openModal(){
+// ============================================================
+// MODAL APRI / CHIUDI
+// ============================================================
+function openModal() {
   document.getElementById('modal-title').textContent = 'Nuovo contatto';
-  document.getElementById('edit-id').value = '';
+  document.getElementById('f-id').value = '';
   document.getElementById('f-nome').value = '';
   document.getElementById('f-ruolo').value = '';
   document.getElementById('f-tipo').value = 'fin';
   document.getElementById('f-canale').value = 'FranKi';
   document.getElementById('f-fase').value = '0';
   document.getElementById('f-note').value = '';
-  document.getElementById('f-stelle').value = '0';
-  document.getElementById('f-data-ultimo').value = '';
-  document.getElementById('f-data-prossimo').value = '';
-  setStelleModal(0);
-  document.getElementById('modal-overlay').classList.add('open');
-  document.getElementById('f-nome').focus();
+  document.getElementById('f-data-u').value = '';
+  document.getElementById('f-data-p').value = '';
+  resetModalStelle();
+  document.getElementById('modal-ov').classList.add('open');
+  setTimeout(function(){ document.getElementById('f-nome').focus(); }, 50);
 }
 
-function openEdit(id){
-  const d = getData();
-  const c = d.find(x => x.id === id);
-  if(!c) return;
+function openEdit(id) {
+  var d = getData();
+  var c = d.find(function(x){ return x.id===id; });
+  if (!c) return;
   document.getElementById('modal-title').textContent = 'Modifica contatto';
-  document.getElementById('edit-id').value = id;
+  document.getElementById('f-id').value = c.id;
   document.getElementById('f-nome').value = c.nome;
-  document.getElementById('f-ruolo').value = c.ruolo || '';
-  document.getElementById('f-tipo').value = c.tipo;
-  document.getElementById('f-canale').value = c.canale;
-  document.getElementById('f-fase').value = c.fase;
-  document.getElementById('f-note').value = c.note || '';
-  document.getElementById('f-stelle').value = c.stelle || 0;
-  document.getElementById('f-data-ultimo').value = c.dataUltimo || '';
-  document.getElementById('f-data-prossimo').value = c.dataProssimo || '';
-  setStelleModal(c.stelle || 0);
-  document.getElementById('modal-overlay').classList.add('open');
+  document.getElementById('f-ruolo').value = c.ruolo||'';
+  document.getElementById('f-tipo').value = c.tipo||'fin';
+  document.getElementById('f-canale').value = c.canale||'FranKi';
+  document.getElementById('f-fase').value = c.fase||'0';
+  document.getElementById('f-note').value = c.note||'';
+  document.getElementById('f-data-u').value = c.dataUltimo||'';
+  document.getElementById('f-data-p').value = c.dataProssimo||'';
+  setModalStelle(c.stelle||0);
+  document.getElementById('modal-ov').classList.add('open');
 }
 
-function closeModal(){
-  document.getElementById('modal-overlay').classList.remove('open');
+function closeModal() {
+  document.getElementById('modal-ov').classList.remove('open');
 }
 
-function salvaContatto(){
-  const nome = document.getElementById('f-nome').value.trim();
-  if(!nome){ alert('Inserisci il nome'); return; }
-  const d = getData();
-  const editId = document.getElementById('edit-id').value;
-  if(editId){
-    const c = d.find(x => x.id === editId);
-    if(c){
+// ============================================================
+// SALVA CONTATTO
+// ============================================================
+function salva() {
+  var nome = document.getElementById('f-nome').value.trim();
+  if (!nome) { alert('Inserisci il nome del contatto'); return; }
+
+  var d = getData();
+  var editId = document.getElementById('f-id').value;
+
+  if (editId) {
+    var c = d.find(function(x){ return x.id===editId; });
+    if (c) {
       c.nome = nome;
       c.ruolo = document.getElementById('f-ruolo').value.trim();
       c.tipo = document.getElementById('f-tipo').value;
       c.canale = document.getElementById('f-canale').value;
       c.fase = document.getElementById('f-fase').value;
       c.note = document.getElementById('f-note').value.trim();
-      c.stelle = parseInt(document.getElementById('f-stelle').value) || 0;
-      c.dataUltimo = document.getElementById('f-data-ultimo').value;
-      c.dataProssimo = document.getElementById('f-data-prossimo').value;
+      c.stelle = parseInt(document.getElementById('f-stelle').value)||0;
+      c.dataUltimo = document.getElementById('f-data-u').value;
+      c.dataProssimo = document.getElementById('f-data-p').value;
     }
   } else {
     d.push({
       id: Date.now().toString(),
-      nome,
+      nome: nome,
       ruolo: document.getElementById('f-ruolo').value.trim(),
       tipo: document.getElementById('f-tipo').value,
       canale: document.getElementById('f-canale').value,
       fase: document.getElementById('f-fase').value,
       note: document.getElementById('f-note').value.trim(),
-      stelle: parseInt(document.getElementById('f-stelle').value) || 0,
-      dataUltimo: document.getElementById('f-data-ultimo').value,
-      dataProssimo: document.getElementById('f-data-prossimo').value,
-      data: new Date().toLocaleDateString('it-IT'),
+      stelle: parseInt(document.getElementById('f-stelle').value)||0,
+      dataUltimo: document.getElementById('f-data-u').value,
+      dataProssimo: document.getElementById('f-data-p').value,
+      dataAgg: new Date().toLocaleDateString('it-IT'),
       expanded: true,
     });
   }
-  saveData(d);
+
+  setData(d);
   closeModal();
-  renderLista();
+  render();
 }
 
-// Chiudi modal su overlay click
-document.getElementById('modal-overlay').addEventListener('click', function(e){
-  if(e.target === this) closeModal();
+// ============================================================
+// SCRIPT PANEL (placeholder)
+// ============================================================
+function toggleScript() {
+  scriptAperto = !scriptAperto;
+  document.getElementById('btn-script').textContent = scriptAperto ? '✕ Script' : '📋 Script';
+}
+
+// ============================================================
+// OVERLAY CLICK
+// ============================================================
+document.getElementById('modal-ov').addEventListener('click', function(e){
+  if (e.target === this) closeModal();
 });
 
-// STELLE MODAL
-function setStelleModal(val) {
-  val = parseInt(val) || 0;
-  document.getElementById('f-stelle').value = val;
-  document.querySelectorAll('#f-stelle-wrap .stella').forEach(function(s) {
-    s.classList.toggle('attiva', parseInt(s.dataset.val) <= val);
-  });
-}
-
-// STELLE CARD
-function setStelle(id, val) {
-  const d = getData();
-  const c = d.find(x => x.id === id);
-  if(c){ c.stelle = val; saveData(d); renderLista(); }
-}
-
-// DATE
-function salvaData(id, campo, val) {
-  const d = getData();
-  const c = d.find(x => x.id === id);
-  if(c){ c[campo] = val; saveData(d); aggiornaIndice(); }
-}
-
-// URGENZA — calcola colore in base alle date
-function urgenzaInfo(contatto) {
-  const oggi = new Date(); oggi.setHours(0,0,0,0);
-  if (contatto.fase === 'done' || contatto.fase === 'no') return {color:'#ccc', pct:0, label:'—'};
-  
-  if (contatto.dataProssimo) {
-    const prossimo = new Date(contatto.dataProssimo);
-    const diff = Math.round((prossimo - oggi) / (1000*60*60*24));
-    if (diff < 0) return {color:'#ef4444', pct:100, label:'Scaduto ' + Math.abs(diff) + 'gg fa'};
-    if (diff === 0) return {color:'#ef4444', pct:100, label:'Oggi!'};
-    if (diff <= 2) return {color:'#ef4444', pct:85, label:'Fra ' + diff + ' giorni'};
-    if (diff <= 5) return {color:'#F0A500', pct:60, label:'Fra ' + diff + ' giorni'};
-    if (diff <= 10) return {color:'#F0A500', pct:35, label:'Fra ' + diff + ' giorni'};
-    return {color:'#22c55e', pct:15, label:'Fra ' + diff + ' giorni'};
-  }
-  if (contatto.dataUltimo) {
-    const ultimo = new Date(contatto.dataUltimo);
-    const diff = Math.round((oggi - ultimo) / (1000*60*60*24));
-    if (diff > 14) return {color:'#ef4444', pct:90, label:'No contatto da ' + diff + 'gg'};
-    if (diff > 7) return {color:'#F0A500', pct:55, label:'No contatto da ' + diff + 'gg'};
-    return {color:'#22c55e', pct:20, label:'Contattato ' + diff + 'gg fa'};
-  }
-  return {color:'#F0A500', pct:50, label:'Nessuna data'};
-}
-
-function urgenzaHtml(contatto) {
-  const u = urgenzaInfo(contatto);
-  return '<div class="inv-urgenza" style="height:10px;border-radius:5px;background:#eee;overflow:hidden;margin:8px 0">' +
-    '<div style="height:10px;width:' + u.pct + '%;background:' + u.color + ';border-radius:5px;transition:width .3s"></div>' +
-    '</div><div style="font-size:10px;color:' + u.color + ';font-weight:700">' + u.label + '</div>';
-}
-
-// INDICE
-function toggleIndice() {
-  const t = document.getElementById('indice-table');
-  const btn = document.getElementById('indice-toggle');
-  const isOpen = t.classList.contains('open');
-  t.classList.toggle('open', !isOpen);
-  btn.classList.toggle('open', !isOpen);
-  btn.textContent = isOpen ? 'Mostra indice' : 'Nascondi indice';
-  if (!isOpen) aggiornaIndice();
-}
-
-function aggiornaIndice() {
-  const rows = document.getElementById('indice-rows');
-  if (!rows) return;
-  const d = getData();
-  
-  // Ordine: done > 3 > 2 > 1 > 0 > no
-  const ordFase = {'done':0,'3':1,'2':2,'1':3,'0':4,'no':5};
-  const sorted = [...d].sort(function(a,b) {
-    const fa = ordFase[a.fase] ?? 6;
-    const fb = ordFase[b.fase] ?? 6;
-    if (fa !== fb) return fa - fb;
-    return (b.stelle||0) - (a.stelle||0);
-  });
-
-  rows.innerHTML = sorted.map(function(c) {
-    const u = urgenzaInfo(c);
-    const stelle = [1,2,3,4,5].map(function(n) {
-      return '<span style="color:' + (n <= (c.stelle||0) ? '#F0A500' : '#ddd') + ';font-size:11px">★</span>';
-    }).join('');
-    const faseLabel = (window.FASI && window.FASI[c.fase]) ? window.FASI[c.fase].label : c.fase;
-    const prossimo = c.dataProssimo ? c.dataProssimo.split('-').reverse().join('/') : '—';
-    return '<div class="it-row" onclick="apriContatto('' + c.id + '')">' +
-      '<div>' +
-        '<div class="it-nome">' + c.nome + '</div>' +
-        '<div class="it-fase">' + faseLabel + '</div>' +
-      '</div>' +
-      '<div>' + stelle + '</div>' +
-      '<div>' +
-        '<div style="height:6px;border-radius:3px;background:#eee;overflow:hidden">' +
-          '<div style="height:6px;width:' + u.pct + '%;background:' + u.color + ';border-radius:3px"></div>' +
-        '</div>' +
-        '<div style="font-size:9px;color:' + u.color + ';margin-top:2px">' + u.label + '</div>' +
-      '</div>' +
-      '<div style="font-size:10px;color:#666">' + prossimo + '</div>' +
-    '</div>';
-  }).join('');
-}
-
-function apriContatto(id) {
-  const d = getData();
-  const c = d.find(x => x.id === id);
-  if (c) { c.expanded = true; saveData(d); renderLista(); }
-  setTimeout(function() {
-    const el = document.querySelector('[data-id="' + id + '"]');
-    if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
-  }, 100);
-}
-
-// Esporta FASI per indice
-window.FASI = {
-  '0':    { label: 'Da contattare' },
-  '1':    { label: 'Call fatta' },
-  '2':    { label: 'Doc inviato' },
-  '3':    { label: 'In chiusura' },
-  'done': { label: 'Firmato' },
-  'no':   { label: 'No' },
-};
-
-// Bottone script globale nella navbar (aggiungo dopo DOMContentLoaded)
-document.addEventListener('DOMContentLoaded', function(){
-  const nav = document.querySelector('nav');
-  const scriptBtn = document.createElement('button');
-  scriptBtn.className = 'nav-add-btn';
-  scriptBtn.style.background = 'rgba(255,255,255,0.12)';
-  scriptBtn.textContent = '📋 Script';
-  scriptBtn.onclick = toggleScript;
-  nav.insertBefore(scriptBtn, nav.querySelector('.nav-add-btn'));
-  renderLista();
-  loadFromSheet();
-});
+// ============================================================
+// BOOT
+// ============================================================
+render();
+loadSheet();
 </script>
-
-<!-- PULSANTE HUB -->
-<a href="https://valzinga.github.io/frankistudio/affio/rcv/" title="Torna all'Hub" style="position:fixed;bottom:20px;right:20px;z-index:9999;width:44px;height:44px;background:#2B38B0;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,0.25);font-size:20px;transition:transform 0.2s" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">🏠</a>
 </body>
 </html>
