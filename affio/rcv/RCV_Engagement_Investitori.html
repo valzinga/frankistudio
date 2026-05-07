@@ -44,9 +44,9 @@ nav{position:sticky;top:0;z-index:200;background:var(--blu);padding:0 16px;displ
 .indice-toggle-btn span{font-size:12px;color:var(--arancio)}
 .indice-box{background:#FFF;border-radius:6px;border:1px solid var(--bordo);overflow:hidden;display:none;margin-bottom:10px}
 .indice-box.open{display:block}
-.indice-head-row{display:grid;grid-template-columns:1fr 70px 80px 60px;gap:0;background:var(--blu);padding:8px 14px}
+.indice-head-row{display:grid;grid-template-columns:1fr 60px 70px 70px 60px;gap:0;background:var(--blu);padding:8px 14px}
 .indice-head-row span{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:10px;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,0.7)}
-.indice-row{display:grid;grid-template-columns:1fr 70px 80px 60px;gap:0;padding:9px 14px;border-bottom:1px solid #f5f3f0;align-items:center;cursor:pointer;transition:background .1s}
+.indice-row{display:grid;grid-template-columns:1fr 60px 70px 70px 60px;gap:0;padding:9px 14px;border-bottom:1px solid #f5f3f0;align-items:center;cursor:pointer;transition:background .1s}
 .indice-row:last-child{border-bottom:none}
 .indice-row:hover{background:#fafaf8}
 .ir-nome{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:13px;color:var(--dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -203,11 +203,12 @@ footer p{color:rgba(255,255,255,.3);font-size:10px;line-height:1.8}
     <span id="indice-toggle-label">▾ Mostra</span>
   </button>
   <div class="indice-box" id="indice-box">
-    <div class="indice-head-row">
+    <div class="indice-head-row" style="grid-template-columns:1fr 60px 70px 70px 60px">
       <span>Nome · Fase</span>
+      <span>Chi</span>
       <span>Stelle</span>
       <span>Urgenza</span>
-      <span>Prossimo</span>
+      <span>Check</span>
     </div>
     <div id="indice-rows"></div>
   </div>
@@ -516,11 +517,15 @@ function renderIndice(d) {
     var stelle = '';
     for(var i=1;i<=5;i++) stelle+='<span style="color:'+(i<=(c.stelle||0)?'#F0A500':'#ddd')+';font-size:11px">★</span>';
     var prossimo = c.dataProssimo?c.dataProssimo.split('-').reverse().join('/'):'—';
-    return '<div class="indice-row" onclick="jumpToCard(\''+c.id+'\')">' +
-      '<div><div class="ir-nome">'+c.nome+'</div><div class="ir-fase">'+(FASI[c.fase]||{}).label+'</div></div>' +
-      '<div class="ir-stelle">'+stelle+'</div>' +
-      '<div><div class="ir-urg-bar"><div class="ir-urg-fill" style="width:'+u.pct+'%;background:'+u.color+'"></div></div><div class="ir-urg-label" style="color:'+u.color+'">'+u.label+'</div></div>' +
-      '<div class="ir-prossimo">'+prossimo+'</div>' +
+    var chkColor = c.fase==='done'?'#22c55e':c.fase==='no'?'#ef4444':'#ddd';
+    var chkIcon = c.fase==='done'?'<b style="color:#22c55e">✓</b>':c.fase==='no'?'<b style="color:#ef4444">✗</b>':'<span style="color:#ddd">○</span>';
+    var chiColor = c.canale==='FranKi'?'#2B38B0':c.canale==='Affio'?'#F0A500':'#888';
+    return '<div class="indice-row" onclick="jumpToCard(\'' + c.id + '\'">' +
+      '<div><div class="ir-nome">' + c.nome + '</div><div class="ir-fase">' + ((FASI[c.fase]||{}).label||'') + '</div></div>' +
+      '<div style="font-family:Barlow Condensed,sans-serif;font-weight:900;font-size:11px;color:' + chiColor + '">' + (c.canale||'—') + '</div>' +
+      '<div class="ir-stelle">' + stelle + '</div>' +
+      '<div><div class="ir-urg-bar"><div class="ir-urg-fill" style="width:' + u.pct + '%;background:' + u.color + '"></div></div><div class="ir-urg-label" style="color:' + u.color + '">' + u.label + '</div></div>' +
+      '<div style="text-align:center">' + chkIcon + '</div>' +
     '</div>';
   }).join('');
 }
