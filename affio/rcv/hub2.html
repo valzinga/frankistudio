@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hub Documenti — Il Poglío · FranKi Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --blu:#2B38B0;--arancio:#F0A500;--grigio-bg:#F2F1ED;
+  --dark:#111118;--bordo:#D8D5CF;--bianco:#FFFFFF;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Barlow',sans-serif;background:var(--grigio-bg);color:#222;font-size:14px;min-height:100vh}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:200;background:var(--blu);padding:0 16px;display:flex;align-items:center;justify-content:space-between;height:52px;gap:8px}
+.fk-logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;display:inline-flex;align-items:center;text-decoration:none;flex-shrink:0}
+.fk-logo .fran{color:#FFF}
+.fk-logo .ki{background:#F0A500;color:#FFF;border-radius:5px;padding:1px 7px;margin-left:2px;display:inline-block}
+.nav-center{color:rgba(255,255,255,0.65);font-size:11px;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase;flex:1;text-align:center}
+.nav-btns{display:flex;gap:6px;flex-shrink:0}
+.nav-btn{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;letter-spacing:1px;text-transform:uppercase;padding:6px 12px;border-radius:4px;border:none;cursor:pointer;transition:all .15s}
+.btn-admin{background:rgba(255,255,255,0.15);color:#FFF}
+.btn-admin.active{background:var(--arancio);color:#FFF}
+.btn-hub1{background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.7)}
+
+/* ADMIN BANNER */
+.admin-banner{background:var(--arancio);padding:10px 16px;display:none;align-items:center;gap:10px}
+.admin-banner.show{display:flex}
+.admin-banner p{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:12px;color:#FFF;text-transform:uppercase;letter-spacing:1px}
+.admin-banner span{font-size:11px;color:rgba(255,255,255,0.8);font-weight:400;text-transform:none;letter-spacing:0}
+
+/* BODY */
+.body{max-width:720px;margin:0 auto;padding:16px 16px 48px}
+
+/* SEZIONE */
+.sez{background:var(--bianco);border-radius:8px;margin-bottom:12px;overflow:hidden}
+.sez-head{padding:14px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--bordo);background:var(--bianco)}
+.sez-color{width:5px;height:36px;border-radius:3px;flex-shrink:0}
+.sez-info{flex:1}
+.sez-num{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#aaa;margin-bottom:2px}
+.sez-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:18px;text-transform:uppercase;color:var(--dark);line-height:1}
+.sez-sub{font-size:11px;color:#888;margin-top:3px;font-style:italic}
+.sez-count{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;color:#ccc}
+
+/* EDIT SEZIONE */
+.sez-edit-btn{background:none;border:1px solid var(--bordo);border-radius:3px;padding:4px 8px;font-size:10px;color:#aaa;cursor:pointer;display:none;font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:0.5px}
+.admin-mode .sez-edit-btn{display:inline-block}
+
+/* DOC LIST */
+.doc-list{padding:4px 0}
+
+/* DOC ITEM */
+.doc-item{display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:1px solid #f5f3f0;transition:background .1s;cursor:pointer;position:relative}
+.doc-item:last-child{border-bottom:none}
+.doc-item:hover{background:#fafaf8}
+.doc-item.dragging{opacity:0.4;background:#f0f0f0}
+.doc-item.drag-over{background:#e8f0fe;border-top:2px solid var(--blu)}
+
+/* DRAG HANDLE */
+.drag-handle{font-size:14px;color:#ddd;cursor:grab;flex-shrink:0;display:none;user-select:none;padding:2px 4px}
+.admin-mode .drag-handle{display:block}
+.drag-handle:active{cursor:grabbing}
+
+/* DOC ICON */
+.doc-icon{font-size:16px;flex-shrink:0;width:22px;text-align:center}
+
+/* DOC INFO */
+.doc-info{flex:1;min-width:0}
+.doc-name{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:15px;text-transform:uppercase;color:var(--dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.doc-name-input{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:15px;text-transform:uppercase;color:var(--dark);border:1px solid var(--blu);border-radius:3px;padding:2px 6px;width:100%;display:none;background:#fff;outline:none}
+.doc-desc{font-size:11px;color:#888;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.admin-mode .doc-name{display:none}
+.admin-mode .doc-name-input{display:block}
+
+/* DOC TAGS */
+.doc-tags{display:flex;gap:4px;flex-shrink:0}
+.dtag{font-size:9px;font-weight:700;padding:2px 6px;border-radius:2px;text-transform:uppercase;letter-spacing:0.5px}
+.dtag-nda{background:#fde0e0;color:#a00}
+.dtag-new{background:#d4f0d4;color:#1a7a1a}
+.dtag-key{background:#fff3cd;color:#856404}
+
+/* DOC LINK BTN */
+.doc-link{color:#ccc;font-size:14px;text-decoration:none;flex-shrink:0;padding:4px}
+.doc-link:hover{color:var(--blu)}
+
+/* MOVE BTN */
+.move-btn{background:none;border:1px solid var(--bordo);border-radius:3px;padding:3px 6px;font-size:10px;color:#888;cursor:pointer;display:none;white-space:nowrap;font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase}
+.admin-mode .move-btn{display:block}
+
+/* MOVE MODAL */
+.move-modal{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:500;display:none;align-items:center;justify-content:center;padding:20px}
+.move-modal.open{display:flex}
+.move-modal-box{background:#FFF;border-radius:8px;width:100%;max-width:400px;overflow:hidden}
+.move-modal-head{background:var(--blu);padding:14px 16px;display:flex;align-items:center;justify-content:space-between}
+.move-modal-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;color:#FFF;text-transform:uppercase}
+.move-modal-close{background:none;border:none;color:rgba(255,255,255,0.6);font-size:18px;cursor:pointer}
+.move-modal-body{padding:16px}
+.move-modal-label{font-size:12px;color:#888;margin-bottom:8px}
+.move-option{display:block;width:100%;padding:10px 12px;border:1px solid var(--bordo);border-radius:4px;background:var(--grigio-bg);margin-bottom:6px;cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:14px;text-transform:uppercase;color:var(--dark);text-align:left;transition:all .15s}
+.move-option:hover{background:var(--blu);color:#FFF;border-color:var(--blu)}
+.move-option:last-child{margin-bottom:0}
+
+/* RESET BTN */
+.reset-btn{background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);border:none;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:1px;padding:4px 8px;border-radius:3px;cursor:pointer}
+
+footer{background:var(--dark);padding:20px 16px;text-align:center;margin-top:8px}
+footer p{color:rgba(255,255,255,0.3);font-size:10px;line-height:1.8}
+
+.hub-btn{position:fixed;bottom:20px;right:20px;z-index:9999;width:44px;height:44px;background:var(--blu);border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,0.25);font-size:20px}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="fk-logo" href="#"><span class="fran">Fran</span><span class="ki">Ki</span></a>
+  <span class="nav-center">Documenti · Il Poglío</span>
+  <div class="nav-btns">
+    <button class="nav-btn btn-hub1" onclick="window.location='https://valzinga.github.io/frankistudio/affio/rcv/'">← Hub</button>
+    <button class="nav-btn btn-admin" id="admin-toggle" onclick="toggleAdmin()">⚙ Admin</button>
+  </div>
+</nav>
+
+<div class="admin-banner" id="admin-banner">
+  <p>Modalità Admin attiva <span>— Rinomina i documenti · Sposta tra sezioni · Trascina per riordinare</span></p>
+  <button class="reset-btn" onclick="resetData()">Reset</button>
+</div>
+
+<div class="body" id="main-body">
+  <!-- Generato da JS -->
+</div>
+
+<!-- MOVE MODAL -->
+<div class="move-modal" id="move-modal">
+  <div class="move-modal-box">
+    <div class="move-modal-head">
+      <span class="move-modal-title">Sposta documento</span>
+      <button class="move-modal-close" onclick="closeMoveModal()">✕</button>
+    </div>
+    <div class="move-modal-body">
+      <div class="move-modal-label">Scegli la sezione di destinazione:</div>
+      <div id="move-options"></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>Il Poglío · FranKi Studio (Avre Srl) · Napoli · frankistudio.it<br>
+  valzinga.github.io/frankistudio/affio/rcv/ · Maggio 2026</p>
+</footer>
+
+<a href="https://valzinga.github.io/frankistudio/affio/rcv/" class="hub-btn" title="Torna all'Hub">🏠</a>
+
+<script>
+var BASE = 'https://valzinga.github.io/frankistudio/affio/rcv/';
+var STORAGE_KEY = 'rcv-hub2-v1';
+var adminMode = false;
+var movingDoc = null;
+var dragSrc = null;
+
+var DEFAULT_DATA = {
+  sezioni: [
+    {
+      id: 's1', num: '01', color: '#6b4c2a',
+      title: 'La Storia',
+      sub: 'Da dove viene Il Poglío',
+      docs: [
+        {id:'d01', icon:'📜', name:'Scheda Storica Asset', desc:'L\'ENEL, gli anni \'50, le palazzine ferme. La narrativa più potente del progetto.', url:'RCV_Scheda_Storica.html', tags:[]},
+        {id:'d02', icon:'🌍', name:'Benchmark Internazionale', desc:'6 case study mondiali. Contesto di mercato, trend mountain hospitality premium.', url:'RCV_Benchmark.html', tags:[]},
+        {id:'d03', icon:'💡', name:'Concept Report F01', desc:'Cosa diventa Il Poglío, a chi si rivolge, perché in questo momento, perché sull\'Appennino.', url:'RCV_Concept_Report_F01.html', tags:[]},
+        {id:'d04', icon:'🎨', name:'Brand Context — Chi è Il Poglío', desc:'Naming, palette, tono di voce, posizionamento. Documento di riferimento visivo e narrativo.', url:'RCV_BrandContext.html', tags:[]},
+      ]
+    },
+    {
+      id: 's2', num: '02', color: '#2B38B0',
+      title: 'Il Progetto Oggi',
+      sub: 'Cosa diventa fisicamente e come funziona',
+      docs: [
+        {id:'d05', icon:'💰', name:'Business Model', desc:'Le tre leve di revenue — club privato, corporate retreat, ESG. Revenue e EBITDA a regime.', url:'RCV_BusinessModel.html', tags:[]},
+        {id:'d06', icon:'🏨', name:'Concept Commerciali', desc:'Bubble room, wellness hub, corporate retreat, membership club. I prodotti concreti.', url:'RCV_ConceptCommerciali.html', tags:[]},
+        {id:'d07', icon:'📅', name:'Piano 30 Mesi', desc:'Timeline completa dall\'acquisizione all\'apertura. Milestone e fasi operative.', url:'RCV_Piano30Mesi.html', tags:[]},
+        {id:'d08', icon:'📈', name:'Simulazione Fasi', desc:'Tre scenari — conservativo, base, ottimistico — con cash flow per fase.', url:'RCV_SimulazioneFasi.html', tags:['nda']},
+        {id:'d09', icon:'⚙️', name:'Simulazione Operativa', desc:'P&L operativo, costi gestione, break-even analysis. Dati operativi completi.', url:'RCV_SimulazioneOperativa.html', tags:['nda']},
+      ]
+    },
+    {
+      id: 's3', num: '03', color: '#F0A500',
+      title: 'Come Entri',
+      sub: 'Tutto quello che serve per decidere',
+      docs: [
+        {id:'d10', icon:'✉️', name:'Lettera FranKi', desc:'Due versioni: Visione (emotiva) e Advisor (professionale). Prima della call.', url:'POGLIO_Lettera_FranKi_v3.html', tags:['new']},
+        {id:'d11', icon:'📄', name:'Presentazione Il Poglío', desc:'Asset, progetto, struttura investimento, protezioni contrattuali. Due versioni: investitore e operativo.', url:'POGLIO_Presentazione_Esterna.html', tags:['new','key']},
+        {id:'d12', icon:'📋', name:'Documento Socio', desc:'Versione FranKi branded con switcher investitore / operativo.', url:'POGLIO_Documento_Socio_v2.html', tags:[]},
+        {id:'d13', icon:'🌿', name:'Teaser Soci Fondatori Club', desc:'Documento lifestyle per i 140 posti del club privato. Tono aspirazionale.', url:'TEASER-ONE-A_RCV.html', tags:[]},
+        {id:'d14', icon:'📑', name:'Teaser B1 — Istituzionali', desc:'Deal structure, IRR target, liquidation preference. Solo investitori qualificati.', url:'TEASER-ONE-B1_RCV.html', tags:['nda']},
+        {id:'d15', icon:'📊', name:'Tracker Engagement Investitori', desc:'CRM interattivo per seguire i contatti M0→M3 con script inline per ogni fase.', url:'RCV_Engagement_Investitori.html', tags:['new']},
+      ]
+    },
+    {
+      id: 's4', num: '04', color: '#22c55e',
+      title: 'Come Si Costruisce',
+      sub: 'Esecuzione, milestone, task quotidiani',
+      docs: [
+        {id:'d16', icon:'🗓️', name:'Roadmap Maggio → Dicembre 2026', desc:'46 attività spuntabili dalla raccolta soci al closing. Link ai documenti per ogni task.', url:'RCV_Roadmap_2026.html', tags:['new']},
+        {id:'d17', icon:'🗓️', name:'Task Mag–Lug + Script Soci', desc:'Task espansi con chi fa cosa, script verbatim per ogni fase di engagement.', url:'RCV_MagLug_Soci.html', tags:['new']},
+        {id:'d18', icon:'📍', name:'Stato Progetto', desc:'Snapshot operativo — semafori, decisioni aperte, contratti da firmare, prossime azioni.', url:'STATO_PROGETTO_v2.html', tags:['new']},
+        {id:'d19', icon:'✅', name:'Papele — Lista Azioni', desc:'Attività prioritizzate con spunta interattiva. Si salva automaticamente.', url:'PAPELE_v2.html', tags:['new']},
+        {id:'d20', icon:'🔧', name:'Mappa Fornitori e Profili Operativi', desc:'10 profili da ingaggiare, 4 candidati doppio ruolo socio/fornitore.', url:'RCV_Fornitori_v2.html', tags:['new']},
+        {id:'d21', icon:'📌', name:'Progetto Master v2', desc:'Struttura societaria definitiva, fee, clausole parasociale. Il riferimento assoluto.', url:'PROGETTO_MASTER_v2.html', tags:['new']},
+      ]
+    },
+    {
+      id: 's5', num: '05', color: '#7c3aed',
+      title: 'Come Si Racconta',
+      sub: 'Comunicazione, visual, brand, produzione',
+      docs: [
+        {id:'d22', icon:'🎬', name:'Brief Storyboard — Gennaro', desc:'8 scene, 90 secondi. Claim, sequenza narrativa, prompt AI, benchmark con link, musica.', url:'POGLIO_Brief_Storyboard_Gennaro.html', tags:['new']},
+        {id:'d23', icon:'🎨', name:'Brand Context', desc:'Naming, palette, tono, posizionamento. Documento di riferimento per la comunicazione esterna.', url:'RCV_BrandContext.html', tags:[]},
+        {id:'d24', icon:'🌿', name:'Teaser Soci Fondatori Club', desc:'Materiale lifestyle per i 140 posti del club. Tono aspirazionale ed emotivo.', url:'TEASER-ONE-A_RCV.html', tags:[]},
+        {id:'d25', icon:'🏨', name:'Concept Commerciali', desc:'Bubble room, wellness hub, corporate retreat. I prodotti e come si raccontano al mercato.', url:'RCV_ConceptCommerciali.html', tags:[]},
+      ]
+    },
+    {
+      id: 's6', num: '06', color: '#ef4444',
+      title: 'Riservato',
+      sub: 'Solo con NDA firmato · info@frankistudio.it',
+      docs: [
+        {id:'d26', icon:'📊', name:'Cap Table v2', desc:'Struttura quote, fasi, diluizione, fondo, simulazione exit. Solo per cordata e advisors.', url:'RCV_CapTable_v2.html', tags:['nda']},
+        {id:'d27', icon:'🔄', name:'Piano B — Arbitrage', desc:'Scenario alternativo con exit rapido senza sviluppo. Analisi comparativa.', url:'RCV_PianoB_Arbitrage.html', tags:['nda']},
+        {id:'d28', icon:'📑', name:'Teaser B1 — Istituzionali', desc:'Deal structure completa, IRR 51%, liquidation preference €2M, multiplo 5.2x.', url:'TEASER-ONE-B1_RCV.html', tags:['nda']},
+        {id:'d29', icon:'⚙️', name:'Simulazione Operativa', desc:'P&L operativo dettagliato, costi gestione, break-even, sensitivity analysis.', url:'RCV_SimulazioneOperativa.html', tags:['nda']},
+        {id:'d30', icon:'📈', name:'Simulazione Fasi', desc:'Tre scenari con cash flow per fase. Dati completi per investitori qualificati.', url:'RCV_SimulazioneFasi.html', tags:['nda']},
+      ]
+    },
+  ]
+};
+
+// STATO
+var state = null;
+
+function loadState() {
+  try {
+    var saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      state = JSON.parse(saved);
+    } else {
+      state = JSON.parse(JSON.stringify(DEFAULT_DATA));
+    }
+  } catch(e) {
+    state = JSON.parse(JSON.stringify(DEFAULT_DATA));
+  }
+}
+
+function saveState() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) {}
+}
+
+function resetData() {
+  if (!confirm('Reset a tutti i dati di default?')) return;
+  try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
+  state = JSON.parse(JSON.stringify(DEFAULT_DATA));
+  saveState();
+  render();
+}
+
+// ADMIN
+function toggleAdmin() {
+  adminMode = !adminMode;
+  document.getElementById('admin-toggle').classList.toggle('active', adminMode);
+  document.getElementById('admin-banner').classList.toggle('show', adminMode);
+  if (adminMode) {
+    document.body.classList.add('admin-mode');
+  } else {
+    document.body.classList.remove('admin-mode');
+    saveAllNames();
+    saveState();
+  }
+  render();
+}
+
+function saveAllNames() {
+  document.querySelectorAll('.doc-name-input').forEach(function(input) {
+    var docId = input.dataset.docid;
+    var sezId = input.dataset.sezid;
+    var sez = state.sezioni.find(function(s){ return s.id === sezId; });
+    if (sez) {
+      var doc = sez.docs.find(function(d){ return d.id === docId; });
+      if (doc) doc.name = input.value;
+    }
+  });
+}
+
+// MOVE MODAL
+function openMoveModal(docId, sezId) {
+  movingDoc = { docId: docId, sezId: sezId };
+  var opts = document.getElementById('move-options');
+  opts.innerHTML = '';
+  state.sezioni.forEach(function(s) {
+    if (s.id === sezId) return;
+    var btn = document.createElement('button');
+    btn.className = 'move-option';
+    btn.textContent = s.num + ' · ' + s.title;
+    btn.style.borderLeft = '4px solid ' + s.color;
+    btn.onclick = function() { moveDoc(s.id); };
+    opts.appendChild(btn);
+  });
+  document.getElementById('move-modal').classList.add('open');
+}
+
+function closeMoveModal() {
+  document.getElementById('move-modal').classList.remove('open');
+  movingDoc = null;
+}
+
+function moveDoc(targetSezId) {
+  if (!movingDoc) return;
+  var srcSez = state.sezioni.find(function(s){ return s.id === movingDoc.sezId; });
+  var tgtSez = state.sezioni.find(function(s){ return s.id === targetSezId; });
+  if (!srcSez || !tgtSez) return;
+  var docIdx = srcSez.docs.findIndex(function(d){ return d.id === movingDoc.docId; });
+  if (docIdx === -1) return;
+  var doc = srcSez.docs.splice(docIdx, 1)[0];
+  tgtSez.docs.push(doc);
+  saveState();
+  closeMoveModal();
+  render();
+}
+
+// DRAG & DROP
+function handleDragStart(e) {
+  dragSrc = { docId: e.currentTarget.dataset.docid, sezId: e.currentTarget.dataset.sezid };
+  e.currentTarget.classList.add('dragging');
+  e.dataTransfer.effectAllowed = 'move';
+}
+
+function handleDragEnd(e) {
+  e.currentTarget.classList.remove('dragging');
+  document.querySelectorAll('.doc-item').forEach(function(el) {
+    el.classList.remove('drag-over');
+  });
+}
+
+function handleDragOver(e) {
+  e.preventDefault();
+  e.currentTarget.classList.add('drag-over');
+  e.dataTransfer.dropEffect = 'move';
+}
+
+function handleDragLeave(e) {
+  e.currentTarget.classList.remove('drag-over');
+}
+
+function handleDrop(e) {
+  e.preventDefault();
+  e.currentTarget.classList.remove('drag-over');
+  if (!dragSrc) return;
+  var tgtDocId = e.currentTarget.dataset.docid;
+  var tgtSezId = e.currentTarget.dataset.sezid;
+  if (dragSrc.docId === tgtDocId) return;
+
+  // Trova e sposta
+  var srcSez = state.sezioni.find(function(s){ return s.id === dragSrc.sezId; });
+  var tgtSez = state.sezioni.find(function(s){ return s.id === tgtSezId; });
+  if (!srcSez || !tgtSez) return;
+
+  var srcIdx = srcSez.docs.findIndex(function(d){ return d.id === dragSrc.docId; });
+  var tgtIdx = tgtSez.docs.findIndex(function(d){ return d.id === tgtDocId; });
+  if (srcIdx === -1 || tgtIdx === -1) return;
+
+  var doc = srcSez.docs.splice(srcIdx, 1)[0];
+  if (srcSez.id === tgtSez.id) {
+    tgtSez.docs.splice(tgtIdx, 0, doc);
+  } else {
+    tgtSez.docs.splice(tgtIdx, 0, doc);
+  }
+
+  saveState();
+  dragSrc = null;
+  render();
+}
+
+// RENDER
+function render() {
+  var body = document.getElementById('main-body');
+  body.innerHTML = '';
+
+  state.sezioni.forEach(function(sez) {
+    var sezEl = document.createElement('div');
+    sezEl.className = 'sez';
+
+    var headHtml = '<div class="sez-head">' +
+      '<div class="sez-color" style="background:' + sez.color + '"></div>' +
+      '<div class="sez-info">' +
+        '<div class="sez-num">' + sez.num + '</div>' +
+        '<div class="sez-title">' + sez.title + '</div>' +
+        '<div class="sez-sub">' + sez.sub + '</div>' +
+      '</div>' +
+      '<div class="sez-count">' + sez.docs.length + ' doc</div>' +
+    '</div>';
+
+    var listHtml = '<div class="doc-list">';
+    sez.docs.forEach(function(doc) {
+      var tagsHtml = '';
+      if (doc.tags && doc.tags.length) {
+        doc.tags.forEach(function(t) {
+          if (t === 'nda') tagsHtml += '<span class="dtag dtag-nda">NDA</span>';
+          if (t === 'new') tagsHtml += '<span class="dtag dtag-new">Nuovo</span>';
+          if (t === 'key') tagsHtml += '<span class="dtag dtag-key">Principale</span>';
+        });
+      }
+
+      listHtml += '<div class="doc-item" ' +
+        'data-docid="' + doc.id + '" data-sezid="' + sez.id + '" ' +
+        'draggable="' + (adminMode ? 'true' : 'false') + '" ' +
+        '>' +
+        '<div class="drag-handle" title="Trascina per riordinare">⠿</div>' +
+        '<div class="doc-icon">' + doc.icon + '</div>' +
+        '<div class="doc-info">' +
+          '<div class="doc-name">' + doc.name + '</div>' +
+          '<input class="doc-name-input" type="text" value="' + doc.name.replace(/"/g, '&quot;') + '" ' +
+            'data-docid="' + doc.id + '" data-sezid="' + sez.id + '" ' +
+            'oninput="updateName(\'' + doc.id + '\',\'' + sez.id + '\',this.value)">' +
+          '<div class="doc-desc">' + doc.desc + '</div>' +
+        '</div>' +
+        '<div class="doc-tags">' + tagsHtml + '</div>' +
+        '<button class="move-btn" onclick="openMoveModal(\'' + doc.id + '\',\'' + sez.id + '\')">Sposta →</button>' +
+        '<a class="doc-link" href="' + BASE + doc.url + '" target="_blank" title="Apri documento">→</a>' +
+      '</div>';
+    });
+    listHtml += '</div>';
+
+    sezEl.innerHTML = headHtml + listHtml;
+    body.appendChild(sezEl);
+
+    // Aggiungi drag events
+    if (adminMode) {
+      sezEl.querySelectorAll('.doc-item').forEach(function(item) {
+        item.addEventListener('dragstart', handleDragStart);
+        item.addEventListener('dragend', handleDragEnd);
+        item.addEventListener('dragover', handleDragOver);
+        item.addEventListener('dragleave', handleDragLeave);
+        item.addEventListener('drop', handleDrop);
+      });
+    } else {
+      // In modalità normale, click apre il link
+      sezEl.querySelectorAll('.doc-item').forEach(function(item) {
+        item.addEventListener('click', function(e) {
+          if (e.target.classList.contains('doc-link') || e.target.classList.contains('move-btn')) return;
+          var url = BASE + item.querySelector('.doc-link').getAttribute('href').replace(BASE, '');
+          window.open(BASE + item.querySelector('.doc-link').getAttribute('href').split('/').pop(), '_blank');
+        });
+      });
+    }
+  });
+}
+
+function updateName(docId, sezId, val) {
+  var sez = state.sezioni.find(function(s){ return s.id === sezId; });
+  if (sez) {
+    var doc = sez.docs.find(function(d){ return d.id === docId; });
+    if (doc) { doc.name = val; saveState(); }
+  }
+}
+
+document.getElementById('move-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeMoveModal();
+});
+
+loadState();
+render();
+</script>
+</body>
+</html>
