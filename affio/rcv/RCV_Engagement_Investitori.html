@@ -145,6 +145,44 @@ nav{position:sticky;top:0;z-index:200;background:var(--blu);padding:0 16px;displ
 .empty-icon{font-size:40px;margin-bottom:10px}
 .empty-text{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;text-transform:uppercase;color:#ccc}
 
+/* INDICE */
+.indice{max-width:680px;margin:0 auto;padding:12px 16px 0}
+.indice-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.indice-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:14px;text-transform:uppercase;letter-spacing:1px;color:var(--dark)}
+.indice-toggle{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:10px;text-transform:uppercase;letter-spacing:1px;padding:4px 10px;border-radius:3px;border:1px solid var(--bordo);background:transparent;color:#888;cursor:pointer}
+.indice-toggle.open{background:var(--blu);color:#FFF;border-color:var(--blu)}
+.indice-table{background:#FFF;border-radius:6px;overflow:hidden;border:1px solid var(--bordo);display:none;margin-bottom:12px}
+.indice-table.open{display:block}
+.it-head{display:grid;grid-template-columns:1fr 60px 90px 80px 60px;gap:0;background:var(--blu);padding:8px 12px}
+.it-head span{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:10px;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,0.7)}
+.it-row{display:grid;grid-template-columns:1fr 60px 90px 80px 60px;gap:0;padding:9px 12px;border-bottom:1px solid #f0ede8;align-items:center}
+.it-row:last-child{border-bottom:none}
+.it-row:hover{background:#fafaf8;cursor:pointer}
+.it-nome{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:13px;color:var(--dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.it-fase{font-size:10px;color:#888}
+.it-stelle{color:#F0A500;font-size:12px;letter-spacing:1px}
+.it-urgenza{height:8px;border-radius:4px;background:#eee;overflow:hidden;margin:0 4px}
+.it-urgenza-fill{height:8px;border-radius:4px;transition:width .3s}
+.it-urgenza-label{font-size:9px;color:#aaa;text-align:center;margin-top:2px}
+
+/* STELLE */
+.stelle-wrap{display:flex;gap:4px;margin:10px 0}
+.stella{font-size:22px;cursor:pointer;transition:transform .1s;user-select:none;color:#ddd}
+.stella.attiva{color:#F0A500}
+.stella:hover{transform:scale(1.2)}
+
+/* DATE CONTATTO */
+.date-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.date-field label{font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:3px;display:block}
+.date-field input{width:100%;border:1px solid var(--bordo);border-radius:4px;padding:7px 10px;font-family:'Barlow',sans-serif;font-size:13px;color:var(--dark);background:#fff;outline:none}
+.date-field input:focus{border-color:var(--blu)}
+
+/* URGENZA BADGE */
+.urgenza-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:3px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-top:8px}
+.urg-verde{background:#d4f0d4;color:#1a7a1a}
+.urg-giallo{background:#fff3cd;color:#856404}
+.urg-rosso{background:#fde0e0;color:#a00}
+
 /* SCRIPT INLINE PER INVESTITORE */
 .inv-script-panel{background:var(--dark);border-radius:6px;padding:14px;margin-top:10px;display:none}
 .inv-script-panel.open{display:block}
@@ -166,6 +204,7 @@ footer p{color:rgba(255,255,255,0.3);font-size:10px;line-height:1.8}
 </nav>
 
 <!-- PROGRESS -->
+<div id="sync-banner" style="display:none;background:#2B38B0;color:#FFF;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:1px;padding:8px 16px;text-align:center">Caricamento...</div>
 <div class="prog-bar-wrap">
   <div class="prog-slots" id="prog-slots">0 / 6 posti</div>
   <div class="prog-bar-bg"><div class="prog-bar-fill" id="prog-fill" style="width:0%"></div></div>
@@ -262,6 +301,24 @@ footer p{color:rgba(255,255,255,0.3);font-size:10px;line-height:1.8}
 </div>
 
 <!-- LISTA INVESTITORI -->
+<!-- INDICE -->
+<div class="indice">
+  <div class="indice-head">
+    <span class="indice-title">📋 Indice contatti</span>
+    <button class="indice-toggle" id="indice-toggle" onclick="toggleIndice()">Mostra indice</button>
+  </div>
+  <div class="indice-table" id="indice-table">
+    <div class="it-head">
+      <span>Nome</span>
+      <span>Fase</span>
+      <span>Urgenza</span>
+      <span>Stelle</span>
+      <span>Prossimo</span>
+    </div>
+    <div id="indice-rows"></div>
+  </div>
+</div>
+
 <div class="investitori" id="lista-investitori">
   <div class="empty" id="empty-state">
     <div class="empty-icon">👤</div>
@@ -320,6 +377,27 @@ footer p{color:rgba(255,255,255,0.3);font-size:10px;line-height:1.8}
         <label class="form-label">Note</label>
         <textarea class="form-input" id="f-note" rows="3" placeholder="Note libere sul contatto..."></textarea>
       </div>
+      <div class="form-group">
+        <label class="form-label">Probabilità partecipazione</label>
+        <div class="stelle-wrap" id="f-stelle-wrap">
+          <span class="stella" data-val="1" onclick="setStelleModal(1)">★</span>
+          <span class="stella" data-val="2" onclick="setStelleModal(2)">★</span>
+          <span class="stella" data-val="3" onclick="setStelleModal(3)">★</span>
+          <span class="stella" data-val="4" onclick="setStelleModal(4)">★</span>
+          <span class="stella" data-val="5" onclick="setStelleModal(5)">★</span>
+        </div>
+        <input type="hidden" id="f-stelle" value="0">
+      </div>
+      <div class="form-row">
+        <div class="date-field">
+          <label>Ultimo contatto</label>
+          <input type="date" id="f-data-ultimo">
+        </div>
+        <div class="date-field">
+          <label>Prossimo contatto</label>
+          <input type="date" id="f-data-prossimo">
+        </div>
+      </div>
     </div>
     <div class="modal-footer">
       <button class="btn-secondary" onclick="closeModal()">Annulla</button>
@@ -334,6 +412,8 @@ footer p{color:rgba(255,255,255,0.3);font-size:10px;line-height:1.8}
 
 <script>
 const KEY = 'rcv-engagement-v1';
+const SHEET_URL = 'https://script.google.com/macros/s/AKfycbw11lIO4uJHCVAr6yh99kKgUym1i1gpbQAcrkiM6FkE5OuwrNSSC4eXJXuW0zOal2lrVg/exec';
+let syncingSheet = false;
 const FASI = {
   '0':    { label: 'Da contattare', badge: 'fb-0', color: '#aaa' },
   '1':    { label: 'Call fatta',    badge: 'fb-1', color: '#F0A500' },
@@ -355,7 +435,47 @@ let filtroAttivo = 'tutti';
 let scriptOpen = false;
 
 function getData(){ try{ return JSON.parse(localStorage.getItem(KEY)) || []; }catch(e){ return []; } }
-function saveData(d){ try{ localStorage.setItem(KEY, JSON.stringify(d)); }catch(e){} }
+function saveData(d){
+  try{ localStorage.setItem(KEY, JSON.stringify(d)); }catch(e){}
+  saveToSheet(d);
+}
+
+function saveToSheet(d) {
+  if (syncingSheet) return;
+  fetch(SHEET_URL, {
+    method: 'POST',
+    body: JSON.stringify({ action: 'save_all', rows: d }),
+  }).catch(function(){});
+}
+
+function loadFromSheet() {
+  showSyncBanner('Caricamento dati dal foglio Google...');
+  fetch(SHEET_URL)
+    .then(function(r){ return r.json(); })
+    .then(function(rows) {
+      if (rows && rows.length > 0) {
+        syncingSheet = true;
+        localStorage.setItem(KEY, JSON.stringify(rows));
+        syncingSheet = false;
+        hideSyncBanner();
+        renderLista();
+      } else {
+        hideSyncBanner();
+      }
+    })
+    .catch(function(){
+      hideSyncBanner();
+    });
+}
+
+function showSyncBanner(msg) {
+  var b = document.getElementById('sync-banner');
+  if (b) { b.textContent = msg; b.style.display = 'block'; }
+}
+function hideSyncBanner() {
+  var b = document.getElementById('sync-banner');
+  if (b) b.style.display = 'none';
+}
 
 function iniziali(nome){
   const p = nome.trim().split(' ');
@@ -454,6 +574,28 @@ function renderLista(){
           <div class="inv-note-label">Note</div>
           <textarea class="inv-note" placeholder="Note libere..." onchange="salvaNota('${c.id}',this.value)">${c.note || ''}</textarea>
         </div>
+        <div style="margin-top:10px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <div>
+            <div class="inv-note-label">Probabilità partecipazione</div>
+            <div class="stelle-wrap" style="margin:6px 0">
+              ${[1,2,3,4,5].map(n => `<span class="stella ${n <= (c.stelle||0) ? 'attiva' : ''}" onclick="setStelle('${c.id}',${n})" style="font-size:20px">★</span>`).join('')}
+            </div>
+          </div>
+          <div>
+            <div class="inv-note-label">Urgenza contatto</div>
+            ${urgenzaHtml(c)}
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">
+          <div class="date-field">
+            <label>Ultimo contatto</label>
+            <input type="date" value="${c.dataUltimo||''}" onchange="salvaData('${c.id}','dataUltimo',this.value)">
+          </div>
+          <div class="date-field">
+            <label>Prossimo contatto</label>
+            <input type="date" value="${c.dataProssimo||''}" onchange="salvaData('${c.id}','dataProssimo',this.value)">
+          </div>
+        </div>
         ${scriptBtnHtml}
         ${scriptPanelHtml}
         <div class="inv-actions">
@@ -468,6 +610,7 @@ function renderLista(){
   });
 
   aggiornaProgresso();
+  aggiornaIndice();
 }
 
 function toggleCard(id){
@@ -570,6 +713,10 @@ function openModal(){
   document.getElementById('f-canale').value = 'FranKi';
   document.getElementById('f-fase').value = '0';
   document.getElementById('f-note').value = '';
+  document.getElementById('f-stelle').value = '0';
+  document.getElementById('f-data-ultimo').value = '';
+  document.getElementById('f-data-prossimo').value = '';
+  setStelleModal(0);
   document.getElementById('modal-overlay').classList.add('open');
   document.getElementById('f-nome').focus();
 }
@@ -586,6 +733,10 @@ function openEdit(id){
   document.getElementById('f-canale').value = c.canale;
   document.getElementById('f-fase').value = c.fase;
   document.getElementById('f-note').value = c.note || '';
+  document.getElementById('f-stelle').value = c.stelle || 0;
+  document.getElementById('f-data-ultimo').value = c.dataUltimo || '';
+  document.getElementById('f-data-prossimo').value = c.dataProssimo || '';
+  setStelleModal(c.stelle || 0);
   document.getElementById('modal-overlay').classList.add('open');
 }
 
@@ -607,6 +758,9 @@ function salvaContatto(){
       c.canale = document.getElementById('f-canale').value;
       c.fase = document.getElementById('f-fase').value;
       c.note = document.getElementById('f-note').value.trim();
+      c.stelle = parseInt(document.getElementById('f-stelle').value) || 0;
+      c.dataUltimo = document.getElementById('f-data-ultimo').value;
+      c.dataProssimo = document.getElementById('f-data-prossimo').value;
     }
   } else {
     d.push({
@@ -617,6 +771,9 @@ function salvaContatto(){
       canale: document.getElementById('f-canale').value,
       fase: document.getElementById('f-fase').value,
       note: document.getElementById('f-note').value.trim(),
+      stelle: parseInt(document.getElementById('f-stelle').value) || 0,
+      dataUltimo: document.getElementById('f-data-ultimo').value,
+      dataProssimo: document.getElementById('f-data-prossimo').value,
       data: new Date().toLocaleDateString('it-IT'),
       expanded: true,
     });
@@ -631,9 +788,132 @@ document.getElementById('modal-overlay').addEventListener('click', function(e){
   if(e.target === this) closeModal();
 });
 
+// STELLE MODAL
+function setStelleModal(val) {
+  val = parseInt(val) || 0;
+  document.getElementById('f-stelle').value = val;
+  document.querySelectorAll('#f-stelle-wrap .stella').forEach(function(s) {
+    s.classList.toggle('attiva', parseInt(s.dataset.val) <= val);
+  });
+}
+
+// STELLE CARD
+function setStelle(id, val) {
+  const d = getData();
+  const c = d.find(x => x.id === id);
+  if(c){ c.stelle = val; saveData(d); renderLista(); }
+}
+
+// DATE
+function salvaData(id, campo, val) {
+  const d = getData();
+  const c = d.find(x => x.id === id);
+  if(c){ c[campo] = val; saveData(d); aggiornaIndice(); }
+}
+
+// URGENZA — calcola colore in base alle date
+function urgenzaInfo(contatto) {
+  const oggi = new Date(); oggi.setHours(0,0,0,0);
+  if (contatto.fase === 'done' || contatto.fase === 'no') return {color:'#ccc', pct:0, label:'—'};
+  
+  if (contatto.dataProssimo) {
+    const prossimo = new Date(contatto.dataProssimo);
+    const diff = Math.round((prossimo - oggi) / (1000*60*60*24));
+    if (diff < 0) return {color:'#ef4444', pct:100, label:'Scaduto ' + Math.abs(diff) + 'gg fa'};
+    if (diff === 0) return {color:'#ef4444', pct:100, label:'Oggi!'};
+    if (diff <= 2) return {color:'#ef4444', pct:85, label:'Fra ' + diff + ' giorni'};
+    if (diff <= 5) return {color:'#F0A500', pct:60, label:'Fra ' + diff + ' giorni'};
+    if (diff <= 10) return {color:'#F0A500', pct:35, label:'Fra ' + diff + ' giorni'};
+    return {color:'#22c55e', pct:15, label:'Fra ' + diff + ' giorni'};
+  }
+  if (contatto.dataUltimo) {
+    const ultimo = new Date(contatto.dataUltimo);
+    const diff = Math.round((oggi - ultimo) / (1000*60*60*24));
+    if (diff > 14) return {color:'#ef4444', pct:90, label:'No contatto da ' + diff + 'gg'};
+    if (diff > 7) return {color:'#F0A500', pct:55, label:'No contatto da ' + diff + 'gg'};
+    return {color:'#22c55e', pct:20, label:'Contattato ' + diff + 'gg fa'};
+  }
+  return {color:'#F0A500', pct:50, label:'Nessuna data'};
+}
+
+function urgenzaHtml(contatto) {
+  const u = urgenzaInfo(contatto);
+  return '<div class="inv-urgenza" style="height:10px;border-radius:5px;background:#eee;overflow:hidden;margin:8px 0">' +
+    '<div style="height:10px;width:' + u.pct + '%;background:' + u.color + ';border-radius:5px;transition:width .3s"></div>' +
+    '</div><div style="font-size:10px;color:' + u.color + ';font-weight:700">' + u.label + '</div>';
+}
+
+// INDICE
+function toggleIndice() {
+  const t = document.getElementById('indice-table');
+  const btn = document.getElementById('indice-toggle');
+  const isOpen = t.classList.contains('open');
+  t.classList.toggle('open', !isOpen);
+  btn.classList.toggle('open', !isOpen);
+  btn.textContent = isOpen ? 'Mostra indice' : 'Nascondi indice';
+  if (!isOpen) aggiornaIndice();
+}
+
+function aggiornaIndice() {
+  const rows = document.getElementById('indice-rows');
+  if (!rows) return;
+  const d = getData();
+  
+  // Ordine: done > 3 > 2 > 1 > 0 > no
+  const ordFase = {'done':0,'3':1,'2':2,'1':3,'0':4,'no':5};
+  const sorted = [...d].sort(function(a,b) {
+    const fa = ordFase[a.fase] ?? 6;
+    const fb = ordFase[b.fase] ?? 6;
+    if (fa !== fb) return fa - fb;
+    return (b.stelle||0) - (a.stelle||0);
+  });
+
+  rows.innerHTML = sorted.map(function(c) {
+    const u = urgenzaInfo(c);
+    const stelle = [1,2,3,4,5].map(function(n) {
+      return '<span style="color:' + (n <= (c.stelle||0) ? '#F0A500' : '#ddd') + ';font-size:11px">★</span>';
+    }).join('');
+    const faseLabel = (window.FASI && window.FASI[c.fase]) ? window.FASI[c.fase].label : c.fase;
+    const prossimo = c.dataProssimo ? c.dataProssimo.split('-').reverse().join('/') : '—';
+    return '<div class="it-row" onclick="apriContatto('' + c.id + '')">' +
+      '<div>' +
+        '<div class="it-nome">' + c.nome + '</div>' +
+        '<div class="it-fase">' + faseLabel + '</div>' +
+      '</div>' +
+      '<div>' + stelle + '</div>' +
+      '<div>' +
+        '<div style="height:6px;border-radius:3px;background:#eee;overflow:hidden">' +
+          '<div style="height:6px;width:' + u.pct + '%;background:' + u.color + ';border-radius:3px"></div>' +
+        '</div>' +
+        '<div style="font-size:9px;color:' + u.color + ';margin-top:2px">' + u.label + '</div>' +
+      '</div>' +
+      '<div style="font-size:10px;color:#666">' + prossimo + '</div>' +
+    '</div>';
+  }).join('');
+}
+
+function apriContatto(id) {
+  const d = getData();
+  const c = d.find(x => x.id === id);
+  if (c) { c.expanded = true; saveData(d); renderLista(); }
+  setTimeout(function() {
+    const el = document.querySelector('[data-id="' + id + '"]');
+    if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
+  }, 100);
+}
+
+// Esporta FASI per indice
+window.FASI = {
+  '0':    { label: 'Da contattare' },
+  '1':    { label: 'Call fatta' },
+  '2':    { label: 'Doc inviato' },
+  '3':    { label: 'In chiusura' },
+  'done': { label: 'Firmato' },
+  'no':   { label: 'No' },
+};
+
 // Bottone script globale nella navbar (aggiungo dopo DOMContentLoaded)
 document.addEventListener('DOMContentLoaded', function(){
-  // Aggiungi bottone script accanto al + aggiungi
   const nav = document.querySelector('nav');
   const scriptBtn = document.createElement('button');
   scriptBtn.className = 'nav-add-btn';
@@ -642,6 +922,7 @@ document.addEventListener('DOMContentLoaded', function(){
   scriptBtn.onclick = toggleScript;
   nav.insertBefore(scriptBtn, nav.querySelector('.nav-add-btn'));
   renderLista();
+  loadFromSheet();
 });
 </script>
 
